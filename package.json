@@ -12,5 +12,8 @@
     "e.mail.ru"
   ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@qa/test-tools": "0.0.1"
+  }
 }
