@@ -1,0 +1,16 @@
+{
+  "name": "tests.e.mail.ru",
+  "version": "0.1.0",
+  "description": "Test cases for e.mail.ru",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "test",
+    "ui",
+    "e.mail.ru"
+  ],
+  "author": "",
+  "license": "ISC"
+}
