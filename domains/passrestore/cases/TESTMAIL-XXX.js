@@ -9,4 +9,11 @@ describe('Passremind. Форма ввода адреса', () => {
 	it('Корректный заголовок', () => {
 		assert.equal(browser.getText(page.accountView.title), 'Восстановление пароля');
 	});
+
+	it('Пустая форма не отправляется', () => {
+		browser.setValue(page.accountView.input, '');
+		browser.click(page.accountView.btn);
+
+		assert.equal(browser.getText(page.accountView.error), 'Введите почтовый ящик');
+	});
 });
