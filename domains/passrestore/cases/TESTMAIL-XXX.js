@@ -1,9 +1,12 @@
 'use strict';
 
-let page = require('../object');
+const page = require('../object');
+const assert = require('assert');
 
-it('Passremind. Тестовый кейс.', () => {
+describe('Passremind. Форма ввода адреса', () => {
 	page.open(`/password/restore`);
 
-	console.log(browser.getText(page.view));
+	it('Корректный заголовок', () => {
+		assert.equal(browser.getText(page.accountView.title), 'Восстановление пароля');
+	});
 });

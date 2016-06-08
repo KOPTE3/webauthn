@@ -21,8 +21,17 @@ class Page extends PageObject {
 
 	}
 
-	get view () {
-		return '.js-view-account';
+	get accountView () {
+		let rootEl = '.js-view-account';
+		const locators = {
+			title: '.password-recovery__remind-new-header',
+			error: '.js-error',
+			input: '.js-input-login',
+			select: '.js-input-domain',
+			btn: 'button[type="submit"]'
+		};
+
+		return PageObject.cssInherit(locators, rootEl);
 	}
 }
 

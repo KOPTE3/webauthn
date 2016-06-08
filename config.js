@@ -17,7 +17,7 @@ exports.config = {
 	path: '/wd/hub',
 
 	/* Базовый адрес тестирования */
-	baseUrl: 'https://mezin.login.win105.dev.mail.ru/',
+	baseUrl: 'https://mezin.win105.dev.mail.ru/',
 
 	/* Доступные значения: silent, verbose, command, data, result, error */
 	logLevel: 'silent',
