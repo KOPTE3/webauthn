@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" timestamp="2016-06-08T17:32:20" time="0.85" tests="4" failures="0" errors="1" skipped="0">
+    <properties>
+      <property name="specId" value="7941c0701e068efeb362259ffa394537"/>
+      <property name="suiteName" value="Базовые функциональные требования"/>
+      <property name="capabilities" value="phantomjs"/>
+    </properties>
+    <testcase classname="phantomjs.Базовые функциональные требования" name="Passremind. Тестовый кейс." time="0.848">
+      <error message="&#xA;Promise was rejected with the following reason: Error: Unable to find element with css selector '.password-recovery__remind__new'&#xA;"/>
+      <system-out>
+        <![CDATA[
+COMMAND: POST http://localhost:4444/wd/hub/session/e53836b6-cfb4-4a9b-83e4-abc119f7c778/url - {"url":"https://mezin.login.win105.dev.mail.ru//password/restore"}
+RESULT: {"state":"success","sessionId":"e53836b6-cfb4-4a9b-83e4-abc119f7c778","hCode":807100745,"value":null,"class":"org.openqa.selenium.remote.Response","status":0}
+COMMAND: GET http://localhost:4444/wd/hub/session/e53836b6-cfb4-4a9b-83e4-abc119f7c778/window/current/size - {}
+RESULT: {"state":"success","sessionId":"e53836b6-cfb4-4a9b-83e4-abc119f7c778","hCode":2131745260,"value":{"width":400,"hCode":-1879048192,"class":"org.openqa.selenium.Dimension","height":300},"class":"org.openqa.selenium.remote.Response","status":0}
+COMMAND: POST http://localhost:4444/wd/hub/session/e53836b6-cfb4-4a9b-83e4-abc119f7c778/execute - {"script":"return (function getViewportSize() {\n    return {\n        screenWidth: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),\n        screenHeight: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)\n    };\n}).apply(null, arguments)","args":[]}
+RESULT: {"state":"success","sessionId":"e53836b6-cfb4-4a9b-83e4-abc119f7c778","hCode":442425225,"value":{"screenWidth":400,"screenHeight":300},"class":"org.openqa.selenium.remote.Response","status":0}
+COMMAND: POST http://localhost:4444/wd/hub/session/e53836b6-cfb4-4a9b-83e4-abc119f7c778/window/current/size - {"width":1500,"height":768}
+RESULT: {"state":"success","sessionId":"e53836b6-cfb4-4a9b-83e4-abc119f7c778","hCode":1237259001,"value":null,"class":"org.openqa.selenium.remote.Response","status":0}
+COMMAND: POST http://localhost:4444/wd/hub/session/e53836b6-cfb4-4a9b-83e4-abc119f7c778/execute - {"script":"return (function getViewportSize() {\n    return {\n        screenWidth: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),\n        screenHeight: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)\n    };\n}).apply(null, arguments)","args":[]}
+RESULT: {"state":"success","sessionId":"e53836b6-cfb4-4a9b-83e4-abc119f7c778","hCode":583345070,"value":{"screenWidth":1500,"screenHeight":768},"class":"org.openqa.selenium.remote.Response","status":0}
+COMMAND: POST http://localhost:4444/wd/hub/session/e53836b6-cfb4-4a9b-83e4-abc119f7c778/element - {"using":"css selector","value":".password-recovery__remind__new"}
+COMMAND: GET http://localhost:4444/wd/hub/session/e53836b6-cfb4-4a9b-83e4-abc119f7c778/screenshot - {}
+COMMAND: DELETE http://localhost:4444/wd/hub/session/e53836b6-cfb4-4a9b-83e4-abc119f7c778 - {}
+RESULT: {"state":"success","sessionId":"e53836b6-cfb4-4a9b-83e4-abc119f7c778","hCode":1759020209,"value":"[base64] 14432 bytes","class":"org.openqa.selenium.remote.Response","status":0}
+RESULT: {"state":"success","sessionId":"e53836b6-cfb4-4a9b-83e4-abc119f7c778","hCode":850812202,"value":null,"class":"org.openqa.selenium.remote.Response","status":0}
+]]>
+      </system-out>
+      <system-err>
+        <![CDATA[
+Error: Promise was rejected with the following reason: Error: Unable to find element with css selector '.password-recovery__remind__new'
+  at Object.Future.wait (/home/a.mezin/packages/tests.e.mail.ru/node_modules/fibers/future.js:449:15)
+  at Object.waitUntil (/home/a.mezin/packages/tests.e.mail.ru/node_modules/wdio-sync/build/index.js:345:27)
+  at Page.open (/home/a.mezin/packages/tests.e.mail.ru/domains/passrestore/object.js:20:11)
+  at Context.<anonymous> (/home/a.mezin/packages/tests.e.mail.ru/domains/passrestore/cases/TESTMAIL-XXX.js:6:7)
+  at /home/a.mezin/packages/tests.e.mail.ru/node_modules/wdio-sync/build/index.js:649:20
+
+    - - - - -
+  at new CommandError (/home/a.mezin/packages/tests.e.mail.ru/node_modules/webdriverio/build/lib/utils/ErrorHandler.js:109:12)
+  at /home/a.mezin/packages/tests.e.mail.ru/node_modules/webdriverio/build/lib/commands/waitUntil.js:79:15
+  at run (/home/a.mezin/packages/tests.e.mail.ru/node_modules/webdriverio/node_modules/core-js/library/modules/es6.promise.js:104:47)
+  at /home/a.mezin/packages/tests.e.mail.ru/node_modules/webdriverio/node_modules/core-js/library/modules/es6.promise.js:115:28
+  at flush (/home/a.mezin/packages/tests.e.mail.ru/node_modules/webdriverio/node_modules/core-js/library/modules/$.microtask.js:19:5)
+  at nextTickCallbackWith0Args (node.js:433:9)
+  at process._tickCallback (node.js:362:13)
+
+]]>
+      </system-err>
+    </testcase>
+    <testcase classname="phantomjs.Базовые функциональные требования" name="&quot;before each&quot; hook" time="1.164"/>
+    <testcase classname="phantomjs.Базовые функциональные требования" name="&quot;after each&quot; hook" time="0.317"/>
+    <testcase classname="phantomjs.Базовые функциональные требования" name="&quot;after all&quot; hook" time="0"/>
+  </testsuite>
+</testsuites>

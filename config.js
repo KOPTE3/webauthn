@@ -57,7 +57,7 @@ exports.config = {
 	 * Порядок файлов сохраняется, дубликаты исключаются
 	 */
 	specs: [
-		'./app/**/spec/index.js'
+		'./domains/**/index.js'
 	],
 
 	/* suites: { }, */

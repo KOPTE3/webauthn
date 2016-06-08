@@ -14,6 +14,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@qa/test-tools": "0.0.1"
+    "@qa/grunt-test-runner": "0.0.1",
+    "@qa/test-tools": "0.0.1",
+    "grunt": "^1.0.1",
+    "phantomjs-prebuilt": "^2.1.7",
+    "time-grunt": "^1.3.0",
+    "wdio-chai-plugin": "0.0.2"
   }
 }
