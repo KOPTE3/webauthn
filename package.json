@@ -1,14 +1,22 @@
 {
-  "name": "tests.e.mail.ru",
+  "name": "@mail/e.mail.ru-tests",
   "version": "0.1.0",
   "description": "Test cases for e.mail.ru",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url" : "ssh://git@stash.mail.ru:2222/mail/e.mail.ru-tests.git"
+  },
   "engines": {
     "node": ">=6.2.1",
     "npm": ">=3.9.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "grunt"   : "grunt",
+    "server"  : "selenium-standalone start",
+    "install" : "selenium-standalone install",
+    "test"    : "grunt --stack test",
+    "wdio"    : "wdio"
   },
   "keywords": [
     "test",
@@ -23,7 +31,8 @@
     "grunt": "^1.0.1",
     "phantomjs-prebuilt": "^2.1.7",
     "time-grunt": "^1.3.0",
-    "wdio-chai-plugin": "0.0.2"
+    "wdio-chai-plugin": "0.0.2",
+    "selenium-standalone": "^5.1.0"
   },
   "devDependencies": {
     "eslint": "^2.11.1",

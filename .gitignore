@@ -1,6 +1,3 @@
-cache
-
-
 # Created by https://www.gitignore.io/api/intellij,node,osx,sublimetext
 
 ### Intellij ###
@@ -153,3 +150,36 @@ bh_unicode_properties.cache
 # Sublime-github package stores a github token in this file
 # https://packagecontrol.io/packages/sublime-github
 GitHub.sublime-settings
+=======
+# --------------------------
+# System
+# --------------------------
+
+*~
+*#*
+._*
+\#*
+*.bak
+*.tmp
+*.swp
+.DS_Store
+
+# --------------------------
+# Git
+# --------------------------
+
+.gitconfig
+
+# --------------------------
+# Node
+# --------------------------
+
+/node_modules
+npm-debug.log
+
+# --------------------------
+# Project
+# --------------------------
+
+.idea
+cache
