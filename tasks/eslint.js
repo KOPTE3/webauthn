@@ -8,7 +8,8 @@ module.exports = grunt => {
         },
         files: [
             './*.js',
-            './domains/**/*.js',
+            './tasks/**/*.js',
+            './facts/**/*.js',
             './plugins/**/*.js'
         ]
     }
