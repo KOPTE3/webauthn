@@ -4,7 +4,7 @@
 /** @namespace it */
 
 class PageObject {
-	open (path) {
+	open(path) {
 		browser.url(path);
 	}
 
@@ -15,9 +15,11 @@ class PageObject {
 	 * @param  {string} parent
 	 * @return {Objcet}
 	 */
-	static cssInherit (locators, parent) {
+	static cssInherit(locators, parent) {
 		for (let name in locators) {
-			locators[name] = `${parent} ${locators[name]}`;
+			if (locators.hasOwnProperty(name)) {
+				locators[name] = `${parent} ${locators[name]}`;
+			}
 		}
 
 		return locators;
