@@ -1,8 +1,6 @@
 'use strict';
 const path = require('path');
-
-console.log(path.resolve(process.cwd(), 'object'))
-let PageObject = require(path.resolve(process.cwd(), 'object'));
+const PageObject = require(path.resolve(process.cwd(), 'object'));
 
 class Page extends PageObject {
 	constructor () {

@@ -5,7 +5,7 @@ let TestTools = require('@qa/test-tools');
 
 module.exports = grunt => {
     return {
-        omega: {
+        dev: {
             options: {
                 // jira: {
                 //     username: 'test-runner',
