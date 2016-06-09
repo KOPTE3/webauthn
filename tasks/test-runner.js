@@ -20,12 +20,10 @@ module.exports = grunt => {
             service: {
                 name: 'wdio',
                 file: path.resolve('facts/config.js'),
-/*
                 data: {
-                    baseUrl: `https://${TestTools.Git.branch}.omega.test.mail.ru`
+                    // baseUrl: `https://${TestTools.Git.branch}.omega.test.mail.ru`
                 }
-*/
             }
         }
-    }
+    };
 };

@@ -8,4 +8,4 @@ class Page extends PageObject {
     }
 }
 
-module.exports = new Page;
+module.exports = new Page();

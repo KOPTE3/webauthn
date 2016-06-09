@@ -4,10 +4,10 @@ const path = require('path');
 const load = require('load-grunt-config');
 const time = require('time-grunt');
 
-module.exports = function (grunt) {
+module.exports = grunt => {
     time(grunt);
 
-    var tasks = path.join(process.cwd(), 'tasks');
+    let tasks = path.join(process.cwd(), 'tasks');
 
     load(grunt, {
         configPath: tasks,

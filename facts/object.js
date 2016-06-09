@@ -7,14 +7,17 @@ class PageObject {
 
     /**
      * Combine selectors in CSS cascade
+     *
      * @static
      * @param  {Object} locators
      * @param  {string} parent
-     * @return {Objcet}
+     * @return {Object}
      */
     static cssInherit (locators, parent) {
         for (let name in locators) {
-            locators[name] = `${parent} ${locators[name]}`;
+            if (Object.prototype.hasOwnProperty.call(locators, name)) {
+                locators[name] = `${parent} ${locators[name]}`;
+            }
         }
 
         return locators;
