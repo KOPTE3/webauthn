@@ -26,22 +26,27 @@
         "grunt"  : "grunt",
         "server" : "selenium-standalone start",
         "install": "selenium-standalone install",
-        "test"   : "grunt --stack test",
+        "test"   : "grunt --stack lint test",
+        "lint"   : "grunt eslint",
         "wdio"   : "wdio"
     },
 
     "dependencies": {
-        "@qa/grunt-test-runner": "0.0.1",
-        "@qa/test-tools"       : "0.0.1",
+        "@qa/grunt-test-runner": "^0.0.1",
+        "@qa/test-tools"       : "^0.0.1",
         "grunt"                : "^1.0.1",
         "phantomjs-prebuilt"   : "^2.1.7",
         "time-grunt"           : "^1.3.0",
-        "wdio-chai-plugin"     : "0.0.2",
-        "selenium-standalone"  : "^5.1.0"
+        "wdio-chai-plugin"     : "^0.0.2"
+    },
+
+    "peerDependencies": {
+        "selenium-standalone": "^5.1.0"
     },
 
     "devDependencies": {
-        "eslint"      : "^2.11.1",
-        "grunt-eslint": "^18.1.0"
+        "@qa/eslint-config-mail.ru": "^0.0.1",
+        "eslint"                   : "^2.11.1",
+        "grunt-eslint"             : "^18.1.0"
     }
 }
