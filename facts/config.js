@@ -1,7 +1,7 @@
 'use strict';
 
 let phantom = require('phantomjs-prebuilt'),
-    chai = require('wdio-chai-plugin');
+    api = require('@qa/wdio-custom-api');
 
 /** @namespace browser */
 exports.config = {
@@ -102,6 +102,6 @@ exports.config = {
     ],
 
     before (capabilities, specs) {
-        // chai(browser);
+        api(browser);
     }
 };
