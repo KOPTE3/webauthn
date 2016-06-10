@@ -3,7 +3,7 @@
 module.exports = grunt => {
     return {
         options: {
-            configFile: './.eslintrc.js'
+            configFile: './.eslintrc.js',
         },
 
         files: [
