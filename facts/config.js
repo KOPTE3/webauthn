@@ -27,14 +27,24 @@ exports.config = {
     logLevel: 'silent',
 
     /*
+     * Максимальное время на выполнение команды.
+     * Если какая-то из команд фреймворка не получит за это время результат,
+     * то выполнение тестов будет прервано.
+    */
+    waitforTimeout: 30 * 1000,
+
+    /* Максимальное время на выполнение повторного запроса. */
+    connectionRetryTimeout: 10 * 1000,
+
+    /* Количество инстансов параллельного запуска тестов */
+    // maxInstances: 1,
+
+    /*
      * Опция позволяет отладчику остановить выполнение тестов
      * в месте вызова инструкции debugger.
      * Для использования этой опции требуется наличие пакета node-inspector
     */
     debug: false,
-
-    /* Количество инстансов параллельного запуска тестов */
-    // maxInstances: 1,
 
     /* Доступные значения: cucumber, mocha, jasmine */
     framework: 'mocha',
@@ -97,10 +107,10 @@ exports.config = {
     */
     capabilities: [
         {
-            browserName: 'internet explorer',
+            browserName: 'phantomjs',
 
             // // http://phantomjs.org/api/command-line.html
-            // 'phantomjs.binary.path': phantom.path,
+            'phantomjs.binary.path': phantom.path,
             //
             // 'phantomjs.cli.args': [
             //  // '--debug=yes',
@@ -113,3 +123,5 @@ exports.config = {
         api(browser);
     }
 };
+
+
