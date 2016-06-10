@@ -6,7 +6,15 @@ let phantom = require('phantomjs-prebuilt'),
 /** @namespace browser */
 exports.config = {
     /*
-     * Настройки, с которыми запущен Selenium-сервер
+     * Настройки с которыми запущен сервер Selenium
+     *
+     * Операционная система: Windows
+     * Список доступных браузеров: Chrome, Firefox, Opera, IE 11
+     * Грид: http://vagabond3.dev.mail.ru:4444/grid/console
+     *
+     * Операционная система: Linux
+     * Список доступных браузеров: Chrome, Firefox
+     * Грид: http://win110.dev.mail.ru:4444/grid/console
     */
     host: 'localhost',
     port: 4444,
@@ -89,15 +97,15 @@ exports.config = {
     */
     capabilities: [
         {
-            browserName: 'phantomjs',
+            browserName: 'internet explorer',
 
-            // http://phantomjs.org/api/command-line.html
-            'phantomjs.binary.path': phantom.path,
-
-            'phantomjs.cli.args': [
-                // '--debug=yes',
-                '--ignore-ssl-errors=yes'
-            ]
+            // // http://phantomjs.org/api/command-line.html
+            // 'phantomjs.binary.path': phantom.path,
+            //
+            // 'phantomjs.cli.args': [
+            //  // '--debug=yes',
+            //  '--ignore-ssl-errors=yes'
+            // ]
         }
     ],
 
