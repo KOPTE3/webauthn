@@ -80,6 +80,10 @@ exports.config = {
             './tests/login/index.js'
         ],
 
+        message: [
+            './tests/message/index.js'
+        ],
+
         passrestore: [
             './tests/passrestore/index.js'
         ]
@@ -99,7 +103,7 @@ exports.config = {
      * (например, для тестирования игрового центра), то нужно указать путь:
      *
      * chromeOptions: {
-     *     binary: 'Electron.app/Contents/MacOS/Electron'
+     *    binary: 'Electron.app/Contents/MacOS/Electron'
      * }
      *
      * Список стандартных опций WebDriver
@@ -123,5 +127,3 @@ exports.config = {
         api(browser);
     }
 };
-
-
