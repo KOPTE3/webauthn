@@ -3,10 +3,14 @@
 let assert = require('assert');
 let page = require('../object');
 
-it('Проверяем фокус на элементе name="Login"', () => {
+it('Авторизация. Со страницы логина. Проверка отображения элементов на форме авторизации', () => {
     page.open('/login');
 
-    let active = browser.hasFocus('[name="Login"]');
+    page.providers.forEach(provider => {
+        if (provider !== 'other') {
+            browser.selectByValue(page.locator.providersSelect, provider);
 
-    assert(active);
+            assert.equal(page.activeProvider, provider);
+        }
+    });
 });

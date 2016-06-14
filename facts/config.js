@@ -71,18 +71,20 @@ exports.config = {
      * Порядок файлов сохраняется, дубликаты исключаются
     */
 
+    /*
     specs: [
-        './tests/**/*index.js'
+        './tests/!**!/!*index.js'
     ],
+    */
 
     suites: {
         login: [
             './tests/login/index.js'
         ],
 
-        message: [
-            './tests/message/index.js'
-        ],
+        // message: [
+        //  './tests/message/index.js'
+        // ],
 
         passrestore: [
             './tests/passrestore/index.js'
@@ -111,13 +113,14 @@ exports.config = {
     */
     capabilities: [
         {
-            browserName: 'phantomjs',
+            browserName: 'chrome',
 
-            // // http://phantomjs.org/api/command-line.html
-            'phantomjs.binary.path': phantom.path,
+            // http://phantomjs.org/api/command-line.html
+            // 'phantomjs.binary.path': phantom.path,
             //
             // 'phantomjs.cli.args': [
             //  // '--debug=yes',
+            //  // '--web-security',
             //  '--ignore-ssl-errors=yes'
             // ]
         }

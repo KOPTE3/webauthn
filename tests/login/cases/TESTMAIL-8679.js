@@ -6,10 +6,9 @@ let page = require('../object');
 it('Авторизация. Со страницы логина. Проверка ошибки при авторизации с пустым полем пароль', () => {
     page.open('/login');
 
-    browser.setValue('.login-page__external_input__login', 'example@mail.ru');
-    browser.click('.js-login-page__external__submit');
+    browser.fill(page.locator.form, { Login: 'example@mail.ru' }, true)
 
-    let result = browser.getText('.login-page__external_error');
+    let result = browser.getText(page.locator.error);
 
     assert.equal(result, 'Поле «Пароль» должно быть заполнено.');
 });
