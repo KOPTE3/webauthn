@@ -79,15 +79,11 @@ exports.config = {
 
     suites: {
         login: [
-            './tests/login/index.js'
+            './tests/login/cases/**/*.js'
         ],
 
-        // message: [
-        //  './tests/message/index.js'
-        // ],
-
         passrestore: [
-            './tests/passrestore/index.js'
+            './tests/passrestore/cases/**/*.js'
         ]
     },
 
@@ -113,16 +109,16 @@ exports.config = {
     */
     capabilities: [
         {
-            browserName: 'chrome',
+            browserName: 'phantomjs',
 
             // http://phantomjs.org/api/command-line.html
-            // 'phantomjs.binary.path': phantom.path,
-            //
-            // 'phantomjs.cli.args': [
-            //  // '--debug=yes',
-            //  // '--web-security',
-            //  '--ignore-ssl-errors=yes'
-            // ]
+            'phantomjs.binary.path': phantom.path,
+
+            'phantomjs.cli.args': [
+                // '--debug=yes',
+                // '--web-security',
+                // '--ignore-ssl-errors=yes'
+            ]
         }
     ],
 
