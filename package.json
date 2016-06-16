@@ -1,6 +1,6 @@
 {
     "name"       : "@mail/e.mail.ru-tests",
-    "version"    : "0.1.0",
+    "version"    : "0.1.1",
     "description": "Test cases for e.mail.ru",
     "author"     : "Mail.Ru Group Limited",
     "license"    : "UNLICENSED",
@@ -45,7 +45,7 @@
     },
 
     "devDependencies": {
-        "@qa/eslint-config-mail.ru": "^0.0.6",
+        "@qa/eslint-config-mail.ru": "^0.0.7",
         "eslint"                   : "^2.11.1"
     }
 }
