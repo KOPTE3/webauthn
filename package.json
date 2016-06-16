@@ -26,8 +26,8 @@
         "grunt"  : "grunt",
         "server" : "selenium-standalone start",
         "install": "selenium-standalone install",
-        "test"   : "grunt --stack eslint test",
-        "lint"   : "grunt eslint",
+        "test"   : "grunt --stack test",
+        "lint"   : "eslint **/*.js",
         "wdio"   : "wdio"
     },
 
@@ -46,7 +46,6 @@
 
     "devDependencies": {
         "@qa/eslint-config-mail.ru": "^0.0.6",
-        "eslint"                   : "^2.11.1",
-        "grunt-eslint"             : "^18.1.0"
+        "eslint"                   : "^2.11.1"
     }
 }
