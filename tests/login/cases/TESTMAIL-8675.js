@@ -16,7 +16,7 @@ describe('TESTMAIL-8675', () => {
                 provider = 'mail.ru'
             }
 
-            assert.equal(result, provider);
+            assert.equal(result, provider, provider);
         });
     });
 });

@@ -1,7 +1,8 @@
 'use strict';
 
 let phantom = require('phantomjs-prebuilt'),
-    api = require('@qa/wdio-custom-api');
+    api = require('@qa/wdio-custom-api'),
+    Log = require('tir');
 
 /** @namespace browser */
 exports.config = {
@@ -15,7 +16,7 @@ exports.config = {
      * Операционная система: Linux
      * Список доступных браузеров: Chrome, Firefox
      * Грид: http://win110.dev.mail.ru:4444/grid/console
-    */
+     */
     host: 'localhost',
     port: 4444,
     path: '/wd/hub',
@@ -30,7 +31,7 @@ exports.config = {
      * Максимальное время на выполнение команды.
      * Если какая-то из команд фреймворка не получит за это время результат,
      * то выполнение тестов будет прервано.
-    */
+     */
     waitforTimeout: 30 * 1000,
 
     /* Максимальное время на выполнение повторного запроса. */
@@ -43,7 +44,7 @@ exports.config = {
      * Опция позволяет отладчику остановить выполнение тестов
      * в месте вызова инструкции debugger.
      * Для использования этой опции требуется наличие пакета node-inspector
-    */
+     */
     debug: false,
 
     /* Доступные значения: cucumber, mocha, jasmine */
@@ -69,13 +70,13 @@ exports.config = {
     /*
      * Список файлов с тестами.
      * Порядок файлов сохраняется, дубликаты исключаются
-    */
+     */
 
-    /*
-    specs: [
-        './tests/!**!/!*index.js'
-    ],
-    */
+    /* 
+     * Список файлов, которые требуется запустить
+     * Этот набор запускается всегда независимо от секции <suite> 
+     */ 
+    // specs: [ ],
 
     suites: {
         login: [
@@ -106,7 +107,7 @@ exports.config = {
      *
      * Список стандартных опций WebDriver
      * https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities
-    */
+     */
     capabilities: [
         {
             browserName: 'phantomjs',
@@ -117,6 +118,9 @@ exports.config = {
             'phantomjs.cli.args': [
                 // '--debug=yes',
                 // '--web-security',
+                // '--no-sandbox',
+                // '--disable-extensions',
+                // '--no-first-run',
                 // '--ignore-ssl-errors=yes'
             ]
         }
@@ -124,5 +128,17 @@ exports.config = {
 
     before (capabilities, specs) {
         api(browser);
+    },
+
+    beforeSuite (suite) {
+        Log.info(suite);
+    },
+
+    beforeHook () {
+        
+    },
+
+    beforeHook () {
+        
     }
 };
