@@ -1,8 +1,14 @@
 'use strict';
 
-let phantom = require('phantomjs-prebuilt'),
-    api = require('@qa/wdio-custom-api'),
-    Log = require('tir');
+let Log = require('tir'),
+    AccountManager = require('@qa/account-manager'),
+    WebDriverAPI = require('@qa/wdio-api-mail.ru'),
+    capabilities = require('@qa/wd-capabilities');
+
+let account = new AccountManager();
+let nconf = require('nconf');
+
+nconf.use('memory');
 
 /** @namespace browser */
 exports.config = {
@@ -38,7 +44,10 @@ exports.config = {
     connectionRetryTimeout: 10 * 1000,
 
     /* Количество инстансов параллельного запуска тестов */
-    // maxInstances: 1,
+    maxInstances: 1,
+
+    /** Использовать синхронное API */
+    sync: true,
 
     /*
      * Опция позволяет отладчику остановить выполнение тестов
@@ -72,10 +81,10 @@ exports.config = {
      * Порядок файлов сохраняется, дубликаты исключаются
      */
 
-    /* 
+    /*
      * Список файлов, которые требуется запустить
-     * Этот набор запускается всегда независимо от секции <suite> 
-     */ 
+     * Этот набор запускается всегда независимо от секции <suite>
+     */
     // specs: [ ],
 
     suites: {
@@ -94,51 +103,43 @@ exports.config = {
      *
      * Внутри каждой группы доступны поля specs и exclude
      *
-     * Опция pageLoadStrategy позволяет начать выполнение тестов сразу
-     * после построения DOM-дерева (document.readyState == 'interactive')
-     * В Selenium до версии 2.46 использовалось именование pageLoadingStrategy
-     *
-     * Если требуется установить какой-то кастомный браузер
-     * (например, для тестирования игрового центра), то нужно указать путь:
-     *
-     * chromeOptions: {
-     *    binary: 'Electron.app/Contents/MacOS/Electron'
-     * }
-     *
-     * Список стандартных опций WebDriver
-     * https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities
+     * Список стандартных опций WebDriver и пр. см ниже по ссылке:
+     * @see https://stash.mail.ru/projects/QA/repos/wd-capabilities/browse
      */
     capabilities: [
-        {
-            browserName: 'phantomjs',
-
-            // http://phantomjs.org/api/command-line.html
-            'phantomjs.binary.path': phantom.path,
-
-            'phantomjs.cli.args': [
-                // '--debug=yes',
-                // '--web-security',
-                // '--no-sandbox',
-                // '--disable-extensions',
-                // '--no-first-run',
-                // '--ignore-ssl-errors=yes'
-            ]
-        }
+        capabilities.get('phantomjs')
     ],
 
     before (capabilities, specs) {
-        api(browser);
+        WebDriverAPI(browser);
     },
 
-    beforeSuite (suite) {
-        Log.info(suite);
+    beforeSuite ({ title }) {
+        let credentials = account.credentials('mail.ru');
+
+        return credentials.then(user => {
+            let { cookies, login, domain } = user;
+
+            nconf.set('user', user);
+
+            if (process.env.NODE_DEBUG) {
+                Log.info(`${title}\nStarted using ${login}@${domain} account`);
+            } else {
+                Log.info(title);
+            }
+        })
+        .catch(error => {
+            Log.error(`{$title}\n${error.message}`);
+        });
     },
 
-    beforeHook () {
-        
-    },
+    afterSuite ({ title }) {
+        let { id, login, domain } = nconf.get('user');
 
-    beforeHook () {
-        
+        account.reset(id);
+
+        if (process.env.NODE_DEBUG) {
+            Log.info(`${title}\nAccount ${login}@${domain} has been discarded`);
+        }
     }
 };
