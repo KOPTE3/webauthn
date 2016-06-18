@@ -1,18 +1,21 @@
 'use strict';
 
-let nconf = require('nconf');
+let AccountManager = require('@qa/account-manager');
 
 class PageObject {
-    static get account () {
-        return new AccountManager();
+    constructor () {
+        this.account = new AccountManager.Session();
     }
 
     open (path) {
-        let user = nconf.get('user');
-
-        browser.url('/login');
-        browser.setCookies(user.cookies);
         browser.url(path);
+    }
+
+    auth (type) {
+        let cookie = this.account.get('cookies');
+
+        browser.url('/');
+        browser.setCookies(cookie);
     }
 
     /**

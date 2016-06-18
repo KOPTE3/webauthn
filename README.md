@@ -3,6 +3,9 @@
 > Набор интеграционных тестов для проекта e.mail.ru
 
 
+ВНИМАНИЕ: перед тем как вы начнете использовать данный пакет внимательно ознакомьтесь с [документацией](confluence.mail.ru/pages/viewpage.action?pageId=95546244)!
+
+
 ### Установка
 
 **npm**
@@ -26,7 +29,6 @@ nvm use 6.2
 
 ### Использование
 
-
 Запустите сервер:
 
 ```
@@ -42,11 +44,35 @@ grunt test
 Зупустить тесты конкретного набора:
 
 ```
-grunt test --suite=login
+grunt test-runner:omega --suite=login
+```
+
+Зупустить тесты конкретного файла:
+
+```
+grunt test-runner:omega --suite=login --grep=TESTMAIL-8674
 ```
 
 Зупустить на заданном адресе:
 
 ```
-grunt test --baseUrl=https://e.mail.ru/login
+grunt test-runner:omega --baseUrl=https://e.mail.ru/login
+```
+
+Пример теста с авторизацией:
+
+```js
+'use strict';
+
+let assert = require('assert');
+let page = require('../object');
+
+describe('TESTMAIL-8674', () => {
+	it('Авторизация.', () => {
+		page.auth();
+		page.open('/messages/inbox');
+
+		assert(browser.getUrl(), 'https://e.mail.ru/messages/inbox');
+	});
+});
 ```

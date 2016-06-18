@@ -1,14 +1,10 @@
 'use strict';
 
-let Log = require('tir'),
-    AccountManager = require('@qa/account-manager'),
+let AccountManager = require('@qa/account-manager'),
     WebDriverAPI = require('@qa/wdio-api-mail.ru'),
     capabilities = require('@qa/wd-capabilities');
 
-let account = new AccountManager();
-let nconf = require('nconf');
-
-nconf.use('memory');
+let account = new AccountManager.Hooks();
 
 /** @namespace browser */
 exports.config = {
@@ -41,13 +37,13 @@ exports.config = {
     waitforTimeout: 30 * 1000,
 
     /* Максимальное время на выполнение повторного запроса. */
-    connectionRetryTimeout: 10 * 1000,
+    // connectionRetryTimeout: 10 * 1000,
 
     /* Количество инстансов параллельного запуска тестов */
-    maxInstances: 1,
+    // maxInstances: 1,
 
     /** Использовать синхронное API */
-    sync: true,
+    // sync: true,
 
     /*
      * Опция позволяет отладчику остановить выполнение тестов
@@ -114,32 +110,11 @@ exports.config = {
         WebDriverAPI(browser);
     },
 
-    beforeSuite ({ title }) {
-        let credentials = account.credentials('mail.ru');
-
-        return credentials.then(user => {
-            let { cookies, login, domain } = user;
-
-            nconf.set('user', user);
-
-            if (process.env.NODE_DEBUG) {
-                Log.info(`${title}\nStarted using ${login}@${domain} account`);
-            } else {
-                Log.info(title);
-            }
-        })
-        .catch(error => {
-            Log.error(`{$title}\n${error.message}`);
-        });
+    beforeSuite () {
+        return account.session();
     },
 
-    afterSuite ({ title }) {
-        let { id, login, domain } = nconf.get('user');
-
-        account.reset(id);
-
-        if (process.env.NODE_DEBUG) {
-            Log.info(`${title}\nAccount ${login}@${domain} has been discarded`);
-        }
+    afterSuite () {
+        return account.discard();
     }
 };
