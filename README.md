@@ -72,7 +72,7 @@ describe('TESTMAIL-8674', () => {
 		page.auth();
 		page.open('/messages/inbox');
 
-		assert(browser.getUrl(), 'https://e.mail.ru/messages/inbox');
+		assert.equal(browser.getUrl(), 'https://e.mail.ru/messages/inbox');
 	});
 });
 ```
