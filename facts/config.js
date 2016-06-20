@@ -2,9 +2,11 @@
 
 let AccountManager = require('@qa/account-manager'),
     WebDriverAPI = require('@qa/wdio-api-mail.ru'),
+    TestTools = require('@qa/test-tools'),
     capabilities = require('@qa/wd-capabilities');
 
 let account = new AccountManager.Hooks();
+let support = new TestTools.Support();
 
 /** @namespace browser */
 exports.config = {
@@ -37,10 +39,10 @@ exports.config = {
     waitforTimeout: 30 * 1000,
 
     /* Максимальное время на выполнение повторного запроса. */
-    // connectionRetryTimeout: 10 * 1000,
+    connectionRetryTimeout: 10 * 1000,
 
     /* Количество инстансов параллельного запуска тестов */
-    // maxInstances: 1,
+    maxInstances: 1,
 
     /** Использовать синхронное API */
     // sync: true,
@@ -84,15 +86,12 @@ exports.config = {
      */
     // specs: [ ],
 
-    suites: {
-        login: [
-            './tests/login/cases/**/*.js'
-        ],
-
-        search: [
-            './tests/search/cases/**/*.js'
-        ]
-    },
+    /**
+     * Набор тестовых кейсов
+     *
+     * { <suite>: [ <files> ] }
+     */
+    suites: support.suites('tests'),
 
     /*
      * Обратие внимание на то, что браузеры запускаются параллельно
@@ -104,11 +103,13 @@ exports.config = {
      * @see https://stash.mail.ru/projects/QA/repos/wd-capabilities/browse
      */
     capabilities: [
-        capabilities.get('phantomjs')
+        capabilities.get('chrome')
     ],
 
     before (capabilities, specs) {
-        WebDriverAPI(browser);
+        let commands = new WebDriverAPI();
+
+        commands.export('all');
     },
 
     beforeSuite () {
