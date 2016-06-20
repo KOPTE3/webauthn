@@ -26,6 +26,20 @@ nvm install 6.2
 nvm use 6.2
 ```
 
+**java**
+
+Для запуска сервера потребуется [установить](http://www.oracle.com/technetwork/java/javase/downloads/index.html) Java
+
+**jdk**
+
+В случае возникновения следующей ошибки:
+
+```
+Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/grid/selenium/GridLauncher : Unsupported major.minor version 51.0
+```
+
+Обновите [JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+
 
 ### Использование
 
@@ -41,7 +55,7 @@ npm start
 grunt test
 ```
 
-Зупустить тесты конкретного набора:
+Зупустить тесты конкретного набора (ваш случай):
 
 ```
 grunt test-runner:omega --suite=login
