@@ -89,8 +89,8 @@ exports.config = {
             './tests/login/cases/**/*.js'
         ],
 
-        passrestore: [
-            './tests/passrestore/cases/**/*.js'
+        search: [
+            './tests/search/cases/**/*.js'
         ]
     },
 

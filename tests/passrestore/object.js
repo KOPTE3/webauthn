@@ -15,9 +15,7 @@ class Page extends PageObject {
             height: 768
         });
 
-        browser.waitUntil(() => {
-            return browser.element('.password-recovery__remind__new');
-        });
+        browser.waitForExist('.password-recovery__remind__new');
     }
 
     get accountView () {
