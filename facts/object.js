@@ -12,7 +12,7 @@ class PageObject {
     }
 
     auth (type) {
-        let cookie = this.account.get('cookies');
+        let cookie = this.account.get('cookies', type);
 
         browser.url('/');
         browser.setCookies(cookie);

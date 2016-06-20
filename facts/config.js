@@ -56,7 +56,8 @@ exports.config = {
     framework: 'mocha',
 
     mochaOpts: {
-        ui: 'bdd'
+        ui: 'bdd',
+        retries: 2
     },
 
     /* Для реппортера Allure требуется наличие установленного плагина в CI */
