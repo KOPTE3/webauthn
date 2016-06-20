@@ -24,7 +24,7 @@
 
     "scripts": {
         "grunt"  : "grunt",
-        "start" : "selenium-standalone start",
+        "start"  : "selenium-standalone start",
         "install": "selenium-standalone install",
         "test"   : "grunt --stack test",
         "lint"   : "eslint **/*.js",
@@ -39,6 +39,7 @@
         "@qa/wdio-api-mail.ru" : "^0.0.1",
         "grunt"                : "^1.0.1",
         "grunt-cli"            : "^1.2.0",
+        "load-grunt-config"    : "^0.19.2",
         "selenium-standalone"  : "^5.1.1",
         "time-grunt"           : "^1.3.0",
         "wdio-api-declaration" : "^0.0.1"
