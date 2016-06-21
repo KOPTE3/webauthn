@@ -8,6 +8,7 @@ let AccountManager = require('@qa/account-manager'),
 let account = new AccountManager.Hooks();
 let support = new TestTools.Support();
 
+
 /** @namespace browser */
 exports.config = {
     /*
