@@ -37,7 +37,6 @@
         "@qa/test-tools"       : "^0.0.2",
         "@qa/wd-capabilities"  : "^0.0.1",
         "@qa/wdio-api-mail.ru" : "^1.0.0",
-        "@qa/git-hooks"        : "^0.0.1",
         "grunt"                : "^1.0.1",
         "grunt-cli"            : "^1.2.0",
         "jit-grunt"            : "^0.10.0",
@@ -49,6 +48,7 @@
 
     "devDependencies": {
         "@qa/eslint-config-mail.ru": "^0.0.8",
+        "@qa/git-hooks"            : "^0.0.1",
         "eslint"                   : "^2.11.1"
     }
 }
