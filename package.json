@@ -32,7 +32,7 @@
     },
 
     "dependencies": {
-        "@qa/account-manager"  : "^0.0.1",
+        "@qa/account-manager"  : "^0.0.2",
         "@qa/grunt-test-runner": "^0.0.5",
         "@qa/test-tools"       : "^0.0.2",
         "@qa/wd-capabilities"  : "^0.0.1",
