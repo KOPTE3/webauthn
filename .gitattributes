@@ -6,5 +6,5 @@
 *.json eol=lf
 
 # Treat spaces
-*.js   filter=treatspaces
-*.json filter=treatspaces
+*.js   filter=tabspace
+*.json filter=tabspace
