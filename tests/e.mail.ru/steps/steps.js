@@ -1,5 +1,7 @@
 'use strict';
 
-class Steps { }
+class Steps {
+
+}
 
 module.exports = Steps;

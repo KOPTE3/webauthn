@@ -11,7 +11,7 @@
 **npm**
 
 ```
-npm install @mail/e.mail.ru-tests
+npm install @qa/yoda
 ```
 
 **nvm**
@@ -58,19 +58,19 @@ grunt test
 Зупустить тесты конкретного набора (ваш случай):
 
 ```
-grunt test-runner:omega --suite=login
+grunt test-runner:e.mail.ru --suite=login
 ```
 
 Зупустить тесты конкретного файла:
 
 ```
-grunt test-runner:omega --suite=login --grep=TESTMAIL-8674
+grunt test-runner:e.mail.ru --suite=login --grep=TESTMAIL-8674
 ```
 
 Зупустить на заданном адресе:
 
 ```
-grunt test-runner:omega --baseUrl=https://e.mail.ru/login
+grunt test-runner:e.mail.ru --suite=login --baseUrl=https://e.mail.ru/login
 ```
 
 Пример теста с авторизацией:

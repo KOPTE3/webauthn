@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    'test': [
-        'test-runner'
-    ]
+	'test': [
+		'test-runner'
+	]
 };
