@@ -1,7 +1,7 @@
 'use strict';
 
 let assert = require('assert');
-let page = require('../object');
+let page = require('../page');
 
 describe('TESTMAIL-8675', () => {
     it('Авторизация. Со страницы логина. Выделение соответствующей иконки домена при вводе email с доменом', () => {

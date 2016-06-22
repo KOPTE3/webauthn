@@ -1,7 +1,7 @@
 'use strict';
 
 let assert = require('assert');
-let page = require('../object');
+let page = require('../page');
 
 describe('TESTMAIL-24935: Авторизация. Со страницы логина. Проверка отображения элементов на форме авторизации', () => {
     beforeEach(() => {

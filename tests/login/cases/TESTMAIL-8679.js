@@ -1,7 +1,7 @@
 'use strict';
 
 let assert = require('assert');
-let page = require('../object');
+let page = require('../page');
 
 describe('TESTMAIL-8679', () => {
     it('Авторизация. Со страницы логина. Проверка ошибки при авторизации с пустым полем пароль', () => {
