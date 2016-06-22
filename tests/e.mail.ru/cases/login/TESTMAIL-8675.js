@@ -3,13 +3,13 @@
 let assert = require('assert');
 
 let login = require('../../steps/login'),
-	store = require('../../store/collectors');
+	providers = require('../../store/collectors/providers');
 
 describe('TESTMAIL-8675', () => {
 	it('Выделение соответствующей иконки домена при вводе email с доменом', () => {
 		login.open();
 
-		let providers = store.providers.get([
+		let providers = providers.get([
 			'mail.ru',
 			'yandex.ru',
 			'rambler.ru',
