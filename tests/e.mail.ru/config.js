@@ -7,8 +7,7 @@ let AccountManager = require('@qa/account-manager'),
 
 let account = new AccountManager.Hooks();
 let support = new TestTools.Support();
-
-let PROJECT = 'tests/e.mail.ru';
+let project = 'tests/e.mail.ru';
 
 /** @namespace browser **/
 exports.config = {
@@ -68,14 +67,14 @@ exports.config = {
 	reporters: ['dot', 'junit'],
 
 	reporterOptions: {
-		outputDir: `./cache/${PROJECT}/reports`
+		outputDir: `./cache/${project}/reports`
 	},
 
 	/* Директория, куда будут складываться скриншоты */
 	// screenshotPath: './cache/tests/shots',
 
 	/* Директория, куда будут складываться логи */
-	logfile: `./cache/${PROJECT}/logs`,
+	logfile: `./cache/${project}/logs`,
 
 	/*
 	 * Список файлов с тестами.
@@ -93,7 +92,7 @@ exports.config = {
 	 *
 	 * { <suite>: [ <files> ] }
 	 */
-	suites: support.suites(`${PROJECT}/cases`),
+	suites: support.suites(`${project}/cases`),
 
 	/*
 	 * Обратие внимание на то, что браузеры запускаются параллельно
