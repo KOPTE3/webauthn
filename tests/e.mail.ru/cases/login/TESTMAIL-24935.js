@@ -1,11 +1,11 @@
 'use strict';
 
-let login = require('../../steps/login');
+let page = require('../../steps/login');
 let form = require('../../steps/login/form');
 
 describe('TESTMAIL-24935', () => {
 	it('Проверка отображения элементов на форме авторизации', () => {
-		login.open();
+		page.open();
 
 		form.checkDefaultDomain();
 		form.checkTitle();
