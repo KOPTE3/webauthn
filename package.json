@@ -36,7 +36,7 @@
 		"@qa/grunt-test-runner": "^0.0.5",
 		"@qa/test-tools"       : "^1.0.0",
 		"@qa/wd-capabilities"  : "^0.0.1",
-		"@qa/wdio-api-mail.ru" : "^1.0.0",
+		"@qa/wdio-api-mail.ru" : "^1.2.0",
 		"grunt"                : "^1.0.1",
 		"grunt-cli"            : "^1.2.0",
 		"jit-grunt"            : "^0.10.0",
