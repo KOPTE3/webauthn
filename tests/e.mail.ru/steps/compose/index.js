@@ -3,7 +3,7 @@
 let Steps = require('../../steps');
 let login = require('../../pages/login');
 
-class Сompose extends Steps {
+class Compose extends Steps {
 	constructor () {
 		super();
 	}

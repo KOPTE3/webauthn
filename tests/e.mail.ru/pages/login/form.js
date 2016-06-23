@@ -3,6 +3,8 @@
 let PageObject = require('../../pages');
 let providers = require('../../store/collectors/providers');
 
+/** @namespace browser */
+
 class Login extends PageObject {
 	constructor () {
 		super();

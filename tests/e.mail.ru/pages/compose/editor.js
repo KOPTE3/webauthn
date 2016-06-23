@@ -2,6 +2,8 @@
 
 let PageObject = require('../../pages');
 
+/** @namespace browser */
+
 class Editor extends PageObject {
 	constructor () {
 		super();
@@ -13,7 +15,14 @@ class Editor extends PageObject {
 		};
 	}
 
-	wait () { }
+	/**
+	 * Дождаться открытия страницы написания письма
+	 *
+	 * @return {boolean}
+	 */
+	wait () {
+		return browser.waitForExist(this.locators.container);
+	}
 }
 
 module.exports = new Editor();

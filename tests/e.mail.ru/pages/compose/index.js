@@ -2,6 +2,8 @@
 
 let PageObject = require('../../pages');
 
+/** @namespace browser */
+
 class Login extends PageObject {
 	constructor () {
 		super();
@@ -13,10 +15,23 @@ class Login extends PageObject {
 		};
 	}
 
+	/** Открыть страницу написания письма
+	 *
+	 * @returns {boolean}
+	 */
 	open () {
 		browser.url('/compose');
 
 		return browser.waitForExist(this.locators.container);
+	}
+
+	/**
+	 * Получить заголовок страницы написания письма
+	 *
+	 * @type {string}
+	 */
+	get title () {
+		browser.getTitle();
 	}
 }
 

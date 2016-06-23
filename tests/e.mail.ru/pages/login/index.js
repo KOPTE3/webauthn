@@ -2,6 +2,8 @@
 
 let PageObject = require('../../pages');
 
+/** @namespace browser */
+
 class Login extends PageObject {
 	constructor () {
 		super();
@@ -13,6 +15,11 @@ class Login extends PageObject {
 		};
 	}
 
+	/**
+	 * Открыть страницу логина
+	 *
+	 * @returns {boolean}
+	 */
 	open () {
 		browser.url('/login');
 
