@@ -11,12 +11,15 @@ class Form extends PageObject {
 
 	get locators () {
 		return {
-			container   : '.compose-head',
-			filedFrom   : '.compose-sender',
-			filedTo     : '[data-original-name="To"]',
-			filedCC     : '[data-original-name="CC"]',
-			filedBCC    : '[data-original-name="BCC"]',
-			filedSubject: '[name="Subject"]'
+			container    : '.compose-head',
+			filedRemind  : '[name="remind"]',
+			filedPriority: '[name="Priority"]',
+			filedReceipt : '[name="Receipt"]',
+			filedFrom    : '.js-compose__header__from',
+			filedTo      : '[data-original-name="To"]',
+			filedCC      : '[data-original-name="CC"]',
+			filedBCC     : '[data-original-name="BCC"]',
+			filedSubject : '[name="Subject"]'
 		};
 	}
 
@@ -27,6 +30,27 @@ class Form extends PageObject {
 	 */
 	wait () {
 		return browser.waitForExist(this.locators.container);
+	}
+
+	/**
+	 * Пометить письмо как важное
+	 */
+	setPriority () {
+
+	}
+
+	/**
+	 * Пометить письмо как с уведомлением
+	 */
+	setReceipt () {
+
+	}
+
+	/**
+	 * Установить напоминание
+	 */
+	setRemind () {
+
 	}
 
 	/**
