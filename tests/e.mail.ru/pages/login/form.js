@@ -1,6 +1,5 @@
 'use strict';
 
-let assert = require('assert');
 let PageObject = require('../../pages');
 let providers = require('../../store/collectors/providers');
 

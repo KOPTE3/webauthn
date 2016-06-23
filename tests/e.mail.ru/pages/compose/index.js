@@ -1,6 +1,5 @@
 'use strict';
 
-let assert = require('assert');
 let PageObject = require('../../pages');
 
 class Login extends PageObject {
@@ -10,7 +9,7 @@ class Login extends PageObject {
 
 	get locators () {
 		return {
-			container: '.login-page__external'
+			container: '.b-compose'
 		};
 	}
 
