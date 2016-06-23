@@ -5,6 +5,7 @@ let assert = require('assert');
 let Steps = require('../../steps');
 let login = require('../../pages/login');
 
+/** Модуль для работы с шагами страницы логина */
 class Login extends Steps {
 	constructor () {
 		super();

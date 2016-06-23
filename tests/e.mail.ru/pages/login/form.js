@@ -4,8 +4,8 @@ let PageObject = require('../../pages');
 let providers = require('../../store/collectors/providers');
 
 /** @namespace browser */
-
-class Login extends PageObject {
+/** Модуль для работы с формой страницы логина */
+class Form extends PageObject {
 	constructor () {
 		super();
 	}

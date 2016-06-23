@@ -3,7 +3,7 @@
 let PageObject = require('../../pages');
 
 /** @namespace browser */
-
+/** Модуль для работы с представлением страницы логина */
 class Login extends PageObject {
 	constructor () {
 		super();

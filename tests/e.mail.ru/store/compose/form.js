@@ -2,22 +2,29 @@
 
 let Store = require('../../store');
 
-/** Модуль для работы с данными формы написания письма */
+/** Модуль для работы с данными формы страницы написания письма */
 class ComposeForm extends Store {
 	constructor () {
 		super();
 	}
 
+	/**
+	 * Возвращает список полей для отправки формы
+	 *
+	 * @type {Object}
+	 */
 	get fields () {
+		let user = this.account.get('email');
+
 		return {
-			from    : this.account.get('email'),
-			to      : '',
-			cc      : '',
-			bcc     : '',
-			subject : '',
-			remind  : '',
-			receipt : '',
-			priority: ''
+			from    : user,
+			to      : user,
+			cc      : user,
+			bcc     : user,
+			subject : 'test',
+			remind  : 1,
+			receipt : 1,
+			priority: 1
 		};
 	}
 }

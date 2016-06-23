@@ -3,6 +3,7 @@
 let Steps = require('../../steps');
 let login = require('../../pages/login');
 
+/** Модуль для работы с шагами страницы написания письма */
 class Compose extends Steps {
 	constructor () {
 		super();

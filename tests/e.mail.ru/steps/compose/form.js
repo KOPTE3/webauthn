@@ -3,6 +3,7 @@
 let Steps = require('../../steps');
 let login = require('../../pages/login');
 
+/** Модуль для работы с формой страницы написания письма */
 class Form extends Steps {
 	constructor () {
 		super();

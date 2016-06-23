@@ -3,8 +3,8 @@
 let PageObject = require('../../pages');
 
 /** @namespace browser */
-
-class Login extends PageObject {
+/** Модуль для работы с представлением страницы написания письма */
+class Compose extends PageObject {
 	constructor () {
 		super();
 	}

@@ -6,6 +6,7 @@ let Steps = require('../../steps');
 let form = require('../../pages/login/form');
 let providers = require('../../store/collectors/providers');
 
+/** Модуль для работы с шагами формы страницы логина */
 class Form extends Steps {
 	constructor () {
 		super();

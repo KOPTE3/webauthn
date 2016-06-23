@@ -2,7 +2,7 @@
 
 let Store = require('../../store');
 
-/** Модуль для работы с редактором на странице написания письма */
+/** Модуль для работы с даными редактора на странице написания письма */
 class ComposeEditor extends Store {
 	constructor () {
 		super();

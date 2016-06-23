@@ -2,7 +2,7 @@
 
 let collectorProviders = require('../../store/collectors/providers');
 
-/** Модуль для работы с данными почтовых провайдеров */
+/** Модуль для работы с данными почтовых провайдеров на странице логина */
 class Providers extends collectorProviders {
 	constructor () {
 		super();

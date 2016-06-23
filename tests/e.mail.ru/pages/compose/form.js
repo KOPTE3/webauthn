@@ -3,7 +3,7 @@
 let PageObject = require('../../pages');
 
 /** @namespace browser */
-
+/** Модуль для работы с формой страницы написания письма */
 class Form extends PageObject {
 	constructor () {
 		super();
