@@ -34,7 +34,7 @@ class Form extends Steps {
 	/**
 	 * Получить данные поля "От кого"
 	 */
-	getFromField () {
+	getFromValue () {
 
 	}
 
@@ -83,7 +83,7 @@ class Form extends Steps {
 	/**
 	 * Получить данные поля "Кому"
 	 */
-	getToField () {
+	getToValue () {
 
 	}
 
@@ -132,7 +132,7 @@ class Form extends Steps {
 	/**
 	 * Получить данные поля "Копия"
 	 */
-	getCCField () {
+	getCCValue () {
 
 	}
 
@@ -181,7 +181,7 @@ class Form extends Steps {
 	/**
 	 * Получить данные поля "Скрытая копия"
 	 */
-	getBCCField () {
+	getBCCValue () {
 
 	}
 
@@ -230,7 +230,7 @@ class Form extends Steps {
 	/**
 	 * Получить данные поля "Тема"
 	 */
-	getSubjectField () {
+	getSubjectValue () {
 
 	}
 
@@ -256,7 +256,7 @@ class Form extends Steps {
 	}
 
 	/**
-	 * Проверить видимость поля "Subject"
+	 * Проверить видимость поля "Тема"
 	 */
 	isVisibleSubjectField () {
 

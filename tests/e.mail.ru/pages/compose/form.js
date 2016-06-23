@@ -11,7 +11,12 @@ class Form extends PageObject {
 
 	get locators () {
 		return {
-			container: '.compose-head'
+			container   : '.compose-head',
+			filedFrom   : '.compose-sender',
+			filedTo     : '[data-original-name="To"]',
+			filedCC     : '[data-original-name="CC"]',
+			filedBCC    : '[data-original-name="BCC"]',
+			filedSubject: '[name="Subject"]'
 		};
 	}
 
@@ -39,9 +44,18 @@ class Form extends PageObject {
 	}
 
 	/**
-	 * Получить данные поля "От кого"
+	 * Получить элемент поля "От кого"
+	 *
+	 * @returns {Promise}
 	 */
 	getFromField () {
+		return browser.element(this.locators.filedFrom);
+	}
+
+	/**
+	 * Получить данные поля "От кого"
+	 */
+	getFromValue () {
 
 	}
 
@@ -88,9 +102,18 @@ class Form extends PageObject {
 	}
 
 	/**
-	 * Получить данные поля "Кому"
+	 * Получить элемент поля "Кому"
+	 *
+	 * @returns {Promise}
 	 */
 	getToField () {
+		return browser.element(this.locators.filedTo);
+	}
+
+	/**
+	 * Получить данные поля "Кому"
+	 */
+	getToValue () {
 
 	}
 
@@ -137,9 +160,18 @@ class Form extends PageObject {
 	}
 
 	/**
-	 * Получить данные поля "Копия"
+	 * Получить элемент поля "Копия"
+	 *
+	 * @returns {Promise}
 	 */
 	getCCField () {
+		return browser.element(this.locators.filedCC);
+	}
+
+	/**
+	 * Получить данные поля "Копия"
+	 */
+	getCCValue () {
 
 	}
 
@@ -186,9 +218,18 @@ class Form extends PageObject {
 	}
 
 	/**
-	 * Получить данные поля "Скрытая копия"
+	 * Получить элемент поля "Скрытая копия"
+	 *
+	 * @returns {Promise}
 	 */
 	getBCCField () {
+		return browser.element(this.locators.filedBCC);
+	}
+
+	/**
+	 * Получить данные поля "Скрытая копия"
+	 */
+	getBCCValue () {
 
 	}
 
@@ -235,9 +276,18 @@ class Form extends PageObject {
 	}
 
 	/**
-	 * Получить данные поля "Тема"
+	 * Получить элемент поля "Тема"
+	 *
+	 * @returns {Promise}
 	 */
 	getSubjectField () {
+		return browser.element(this.locators.filedSubject);
+	}
+
+	/**
+	 * Получить данные поля "Тема"
+	 */
+	getSubjectValue () {
 
 	}
 
@@ -263,7 +313,7 @@ class Form extends PageObject {
 	}
 
 	/**
-	 * Проверить видимость поля "Subject"
+	 * Проверить видимость поля "Тема"
 	 */
 	isVisibleSubjectField () {
 
