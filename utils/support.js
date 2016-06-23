@@ -3,9 +3,9 @@
 let TestTools = require('@qa/test-tools');
 
 class Support extends TestTools.Support {
-    constructor () {
-        super();
-    }
+	constructor () {
+		super();
+	}
 }
 
 module.exports = new Support();
