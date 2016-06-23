@@ -14,18 +14,16 @@ class Login extends Steps {
 	 * Открыть страницу авторизации
 	 */
 	open () {
-		login.open();
+		let actual = login.open();
+
+		assert(actual, 'Не удалось открыть страницу');
 	}
 
 	/**
 	 * Авторизация
 	 */
 	auth () {
-		let {value} = login.auth();
-
-		console.log(value)
-
-		assert(value, `Не удалось авторизоваться ${value}`);
+		login.auth();
 	}
 }
 

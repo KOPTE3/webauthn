@@ -18,7 +18,7 @@ class Login extends PageObject {
 	/**
 	 * Авторизация
 	 *
-	 * @param {string}
+	 * @param {string} type
 	 * @returns {boolean}
 	 */
 	auth (type) {
