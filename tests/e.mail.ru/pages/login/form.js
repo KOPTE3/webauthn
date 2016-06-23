@@ -27,14 +27,13 @@ class Login extends PageObject {
 			helpLink       : '.login-page__external__desc__parag a',
 			helpText       : '.login-page__external__desc__parag a',
 			desc           : '.login-page__external__desc__parag'
-		}
+		};
 	}
 
 	/**
 	 * Получить активный домен
 	 *
-	 * @property
-	 * @returns {string}
+	 * @type {string}
 	 */
 	get activeDomain () {
 		return browser.getAttribute(this.locators.activeDomain, 'data-domain');
@@ -53,8 +52,7 @@ class Login extends PageObject {
 	/**
 	 * Получить состояние видимости списка доменов
 	 *
-	 * @property
-	 * @returns {string}
+	 * @type {string}
 	 */
 	get isSelectVisible () {
 		return browser.isVisible(this.locators.select);
@@ -73,8 +71,7 @@ class Login extends PageObject {
 	/**
 	 * Получить сообщение об ошибке
 	 *
-	 * @property
-	 * @returns {string}
+	 * @type {string}
 	 */
 	get getError () {
 		return browser.getText(this.locators.error);
@@ -83,8 +80,7 @@ class Login extends PageObject {
 	/**
 	 * Получить домен, который используется по умолчанию
 	 *
-	 * @property
-	 * @returns {string}
+	 * @type {string}
 	 */
 	get getDefaultDomain () {
 		return browser
@@ -95,8 +91,7 @@ class Login extends PageObject {
 	/**
 	 * Получить адрес ссылки для восстановления пароля
 	 *
-	 * @property
-	 * @returns {string}
+	 * @type {string}
 	 */
 	get getPassRemindLink () {
 		return browser.getAttribute(this.locators.forgetLink, 'href');
@@ -105,8 +100,7 @@ class Login extends PageObject {
 	/**
 	 * Получить адрес ссылки на страницу помощи
 	 *
-	 * @property
-	 * @returns {string}
+	 * @type {string}
 	 */
 	get getHelpLink () {
 		return browser.getAttribute(this.locators.helpLink, 'href');
@@ -115,8 +109,7 @@ class Login extends PageObject {
 	/**
 	 * Получить текст ссылки "Узнать больше"
 	 *
-	 * @property
-	 * @returns {string}
+	 * @type {string}
 	 */
 	get getHelpText () {
 		return browser.getText(this.locators.helpText);
@@ -125,8 +118,7 @@ class Login extends PageObject {
 	/**
 	 * Получить текст контрола "Запомнить почту"
 	 *
-	 * @property
-	 * @returns {string}
+	 * @type {string}
 	 */
 	get getRememberText () {
 		return browser.getText(this.locators.rememberText);
@@ -135,8 +127,7 @@ class Login extends PageObject {
 	/**
 	 * Получить состояние контрола "Запомнить почту"
 	 *
-	 * @property
-	 * @returns {string}
+	 * @type {string}
 	 */
 	get getRememberState () {
 		let state = browser.element(this.locators.rememberState);
@@ -147,8 +138,7 @@ class Login extends PageObject {
 	/**
 	 * Получить заголовок формы
 	 *
-	 * @property
-	 * @returns {string}
+	 * @type {string}
 	 */
 	get title () {
 		return browser.getText(this.locators.header);
@@ -157,8 +147,7 @@ class Login extends PageObject {
 	/**
 	 * Получить описание формы
 	 *
-	 * @property
-	 * @returns {string}
+	 * @type {string}
 	 */
 	get description () {
 		return browser.getText(this.locators.desc);
@@ -177,8 +166,7 @@ class Login extends PageObject {
 	/**
 	 * Получить значение из списка доменов
 	 *
-	 * @property
-	 * @returns {string}
+	 * @type {string}
 	 */
 	get getLoginValue () {
 		return browser.getValue(this.locators.providersSelect);

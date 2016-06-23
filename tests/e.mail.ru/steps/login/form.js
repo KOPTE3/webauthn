@@ -35,7 +35,7 @@ class Form extends Steps {
 	/**
 	 * Выбрать домен в списке
 	 *
-	 * @param {string} provider
+	 * @param {string} login
 	 */
 	setLogin (login) {
 		let actual = form.setLogin(login);
@@ -51,7 +51,7 @@ class Form extends Steps {
 	 */
 	getLoginValue (provider) {
 		if (provider === 'other') {
-			provider = 'mail.ru'
+			provider = 'mail.ru';
 		}
 
 		assert.equal(form.getLoginValue, provider,
@@ -126,8 +126,6 @@ class Form extends Steps {
 
 	/**
 	 * Получить заголовок формы
-	 *
-	 * @returns {string}
 	 */
 	checkTitle () {
 		assert.equal(form.title, 'Вход в почту',
@@ -136,8 +134,6 @@ class Form extends Steps {
 
 	/**
 	 * Получить описание формы
-	 *
-	 * @returns {string}
 	 */
 	checkDescription () {
 		assert.equal(form.description, 'Вы можете войти в почту с помощью аккаунта любого почтового сервиса и легко переключаться между ними, не выходя из почты. Узнать больше', 'Не удалось проверить описание формы');

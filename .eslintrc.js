@@ -3,6 +3,10 @@ module.exports = {
 		'@qa/eslint-config-mail.ru'
 	],
 
+	'rules': {
+		'max-len': ['error', 100],
+	},
+
 	"env": {
 		"browser": true,
 		"node"   : true,

@@ -15,7 +15,7 @@ class Login extends PageObject {
 	}
 
 	open () {
-		browser.url('/login');
+		browser.url('/compose');
 
 		return browser.waitForExist(this.locators.container);
 	}
