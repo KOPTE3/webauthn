@@ -184,4 +184,4 @@ class Form extends PageObject {
 	}
 }
 
-module.exports = new Login();
+module.exports = new Form();
