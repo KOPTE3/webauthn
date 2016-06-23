@@ -24,6 +24,7 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | b
 source ~/.bash{rc,_profile}
 nvm install 6.2
 nvm use 6.2
+nvm alias default 6.2
 ```
 
 **java**
