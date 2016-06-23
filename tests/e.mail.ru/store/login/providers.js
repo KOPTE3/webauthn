@@ -11,8 +11,7 @@ class Providers extends collectorProviders {
 	/**
 	 * Получить активный список провайдеров (пиктограммы)
 	 *
-	 * @property
-	 * @returns {Array}
+	 * @type {Array}
 	 */
 	get active () {
 		return this.get([
@@ -26,8 +25,7 @@ class Providers extends collectorProviders {
 	/**
 	 * Получить список провайдеров (селект)
 	 *
-	 * @property
-	 * @returns {Array}
+	 * @type {Array}
 	 */
 	get select () {
 		return this.get([

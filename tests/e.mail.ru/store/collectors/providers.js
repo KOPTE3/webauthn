@@ -201,7 +201,7 @@ class Providers extends Store {
 					'live.ru'
 				]
 			}
-		]
+		];
 	}
 
 	/**
@@ -210,7 +210,7 @@ class Providers extends Store {
 	 * @param {...Array} providers — список провайдеров
 	 */
 	set (...providers) {
-		this.list.push(...providers)
+		this.list.push(...providers);
 	}
 
 	/**
