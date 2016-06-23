@@ -29,7 +29,7 @@ class Form extends Steps {
 	 * @param {string} provider
 	 */
 	checkDefaultDomain (provider) {
-		form.getActiveDomain('mail.ru');
+		this.getActiveDomain('mail.ru');
 	}
 
 	/**
