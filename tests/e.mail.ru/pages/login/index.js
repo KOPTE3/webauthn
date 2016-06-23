@@ -16,12 +16,26 @@ class Login extends PageObject {
 	}
 
 	/**
+	 * Авторизация
+	 *
+	 * @param {string}
+	 * @returns {boolean}
+	 */
+	auth (type) {
+		super.auth(type);
+
+		return browser.execute(() => {
+			return window.patron.username;
+		});
+	}
+
+	/**
 	 * Открыть страницу логина
 	 *
 	 * @returns {boolean}
 	 */
 	open () {
-		browser.url('/login');
+		super.open('/login');
 
 		return browser.waitForExist(this.locators.container);
 	}

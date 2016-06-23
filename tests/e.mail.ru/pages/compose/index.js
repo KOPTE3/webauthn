@@ -20,7 +20,7 @@ class Login extends PageObject {
 	 * @returns {boolean}
 	 */
 	open () {
-		browser.url('/compose');
+		super.open('/compose');
 
 		return browser.waitForExist(this.locators.container);
 	}
