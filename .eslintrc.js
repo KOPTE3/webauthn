@@ -1,20 +1,20 @@
 module.exports = {
-    extends: [
-        '@qa/eslint-config-mail.ru'
-    ],
-    
-    "env": {
-        "browser": true,
-        "node": true,
-        "es6": true,
-        "mocha": true
-    },
+	extends: [
+		'@qa/eslint-config-mail.ru'
+	],
 
-    "parserOptions": {
-        "ecmaVersion": 6
-    },
+	"env": {
+		"browser": true,
+		"node"   : true,
+		"es6"    : true,
+		"mocha"  : true
+	},
 
-    "globals": {
-        "browser": true
-    }
+	"parserOptions": {
+		"ecmaVersion": 6
+	},
+
+	"globals": {
+		"browser": true
+	}
 };

@@ -11,12 +11,12 @@ class Login extends Steps {
 	}
 
 	/**
-	 * Открыть страницу написания авторизацию
+	 * Открыть страницу авторизации
 	 */
 	open () {
 		let actual = login.open();
 
-		assert(actual.value, 'Не удалось открыть страницу');
+		assert(actual, 'Не удалось открыть страницу');
 	}
 }
 

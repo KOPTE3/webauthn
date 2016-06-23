@@ -2,6 +2,7 @@
 
 let assert = require('assert');
 let PageObject = require('../../pages');
+let providers = require('../../store/collectors/providers');
 
 class Login extends PageObject {
 	constructor () {
@@ -16,7 +17,7 @@ class Login extends PageObject {
 			activeDomain   : '.login-page__external_domains__list_active',
 			otherProvider  : '.login-page__external_domains__item_other',
 			select         : '.login-page__external_select__box',
-			login          : '.login-page__external_input__login',
+			login          : '.login-page__external_input__login[name="Login"]',
 			submit         : '.js-login-page__external__submit',
 			error          : '.login-page__external_error',
 			header         : '.login-page__external_head',
@@ -45,7 +46,7 @@ class Login extends PageObject {
 	 * @param {string} provider
 	 * @returns {Promise}
 	 */
-	clickByDomain () {
+	clickByDomain (provider) {
 		return browser.click(`[data-domain="${provider}"]`);
 	}
 
@@ -60,6 +61,16 @@ class Login extends PageObject {
 	}
 
 	/**
+	 * Получить состояние видимости списка доменов
+	 *
+	 * @param {string} login
+	 * @returns {Promise}
+	 */
+	setLogin (login) {
+		return browser.setValue(this.locators.login, login);
+	}
+
+	/**
 	 * Получить сообщение об ошибке
 	 *
 	 * @property
@@ -67,6 +78,18 @@ class Login extends PageObject {
 	 */
 	get getError () {
 		return browser.getText(this.locators.error);
+	}
+
+	/**
+	 * Получить домен, который используется по умолчанию
+	 *
+	 * @property
+	 * @returns {string}
+	 */
+	get getDefaultDomain () {
+		return browser
+			.elements(this.locators.providersBlock)
+			.getAttribute('data-domain');
 	}
 
 	/**
@@ -106,7 +129,7 @@ class Login extends PageObject {
 	 * @returns {string}
 	 */
 	get getRememberText () {
-		return browser.getText(page.locator.rememberText);
+		return browser.getText(this.locators.rememberText);
 	}
 
 	/**
@@ -142,23 +165,13 @@ class Login extends PageObject {
 	}
 
 	/**
-	 * Заполнить форму с заданными полями
-	 *
-	 * @param {Object}
-	 * @returns {Promise}
-	 */
-	fill () {
-		return browser.fill(this.locators.container);
-	}
-
-	/**
 	 * Отправить форму
 	 *
 	 * @param {Object} data
 	 * @returns {Promise}
 	 */
 	send (data) {
-		return browser.fill(page.locators.container, data, true);
+		return browser.fill(this.locators.container, data, true);
 	}
 
 	/**

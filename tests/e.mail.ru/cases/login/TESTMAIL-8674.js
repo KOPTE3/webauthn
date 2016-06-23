@@ -2,23 +2,17 @@
 
 let assert = require('assert');
 
-let login = require('../../steps/login'),
-	providers = require('../../store/collectors/providers');
+let login = require('../../steps/login');
+let form = require('../../steps/login/form');
+let providers = require('../../store/login/providers');
 
 describe('TESTMAIL-8674: Страница логина', () => {
 	it('Выделение соответствующей иконки домена при выборе домена в списке', () => {
 		login.open();
 
-		let providers = providers.get([
-			'mail.ru',
-			'yandex.ru',
-			'rambler.ru',
-			'gmail.com'
-		]);
-
-		providers.forEach(({ name }) => {
-			login.selectDomain(name);
-			login.getActiveDomain(name);
+		providers.active.forEach(({ name }) => {
+			form.selectDomain(name);
+			form.getActiveDomain(name);
 		});
 	});
 });

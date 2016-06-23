@@ -1,28 +1,22 @@
 'use strict';
 
 let assert = require('assert');
+
 let login = require('../../steps/login');
+let form = require('../../steps/login/form');
+let providers = require('../../store/login/providers');
 
 describe('TESTMAIL-24935', () => {
 	it('Проверка отображения элементов на форме авторизации', () => {
 		login.open();
-		login.getActiveDomain('mail.ru');
-		login.checkTitle();
-		login.checkDescription();
-		login.checkPassRemindLink();
-		login.checkHelpText();
-		login.checkHelpLink();
-		login.checkRememberText();
-		login.checkRememberState();
-	});
 
-	// let providers = browser
-	// 	.elements(page.locator.providersBlock)
-	// 	.getAttribute('data-domain');
-	//
-	// let result = page.providers.every((value, index) => {
-	// 	return value === providers[index];
-	// });
-	//
-	// assert(result);
+		form.checkDefaultDomain();
+		form.checkTitle();
+		form.checkDescription();
+		form.checkPassRemindLink();
+		form.checkHelpText();
+		form.checkHelpLink();
+		form.checkRememberText();
+		form.checkRememberState();
+	});
 });

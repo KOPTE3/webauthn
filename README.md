@@ -49,7 +49,7 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 npm start
 ```
 
-Запустите тесты:
+Запустить весь набор тестов:
 
 ```
 grunt test
@@ -67,7 +67,7 @@ grunt test-runner:e.mail.ru --suite=login
 grunt test-runner:e.mail.ru --suite=login --grep=TESTMAIL-8674
 ```
 
-Зупустить на заданном адресе:
+Выполнить тесты на заданном адресе:
 
 ```
 grunt test-runner:e.mail.ru --suite=login --baseUrl=https://e.mail.ru/login
@@ -89,4 +89,270 @@ describe('TESTMAIL-8674', () => {
 		assert.equal(browser.getUrl(), 'https://e.mail.ru/messages/inbox');
 	});
 });
+```
+
+### Структура проекта
+
+Ниже будет рассмотрена структура проекта на примере e.mail.ru:
+
+```
+➜ tests
+	➜ e.mail.ru
+		➜ cases
+			➜ <название_раздела>
+				<название_кейса>.js
+		➜ pages
+			➜ <название_раздела>
+				<название_предствавления>.js
+		➜ steps
+			➜ <название_раздела>
+				<шаги_раздела>.js
+		➜ store
+			➜ <название_раздела>
+				<хранилище_раздела>.js
+		config.js
+```
+
+| Сущность  | Назначение              | Взаимодействие |
+|-----------|-------------------------|----------------|
+| **cases** | Тест-кейсы              | store, steps
+| **pages** | Элементы предстравления | store
+| **steps** | Шаги                    | store, cases
+| **store** | Хранилище               | store
+
+Обратие внимание, что взаимодействие между ущностями строго регламентировано. Это значит, что вы не можете внутри тест-кейса обращься к элементыам представления.
+
+
+#### cases
+
+Пример тест-кейса:
+
+```js
+'use strict';
+
+let assert = require('assert');
+
+let login = require('../../steps/login');
+let form = require('../../steps/login/form');
+let providers = require('../../store/login/providers');
+
+describe('TESTMAIL-24935', () => {
+	it('Проверка отображения элементов на форме авторизации', () => {
+		login.open();
+
+		form.checkDefaultDomain();
+		form.checkTitle();
+	});
+});
+```
+
+В тест-кейсе вызываются **только** шаги!
+
+
+#### pages
+
+Пример представления:
+
+```js
+'use strict';
+
+let assert = require('assert');
+let PageObject = require('../../pages');
+
+class Login extends PageObject {
+	constructor () {
+		super();
+	}
+
+	get locators () {
+		return {
+			container: '.login-page__external'
+		}
+	}
+
+	open () {
+		browser.url('/login');
+
+		return browser.waitForExist(this.locators.container);
+	}
+}
+
+module.exports = new Login();
+```
+
+#### steps
+
+Пример степов:
+
+```js
+'use strict';
+
+let assert = require('assert');
+
+let Steps = require('../../steps');
+let form = require('../../pages/login/form');
+let providers = require('../../store/collectors/providers');
+
+class Form extends Steps {
+	constructor () {
+		super();
+	}
+
+	/**
+	 * Проверить домен, который используется по умолчанию
+	 *
+	 * @param {string} provider
+	 */
+	checkDefaultDomain (provider) {
+		form.getActiveDomain('mail.ru');
+	}
+
+	/**
+	 * Сверить активный домен
+	 *
+	 * @param {string} provider
+	 */
+	getActiveDomain (provider) {
+		assert.equal(form.activeDomain, provider,
+			`Передан неверный провайдер ${provider}`);
+	}
+
+	/**
+	 * Получить заголовок формы
+	 *
+	 * @returns {string}
+	 */
+	checkTitle () {
+		assert.equal(form.title, 'Вход в почту',
+			'Не удалось проверить заголовок формы');
+	}
+}
+
+module.exports = new Form();
+```
+
+#### store
+
+Пример хранилища данных:
+
+```
+➜ store
+	➜ collectors
+		providers.js
+
+	➜ login
+		providers.js
+```
+
+**store/collectors/providers.js**
+
+```js
+'use strict';
+
+let Store = require('../../store');
+
+/** Модуль для работы с данными почтовых провайдеров */
+class Providers extends Store {
+	constructor () {
+		super();
+
+		/**
+		 * Cписок провайдеров
+		 *
+		 * @property
+		 * @returns {Array}
+		 */
+		this.list = [
+			{
+				name: 'mail.ru',
+				type: 'internal',
+				data: [
+					'mail.ru',
+					'mail.ua',
+					'inbox.ru',
+					'list.ru',
+					'bk.ru'
+				]
+			},
+	}
+
+	/**
+	 * Добаавляет список провайдеров
+	 *
+	 * @param {...Array} providers — список провайдеров
+	 */
+	set (...providers) {
+		this.list.push(...providers)
+	}
+
+	/**
+	 * Возвращает список провайдеров
+	 *
+	 * @param {Array|null} providers — заданный список провайдеров
+	 * @returns {Array}
+	 */
+	get (providers) {
+		if (providers) {
+			return this.list.filter(provider => {
+				if (providers.includes(provider.name)) {
+					return provider;
+				}
+			});
+		}
+
+		return this.list;
+	}
+}
+
+module.exports = Providers;
+```
+
+**store/login/providers.js**
+
+```js
+'use strict';
+
+let collectorProviders = require('../../store/collectors/providers');
+
+/** Модуль для работы с данными почтовых провайдеров */
+class Providers extends collectorProviders {
+	constructor () {
+		super();
+	}
+
+	/**
+	 * Получить активный список провайдеров (пиктограммы)
+	 *
+	 * @property
+	 * @returns {Array}
+	 */
+	get active () {
+		return this.get([
+			'mail.ru',
+			'yandex.ru',
+			'rambler.ru',
+			'gmail.com'
+		]);
+	}
+
+	/**
+	 * Получить список провайдеров (селект)
+	 *
+	 * @property
+	 * @returns {Array}
+	 */
+	get select () {
+		return this.get([
+			'mail.ru',
+			'yandex.ru',
+			'rambler.ru',
+			'gmail.com',
+			'yahoo.com',
+			'hotmail.com',
+			'outlook.com'
+		]);
+	}
+}
+
+module.exports = new Providers();
 ```

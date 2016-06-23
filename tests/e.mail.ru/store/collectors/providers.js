@@ -4,14 +4,16 @@ let Store = require('../../store');
 
 /** Модуль для работы с данными почтовых провайдеров */
 class Providers extends Store {
-	/**
-	 * Cписок провайдеров
-	 *
-	 * @property
-	 * @returns {Array}
-	 */
-	get list () {
-		return [
+	constructor () {
+		super();
+
+		/**
+		 * Список провайдеров
+		 *
+		 * @property
+		 * @returns {Array}
+		 */
+		this.list = [
 			{
 				name: 'mail.ru',
 				type: 'internal',
@@ -203,15 +205,24 @@ class Providers extends Store {
 	}
 
 	/**
+	 * Добаавляет список провайдеров
+	 *
+	 * @param {...Array} providers — список провайдеров
+	 */
+	set (...providers) {
+		this.list.push(...providers)
+	}
+
+	/**
 	 * Возвращает список провайдеров
 	 *
-	 * @param {Array|null} list — заданный список провайдеров
+	 * @param {Array|null} providers — заданный список провайдеров
 	 * @returns {Array}
 	 */
-	get (list) {
-		if (list) {
+	get (providers) {
+		if (providers) {
 			return this.list.filter(provider => {
-				if (list.includes(provider.name)) {
+				if (providers.includes(provider.name)) {
 					return provider;
 				}
 			});
@@ -221,4 +232,4 @@ class Providers extends Store {
 	}
 }
 
-module.exports = new Providers();
+module.exports = Providers;

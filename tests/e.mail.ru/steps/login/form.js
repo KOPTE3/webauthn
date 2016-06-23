@@ -3,9 +3,10 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let login = require('../../pages/login');
+let form = require('../../pages/login/form');
+let providers = require('../../store/collectors/providers');
 
-class Login extends Steps {
+class Form extends Steps {
 	constructor () {
 		super();
 	}
@@ -16,9 +17,31 @@ class Login extends Steps {
 	 * @param {string} provider
 	 */
 	selectDomain (provider) {
-		let actual = login.getSelectedDomain(provider);
+		let actual = form.getSelectedDomain(provider);
 
-		assert(actual.value, `Не удалось найти элемент с заданным провайдером: ${provider}`);
+		assert.equal(actual.state, 'success',
+			`Не удалось найти элемент с заданным провайдером: ${provider}`);
+	}
+
+	/**
+	 * Проверить домен, который используется по умолчанию
+	 *
+	 * @param {string} provider
+	 */
+	checkDefaultDomain (provider) {
+		form.getActiveDomain('mail.ru');
+	}
+
+	/**
+	 * Выбрать домен в списке
+	 *
+	 * @param {string} provider
+	 */
+	setLogin (login) {
+		let actual = form.setLogin(login);
+
+		assert.equal(actual.state, 'success',
+			`Не удалось найти элемент с заданным провайдером: ${login}`);
 	}
 
 	/**
@@ -31,7 +54,7 @@ class Login extends Steps {
 			provider = 'mail.ru'
 		}
 
-		assert.equal(login.getLoginValue, provider,
+		assert.equal(form.getLoginValue, provider,
 			`Не удалось найти значение для заданного провайдера ${provider}`);
 	}
 
@@ -41,7 +64,7 @@ class Login extends Steps {
 	 * @param {string} provider
 	 */
 	getActiveDomain (provider) {
-		assert.equal(login.activeDomain, provider,
+		assert.equal(form.activeDomain, provider,
 			`Передан неверный провайдер ${provider}`);
 	}
 
@@ -49,7 +72,7 @@ class Login extends Steps {
 	 * Проверить текст ссылки "Узнать больше"
 	 */
 	checkHelpText () {
-		assert.equal(login.getHelpText, 'Узнать больше',
+		assert.equal(form.getHelpText, 'Узнать больше',
 			`Проверка ссылки "Узнать больше"`);
 	}
 
@@ -57,7 +80,7 @@ class Login extends Steps {
 	 * Проверить текст ссылки "Узнать больше"
 	 */
 	checkHelpLink () {
-		assert.equal(login.getHelpLink, 'http://mailblog.mail.ru/vvp-ios-and/',
+		assert.equal(form.getHelpLink, 'http://mailblog.mail.ru/vvp-ios-and/',
 			`Проверка ссылки "Узнать больше"`);
 	}
 
@@ -65,7 +88,7 @@ class Login extends Steps {
 	 * Проверить текст контрола "Запомнить почту"
 	 */
 	checkRememberText () {
-		assert.equal(login.getRememberText, 'запомнить почту',
+		assert.equal(form.getRememberText, 'запомнить почту',
 			`Проверка текста контрола "Запомнить почту"`);
 	}
 
@@ -73,7 +96,7 @@ class Login extends Steps {
 	 * Проверить состояние контрола "Запомнить почту"
 	 */
 	checkRememberState () {
-		assert.equal(login.getRememberState, '1',
+		assert.equal(form.getRememberState, '1',
 			`Проверка состояние контрола "Запомнить почту"`);
 	}
 
@@ -83,9 +106,10 @@ class Login extends Steps {
 	 * @param {string} provider
 	 */
 	clickByDomain (provider) {
-		let actual = login.clickByDomain(provider);
+		let actual = form.clickByDomain(provider);
 
-		assert(actual.value, `Не удалось найти элемент для провайдера ${provider}`);
+		assert.equal(actual.state, 'success',
+			`Не удалось найти элемент для провайдера ${provider}`);
 	}
 
 	/**
@@ -94,9 +118,10 @@ class Login extends Steps {
 	 * @param {Object} data
 	 */
 	send (data) {
-		let actual = login.send(data);
+		let actual = form.send(data);
 
-		assert(actual.value, `Не удалось отправить форму c переданными данными ${data}`);
+		assert.equal(actual.state, 'success',
+			'Не удалось отправить форму c переданными данными');
 	}
 
 	/**
@@ -105,7 +130,7 @@ class Login extends Steps {
 	 * @returns {string}
 	 */
 	checkTitle () {
-		assert.equal(login.title, 'Вход в почту',
+		assert.equal(form.title, 'Вход в почту',
 			'Не удалось проверить заголовок формы');
 	}
 
@@ -115,37 +140,32 @@ class Login extends Steps {
 	 * @returns {string}
 	 */
 	checkDescription () {
-		assert.equal(login.description, 'Вы можете войти в почту с помощью аккаунта любого почтового сервиса и легко переключаться между ними, не выходя из почты. Узнать больше', 'Не удалось проверить описание формы');
+		assert.equal(form.description, 'Вы можете войти в почту с помощью аккаунта любого почтового сервиса и легко переключаться между ними, не выходя из почты. Узнать больше', 'Не удалось проверить описание формы');
 	}
 
 	/**
 	 * Получить ссылку на восстановление пароля
-	 *
-	 * @property
-	 * @returns {string}
 	 */
-	get checkPassRemindLink () {
-		assert.equal(this.getPassRemindLink, 'https://e.mail.ru/cgi-bin/passremind',
+	checkPassRemindLink () {
+		assert.equal(form.getPassRemindLink, 'https://e.mail.ru/cgi-bin/passremind',
 			'Некорректная ссылка на восстановление пароля');
 	}
 
 	/**
 	 * Получить сообщение об ошибке
 	 *
-	 * @param {string} text
+	 * @param {string} expected
 	 */
 	getError (expected) {
-		assert.equal(login.getError, expected, `Сообщение ошибки`);
+		assert.equal(form.getError, expected, `Сообщение ошибки`);
 	}
 
 	/**
 	 * Проверить видимость списка доменов
-	 *
-	 * @param {string} provider
 	 */
 	isSelectVisible () {
-		assert(!login.isSelectVisible, `Видимость списка доменов под вопросом`);
+		assert(!form.isSelectVisible, `Видимость списка доменов под вопросом`);
 	}
 }
 
-module.exports = new Login();
+module.exports = new Form();
