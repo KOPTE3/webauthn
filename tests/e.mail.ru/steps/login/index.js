@@ -21,13 +21,6 @@ class Login extends Steps {
 
 		assert(actual, 'Не удалось открыть страницу');
 	}
-
-	/**
-	 * Авторизация
-	 */
-	auth () {
-		login.auth();
-	}
 }
 
 module.exports = new Login();
