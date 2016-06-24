@@ -2,13 +2,17 @@
 
 let PageObject = require('../../pages');
 
-/** @namespace browser */
 /** Модуль для работы с редактором страницы написания письма */
 class Editor extends PageObject {
 	constructor () {
 		super();
 	}
 
+	/**
+	 * Локаторы
+	 *
+	 * @type {Object}
+	 */
 	get locators () {
 		return {
 			container: '.mceToolbarRow1'
@@ -21,7 +25,7 @@ class Editor extends PageObject {
 	 * @return {boolean}
 	 */
 	wait () {
-		return browser.waitForExist(this.locators.container);
+		return this.page.waitForExist(this.locators.container);
 	}
 }
 

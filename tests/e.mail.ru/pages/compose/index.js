@@ -2,13 +2,17 @@
 
 let PageObject = require('../../pages');
 
-/** @namespace browser */
 /** Модуль для работы с представлением страницы написания письма */
 class Compose extends PageObject {
 	constructor () {
 		super();
 	}
 
+	/**
+	 * Локаторы
+	 *
+	 * @type {Object}
+	 */
 	get locators () {
 		return {
 			container: '.b-compose'
@@ -24,7 +28,7 @@ class Compose extends PageObject {
 	open (query) {
 		super.open('/compose', query);
 
-		return browser.waitForExist(this.locators.container);
+		return this.page.waitForExist(this.locators.container);
 	}
 
 	/**
@@ -33,7 +37,7 @@ class Compose extends PageObject {
 	 * @type {string}
 	 */
 	get title () {
-		browser.getTitle();
+		this.page.getTitle();
 	}
 }
 

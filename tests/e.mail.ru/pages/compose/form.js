@@ -2,24 +2,32 @@
 
 let PageObject = require('../../pages');
 
-/** @namespace browser */
 /** Модуль для работы с формой страницы написания письма */
 class Form extends PageObject {
 	constructor () {
 		super();
 	}
 
+	/**
+	 * Локаторы
+	 *
+	 * @type {Object}
+	 */
 	get locators () {
 		return {
-			container    : '.compose-head',
-			filedRemind  : '[name="remind"]',
-			filedPriority: '[name="Priority"]',
-			filedReceipt : '[name="Receipt"]',
-			filedFrom    : '.js-compose__header__from',
-			filedTo      : '[data-original-name="To"]',
-			filedCC      : '[data-original-name="CC"]',
-			filedBCC     : '[data-original-name="BCC"]',
-			filedSubject : '[name="Subject"]'
+			container: '.compose-head',
+			fields: {
+				priority: '[name="Priority"]',
+				receipt : '[name="Receipt"]',
+				from    : '.js-compose__header__from',
+				to      : '.compose__header__field [data-original-name="To"]',
+				cc      : '.compose__header__field [data-original-name="CC"]',
+				bcc     : '.compose__header__field [data-original-name="BCC"]',
+				subject : '.compose__header__field [name="Subject"]'
+			},
+			filedRemind   : '[name="remind"]',
+			fieldMenu     : '#dropdown-select-fields .dropdown__checkbox',
+			fieldMenuItems: '#dropdown-select-fields .dropdown__list_multiselect'
 		};
 	}
 
@@ -29,321 +37,148 @@ class Form extends PageObject {
 	 * @returns {boolean}
 	 */
 	wait () {
-		return browser.waitForExist(this.locators.container);
+		return this.page.waitForExist(this.locators.container);
 	}
 
 	/**
-	 * Пометить письмо как важное
-	 */
-	setPriority () {
-
-	}
-
-	/**
-	 * Пометить письмо как с уведомлением
-	 */
-	setReceipt () {
-
-	}
-
-	/**
-	 * Установить напоминание
-	 */
-	setRemind () {
-
-	}
-
-	/**
-	 * Кликнуть на поле "От кого"
-	 */
-	clickFromField () {
-
-	}
-
-	/**
-	 * Кликнуть на поле "Кому"
-	 */
-	clickToField () {
-
-	}
-
-	/**
-	 * Кликнуть на поле "Копия"
-	 */
-	clickCCField () {
-
-	}
-
-	/**
-	 * Кликнуть на поле "Скрытая копия"
-	 */
-	clickBCCField () {
-
-	}
-
-	/**
-	 * Кликнуть на поле "Тема"
-	 */
-	clickSubjectField () {
-
-	}
-
-	/**
-	 * Заполнить поле "От кого"
+	 * Получить элемент поля по имени
 	 *
-	 * @param {string} value
-	 */
-	setFromField (value) {
-		browser.setValue(this.locators.filedFrom, value);
-	}
-
-	/**
-	 * Заполнить поле "Кому"
-	 */
-	setToField () {
-
-	}
-
-	/**
-	 * Заполнить поле "Копия"
-	 */
-	setCCField () {
-
-	}
-
-	/**
-	 * Заполнить поле формы "Скрытая копия"
-	 */
-	setBCCField () {
-
-	}
-
-	/**
-	 * Заполнить поле формы "Тема"
-	 */
-	setSubjectField () {
-
-	}
-
-	/**
-	 * Получить элемент поля "От кого"
+	 * @param {string} name — имя поля.
+	 * Доступные значения (from, to, cc, bcc, subject, priority, receipt)
 	 *
 	 * @returns {Promise}
 	 */
-	getFromField () {
-		return browser.element(this.locators.filedFrom);
+	getFieldElement (name) {
+		return this.page.element(this.locators.fields[name]);
 	}
 
 	/**
-	 * Получить элемент поля "Кому"
+	 * Сделать клик на заданном поле
 	 *
-	 * @returns {Promise}
+	 * @see getFieldElement
+	 * @param {string} name — имя поля
 	 */
-	getToField () {
-		return browser.element(this.locators.filedTo);
+	clickField (name) {
+		this.page.click(this.locators.filds[name]);
 	}
 
 	/**
-	 * Получить элемент поля "Копия"
+	 * Показать заданное поле
 	 *
-	 * @returns {Promise}
+	 * @see getFieldElement
+	 * @param {string} name — имя поля
 	 */
-	getCCField () {
-		return browser.element(this.locators.filedCC);
+	showField (name) {
+		this.showMenuFields();
 	}
 
 	/**
-	 * Получить элемент поля "Скрытая копия"
+	 * Скрыть заданное поле
 	 *
-	 * @returns {Promise}
+	 * @see getFieldElement
+	 * @param {string} name — имя поля
 	 */
-	getBCCField () {
-		return browser.element(this.locators.filedBCC);
-	}
-
-	/**
-	 * Получить элемент поля "Тема"
-	 *
-	 * @returns {Promise}
-	 */
-	getSubjectField () {
-		return browser.element(this.locators.filedSubject);
-	}
-
-	/**
-	 * Получить данные поля "От кого"
-	 */
-	getFromValue () {
-
-	}
-
-	/**
-	 * Получить данные поля "Кому"
-	 */
-	getToValue () {
-
-	}
-
-
-	/**
-	 * Получить данные поля "Копия"
-	 */
-	getCCValue () {
-
-	}
-
-	/**
-	 * Получить данные поля "Скрытая копия"
-	 */
-	getBCCValue () {
-
-	}
-
-	/**
-	 * Получить данные поля "Тема"
-	 */
-	getSubjectValue () {
-
-	}
-
-	/**
-	 * Очистить поле "От кого"
-	 */
-	clearFromField () {
-
-	}
-
-	/**
-	 * Очистить поле "От кого"
-	 */
-	clearFromField () {
-
-	}
-
-	/**
-	 * Очистить поле "Копия"
-	 */
-	clearCCField () {
-
-	}
-
-	/**
-	 * Очистить поле "Скрытая копия"
-	 */
-	clearBCCField () {
-
-	}
-
-	/**
-	 * Очистить поле "Тема"
-	 */
-	clearSubjectField () {
-
-	}
-
-	/**
-	 * Показать поле "От кого"
-	 */
-	showFromField () {
-
-	}
-
-	/**
-	 * Показать поле "Кому"
-	 */
-	showToField () {
-
-	}
-
-	/**
-	 * Показать поле "Копия"
-	 */
-	showCCField () {
-
-	}
-
-	/**
-	 * Показать поле "Скрытая копия"
-	 */
-	showBCCField () {
-
-	}
-
-	/**
-	 * Показать поле "Тема"
-	 */
-	showSubjectField () {
-
-	}
-
-	/**
-	 * Скрыть поле "От кого"
-	 */
-	hideFromField () {
-
-	}
-
-	/**
-	 * Скрыть поле "Кому"
-	 */
-	hideToField () {
-
-	}
-
-	/**
-	 * Скрыть поле "Копия"
-	 */
-	hideCCField () {
-
-	}
-
-	/**
-	 * Скрыть поле "Скрытая копия"
-	 */
-	hideBCCField () {
-
-	}
-
-	/**
-	 * Скрыть поле "Тема"
-	 */
-	hideSubjectField () {
-
+	hideField (name) {
+		this.showMenuFields();
 	}
 
 	/**
 	 * Проверить видимость поля "От кого"
+	 *
+	 * @see getFieldElement
+	 * @param {string} name — имя поля
+	 * @returns {boolean}
 	 */
-	isVisibleFromField () {
-
+	isVisibleField (name) {
+		return this.page.isVisible(this.locators.fields[name]);
 	}
 
 	/**
-	 * Проверить видимость поля "Кому"
+	 * Очистить поле заданное поле
+	 *
+	 * @see getFieldElement
+	 * @param {string} name — имя поля
 	 */
-	isVisibleToField () {
-
+	clearField (name) {
+		this.getFieldElement(name).setValue('');
 	}
 
 	/**
-	 * Проверить видимость поля "Копия"
+	 * Задать значение поля по имени
+	 *
+	 * @see getFieldElement
+	 * @param {string} name — имя поля
+	 * @param {string} value — значение поля
 	 */
-	isVisibleCCField () {
-
+	setFieldValue (name, value) {
+		this.getFieldElement(name).keys(value);
 	}
 
 	/**
-	 * Проверить видимость поля "Скрытая копия"
+	 * Получить ссылку на элемент списка полей
+	 *
+	 * @returns {Promise}
 	 */
-	isVisibleBCCField () {
-
+	getMenuFields () {
+		return this.page.element(this.locators.fieldMenu);
 	}
 
 	/**
-	 * Проверить видимость поля "Тема"
+	 * Переключить все доступные поля формы
+	 *
+	 * @param {boolean} state — состояние
 	 */
-	isVisibleSubjectField () {
+	toggleAllFields (state) {
+		let fields = ['to', 'from', 'cc', 'bcc'];
 
+		for (let name of fields) {
+			if (state) {
+				this.showField(name);
+			} else {
+				this.hideField(name);
+			}
+		}
+	}
+
+	/**
+	 * Показать все поля формы
+	 */
+	showAllFields () {
+		this.toggleAllFields(true);
+	}
+
+	/**
+	 * Скрыть все поля формы
+	 */
+	hideAllFields () {
+		this.toggleAllFields(false);
+	}
+
+	/**
+	 * Проверить видимость списка полей
+	 *
+	 * @returns {boolean}
+	 */
+	isVisibleMenuFields () {
+		return this.page.isVisible(this.locators.fieldMenu);
+	}
+
+	/**
+	 * Скрыть список полей
+	 */
+	hideMenuFields () {
+		if (this.isVisibleMenuFields()) {
+			this.page.click(this.locators.fieldMenu);
+		}
+	}
+
+	/**
+	 * Показать список полей
+	 */
+	showMenuFields () {
+		if (!this.isVisibleMenuFields()) {
+			this.page.click(this.locators.fieldMenu);
+		}
 	}
 }
 

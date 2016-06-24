@@ -7,5 +7,7 @@ describe('TESTMAIL-XXX', () => {
 	it('Открытие страницы написания письма', () => {
 		page.auth();
 		page.open();
+
+		form.showAllFields();
 	});
 });

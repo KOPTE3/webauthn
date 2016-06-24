@@ -3,13 +3,17 @@
 let PageObject = require('../../pages');
 let providers = require('../../store/collectors/providers');
 
-/** @namespace browser */
 /** Модуль для работы с формой страницы логина */
 class Form extends PageObject {
 	constructor () {
 		super();
 	}
 
+	/**
+	 * Локаторы
+	 *
+	 * @type {Object}
+	 */
 	get locators () {
 		return {
 			container      : '#LoginExternal',
@@ -34,10 +38,10 @@ class Form extends PageObject {
 	/**
 	 * Получить активный домен
 	 *
-	 * @type {string}
+	 * @returns {string}
 	 */
-	get activeDomain () {
-		return browser.getAttribute(this.locators.activeDomain, 'data-domain');
+	getActiveDomain () {
+		return this.page.getAttribute(this.locators.activeDomain, 'data-domain');
 	}
 
 	/**
@@ -47,16 +51,16 @@ class Form extends PageObject {
 	 * @returns {Promise}
 	 */
 	clickByDomain (provider) {
-		return browser.click(`[data-domain="${provider}"]`);
+		return this.page.click(`[data-domain="${provider}"]`);
 	}
 
 	/**
 	 * Получить состояние видимости списка доменов
 	 *
-	 * @type {string}
+	 * @returns {string}
 	 */
-	get isSelectVisible () {
-		return browser.isVisible(this.locators.select);
+	isSelectVisible () {
+		return this.page.isVisible(this.locators.select);
 	}
 
 	/**
@@ -66,25 +70,25 @@ class Form extends PageObject {
 	 * @returns {Promise}
 	 */
 	setLogin (login) {
-		return browser.setValue(this.locators.login, login);
+		return this.page.setValue(this.locators.login, login);
 	}
 
 	/**
 	 * Получить сообщение об ошибке
 	 *
-	 * @type {string}
+	 * @returns {string}
 	 */
-	get getError () {
-		return browser.getText(this.locators.error);
+	getError () {
+		return this.page.getText(this.locators.error);
 	}
 
 	/**
 	 * Получить домен, который используется по умолчанию
 	 *
-	 * @type {string}
+	 * @returns {string}
 	 */
-	get getDefaultDomain () {
-		return browser
+	getDefaultDomain () {
+		return this.page
 			.elements(this.locators.providersBlock)
 			.getAttribute('data-domain');
 	}
@@ -92,46 +96,46 @@ class Form extends PageObject {
 	/**
 	 * Получить адрес ссылки для восстановления пароля
 	 *
-	 * @type {string}
+	 * @returns {boolean}
 	 */
-	get getPassRemindLink () {
-		return browser.getAttribute(this.locators.forgetLink, 'href');
+	getPassRemindLink () {
+		return this.page.getAttribute(this.locators.forgetLink, 'href');
 	}
 
 	/**
 	 * Получить адрес ссылки на страницу помощи
 	 *
-	 * @type {string}
+	 * @returns {boolean}
 	 */
-	get getHelpLink () {
-		return browser.getAttribute(this.locators.helpLink, 'href');
+	getHelpLink () {
+		return this.page.getAttribute(this.locators.helpLink, 'href');
 	}
 
 	/**
 	 * Получить текст ссылки "Узнать больше"
 	 *
-	 * @type {string}
+	 * @returns {boolean}
 	 */
-	get getHelpText () {
-		return browser.getText(this.locators.helpText);
+	getHelpText () {
+		return this.page.getText(this.locators.helpText);
 	}
 
 	/**
 	 * Получить текст контрола "Запомнить почту"
 	 *
-	 * @type {string}
+	 * @returns {boolean}
 	 */
-	get getRememberText () {
-		return browser.getText(this.locators.rememberText);
+	getRememberText () {
+		return this.page.getText(this.locators.rememberText);
 	}
 
 	/**
 	 * Получить состояние контрола "Запомнить почту"
 	 *
-	 * @type {string}
+	 * @returns {boolean}
 	 */
-	get getRememberState () {
-		let state = browser.element(this.locators.rememberState);
+	getRememberState () {
+		let state = this.page.element(this.locators.rememberState);
 
 		return state.getValue();
 	}
@@ -142,7 +146,7 @@ class Form extends PageObject {
 	 * @type {string}
 	 */
 	get title () {
-		return browser.getText(this.locators.header);
+		return this.page.getText(this.locators.header);
 	}
 
 	/**
@@ -151,7 +155,7 @@ class Form extends PageObject {
 	 * @type {string}
 	 */
 	get description () {
-		return browser.getText(this.locators.desc);
+		return this.page.getText(this.locators.desc);
 	}
 
 	/**
@@ -161,7 +165,7 @@ class Form extends PageObject {
 	 * @returns {Promise}
 	 */
 	send (data) {
-		return browser.fill(this.locators.container, data, true);
+		return this.page.fill(this.locators.container, data, true);
 	}
 
 	/**
@@ -170,7 +174,7 @@ class Form extends PageObject {
 	 * @type {string}
 	 */
 	get getLoginValue () {
-		return browser.getValue(this.locators.providersSelect);
+		return this.page.getValue(this.locators.providersSelect);
 	}
 
 	/**
@@ -180,7 +184,7 @@ class Form extends PageObject {
 	 * @returns {Promise}
 	 */
 	getSelectedDomain (provider) {
-		return browser.selectByValue(this.locators.providersSelect, provider);
+		return this.page.selectByValue(this.locators.providersSelect, provider);
 	}
 }
 

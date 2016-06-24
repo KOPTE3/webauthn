@@ -2,13 +2,17 @@
 
 let PageObject = require('../../pages');
 
-/** @namespace browser */
 /** Модуль для работы с представлением страницы логина */
 class Login extends PageObject {
 	constructor () {
 		super();
 	}
 
+	/**
+	 * Локаторы
+	 *
+	 * @type {Object}
+	 */
 	get locators () {
 		return {
 			container: '.login-page__external'
@@ -24,7 +28,7 @@ class Login extends PageObject {
 	auth (type) {
 		super.auth(type);
 
-		return browser.execute(() => {
+		return this.page.execute(() => {
 			return window.patron.username;
 		});
 	}
@@ -38,7 +42,7 @@ class Login extends PageObject {
 	open (query) {
 		super.open('/login', query);
 
-		return browser.waitForExist(this.locators.container);
+		return this.page.waitForExist(this.locators.container);
 	}
 }
 

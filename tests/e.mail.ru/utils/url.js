@@ -34,9 +34,9 @@ class URL {
 	 * @param {Object} [query]
 	 * @returns {string}
 	 */
-	static request (path, ...query) {
+	static request (path, query) {
 		if (query) {
-			return `${path}?${URL.query(...query)}`;
+			return `${path}?${URL.query(query)}`;
 		}
 
 		return path;

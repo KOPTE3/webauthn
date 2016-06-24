@@ -4,6 +4,7 @@ let assert = require('assert');
 
 let Steps = require('../../steps');
 let compose = require('../../pages/compose');
+let form = require('../../pages/compose/form');
 
 /** Модуль для работы с формой страницы написания письма */
 class Form extends Steps {
@@ -21,273 +22,91 @@ class Form extends Steps {
 	}
 
 	/**
-	 * Пометить письмо как важное
-	 */
-	setPriority () {
-
-	}
-
-	/**
-	 * Пометить письмо как с уведомлением
-	 */
-	setReceipt () {
-
-	}
-
-	/**
-	 * Установить напоминание
-	 */
-	setRemind () {
-
-	}
-
-	/**
-	 * Кликнуть на поле "От кого"
-	 */
-	clickFromField () {
-
-	}
-
-	/**
-	 * Кликнуть на поле "Кому"
-	 */
-	clickToField () {
-
-	}
-
-	/**
-	 * Кликнуть на поле "Копия"
-	 */
-	clickCCField () {
-
-	}
-
-	/**
-	 * Кликнуть на поле "Скрытая копия"
-	 */
-	clickBCCField () {
-
-	}
-
-	/**
-	 * Кликнуть на поле "Тема"
-	 */
-	clickSubjectField () {
-
-	}
-
-	/**
-	 * Заполнить поле "От кого"
+	 * Сделать клик на заданном поле
 	 *
-	 * @param {string} value
+	 * @see form.getFieldElement
+	 * @param {string} name — имя поля
 	 */
-	setFromField (value) {
-		// let actual = compose.setFromField(value);
+	clickField (name) {
+		form.clickField(name);
 	}
 
 	/**
-	 * Заполнить поле "Кому"
+	 * Показать заданное поле
+	 *
+	 * @see form.getFieldElement
+	 * @param {string} name — имя поля
 	 */
-	setToField () {
-
+	showField (name) {
+		form.showField(name);
 	}
 
 	/**
-	 * Заполнить поле "Копия"
+	 * Скрыть заданное поле
+	 *
+	 * @see form.getFieldElement
+	 * @param {string} name — имя поля
 	 */
-	setCCField () {
-
-	}
-
-	/**
-	 * Заполнить поле формы "Скрытая копия"
-	 */
-	setBCCField () {
-
-	}
-
-	/**
-	 * Заполнить поле формы "Тема"
-	 */
-	setSubjectField () {
-
-	}
-
-	/**
-	 * Получить данные поля "От кого"
-	 */
-	getFromValue () {
-
-	}
-
-	/**
-	 * Получить данные поля "Кому"
-	 */
-	getToValue () {
-
-	}
-
-
-	/**
-	 * Получить данные поля "Копия"
-	 */
-	getCCValue () {
-
-	}
-
-	/**
-	 * Получить данные поля "Скрытая копия"
-	 */
-	getBCCValue () {
-
-	}
-
-	/**
-	 * Получить данные поля "Тема"
-	 */
-	getSubjectValue () {
-
-	}
-
-	/**
-	 * Очистить поле "От кого"
-	 */
-	clearFromField () {
-
-	}
-
-	/**
-	 * Очистить поле "От кого"
-	 */
-	clearFromField () {
-
-	}
-
-	/**
-	 * Очистить поле "Копия"
-	 */
-	clearCCField () {
-
-	}
-
-	/**
-	 * Очистить поле "Скрытая копия"
-	 */
-	clearBCCField () {
-
-	}
-
-	/**
-	 * Очистить поле "Тема"
-	 */
-	clearSubjectField () {
-
-	}
-
-	/**
-	 * Показать поле "От кого"
-	 */
-	showFromField () {
-
-	}
-
-	/**
-	 * Показать поле "Кому"
-	 */
-	showToField () {
-
-	}
-
-	/**
-	 * Показать поле "Копия"
-	 */
-	showCCField () {
-
-	}
-
-	/**
-	 * Показать поле "Скрытая копия"
-	 */
-	showBCCField () {
-
-	}
-
-	/**
-	 * Показать поле "Тема"
-	 */
-	showSubjectField () {
-
-	}
-
-	/**
-	 * Скрыть поле "От кого"
-	 */
-	hideFromField () {
-
-	}
-
-	/**
-	 * Скрыть поле "Кому"
-	 */
-	hideToField () {
-
-	}
-
-	/**
-	 * Скрыть поле "Копия"
-	 */
-	hideCCField () {
-
-	}
-
-	/**
-	 * Скрыть поле "Скрытая копия"
-	 */
-	hideBCCField () {
-
-	}
-
-	/**
-	 * Скрыть поле "Тема"
-	 */
-	hideSubjectField () {
-
+	hideField (name) {
+		form.showMenuFields();
 	}
 
 	/**
 	 * Проверить видимость поля "От кого"
+	 *
+	 * @see form.getFieldElement
+	 * @param {string} name — имя поля
 	 */
-	isVisibleFromField () {
+	isVisibleField (name) {
+		let active = form.isVisibleField(name);
 
+		asert(active, `Видимость поля ${name} под вопросом`);
 	}
 
 	/**
-	 * Проверить видимость поля "Кому"
+	 * Очистить поле заданное поле
+	 *
+	 * @see form.getFieldElement
+	 * @param {string} name — имя поля
 	 */
-	isVisibleToField () {
-
+	clearField (name) {
+		form.clearField(name);
 	}
 
 	/**
-	 * Проверить видимость поля "Копия"
+	 * Задать значение поля по имени
+	 *
+	 * @see form.getFieldElement
+	 * @param {string} name — имя поля
+	 * @param {string} value — значение поля
 	 */
-	isVisibleCCField () {
-
+	setFieldValue (name, value) {
+		form.setFieldValue(...arguments);
 	}
 
 	/**
-	 * Проверить видимость поля "Скрытая копия"
+	 * Показать все поля формы
 	 */
-	isVisibleBCCField () {
+	isVisibleMenuFields () {
+		let active = form.isVisibleMenuFields();
 
+		asert(active, 'Видимость списка полей под вопросом');
 	}
 
 	/**
-	 * Проверить видимость поля "Тема"
+	 * Показать все поля формы
 	 */
-	isVisibleSubjectField () {
-
+	showAllFields () {
+		form.showAllFields();
 	}
+
+	/**
+	 * Скрыть все поля формы
+	 */
+	hideAllFields () {
+		form.hideAllFields();
+	}
+
 }
 
 module.exports = new Form();

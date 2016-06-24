@@ -39,10 +39,7 @@ class Form extends Steps {
 	 * @param {string} login
 	 */
 	setLogin (login) {
-		let actual = form.setLogin(login);
-
-		assert.equal(actual.state, 'success',
-			`Не удалось найти элемент с заданным провайдером: ${login}`);
+		form.setLogin(login);
 	}
 
 	/**
@@ -65,7 +62,7 @@ class Form extends Steps {
 	 * @param {string} provider
 	 */
 	getActiveDomain (provider) {
-		assert.equal(form.activeDomain, provider,
+		assert.equal(form.getActiveDomain(), provider,
 			`Передан неверный провайдер ${provider}`);
 	}
 
@@ -73,7 +70,7 @@ class Form extends Steps {
 	 * Проверить текст ссылки "Узнать больше"
 	 */
 	checkHelpText () {
-		assert.equal(form.getHelpText, 'Узнать больше',
+		assert.equal(form.getHelpText(), 'Узнать больше',
 			`Проверка ссылки "Узнать больше"`);
 	}
 
@@ -81,7 +78,7 @@ class Form extends Steps {
 	 * Проверить текст ссылки "Узнать больше"
 	 */
 	checkHelpLink () {
-		assert.equal(form.getHelpLink, 'http://mailblog.mail.ru/vvp-ios-and/',
+		assert.equal(form.getHelpLink(), 'http://mailblog.mail.ru/vvp-ios-and/',
 			`Проверка ссылки "Узнать больше"`);
 	}
 
@@ -89,7 +86,7 @@ class Form extends Steps {
 	 * Проверить текст контрола "Запомнить почту"
 	 */
 	checkRememberText () {
-		assert.equal(form.getRememberText, 'запомнить почту',
+		assert.equal(form.getRememberText(), 'запомнить почту',
 			`Проверка текста контрола "Запомнить почту"`);
 	}
 
@@ -97,7 +94,7 @@ class Form extends Steps {
 	 * Проверить состояние контрола "Запомнить почту"
 	 */
 	checkRememberState () {
-		assert.equal(form.getRememberState, '1',
+		assert.equal(form.getRememberState(), '1',
 			`Проверка состояние контрола "Запомнить почту"`);
 	}
 
@@ -146,7 +143,7 @@ class Form extends Steps {
 	 * Получить ссылку на восстановление пароля
 	 */
 	checkPassRemindLink () {
-		assert.equal(form.getPassRemindLink, 'https://e.mail.ru/cgi-bin/passremind',
+		assert.equal(form.getPassRemindLink(), 'https://e.mail.ru/cgi-bin/passremind',
 			'Некорректная ссылка на восстановление пароля');
 	}
 
@@ -156,14 +153,14 @@ class Form extends Steps {
 	 * @param {string} expected
 	 */
 	getError (expected) {
-		assert.equal(form.getError, expected, `Сообщение ошибки`);
+		assert.equal(form.getError(), expected, `Сообщение ошибки`);
 	}
 
 	/**
 	 * Проверить видимость списка доменов
 	 */
 	isSelectVisible () {
-		assert(!form.isSelectVisible, `Видимость списка доменов под вопросом`);
+		assert(!form.isSelectVisible(), `Видимость списка доменов под вопросом`);
 	}
 }
 

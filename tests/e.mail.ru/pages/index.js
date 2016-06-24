@@ -1,6 +1,5 @@
 'use strict';
 
-let Log = require('tir');
 let Store = require('../store');
 let URL = require('../utils/url');
 
@@ -8,6 +7,15 @@ let URL = require('../utils/url');
 class PageObject {
 	constructor () {
 		this.store = new Store();
+	}
+
+	/**
+	 * Ссылка на объект страницы
+	 *
+	 * @type {Promise}
+	 */
+	get page () {
+		return browser;
 	}
 
 	/**
@@ -19,7 +27,7 @@ class PageObject {
 	open (path, query) {
 		let url = URL.request(...arguments);
 
-		browser.url(url);
+		this.page.url(url);
 	}
 
 	/**
@@ -33,10 +41,10 @@ class PageObject {
 		let cookie = account.get('cookies');
 		let login = account.get('login');
 
-		Log.info(`Used ${login} account`);
+		console.log(`Used ${login} account`);
 
-		browser.url('/');
-		browser.setCookies(cookie);
+		this.page.url('/');
+		this.page.setCookies(cookie);
 	}
 }
 
