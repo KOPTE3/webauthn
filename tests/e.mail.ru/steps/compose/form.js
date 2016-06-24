@@ -82,8 +82,7 @@ class Form extends Steps {
 	 * @param {string} value
 	 */
 	setFromField (value) {
-		let actual = compose.setFromField(value);
-		console.log(actual);
+		// let actual = compose.setFromField(value);
 	}
 
 	/**
