@@ -10,3 +10,4 @@ class Steps extends Page {
 }
 
 module.exports = Steps;
+
