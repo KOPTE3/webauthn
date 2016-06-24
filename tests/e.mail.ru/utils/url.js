@@ -36,7 +36,7 @@ class URL {
 	 */
 	static request (path, ...query) {
 		if (query) {
-			return `${path}?${URL.query(...query)}`
+			return `${path}?${URL.query(...query)}`;
 		}
 
 		return path;
