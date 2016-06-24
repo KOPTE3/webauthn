@@ -32,10 +32,11 @@ class Login extends PageObject {
 	/**
 	 * Открыть страницу логина
 	 *
+	 * @param {Object} [query] — параметры запроса
 	 * @returns {boolean}
 	 */
-	open () {
-		super.open('/login');
+	open (query) {
+		super.open('/login', query);
 
 		return browser.waitForExist(this.locators.container);
 	}

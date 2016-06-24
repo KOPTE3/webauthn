@@ -12,10 +12,10 @@ class Compose extends Steps {
 	/**
 	 * Открыть страницу написания письма
 	 *
-	 * @param {Object} [params] — параметры запроса
+	 * @param {Object} [query] — параметры запроса
 	 */
-	open (params) {
-		let actual = page.open(params);
+	open (query) {
+		let actual = page.open(query);
 
 		assert(actual, 'Не удалось открыть страницу написания письма');
 	}

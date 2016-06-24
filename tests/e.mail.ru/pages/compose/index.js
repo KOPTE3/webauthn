@@ -15,12 +15,14 @@ class Compose extends PageObject {
 		};
 	}
 
-	/** Открыть страницу написания письма
+	/**
+	 * Открыть страницу написания письма
 	 *
+	 * @param {Object} [query] — параметры запроса
 	 * @returns {boolean}
 	 */
-	open () {
-		super.open('/compose');
+	open (query) {
+		super.open('/compose', query);
 
 		return browser.waitForExist(this.locators.container);
 	}

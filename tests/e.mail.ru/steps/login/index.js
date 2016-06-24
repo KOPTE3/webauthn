@@ -13,9 +13,11 @@ class Login extends Steps {
 
 	/**
 	 * Открыть страницу авторизации
+	 *
+	 * @param {Object} [query] — параметры запроса
 	 */
-	open () {
-		let actual = login.open();
+	open (query) {
+		let actual = login.open(query);
 
 		assert(actual, 'Не удалось открыть страницу');
 	}
