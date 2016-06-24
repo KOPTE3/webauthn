@@ -1,5 +1,7 @@
 'use strict';
 
+let assert = require('assert');
+
 let Steps = require('../../steps');
 let compose = require('../../pages/compose');
 
