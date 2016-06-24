@@ -1,7 +1,7 @@
 'use strict';
 
 let Steps = require('../../steps');
-let login = require('../../pages/login');
+let compose = require('../../pages/compose');
 
 /** Модуль для работы с формой страницы написания письма */
 class Form extends Steps {
@@ -13,7 +13,7 @@ class Form extends Steps {
 	 * Дождаться появления формы написания письма
 	 */
 	wait () {
-		let actual = login.wait();
+		let actual = compose.wait();
 
 		assert(actual, 'Не удалось открыть форму написания письма');
 	}

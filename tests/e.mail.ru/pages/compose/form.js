@@ -90,9 +90,11 @@ class Form extends PageObject {
 
 	/**
 	 * Заполнить поле "От кого"
+	 *
+	 * @param {string} value
 	 */
-	setFromField () {
-
+	setFromField (value) {
+		browser.setValue(this.locators.filedFrom, value);
 	}
 
 	/**
