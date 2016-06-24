@@ -5,7 +5,7 @@ let form = require('../../steps/compose/form');
 
 describe('TESTMAIL-XXX', () => {
 	it('Открытие страницы написания письма', () => {
-		form.auth();
+		page.auth();
 		page.open();
 	});
 });
