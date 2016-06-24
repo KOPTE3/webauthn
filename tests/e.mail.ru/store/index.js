@@ -2,6 +2,7 @@
 
 let AccountManager = require('@qa/account-manager');
 
+/** @namespace browser */
 /** Модуль для работы с данными */
 class Store {
 	/**
@@ -11,6 +12,16 @@ class Store {
 	 */
 	get account () {
 		return new AccountManager.Session();
+	}
+
+	/**
+	 * Название платформы
+	 *
+	 * @type {string}
+	 */
+	get platform () {
+		return browser.desiredCapabilities.platform ||
+			browser.execute('window.navigator.platform').value;
 	}
 }
 
