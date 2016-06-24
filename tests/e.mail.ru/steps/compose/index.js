@@ -1,7 +1,7 @@
 'use strict';
 
 let Steps = require('../../steps');
-let login = require('../../pages/login');
+let page = require('../../pages/compose');
 
 /** Модуль для работы с шагами страницы написания письма */
 class Compose extends Steps {
@@ -11,12 +11,14 @@ class Compose extends Steps {
 
 	/**
 	 * Открыть страницу написания письма
+	 *
+	 * @param {Object} [params] — параметры запроса
 	 */
-	open () {
-		let actual = login.open();
+	open (params) {
+		let actual = page.open(params);
 
 		assert(actual, 'Не удалось открыть страницу написания письма');
 	}
 }
 
-module.exports = new Сompose();
+module.exports = new Compose();
