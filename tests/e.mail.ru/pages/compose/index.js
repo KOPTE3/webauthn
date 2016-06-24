@@ -37,4 +37,4 @@ class Compose extends PageObject {
 	}
 }
 
-module.exports = new Login();
+module.exports = new Compose();

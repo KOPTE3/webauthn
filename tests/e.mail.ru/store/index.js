@@ -12,6 +12,14 @@ class Store {
 	get account () {
 		return new AccountManager.Session();
 	}
+
+	get files () {
+		if (browser) {
+
+		}
+
+		return '/var/lib/selenium/Dropbox/feta/mail';
+	}
 }
 
 module.exports = Store;

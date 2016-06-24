@@ -76,9 +76,13 @@ class Form extends Steps {
 
 	/**
 	 * Заполнить поле "От кого"
+	 *
+	 * @param {string} value
 	 */
-	setFromField () {
+	setFromField (value) {
+		let actual = compose.setFromField(value);
 
+		console.log(actual);
 	}
 
 	/**

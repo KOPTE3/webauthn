@@ -7,5 +7,6 @@ describe('TESTMAIL-XXX', () => {
 	it('Открытие страницы написания письма', () => {
 		page.auth();
 		page.open();
+		console.log(browser);
 	});
 });
