@@ -12,6 +12,12 @@
 
 ### Установка
 
+**git**
+
+```
+git clone ssh://git@stash.mail.ru:2222/qa/yoda.git
+```
+
 **npm**
 
 ```
