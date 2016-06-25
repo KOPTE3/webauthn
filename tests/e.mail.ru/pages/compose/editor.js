@@ -15,7 +15,9 @@ class Editor extends PageObject {
 	 */
 	get locators () {
 		return {
-			container: '.mceToolbarRow1'
+			container: '.mceToolbarRow1',
+			body: '.mceContentBody',
+			editor: '.mceIframeContainer iframe'
 		};
 	}
 
@@ -27,6 +29,15 @@ class Editor extends PageObject {
 	wait () {
 		return this.page.waitForExist(this.locators.container);
 	}
+	
+	/**
+	 * Получить редактор сообщения
+	 */
+	getEditor () {
+		var frameId = this.page.getAttribute(this.locators.editor, 'id');
+		return this.page.frame(frameId).element(this.locators.body);
+	}
+
 }
 
 module.exports = new Editor();
