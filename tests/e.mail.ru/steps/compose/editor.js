@@ -15,7 +15,7 @@ class Editor extends Steps {
 	 * Дождаться появления редактора написания письма
 	 */
 	wait () {
-		let actual = login.wait();
+		let actual = page.wait();
 
 		assert(actual, 'Не удалось дождаться появления редактора написания письма');
 	}
