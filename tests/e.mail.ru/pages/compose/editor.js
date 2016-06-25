@@ -29,12 +29,14 @@ class Editor extends PageObject {
 	wait () {
 		return this.page.waitForExist(this.locators.container);
 	}
-	
+
 	/**
 	 * Получить редактор сообщения
+	 * @return {element}
 	 */
 	getEditor () {
 		var frameId = this.page.getAttribute(this.locators.editor, 'id');
+		
 		return this.page.frame(frameId).element(this.locators.body);
 	}
 

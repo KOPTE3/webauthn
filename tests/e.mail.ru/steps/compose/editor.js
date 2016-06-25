@@ -21,11 +21,12 @@ class Editor extends Steps {
 	}
 
 	/**
-	 * Написать текст письма
-	 * @param text
+	 * Ввести текст сообщения
+	 * @param {String} text
 	 */
 	writeMessage (text) {
 		let editor = page.getEditor();
+
 		editor.click(); // наводим фокус в едитор
 		editor.keys('\uE013\uE013\uE013'); // поднимае курсор вверх
 		editor.keys(text); // вводим текст

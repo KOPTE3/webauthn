@@ -20,9 +20,7 @@ module.exports = grunt => {
 			service: {
 				name: 'wdio',
 				file: path.resolve('tests/e.mail.ru/config.js'),
-				data: {
-					//baseUrl: `https://pre.test.mail.ru`
-				}
+				data: {}
 			}
 		}
 	};
