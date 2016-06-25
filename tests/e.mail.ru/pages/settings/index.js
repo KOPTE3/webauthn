@@ -2,8 +2,8 @@
 
 let PageObject = require('../../pages');
 
-/** Модуль для работы с представлением страницы написания письма */
-class Compose extends PageObject {
+/** Модуль для работы с представлением страницы настроек */
+class Settings extends PageObject {
 	constructor () {
 		super();
 	}
@@ -15,21 +15,21 @@ class Compose extends PageObject {
 	 */
 	get locators () {
 		return {
-			container: '.b-compose'
+			container: '.settings__index__widgets'
 		};
 	}
 
 	/**
-	 * Открыть страницу написания письма
+	 * Открыть страницу поиска писем
 	 *
 	 * @param {Object} [query] — параметры запроса
 	 * @returns {boolean}
 	 */
 	open (query) {
-		super.open('/compose', query);
+		super.open('/search', query);
 
 		return this.page.waitForExist(this.locators.container);
 	}
 }
 
-module.exports = new Compose();
+module.exports = new Settings();

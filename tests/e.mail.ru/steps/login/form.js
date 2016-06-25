@@ -52,7 +52,9 @@ class Form extends Steps {
 			provider = 'mail.ru';
 		}
 
-		assert.equal(form.getLoginValue, provider,
+		let actual = form.getLoginValue();
+
+		assert.equal(actual, provider,
 			`Не удалось найти значение для заданного провайдера ${provider}`);
 	}
 

@@ -171,9 +171,9 @@ class Form extends PageObject {
 	/**
 	 * Получить значение из списка доменов
 	 *
-	 * @type {string}
+	 * @returns {string}
 	 */
-	get getLoginValue () {
+	getLoginValue () {
 		return this.page.getValue(this.locators.providersSelect);
 	}
 

@@ -4,7 +4,7 @@ let path = require('path');
 let Store = require('../../store');
 
 /** Модуль для работы с аттачами */
-class Compose extends Store {
+class Attachments extends Store {
 	constructor () {
 		super();
 	}
@@ -25,3 +25,5 @@ class Compose extends Store {
 		return path.join(profile, '/Dropbox/feta/mail');
 	}
 }
+
+module.exports = new Attachments();

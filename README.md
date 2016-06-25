@@ -61,23 +61,13 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 npm start
 ```
 
-Запустить весь набор тестов:
-
-```
-grunt test
-```
-
-Зупустить тесты конкретного набора (ваш случай):
+Зупустить тесты конкретного набора:
 
 ```
 grunt test-runner:e.mail.ru --suite=login
 ```
 
-Зупустить тесты конкретного файла:
-
-```
-grunt test-runner:e.mail.ru --suite=login --grep=TESTMAIL-8674
-```
+PS: опция `--grep` временно не работает
 
 Выполнить тесты на заданном адресе:
 
@@ -85,23 +75,8 @@ grunt test-runner:e.mail.ru --suite=login --grep=TESTMAIL-8674
 grunt test-runner:e.mail.ru --suite=login --baseUrl=https://e.mail.ru/login
 ```
 
-Пример теста с авторизацией:
+Полный список доступных опций test-runner'a смотрите [здесь](https://stash.mail.ru/projects/QA/repos/grunt-test-runner/browse).
 
-```js
-'use strict';
-
-let assert = require('assert');
-let page = require('../object');
-
-describe('TESTMAIL-8674', () => {
-	it('Авторизация.', () => {
-		page.auth();
-		page.open('/messages/inbox');
-
-		assert.equal(browser.getUrl(), 'https://e.mail.ru/messages/inbox');
-	});
-});
-```
 
 ### Структура проекта
 
@@ -122,6 +97,9 @@ describe('TESTMAIL-8674', () => {
 		➜ store
 			➜ <название_раздела>
 				<хранилище_раздела>.js
+		➜ utils
+			➜ <название_раздела>
+				<утилиты_раздела>.js
 		config.js
 ```
 
@@ -131,6 +109,7 @@ describe('TESTMAIL-8674', () => {
 | **pages** | Элементы предстравления | store, browser
 | **steps** | Шаги                    | store, pages
 | **store** | Хранилище               | store
+| **utils** | Утилиты                 | store
 
 Обратие внимание, что взаимодействие между сущностями строго регламентировано. Например, это значит, что вы не можете внутри какого-либо тест-кейса обращься к элементам представления (все объекты представления включая `browser` можно вызывать только в директории `pages` и нигде больше).
 
@@ -146,7 +125,6 @@ let assert = require('assert');
 
 let login = require('../../steps/login');
 let form = require('../../steps/login/form');
-let providers = require('../../store/login/providers');
 
 describe('TESTMAIL-24935', () => {
 	it('Проверка отображения элементов на форме авторизации', () => {
@@ -154,6 +132,21 @@ describe('TESTMAIL-24935', () => {
 
 		form.checkDefaultDomain();
 		form.checkTitle();
+	});
+});
+```
+
+Пример теста с авторизацией:
+
+```js
+'use strict';
+
+let page = require('../../steps/messages');
+
+describe('TESTMAIL-XXXX', () => {
+	it('Проверка перехода на страницу списка писем.', () => {
+		page.auth();
+		page.open();
 	});
 });
 ```
@@ -367,4 +360,83 @@ class Providers extends collectorProviders {
 }
 
 module.exports = new Providers();
+```
+
+### Рекомендации
+
+* Не обращайтесь к объекту `browser` напрямую, только через `this.page` в `pages`
+* Все без исключения методы должны иметь аннотацию JSDoc
+* Не используйте сокращения вида err, dfd, fn, и пр.
+* Для переменной, которая сохраняет состояние используйте название `actual`
+* Прижерживайтесь существующей структуры и организации кода проекта
+* Для работы с любыми данными используйте всегда хранилище (`store`)
+* Если вы работаете с полями формы, то у вас должны быть определены как минимум следующие типы методов:
+
+
+| Метод  | Назначение                                | Определение    |
+|---------------------|------------------------------|----------------|
+| **getField**        | Получить значение элемента   | pages
+| **getFieldValue**   | Получить значение элемента   | pages
+| **setFieldValue**   | Установить значение элемента | pages, steps
+| **clearFieldValue** | Очистить значение элемента   | pages, steps
+
+
+Необязательные методы:
+
+| Метод              | Назначение                   | Определение    |
+|--------------------|------------------------------|----------------|
+| **showField**      | Показать элемент             | pages, steps
+| **hideField**      | Скрыть элемент               | pages, steps
+| **isVisibleField** | Проверить видимость элемента | pages, steps
+| **clickField**     | Сделать клик в поле          | pages, steps
+| **tabField**       | Перейти в поле по табу       | pages, steps
+
+
+Эти методы должны примать имена полей и значения:
+
+**<page>**
+
+```js
+{
+	/**
+	 * Получить элемент поля по имени
+	 *
+	 * @param {string} name — имя поля.
+	 * Доступные значения (from, to, cc, bcc, subject, priority, receipt, remind)
+	 *
+	 * @returns {Promise}
+	 */
+	getField (name) {
+		return this.page.element(this.locators.fields[name]);
+	}
+}
+```
+
+```js
+{
+	/**
+	 * Получить значение поля по имени
+	 *
+	 * @see getField
+	 * @param {string} name — имя поля
+	 * @returns {string}
+	 */
+	getFieldValue (name, value) {
+		return this.getField(name).getValue();
+	}
+}
+```
+
+**<step>**
+
+```js
+/**
+ * Получить значение поля по имени
+ *
+ * @see form.getField
+ * @param {string} name — имя поля
+ */
+getFieldValue (name) {
+	form.getFieldValue(name);
+}
 ```

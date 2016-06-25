@@ -1,6 +1,7 @@
 'use strict';
 
 let PageObject = require('../../pages');
+let ComposeFormStore = require('../../store/compose/form');
 
 /** Модуль для работы с формой страницы написания письма */
 class Form extends PageObject {
@@ -19,15 +20,15 @@ class Form extends PageObject {
 			fields: {
 				priority: '[name="Priority"]',
 				receipt : '[name="Receipt"]',
+				remind  : '[name="remind"]',
 				from    : '.js-compose__header__from',
 				to      : '.compose__header__field [data-original-name="To"]',
 				cc      : '.compose__header__field [data-original-name="CC"]',
 				bcc     : '.compose__header__field [data-original-name="BCC"]',
 				subject : '.compose__header__field [name="Subject"]'
 			},
-			filedRemind   : '[name="remind"]',
-			fieldMenu     : '#dropdown-select-fields .dropdown__checkbox',
-			fieldMenuItems: '#dropdown-select-fields .dropdown__list_multiselect'
+			selectField    : '#dropdown-select-fields .dropdown__checkbox',
+			selectFieldItem: '#dropdown-select-fields .dropdown__list_multiselect'
 		};
 	}
 
@@ -44,18 +45,18 @@ class Form extends PageObject {
 	 * Получить элемент поля по имени
 	 *
 	 * @param {string} name — имя поля.
-	 * Доступные значения (from, to, cc, bcc, subject, priority, receipt)
+	 * Доступные значения (from, to, cc, bcc, subject, priority, receipt, remind)
 	 *
 	 * @returns {Promise}
 	 */
-	getFieldElement (name) {
+	getField (name) {
 		return this.page.element(this.locators.fields[name]);
 	}
 
 	/**
 	 * Сделать клик на заданном поле
 	 *
-	 * @see getFieldElement
+	 * @see getField
 	 * @param {string} name — имя поля
 	 */
 	clickField (name) {
@@ -65,27 +66,27 @@ class Form extends PageObject {
 	/**
 	 * Показать заданное поле
 	 *
-	 * @see getFieldElement
+	 * @see getField
 	 * @param {string} name — имя поля
 	 */
 	showField (name) {
-		this.showMenuFields();
+		this.showSelectFields();
 	}
 
 	/**
 	 * Скрыть заданное поле
 	 *
-	 * @see getFieldElement
+	 * @see getField
 	 * @param {string} name — имя поля
 	 */
 	hideField (name) {
-		this.showMenuFields();
+		this.showSelectFields();
 	}
 
 	/**
 	 * Проверить видимость поля "От кого"
 	 *
-	 * @see getFieldElement
+	 * @see getField
 	 * @param {string} name — имя поля
 	 * @returns {boolean}
 	 */
@@ -96,22 +97,33 @@ class Form extends PageObject {
 	/**
 	 * Очистить поле заданное поле
 	 *
-	 * @see getFieldElement
+	 * @see getField
 	 * @param {string} name — имя поля
 	 */
-	clearField (name) {
-		this.getFieldElement(name).setValue('');
+	clearFieldValue (name) {
+		this.getField(name).setValue('');
+	}
+
+	/**
+	 * Получить значение поля по имени
+	 *
+	 * @see getField
+	 * @param {string} name — имя поля
+	 * @returns {string}
+	 */
+	getFieldValue (name) {
+		return this.getField(name).getValue();
 	}
 
 	/**
 	 * Задать значение поля по имени
 	 *
-	 * @see getFieldElement
+	 * @see getField
 	 * @param {string} name — имя поля
 	 * @param {string} value — значение поля
 	 */
 	setFieldValue (name, value) {
-		this.getFieldElement(name).keys(value);
+		this.getField(name).keys(value);
 	}
 
 	/**
@@ -120,7 +132,7 @@ class Form extends PageObject {
 	 * @returns {Promise}
 	 */
 	getMenuFields () {
-		return this.page.element(this.locators.fieldMenu);
+		return this.page.element(this.locators.selectField);
 	}
 
 	/**
@@ -129,9 +141,7 @@ class Form extends PageObject {
 	 * @param {boolean} state — состояние
 	 */
 	toggleAllFields (state) {
-		let fields = ['to', 'from', 'cc', 'bcc'];
-
-		for (let name of fields) {
+		for (let name of ComposeFormStore.hiddenFields) {
 			if (state) {
 				this.showField(name);
 			} else {
@@ -159,25 +169,25 @@ class Form extends PageObject {
 	 *
 	 * @returns {boolean}
 	 */
-	isVisibleMenuFields () {
-		return this.page.isVisible(this.locators.fieldMenu);
+	isVisibleSelectFields () {
+		return this.page.isVisible(this.locators.selectField);
 	}
 
 	/**
 	 * Скрыть список полей
 	 */
-	hideMenuFields () {
-		if (this.isVisibleMenuFields()) {
-			this.page.click(this.locators.fieldMenu);
+	hideSelectFields () {
+		if (this.isVisibleSelectFields()) {
+			this.page.click(this.locators.selectField);
 		}
 	}
 
 	/**
 	 * Показать список полей
 	 */
-	showMenuFields () {
-		if (!this.isVisibleMenuFields()) {
-			this.page.click(this.locators.fieldMenu);
+	showSelectFields () {
+		if (!this.isVisibleSelectFields()) {
+			this.page.click(this.locators.selectField);
 		}
 	}
 }

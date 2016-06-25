@@ -2,8 +2,8 @@
 
 let PageObject = require('../../pages');
 
-/** Модуль для работы с представлением страницы написания письма */
-class Compose extends PageObject {
+/** Модуль для работы с представлением треда */
+class Thread extends PageObject {
 	constructor () {
 		super();
 	}
@@ -15,21 +15,22 @@ class Compose extends PageObject {
 	 */
 	get locators () {
 		return {
-			container: '.b-compose'
+			container: '.b-thread'
 		};
 	}
 
 	/**
-	 * Открыть страницу написания письма
+	 * Открыть страницу чтения треда
 	 *
+	 * @param {string} path — id треда
 	 * @param {Object} [query] — параметры запроса
 	 * @returns {boolean}
 	 */
-	open (query) {
-		super.open('/compose', query);
+	open (path, query) {
+		super.open(`/thread/${path}`, query);
 
 		return this.page.waitForExist(this.locators.container);
 	}
 }
 
-module.exports = new Compose();
+module.exports = new Thread();

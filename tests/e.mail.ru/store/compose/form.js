@@ -27,6 +27,16 @@ class ComposeForm extends Store {
 			priority: 1
 		};
 	}
+
+	/**
+	 * Возвращает список полей, которые могут быть скрыты
+	 *
+	 * @static
+	 * @type {Array}
+	 */
+	static get hiddenFields () {
+		return ['to', 'from', 'cc', 'bcc'];
+	}
 }
 
 module.exports = ComposeForm;

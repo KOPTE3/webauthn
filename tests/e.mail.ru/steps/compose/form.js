@@ -18,13 +18,44 @@ class Form extends Steps {
 	wait () {
 		let actual = compose.wait();
 
-		assert(actual, 'Не удалось открыть форму написания письма');
+		assert(actual, 'Не удалось дождаться показа формуынаписания письма');
+	}
+
+	/**
+	 * Получить значение поля по имени
+	 *
+	 * @see form.getField
+	 * @param {string} name — имя поля
+	 */
+	getFieldValue (name) {
+		form.getFieldValue(name);
+	}
+
+	/**
+	 * Задать значение поля по имени
+	 *
+	 * @see form.getField
+	 * @param {string} name — имя поля
+	 * @param {string} value — значение поля
+	 */
+	setFieldValue (name, value) {
+		form.setFieldValue(...arguments);
+	}
+
+	/**
+	 * Очистить поле заданное поле
+	 *
+	 * @see form.getField
+	 * @param {string} name — имя поля
+	 */
+	clearFieldValue (name) {
+		form.clearFieldValue(name);
 	}
 
 	/**
 	 * Сделать клик на заданном поле
 	 *
-	 * @see form.getFieldElement
+	 * @see form.getField
 	 * @param {string} name — имя поля
 	 */
 	clickField (name) {
@@ -34,7 +65,7 @@ class Form extends Steps {
 	/**
 	 * Показать заданное поле
 	 *
-	 * @see form.getFieldElement
+	 * @see form.getField
 	 * @param {string} name — имя поля
 	 */
 	showField (name) {
@@ -44,7 +75,7 @@ class Form extends Steps {
 	/**
 	 * Скрыть заданное поле
 	 *
-	 * @see form.getFieldElement
+	 * @see form.getField
 	 * @param {string} name — имя поля
 	 */
 	hideField (name) {
@@ -54,7 +85,7 @@ class Form extends Steps {
 	/**
 	 * Проверить видимость поля "От кого"
 	 *
-	 * @see form.getFieldElement
+	 * @see form.getField
 	 * @param {string} name — имя поля
 	 */
 	isVisibleField (name) {
@@ -64,31 +95,10 @@ class Form extends Steps {
 	}
 
 	/**
-	 * Очистить поле заданное поле
-	 *
-	 * @see form.getFieldElement
-	 * @param {string} name — имя поля
-	 */
-	clearField (name) {
-		form.clearField(name);
-	}
-
-	/**
-	 * Задать значение поля по имени
-	 *
-	 * @see form.getFieldElement
-	 * @param {string} name — имя поля
-	 * @param {string} value — значение поля
-	 */
-	setFieldValue (name, value) {
-		form.setFieldValue(...arguments);
-	}
-
-	/**
 	 * Показать все поля формы
 	 */
-	isVisibleMenuFields () {
-		let active = form.isVisibleMenuFields();
+	isVisibleSelectFields () {
+		let active = form.isVisibleSelectFields();
 
 		asert(active, 'Видимость списка полей под вопросом');
 	}

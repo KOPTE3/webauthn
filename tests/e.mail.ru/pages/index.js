@@ -31,6 +31,15 @@ class PageObject {
 	}
 
 	/**
+	 * Получить заголовок страницы
+	 *
+	 * @type {string}
+	 */
+	get title () {
+		this.page.getTitle();
+	}
+
+	/**
 	 * Авторизация
 	 *
 	 * @param {string} type — типа авторизации
