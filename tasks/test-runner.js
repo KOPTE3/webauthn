@@ -24,7 +24,7 @@ module.exports = grunt => {
 					},
 					(error, logo) => {
 						console.log(logo);
-					})
+					});
 				}
 			}
 		},
