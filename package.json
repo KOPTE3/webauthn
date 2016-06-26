@@ -27,7 +27,7 @@
 		"start"  : "selenium-standalone start",
 		"install": "selenium-standalone install",
 		"test"   : "grunt --stack test",
-		"lint"   : "eslint . --ext .js",
+		"lint"   : "eslint . --format 'node_modules/eslint-friendly-formatter' --ext .js",
 		"wdio"   : "wdio"
 	},
 
@@ -54,6 +54,7 @@
 	"devDependencies": {
 		"@qa/eslint-config-mail.ru": "^0.0.9",
 		"@qa/git-hooks"            : "^0.0.1",
-		"eslint"                   : "^2.11.1"
+		"eslint"                   : "^2.11.1",
+		"eslint-stylish-config"    : "^0.0.2"
 	}
 }

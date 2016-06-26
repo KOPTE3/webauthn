@@ -1,8 +1,8 @@
 'use strict';
 
-const path = require('path');
-const load = require('load-grunt-config');
-const time = require('time-grunt');
+let path = require('path');
+let load = require('load-grunt-config');
+let time = require('time-grunt');
 
 module.exports = grunt => {
 	time(grunt);

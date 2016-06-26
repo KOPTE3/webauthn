@@ -2,7 +2,7 @@
 
 ### Платформа для написания интеграционных тестов
 
-![Yoda](files/yoda.jpg)
+![Yoda](files/logo.jpg)
 
 Меленький `Yoda` призван помочь большой `Fete`
 
@@ -67,7 +67,13 @@ npm start
 grunt test-runner:e.mail.ru --suite=login
 ```
 
-PS: опция `--grep` временно не работает
+Зупустить конкретный тест-кейс:
+
+```
+grunt test-runner:e.mail.ru --suite=login --grep=TESTMAIL-XXXX
+```
+
+*Опция `--grep` принимает название тест-кейса, которое задается в секции `describe`*
 
 Выполнить тесты на заданном адресе:
 

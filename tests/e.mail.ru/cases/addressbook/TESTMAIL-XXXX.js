@@ -2,7 +2,7 @@
 
 let page = require('../../steps/addressbook');
 
-describe('TESTMAIL-XXX', () => {
+describe('TESTMAIL-XXXX', () => {
 	it('Открытие адресной книги', () => {
 		page.auth();
 		page.open();
