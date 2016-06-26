@@ -1,10 +1,10 @@
 'use strict';
 
 let PageObject = require('../../pages');
-let ComposeFormStore = require('../../store/compose/form');
+let ComposeFormStore = require('../../store/compose/fields');
 
 /** Модуль для работы с формой страницы написания письма */
-class Form extends PageObject {
+class Fields extends PageObject {
 	constructor () {
 		super();
 	}
@@ -192,4 +192,4 @@ class Form extends PageObject {
 	}
 }
 
-module.exports = new Form();
+module.exports = new Fields();
