@@ -1,7 +1,7 @@
 'use strict';
 
 let PageObject = require('../../pages');
-let providers = require('../../store/collectors/providers');
+let providers = require('../../store/authorization/providers');
 
 /** Модуль для работы с формой страницы логина */
 class Form extends PageObject {

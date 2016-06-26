@@ -202,7 +202,7 @@ let assert = require('assert');
 
 let Steps = require('../../steps');
 let form = require('../../pages/login/form');
-let providers = require('../../store/collectors/providers');
+let providers = require('../../store/authorization/providers');
 
 class Form extends Steps {
 	constructor () {
@@ -248,14 +248,15 @@ module.exports = new Form();
 
 ```
 ➜ store
-	➜ collectors
+	➜ authorization
+		index.js
 		providers.js
 
 	➜ login
 		providers.js
 ```
 
-**store/collectors/providers.js**
+**store/authorization/providers.js**
 
 ```js
 'use strict';
@@ -323,10 +324,10 @@ module.exports = Providers;
 ```js
 'use strict';
 
-let collectorProviders = require('../../store/collectors/providers');
+let authProviders = require('../../store/authorization/providers');
 
 /** Модуль для работы с данными почтовых провайдеров */
-class Providers extends collectorProviders {
+class Providers extends authProviders {
 	constructor () {
 		super();
 	}
