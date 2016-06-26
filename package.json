@@ -31,9 +31,13 @@
 		"wdio"   : "wdio"
 	},
 
-	"pre-commit": [
-		"lint"
-	],
+	"pre-commit": {
+		"silent": true,
+
+		"run": [
+			"lint"
+		]
+	},
 
 	"dependencies": {
 		"@qa/account-manager"  : "^0.0.3",
