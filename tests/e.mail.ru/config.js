@@ -27,7 +27,7 @@ exports.config = {
 	path: '/wd/hub',
 
 	/* Базовый адрес тестирования */
-	baseUrl: 'https://omega.test.mail.ru',
+	baseUrl: 'https://e.mail.ru',
 
 	/* Доступные значения: silent, verbose, command, data, result, error */
 	logLevel: 'silent',
@@ -115,7 +115,7 @@ exports.config = {
 
 	beforeSuite () {
 		return account.session({
-			host: this.baseUrl
+			host: browser.options.baseUrl
 		});
 	},
 
