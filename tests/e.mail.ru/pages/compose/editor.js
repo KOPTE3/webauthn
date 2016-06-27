@@ -41,7 +41,7 @@ class Editor extends PageObject {
 	}
 
 	restoreParentFrame () {
-		this.frameParent();
+		this.page.frameParent();
 	}
 
 }

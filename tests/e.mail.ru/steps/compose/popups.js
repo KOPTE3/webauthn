@@ -21,7 +21,7 @@ class Popups extends Steps {
 	getPopup (name) {
 		let popup = popups.getPopup(name);
 
-		assert(popup.isVisible());
+		assert(popup.isVisible(), 'Попап не был показан');
 
 		return popup;
 	}

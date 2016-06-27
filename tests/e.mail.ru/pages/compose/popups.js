@@ -35,7 +35,7 @@ class Popups extends PageObject {
 	 * Доступные значения (missingAttach, multiAttachToCompose, secure)
 	 */
 	waitPopup (name) {
-		this.page.waitForVisible(this.locators.popups[name]);
+		this.page.waitForVisible(this.locators.popups[name], 2000);
 	}
 
 	/**

@@ -21,17 +21,25 @@ class Editor extends Steps {
 	}
 
 	/**
+	 * Метод фокусируется на input
+	 * @param {Element} input - элемент на котором сфокусироватся
+	 * */
+	setFocus (input) {
+		input.click(); // наводим фокус в едитор
+		input.keys('\uE013\uE013\uE013'); // поднимаем курсор вверх
+	}
+
+	/**
 	 * Ввести текст сообщения
 	 * @param {String} text
 	 */
 	writeMessage (text) {
 		let editor = page.getEditor();
 
-		editor.click(); // наводим фокус в едитор
-		editor.keys('\uE013\uE013\uE013'); // поднимае курсор вверх
+		this.setFocus(editor);
 		editor.keys(text); // вводим текст
 
-		assert(editor.getText('').includes(text), 'Текст не был введен');
+		assert(editor.getText('').includes(text), 'Текст письма не был введен');
 		page.restoreParentFrame();
 	}
 
