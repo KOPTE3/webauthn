@@ -43,7 +43,7 @@
 		"@qa/account-manager"  : "^0.0.9",
 		"@qa/grunt-test-runner": "^0.1.0",
 		"@qa/test-tools"       : "^1.0.0",
-		"@qa/wd-capabilities"  : "^0.0.2",
+		"@qa/wd-capabilities"  : "^0.0.3",
 		"@qa/wdio-api-mail.ru" : "^1.2.0",
 		"grunt"                : "^1.0.1",
 		"grunt-cli"            : "^1.2.0",
