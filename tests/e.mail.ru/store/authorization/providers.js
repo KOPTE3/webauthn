@@ -3,7 +3,7 @@
 let Store = require('../../store');
 
 /** Модуль для работы с данными почтовых провайдеров */
-class Providers extends Store {
+class AuthProviders extends Store {
 	constructor () {
 		super();
 
@@ -232,4 +232,4 @@ class Providers extends Store {
 	}
 }
 
-module.exports = Providers;
+module.exports = AuthProviders;

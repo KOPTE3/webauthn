@@ -1,9 +1,9 @@
 'use strict';
 
-let collectorProviders = require('../../store/collectors/providers');
+let AuthProviders = require('../../store/authorization/providers');
 
 /** Модуль для работы с данными почтовых провайдеров на странице логина */
-class Providers extends collectorProviders {
+class Providers extends AuthProviders {
 	constructor () {
 		super();
 	}

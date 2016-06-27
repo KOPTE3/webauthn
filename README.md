@@ -2,7 +2,7 @@
 
 ### Платформа для написания интеграционных тестов
 
-![Yoda](files/yoda.jpg)
+![Yoda](files/logo.jpg)
 
 Меленький `Yoda` призван помочь большой `Fete`
 
@@ -67,7 +67,13 @@ npm start
 grunt test-runner:e.mail.ru --suite=login
 ```
 
-PS: опция `--grep` временно не работает
+Зупустить конкретный тест-кейс:
+
+```
+grunt test-runner:e.mail.ru --suite=login --grep=TESTMAIL-XXXX
+```
+
+*Опция `--grep` принимает название тест-кейса, которое задается в секции `describe`*
 
 Выполнить тесты на заданном адресе:
 
@@ -196,7 +202,7 @@ let assert = require('assert');
 
 let Steps = require('../../steps');
 let form = require('../../pages/login/form');
-let providers = require('../../store/collectors/providers');
+let providers = require('../../store/authorization/providers');
 
 class Form extends Steps {
 	constructor () {
@@ -242,14 +248,15 @@ module.exports = new Form();
 
 ```
 ➜ store
-	➜ collectors
+	➜ authorization
+		index.js
 		providers.js
 
 	➜ login
 		providers.js
 ```
 
-**store/collectors/providers.js**
+**store/authorization/providers.js**
 
 ```js
 'use strict';
@@ -317,10 +324,10 @@ module.exports = Providers;
 ```js
 'use strict';
 
-let collectorProviders = require('../../store/collectors/providers');
+let authProviders = require('../../store/authorization/providers');
 
 /** Модуль для работы с данными почтовых провайдеров */
-class Providers extends collectorProviders {
+class Providers extends authProviders {
 	constructor () {
 		super();
 	}
@@ -366,6 +373,7 @@ module.exports = new Providers();
 
 * Не обращайтесь к объекту `browser` напрямую, только через `this.page` в `pages`
 * Все без исключения методы должны иметь аннотацию JSDoc
+* Всегда определяйте локатор с имененем `container`
 * Не используйте сокращения вида err, dfd, fn, и пр.
 * Для переменной, которая сохраняет состояние используйте название `actual`
 * Прижерживайтесь существующей структуры и организации кода проекта

@@ -10,6 +10,17 @@ class PageObject {
 	}
 
 	/**
+	 * Локаторы
+	 *
+	 * @type {Object}
+	 */
+	get locators () {
+		return {
+			container: '#LEGO'
+		};
+	}
+
+	/**
 	 * Ссылка на объект страницы
 	 *
 	 * @type {Promise}
@@ -31,6 +42,15 @@ class PageObject {
 	}
 
 	/**
+	 * Дождаться появления требуемого элемента
+	 *
+	 * @returns {boolean}
+	 */
+	wait () {
+		return this.page.waitForExist(this.locators.container);
+	}
+
+	/**
 	 * Получить заголовок страницы
 	 *
 	 * @type {string}
@@ -47,13 +67,16 @@ class PageObject {
 	auth (type) {
 		let { account } = this.store;
 
-		let cookie = account.get('cookies');
+		this.page.url('/login');
+
 		let login = account.get('login');
+		let cookie = account.get('cookies');
+
+		cookie.forEach(value => {
+			browser.setCookie(value);
+		});
 
 		console.log(`Used ${login} account`);
-
-		this.page.url('/');
-		this.page.setCookies(cookie);
 	}
 }
 

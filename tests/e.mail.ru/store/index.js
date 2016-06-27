@@ -14,6 +14,10 @@ class Store {
 		return new AccountManager.Session();
 	}
 
+	cookies (cookie) {
+		cookie.qa = '77Gozo5bwoYF5Xned9Vns5dqh5WopOZQ';
+	}
+
 	/**
 	 * Название платформы
 	 *

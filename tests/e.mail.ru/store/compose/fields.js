@@ -3,7 +3,7 @@
 let Store = require('../../store');
 
 /** Модуль для работы с данными формы страницы написания письма */
-class ComposeForm extends Store {
+class ComposeFields extends Store {
 	constructor () {
 		super();
 	}
@@ -39,4 +39,4 @@ class ComposeForm extends Store {
 	}
 }
 
-module.exports = ComposeForm;
+module.exports = ComposeFields;

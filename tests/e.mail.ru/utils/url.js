@@ -3,6 +3,7 @@
 let url = require('url');
 let querystring = require('querystring');
 
+/** Модуль для работы с URL */
 class URL {
 	/**
 	 * Сериализует параметры запроса
@@ -16,7 +17,7 @@ class URL {
 	}
 
 	/**
-	 * Десириализует параметры запроса
+	 * Десериализует параметры запроса
 	 *
 	 * @static
 	 * @see querystring.parse

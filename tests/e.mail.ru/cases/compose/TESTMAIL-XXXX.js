@@ -1,13 +1,14 @@
 'use strict';
 
 let page = require('../../steps/compose');
-let form = require('../../steps/compose/form');
+let fields = require('../../steps/compose/fields');
+let controls = require('../../steps/compose/controls');
 
-describe('TESTMAIL-XXX', () => {
+describe('TESTMAIL-XXXX', () => {
 	it('Открытие страницы написания письма', () => {
 		page.auth();
 		page.open();
-
-		form.showAllFields();
+		fields.showAllFields();
+		controls.saveDraft();
 	});
 });
