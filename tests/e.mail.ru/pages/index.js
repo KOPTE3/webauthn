@@ -3,6 +3,8 @@
 let Store = require('../store');
 let URL = require('../utils/url');
 
+let features = [];
+
 /** @namespace browser */
 class PageObject {
 	constructor () {
@@ -35,8 +37,13 @@ class PageObject {
 	 * @param {string} path — метод запроса
 	 * @param {Object} [query] — параметры запроса
 	 */
-	open (path, query) {
-		let url = URL.request(...arguments);
+	open (path, query = {}) {
+		if (features.length) {
+			query.ftrs = features.join(' ');
+			features = [];
+		}
+
+		let url = URL.request(path, query);
 
 		this.page.url(url);
 	}
@@ -72,26 +79,12 @@ class PageObject {
 		let login = account.get('login');
 		let cookie = account.get('cookies');
 
-		cookie.forEach(value => {
-			browser.setCookie(value);
-		});
-
+		this.page.setCookies(cookie);
 		console.log(`Used ${login} account`);
 	}
 
-	/**
-	 * Включение фичи
-	 *
-	 * @param {string} name — имя фичи
-	 * @param {boolean} state — статус фичи (true - включенна)
-	 */
-	toggleFeature (name, state) {
-		this.page.execute(function (fName, fState) {
-			var feature = {};
-			
-			feature[fName] = {state: fState};
-			require('features').extend(feature);
-		}, name, state);
+	addFeature (name) {
+		features.push(name);
 	}
 
 }

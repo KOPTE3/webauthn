@@ -36,8 +36,12 @@ class Editor extends PageObject {
 	 */
 	getEditor () {
 		var frameId = this.page.getAttribute(this.locators.editor, 'id');
-		
+
 		return this.page.frame(frameId).element(this.locators.body);
+	}
+
+	restoreParentFrame () {
+		this.frameParent();
 	}
 
 }

@@ -21,8 +21,8 @@ class Controls extends Steps {
 	/**
 	 * Отправить сообщение
 	 */
-	sendMessage () {
-		controls.sendMessage();
+	compose () {
+		controls.compose();
 	}
 
 }

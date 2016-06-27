@@ -32,6 +32,7 @@ class Editor extends Steps {
 		editor.keys(text); // вводим текст
 
 		assert(editor.getText('').includes(text), 'Текст не был введен');
+		page.restoreParentFrame();
 	}
 
 

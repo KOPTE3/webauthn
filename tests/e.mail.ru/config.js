@@ -114,7 +114,9 @@ exports.config = {
 	},
 
 	beforeSuite () {
-		return account.session();
+		return account.session({
+			host: this.baseUrl
+		});
 	},
 
 	afterSuite () {

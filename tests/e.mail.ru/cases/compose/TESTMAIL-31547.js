@@ -6,14 +6,20 @@ let editor = require('../../steps/compose/editor');
 let controls = require('../../steps/compose/controls');
 let popups = require('../../steps/compose/popups');
 
-describe('TESTMAIL-31548', () => {
-	it('НЕ AJAX. Написание письма. Забытое вложение.' +
-	   'Проверить появление попапа при отправке текстов ' +
-	  '(тексты для которых должен появляться попап)', () => {
+describe('TESTMAIL-31547' +
+	'НЕ AJAX. Написание письма. Забытое вложение.' +
+   	'Проверить появление попапа при отправке текстов ' +
+  	'(тексты для которых должен появляться попап)', () => {
+	beforeEach(function () {
 		page.auth();
-		page.open();
-		page.toggleFeature('check-missing-attach', true);
 
+		page.addFeature('check-missing-attach');
+		page.addFeature('disable-ballons');
+
+		page.open();
+	});
+
+	it('Уважаемый Сергей Михайлович!', () => {
 		fields.setFieldValue('subject', 'check attach');
 		fields.setFieldValue('to', 'i.burlak@corp.mail.ru');
 
@@ -27,6 +33,11 @@ describe('TESTMAIL-31548', () => {
 		' адрес электронной почты и телефон для связи\n' +
 		' С уважением к Вам, Директор ООО "Универсал-1"Александр Ротин .');
 
-		popups.getPopup('missingAttach');
+		try {
+			controls.compose();
+			popups.getPopup('missingAttach');
+		} catch (error) {
+			console.log(error);
+		}
 	});
 });

@@ -25,7 +25,7 @@ class Fields extends PageObject {
 				to      : '.compose__header__field [data-original-name="To"]',
 				cc      : '.compose__header__field [data-original-name="CC"]',
 				bcc     : '.compose__header__field [data-original-name="BCC"]',
-				subject : '.compose__header__field [name="Subject"]'
+				subject : '.compose__header__field[name="Subject"]'
 			},
 			selectField    : '#dropdown-select-fields .dropdown__checkbox',
 			selectFieldItem: '#dropdown-select-fields .dropdown__list_multiselect'
@@ -123,7 +123,7 @@ class Fields extends PageObject {
 	 * @param {string} value — значение поля
 	 */
 	setFieldValue (name, value) {
-		this.getField(name).keys(value);
+		this.getField(name).setValue(value);
 	}
 
 	/**

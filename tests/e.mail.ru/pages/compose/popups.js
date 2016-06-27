@@ -30,13 +30,23 @@ class Popups extends PageObject {
 	}
 
 	/**
-	 *
+	 * Метод дожидается показа попапа
+	 * @param {string} name - имя попапа
+	 * Доступные значения (missingAttach, multiAttachToCompose, secure)
+	 */
+	waitPopup (name) {
+		this.page.waitForVisible(this.locators.popups[name]);
+	}
+
+	/**
 	 * Метод возвращает элемент попапа по его имени
 	 * @param {string} name - имя попапа
 	 * Доступные значения (missingAttach, multiAttachToCompose, secure)
 	 * @returns {Promise}
 	 */
 	getPopup (name) {
+		this.waitPopup(name);
+
 		return browser.element(this.locators.popups[name]);
 	}
 
