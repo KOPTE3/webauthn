@@ -19,7 +19,7 @@ class Popups extends PageObject {
 			head: '.popup__box .popup__head',
 			desc: '.popup__box .popup__desc',
 			apply: '.popup__box .popup__controls .confirm-ok',
-			cancle: '.popup__box .popup__controls .confirm-cancel',
+			cancel: '.popup__box .popup__controls .confirm-cancel',
 			close: '.popup .js-cancel',
 			popups: {
 				missingAttach: '.is-compose-missingAttach_in',
@@ -31,6 +31,7 @@ class Popups extends PageObject {
 
 	/**
 	 * Метод дожидается показа попапа
+	 *
 	 * @param {string} name - имя попапа
 	 * Доступные значения (missingAttach, multiAttachToCompose, secure)
 	 */
@@ -40,6 +41,7 @@ class Popups extends PageObject {
 
 	/**
 	 * Метод возвращает элемент попапа по его имени
+	 *
 	 * @param {string} name - имя попапа
 	 * Доступные значения (missingAttach, multiAttachToCompose, secure)
 	 * @returns {Promise}

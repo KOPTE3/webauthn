@@ -14,8 +14,8 @@ class Controls extends Steps {
 	/**
 	 * Сохранить черновик
 	 */
-	saveDraft () {
-		controls.saveDraft();
+	draft () {
+		controls.draft();
 	}
 
 	/**

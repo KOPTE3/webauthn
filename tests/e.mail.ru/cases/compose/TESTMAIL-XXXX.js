@@ -9,6 +9,6 @@ describe('TESTMAIL-XXXX', () => {
 		page.auth();
 		page.open();
 		fields.showAllFields();
-		controls.saveDraft();
+		controls.draft();
 	});
 });

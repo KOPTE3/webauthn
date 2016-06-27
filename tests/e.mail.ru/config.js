@@ -27,7 +27,7 @@ exports.config = {
 	path: '/wd/hub',
 
 	/* Базовый адрес тестирования */
-	baseUrl: 'https://e.mail.ru',
+	baseUrl: 'https://omega.test.mail.ru',
 
 	/* Доступные значения: silent, verbose, command, data, result, error */
 	logLevel: 'silent',
@@ -60,7 +60,7 @@ exports.config = {
 
 	mochaOpts: {
 		ui: 'bdd',
-		retries: 2
+		retries: 1
 	},
 
 	/* Для реппортера Allure требуется наличие установленного плагина в CI */
