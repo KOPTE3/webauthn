@@ -17,7 +17,8 @@ class Controls extends PageObject {
 	get locators () {
 		return {
 			container: '[data-mnemo="toolbar-compose"]',
-			saveDraft: '[data-mnemo="toolbar-compose"] [data-name="saveDraft"]'
+			saveDraft: '[data-mnemo="toolbar-compose"] [data-name="saveDraft"]',
+			compose  : '[data-mnemo="toolbar-compose"] [data-name="saveDraft"]'
 		};
 	}
 
@@ -25,6 +26,13 @@ class Controls extends PageObject {
 	 * Сохранить черновик
 	 */
 	saveDraft () {
+		this.page.click(this.locators.saveDraft);
+	}
+
+	/**
+	 * Написать письмо
+	 */
+	compose () {
 		this.page.click(this.locators.saveDraft);
 	}
 }

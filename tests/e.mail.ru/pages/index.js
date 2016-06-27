@@ -72,10 +72,7 @@ class PageObject {
 		let login = account.get('login');
 		let cookie = account.get('cookies');
 
-		cookie.forEach(value => {
-			browser.setCookie(value);
-		});
-
+		this.page.setCookies(cookie);
 		console.log(`Used ${login} account`);
 	}
 }
