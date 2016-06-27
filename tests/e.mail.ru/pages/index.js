@@ -78,6 +78,22 @@ class PageObject {
 
 		console.log(`Used ${login} account`);
 	}
+
+	/**
+	 * Включение фичи
+	 *
+	 * @param {string} name — имя фичи
+	 * @param {boolean} state — статус фичи (true - включенна)
+	 */
+	toggleFeature (name, state) {
+		this.page.execute(function (fName, fState) {
+			var feature = {};
+			
+			feature[fName] = {state: fState};
+			require('features').extend(feature);
+		}, name, state);
+	}
+
 }
 
 module.exports = PageObject;

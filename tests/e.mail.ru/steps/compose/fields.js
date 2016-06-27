@@ -110,7 +110,7 @@ class Fields extends Steps {
 	showAllFields () {
 		fields.showAllFields();
 	}
-	
+
 	/**
 	 * Скрыть все поля формы
 	 */

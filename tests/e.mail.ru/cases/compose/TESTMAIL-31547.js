@@ -1,16 +1,21 @@
 'use strict';
 
 let page = require('../../steps/compose');
-let form = require('../../steps/compose/form');
+let fields = require('../../steps/compose/fields');
 let editor = require('../../steps/compose/editor');
+let controls = require('../../steps/compose/controls');
+let popups = require('../../steps/compose/popups');
 
-describe('TESTMAIL-31547', () => {
-	it('МС. НЕ AJAX. Написание письма. Забытое вложение. ' +
-		'Проверить появление попапа и сам попап', () => {
+describe('TESTMAIL-31548', () => {
+	it('НЕ AJAX. Написание письма. Забытое вложение.' +
+	   'Проверить появление попапа при отправке текстов ' +
+	  '(тексты для которых должен появляться попап)', () => {
 		page.auth();
 		page.open();
+		page.toggleFeature('check-missing-attach', true);
 
-		form.setFieldValue('to', 'i.burlak@corp.mail.ru');
+		fields.setFieldValue('subject', 'check attach');
+		fields.setFieldValue('to', 'i.burlak@corp.mail.ru');
 
 		editor.writeMessage('Уважаемый Сергей Михайлович!\n' +
 		' Электролаборатория ООО"Универсал-1" предлагает ' +
@@ -21,5 +26,7 @@ describe('TESTMAIL-31547', () => {
 		' Во вложенном файле наше Предложение, реквизиты, ' +
 		' адрес электронной почты и телефон для связи\n' +
 		' С уважением к Вам, Директор ООО "Универсал-1"Александр Ротин .');
+
+		popups.getPopup('missingAttach');
 	});
 });

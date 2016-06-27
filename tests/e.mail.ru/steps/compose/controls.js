@@ -17,6 +17,14 @@ class Controls extends Steps {
 	saveDraft () {
 		controls.saveDraft();
 	}
+
+	/**
+	 * Отправить сообщение
+	 */
+	sendMessage () {
+		controls.sendMessage();
+	}
+
 }
 
 module.exports = new Controls();

@@ -17,7 +17,9 @@ class Controls extends PageObject {
 	get locators () {
 		return {
 			container: '[data-mnemo="toolbar-compose"]',
-			saveDraft: '[data-mnemo="toolbar-compose"] [data-name="saveDraft"]'
+			saveDraft: '[data-mnemo="toolbar-compose"] [data-name="saveDraft"]',
+			send: '[data-mnemo="toolbar-compose"] [data-name="send"]',
+			cancel: '[data-mnemo="toolbar-compose"] [data-name="cancel"]'
 		};
 	}
 
@@ -27,6 +29,15 @@ class Controls extends PageObject {
 	saveDraft () {
 		this.page.click(this.locators.saveDraft);
 	}
+
+	/**
+	 * Отправить сообщение
+	 */
+	sendMessage () {
+		this.page.click(this.locators.send);
+	}
+
+
 }
 
 module.exports = new Controls();
