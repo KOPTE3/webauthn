@@ -26,8 +26,8 @@
 		"grunt"  : "grunt",
 		"start"  : "selenium-standalone start",
 		"install": "selenium-standalone install",
-		"test"   : "grunt --stack test",
 		"lint"   : "eslint . --format 'node_modules/eslint-friendly-formatter' --ext .js",
+		"test"   : "grunt --stack test",
 		"wdio"   : "wdio"
 	},
 
