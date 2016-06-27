@@ -10,6 +10,7 @@ let fields = require('../../pages/compose/fields');
 class Fields extends Steps {
 	constructor () {
 		super();
+		// this.wait();
 	}
 
 	/**
@@ -18,7 +19,7 @@ class Fields extends Steps {
 	wait () {
 		let actual = compose.wait();
 
-		assert(actual, 'Не удалось дождаться показа формуынаписания письма');
+		assert(actual, 'Не удалось дождаться показа формы написания письма');
 	}
 
 	/**

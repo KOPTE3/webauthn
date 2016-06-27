@@ -1,12 +1,24 @@
 'use strict';
 
 let assert = require('assert');
-let Page = require('../pages');
+let Pages = require('../pages');
 
-class Steps extends Page {
+class Steps extends Pages {
 	constructor () {
 		super();
 	}
+
+	/**
+	 * Дождаться появления требуемного элемента
+	 */
+	/*
+	wait () {
+		let actual = super.wait();
+
+		assert(actual, `Не удалось дождаться появления элемента ${
+			this.locators.container}`);
+	}
+	*/
 }
 
 module.exports = Steps;
