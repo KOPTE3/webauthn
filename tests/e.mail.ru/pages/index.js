@@ -3,6 +3,8 @@
 let Store = require('../store');
 let URL = require('../utils/url');
 
+let features = [];
+
 /** @namespace browser */
 class PageObject {
 	constructor () {
@@ -35,8 +37,13 @@ class PageObject {
 	 * @param {string} path — метод запроса
 	 * @param {Object} [query] — параметры запроса
 	 */
-	open (path, query) {
-		let url = URL.request(...arguments);
+	open (path, query = {}) {
+		if (features.length) {
+			query.ftrs = features.join(' ');
+			features = [];
+		}
+
+		let url = URL.request(path, query);
 
 		this.page.url(url);
 	}
@@ -75,6 +82,11 @@ class PageObject {
 		this.page.setCookies(cookie);
 		console.log(`Used ${login} account`);
 	}
+
+	addFeature (name) {
+		features.push(name);
+	}
+
 }
 
 module.exports = PageObject;

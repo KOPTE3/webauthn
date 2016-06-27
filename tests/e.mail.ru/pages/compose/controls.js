@@ -18,7 +18,8 @@ class Controls extends PageObject {
 		return {
 			container: '[data-mnemo="toolbar-compose"]',
 			saveDraft: '[data-mnemo="toolbar-compose"] [data-name="saveDraft"]',
-			compose  : '[data-mnemo="toolbar-compose"] [data-name="saveDraft"]'
+			cancel: '[data-mnemo="toolbar-compose"] [data-name="cancel"]',
+			compose  : '[data-mnemo="toolbar-compose"] [data-name="send"]'
 		};
 	}
 
@@ -33,8 +34,9 @@ class Controls extends PageObject {
 	 * Написать письмо
 	 */
 	compose () {
-		this.page.click(this.locators.saveDraft);
+		this.page.click(this.locators.compose);
 	}
+
 }
 
 module.exports = new Controls();

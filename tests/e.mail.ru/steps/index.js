@@ -22,4 +22,3 @@ class Steps extends Pages {
 }
 
 module.exports = Steps;
-
