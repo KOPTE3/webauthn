@@ -9,27 +9,39 @@ class Messages extends PageObject {
 	}
 
 	/**
+	 * Базовый адрес страницы
+	 *
+	 * @type {string}
+	 */
+	get location () {
+		return '/messages/inbox';
+	}
+
+	/**
 	 * Локаторы
 	 *
 	 * @type {Object}
 	 */
 	get locators () {
 		return {
-			container: '.b-letters'
+			container: '#b-letters',
+			buttons: {
+				compose: '.b-toolbar__btn[data-name="compose"]'
+			}
 		};
 	}
 
 	/**
-	 * Открыть страницу написания письма
+	 * Метод кликает по кнопкам
 	 *
-	 * @param {Object} [query] — параметры запроса
-	 * @returns {boolean}
-	 */
-	open (query) {
-		super.open('/messages', query);
-
-		return this.page.waitForExist(this.locators.container);
+	 * @param {string} name - имя кнопки
+	 * Доступные значения (compose)
+	 * */
+	clickButton (name) {
+		console.log('click');
+		this.page.click(this.locators.buttons[name]);
 	}
+
 }
 
-module.exports = new Messages();
+module.exports = Messages;
