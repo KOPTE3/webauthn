@@ -28,6 +28,16 @@ class LayerSteps extends Steps {
 	close () {
 		this.layer.close();
 	}
+
+	/**
+	 * Метод проверяет, что леер закрыт
+	 * */
+	shoulBeClosed () {
+		let layer = this.layer.getContainer();
+
+		assert(!layer.isVisible(), 'Лаер все еще не закрыт');
+	}
+
 }
 
 module.exports = LayerSteps;

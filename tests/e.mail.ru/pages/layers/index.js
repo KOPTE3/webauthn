@@ -25,6 +25,14 @@ class Layers extends PageObject {
 	}
 
 	/**
+	 * Метод возвращает контенер текущего леера
+	 * @returns {Promise}
+	 * */
+	getContainer () {
+		return this.page.element(this.locators.container);
+	}
+
+	/**
 	 * Метод дожидается показа лаера
 	 *
 	 * Доступные значения (missingAttach, multiAttachToCompose, secure)
