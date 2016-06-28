@@ -14,14 +14,35 @@ class Layers extends PageObject {
 	 * @type {Object}
 	 */
 	get locators () {
+		let locator = this.locator || '';
+
 		return {
 			container: '.alertDiv',
-			head     : '.popup__box .popup__head',
-			desc     : '.popup__box .popup__desc',
-			apply    : '.popup__box .popup__controls .confirm-ok',
-			cancel   : '.popup__box .popup__controls .confirm-cancel',
+			head     : `${locator} .popup__box .popup__head`,
+			desc     : `${locator} .popup__box .popup__desc`,
+			apply    : `${locator} .popup__controls .confirm-ok`,
+			cancel   : `${locator} .popup__controls .confirm-cancel`,
 			close    : '.popup .js-cancel'
 		};
+	}
+
+	/**
+	 * Метод возвращает контенер текущего леера
+	 *
+	 * @returns {Promise}
+	 */
+	getContainer () {
+		return this.page.element(this.locators.container);
+	}
+
+	/**
+	 * Метод возвращает текст блока
+	 *
+	 * @param {string} name - имя блока
+	 * @returns {Promise}
+	 */
+	getBlockText (name) {
+		return this.page.getText(this.locators[name]);
 	}
 
 	/**
