@@ -6,6 +6,7 @@ let Layers = require('../../pages/layers');
 class multiAttach extends Layers {
 	constructor () {
 		super();
+		this.locator = '.is-multiAttachToCompose_in';
 	}
 
 	/**
@@ -15,7 +16,6 @@ class multiAttach extends Layers {
 	 */
 	get locators () {
 		return this.extend(super.locators, {
-			container: '.is-multiAttachToCompose_in'
 		});
 	}
 }

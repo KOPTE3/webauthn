@@ -3,7 +3,7 @@
 let PageObject = require('../../pages');
 
 /** Модуль для работы с представлением страницы адресной книги */
-class AddressBook extends PageObject {
+class AddressBookPage extends PageObject {
 	constructor () {
 		super();
 	}
@@ -32,4 +32,4 @@ class AddressBook extends PageObject {
 	}
 }
 
-module.exports = new AddressBook();
+module.exports = new AddressBookPage();

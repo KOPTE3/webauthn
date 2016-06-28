@@ -9,6 +9,15 @@ class LoginPage extends PageObject {
 	}
 
 	/**
+	 * Базовый адрес страницы
+	 *
+	 * @type {string}
+	 */
+	get location () {
+		return '/login';
+	}
+
+	/**
 	 * Локаторы
 	 *
 	 * @type {Object}
@@ -17,32 +26,6 @@ class LoginPage extends PageObject {
 		return {
 			container: '.login-page__external'
 		};
-	}
-
-	/**
-	 * Авторизация
-	 *
-	 * @param {string} type
-	 * @returns {boolean}
-	 */
-	auth (type) {
-		super.auth(type);
-
-		return this.page.execute(() => {
-			return window.patron.username;
-		});
-	}
-
-	/**
-	 * Открыть страницу логина
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 * @returns {boolean}
-	 */
-	open (query) {
-		super.open('/login', query);
-
-		return this.page.waitForExist(this.locators.container);
 	}
 }
 

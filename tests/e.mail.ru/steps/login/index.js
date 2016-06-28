@@ -12,16 +12,12 @@ class LoginStep extends Steps {
 	}
 
 	/**
-	 * Открыть страницу авторизации
+	 * Возвращает ссылку на инстанс страницы
 	 *
-	 * @static
-	 * @param {Object} [query] — параметры запроса
+	 * @type {Object}
 	 */
-	static open (query) {
-		let login = new LoginPage();
-		let actual = login.open(query);
-
-		assert(actual, 'Не удалось открыть страницу');
+	static get page () {
+		return new LoginPage();
 	}
 }
 

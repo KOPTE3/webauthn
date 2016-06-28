@@ -12,7 +12,6 @@ class LayerSteps extends Steps {
 	/**
 	 * Метод вызывает показ требуемого лаера
 	 *
-	 * @static
 	 * @param {Object} options - опции лаера
 	 * Доступные значения (missingAttach, multiAttachToCompose, secure)
 	 */
@@ -28,6 +27,21 @@ class LayerSteps extends Steps {
 	close () {
 		this.layer.close();
 	}
+
+	/**
+	 * Метод проверяет, что леер закрыт
+	 */
+	shoulBeClosed () {
+		let layer = this.layer.getContainer();
+
+		assert(!layer.isVisible(), 'Лаер все еще не закрыт');
+	}
+
+	blockShouldHaveText (name, text) {
+		assert.equal(this.layer.getBlockText(name), text,
+			'Блок леера содержит не корректный текст');
+	}
+
 }
 
 module.exports = LayerSteps;

@@ -3,8 +3,10 @@
 let assert = require('assert');
 let Pages = require('../pages');
 
-class Steps {
-	constructor () { }
+class Steps extends Pages {
+	constructor () {
+		super();
+	}
 
 	/**
 	 * Локаторы
@@ -18,16 +20,16 @@ class Steps {
 	}
 
 	/**
-	 * Дождаться появления требуемного элемента
+	 *
+	 * Открыть страницу
+	 *
+	 * @param {Object} [query] — параметры запроса
 	 */
-	/*
-	wait () {
-		let actual = super.wait();
+	static open (query) {
+		let actual = this.page.open(query);
 
-		assert(actual, `Не удалось дождаться появления элемента ${
-			this.locators.container}`);
+		assert(actual, 'Не удалось открыть страницу');
 	}
-	*/
 }
 
 module.exports = Steps;

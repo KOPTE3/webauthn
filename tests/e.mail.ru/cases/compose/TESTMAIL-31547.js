@@ -18,6 +18,11 @@ describe('TESTMAIL-31547: НЕ AJAX. Написание письма. Забыт
 		Compose.open();
 	});
 
+	afterEach(() => {
+		missingAttachLayer.close();
+		composeControls.cancel();
+	});
+
 	composeEditorStore.letters.forEach(text => {
 		it(text, () => {
 			composeFields.setFieldValue('subject', 'check attach');
@@ -27,8 +32,6 @@ describe('TESTMAIL-31547: НЕ AJAX. Написание письма. Забыт
 				composeEditor.writeMessage(text);
 				composeControls.send();
 				missingAttachLayer.show();
-				missingAttachLayer.close();
-				composeControls.cancel();
 			} catch (error) {
 				console.log(error);
 			}

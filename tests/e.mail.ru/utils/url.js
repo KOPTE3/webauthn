@@ -8,7 +8,6 @@ class URL {
 	/**
 	 * Сериализует параметры запроса
 	 *
-	 * @static
 	 * @see querystring.stringify
 	 * @returns {string}
 	 */
@@ -19,7 +18,6 @@ class URL {
 	/**
 	 * Десериализует параметры запроса
 	 *
-	 * @static
 	 * @see querystring.parse
 	 * @returns {Object}
 	 */
@@ -30,7 +28,6 @@ class URL {
 	/**
 	 * Возвращает адрес запроса
 	 *
-	 * @static
 	 * @param {string} path
 	 * @param {Object} [query]
 	 * @returns {string}
