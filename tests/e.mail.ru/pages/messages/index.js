@@ -3,9 +3,18 @@
 let PageObject = require('../../pages');
 
 /** Модуль для работы с представлением страницы списка писем */
-class Messages extends PageObject {
+class MessagesPage extends PageObject {
 	constructor () {
 		super();
+	}
+
+	/**
+	 * Базовый адрес страницы
+	 *
+	 * @type {string}
+	 */
+	get location () {
+		return '/message';
 	}
 
 	/**
@@ -18,18 +27,6 @@ class Messages extends PageObject {
 			container: '.b-letters'
 		};
 	}
-
-	/**
-	 * Открыть страницу написания письма
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 * @returns {boolean}
-	 */
-	open (query) {
-		super.open('/messages', query);
-
-		return this.page.waitForExist(this.locators.container);
-	}
 }
 
-module.exports = new Messages();
+module.exports = MessagesPage;
