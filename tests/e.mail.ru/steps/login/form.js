@@ -4,7 +4,7 @@ let assert = require('assert');
 
 let Steps = require('../../steps');
 let LoginForm = require('../../pages/login/form');
-let providers = require('../../store/authorization/providers');
+let providers = require('../authorization/providers');
 
 /** Модуль для работы с шагами формы страницы логина */
 class LoginFormSteps extends Steps {

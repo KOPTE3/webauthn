@@ -1,6 +1,6 @@
 'use strict';
 
-let ComposePage = require('../../pages/compose');
+let ComposePage = require('../compose');
 let ComposeFieldsStore = require('../../store/compose/fields');
 
 /** Модуль для работы с формой страницы написания письма */
