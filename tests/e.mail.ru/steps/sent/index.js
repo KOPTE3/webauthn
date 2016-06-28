@@ -19,6 +19,13 @@ class SentSteps extends Steps {
 	static get page () {
 		return new SentPage();
 	}
+
+	/**
+	 * Метод дожидается открытия страницы успешной загрузки
+	 * */
+	static wait () {
+		this.page.wait();
+	}
 }
 
 module.exports = SentSteps;

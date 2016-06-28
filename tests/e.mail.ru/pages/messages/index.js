@@ -14,7 +14,7 @@ class MessagesPage extends PageObject {
 	 * @type {string}
 	 */
 	get location () {
-		return '/message';
+		return '/messages/inbox';
 	}
 
 	/**
@@ -24,9 +24,23 @@ class MessagesPage extends PageObject {
 	 */
 	get locators () {
 		return {
-			container: '.b-letters'
+			container: '#b-letters',
+			buttons: {
+				compose: '.b-toolbar__btn[data-name="compose"]'
+			}
 		};
 	}
+
+	/**
+	 * Метод кликает по кнопкам
+	 *
+	 * @param {string} name - имя кнопки
+	 * Доступные значения (compose)
+	 * */
+	clickButton (name) {
+		this.page.click(this.locators.buttons[name]);
+	}
+
 }
 
 module.exports = MessagesPage;
