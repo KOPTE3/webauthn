@@ -1,11 +1,19 @@
 module.exports = {
 	extends: [
-		'@qa/eslint-config-mail.ru'
+		'@qa/eslint-config-mail.ru',
+
 	],
 
 	'rules': {
-		'max-len': ['error', 100],
-		'array-callback-return': 'off'
+		'max-len'              : ['error', 100],
+		'array-callback-return': 'off',
+		'require-jsdoc'        : ["error", {
+			'require': {
+				'FunctionDeclaration': true,
+				'MethodDefinition'   : false,
+				'ClassDeclaration'   : false
+			}
+		}]
 	},
 
 	"env": {

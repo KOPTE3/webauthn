@@ -3,10 +3,10 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let login = require('../../pages/login');
+let LoginPage = require('../../pages/login');
 
 /** Модуль для работы с шагами страницы логина */
-class Login extends Steps {
+class LoginStep extends Steps {
 	constructor () {
 		super();
 	}
@@ -14,13 +14,15 @@ class Login extends Steps {
 	/**
 	 * Открыть страницу авторизации
 	 *
+	 * @static
 	 * @param {Object} [query] — параметры запроса
 	 */
-	open (query) {
+	static open (query) {
+		let login = new LoginPage();
 		let actual = login.open(query);
 
 		assert(actual, 'Не удалось открыть страницу');
 	}
 }
 
-module.exports = new Login();
+module.exports = LoginStep;

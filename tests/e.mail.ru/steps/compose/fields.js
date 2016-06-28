@@ -2,22 +2,22 @@
 
 let assert = require('assert');
 
-let Steps = require('../../steps');
-let compose = require('../../pages/compose');
-let fields = require('../../pages/compose/fields');
+let ComposeSteps = require('../../steps/compose');
+let ComposeFields = require('../../pages/compose/fields');
 
 /** Модуль для работы с формой страницы написания письма */
-class Fields extends Steps {
+class ComposeFieldsSteps extends ComposeSteps {
 	constructor () {
 		super();
-		// this.wait();
+
+		this.composeFields = new ComposeFields();
 	}
 
 	/**
 	 * Дождаться появления формы написания письма
 	 */
 	wait () {
-		let actual = compose.wait();
+		let actual = this.composePage.wait();
 
 		assert(actual, 'Не удалось дождаться показа формы написания письма');
 	}
@@ -25,72 +25,72 @@ class Fields extends Steps {
 	/**
 	 * Получить значение поля по имени
 	 *
-	 * @see fields.getField
+	 * @see this.composeFields.getField
 	 * @param {string} name — имя поля
 	 */
 	getFieldValue (name) {
-		fields.getFieldValue(name);
+		this.composeFields.getFieldValue(name);
 	}
 
 	/**
 	 * Задать значение поля по имени
 	 *
-	 * @see fields.getField
+	 * @see this.composeFields.getField
 	 * @param {string} name — имя поля
 	 * @param {string} value — значение поля
 	 */
 	setFieldValue (name, value) {
-		fields.setFieldValue(...arguments);
+		this.composeFields.setFieldValue(...arguments);
 	}
 
 	/**
 	 * Очистить поле заданное поле
 	 *
-	 * @see fields.getField
+	 * @see this.composeFields.getField
 	 * @param {string} name — имя поля
 	 */
 	clearFieldValue (name) {
-		fields.clearFieldValue(name);
+		this.composeFields.clearFieldValue(name);
 	}
 
 	/**
 	 * Сделать клик на заданном поле
 	 *
-	 * @see fields.getField
+	 * @see this.composeFields.getField
 	 * @param {string} name — имя поля
 	 */
 	clickField (name) {
-		fields.clickField(name);
+		this.composeFields.clickField(name);
 	}
 
 	/**
 	 * Показать заданное поле
 	 *
-	 * @see fields.getField
+	 * @see this.composeFields.getField
 	 * @param {string} name — имя поля
 	 */
 	showField (name) {
-		fields.showField(name);
+		this.composeFields.showField(name);
 	}
 
 	/**
 	 * Скрыть заданное поле
 	 *
-	 * @see fields.getField
+	 * @see this.composeFields.getField
 	 * @param {string} name — имя поля
 	 */
 	hideField (name) {
-		fields.showMenuFields();
+		this.composeFields.showMenuFields();
 	}
 
 	/**
 	 * Проверить видимость поля "От кого"
 	 *
-	 * @see fields.getField
+	 * @see this.composeFields.getField
 	 * @param {string} name — имя поля
 	 */
 	isVisibleField (name) {
-		let active = fields.isVisibleField(name);
+		let active = this.composeFields.isVisibleField(name);
 
 		asert(active, `Видимость поля ${name} под вопросом`);
 	}
@@ -99,7 +99,7 @@ class Fields extends Steps {
 	 * Показать все поля формы
 	 */
 	isVisibleSelectFields () {
-		let active = fields.isVisibleSelectFields();
+		let active = this.composeFields.isVisibleSelectFields();
 
 		asert(active, 'Видимость списка полей под вопросом');
 	}
@@ -108,16 +108,15 @@ class Fields extends Steps {
 	 * Показать все поля формы
 	 */
 	showAllFields () {
-		fields.showAllFields();
+		this.composeFields.showAllFields();
 	}
 
 	/**
 	 * Скрыть все поля формы
 	 */
 	hideAllFields () {
-		fields.hideAllFields();
+		this.composeFields.hideAllFields();
 	}
-
 }
 
-module.exports = new Fields();
+module.exports = new ComposeFieldsSteps();

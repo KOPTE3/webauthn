@@ -2,35 +2,37 @@
 
 let assert = require('assert');
 
-let Steps = require('../../steps');
-let controls = require('../../pages/compose/controls');
+let ComposeSteps = require('../../steps/compose');
+let ComposeControls = require('../../pages/compose/controls');
 
 /** Модуль для работы с шагами контролов страницы написания письма */
-class Controls extends Steps {
+class ComposeControlSteps extends ComposeSteps {
 	constructor () {
 		super();
+
+		this.composeControls = new ComposeControls();
 	}
 
 	/**
 	 * Сохранить черновик
 	 */
 	draft () {
-		controls.draft();
+		this.composeControls.draft();
 	}
 
 	/**
 	 * Отправить сообщение
 	 */
 	send () {
-		controls.send();
+		this.composeControls.send();
 	}
 
 	/*
 	 * Отменить письмо
 	 * */
 	cancel () {
-		controls.cancel();
+		this.composeControls.cancel();
 	}
 }
 
-module.exports = new Controls();
+module.exports = new ComposeControlSteps();

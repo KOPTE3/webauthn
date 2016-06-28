@@ -1,10 +1,10 @@
 'use strict';
 
-let PageObject = require('../../pages');
+let LoginPage = require('../../pages/login');
 let providers = require('../../store/authorization/providers');
 
 /** Модуль для работы с формой страницы логина */
-class Form extends PageObject {
+class LoginForm extends LoginPage {
 	constructor () {
 		super();
 	}
@@ -15,7 +15,7 @@ class Form extends PageObject {
 	 * @type {Object}
 	 */
 	get locators () {
-		return {
+		return this.extend(super.locators, {
 			container      : '#LoginExternal',
 			providersSelect: '.js-login-page__external__input_domain',
 			providersBlock : '.login-page__external_domains__list',
@@ -32,7 +32,7 @@ class Form extends PageObject {
 			helpLink       : '.login-page__external__desc__parag a',
 			helpText       : '.login-page__external__desc__parag a',
 			desc           : '.login-page__external__desc__parag'
-		};
+		});
 	}
 
 	/**
@@ -188,4 +188,4 @@ class Form extends PageObject {
 	}
 }
 
-module.exports = new Form();
+module.exports = LoginForm;

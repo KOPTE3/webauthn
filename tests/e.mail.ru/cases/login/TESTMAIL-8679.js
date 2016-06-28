@@ -1,13 +1,13 @@
 'use strict';
 
-let page = require('../../steps/login');
-let form = require('../../steps/login/form');
+let LoginPage = require('../../steps/login');
+let loginForm = require('../../steps/login/form');
 
 describe('TESTMAIL-8679', () => {
 	it('Проверка ошибки при авторизации с пустым полем пароль', () => {
-		page.open();
+		LoginPage.open();
 
-		form.send({ Login: 'example@mail.ru' });
-		form.getError('Поле «Пароль» должно быть заполнено.');
+		loginForm.send({ Login: 'example@mail.ru' });
+		loginForm.getError('Поле «Пароль» должно быть заполнено.');
 	});
 });

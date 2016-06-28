@@ -1,9 +1,9 @@
 'use strict';
 
-let PageObject = require('../../pages');
+let ComposePage = require('../../pages/compose');
 
 /** Модуль для работы с редактором страницы написания письма */
-class Editor extends PageObject {
+class ComposeEditor extends ComposePage {
 	constructor () {
 		super();
 	}
@@ -14,11 +14,11 @@ class Editor extends PageObject {
 	 * @type {Object}
 	 */
 	get locators () {
-		return {
+		return this.extend(super.locators, {
 			container: '.mceToolbarRow1',
 			body: '.mceContentBody',
 			editor: '.mceIframeContainer iframe'
-		};
+		});
 	}
 
 	/**
@@ -46,4 +46,4 @@ class Editor extends PageObject {
 
 }
 
-module.exports = new Editor();
+module.exports = ComposeEditor;
