@@ -21,16 +21,11 @@ describe('TESTMAIL-31552: Написание письма. Забытое вло
 		Compose.open();
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', 'i.burlak@corp.mail.ru');
-	});
-
-	afterEach(() => {
-		missingAttachLayer.close();
-		composeControls.cancel();
+		composeEditor.writeMessage(text);
 	});
 
 	it('проверяем содержимое леера', () => {
 		try {
-			composeEditor.writeMessage(text);
 			composeControls.send();
 			missingAttachLayer.show();
 			missingAttachLayer.blockShouldHaveText(
@@ -46,6 +41,8 @@ describe('TESTMAIL-31552: Написание письма. Забытое вло
 				'Все равно отправить'
 			);
 			missingAttachLayer.blockShouldHaveText('cancel', 'Прикрепить файл');
+			missingAttachLayer.close();
+			missingAttachLayer.shoulBeClosed();
 		} catch (error) {
 			console.log(error);
 		}
