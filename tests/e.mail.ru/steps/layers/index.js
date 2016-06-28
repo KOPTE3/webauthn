@@ -21,6 +21,13 @@ class LayerSteps extends Steps {
 
 		assert(layer.isVisible(), 'Лаер не был показан');
 	}
+
+	/**
+	 * Метод закрывает открытый попап
+	 */
+	close () {
+		this.layer.close();
+	}
 }
 
 module.exports = LayerSteps;

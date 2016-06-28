@@ -30,8 +30,6 @@ class Layers extends PageObject {
 	 * Доступные значения (missingAttach, multiAttachToCompose, secure)
 	 */
 	wait () {
-		console.log('---', this.locators.container);
-
 		this.page.waitForVisible(this.locators.container, 1000);
 	}
 

@@ -27,6 +27,12 @@ class ComposeControlSteps extends ComposeSteps {
 		this.composeControls.send();
 	}
 
+	/*
+	 * Отменить письмо
+	 * */
+	cancel () {
+		this.composeControls.cancel();
+	}
 }
 
 module.exports = new ComposeControlSteps();

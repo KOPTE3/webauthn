@@ -42,6 +42,14 @@ class ComposeControls extends ComposePage {
 		this.page.click(this.locators.send);
 	}
 
+	/**
+	 * Отменить письмо
+	 * */
+	cancel () {
+		this.page.click(this.locators.cancel);
+		this.page.alertAccept();
+	}
+
 }
 
 module.exports = ComposeControls;
