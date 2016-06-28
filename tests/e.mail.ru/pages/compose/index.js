@@ -9,6 +9,15 @@ class ComposePage extends PageObject {
 	}
 
 	/**
+	 * Базовый адрес страницы
+	 *
+	 * @type {string}
+	 */
+	get location () {
+		return '/compose';
+	}
+
+	/**
 	 * Локаторы
 	 *
 	 * @type {Object}
@@ -17,18 +26,6 @@ class ComposePage extends PageObject {
 		return {
 			container: '.b-compose'
 		};
-	}
-
-	/**
-	 * Открыть страницу написания письма
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 * @returns {boolean}
-	 */
-	open (query) {
-		super.open('/compose', query);
-
-		return this.page.waitForExist(this.locators.container);
 	}
 }
 

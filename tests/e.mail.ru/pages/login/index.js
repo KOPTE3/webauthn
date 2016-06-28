@@ -9,6 +9,15 @@ class LoginPage extends PageObject {
 	}
 
 	/**
+	 * Базовый адрес страницы
+	 *
+	 * @type {string}
+	 */
+	get location () {
+		return '/login';
+	}
+
+	/**
 	 * Локаторы
 	 *
 	 * @type {Object}
@@ -17,18 +26,6 @@ class LoginPage extends PageObject {
 		return {
 			container: '.login-page__external'
 		};
-	}
-
-	/**
-	 * Открыть страницу логина
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 * @returns {boolean}
-	 */
-	open (query) {
-		super.open('/login', query);
-
-		return this.page.waitForExist(this.locators.container);
 	}
 }
 

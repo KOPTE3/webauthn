@@ -20,16 +20,16 @@ class Steps extends Pages {
 	}
 
 	/**
-	 * Дождаться появления требуемного элемента
+	 *
+	 * Открыть страницу
+	 *
+	 * @param {Object} [query] — параметры запроса
 	 */
-	/*
-	wait () {
-		let actual = super.wait();
+	static open (query) {
+		let actual = this.page.open(query);
 
-		assert(actual, `Не удалось дождаться появления элемента ${
-			this.locators.container}`);
+		assert(actual, 'Не удалось открыть страницу');
 	}
-	*/
 }
 
 module.exports = Steps;

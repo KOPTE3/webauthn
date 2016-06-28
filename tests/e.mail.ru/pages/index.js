@@ -33,18 +33,20 @@ class PageObject {
 	/**
 	 * Открытие страницы
 	 *
-	 * @param {string} path — метод запроса
 	 * @param {Object} [query] — параметры запроса
+	 * @returns {boolean}
 	 */
-	open (path, query = {}) {
+	open (query = {}) {
 		if (features.length) {
 			query.ftrs = features.join(' ');
 			features = [];
 		}
 
-		let url = URL.request(path, query);
+		let url = URL.request(this.location, query);
 
 		this.page.url(url);
+
+		return this.wait();
 	}
 
 	/**
