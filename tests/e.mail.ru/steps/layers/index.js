@@ -38,6 +38,10 @@ class LayerSteps extends Steps {
 		assert(!layer.isVisible(), 'Лаер все еще не закрыт');
 	}
 
+	blockShouldHaveText (name, text) {
+		assert.equal(this.layer.getText(name), text);
+	}
+
 }
 
 module.exports = LayerSteps;

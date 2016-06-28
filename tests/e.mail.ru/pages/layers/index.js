@@ -14,12 +14,14 @@ class Layers extends PageObject {
 	 * @type {Object}
 	 */
 	get locators () {
+		let layerName = this.name || '';
+
 		return {
 			container: '.alertDiv',
-			head     : '.popup__box .popup__head',
-			desc     : '.popup__box .popup__desc',
-			apply    : '.popup__box .popup__controls .confirm-ok',
-			cancel   : '.popup__box .popup__controls .confirm-cancel',
+			head     : `${layerName} .popup__box .popup__head`,
+			desc     : `${layerName} .popup__box .popup__desc`,
+			apply    : `${layerName} .popup__controls .confirm-ok`,
+			cancel   : `${layerName} .popup__controls .confirm-cancel`,
 			close    : '.popup .js-cancel'
 		};
 	}
@@ -30,6 +32,15 @@ class Layers extends PageObject {
 	 * */
 	getContainer () {
 		return this.page.element(this.locators.container);
+	}
+
+	/**
+	 * Метод возвращает текст блока
+	 * @param {string} name - имя блока
+	 * @returns {Promise}
+	 * */
+	getText (name) {
+		return this.page.getText(this.locators[name]);
 	}
 
 	/**

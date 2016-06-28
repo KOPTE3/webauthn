@@ -76,6 +76,7 @@ class ComposeEditor extends Store {
 
 		];
 	}
+
 }
 
 module.exports = ComposeEditor;
