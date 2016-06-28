@@ -6,6 +6,7 @@ let Layers = require('../../pages/layers');
 class MissingAttach extends Layers {
 	constructor () {
 		super();
+		this.locator = '.is-secure_in';
 	}
 
 	/**
@@ -15,7 +16,7 @@ class MissingAttach extends Layers {
 	 */
 	get locators () {
 		return this.extend(super.locators, {
-			container: '.is-secure_in'
+			container: ''
 		});
 	}
 }

@@ -6,7 +6,7 @@ let Layers = require('../../pages/layers');
 class missingAttach extends Layers {
 	constructor () {
 		super();
-		this.name = '.is-compose-missingAttach_in';
+		this.locator = '.is-compose-missingAttach_in';
 	}
 
 	/**
@@ -16,7 +16,6 @@ class missingAttach extends Layers {
 	 */
 	get locators () {
 		return this.extend(super.locators, {
-			container: this.name
 		});
 	}
 }

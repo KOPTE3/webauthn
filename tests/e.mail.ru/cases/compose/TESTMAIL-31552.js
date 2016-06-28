@@ -12,20 +12,18 @@ const text = 'Добрый день! Во вложении заявка, про�
 describe('TESTMAIL-31552: Написание письма. Забытое вложение. ' +
 	'Проверить закрытие попапа по клику на кнопку "Прикрепить файл"', () => {
 	before(Compose.auth);
-
-	beforeEach(() => {
-		Compose.addFeature('check-missing-attach');
-		Compose.addFeature('disable-ballons');
-		Compose.addFeature('no-collectors-in-compose');
-
-		Compose.open();
-		composeFields.setFieldValue('subject', 'check attach');
-		composeFields.setFieldValue('to', 'i.burlak@corp.mail.ru');
-		composeEditor.writeMessage(text);
-	});
-
+	
 	it('проверяем содержимое леера', () => {
 		try {
+			Compose.addFeature('check-missing-attach');
+			Compose.addFeature('disable-ballons');
+			Compose.addFeature('no-collectors-in-compose');
+
+			Compose.open();
+			composeFields.setFieldValue('subject', 'check attach');
+			composeFields.setFieldValue('to', 'i.burlak@corp.mail.ru');
+			composeEditor.writeMessage(text);
+
 			composeControls.send();
 			missingAttachLayer.show();
 			missingAttachLayer.blockShouldHaveText(
