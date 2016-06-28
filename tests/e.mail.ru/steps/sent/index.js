@@ -21,15 +21,6 @@ class SentSteps extends Steps {
 	}
 
 	/**
-	 * Возвращает ссылку на инстанс страницы
-	 *
-	 * @type {Object}
-	 */
-	static get page () {
-		return new SentPage();
-	}
-
-	/**
 	 * Метод дожидается открытия страницы успешной загрузки
 	 * */
 	static wait () {
