@@ -29,4 +29,4 @@ class Sent extends PageObject {
 	}
 }
 
-module.exports = new Sent();
+module.exports = Sent;

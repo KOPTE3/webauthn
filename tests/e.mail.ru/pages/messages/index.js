@@ -38,7 +38,6 @@ class MessagesPage extends PageObject {
 	 * Доступные значения (compose)
 	 * */
 	clickButton (name) {
-		console.log('click');
 		this.page.click(this.locators.buttons[name]);
 	}
 
