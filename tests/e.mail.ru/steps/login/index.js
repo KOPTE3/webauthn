@@ -14,7 +14,6 @@ class LoginStep extends Steps {
 	/**
 	 * Открыть страницу авторизации
 	 *
-	 * @static
 	 * @param {Object} [query] — параметры запроса
 	 */
 	static open (query) {

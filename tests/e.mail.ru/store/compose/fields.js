@@ -31,7 +31,6 @@ class ComposeFields extends Store {
 	/**
 	 * Возвращает список полей, которые могут быть скрыты
 	 *
-	 * @static
 	 * @type {Array}
 	 */
 	static get hiddenFields () {

@@ -11,7 +11,6 @@ class ComposeEditor extends Store {
 	/**
 	 * Возвращает список писем
 	 *
-	 * @static
 	 * @type {Array}
 	 */
 	static get letters () {

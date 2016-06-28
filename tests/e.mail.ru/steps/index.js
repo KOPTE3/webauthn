@@ -3,8 +3,10 @@
 let assert = require('assert');
 let Pages = require('../pages');
 
-class Steps {
-	constructor () { }
+class Steps extends Pages {
+	constructor () {
+		super();
+	}
 
 	/**
 	 * Локаторы

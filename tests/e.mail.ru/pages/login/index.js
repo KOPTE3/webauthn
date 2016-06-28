@@ -20,20 +20,6 @@ class LoginPage extends PageObject {
 	}
 
 	/**
-	 * Авторизация
-	 *
-	 * @param {string} type
-	 * @returns {boolean}
-	 */
-	auth (type) {
-		super.auth(type);
-
-		return this.page.execute(() => {
-			return window.patron.username;
-		});
-	}
-
-	/**
 	 * Открыть страницу логина
 	 *
 	 * @param {Object} [query] — параметры запроса
