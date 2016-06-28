@@ -41,7 +41,6 @@ class LayerSteps extends Steps {
 		assert.equal(this.layer.getBlockText(name), text,
 			'Блок леера содержит не корректный текст');
 	}
-
 }
 
 module.exports = LayerSteps;

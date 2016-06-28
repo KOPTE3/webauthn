@@ -3,9 +3,18 @@
 let PageObject = require('../../pages');
 
 /** Модуль для работы с представлением страницы поиска писем */
-class Search extends PageObject {
+class SearchPage extends PageObject {
 	constructor () {
 		super();
+	}
+
+	/**
+	 * Базовый адрес страницы
+	 *
+	 * @type {string}
+	 */
+	get location () {
+		return '/search';
 	}
 
 	/**
@@ -15,21 +24,9 @@ class Search extends PageObject {
 	 */
 	get locators () {
 		return {
-			container: '.b-datalist_search'
+			container: '.b-fileSearch'
 		};
-	}
-
-	/**
-	 * Открыть страницу поиска писем
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 * @returns {boolean}
-	 */
-	open (query) {
-		super.open('/search', query);
-
-		return this.page.waitForExist(this.locators.container);
 	}
 }
 
-module.exports = Search;
+module.exports = SearchPage;

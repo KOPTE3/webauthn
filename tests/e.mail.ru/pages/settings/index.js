@@ -9,6 +9,15 @@ class Settings extends PageObject {
 	}
 
 	/**
+	 * Базовый адрес страницы
+	 *
+	 * @type {string}
+	 */
+	get location () {
+		return '/search';
+	}
+
+	/**
 	 * Локаторы
 	 *
 	 * @type {Object}
@@ -17,18 +26,6 @@ class Settings extends PageObject {
 		return {
 			container: '.settings__index__widgets'
 		};
-	}
-
-	/**
-	 * Открыть страницу поиска писем
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 * @returns {boolean}
-	 */
-	open (query) {
-		super.open('/search', query);
-
-		return this.page.waitForExist(this.locators.container);
 	}
 }
 

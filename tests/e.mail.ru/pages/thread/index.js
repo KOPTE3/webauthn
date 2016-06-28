@@ -9,6 +9,15 @@ class Thread extends PageObject {
 	}
 
 	/**
+	 * Базовый адрес страницы
+	 *
+	 * @type {string}
+	 */
+	get location () {
+		return '/thread';
+	}
+
+	/**
 	 * Локаторы
 	 *
 	 * @type {Object}
@@ -17,19 +26,6 @@ class Thread extends PageObject {
 		return {
 			container: '.b-thread'
 		};
-	}
-
-	/**
-	 * Открыть страницу чтения треда
-	 *
-	 * @param {string} path — id треда
-	 * @param {Object} [query] — параметры запроса
-	 * @returns {boolean}
-	 */
-	open (path, query) {
-		super.open(`/thread/${path}`, query);
-
-		return this.page.waitForExist(this.locators.container);
 	}
 }
 
