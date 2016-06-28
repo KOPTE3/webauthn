@@ -3,7 +3,7 @@
 let PageObject = require('../../pages');
 
 /** Модуль для работы с представлением страницы написания письма */
-class Compose extends PageObject {
+class ComposePage extends PageObject {
 	constructor () {
 		super();
 	}
@@ -32,4 +32,4 @@ class Compose extends PageObject {
 	}
 }
 
-module.exports = new Compose();
+module.exports = ComposePage;

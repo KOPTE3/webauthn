@@ -3,9 +3,18 @@
 let assert = require('assert');
 let Pages = require('../pages');
 
-class Steps extends Pages {
-	constructor () {
-		super();
+class Steps {
+	constructor () { }
+
+	/**
+	 * Локаторы
+	 *
+	 * @param {string} name
+	 */
+	static addFeature (name) {
+		let pages = new Pages();
+
+		pages.addFeature(name);
 	}
 
 	/**

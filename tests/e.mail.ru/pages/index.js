@@ -2,6 +2,7 @@
 
 let Store = require('../store');
 let URL = require('../utils/url');
+let merge = require('deepmerge');
 
 let features = [];
 
@@ -49,6 +50,16 @@ class PageObject {
 	}
 
 	/**
+	 * Расширяет объект
+	 *
+	 * @param {Object} object
+	 * @returns {Object}
+	 */
+	extend (object) {
+		return merge(...arguments);
+	}
+
+	/**
 	 * Дождаться появления требуемого элемента
 	 *
 	 * @returns {boolean}
@@ -86,7 +97,6 @@ class PageObject {
 	addFeature (name) {
 		features.push(name);
 	}
-
 }
 
 module.exports = PageObject;

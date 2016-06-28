@@ -3,13 +3,15 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let form = require('../../pages/login/form');
+let LoginForm = require('../../pages/login/form');
 let providers = require('../../store/authorization/providers');
 
 /** Модуль для работы с шагами формы страницы логина */
-class Form extends Steps {
+class LoginFormSteps extends Steps {
 	constructor () {
 		super();
+
+		this.loginForm = new LoginForm();
 	}
 
 	/**
@@ -18,7 +20,7 @@ class Form extends Steps {
 	 * @param {string} provider
 	 */
 	selectDomain (provider) {
-		let actual = form.getSelectedDomain(provider);
+		let actual = this.loginForm.getSelectedDomain(provider);
 
 		assert.equal(actual.state, 'success',
 			`Не удалось найти элемент с заданным провайдером: ${provider}`);
@@ -39,7 +41,7 @@ class Form extends Steps {
 	 * @param {string} login
 	 */
 	setLogin (login) {
-		form.setLogin(login);
+		this.loginForm.setLogin(login);
 	}
 
 	/**
@@ -52,7 +54,7 @@ class Form extends Steps {
 			provider = 'mail.ru';
 		}
 
-		let actual = form.getLoginValue();
+		let actual = this.loginForm.getLoginValue();
 
 		assert.equal(actual, provider,
 			`Не удалось найти значение для заданного провайдера ${provider}`);
@@ -64,7 +66,7 @@ class Form extends Steps {
 	 * @param {string} provider
 	 */
 	getActiveDomain (provider) {
-		assert.equal(form.getActiveDomain(), provider,
+		assert.equal(this.loginForm.getActiveDomain(), provider,
 			`Передан неверный провайдер ${provider}`);
 	}
 
@@ -72,7 +74,7 @@ class Form extends Steps {
 	 * Проверить текст ссылки "Узнать больше"
 	 */
 	checkHelpText () {
-		assert.equal(form.getHelpText(), 'Узнать больше',
+		assert.equal(this.loginForm.getHelpText(), 'Узнать больше',
 			`Проверка ссылки "Узнать больше"`);
 	}
 
@@ -80,7 +82,7 @@ class Form extends Steps {
 	 * Проверить текст ссылки "Узнать больше"
 	 */
 	checkHelpLink () {
-		assert.equal(form.getHelpLink(), 'http://mailblog.mail.ru/vvp-ios-and/',
+		assert.equal(this.loginForm.getHelpLink(), 'http://mailblog.mail.ru/vvp-ios-and/',
 			`Проверка ссылки "Узнать больше"`);
 	}
 
@@ -88,7 +90,7 @@ class Form extends Steps {
 	 * Проверить текст контрола "Запомнить почту"
 	 */
 	checkRememberText () {
-		assert.equal(form.getRememberText(), 'запомнить почту',
+		assert.equal(this.loginForm.getRememberText(), 'запомнить почту',
 			`Проверка текста контрола "Запомнить почту"`);
 	}
 
@@ -96,7 +98,7 @@ class Form extends Steps {
 	 * Проверить состояние контрола "Запомнить почту"
 	 */
 	checkRememberState () {
-		assert.equal(form.getRememberState(), '1',
+		assert.equal(this.loginForm.getRememberState(), '1',
 			`Проверка состояние контрола "Запомнить почту"`);
 	}
 
@@ -106,7 +108,7 @@ class Form extends Steps {
 	 * @param {string} provider
 	 */
 	clickByDomain (provider) {
-		let actual = form.clickByDomain(provider);
+		let actual = this.loginForm.clickByDomain(provider);
 
 		assert.equal(actual.state, 'success',
 			`Не удалось найти элемент для провайдера ${provider}`);
@@ -118,7 +120,7 @@ class Form extends Steps {
 	 * @param {Object} data
 	 */
 	send (data) {
-		let actual = form.send(data);
+		let actual = this.loginForm.send(data);
 
 		assert.equal(actual.state, 'success',
 			'Не удалось отправить форму c переданными данными');
@@ -128,7 +130,7 @@ class Form extends Steps {
 	 * Получить заголовок формы
 	 */
 	checkTitle () {
-		assert.equal(form.title, 'Вход в почту',
+		assert.equal(this.loginForm.title, 'Вход в почту',
 			'Не удалось проверить заголовок формы');
 	}
 
@@ -136,7 +138,7 @@ class Form extends Steps {
 	 * Получить описание формы
 	 */
 	checkDescription () {
-		assert.equal(form.description, 'Вы можете войти в почту с помощью аккаунта ' +
+		assert.equal(this.loginForm.description, 'Вы можете войти в почту с помощью аккаунта ' +
 			'любого почтового сервиса и легко переключаться между ними, не выходя из почты. ' +
 			'Узнать больше', 'Не удалось проверить описание формы');
 	}
@@ -145,7 +147,7 @@ class Form extends Steps {
 	 * Получить ссылку на восстановление пароля
 	 */
 	checkPassRemindLink () {
-		assert.equal(form.getPassRemindLink(), 'https://e.mail.ru/cgi-bin/passremind',
+		assert.equal(this.loginForm.getPassRemindLink(), 'https://e.mail.ru/cgi-bin/passremind',
 			'Некорректная ссылка на восстановление пароля');
 	}
 
@@ -155,15 +157,15 @@ class Form extends Steps {
 	 * @param {string} expected
 	 */
 	getError (expected) {
-		assert.equal(form.getError(), expected, `Сообщение ошибки`);
+		assert.equal(this.loginForm.getError(), expected, `Сообщение ошибки`);
 	}
 
 	/**
 	 * Проверить видимость списка доменов
 	 */
 	isSelectVisible () {
-		assert(!form.isSelectVisible(), `Видимость списка доменов под вопросом`);
+		assert(!this.loginForm.isSelectVisible(), `Видимость списка доменов под вопросом`);
 	}
 }
 
-module.exports = new Form();
+module.exports = new LoginFormSteps();

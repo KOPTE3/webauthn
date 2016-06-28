@@ -1,9 +1,9 @@
 'use strict';
 
-let PageObject = require('../../pages');
+let ComposePage = require('../../pages/compose');
 
 /** Модуль для работы с контролами страницы написания письма */
-class Controls extends PageObject {
+class ComposeControls extends ComposePage {
 	constructor () {
 		super();
 	}
@@ -19,13 +19,13 @@ class Controls extends PageObject {
 			'#LEGO>div:not([style *= "hidden"]) div:not([style *= "none"])>' +
 			'div[data-uniqid]:not([style *= "none"])>.b-toolbar[data-mnemo]';
 
-		return {
+		return this.extend(super.locators, {
 			container: toolbar,
 			draft    : `${toolbar} [data-name="saveDraft"]`,
 			cancel   : `${toolbar} [data-name="cancel"]`,
 			template : `${toolbar} [data-name="saveTemplate"]`,
 			send     : `${toolbar} [data-name="send"]`
-		};
+		});
 	}
 
 	/**
@@ -44,4 +44,4 @@ class Controls extends PageObject {
 
 }
 
-module.exports = new Controls();
+module.exports = ComposeControls;

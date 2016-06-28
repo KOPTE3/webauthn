@@ -3,7 +3,7 @@
 let PageObject = require('../../pages');
 
 /** Модуль для работы с представлением страницы логина */
-class Login extends PageObject {
+class LoginPage extends PageObject {
 	constructor () {
 		super();
 	}
@@ -46,4 +46,4 @@ class Login extends PageObject {
 	}
 }
 
-module.exports = new Login();
+module.exports = LoginPage;
