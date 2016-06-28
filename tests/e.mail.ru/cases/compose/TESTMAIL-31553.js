@@ -6,7 +6,7 @@ let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
-let SuccessPage = require('../../store/compose/success');
+let SentPage = require('../../steps/sent');
 
 const text = 'Добрый день! Во вложении заявка, прошу скинуть счет на оплату.';
 
@@ -26,8 +26,10 @@ describe('TESTMAIL-31553: НЕ AJAX. Написание письма. Забыт
 			composeEditor.writeMessage(text);
 
 			composeControls.send();
+			missingAttachLayer.wait();
 			missingAttachLayer.apply();
-			SuccessPage.wait();
+			missingAttachLayer.shoulBeClosed();
+			SentPage.wait();
 		} catch (error) {
 			console.log(error);
 		}
