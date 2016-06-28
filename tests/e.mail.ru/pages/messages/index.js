@@ -3,7 +3,7 @@
 let PageObject = require('../../pages');
 
 /** Модуль для работы с представлением страницы списка писем */
-class Messages extends PageObject {
+class MessagesPage extends PageObject {
 	constructor () {
 		super();
 	}
@@ -44,4 +44,4 @@ class Messages extends PageObject {
 
 }
 
-module.exports = Messages;
+module.exports = MessagesPage;

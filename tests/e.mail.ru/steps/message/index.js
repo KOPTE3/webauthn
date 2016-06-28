@@ -3,24 +3,22 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let page = require('../../pages/message');
+let MessagePage = require('../../pages/message');
 
 /** Модуль для работы с шагами страницы чтения письма */
-class Message extends Steps {
+class MessageSteps extends Steps {
 	constructor () {
 		super();
 	}
 
 	/**
-	 * Открыть страницу написания письма
+	 * Возвращает ссылку на инстанс страницы
 	 *
-	 * @param {Object} [query] — параметры запроса
+	 * @type {Object}
 	 */
-	open (query) {
-		let actual = page.open(query);
-
-		assert(actual, 'Не удалось открыть страницу чтения письма');
+	static get page () {
+		return new MessagePage();
 	}
 }
 
-module.exports = new Message();
+module.exports = MessageSteps;

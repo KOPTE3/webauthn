@@ -3,23 +3,22 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let page = require('../../pages/folders');
+let FoldersPage = require('../../pages/folders');
 
 /** Модуль для работы с шагами списка папкок */
-class Folders extends Steps {
+class FoldersSteps extends Steps {
 	constructor () {
 		super();
 	}
 
 	/**
-	 * Дождаться появления списка папкок
+	 * Возвращает ссылку на инстанс страницы
 	 *
+	 * @type {Object}
 	 */
-	wait () {
-		let actual = compose.wait();
-
-		assert(actual, 'Не дождаться показа списка папок');
+	static get page () {
+		return new FoldersPage();
 	}
 }
 
-module.exports = new Folders();
+module.exports = FoldersSteps;

@@ -3,24 +3,22 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let page = require('../../pages/addressbook');
+let AddressBookPage = require('../../pages/addressbook');
 
 /** Модуль для работы с шагами страницы адресной книги */
-class AddressBook extends Steps {
+class AddressBookSteps extends Steps {
 	constructor () {
 		super();
 	}
 
 	/**
-	 * Открыть страницу
+	 * Возвращает ссылку на инстанс страницы
 	 *
-	 * @param {Object} [query] — параметры запроса
+	 * @type {Object}
 	 */
-	open (query) {
-		let actual = page.open(query);
-
-		assert(actual, 'Не удалось открыть страницу адресной книги');
+	static get page () {
+		return new AddressBookPage();
 	}
 }
 
-module.exports = new AddressBook();
+module.exports = AddressBookSteps;

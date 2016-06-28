@@ -6,7 +6,7 @@ let Steps = require('../../steps');
 let MessagesPage = require('../../pages/messages');
 
 /** Модуль для работы с шагами страницы списка писем */
-class Messages extends Steps {
+class MessagesSteps extends Steps {
 	constructor () {
 		super();
 	}
@@ -17,7 +17,7 @@ class Messages extends Steps {
 	 * @type {Object}
 	 */
 	static get page () {
-		return new ComposePage();
+		return new MessagesPage();
 	}
 
 	/**
@@ -30,4 +30,5 @@ class Messages extends Steps {
 
 }
 
-module.exports = Messages;
+
+module.exports = MessagesSteps;
