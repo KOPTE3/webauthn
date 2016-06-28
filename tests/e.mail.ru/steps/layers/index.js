@@ -39,7 +39,8 @@ class LayerSteps extends Steps {
 	}
 
 	blockShouldHaveText (name, text) {
-		assert.equal(this.layer.getText(name), text);
+		assert.equal(this.layer.getText(name), text,
+			'Блок леера содержит не корректный текст');
 	}
 
 }
