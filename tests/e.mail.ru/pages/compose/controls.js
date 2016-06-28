@@ -19,7 +19,7 @@ class Controls extends PageObject {
 			container: '[data-mnemo="toolbar-compose"]',
 			saveDraft: '[data-mnemo="toolbar-compose"] [data-name="saveDraft"]',
 			cancel: '[data-mnemo="toolbar-compose"] [data-name="cancel"]',
-			compose  : '[data-mnemo="toolbar-compose"] [data-name="send"]'
+			compose  : '.js-not-sticky [data-name="send"]'
 		};
 	}
 
