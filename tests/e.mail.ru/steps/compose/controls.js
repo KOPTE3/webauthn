@@ -14,17 +14,23 @@ class Controls extends Steps {
 	/**
 	 * Сохранить черновик
 	 */
-	saveDraft () {
-		controls.saveDraft();
+	draft () {
+		controls.draft();
 	}
 
 	/**
 	 * Отправить сообщение
 	 */
-	compose () {
-		controls.compose();
+	send () {
+		controls.send();
 	}
 
+	/*
+	 * Отменить письмо
+	 * */
+	cancel () {
+		controls.cancel();
+	}
 }
 
 module.exports = new Controls();
