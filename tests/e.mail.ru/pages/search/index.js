@@ -15,7 +15,7 @@ class Search extends PageObject {
 	 */
 	get locators () {
 		return {
-			container: '.b-fileSearch'
+			container: '.b-datalist_search'
 		};
 	}
 
@@ -32,4 +32,4 @@ class Search extends PageObject {
 	}
 }
 
-module.exports = new Search();
+module.exports = Search;

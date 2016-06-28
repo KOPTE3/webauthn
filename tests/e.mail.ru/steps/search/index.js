@@ -3,7 +3,9 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let page = require('../../pages/search');
+let SearchPage = require('../../pages/search');
+
+let searchPage = new SearchPage();
 
 /** Модуль для работы с шагами страницы поиска */
 class Search extends Steps {
@@ -14,13 +16,23 @@ class Search extends Steps {
 	/**
 	 * Открыть страницу
 	 *
+	 * @static
 	 * @param {Object} [query] — параметры запроса
 	 */
-	open (query) {
-		let actual = page.open(query);
+	static open (query) {
+		let actual = searchPage.open(query);
 
 		assert(actual, 'Не удалось открыть страницу поиска');
 	}
+
+	/**
+	 * Авторизация
+	 *
+	 * @static
+	 */
+	static auth () {
+		searchPage.auth();
+	}
 }
 
-module.exports = new Search();
+module.exports = Search;

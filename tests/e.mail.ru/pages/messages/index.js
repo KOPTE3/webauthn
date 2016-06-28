@@ -15,7 +15,7 @@ class Messages extends PageObject {
 	 */
 	get locators () {
 		return {
-			container: '.b-letters'
+			container: '.b-datalist_letters'
 		};
 	}
 
