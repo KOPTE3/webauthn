@@ -5,37 +5,19 @@ let assert = require('assert');
 let Steps = require('../../steps');
 let ComposePage = require('../../pages/compose');
 
-let composePage = new ComposePage();
-
 /** Модуль для работы с шагами страницы написания письма */
 class ComposeSteps extends Steps {
 	constructor () {
 		super();
-
-		this.composePage = composePage;
 	}
 
 	/**
-	 * Открыть страницу написания письма
+	 * Возвращает ссылку на инстанс страницы
 	 *
-	 * @static
-	 * @param {Object} [query] — параметры запроса
+	 * @type {Object}
 	 */
-	static open (query) {
-		let actual = composePage.open(query);
-
-		assert(actual, 'Не удалось открыть страницу написания письма');
-	}
-
-	/**
-	 * Открыть страницу написания письма
-	 *
-	 * @static
-	 * @todo сделать проверку авторизации
-	 * @param {Object} [options]
-	 */
-	static auth (options) {
-		composePage.auth(options);
+	static get page () {
+		return new ComposePage();
 	}
 }
 

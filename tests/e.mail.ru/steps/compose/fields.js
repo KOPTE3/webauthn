@@ -2,6 +2,7 @@
 
 let assert = require('assert');
 
+let ComposePage = require('../../pages/compose');
 let ComposeSteps = require('../../steps/compose');
 let ComposeFields = require('../../pages/compose/fields');
 
@@ -11,6 +12,7 @@ class ComposeFieldsSteps extends ComposeSteps {
 		super();
 
 		this.composeFields = new ComposeFields();
+		this.composePage = new ComposePage();
 	}
 
 	/**

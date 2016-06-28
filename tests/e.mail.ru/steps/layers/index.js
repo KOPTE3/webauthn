@@ -12,7 +12,6 @@ class LayerSteps extends Steps {
 	/**
 	 * Метод вызывает показ требуемого лаера
 	 *
-	 * @static
 	 * @param {Object} options - опции лаера
 	 * Доступные значения (missingAttach, multiAttachToCompose, secure)
 	 */

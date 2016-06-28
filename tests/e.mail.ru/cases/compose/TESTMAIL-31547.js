@@ -27,6 +27,7 @@ describe('TESTMAIL-31547: НЕ AJAX. Написание письма. Забыт
 		it(text, () => {
 			composeFields.setFieldValue('subject', 'check attach');
 			composeFields.setFieldValue('to', 'i.burlak@corp.mail.ru');
+
 			try {
 				composeEditor.writeMessage(text);
 				composeControls.send();

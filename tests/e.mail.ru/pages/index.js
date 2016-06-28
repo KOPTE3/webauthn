@@ -8,9 +8,7 @@ let features = [];
 
 /** @namespace browser */
 class PageObject {
-	constructor () {
-		this.store = new Store();
-	}
+	constructor () { }
 
 	/**
 	 * Локаторы
@@ -35,18 +33,20 @@ class PageObject {
 	/**
 	 * Открытие страницы
 	 *
-	 * @param {string} path — метод запроса
 	 * @param {Object} [query] — параметры запроса
+	 * @returns {boolean}
 	 */
-	open (path, query = {}) {
+	open (query = {}) {
 		if (features.length) {
 			query.ftrs = features.join(' ');
 			features = [];
 		}
 
-		let url = URL.request(path, query);
+		let url = URL.request(this.location, query);
 
 		this.page.url(url);
+
+		return this.wait();
 	}
 
 	/**
@@ -81,19 +81,29 @@ class PageObject {
 	 * Авторизация
 	 *
 	 * @param {string} type — типа авторизации
+	 * @returns {boolean}
 	 */
-	auth (type) {
-		let { account } = this.store;
+	static auth (type) {
+		let { account } = new Store();
 
-		this.page.url('/login');
+		browser.url('/login');
 
 		let login = account.get('login');
 		let cookie = account.get('cookies');
 
-		this.page.setCookies(cookie);
+		browser.setCookies(cookie);
 		console.log(`Used ${login} account`);
+
+		return browser.execute(() => {
+			return window.patron.username;
+		});
 	}
 
+	/**
+	 * Включение фичи
+	 *
+	 * @param {string} name — типа авторизации
+	 */
 	addFeature (name) {
 		features.push(name);
 	}
