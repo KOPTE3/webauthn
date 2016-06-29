@@ -27,7 +27,7 @@
 		"start"  : "selenium-standalone start",
 		"install": "selenium-standalone install",
 		"lint"   : "eslint . --format node_modules/eslint-friendly-formatter --ext .js",
-		"test"   : "grunt --stack test",
+		"test"   : "source utils/laucher.sh",
 		"wdio"   : "wdio"
 	},
 
