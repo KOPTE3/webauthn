@@ -1,9 +1,9 @@
 'use strict';
 
-let PageObject = require('../../pages');
+let ComposePage = require('../compose');
 
 /** Модуль для работы с редактором страницы написания письма */
-class Editor extends PageObject {
+class ComposeEditor extends ComposePage {
 	constructor () {
 		super();
 	}
@@ -14,9 +14,11 @@ class Editor extends PageObject {
 	 * @type {Object}
 	 */
 	get locators () {
-		return {
-			container: '.mceToolbarRow1'
-		};
+		return this.extend(super.locators, {
+			container: '.mceToolbarRow1',
+			body: '.mceContentBody',
+			editor: '.mceIframeContainer iframe'
+		});
 	}
 
 	/**
@@ -27,6 +29,21 @@ class Editor extends PageObject {
 	wait () {
 		return this.page.waitForExist(this.locators.container);
 	}
+
+	/**
+	 * Получить редактор сообщения
+	 * @return {element}
+	 */
+	getEditor () {
+		var frameId = this.page.getAttribute(this.locators.editor, 'id');
+
+		return this.page.frame(frameId).element(this.locators.body);
+	}
+
+	restoreParentFrame () {
+		this.page.frameParent();
+	}
+
 }
 
-module.exports = new Editor();
+module.exports = ComposeEditor;

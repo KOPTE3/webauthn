@@ -34,7 +34,7 @@ module.exports = grunt => {
 				name: 'wdio',
 				file: path.resolve('tests/e.mail.ru/config.js'),
 				data: {
-					// baseUrl: `https://${TestTools.Git.branch}.omega.test.mail.ru`
+					// baseUrl: 'https://mail-48471.omega.test.mail.ru'
 				}
 			}
 		}

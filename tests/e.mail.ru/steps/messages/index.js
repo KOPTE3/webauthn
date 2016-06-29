@@ -3,24 +3,32 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let page = require('../../pages/messages');
+let MessagesPage = require('../../pages/messages');
 
 /** Модуль для работы с шагами страницы списка писем */
-class Messages extends Steps {
+class MessagesSteps extends Steps {
 	constructor () {
 		super();
 	}
 
 	/**
-	 * Открыть страницу написания письма
+	 * Возвращает ссылку на инстанс страницы
 	 *
-	 * @param {Object} [query] — параметры запроса
+	 * @type {Object}
 	 */
-	open (query) {
-		let actual = page.open(query);
-
-		assert(actual, 'Не удалось открыть страницу списка писем');
+	static get page () {
+		return new MessagesPage();
 	}
+
+	/**
+	 *
+	 * @static
+	 * */
+	static toCompose () {
+		this.page.clickButton('compose');
+	}
+
 }
 
-module.exports = new Messages();
+
+module.exports = MessagesSteps;

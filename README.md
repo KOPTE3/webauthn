@@ -61,16 +61,22 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 npm start
 ```
 
-Зупустить тесты конкретного набора:
+Зупустить тесты конкретного тестового набора:
 
 ```
-grunt test-runner:e.mail.ru --suite=login
+npm test -- e.mail.ru --suite=login
+```
+
+`--suite` может принимать множество значений:
+
+```
+npm test -- e.mail.ru --suite='login,compose'
 ```
 
 Зупустить конкретный тест-кейс:
 
 ```
-grunt test-runner:e.mail.ru --suite=login --grep=TESTMAIL-XXXX
+npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674
 ```
 
 *Опция `--grep` принимает название тест-кейса, которое задается в секции `describe`*
@@ -78,7 +84,7 @@ grunt test-runner:e.mail.ru --suite=login --grep=TESTMAIL-XXXX
 Выполнить тесты на заданном адресе:
 
 ```
-grunt test-runner:e.mail.ru --suite=login --baseUrl=https://e.mail.ru/login
+npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --baseUrl=https://e.mail.ru/login
 ```
 
 Полный список доступных опций test-runner'a смотрите [здесь](https://stash.mail.ru/projects/QA/repos/grunt-test-runner/browse).
@@ -147,12 +153,12 @@ describe('TESTMAIL-24935', () => {
 ```js
 'use strict';
 
-let page = require('../../steps/messages');
+let Messages = require('../../steps/messages');
 
 describe('TESTMAIL-XXXX', () => {
 	it('Проверка перехода на страницу списка писем.', () => {
-		page.auth();
-		page.open();
+		Messages.auth();
+		Messages.open();
 	});
 });
 ```
@@ -201,12 +207,14 @@ module.exports = new Login();
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let form = require('../../pages/login/form');
+let LoginForm = require('../../pages/login/form');
 let providers = require('../../store/authorization/providers');
 
-class Form extends Steps {
+class LoginFormSteps extends Steps {
 	constructor () {
 		super();
+
+		this.loginForm = new LoginForm();
 	}
 
 	/**
@@ -215,7 +223,7 @@ class Form extends Steps {
 	 * @param {string} provider
 	 */
 	checkDefaultDomain (provider) {
-		form.getActiveDomain('mail.ru');
+		this.loginForm.getActiveDomain('mail.ru');
 	}
 
 	/**
@@ -224,7 +232,7 @@ class Form extends Steps {
 	 * @param {string} provider
 	 */
 	getActiveDomain (provider) {
-		assert.equal(form.activeDomain, provider,
+		assert.equal(this.loginForm.activeDomain, provider,
 			`Передан неверный провайдер ${provider}`);
 	}
 
@@ -234,12 +242,12 @@ class Form extends Steps {
 	 * @returns {string}
 	 */
 	checkTitle () {
-		assert.equal(form.title, 'Вход в почту',
+		assert.equal(this.loginForm.title, 'Вход в почту',
 			'Не удалось проверить заголовок формы');
 	}
 }
 
-module.exports = new Form();
+module.exports = new LoginFormSteps();
 ```
 
 #### store

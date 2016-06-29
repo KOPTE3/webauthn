@@ -9,17 +9,27 @@ class Steps extends Pages {
 	}
 
 	/**
-	 * Дождаться появления требуемного элемента
+	 * Локаторы
+	 *
+	 * @param {string} name
 	 */
-	/*
-	wait () {
-		let actual = super.wait();
+	static addFeature (name) {
+		let pages = new Pages();
 
-		assert(actual, `Не удалось дождаться появления элемента ${
-			this.locators.container}`);
+		pages.addFeature(name);
 	}
-	*/
+
+	/**
+	 *
+	 * Открыть страницу
+	 *
+	 * @param {Object} [query] — параметры запроса
+	 */
+	static open (query) {
+		let actual = this.page.open(query);
+
+		assert(actual, 'Не удалось открыть страницу');
+	}
 }
 
 module.exports = Steps;
-

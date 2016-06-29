@@ -9,6 +9,15 @@ class Sent extends PageObject {
 	}
 
 	/**
+	 * Базовый адрес страницы
+	 *
+	 * @type {string}
+	 */
+	get location () {
+		return '/sendmsgok';
+	}
+
+	/**
 	 * Локаторы
 	 *
 	 * @type {Object}
@@ -18,18 +27,6 @@ class Sent extends PageObject {
 			container: '.b-compose__sent'
 		};
 	}
-
-	/**
-	 * Открыть страницу адресной книги
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 * @returns {boolean}
-	 */
-	open (query) {
-		super.open('/sendmsgok', query);
-
-		return this.page.waitForExist(this.locators.container);
-	}
 }
 
-module.exports = new Sent();
+module.exports = Sent;

@@ -1,19 +1,19 @@
 'use strict';
 
-let page = require('../../steps/login');
-let form = require('../../steps/login/form');
+let LoginPage = require('../../steps/login');
+let loginForm = require('../../steps/login/form');
 
 describe('TESTMAIL-24935', () => {
 	it('Проверка отображения элементов на форме авторизации', () => {
-		page.open();
+		LoginPage.open();
 
-		form.checkDefaultDomain();
-		form.checkTitle();
-		form.checkDescription();
-		form.checkPassRemindLink();
-		form.checkHelpText();
-		form.checkHelpLink();
-		form.checkRememberText();
-		form.checkRememberState();
+		loginForm.checkDefaultDomain();
+		loginForm.checkTitle();
+		loginForm.checkDescription();
+		loginForm.checkPassRemindLink();
+		loginForm.checkHelpText();
+		loginForm.checkHelpLink();
+		loginForm.checkRememberText();
+		loginForm.checkRememberState();
 	});
 });

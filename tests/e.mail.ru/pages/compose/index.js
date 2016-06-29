@@ -3,9 +3,18 @@
 let PageObject = require('../../pages');
 
 /** Модуль для работы с представлением страницы написания письма */
-class Compose extends PageObject {
+class ComposePage extends PageObject {
 	constructor () {
 		super();
+	}
+
+	/**
+	 * Базовый адрес страницы
+	 *
+	 * @type {string}
+	 */
+	get location () {
+		return '/compose';
 	}
 
 	/**
@@ -18,18 +27,6 @@ class Compose extends PageObject {
 			container: '.b-compose'
 		};
 	}
-
-	/**
-	 * Открыть страницу написания письма
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 * @returns {boolean}
-	 */
-	open (query) {
-		super.open('/compose', query);
-
-		return this.page.waitForExist(this.locators.container);
-	}
 }
 
-module.exports = new Compose();
+module.exports = ComposePage;

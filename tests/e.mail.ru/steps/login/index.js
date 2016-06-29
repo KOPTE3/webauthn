@@ -3,24 +3,22 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let login = require('../../pages/login');
+let LoginPage = require('../../pages/login');
 
 /** Модуль для работы с шагами страницы логина */
-class Login extends Steps {
+class LoginStep extends Steps {
 	constructor () {
 		super();
 	}
 
 	/**
-	 * Открыть страницу авторизации
+	 * Возвращает ссылку на инстанс страницы
 	 *
-	 * @param {Object} [query] — параметры запроса
+	 * @type {Object}
 	 */
-	open (query) {
-		let actual = login.open(query);
-
-		assert(actual, 'Не удалось открыть страницу');
+	static get page () {
+		return new LoginPage();
 	}
 }
 
-module.exports = new Login();
+module.exports = LoginStep;

@@ -1,10 +1,10 @@
 'use strict';
 
-let PageObject = require('../../pages');
-let ComposeFormStore = require('../../store/compose/fields');
+let ComposePage = require('../compose');
+let ComposeFieldsStore = require('../../store/compose/fields');
 
 /** Модуль для работы с формой страницы написания письма */
-class Fields extends PageObject {
+class ComposeFields extends ComposePage {
 	constructor () {
 		super();
 	}
@@ -15,7 +15,7 @@ class Fields extends PageObject {
 	 * @type {Object}
 	 */
 	get locators () {
-		return {
+		return this.extend(super.locators, {
 			container: '.compose-head',
 			fields: {
 				priority: '[name="Priority"]',
@@ -25,11 +25,11 @@ class Fields extends PageObject {
 				to      : '.compose__header__field [data-original-name="To"]',
 				cc      : '.compose__header__field [data-original-name="CC"]',
 				bcc     : '.compose__header__field [data-original-name="BCC"]',
-				subject : '.compose__header__field [name="Subject"]'
+				subject : '.compose__header__field[name="Subject"]'
 			},
 			selectField    : '#dropdown-select-fields .dropdown__checkbox',
 			selectFieldItem: '#dropdown-select-fields .dropdown__list_multiselect'
-		};
+		});
 	}
 
 	/**
@@ -123,7 +123,7 @@ class Fields extends PageObject {
 	 * @param {string} value — значение поля
 	 */
 	setFieldValue (name, value) {
-		this.getField(name).keys(value);
+		this.getField(name).setValue(value);
 	}
 
 	/**
@@ -141,7 +141,7 @@ class Fields extends PageObject {
 	 * @param {boolean} state — состояние
 	 */
 	toggleAllFields (state) {
-		for (let name of ComposeFormStore.hiddenFields) {
+		for (let name of ComposeFieldsStore.hiddenFields) {
 			if (state) {
 				this.showField(name);
 			} else {
@@ -192,4 +192,4 @@ class Fields extends PageObject {
 	}
 }
 
-module.exports = new Fields();
+module.exports = ComposeFields;

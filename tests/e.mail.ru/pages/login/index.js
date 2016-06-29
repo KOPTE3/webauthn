@@ -3,9 +3,18 @@
 let PageObject = require('../../pages');
 
 /** Модуль для работы с представлением страницы логина */
-class Login extends PageObject {
+class LoginPage extends PageObject {
 	constructor () {
 		super();
+	}
+
+	/**
+	 * Базовый адрес страницы
+	 *
+	 * @type {string}
+	 */
+	get location () {
+		return '/login';
 	}
 
 	/**
@@ -18,32 +27,6 @@ class Login extends PageObject {
 			container: '.login-page__external'
 		};
 	}
-
-	/**
-	 * Авторизация
-	 *
-	 * @param {string} type
-	 * @returns {boolean}
-	 */
-	auth (type) {
-		super.auth(type);
-
-		return this.page.execute(() => {
-			return window.patron.username;
-		});
-	}
-
-	/**
-	 * Открыть страницу логина
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 * @returns {boolean}
-	 */
-	open (query) {
-		super.open('/login', query);
-
-		return this.page.waitForExist(this.locators.container);
-	}
 }
 
-module.exports = new Login();
+module.exports = LoginPage;

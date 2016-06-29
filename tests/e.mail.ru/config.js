@@ -60,7 +60,9 @@ exports.config = {
 
 	mochaOpts: {
 		ui: 'bdd',
-		retries: 2
+
+		/* Количество попыток на выполнение теста, который не был пройден */
+		retries: 0
 	},
 
 	/* Для реппортера Allure требуется наличие установленного плагина в CI */
@@ -115,7 +117,9 @@ exports.config = {
 	},
 
 	beforeSuite () {
-		return account.session();
+		return account.session({
+			host: browser.options.baseUrl
+		});
 	},
 
 	afterSuite () {

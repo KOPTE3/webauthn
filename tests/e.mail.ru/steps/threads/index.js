@@ -3,24 +3,22 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let page = require('../../pages/threads');
+let ThreadsPage = require('../../pages/threads');
 
 /** Модуль для работы с шагами страницы списка тредов */
-class Threads extends Steps {
+class ThreadsSteps extends Steps {
 	constructor () {
 		super();
 	}
 
 	/**
-	 * Открыть страницу
+	 * Возвращает ссылку на инстанс страницы
 	 *
-	 * @param {Object} [query] — параметры запроса
+	 * @type {Object}
 	 */
-	open (query) {
-		let actual = page.open(query);
-
-		assert(actual, 'Не удалось открыть страницу списка тредов');
+	static get page () {
+		return new ThreadsPage();
 	}
 }
 
-module.exports = new Threads();
+module.exports = ThreadsSteps;

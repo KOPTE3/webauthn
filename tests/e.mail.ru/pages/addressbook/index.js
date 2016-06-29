@@ -3,9 +3,18 @@
 let PageObject = require('../../pages');
 
 /** Модуль для работы с представлением страницы адресной книги */
-class AddressBook extends PageObject {
+class AddressBookPage extends PageObject {
 	constructor () {
 		super();
+	}
+
+	/**
+	 * Базовый адрес страницы
+	 *
+	 * @type {string}
+	 */
+	get location () {
+		return '/addressbook';
 	}
 
 	/**
@@ -18,18 +27,6 @@ class AddressBook extends PageObject {
 			container: '.addressbook_page_view'
 		};
 	}
-
-	/**
-	 * Открыть страницу адресной книги
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 * @returns {boolean}
-	 */
-	open (query) {
-		super.open('/addressbook', query);
-
-		return this.page.waitForExist(this.locators.container);
-	}
 }
 
-module.exports = new AddressBook();
+module.exports = AddressBookPage;

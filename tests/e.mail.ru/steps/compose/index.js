@@ -3,24 +3,22 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let page = require('../../pages/compose');
+let ComposePage = require('../../pages/compose');
 
 /** Модуль для работы с шагами страницы написания письма */
-class Compose extends Steps {
+class ComposeSteps extends Steps {
 	constructor () {
 		super();
 	}
 
 	/**
-	 * Открыть страницу написания письма
+	 * Возвращает ссылку на инстанс страницы
 	 *
-	 * @param {Object} [query] — параметры запроса
+	 * @type {Object}
 	 */
-	open (query) {
-		let actual = page.open(query);
-
-		assert(actual, 'Не удалось открыть страницу написания письма');
+	static get page () {
+		return new ComposePage();
 	}
 }
 
-module.exports = new Compose();
+module.exports = ComposeSteps;
