@@ -2,7 +2,6 @@
 
 let PageObject = require('../../pages');
 let Captcha = require('../../utils/captcha');
-let assety = require('assert');
 
 /** Модуль для работы со страницей выбора типа восстановления пароля */
 class Controls extends PageObject {
@@ -29,20 +28,40 @@ class Controls extends PageObject {
 	}
 
 	/**
-	 * Crack and fill captcha
+	 * Get X-Captcha-Id header from page
+	 * @return {Object}
 	 */
-	fillPhoneCaptcha () {
-		let cid = Captcha.getCaptchaID(this.locators.phoneCaptchaImg),
-			code;
+	get phoneCaptchaID () {
+		return Captcha.getCaptchaID(this.locators.phoneCaptchaImg);
+	}
+
+	/**
+	 * Get captcha value by X-Captcha-Id
+	 * @param  {string} cid
+	 * @return {Object}
+	 */
+	getPhoneCaptchaValue (cid) {
+		let code;
 
 		this.page.waitUntil(function async () {
-			return Captcha.getCaptchaValue(cid.value).then(result => {
+			return Captcha.getCaptchaValue(cid).then(result => {
 				code = result;
 
-				return typeof result === 'string';
+				return true;
 			});
 		});
 
+		return {
+			value: code,
+			isOK: typeof code === 'string'
+		};
+	}
+
+	/**
+	 * Fill code field
+	 * @param  {string} code
+	 */
+	fillPhoneCaptcha (code) {
 		this.page.setValue(this.locators.phoneCaptchaField, code);
 	}
 

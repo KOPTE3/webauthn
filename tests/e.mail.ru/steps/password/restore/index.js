@@ -3,7 +3,7 @@
 let assert = require('assert');
 
 let PasswordSteps = require('../../password');
-let PasswordRestorePage = require('../../../pages/password/restore');
+let PasswordRestorePage = require('../../../pages/passrestore');
 
 /** Модуль для работы с шагами страницы поиска */
 class PasswordRestoreSteps extends PasswordSteps {

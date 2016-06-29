@@ -50,7 +50,7 @@ class Captcha {
 		);
 
 		return {
-			success: result.state === 'success',
+			isOK: result.state === 'success',
 			value: result.value
 		};
 	}

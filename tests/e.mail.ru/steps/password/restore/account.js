@@ -2,11 +2,11 @@
 
 let assert = require('assert');
 
-let Steps = require('../../steps');
-let accountView = require('../../pages/passrestore/account');
+let PasswordRestoreSteps = require('../restore');
+let accountViewPage = require('../../../pages/passrestore/account');
 
 /** Модуль для работы с формой ввода адреса для восстановления */
-class Controls extends Steps {
+class Controls extends PasswordRestoreSteps {
 	constructor () {
 		super();
 	}
@@ -15,14 +15,14 @@ class Controls extends Steps {
 	* @param {string} [email] - адрес для восстановления
 	*/
 	setEmail (email) {
-		accountView.setEmail(email);
+		accountViewPage.setEmail(email);
 	}
 
 	/**
 	 * Submit form with email to restore
 	 */
 	submitForm () {
-		accountView.submitForm();
+		accountViewPage.submitForm();
 	}
 }
 
