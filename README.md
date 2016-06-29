@@ -67,6 +67,12 @@ npm start
 npm test -- e.mail.ru --suite=login
 ```
 
+`--suite` может принимать множество значений:
+
+```
+npm test -- e.mail.ru --suite='login,compose'
+```
+
 Зупустить конкретный тест-кейс:
 
 ```

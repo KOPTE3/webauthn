@@ -1,7 +1,5 @@
 'use strict';
 
-let assert = require('assert');
-
 let LoginPage = require('../../steps/login');
 let loginForm = require('../../steps/login/form');
 let providers = require('../../store/login/providers');

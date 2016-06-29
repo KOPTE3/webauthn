@@ -2,11 +2,11 @@
 
 let assert = require('assert');
 
-let Steps = require('../../steps');
-let PasswordRestorePage = require('../../pages/passrestore');
+let PasswordSteps = require('../../password');
+let PasswordRestorePage = require('../../../pages/password/restore');
 
 /** Модуль для работы с шагами страницы поиска */
-class PasswordRestoreSteps extends Steps {
+class PasswordRestoreSteps extends PasswordSteps {
 	constructor () {
 		super();
 	}

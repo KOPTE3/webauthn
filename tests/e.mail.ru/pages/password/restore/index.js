@@ -1,9 +1,9 @@
 'use strict';
 
-let PageObject = require('../../pages');
+let PasswordPage = require('../restore');
 
-/** Модуль для работы с представлением страницы адресной книги */
-class PasswordRestorePage extends PageObject {
+/** Модуль для работы с представлением страницы восстановления пароля */
+class PasswordRestorePage extends PasswordPage {
 	constructor () {
 		super();
 	}
