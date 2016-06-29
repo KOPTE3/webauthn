@@ -94,7 +94,7 @@ class PageObject {
 		browser.setCookies(cookie);
 		console.log(`Used ${login} account`);
 
-		return browser.execute(() => {
+		return browser.execute(function () {
 			return window.patron.username;
 		});
 	}

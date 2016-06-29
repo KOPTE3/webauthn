@@ -14,7 +14,7 @@ class MessagesPage extends PageObject {
 	 * @type {string}
 	 */
 	get location () {
-		return '/message';
+		return '/messages';
 	}
 
 	/**
