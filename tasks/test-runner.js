@@ -7,7 +7,7 @@ let TestTools = require('@qa/test-tools');
 module.exports = grunt => {
 	return {
 		options: {
-/*
+		/*
 			jira: {
 				username: 'test-runner',
 				password: 'CAArKpPe',
@@ -15,7 +15,7 @@ module.exports = grunt => {
 				host    : 'jira.mail.ru',
 				status  : 27411
 			},
-*/
+		*/
 
 			hooks: {
 				init () {
@@ -32,9 +32,33 @@ module.exports = grunt => {
 		'e.mail.ru': {
 			service: {
 				name: 'wdio',
+				file: path.resolve('tests/e.mail.ru/config.js')
+			}
+		},
+
+		'e.mail.ru-omega': {
+			service: {
+				name: 'wdio',
 				file: path.resolve('tests/e.mail.ru/config.js'),
 				data: {
-					// baseUrl: 'https://mail-48471.omega.test.mail.ru'
+					baseUrl: `https://${TestTools.Git.branch}.omega.test.mail.ru`
+				}
+			}
+		},
+
+		'account.mail.ru': {
+			service: {
+				name: 'wdio',
+				file: path.resolve('tests/account.mail.ru/config.js')
+			}
+		},
+
+		'account.mail.ru-omega': {
+			service: {
+				name: 'wdio',
+				file: path.resolve('tests/account.mail.ru/config.js'),
+				data: {
+					baseUrl: `https://${TestTools.Git.branch}.account.omega.test.mail.ru`
 				}
 			}
 		}
