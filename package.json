@@ -27,7 +27,7 @@
 		"start"  : "selenium-standalone start",
 		"install": "selenium-standalone install",
 		"lint"   : "eslint . --format node_modules/eslint-friendly-formatter --ext .js",
-		"test"   : "grunt --stack test",
+		"test"   : "source utils/laucher.sh",
 		"wdio"   : "wdio"
 	},
 
@@ -41,7 +41,7 @@
 
 	"dependencies": {
 		"@qa/account-manager"  : "^0.0.10",
-		"@qa/grunt-test-runner": "^0.1.0",
+		"@qa/grunt-test-runner": "^0.2.0",
 		"@qa/test-tools"       : "^1.0.0",
 		"@qa/wd-capabilities"  : "^0.0.3",
 		"@qa/wdio-api-mail.ru" : "^1.2.0",

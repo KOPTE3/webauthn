@@ -1,6 +1,6 @@
 'use strict';
 
-let ComposePage = require('../../pages/compose');
+let ComposePage = require('../compose');
 
 /** Модуль для работы с контролами страницы написания письма */
 class ComposeControls extends ComposePage {

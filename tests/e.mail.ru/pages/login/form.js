@@ -1,6 +1,6 @@
 'use strict';
 
-let LoginPage = require('../../pages/login');
+let LoginPage = require('../login');
 let providers = require('../../store/authorization/providers');
 
 /** Модуль для работы с формой страницы логина */

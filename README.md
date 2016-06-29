@@ -61,16 +61,16 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 npm start
 ```
 
-Зупустить тесты конкретного набора:
+Зупустить тесты конкретного тестового набора:
 
 ```
-grunt test-runner:e.mail.ru --suite=login
+npm test -- e.mail.ru --suite=login
 ```
 
 Зупустить конкретный тест-кейс:
 
 ```
-grunt test-runner:e.mail.ru --suite=login --grep=TESTMAIL-XXXX
+npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674
 ```
 
 *Опция `--grep` принимает название тест-кейса, которое задается в секции `describe`*
@@ -78,7 +78,7 @@ grunt test-runner:e.mail.ru --suite=login --grep=TESTMAIL-XXXX
 Выполнить тесты на заданном адресе:
 
 ```
-grunt test-runner:e.mail.ru --suite=login --baseUrl=https://e.mail.ru/login
+npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --baseUrl=https://e.mail.ru/login
 ```
 
 Полный список доступных опций test-runner'a смотрите [здесь](https://stash.mail.ru/projects/QA/repos/grunt-test-runner/browse).

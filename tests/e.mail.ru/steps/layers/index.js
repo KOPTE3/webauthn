@@ -29,6 +29,20 @@ class LayerSteps extends Steps {
 	}
 
 	/**
+	 * Метод нажимает "Принять" в леере
+	 * */
+	apply () {
+		this.layer.apply();
+	}
+
+	/**
+	 * Метод нажимает "Отменить" в леере
+	 * */
+	cancel () {
+		this.layer.cancel();
+	}
+
+	/**
 	 * Метод проверяет, что леер закрыт
 	 */
 	shoulBeClosed () {

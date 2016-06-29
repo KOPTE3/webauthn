@@ -19,6 +19,16 @@ class MessagesSteps extends Steps {
 	static get page () {
 		return new MessagesPage();
 	}
+
+	/**
+	 *
+	 * @static
+	 * */
+	static toCompose () {
+		this.page.clickButton('compose');
+	}
+
 }
+
 
 module.exports = MessagesSteps;

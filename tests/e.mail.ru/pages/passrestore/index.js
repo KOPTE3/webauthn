@@ -2,8 +2,8 @@
 
 let PageObject = require('../../pages');
 
-/** Модуль для работы с представлением страницы отправленного письма */
-class Sent extends PageObject {
+/** Модуль для работы с представлением страницы адресной книги */
+class PasswordRestorePage extends PageObject {
 	constructor () {
 		super();
 	}
@@ -14,7 +14,7 @@ class Sent extends PageObject {
 	 * @type {string}
 	 */
 	get location () {
-		return '/sendmsgok';
+		return '/password/restore';
 	}
 
 	/**
@@ -24,9 +24,9 @@ class Sent extends PageObject {
 	 */
 	get locators () {
 		return {
-			container: '.b-compose__sent'
+			container: '.password-recovery__remind__new'
 		};
 	}
 }
 
-module.exports = Sent;
+module.exports = PasswordRestorePage;

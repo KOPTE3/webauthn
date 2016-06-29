@@ -3,8 +3,8 @@
 let assert = require('assert');
 
 let ComposePage = require('../../pages/compose');
-let ComposeSteps = require('../../steps/compose');
 let ComposeFields = require('../../pages/compose/fields');
+let ComposeSteps = require('../compose');
 
 /** Модуль для работы с формой страницы написания письма */
 class ComposeFieldsSteps extends ComposeSteps {
