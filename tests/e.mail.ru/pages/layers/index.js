@@ -65,6 +65,10 @@ class Layers extends PageObject {
 		return this.page.element(this.locators.container);
 	}
 
+	apply () {
+		this.page.click(this.locators.apply);
+	}
+
 	/**
 	 * Метод закрывает открытый попап
 	 */
