@@ -92,7 +92,9 @@ class PortalSearch extends PortalMenu {
 	 */
 	getOperandText (name) {
 		let operand = this.getOperand(name);
-		let input = this.page.elementIdElement(operand.value.ELEMENT, this.locators.operands.input);
+
+		let input = this.page.elementIdElement(operand.value.ELEMENT,
+			this.locators.operands.input);
 
 		return input && input.state === 'success' ? input.getValue() : '';
 	}
@@ -129,7 +131,8 @@ class PortalSearch extends PortalMenu {
 	operandHasClose (name) {
 		let operand = this.getOperand(name);
 
-		return !!this.page.elementIdElement(operand.value.ELEMENT, this.locators.operands.close);
+		return !!this.page.elementIdElement(operand.value.ELEMENT,
+			this.locators.operands.close);
 	}
 }
 

@@ -4,6 +4,8 @@ let LoginPage = require('../../steps/login');
 let loginForm = require('../../steps/login/form');
 let AuthorizationErrors = require('../../store/authorization/errors');
 
+let assert = require('assert');
+
 describe('TESTMAIL-30265', () => {
 	it('Отображение ошибки errno=1', () => {
 		LoginPage.open({ errno: 1 });
@@ -13,3 +15,4 @@ describe('TESTMAIL-30265', () => {
 		loginForm.getError(AuthorizationErrors.codes[errno]);
 	});
 });
+

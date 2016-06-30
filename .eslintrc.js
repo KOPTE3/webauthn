@@ -5,29 +5,33 @@ module.exports = {
 	],
 
 	'rules': {
-		'max-len'              : ['error', 100],
+		// 'max-len'              : ['error', 100],
 		'array-callback-return': 'off',
-		'require-jsdoc'        : ["error", {
+		'require-jsdoc'        : ['error', {
 			'require': {
 				'FunctionDeclaration': true,
 				'MethodDefinition'   : false,
 				'ClassDeclaration'   : false
 			}
-		}]
+		}],
+
+		'no-mixed-spaces-and-tabs': 'error',
+
+		'no-mixed-requires': [0, true]
 	},
 
-	"env": {
-		"browser": true,
-		"node"   : true,
-		"es6"    : true,
-		"mocha"  : true
+	'env': {
+		'browser': true,
+		'node'   : true,
+		'es6'    : true,
+		'mocha'  : true
 	},
 
-	"parserOptions": {
-		"ecmaVersion": 6
+	'parserOptions': {
+		'ecmaVersion': 6
 	},
 
-	"globals": {
-		"browser": true
+	'globals': {
+		'browser': true
 	}
 };
