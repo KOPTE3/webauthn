@@ -5,7 +5,6 @@ module.exports = {
 	],
 
 	'rules': {
-		// 'max-len'              : ['error', 100],
 		'array-callback-return': 'off',
 		'require-jsdoc'        : ['error', {
 			'require': {
@@ -16,8 +15,7 @@ module.exports = {
 		}],
 
 		'no-mixed-spaces-and-tabs': 'error',
-
-		'no-mixed-requires': [0, true]
+		'no-mixed-requires': 1
 	},
 
 	'env': {
