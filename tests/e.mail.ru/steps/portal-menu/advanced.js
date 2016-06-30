@@ -17,9 +17,9 @@ class AdvancedSteps extends PortalMenuSteps {
 	 * Проверка видимости формы
 	 */
 	isVisible () {
-		let visible = this.advanced.isVisible();
+		let actual = this.advanced.isVisible();
 
-		assert(visible, 'Видимость расширенного поиска');
+		assert(actual, 'Видимость расширенного поиска');
 	}
 
 	/**
@@ -32,7 +32,9 @@ class AdvancedSteps extends PortalMenuSteps {
 
 		this.advanced.clickCheckbox(name);
 
-		assert(checked !== this.advanced.isChecked(name), 'чекбокс не кликнулся');
+		let actual = this.advanced.isChecked(name);
+
+		assert(actual !== checked, 'чекбокс не кликнулся');
 	}
 
 	/**
@@ -42,9 +44,9 @@ class AdvancedSteps extends PortalMenuSteps {
 	 * @param {boolean} reverse - наоборот, проверка что чекбокс не выбран
 	 */
 	isChecked (name, reverse) {
-		let checked = this.advanced.isChecked(name);
+		let actual = this.advanced.isChecked(name);
 
-		assert(checked === !reverse, `Чекбокс ${name}${reverse ? '' : ' не'} выбран`);
+		assert(actual === !reverse, `Чекбокс ${name}${reverse ? '' : ' не'} выбран`);
 	}
 }
 

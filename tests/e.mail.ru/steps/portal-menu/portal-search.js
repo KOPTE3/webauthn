@@ -22,9 +22,11 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 */
 	toggleAdvanced () {
 		let visible = this.advanced.isVisible();
-		let result = visible ? this.portalSearch.hideAdvanced() : this.portalSearch.showAdvanced();
+		let actual = visible ?
+			this.portalSearch.hideAdvanced() :
+			this.portalSearch.showAdvanced();
 
-		assert(result, 'toggle advanced search');
+		assert(actual, 'toggle advanced search');
 	}
 
 	/**
@@ -33,9 +35,9 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 * @param {string} name - имя операнда
 	 */
 	hasOperand (name) {
-		let hasOperand = this.portalSearch.hasOperand(name);
+		let actual = this.portalSearch.hasOperand(name);
 
-		assert(hasOperand, `операнд ${name} не появился`);
+		assert(actual, `операнд ${name} не появился`);
 	}
 
 	/**
@@ -44,9 +46,9 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 * @param {string} name - имя операнда (unread|flag|attach)
 	 */
 	operandHasIcon (name) {
-		let hasIcon = this.portalSearch.operandHasIcon(name);
+		let actual = this.portalSearch.operandHasIcon(name);
 
-		assert(hasIcon, `у операнда ${name} нет иконки`);
+		assert(actual, `у операнда ${name} нет иконки`);
 	}
 
 	/**
@@ -55,9 +57,21 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 * @param {string} name - имя операнда
 	 */
 	operandHasClose (name) {
-		let hasClose = this.portalSearch.operandHasClose(name);
+		let actual = this.portalSearch.operandHasClose(name);
 
-		assert(hasClose, `у операнда ${name} нет кнопки закрыть`);
+		assert(actual, `у операнда ${name} нет кнопки закрыть`);
+	}
+
+	/**
+	 * Проверить текст операнда
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} text - текст
+	 */
+	operandHasText (name, text) {
+		let actual = this.portalSearch.getOperandText(name);
+
+		assert(actual === text, `Текст операнда ${name} не равен "${text}"`);
 	}
 }
 

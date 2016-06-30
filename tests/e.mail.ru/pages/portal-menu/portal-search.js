@@ -34,11 +34,12 @@ class PortalSearch extends PortalMenu {
 				date:	 `${container} [data-operand-name="q_date"]`,
 				blank:	 `${container} [data-operand-name="blank"]`,
 				icons: {
-					unread:	 `${container} [data-operand-name="q_read"] .ico_folder_unread`,
-					flag:	 `${container} [data-operand-name="q_flag"] .ico_folder_important`,
-					attach:	 `${container} [data-operand-name="q_attach"] .ico_folder_attachment`
+					unread:	 `.ico_folder_unread`,
+					flag:	 `.ico_folder_important`,
+					attach:	 `.ico_folder_attachment`
 				},
-				close: '.b-operand__close'
+				close: '.b-operand__close',
+				input: '.b-operand__input'
 			}
 		});
 	}
@@ -84,6 +85,19 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Получить текст операнда.
+	 *
+	 * @param {string} name - имя операнда
+	 * @return {string}
+	 */
+	getOperandText (name) {
+		let operand = this.getOperand(name);
+		let input = this.page.elementIdElement(operand.value.ELEMENT, this.locators.operands.input);
+
+		return input && input.state === 'success' ? input.getValue() : '';
+	}
+
+	/**
 	 * Операнд существует
 	 *
 	 * @param {string} name - имя операнда
@@ -100,7 +114,10 @@ class PortalSearch extends PortalMenu {
 	 * @return {boolean}
 	 */
 	operandHasIcon (name) {
-		return this.page.element(this.locators.operands.icons[name]);
+		let operand = this.getOperand(name);
+		let locator = this.locators.operands.icons[name];
+
+		return !!this.page.elementIdElement(operand.value.ELEMENT, locator);
 	}
 
 	/**
