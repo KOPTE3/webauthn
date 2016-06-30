@@ -26,6 +26,17 @@ class PortalSearchSteps extends PortalMenuSteps {
 
 		assert(result, 'toggle advanced search');
 	}
+
+	/**
+	 * Проверка наличия операнда
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	hasOperand (name) {
+		let hasOperand = this.portalSearch.hasOperand(name);
+
+		assert(hasOperand, `операнд ${name} не появился`);
+	}
 }
 
 module.exports = new PortalSearchSteps();

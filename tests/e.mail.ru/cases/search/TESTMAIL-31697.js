@@ -9,5 +9,10 @@ describe('TESTMAIL-31697', () => {
 		Messages.auth();
 		Messages.open();
 		PortalSearchSteps.toggleAdvanced();
+
+		let name = 'flag';
+
+		AdvancedSteps.clickCheckbox(name);
+		PortalSearchSteps.hasOperand(name);
 	});
 });

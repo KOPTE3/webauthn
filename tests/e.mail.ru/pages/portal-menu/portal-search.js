@@ -22,7 +22,18 @@ class PortalSearch extends PortalMenu {
 		return this.extend(super.locators, {
 			container,
 			form: `${container} .js-search`,
-			advancedToggle: `${container} .js-dropdown-button`
+			advancedToggle: `${container} .js-dropdown-button`,
+			operands: {
+				message: `${container} [data-operand-name="q_query"]`,
+				from:	 `${container} [data-operand-name="q_from"]`,
+				to:		 `${container} [data-operand-name="q_to"]`,
+				subject: `${container} [data-operand-name="q_subj"]`,
+				unread:	 `${container} [data-operand-name="q_read"]`,
+				flag:	 `${container} [data-operand-name="q_flag"]`,
+				attach:	 `${container} [data-operand-name="q_attach"]`,
+				date:	 `${container} [data-operand-name="q_date"]`,
+				blank:	 `${container} [data-operand-name="blank"]`
+			}
 		});
 	}
 
@@ -53,6 +64,30 @@ class PortalSearch extends PortalMenu {
 		this.toggleAdvanced();
 
 		return this.page.waitForVisible(this.advanced.locators.container);
+	}
+
+	/**
+	 * Получить операнд по имени
+	 *
+	 * @param {string} name - имя операнда
+	 * (message|from|to|subject|unread|flag|attach|date|blank)
+	 * @return {*}
+	 */
+	getOperand (name) {
+		return this.page.element(this.locators.operands[name]);
+	}
+
+	/**
+	 * Операнд существует
+	 *
+	 * @param {string} name - имя операнда
+	 * @return {boolean}
+	 */
+	hasOperand (name) {
+		let operand = this.getOperand(name);
+		let result;
+
+		return this.page.waitForVisible(this.locators.operands[name]);
 	}
 }
 

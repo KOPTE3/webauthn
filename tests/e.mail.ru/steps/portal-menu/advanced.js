@@ -21,6 +21,19 @@ class AdvancedSteps extends PortalMenuSteps {
 
 		assert(visible, 'Видимость расширенного поиска');
 	}
+
+	/**
+	 * Кликнуть в чекбокс
+	 *
+	 * @param {string} name - unread|flag|attach
+	 */
+	clickCheckbox (name) {
+		let checked = this.advanced.isChecked(name);
+
+		this.advanced.clickCheckbox(name);
+
+		assert(checked !== this.advanced.isChecked(name), 'чекбокс не кликнулся');
+	}
 }
 
 module.exports = new AdvancedSteps();
