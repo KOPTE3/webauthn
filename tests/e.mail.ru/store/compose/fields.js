@@ -14,7 +14,7 @@ class ComposeFields extends Store {
 	 * @type {Object}
 	 */
 	get fields () {
-		let user = this.account.get('email');
+		let user = `${this.account.get('login')}@${this.account.get('domain')}`;
 
 		return {
 			from    : user,
