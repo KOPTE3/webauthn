@@ -68,7 +68,7 @@ exports.config = {
 		// 'prof': true,
 
 		/** Максимальное время на ожидание результата выполнения теста */
-		'timeout': 1 * 1000,
+		'timeout': 15 * 1000,
 
 		/** Показывать стек-трейс */
 		'trace': true,
@@ -120,8 +120,8 @@ exports.config = {
 	 * @see https://stash.mail.ru/projects/QA/repos/wd-capabilities/browse
 	 */
 	capabilities: [
-		// capabilities.get('chrome'),
-		capabilities.get('phantomjs')
+		// capabilities.get('phantomjs'),
+		capabilities.get('chrome')
 	],
 
 	before (capabilities, specs) {

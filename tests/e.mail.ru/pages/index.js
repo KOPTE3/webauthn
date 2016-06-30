@@ -77,7 +77,6 @@ class PageObject {
 	 * Авторизация
 	 *
 	 * @param {string} type — типа авторизации
-	 * @returns {boolean}
 	 */
 	static auth (type) {
 		let { account } = new Store();
@@ -85,14 +84,26 @@ class PageObject {
 		browser.url('/login');
 
 		let login = account.get('login');
-		let cookie = account.get('cookies');
 
-		browser.setCookies(cookie);
+		try {
+			let cookie = account.get('cookies');
+
+			if (!cookie.length) {
+				throw new Error();
+			}
+
+			browser.setCookies(cookie);
+		} catch (error) {
+			throw new Error('Could not found cookie to continue');
+		}
+
 		console.log(`Used ${login} account`);
 
+		/*
 		return browser.execute(function () {
 			return window.patron.username;
 		});
+		*/
 	}
 
 	/**
