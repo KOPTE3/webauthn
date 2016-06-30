@@ -26,7 +26,7 @@ describe('TESTMAIL-31540: AJAX. Написание письма. Забытое 
 	composeEditorStore.letters.forEach(text => {
 		it(text, () => {
 			composeFields.setFieldValue('subject', 'check attach');
-			composeFields.setFieldValue('to', composeFiledsStore.fiel);
+			composeFields.setFieldValue('to', composeFiledsStore.fields.to);
 			composeEditor.writeMessage(text);
 			composeControls.send();
 			missingAttachLayer.show();
