@@ -20,7 +20,6 @@ class Steps extends Pages {
 	}
 
 	/**
-	 *
 	 * Открыть страницу
 	 *
 	 * @param {Object} [query] — параметры запроса
@@ -35,7 +34,9 @@ class Steps extends Pages {
 				'"locators.container"');
 		}
 
-		this.page.open(query);
+		let actual = this.page.open(query);
+
+		assert(actual, 'Не удалось авторизоваться');
 	}
 }
 

@@ -1,10 +1,10 @@
 'use strict';
 
-let page = require('../../steps/threads');
+let Threads = require('../../steps/threads');
 
 describe('TESTMAIL-XXX', () => {
 	it('Открытие списка тредов', () => {
-		page.auth();
-		page.open();
+		Threads.auth();
+		Threads.open();
 	});
 });
