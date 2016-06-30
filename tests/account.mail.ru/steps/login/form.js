@@ -80,8 +80,8 @@ class LoginFormSteps extends Steps {
 	/**
 	 * Проверить состояние контрола "Запомнить почту"
 	 */
-	checkRememberState () {
-		assert.equal(this.loginForm.getRememberState(), '1',
+	checkSessionState () {
+		assert.equal(this.loginForm.getSessionState(), '1',
 			`Проверка состояние контрола "Запомнить почту"`);
 	}
 

@@ -124,10 +124,8 @@ class LoginForm extends LoginPage {
 	 *
 	 * @returns {boolean}
 	 */
-	getRememberState () {
-		let state = this.page.element(this.locators.rememberState);
-
-		return state.getValue();
+	getSessionState () {
+		return this.page.isEnabled(this.locators.rememberState);
 	}
 
 	/**
