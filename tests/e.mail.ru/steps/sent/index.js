@@ -15,6 +15,7 @@ class SentSteps extends Steps {
 	 * Возвращает ссылку на инстанс страницы
 	 *
 	 * @type {Object}
+	 * @static
 	 */
 	static get page () {
 		return new SentPage();
@@ -22,10 +23,24 @@ class SentSteps extends Steps {
 
 	/**
 	 * Метод дожидается открытия страницы успешной загрузки
+	 *
+	 * @static
 	 * */
 	static wait () {
 		this.page.wait();
 	}
+
+
+	/**
+	 * Метод дожидается открытия страницы успешной загрузки
+	 *
+	 * @static
+	 * */
+	static isVisible () {
+		this.page.isVisible();
+	}
+
+
 }
 
 module.exports = SentSteps;

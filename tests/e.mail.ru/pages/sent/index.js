@@ -27,6 +27,14 @@ class Sent extends PageObject {
 			container: '.b-compose__sent'
 		};
 	}
+
+	/**
+	 * Проверить что страница отправки сообщения показана
+	 */
+	isVisible () {
+		this.page.isVisible(this.locators.container);
+	}
+
 }
 
 module.exports = Sent;
