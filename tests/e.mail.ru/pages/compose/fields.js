@@ -34,11 +34,9 @@ class ComposeFields extends ComposePage {
 
 	/**
 	 * Дождаться появления формы написания письма
-	 *
-	 * @returns {boolean}
 	 */
 	wait () {
-		return this.page.waitForExist(this.locators.container);
+		this.page.waitForExist(this.locators.container);
 	}
 
 	/**

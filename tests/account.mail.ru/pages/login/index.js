@@ -2,7 +2,8 @@
 
 let PageObject = require('../../pages');
 
-class PasswordPage extends PageObject {
+/** Модуль для работы с представлением страницы логина */
+class LoginPage extends PageObject {
 	constructor () {
 		super();
 	}
@@ -13,7 +14,7 @@ class PasswordPage extends PageObject {
 	 * @type {string}
 	 */
 	get location () {
-		return '/password';
+		return '/login';
 	}
 
 	/**
@@ -23,9 +24,9 @@ class PasswordPage extends PageObject {
 	 */
 	get locators () {
 		return {
-			container: '.password-recovery__remind__new'
+			container: '.b-login'
 		};
 	}
 }
 
-module.exports = PasswordPage;
+module.exports = LoginPage;

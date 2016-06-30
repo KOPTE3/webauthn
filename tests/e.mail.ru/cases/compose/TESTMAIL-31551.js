@@ -6,6 +6,8 @@ let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
+let ComposeFiledsStore = require('../../store/compose/fields');
+let composeFiledsStore = new ComposeFiledsStore();
 
 const text = 'Добрый день! Во вложении заявка, прошу скинуть счет на оплату.';
 
@@ -23,16 +25,11 @@ describe('TESTMAIL-31551: НЕ AJAX. Написание письма. Забыт
 
 	it('проверяем закрытие леера', () => {
 		composeFields.setFieldValue('subject', 'check attach');
-		composeFields.setFieldValue('to', 'i.burlak@corp.mail.ru');
-
-		try {
-			composeEditor.writeMessage(text);
-			composeControls.send();
-			missingAttachLayer.show();
-			missingAttachLayer.close();
-			missingAttachLayer.shoulBeClosed();
-		} catch (error) {
-			console.log(error);
-		}
+		composeFields.setFieldValue('to', composeFiledsStore.fields.to);
+		composeEditor.writeMessage(text);
+		composeControls.send();
+		missingAttachLayer.show();
+		missingAttachLayer.close();
+		missingAttachLayer.shoulBeClosed();
 	});
 });

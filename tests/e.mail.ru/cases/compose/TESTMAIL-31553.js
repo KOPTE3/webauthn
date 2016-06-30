@@ -7,6 +7,8 @@ let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
 let SentPage = require('../../steps/sent');
+let ComposeFiledsStore = require('../../store/compose/fields');
+let composeFiledsStore = new ComposeFiledsStore();
 
 const text = 'Добрый день! Во вложении заявка, прошу скинуть счет на оплату.';
 
@@ -15,23 +17,19 @@ describe('TESTMAIL-31553: НЕ AJAX. Написание письма. Забыт
 	before(Compose.auth);
 
 	it('проверям что сообщение было отправленно', () => {
-		try {
-			Compose.addFeature('check-missing-attach');
-			Compose.addFeature('disable-ballons');
-			Compose.addFeature('no-collectors-in-compose');
+		Compose.addFeature('check-missing-attach');
+		Compose.addFeature('disable-ballons');
+		Compose.addFeature('no-collectors-in-compose');
 
-			Compose.open();
-			composeFields.setFieldValue('subject', 'check attach');
-			composeFields.setFieldValue('to', 'i.burlak@corp.mail.ru');
-			composeEditor.writeMessage(text);
+		Compose.open();
+		composeFields.setFieldValue('subject', 'check attach');
+		composeFields.setFieldValue('to', composeFiledsStore.fields.to);
+		composeEditor.writeMessage(text);
 
-			composeControls.send();
-			missingAttachLayer.wait();
-			missingAttachLayer.apply();
-			missingAttachLayer.shoulBeClosed();
-			SentPage.wait();
-		} catch (error) {
-			console.log(error);
-		}
+		composeControls.send();
+		missingAttachLayer.wait();
+		missingAttachLayer.apply();
+		missingAttachLayer.shoulBeClosed();
+		SentPage.isVisible();
 	});
 });

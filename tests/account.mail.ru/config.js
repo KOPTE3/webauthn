@@ -7,7 +7,7 @@ let AccountManager = require('@qa/account-manager'),
 
 let account = new AccountManager.Hooks();
 let support = new TestTools.Support();
-let project = 'tests/e.mail.ru';
+let project = 'tests/account.mail.ru';
 
 /** @namespace browser **/
 exports.config = {
@@ -27,7 +27,7 @@ exports.config = {
 	path: '/wd/hub',
 
 	/* Базовый адрес тестирования */
-	baseUrl: 'https://e.mail.ru',
+	baseUrl: 'https://account.mail.ru',
 
 	/* Доступные значения: silent, verbose, command, data, result, error */
 	logLevel: 'silent',
@@ -120,7 +120,6 @@ exports.config = {
 	 * @see https://stash.mail.ru/projects/QA/repos/wd-capabilities/browse
 	 */
 	capabilities: [
-		// capabilities.get('phantomjs'),
 		capabilities.get('chrome')
 	],
 

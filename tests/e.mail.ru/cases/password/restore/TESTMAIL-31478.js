@@ -1,9 +1,9 @@
 'use strict';
 
-let PasswordRestorePage = require('../../steps/passrestore');
+let PasswordRestore = require('../../../steps/password/restore');
 
-describe('TESTMAIL-8674', () => {
-	it('Ввод скрытых цифр телефона.', () => {
-
+describe.skip('TESTMAIL-31478: Восстановление пароля', () => {
+	it('Ввод скрытых цифр телефона', () => {
+		PasswordRestore.open();
 	});
 });

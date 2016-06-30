@@ -3,9 +3,10 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let PasswordPage = require('../../pages/passrestore');
+let LoginPage = require('../../pages/login');
 
-class PasswordSteps extends Steps {
+/** Модуль для работы с шагами страницы логина */
+class LoginStep extends Steps {
 	constructor () {
 		super();
 	}
@@ -16,8 +17,8 @@ class PasswordSteps extends Steps {
 	 * @type {Object}
 	 */
 	static get page () {
-		return new PasswordPage();
+		return new LoginPage();
 	}
 }
 
-module.exports = PasswordSteps;
+module.exports = LoginStep;
