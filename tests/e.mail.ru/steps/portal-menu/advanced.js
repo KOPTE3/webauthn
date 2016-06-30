@@ -34,7 +34,7 @@ class AdvancedSteps extends PortalMenuSteps {
 
 		let actual = this.advanced.isChecked(name);
 
-		assert(actual !== checked, 'чекбокс не кликнулся');
+		assert(actual !== checked, `Чекбокс ${name} не кликнулся`);
 	}
 
 	/**

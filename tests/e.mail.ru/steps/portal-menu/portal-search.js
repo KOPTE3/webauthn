@@ -26,7 +26,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 			this.portalSearch.hideAdvanced() :
 			this.portalSearch.showAdvanced();
 
-		assert(actual, 'toggle advanced search');
+		assert(actual, 'Расширенный поиск не переключился');
 	}
 
 	/**
@@ -37,7 +37,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 	hasOperand (name) {
 		let actual = this.portalSearch.hasOperand(name);
 
-		assert(actual, `операнд ${name} не появился`);
+		assert(actual, `Операнд ${name} не появился`);
 	}
 
 	/**
@@ -48,7 +48,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 	operandHasIcon (name) {
 		let actual = this.portalSearch.operandHasIcon(name);
 
-		assert(actual, `у операнда ${name} нет иконки`);
+		assert(actual, `У операнда ${name} нет иконки`);
 	}
 
 	/**
@@ -59,7 +59,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 	operandHasClose (name) {
 		let actual = this.portalSearch.operandHasClose(name);
 
-		assert(actual, `у операнда ${name} нет кнопки закрыть`);
+		assert(actual, `У операнда ${name} нет кнопки закрыть`);
 	}
 
 	/**
