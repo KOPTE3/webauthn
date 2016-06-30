@@ -14,5 +14,9 @@ describe('TESTMAIL-31697', () => {
 
 		AdvancedSteps.clickCheckbox(name);
 		PortalSearchSteps.hasOperand(name);
+		PortalSearchSteps.operandHasIcon(name);
+		PortalSearchSteps.operandHasClose(name);
+		AdvancedSteps.isVisible();
+		AdvancedSteps.isChecked(name);
 	});
 });

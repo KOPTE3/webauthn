@@ -34,6 +34,18 @@ class AdvancedSteps extends PortalMenuSteps {
 
 		assert(checked !== this.advanced.isChecked(name), 'чекбокс не кликнулся');
 	}
+
+	/**
+	 * Выбран ли чекбокс
+	 *
+	 * @param {string} name - unread|flag|attach
+	 * @param {boolean} reverse - наоборот, проверка что чекбокс не выбран
+	 */
+	isChecked (name, reverse) {
+		let checked = this.advanced.isChecked(name);
+
+		assert(checked === !reverse, `Чекбокс ${name}${reverse ? '' : ' не'} выбран`);
+	}
 }
 
 module.exports = new AdvancedSteps();

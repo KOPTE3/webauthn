@@ -37,6 +37,28 @@ class PortalSearchSteps extends PortalMenuSteps {
 
 		assert(hasOperand, `операнд ${name} не появился`);
 	}
+
+	/**
+	 * Проверить, что у операнда есть иконка
+	 *
+	 * @param {string} name - имя операнда (unread|flag|attach)
+	 */
+	operandHasIcon (name) {
+		let hasIcon = this.portalSearch.operandHasIcon(name);
+
+		assert(hasIcon, `у операнда ${name} нет иконки`);
+	}
+
+	/**
+	 * Проверить, что у операнда есть крестик
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	operandHasClose (name) {
+		let hasClose = this.portalSearch.operandHasClose(name);
+
+		assert(hasClose, `у операнда ${name} нет кнопки закрыть`);
+	}
 }
 
 module.exports = new PortalSearchSteps();

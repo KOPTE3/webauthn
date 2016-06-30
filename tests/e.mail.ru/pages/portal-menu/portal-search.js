@@ -32,7 +32,13 @@ class PortalSearch extends PortalMenu {
 				flag:	 `${container} [data-operand-name="q_flag"]`,
 				attach:	 `${container} [data-operand-name="q_attach"]`,
 				date:	 `${container} [data-operand-name="q_date"]`,
-				blank:	 `${container} [data-operand-name="blank"]`
+				blank:	 `${container} [data-operand-name="blank"]`,
+				icons: {
+					unread:	 `${container} [data-operand-name="q_read"] .ico_folder_unread`,
+					flag:	 `${container} [data-operand-name="q_flag"] .ico_folder_important`,
+					attach:	 `${container} [data-operand-name="q_attach"] .ico_folder_attachment`
+				},
+				close: '.b-operand__close'
 			}
 		});
 	}
@@ -63,7 +69,7 @@ class PortalSearch extends PortalMenu {
 	showAdvanced () {
 		this.toggleAdvanced();
 
-		return this.page.waitForVisible(this.advanced.locators.container);
+		return !!this.page.waitForVisible(this.advanced.locators.container);
 	}
 
 	/**
@@ -84,10 +90,29 @@ class PortalSearch extends PortalMenu {
 	 * @return {boolean}
 	 */
 	hasOperand (name) {
-		let operand = this.getOperand(name);
-		let result;
+		return !!this.page.waitForVisible(this.locators.operands[name]);
+	}
 
-		return this.page.waitForVisible(this.locators.operands[name]);
+	/**
+	 * У операнда есть иконка
+	 *
+	 * @param {string} name - имя операнда (unread|flag|attach)
+	 * @return {boolean}
+	 */
+	operandHasIcon (name) {
+		return this.page.element(this.locators.operands.icons[name]);
+	}
+
+	/**
+	 * У операнда есть крестик
+	 *
+	 * @param {string} name - имя операнда (unread|flag|attach)
+	 * @return {boolean}
+	 */
+	operandHasClose (name) {
+		let operand = this.getOperand(name);
+
+		return !!this.page.elementIdElement(operand.value.ELEMENT, this.locators.operands.close);
 	}
 }
 
