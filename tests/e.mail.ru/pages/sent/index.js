@@ -24,15 +24,19 @@ class Sent extends PageObject {
 	 */
 	get locators () {
 		return {
-			container: '.b-compose__sent'
+			container: '#b-compose__sent'
 		};
 	}
 
 	/**
 	 * Проверить что страница отправки сообщения показана
+	 *
+	 * @return {Promise}
 	 */
 	isVisible () {
-		this.page.isVisible(this.locators.container);
+		this.page.waitForVisible(this.locators.container);
+		
+		return this.page.isVisible(this.locators.container);
 	}
 
 }

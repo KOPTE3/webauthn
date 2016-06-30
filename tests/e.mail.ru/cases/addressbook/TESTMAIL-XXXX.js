@@ -1,10 +1,10 @@
 'use strict';
 
-let page = require('../../steps/addressbook');
+let AddressBook = require('../../steps/addressbook');
 
 describe('TESTMAIL-XXXX', () => {
 	it('Открытие адресной книги', () => {
-		page.auth();
-		page.open();
+		AddressBook.auth();
+		AddressBook.open();
 	});
 });

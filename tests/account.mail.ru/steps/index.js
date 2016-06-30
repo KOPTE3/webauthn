@@ -1,41 +1,10 @@
 'use strict';
 
-let assert = require('assert');
-let Pages = require('../pages');
+let DefaultSteps = require('../../e.mail.ru/steps');
 
-class Steps extends Pages {
+class Steps extends DefaultSteps {
 	constructor () {
 		super();
-	}
-
-	/**
-	 * Локаторы
-	 *
-	 * @param {string} name
-	 */
-	static addFeature (name) {
-		let pages = new Pages();
-
-		pages.addFeature(name);
-	}
-
-	/**
-	 *
-	 * Открыть страницу
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 */
-	static open (query) {
-		try {
-			if (!this.page.locators.container) {
-				throw new Error();
-			}
-		} catch (error) {
-			assert(false, 'Не определен основной элемент страницы в ' +
-				'"locators.container"');
-		}
-
-		this.page.open(query);
 	}
 }
 
