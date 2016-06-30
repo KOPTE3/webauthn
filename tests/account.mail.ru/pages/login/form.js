@@ -16,7 +16,7 @@ class LoginForm extends LoginPage {
 	 */
 	get locators () {
 		return {
-			// container      : '.b-login',
+			container      : '.b-login',
 			providersSelect: '.b-dropdown__list',
 			providersBlock : '.b-email-providers__list',
 			activeDomain   : '.b-email-providers__list__item_selected',
@@ -65,7 +65,7 @@ class LoginForm extends LoginPage {
 	/**
 	 * Получить состояние видимости списка доменов
 	 *
-	 * @returns {string}
+	 * @returns {boolean}
 	 */
 	isSelectVisible () {
 		return this.page.isVisible(this.locators.select);
@@ -108,6 +108,23 @@ class LoginForm extends LoginPage {
 	 */
 	getPassRemindLink () {
 		return this.page.getAttribute(this.locators.forgetLink, 'href');
+	}
+
+	/**
+	 * Кликнуть на ссылку восстановления пароля
+	 */
+	clickPassRemindLink () {
+		this.page.click(this.locators.forgetLink);
+	}
+
+	/**
+	 * Проверить ссылку восстановления пароля
+	 *
+	 * @param {string} url
+	 */
+	checkPassRemindLink (url) {
+		this.clickPassRemindLink();
+		this.page.wait(url);
 	}
 
 	/**

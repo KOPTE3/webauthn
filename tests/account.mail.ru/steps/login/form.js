@@ -144,13 +144,12 @@ class LoginFormSteps extends Steps {
 	}
 
 	/**
-	 * Получить ссылку на восстановление пароля
+	 * Проверить ссылку восстановления пароля
 	 */
 	checkPassRemindLink () {
-		let actual = this.loginForm.getPassRemindLink();
+		let url = 'https://e.mail.ru/password/restore/';
 
-		assert.equal(actual, 'https://e.mail.ru/password/restore/',
-			'Некорректная ссылка на восстановление пароля');
+		this.loginForm.checkPassRemindLink(url);
 	}
 
 	/**
