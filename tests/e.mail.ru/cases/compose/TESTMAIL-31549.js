@@ -17,12 +17,11 @@ describe('TESTMAIL-31549: НЕ AJAX. Написание письма. Забыт
 	before(Compose.auth);
 
 	beforeEach(() => {
-		Messages.addFeature('check-missing-attach');
-		Messages.addFeature('disable-ballons');
-		Messages.addFeature('no-collectors-in-compose');
+		Compose.addFeature('check-missing-attach');
+		Compose.addFeature('disable-ballons');
+		Compose.addFeature('no-collectors-in-compose');
 
-		Messages.open();
-		Messages.toCompose();
+		Compose.open();
 	});
 
 	composeEditorStore.lettersWithoutAttach.forEach(text => {
