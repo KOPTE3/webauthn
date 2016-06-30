@@ -37,7 +37,7 @@ class SentSteps extends Steps {
 	 * @static
 	 * */
 	static isVisible () {
-		this.page.isVisible();
+		assert(this.page.isVisible(), 'Страница успешной отправки не показана');
 	}
 
 

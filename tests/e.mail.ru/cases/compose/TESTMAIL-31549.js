@@ -7,11 +7,13 @@ let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
+let SentPage = require('../../steps/sent');
 let ComposeFiledsStore = require('../../store/compose/fields');
 let composeFiledsStore = new ComposeFiledsStore();
 
-describe('TESTMAIL-31540: AJAX. Написание письма. Забытое вложение. ' +
-'Проверить появление попапа при отправке текстов', () => {
+describe('TESTMAIL-31549: НЕ AJAX. Написание письма. Забытое вложение. ' +
+'Проверить отсутствие попапа при отправке ' +
+'(тексты для которых не должен появляться попап)', () => {
 	before(Compose.auth);
 
 	beforeEach(() => {
@@ -23,15 +25,13 @@ describe('TESTMAIL-31540: AJAX. Написание письма. Забытое 
 		Messages.toCompose();
 	});
 
-	composeEditorStore.lettersWithAttach.forEach(text => {
+	composeEditorStore.lettersWithoutAttach.forEach(text => {
 		it(text, () => {
 			composeFields.setFieldValue('subject', 'check attach');
 			composeFields.setFieldValue('to', composeFiledsStore.fields.to);
 			composeEditor.writeMessage(text);
 			composeControls.send();
-			missingAttachLayer.show();
-			missingAttachLayer.close();
-			composeControls.cancel();
+			SentPage.isVisible();
 		});
 	});
 });

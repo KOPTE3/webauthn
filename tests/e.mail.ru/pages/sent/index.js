@@ -32,7 +32,7 @@ class Sent extends PageObject {
 	 * Проверить что страница отправки сообщения показана
 	 */
 	isVisible () {
-		this.page.isVisible(this.locators.container);
+		this.page.waitForVisible(this.locators.container);
 	}
 
 }

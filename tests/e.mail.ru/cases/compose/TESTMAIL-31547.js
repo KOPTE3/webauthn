@@ -25,7 +25,7 @@ describe('TESTMAIL-31547: НЕ AJAX. Написание письма. Забыт
 		composeControls.cancel();
 	});
 
-	composeEditorStore.letters.forEach(text => {
+	composeEditorStore.lettersWithAttach.forEach(text => {
 		it(text, () => {
 			composeFields.setFieldValue('subject', 'check attach');
 			composeFields.setFieldValue('to', composeFiledsStore.fields.to);
