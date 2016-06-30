@@ -2,8 +2,8 @@
 
 let Search = require('../../steps/search');
 
-describe('TESTMAIL-XXX', () => {
-	it('Открытие стрницы поиска по файлам', () => {
+describe('TESTMAIL-XXXX', () => {
+	it('Открытие страницы поиска по файлам', () => {
 		Search.auth();
 		Search.open();
 	});
