@@ -1,9 +1,9 @@
 'use strict';
 
+let assert = require('assert');
+
 let PortalMenuSteps = require('../../steps/portal-menu');
 let Advanced = require('../../pages/portal-menu/advanced');
-
-let assert = require('assert');
 
 /** Модуль для работы с представлением страницы поиска писем */
 class AdvancedSteps extends PortalMenuSteps {
