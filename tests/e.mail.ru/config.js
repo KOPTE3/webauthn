@@ -106,7 +106,8 @@ exports.config = {
 	 * @see https://stash.mail.ru/projects/QA/repos/wd-capabilities/browse
 	 */
 	capabilities: [
-		capabilities.get('chrome')
+		// capabilities.get('chrome'),
+		capabilities.get('phantomjs')
 	],
 
 	before (capabilities, specs) {
