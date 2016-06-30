@@ -43,7 +43,7 @@ exports.config = {
 	// connectionRetryTimeout: 10 * 1000,
 
 	/* Количество инстансов параллельного запуска тестов */
-	maxInstances: 10,
+	maxInstances: 1,
 
 	/** Использовать синхронное API */
 	// sync: true,
