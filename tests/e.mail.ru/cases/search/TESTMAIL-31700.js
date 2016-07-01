@@ -6,8 +6,8 @@ let AdvancedSteps = require('../../steps/portal-menu/advanced');
 let PortalSearchStore = require('../../store/portal-menu/portal-search');
 let AdvancedStore = require('../../store/portal-menu/advanced');
 
-describe('TESTMAIL-31701', () => {
-	it('Проверка невозможности редактирования операндов-флажков', () => {
+describe('TESTMAIL-31700', () => {
+	it('Проверка, что при удалении операнда убирается чекбокс', () => {
 		Messages.auth();
 		Messages.open();
 		PortalSearchSteps.toggleAdvanced();
@@ -17,9 +17,15 @@ describe('TESTMAIL-31701', () => {
 			PortalSearchSteps.hasOperand(name);
 		});
 
+		PortalSearchSteps.toggleAdvanced();
+
 		PortalSearchStore.flagOperands.forEach(name => {
-			PortalSearchSteps.clickOperand(name);
-			PortalSearchSteps.isFocusInBlank();
+			PortalSearchSteps.clickOperandClose(name);
+		});
+
+		PortalSearchSteps.toggleAdvanced();
+		AdvancedStore.checkboxes.forEach(name => {
+			AdvancedSteps.isChecked(name, true);
 		});
 	});
 });

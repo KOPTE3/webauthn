@@ -98,6 +98,19 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Нажать на крестик в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	clickOperandClose (name) {
+		this.portalSearch.clickOperandClose(name);
+
+		let actual = this.portalSearch.hasOperand(name, true);
+
+		assert(actual, `Операнд ${name} не удалился`);
+	}
+
+	/**
 	 * Фокус находится в операнде
 	 *
 	 * @param {string} name - имя операнда

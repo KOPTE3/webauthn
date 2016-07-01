@@ -3,6 +3,8 @@
 let PortalMenu = require('../portal-menu');
 let Advanced = require('../portal-menu/advanced');
 
+let Utils = require('../../utils/portal-menu/portal-search');
+
 /** Модуль для работы с поиском в синей шапке */
 class PortalSearch extends PortalMenu {
 	constructor () {
@@ -107,17 +109,18 @@ class PortalSearch extends PortalMenu {
 	getOperandText (name) {
 		let input = this.getOperandInput(name);
 
-		return input && input.state === 'success' ? input.getValue() : '';
+		return input && input.value ? input.getValue() : '';
 	}
 
 	/**
 	 * Операнд существует
 	 *
 	 * @param {string} name - имя операнда
+	 * @param {boolean} reverse - операнд не существует
 	 * @return {boolean}
 	 */
-	hasOperand (name) {
-		return !!this.page.waitForVisible(this.locators.operands[name]);
+	hasOperand (name, reverse = false) {
+		return this.page.waitForVisible(this.locators.operands[name], void 0, reverse);
 	}
 
 	/**
@@ -165,7 +168,7 @@ class PortalSearch extends PortalMenu {
 	 * @return {boolean}
 	 */
 	operandHasFocus (name) {
-		let locator = this.locators.operands[name] + ' ' + this.locators.operands.input;
+		let locator = Utils.getOperandLocator(this.locators.operands, name, 'input');
 
 		return this.page.hasFocus(locator);
 	}
@@ -177,6 +180,17 @@ class PortalSearch extends PortalMenu {
 	 */
 	clickOperand (name) {
 		this.page.click(this.locators.operands[name]);
+	}
+
+	/**
+	 * Нажать на крестик в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	clickOperandClose (name) {
+		let locator = Utils.getOperandLocator(this.locators.operands, name, 'close');
+
+		this.page.click(locator);
 	}
 }
 
