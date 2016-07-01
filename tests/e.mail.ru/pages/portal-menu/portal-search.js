@@ -39,7 +39,8 @@ class PortalSearch extends PortalMenu {
 					attach:	 `.ico_folder_attachment`
 				},
 				close: '.b-operand__close',
-				input: '.b-operand__input'
+				input: '.b-operand__input',
+				active: '.b-operand_active'
 			}
 		});
 	}
@@ -85,16 +86,26 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Получить текстовый инпут операнда
+	 *
+	 * @param {string} name - имя операнда
+	 * @return {*}
+	 */
+	getOperandInput (name) {
+		let operand = this.getOperand(name);
+		let locator = this.locators.operands.input;
+
+		return this.page.elementIdElement(operand.value.ELEMENT, locator);
+	}
+
+	/**
 	 * Получить текст операнда.
 	 *
 	 * @param {string} name - имя операнда
 	 * @return {string}
 	 */
 	getOperandText (name) {
-		let operand = this.getOperand(name);
-
-		let input = this.page.elementIdElement(operand.value.ELEMENT,
-			this.locators.operands.input);
+		let input = this.getOperandInput(name);
 
 		return input && input.state === 'success' ? input.getValue() : '';
 	}
@@ -133,6 +144,39 @@ class PortalSearch extends PortalMenu {
 
 		return !!this.page.elementIdElement(operand.value.ELEMENT,
 			this.locators.operands.close);
+	}
+
+	/**
+	 * Операнд в режиме редактирования
+	 *
+	 * @param {string} name - имя операнда
+	 * @return {boolean}
+	 */
+	isOperandActive (name) {
+		let operand = this.getOperand(name);
+		let classes = operand.getAttribute('class').split(' ');
+
+		return classes.indexOf(this.locators.operands.active) > -1;
+	}
+
+	/**
+	 * Фокус в инпуте операнда
+	 * @param {string} name - имя операнда
+	 * @return {boolean}
+	 */
+	operandHasFocus (name) {
+		let locator = this.locators.operands[name] + ' ' + this.locators.operands.input;
+
+		return this.page.hasFocus(locator);
+	}
+
+	/**
+	 * Кликнуть в операнд
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	clickOperand (name) {
+		this.page.click(this.locators.operands[name]);
 	}
 }
 

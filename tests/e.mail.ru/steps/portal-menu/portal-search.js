@@ -3,8 +3,11 @@
 let assert = require('assert');
 
 let PortalMenuSteps = require('../../steps/portal-menu');
+
 let PortalSearch = require('../../pages/portal-menu/portal-search');
 let Advanced = require('../../pages/portal-menu/advanced');
+
+let PortalSearchStore = require('../../store/portal-menu/portal-search');
 
 
 /** Модуль для работы с представлением страницы поиска писем */
@@ -73,6 +76,43 @@ class PortalSearchSteps extends PortalMenuSteps {
 		let actual = this.portalSearch.getOperandText(name);
 
 		assert(actual === text, `Текст операнда ${name} не равен "${text}"`);
+	}
+
+	/**
+	 * Кликнуть в операнд
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	clickOperand (name) {
+		this.portalSearch.clickOperand(name);
+
+		let actual = this.portalSearch.isOperandActive(name);
+
+		if (PortalSearchStore.flagOperands.indexOf(name) > -1) {
+			// Операнд-флаг не должен кликаться,
+			assert(!actual, `По клику операнд ${name} активен`);
+		} else {
+			// а обычный операнд должен кликаться
+			assert(actual, `По клику операнд ${name} не активен`);
+		}
+	}
+
+	/**
+	 * Фокус находится в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	operandHasFocus (name) {
+		let actual = this.portalSearch.operandHasFocus(name);
+
+		assert(actual, `Фокус не находится в операнде ${name}`);
+	}
+
+	/**
+	 * Фокус находится в пустом операнде
+	 */
+	isFocusInBlank () {
+		this.operandHasFocus('blank');
 	}
 }
 
