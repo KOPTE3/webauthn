@@ -70,7 +70,6 @@ class PageObject {
 		this.page.url(url);
 		this.wait();
 
-
 		if (user) {
 			return this.isActiveUser(user);
 		}
