@@ -23,9 +23,13 @@ class ComposeEditor extends ComposePage {
 
 	/**
 	 * Дождаться открытия страницы написания письма
+	 *
+	 * @return {Promise}
 	 */
 	wait () {
 		this.page.waitForExist(this.locators.container);
+		
+		return this.page.isVisible(this.locators.container);
 	}
 
 	/**
