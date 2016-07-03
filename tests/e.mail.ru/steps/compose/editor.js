@@ -14,7 +14,7 @@ class ComposeEditorSteps extends ComposeSteps {
 	}
 
 	/**
-	 * Дождаться появления редактора написания письма
+	 * Дождаться появления редактора
 	 */
 	wait () {
 		let actual = this.composeEditor.wait();
