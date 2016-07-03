@@ -1,24 +1,27 @@
 'use strict';
 
+let Messages = require('../../steps/messages');
 let Compose = require('../../steps/compose');
 let composeFields = require('../../steps/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
+let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
 
 const text = 'Добрый день! Во вложении заявка, прошу скинуть счет на оплату.';
 
-describe('TESTMAIL-31551: НЕ AJAX. Забытое вложение. Проверить закрытие попапа ' +
-	'по крестику', () => {
+describe('TESTMAIL-31554: AJAX. Написание письма. Забытое вложение.' +
+' Проверить закрытие попапа по крестику ', () => {
 	before(Compose.auth);
 
 	beforeEach(() => {
-		Compose.addFeature('check-missing-attach');
-		Compose.addFeature('disable-ballons');
-		Compose.addFeature('no-collectors-in-compose');
+		Messages.addFeature('check-missing-attach');
+		Messages.addFeature('disable-ballons');
+		Messages.addFeature('no-collectors-in-compose');
 
-		Compose.open();
+		Messages.open();
+		Messages.toCompose();
 	});
 
 	it('проверяем закрытие леера', () => {

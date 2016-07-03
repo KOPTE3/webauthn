@@ -27,6 +27,7 @@ class MessagePage extends PageObject {
 			container: '.b-letter'
 		};
 	}
+
 }
 
 module.exports = MessagePage;
