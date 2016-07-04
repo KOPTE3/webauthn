@@ -131,8 +131,7 @@ class ComposeEditor extends Store {
 			'благодарю за ответ! С уважением, Помощник руководителя  ' +
 			'Динара Колoва, Thank you in advance for your reply! ' +
 			'With kind regards and best wishes, Dinara Kolova, ' +
-			' +7(499)755-88-21 ООО "ТД Максимус" '
-
+			' +7(499)755-88-21 ООО "ТД Максимус"'
 		];
 	}
 
