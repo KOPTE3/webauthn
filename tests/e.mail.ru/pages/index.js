@@ -104,7 +104,7 @@ class PageObject {
 	 *
 	 * @param {string} name — типа авторизации
 	 */
-	addFeature (name) {
+	static addFeature (name) {
 		features.push(name);
 	}
 }

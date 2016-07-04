@@ -3,20 +3,30 @@
 let assert = require('assert');
 let Pages = require('../pages');
 
-class Steps extends Pages {
-	constructor () {
-		super();
-	}
-
+class Steps {
 	/**
 	 * Локаторы
 	 *
 	 * @param {string} name
 	 */
 	static addFeature (name) {
-		let pages = new Pages();
+		Pages.addFeature(name);
+	}
 
-		pages.addFeature(name);
+	/**
+	 * Авторизация
+	 *
+	 * @param {string} type — типа авторизации
+	 * @returns {boolean}
+	 */
+	static auth (type) {
+		return Pages.auth(type);
+	}
+
+	static openPage () {
+		let actual = this.page.open();
+
+		assert(actual, 'Не удалось открыть страницу');
 	}
 
 	/**
