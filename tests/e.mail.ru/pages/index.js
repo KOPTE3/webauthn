@@ -11,7 +11,9 @@ let cache = {
 
 /** @namespace browser */
 class PageObject {
-	constructor () { }
+	constructor () {
+		this.store = new Store();
+	}
 
 	/**
 	 * Локаторы
@@ -82,8 +84,10 @@ class PageObject {
 	 *
 	 * @param {string} type — типа авторизации
 	 */
-	static auth (type) {
-		let { account } = new Store();
+	static auth (type = 'basic') {
+		this.page.store.session({ type });
+
+		let { account } = this.page.store;
 
 		cache.user = account.get('email');
 
@@ -135,7 +139,7 @@ class PageObject {
 	 *
 	 * @param {Array} list — список фич, которые требуется включить
 	 */
-	features (...list) {
+	features (list) {
 		cache.features.push(...list);
 	}
 }

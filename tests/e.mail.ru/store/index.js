@@ -5,13 +5,10 @@ let AccountManager = require('@qa/account-manager');
 /** @namespace browser */
 /** Модуль для работы с данными */
 class Store {
-	constructor () { }
-
 	/**
 	 * Информация об аккаунте
 	 *
 	 * @param {Object} [options]
-	 * @returns {Promise}
 	 */
 	session (options = {}) {
 		let account = new AccountManager.Hooks();
@@ -20,8 +17,9 @@ class Store {
 			host: browser.options.baseUrl
 		});
 
-		return browser.waitUntil(function async () {
-			return account.session(options);
+		browser.waitUntil(function async () {
+			return account.session(options)
+				.then(result => true);
 		});
 	}
 
