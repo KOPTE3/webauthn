@@ -22,15 +22,16 @@ class LoginForm extends LoginPage {
 			activeDomain   : '.b-email-providers__list__item_selected',
 			otherProvider  : '[data-id="other"]',
 			select         : '.b-select__dropdown',
-			login          : '[data-input="Login"] [name="Username"]',
-			password       : '[data-input="Password"] [name="Password"]',
+			login          : '[name="Username"]',
+			password       : '[name="Password"]',
 			submit         : '.js-login-page__external__submit',
 			error          : '.b-login__errors',
 			title          : '.b-login__header__title',
 			desc           : '.b-login__header__desc',
 			rememberState  : '.b-grid_restore [name="saveauth"]',
 			rememberText   : '.b-grid_restore .b-checkbox__label',
-			forgetLink     : '.b-link_passremind'
+			forgetLink     : '.b-link_passremind',
+			signUpLink     : '[data-name="signup-link"]'
 		};
 	}
 
@@ -111,20 +112,36 @@ class LoginForm extends LoginPage {
 	}
 
 	/**
-	 * Кликнуть на ссылку восстановления пароля
+	 * Проверить видимость кнопки восстановления пароля
+	 *
+	 * @returns {boolean}
 	 */
-	clickPassRemindLink () {
-		this.page.click(this.locators.forgetLink);
+	isPassRemindLinkExist () {
+		return this.page.isExisting(this.locators.forgetLink);
 	}
 
 	/**
-	 * Проверить ссылку восстановления пароля
+	 * Проверить переход по ссылке восстановления пароля
 	 *
 	 * @param {string} url
+	 * @returns {boolean}
 	 */
-	checkPassRemindLink (url) {
-		this.clickPassRemindLink();
-		this.page.wait(url);
+	clickPassRemindLink (url) {
+		this.page.click(this.locators.forgetLink);
+
+		return this.page.waitForUrl(url);
+	}
+
+	/**
+	 * Проверить переход по ссылке регистрации
+	 *
+	 * @param {string} url
+	 * @returns {boolean}
+	 */
+	clickSignUpLink (url) {
+		this.page.click(this.locators.signUpLink);
+
+		return this.page.waitForUrl(url);
 	}
 
 	/**

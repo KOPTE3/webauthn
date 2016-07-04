@@ -7,8 +7,6 @@ let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
 let ComposeFieldsStore = require('../../store/compose/fields');
 
-let { fields } = new ComposeFieldsStore();
-
 const text = 'Добрый день! Во вложении заявка, прошу скинуть счет на оплату.';
 
 describe('TESTMAIL-31551: НЕ AJAX. Забытое вложение. Проверить закрытие попапа ' +
@@ -16,14 +14,18 @@ describe('TESTMAIL-31551: НЕ AJAX. Забытое вложение. Прове
 	before(Compose.auth);
 
 	beforeEach(() => {
-		Compose.addFeature('check-missing-attach');
-		Compose.addFeature('disable-ballons');
-		Compose.addFeature('no-collectors-in-compose');
+		Compose.features([
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose'
+		]);
 
 		Compose.open();
 	});
 
 	it('проверяем закрытие леера', () => {
+		let { fields } = new ComposeFieldsStore();
+
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', fields.to);
 		composeEditor.writeMessage(text);

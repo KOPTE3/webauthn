@@ -70,7 +70,6 @@ class PageObject {
 		this.page.url(url);
 		this.wait();
 
-
 		if (user) {
 			return this.isActiveUser(user);
 		}
@@ -134,10 +133,10 @@ class PageObject {
 	/**
 	 * Включение фичи
 	 *
-	 * @param {string} name — типа авторизации
+	 * @param {Array} list — список фич, которые требуется включить
 	 */
-	addFeature (name) {
-		cache.features.push(name);
+	features (...list) {
+		cache.features.push(...list);
 	}
 }
 

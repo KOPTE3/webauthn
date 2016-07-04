@@ -7,7 +7,7 @@ let AccountManager = require('@qa/account-manager'),
 
 let account = new AccountManager.Hooks();
 let support = new TestTools.Support();
-let project = 'tests/account.mail.ru';
+let project = 'account.mail.ru';
 
 /** @namespace browser **/
 exports.config = {
@@ -27,7 +27,7 @@ exports.config = {
 	path: '/wd/hub',
 
 	/* Базовый адрес тестирования */
-	baseUrl: 'https://account.mail.ru',
+	baseUrl: `https://${project}`,
 
 	/* Доступные значения: silent, verbose, command, data, result, error */
 	logLevel: 'silent',
@@ -83,14 +83,14 @@ exports.config = {
 	reporters: ['dot', 'junit'],
 
 	reporterOptions: {
-		outputDir: `./cache/${project}/reports`
+		outputDir: `./cache/tests/${project}/reports`
 	},
 
 	/* Директория, куда будут складываться скриншоты */
 	// screenshotPath: './cache/tests/shots',
 
 	/* Директория, куда будут складываться логи */
-	logfile: `./cache/${project}/logs`,
+	logfile: `./cache/tests/${project}/logs`,
 
 	/*
 	 * Список файлов с тестами.
@@ -108,7 +108,7 @@ exports.config = {
 	 *
 	 * { <suite>: [ <files> ] }
 	 */
-	suites: support.suites(`${project}/cases`),
+	suites: support.suites(`tests/${project}/cases`),
 
 	/*
 	 * Обратие внимание на то, что браузеры запускаются параллельно
@@ -120,6 +120,7 @@ exports.config = {
 	 * @see https://stash.mail.ru/projects/QA/repos/wd-capabilities/browse
 	 */
 	capabilities: [
+		// capabilities.get('phantomjs'),
 		capabilities.get('chrome')
 	],
 
