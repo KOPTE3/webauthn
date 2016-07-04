@@ -11,7 +11,9 @@ let cache = {
 
 /** @namespace browser */
 class PageObject {
-	constructor () { }
+	constructor () {
+		this.store = new Store();
+	}
 
 	/**
 	 * Локаторы
@@ -37,7 +39,7 @@ class PageObject {
 	 * Проверяет залогинен ли пользователь
 	 *
 	 * @param {string} email
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	isActiveUser (email) {
 		return browser.waitUntil(function async () {
@@ -70,7 +72,6 @@ class PageObject {
 		this.page.url(url);
 		this.wait();
 
-
 		if (user) {
 			return this.isActiveUser(user);
 		}
@@ -83,8 +84,10 @@ class PageObject {
 	 *
 	 * @param {string} type — типа авторизации
 	 */
-	static auth (type) {
-		let { account } = new Store();
+	static auth (type = 'basic') {
+		this.page.store.session({ type });
+
+		let { account } = this.page.store;
 
 		cache.user = account.get('email');
 
@@ -134,10 +137,10 @@ class PageObject {
 	/**
 	 * Включение фичи
 	 *
-	 * @param {string} name — типа авторизации
+	 * @param {Array} list — список фич, которые требуется включить
 	 */
-	addFeature (name) {
-		cache.features.push(name);
+	features (list) {
+		cache.features.push(...list);
 	}
 }
 

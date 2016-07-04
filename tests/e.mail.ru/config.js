@@ -7,7 +7,7 @@ let AccountManager = require('@qa/account-manager'),
 
 let account = new AccountManager.Hooks();
 let support = new TestTools.Support();
-let project = 'tests/e.mail.ru';
+let project = 'e.mail.ru';
 
 /** @namespace browser **/
 exports.config = {
@@ -27,7 +27,7 @@ exports.config = {
 	path: '/wd/hub',
 
 	/* Базовый адрес тестирования */
-	baseUrl: 'https://e.mail.ru',
+	baseUrl: `https://${project}`,
 
 	/* Доступные значения: silent, verbose, command, data, result, error */
 	logLevel: 'silent',
@@ -68,7 +68,7 @@ exports.config = {
 		// 'prof': true,
 
 		/** Максимальное время на ожидание результата выполнения теста */
-		'timeout': 10 * 1000,
+		'timeout': 15 * (60 * 1000),
 
 		/** Показывать стек-трейс */
 		'trace': true,
@@ -83,14 +83,14 @@ exports.config = {
 	reporters: ['dot', 'junit'],
 
 	reporterOptions: {
-		outputDir: `./cache/${project}/reports`
+		outputDir: `./cache/tests/${project}/reports`
 	},
 
 	/* Директория, куда будут складываться скриншоты */
 	// screenshotPath: './cache/tests/shots',
 
 	/* Директория, куда будут складываться логи */
-	logfile: `./cache/${project}/logs`,
+	logfile: `./cache/tests/${project}/logs`,
 
 	/*
 	 * Список файлов с тестами.
@@ -108,7 +108,7 @@ exports.config = {
 	 *
 	 * { <suite>: [ <files> ] }
 	 */
-	suites: support.suites(`${project}/cases`),
+	suites: support.suites(`tests/${project}/cases`),
 
 	/*
 	 * Обратие внимание на то, что браузеры запускаются параллельно
@@ -128,12 +128,6 @@ exports.config = {
 		let commands = new WebDriverAPI();
 
 		commands.export('all');
-	},
-
-	beforeSuite () {
-		return account.session({
-			host: browser.options.baseUrl
-		});
 	},
 
 	afterSuite () {

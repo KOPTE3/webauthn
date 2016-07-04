@@ -33,7 +33,9 @@ class URL {
 	 * @returns {string}
 	 */
 	static request (path, query) {
-		if (query) {
+		let params = Object.keys(query);
+
+		if (params.length) {
 			return `${path}?${URL.query(query)}`;
 		}
 

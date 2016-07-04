@@ -29,7 +29,7 @@ class Controls extends PageObject {
 
 	/**
 	 * Get X-Captcha-Id header from page
-	 * @return {Object}
+	 * @returns {Object}
 	 */
 	get phoneCaptchaID () {
 		return Captcha.getCaptchaID(this.locators.phoneCaptchaImg);
@@ -37,8 +37,8 @@ class Controls extends PageObject {
 
 	/**
 	 * Get captcha value by X-Captcha-Id
-	 * @param  {string} cid
-	 * @return {Object}
+	 * @param {string} cid
+	 * @returns {Object}
 	 */
 	getPhoneCaptchaValue (cid) {
 		let code;
@@ -59,7 +59,7 @@ class Controls extends PageObject {
 
 	/**
 	 * Fill code field
-	 * @param  {string} code
+	 * @param {string} code
 	 */
 	fillPhoneCaptcha (code) {
 		this.page.setValue(this.locators.phoneCaptchaField, code);

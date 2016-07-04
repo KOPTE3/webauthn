@@ -22,18 +22,22 @@ class ComposeEditor extends ComposePage {
 	}
 
 	/**
-	 * Дождаться открытия страницы написания письма
+	 * Дождаться открытия редактора
+	 *
+	 * @returns {boolean}
 	 */
 	wait () {
 		this.page.waitForExist(this.locators.container);
+
+		return this.page.isVisible(this.locators.container);
 	}
 
 	/**
 	 * Получить редактор сообщения
-	 * @return {element}
+	 * @returns {Element}
 	 */
 	getEditor () {
-		var frameId = this.page.getAttribute(this.locators.editor, 'id');
+		let frameId = this.page.getAttribute(this.locators.editor, 'id');
 
 		return this.page.frame(frameId).element(this.locators.body);
 	}
@@ -41,7 +45,6 @@ class ComposeEditor extends ComposePage {
 	restoreParentFrame () {
 		this.page.frameParent();
 	}
-
 }
 
 module.exports = ComposeEditor;

@@ -14,7 +14,7 @@ class ComposeEditorSteps extends ComposeSteps {
 	}
 
 	/**
-	 * Дождаться появления редактора написания письма
+	 * Дождаться появления редактора
 	 */
 	wait () {
 		let actual = this.composeEditor.wait();
@@ -24,8 +24,9 @@ class ComposeEditorSteps extends ComposeSteps {
 
 	/**
 	 * Метод фокусируется на input
+	 *
 	 * @param {Element} input - элемент на котором сфокусироватся
-	 * */
+	 */
 	setFocus (input) {
 		input.click(); // наводим фокус в едитор
 		input.keys('\uE013\uE013\uE013'); // поднимаем курсор вверх
@@ -33,7 +34,8 @@ class ComposeEditorSteps extends ComposeSteps {
 
 	/**
 	 * Ввести текст сообщения
-	 * @param {String} text
+	 *
+	 * @param {boolean} text
 	 */
 	writeMessage (text) {
 		let editor = this.composeEditor.getEditor();
@@ -41,7 +43,9 @@ class ComposeEditorSteps extends ComposeSteps {
 		this.setFocus(editor);
 		editor.keys(text); // вводим текст
 
-		assert(editor.getText('').includes(text), 'Текст письма не был введен');
+		let actual = editor.getText('').includes(text);
+
+		assert(actual, 'Текст письма не был введен');
 		this.composeEditor.restoreParentFrame();
 	}
 }

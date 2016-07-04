@@ -57,7 +57,7 @@ class PortalSearch extends PortalMenu {
 	/**
 	 * Скрыть расширенный поиск
 	 *
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	hideAdvanced () {
 		this.toggleAdvanced();
@@ -68,7 +68,7 @@ class PortalSearch extends PortalMenu {
 	/**
 	 * Показать расширенный поиск
 	 *
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	showAdvanced () {
 		this.toggleAdvanced();
@@ -81,7 +81,7 @@ class PortalSearch extends PortalMenu {
 	 *
 	 * @param {string} name - имя операнда
 	 * (message|from|to|subject|unread|flag|attach|date|blank)
-	 * @return {*}
+	 * @returns {*}
 	 */
 	getOperand (name) {
 		return this.page.element(this.locators.operands[name]);
@@ -104,7 +104,7 @@ class PortalSearch extends PortalMenu {
 	 * Получить текст операнда.
 	 *
 	 * @param {string} name - имя операнда
-	 * @return {string}
+	 * @returns {string}
 	 */
 	getOperandText (name) {
 		let input = this.getOperandInput(name);
@@ -117,7 +117,7 @@ class PortalSearch extends PortalMenu {
 	 *
 	 * @param {string} name - имя операнда
 	 * @param {boolean} reverse - операнд не существует
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	hasOperand (name, reverse = false) {
 		return this.page.waitForVisible(this.locators.operands[name], void 0, reverse);
@@ -127,7 +127,7 @@ class PortalSearch extends PortalMenu {
 	 * У операнда есть иконка
 	 *
 	 * @param {string} name - имя операнда (unread|flag|attach)
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	operandHasIcon (name) {
 		let operand = this.getOperand(name);
@@ -140,7 +140,7 @@ class PortalSearch extends PortalMenu {
 	 * У операнда есть крестик
 	 *
 	 * @param {string} name - имя операнда (unread|flag|attach)
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	operandHasClose (name) {
 		let operand = this.getOperand(name);
