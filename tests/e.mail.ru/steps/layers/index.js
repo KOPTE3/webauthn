@@ -28,10 +28,6 @@ class LayerSteps extends Steps {
 		this.layer.close();
 	}
 
-	apply () {
-		this.layer.apply();
-	}
-
 	/**
 	 * Метод нажимает "Принять" в леере
 	 * */

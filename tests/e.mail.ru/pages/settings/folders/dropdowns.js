@@ -8,7 +8,6 @@ class DropdownsPage extends PageObject {
 	}
 
 	/**
-	 *
 	 * Локаторы
 	 *
 	 * @type {Object}

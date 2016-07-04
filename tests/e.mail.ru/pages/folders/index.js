@@ -1,11 +1,14 @@
 'use strict';
 
 let PageObject = require('../../pages');
+let MessagesPage = require('../../pages/messages');
 
 /** Модуль для работы с представлением списка папок */
 class FoldersPage extends PageObject {
 	constructor () {
 		super();
+
+		this.messagesPage = new MessagesPage();
 	}
 
 	/**
@@ -24,8 +27,8 @@ class FoldersPage extends PageObject {
 	 */
 	get locators () {
 		return {
-			datalist: '.b-datalists', // TODO: заюзать locator из messages
 			container: '.b-nav_folders',
+			datalist: this.messagesPage.locators.container,
 			item: '.b-nav__item[data-id]',
 			parent: '.b-nav__subitems[data-parent]',
 			textItem: '.b-nav__item__text'
@@ -62,71 +65,6 @@ class FoldersPage extends PageObject {
 		this.page.elementIdClick(item.value.ELEMENT);
 		this.page.waitForExist(this.locators.datalist
 			+ ' [data-cache-key="' + folderId + '_undefined_false"]');
-	}
-
-	setOffsetTime (offset) {
-		return this.page.execute((offset) => {
-			Date._getUnixtime = Date.getUnixtime;
-
-			Date.getUnixtime = function () {
-				return Date._getUnixtime() + offset;
-			};
-		}, offset);
-	}
-
-	resetOffsetTime () {
-		return this.page.execute(() => {
-			if (Date._getUnixtime) {
-				Date.getUnixtime = Date._getUnixtime;
-			}
-		});
-	}
-
-	getData (container, element, parent) {
-		let id = container.elementIdAttribute(element, 'data-id').value;
-		let textElement = container.elementIdElement(element, this.locators.textItem);
-
-		return {
-			id,
-			name: textElement.getText(),
-			parent
-		};
-	}
-
-	getList () {
-		let list = [];
-		let container = this.page.element(this.locators.container);
-
-		/*
-		container.elements('>' + this.locators.item).value.forEach(item => {
-
-			let parent = container.elementIdAttribute(item.ELEMENT, 'data-parent').value;
-
-			if (parent) {
-				list.push(this.getData(container, item.ELEMENT, parent));
-			} else {
-				list.push(this.getData(container, item.ELEMENT, '-1'));
-			}
-		});
-		*/
-
-		/*
-		container.elements('>' + this.locators.item).value.forEach(item => {
-			list.push(this.getData(container, item.ELEMENT, '-1'));
-		});
-
-		container.elements('>' + this.locators.parent).value.forEach(item => {
-
-			let parent = container.elementIdAttribute(item.ELEMENT, 'data-parent').value;
-
-			container.elementIdElements(item.ELEMENT, this.locators.item).value.forEach(item => {
-				list.push(this.getData(container, item.ELEMENT, parent));
-			});
-		});
-
-		console.log(list);
-		*/
-		return list;
 	}
 }
 

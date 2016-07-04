@@ -23,11 +23,11 @@ class Folders extends Steps {
 		let {name, parent} = data;
 
 		this.foldersPage.open();
-		// this.controlsPage.newFolder();
-		// LayerFolderAdd.show();
-		// this.fieldsPage.setFieldValue('name', name);
-		// this.dropdownsPage.setDropdownValue('parent', parent);
-		// LayerFolderAdd.apply();
+		this.controlsPage.newFolder();
+		LayerFolderAdd.show();
+		this.fieldsPage.setFieldValue('name', name);
+		this.dropdownsPage.setDropdownValue('parent', parent);
+		LayerFolderAdd.apply();
 		this.foldersPage.waitAddSuccess(data);
 	}
 }

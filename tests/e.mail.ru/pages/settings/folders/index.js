@@ -30,39 +30,9 @@ class FoldersPage extends PageObject {
 		};
 	}
 
-	getList () {
-		let list = [];
-		let container = this.page.element(this.locators.container);
-		let elements = container.elements(this.locators.item);
-
-		elements.value.forEach(item => {
-			let element = container.elementIdElement(item.ELEMENT, this.locators.itemWithParam);
-			let id = element.getAttribute('data-id');
-			let parent = element.getAttribute('data-parent');
-			let name = element.getText();
-
-			list.push({
-				id,
-				name,
-				parent
-			});
-		});
-
-		return list;
-	}
-
 	waitAddSuccess (data) {
-
-		// this.page.waitForExist(this.locators.container + ' ' + this.locators.item
-		// 	+ ' [data-parent="' + data.parent + '"]');
-
-		/*
-		this.page.waitUntil(() => {
-			return this.getList().find(function (item) {
-				return item.parent === data.parent && item.name === data.name;
-			});
-		});
-		*/
+		this.page.waitForExist(this.locators.container + ' ' + this.locators.item
+			+ ' [data-parent="' + data.parent + '"]');
 	}
 }
 

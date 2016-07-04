@@ -64,6 +64,18 @@ class Actions {
 		});
 	}
 
+	/**
+	 * Создаёт папки
+	 *
+	 * @param {array} folders - папки
+	 *
+	 * @return {Promise}
+	 */
+	createFolders (folders) {
+		return this.call('folders/add', {
+			folders
+		});
+	}
 }
 
 module.exports = new Actions();

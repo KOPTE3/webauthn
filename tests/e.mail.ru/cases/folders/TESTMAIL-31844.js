@@ -4,7 +4,7 @@ let Folders = require('../../steps/folders');
 let actions = require('../../utils/actions');
 let date = require('../../utils/date');
 
-describe('TESTMAIL-31845', () => {
+describe('TESTMAIL-31844', () => {
 	before(() => {
 		Folders.auth();
 	});
@@ -14,18 +14,13 @@ describe('TESTMAIL-31845', () => {
 	});
 
 	it('Список писем. Сворачивание папок по времени.' +
-		'Проверка, что если в пользовательскую папку и ее подпапку,' +
+		'Проверка, что если в дефолтную папку и ее подпапку,' +
 		'не заходили 1 день, то она свернется', () => {
 		Folders.open();
 
-		let [mainFolderId] = actions.createFolders([{
-			name: 'Папка',
-			parent: '-1'
-		}]).value;
-
 		let [folderId] = actions.createFolders([{
 			name: 'Тестовая папка',
-			parent: mainFolderId
+			parent: '0'
 		}]).value;
 
 		Folders.open();
@@ -36,4 +31,3 @@ describe('TESTMAIL-31845', () => {
 		Folders.isFolderHidden(folderId);
 	});
 });
-
