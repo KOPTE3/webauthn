@@ -1,7 +1,6 @@
 module.exports = {
 	extends: [
-		'@qa/eslint-config-mail.ru',
-
+		'@qa/eslint-config-mail.ru'
 	],
 
 	'rules': {

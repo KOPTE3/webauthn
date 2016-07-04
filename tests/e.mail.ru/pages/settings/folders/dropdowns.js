@@ -30,8 +30,10 @@ class DropdownsPage extends PageObject {
 
 	setDropdownValue (name, value) {
 		this.clickCtrl(name);
-		this.page.click(this.locators.dropdowns[name].list
-			+ ' [data-value="' + value + '"]');
+
+		let locator = `${this.locators.dropdowns[name].list} [data-value="${value}"]`;
+
+		this.page.click(locator);
 	}
 }
 

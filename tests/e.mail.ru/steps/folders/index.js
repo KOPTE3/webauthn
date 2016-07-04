@@ -26,15 +26,15 @@ class FoldersSteps extends Steps {
 	}
 
 	static isFolderHidden (folderId) {
-		let hidden = this.page.isFolderHidden(folderId);
+		let actual = this.page.isFolderHidden(folderId);
 
-		assert(hidden, 'Папка должна быть схлопнута');
+		assert(actual, 'Папка должна быть схлопнута');
 	}
 
 	static isFolderVisible (folderId) {
-		let visible = this.page.isFolderVisible(folderId);
+		let actual = this.page.isFolderVisible(folderId);
 
-		assert(visible, 'Папка должна быть раскрыта');
+		assert(actual, 'Папка должна быть раскрыта');
 	}
 }
 

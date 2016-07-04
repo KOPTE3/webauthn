@@ -13,7 +13,9 @@ const text = 'Добрый день! Во вложении заявка, про�
 
 describe('TESTMAIL-31554: AJAX. Написание письма. Забытое вложение.' +
 ' Проверить закрытие попапа по крестику ', () => {
-	before(Compose.auth);
+	before(() => {
+		Compose.auth();
+	});
 
 	beforeEach(() => {
 		Messages.features([
@@ -35,6 +37,6 @@ describe('TESTMAIL-31554: AJAX. Написание письма. Забытое 
 		composeControls.send();
 		missingAttachLayer.show();
 		missingAttachLayer.close();
-		missingAttachLayer.shoulBeClosed();
+		missingAttachLayer.shouldBeClosed();
 	});
 });

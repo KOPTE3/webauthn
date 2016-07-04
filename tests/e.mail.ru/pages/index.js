@@ -11,7 +11,9 @@ let cache = {
 
 /** @namespace browser */
 class PageObject {
-	constructor () { }
+	constructor () {
+		this.store = new Store();
+	}
 
 	/**
 	 * Локаторы
@@ -37,7 +39,7 @@ class PageObject {
 	 * Проверяет залогинен ли пользователь
 	 *
 	 * @param {string} email
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	isActiveUser (email) {
 		return browser.waitUntil(function async () {
@@ -82,8 +84,10 @@ class PageObject {
 	 *
 	 * @param {string} type — типа авторизации
 	 */
-	static auth (type) {
-		let { account } = new Store();
+	static auth (type = 'basic') {
+		this.page.store.session({ type });
+
+		let { account } = this.page.store;
 
 		cache.user = account.get('email');
 

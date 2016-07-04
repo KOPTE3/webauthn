@@ -31,8 +31,10 @@ class FoldersPage extends PageObject {
 	}
 
 	waitAddSuccess (data) {
-		this.page.waitForExist(this.locators.container + ' ' + this.locators.item
-			+ ' [data-parent="' + data.parent + '"]');
+		let {container, item} = this.locators;
+		let locator = `${container} ${item} [data-parent="${data.parent}"]`;
+
+		this.page.waitForExist(locator);
 	}
 }
 

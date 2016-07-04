@@ -30,7 +30,7 @@ class Advanced extends PortalMenu {
 	/**
 	 * Видимость формы
 	 *
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	isVisible () {
 		return this.page.isVisible(this.locators.form);
@@ -40,7 +40,7 @@ class Advanced extends PortalMenu {
 	 * Выбран ли чекбокс
 	 *
 	 * @param {string} name - unread|flag|attach
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	isChecked (name) {
 		let checkbox = this.page.element(this.locators.checkboxes[name]);

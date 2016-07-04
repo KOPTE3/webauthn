@@ -2,13 +2,12 @@
 
 /** Модуль для работы с Date */
 class Date {
-
 	/**
 	 * Смещает текущее время
 	 * @param {number} offset - секунды
 	 */
 	setTimeOffset (offset) {
-		browser.execute((offset) => {
+		browser.execute(function (offset) {
 			Date.setNow(Date.now() + (offset * 1000));
 		}, offset);
 	}
@@ -17,7 +16,7 @@ class Date {
 	 * Восстанавливает оригинальную дату
 	 */
 	resetTimeOffset () {
-		browser.execute(() => {
+		browser.execute(function () {
 			Date.setNow(new Date());
 		});
 	}
