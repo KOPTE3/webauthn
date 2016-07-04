@@ -6,6 +6,7 @@ let PortalMenuSteps = require('../../steps/portal-menu');
 
 let PortalSearch = require('../../pages/portal-menu/portal-search');
 let Advanced = require('../../pages/portal-menu/advanced');
+let Search = require('../../pages/search');
 
 let PortalSearchStore = require('../../store/portal-menu/portal-search');
 
@@ -17,6 +18,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 
 		this.portalSearch = new PortalSearch();
 		this.advanced = new Advanced();
+		this.search = new Search();
 	}
 
 	/**
@@ -31,6 +33,15 @@ class PortalSearchSteps extends PortalMenuSteps {
 			this.portalSearch.showAdvanced();
 
 		assert(actual, 'Расширенный поиск не переключился');
+	}
+
+	/**
+	 * Кликнуть в поле поиска
+	 */
+	clickSearchField () {
+		this.portalSearch.clickSearchField();
+
+		this.isFocusInBlank();
 	}
 
 	/**
@@ -126,6 +137,39 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 */
 	isFocusInBlank () {
 		this.operandHasFocus('blank');
+	}
+
+	/**
+	 * Саджесты показаны
+	 */
+	hasSuggests () {
+		let actual = this.portalSearch.hasSuggests();
+
+		assert(actual, 'Саджесты не показались');
+	}
+
+	/**
+	 * Саджесты не показаны
+	 */
+	noSuggests () {
+		let actual = this.portalSearch.hasSuggests(true);
+
+		assert(actual, 'Саджесты не показались');
+	}
+
+	/**
+	 * Выполнить простой поиск "в письме"
+	 * @param {string} query - текст запроса
+	 */
+	simpleSearch (query = 'test') {
+		this.portalSearch.removeAllOperands();
+		this.clickSearchField();
+		this.portalSearch.setOperandText('blank', query);
+		this.portalSearch.clickSearchButton();
+
+		let actual = this.search.wait();
+
+		assert(assert, 'не удалось дождаться открытия страницы поиска');
 	}
 }
 
