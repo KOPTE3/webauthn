@@ -3,6 +3,8 @@
 let PortalMenu = require('../portal-menu');
 let Advanced = require('../portal-menu/advanced');
 
+let Utils = require('../../utils/portal-menu/portal-search');
+
 /** Модуль для работы с поиском в синей шапке */
 class PortalSearch extends PortalMenu {
 	constructor () {
@@ -22,8 +24,12 @@ class PortalSearch extends PortalMenu {
 		return this.extend(super.locators, {
 			container,
 			form: `${container} .js-search`,
+			searchButton: `${container} [type="submit"]`,
 			advancedToggle: `${container} .js-dropdown-button`,
+			searchField: `${container} .pm-toolbar__search__label__wrapper`,
+			suggests: `${container} .pm-toolbar__suggests`,
 			operands: {
+				all:	 `${container} .b-operand:not([style*="display: none"])`,
 				message: `${container} [data-operand-name="q_query"]`,
 				from:	 `${container} [data-operand-name="q_from"]`,
 				to:		 `${container} [data-operand-name="q_to"]`,
@@ -39,7 +45,8 @@ class PortalSearch extends PortalMenu {
 					attach:	 `.ico_folder_attachment`
 				},
 				close: '.b-operand__close',
-				input: '.b-operand__input'
+				input: '.b-operand__input',
+				active: '.b-operand_active'
 			}
 		});
 	}
@@ -74,6 +81,15 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Получить все активные операнды
+	 *
+	 * @return {array}
+	 */
+	getAllOperands () {
+		return this.page.elements(this.locators.operands.all);
+	}
+
+	/**
 	 * Получить операнд по имени
 	 *
 	 * @param {string} name - имя операнда
@@ -85,28 +101,53 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Получить текстовый инпут операнда
+	 *
+	 * @param {string} name - имя операнда
+	 * @return {*}
+	 */
+	getOperandInput (name) {
+		let operand = this.getOperand(name);
+		let locator = this.locators.operands.input;
+
+		return this.page.elementIdElement(operand.value.ELEMENT, locator);
+	}
+
+	/**
 	 * Получить текст операнда.
 	 *
 	 * @param {string} name - имя операнда
 	 * @returns {string}
 	 */
 	getOperandText (name) {
-		let operand = this.getOperand(name);
+		let input = this.getOperandInput(name);
 
-		let input = this.page.elementIdElement(operand.value.ELEMENT,
-			this.locators.operands.input);
+		return input && input.value ? input.getValue() : '';
+	}
 
-		return input && input.state === 'success' ? input.getValue() : '';
+	/**
+	 * Ввести текст в операнд
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} value - что печатать
+	 */
+	setOperandText (name, value = '') {
+		let input = this.getOperandInput(name);
+
+		if (input && input.value) {
+			input.setValue(value);
+		}
 	}
 
 	/**
 	 * Операнд существует
 	 *
 	 * @param {string} name - имя операнда
+	 * @param {boolean} reverse - операнд не существует
 	 * @returns {boolean}
 	 */
-	hasOperand (name) {
-		return !!this.page.waitForVisible(this.locators.operands[name]);
+	hasOperand (name, reverse = false) {
+		return this.page.waitForVisible(this.locators.operands[name], void 0, reverse);
 	}
 
 	/**
@@ -133,6 +174,97 @@ class PortalSearch extends PortalMenu {
 
 		return !!this.page.elementIdElement(operand.value.ELEMENT,
 			this.locators.operands.close);
+	}
+
+	/**
+	 * Операнд в режиме редактирования
+	 *
+	 * @param {string} name - имя операнда
+	 * @return {boolean}
+	 */
+	isOperandActive (name) {
+		let operand = this.getOperand(name);
+		let classes = operand.getAttribute('class').split(' ');
+
+		return classes.indexOf(this.locators.operands.active) > -1;
+	}
+
+	/**
+	 * Фокус в инпуте операнда
+	 * @param {string} name - имя операнда
+	 * @return {boolean}
+	 */
+	operandHasFocus (name) {
+		let locator = Utils.getOperandLocator(this.locators.operands, name, 'input');
+
+		return this.page.hasFocus(locator);
+	}
+
+	/**
+	 * Кликнуть на лупу
+	 */
+	clickSearchButton () {
+		this.page.click(this.locators.searchButton);
+	}
+
+	/**
+	 * Кликнуть в поле поиска
+	 */
+	clickSearchField () {
+		this.page.click(this.locators.searchField);
+	}
+
+	/**
+	 * Кликнуть в операнд
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	clickOperand (name) {
+		this.page.click(this.locators.operands[name]);
+	}
+
+	/**
+	 * Нажать на крестик в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	clickOperandClose (name) {
+		let locator = Utils.getOperandLocator(this.locators.operands, name, 'close');
+
+		this.page.click(locator);
+	}
+
+	/**
+	 * Удалить все операнды
+	 */
+	removeAllOperands () {
+		let blank = this.getOperand('blank');
+
+		if (blank.value) {
+			this.setOperandText('blank');
+		}
+
+		let operands = this.getAllOperands();
+
+		operands.value.forEach(item => {
+			let name = this.page.elementIdAttribute(item.ELEMENT, 'data-operand-name');
+
+			name = Utils.getOperandName(name.value);
+
+			if (name !== 'blank') {
+				this.clickOperandClose(name);
+			}
+		});
+	}
+
+	/**
+	 * Есть ли саджесты
+	 *
+	 * @param {boolean} reverse - нет ли саджестов
+	 * @return {boolean}
+	 */
+	hasSuggests (reverse = false) {
+		return this.page.waitForVisible(this.locators.suggests, void 0, reverse);
 	}
 }
 
