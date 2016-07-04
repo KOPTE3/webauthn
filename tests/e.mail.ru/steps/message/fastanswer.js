@@ -13,10 +13,13 @@ class MessageFastanswerSteps extends MessageSteps {
 	}
 
 	/**
-	 * Открывает форму быстрого ответа
+	 * Кликает по кнопкам в быстром ответе
+	 *
+	 * @param {string} name - имя кнопки по которой нужно кликнуть
+	 * (reply, forward);
 	 */
-	open () {
-		this.fastanswerPage.open();
+	clickButton (name) {
+		this.fastanswerPage.clickButton(name);
 	}
 
 }

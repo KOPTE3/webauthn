@@ -17,16 +17,22 @@ class MessageFastanswerPage extends MessagePage {
 		let active = '.b-letter_expanded';
 
 		return this.extend(super.locators, {
-			textarea: `${active} [data-name="fast-reply"]`
+			buttons: {
+				reply: `${active} [data-name="fast-reply"]`,
+				forward: `${active} [data-compose-act="forward"]`
+			}
 		});
 	}
 
 	/**
-	 * Открывает форму быстрого ответа
+	 * Кликает по кнопкам в быстром ответе
+	 *
+	 * @param {string} name - имя кнопки по которой нужно кликнуть
+	 * (reply, forward);
 	 */
-	open () {
-		this.page.waitForExist(this.locators.textarea);
-		this.page.click(this.locators.textarea);
+	clickButton (name) {
+		this.page.waitForExist(this.locators.buttons[name]);
+		this.page.click(this.locators.buttons[name]);
 	}
 }
 

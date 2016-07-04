@@ -31,7 +31,8 @@ class MessageToolbar extends MessagePage {
 			},
 			fastreply: {
 				replyAll: `${fatsreply} [data-mnemo="send-all"]`,
-				saveDraft:  `${fatsreply} [data-name="saveDraft"]`
+				saveDraft: `${fatsreply} [data-name="saveDraft"]`,
+				resend: `${fatsreply} [data-mnemo="resend"]`
 			}
 		});
 	}
@@ -40,7 +41,7 @@ class MessageToolbar extends MessagePage {
 	 * Нажать на кнопку тулбара
 	 *
 	 * @param {string} name - имя кнопки, по которой нужно нажать
-	 * доступные значения (replyAll, reply, forward, remove, archive, spam);
+	 * доступные значения (send, replyAll, reply, forward, remove, archive, spam);
 	 */
 	clickButton (name) {
 		this.page.waitForExist(this.locators.buttons[name]);
@@ -51,7 +52,7 @@ class MessageToolbar extends MessagePage {
 	 * Нажать на кнопку из тулбара быстрого ответа
 	 *
 	 * @param {string} name - имя кнопки, по которой нужно нажать
-	 * доступные значения (replyAll, saveDraft);
+	 * доступные значения (replyAll, saveDraft, resend);
 	 */
 	clickFastreplyButton (name) {
 		this.page.waitForExist(this.locators.fastreply[name]);

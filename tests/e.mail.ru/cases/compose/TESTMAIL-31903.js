@@ -14,32 +14,13 @@ let ComposeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
 let messageToolbarSteps = require('../../steps/message/toolbar');
 
-const text = 'Тестовый текст';
-const subject = 'Тест';
+const subject = 'Тестовый текст';
 
-describe('TESTMAIL-31874: Ответ на письмо. Забытое вложение. Проверить появление ' +
-' попапа для быстрого ответа с текстом и без аттача', done => {
+describe('TESTMAIL-31903: AJAX. Ответ на письмо. Забытое вложение. Проверить ' +
+'появление попапа для быстрой пересылки с текстом и без аттача', done => {
 	before(Compose.auth);
 
 	beforeEach(() => {
-		let { fields } = new ComposeFieldsStore();
-
-		Messages.open();
-
-		let message = actions.sendMessage(
-			fields.to,
-			fields.from,
-			subject,
-			text
-		);
-
-		Messages.features([
-			'check-missing-attach',
-			'disable-ballons',
-			'no-collectors-in-compose',
-			'disable-fastreply-landmark'
-		]);
-
 		Messages.open();
 	});
 
@@ -52,15 +33,29 @@ describe('TESTMAIL-31874: Ответ на письмо. Забытое влож�
 		it(text, () => {
 			let { fields } = new ComposeFieldsStore();
 
+			let message = actions.sendMessage(
+				fields.to,
+				fields.from,
+				subject,
+				text
+			);
+
+			Messages.features([
+				'check-missing-attach',
+				'disable-ballons',
+				'no-collectors-in-compose',
+				'disable-fastreply-landmark'
+			]);
+
+			Messages.open();
 			lettersSteps.openNewestLetter();
-			fastanswerSteps.clickButton('reply');
+			fastanswerSteps.clickButton('forward');
 
 			composeEditor.wait();
-			composeFields.setFieldValue('subject', 'check attach');
+			composeFields.setFieldValue('subject', subject);
 			composeFields.setFieldValue('to', fields.to);
-			composeEditor.writeMessage(text);
 
-			messageToolbarSteps.clickFastreplyButton('replyAll');
+			messageToolbarSteps.clickFastreplyButton('resend');
 			missingAttachLayer.show();
 		});
 	});
