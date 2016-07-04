@@ -17,7 +17,7 @@ const text = 'Тестовый текст';
 const subject = 'Тест';
 
 describe('TESTMAIL-31873: AJAX. Ответ на письмо. Забытое вложение. ' +
-'Проверить появление попапа для полного ответа с текстом и без аттача]', done => {
+'Проверить появление попапа для полного ответа с текстом и без аттача', done => {
 	before(Compose.auth);
 
 	beforeEach(() => {
@@ -32,9 +32,12 @@ describe('TESTMAIL-31873: AJAX. Ответ на письмо. Забытое в�
 			text
 		);
 
-		Messages.addFeature('check-missing-attach');
-		Messages.addFeature('disable-ballons');
-		Messages.addFeature('no-collectors-in-compose');
+		Messages.features([
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose'
+		]);
+
 		Messages.open();
 	});
 

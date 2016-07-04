@@ -90,6 +90,56 @@ npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --baseUrl=https://e.mai
 Полный список доступных опций test-runner'a смотрите [здесь](https://stash.mail.ru/projects/QA/repos/grunt-test-runner/browse).
 
 
+### API
+
+Во всех тестах через степы доступны следующие методы:
+
+
+#### open
+
+Открытие требуемого представления
+
+```js
+let Messages = require('../../steps/messages');
+
+describe('TESTMAIL-31873', () => {
+	Messages.open();
+});
+```
+
+#### features
+
+Включение фич:
+
+```js
+let Messages = require('../../steps/messages');
+
+describe('TESTMAIL-31873', () => {
+	beforeEach(() => {
+		Messages.features([
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose'
+		]);
+
+		Messages.open();
+	});
+});
+```
+
+#### auth
+
+Авторизация
+
+```js
+let Messages = require('../../steps/messages');
+
+describe('TESTMAIL-31873', () => {
+	Messages.auth();
+	Messages.open();
+});
+```
+
 ### Структура проекта
 
 Ниже будет рассмотрена структура проекта на примере e.mail.ru:

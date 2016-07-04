@@ -17,11 +17,14 @@ describe('TESTMAIL-31553: НЕ AJAX. Написание письма. Забыт
 	before(Compose.auth);
 
 	it('проверям что сообщение было отправленно', () => {
-		Compose.addFeature('check-missing-attach');
-		Compose.addFeature('disable-ballons');
-		Compose.addFeature('no-collectors-in-compose');
+		Compose.features([
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose'
+		]);
 
 		Compose.open();
+
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', composeFiledsStore.fields.to);
 		composeEditor.writeMessage(text);

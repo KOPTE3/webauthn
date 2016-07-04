@@ -14,9 +14,11 @@ describe('TESTMAIL-31551: НЕ AJAX. Забытое вложение. Прове
 	before(Compose.auth);
 
 	beforeEach(() => {
-		Compose.addFeature('check-missing-attach');
-		Compose.addFeature('disable-ballons');
-		Compose.addFeature('no-collectors-in-compose');
+		Compose.features([
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose'
+		]);
 
 		Compose.open();
 	});
