@@ -1,10 +1,10 @@
 'use strict';
 
-let page = require('../../steps/sent');
+let Sent = require('../../steps/sent');
 
 describe('TESTMAIL-XXX', () => {
 	it('Открытие страницы отправленного письма', () => {
-		page.auth();
-		page.open();
+		Sent.auth();
+		Sent.open();
 	});
 });

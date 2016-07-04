@@ -3,7 +3,7 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let PasswordPage = require('../../pages/password');
+let PasswordPage = require('../../pages/passrestore');
 
 class PasswordSteps extends Steps {
 	constructor () {

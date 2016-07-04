@@ -11,24 +11,32 @@ class Steps extends Pages {
 	/**
 	 * Локаторы
 	 *
-	 * @param {string} name
+	 * @param {Array} list — список фич, которые требуется включить
 	 */
-	static addFeature (name) {
+	static features (...list) {
 		let pages = new Pages();
 
-		pages.addFeature(name);
+		pages.features(...list);
 	}
 
 	/**
-	 *
 	 * Открыть страницу
 	 *
 	 * @param {Object} [query] — параметры запроса
 	 */
 	static open (query) {
+		try {
+			if (!this.page.locators.container) {
+				throw new Error();
+			}
+		} catch (error) {
+			assert(false, 'Не определен основной элемент страницы в ' +
+				'"locators.container"');
+		}
+
 		let actual = this.page.open(query);
 
-		assert(actual, 'Не удалось открыть страницу');
+		assert(actual, 'Не удалось авторизоваться');
 	}
 }
 

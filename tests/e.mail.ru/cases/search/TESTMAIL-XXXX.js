@@ -1,10 +1,10 @@
 'use strict';
 
-let page = require('../../steps/search');
+let Search = require('../../steps/search');
 
-describe('TESTMAIL-XXX', () => {
-	it('Открытие стрницы поиска по файлам', () => {
-		page.auth();
-		page.open();
+describe('TESTMAIL-XXXX', () => {
+	it('Открытие страницы поиска по файлам', () => {
+		Search.auth();
+		Search.open();
 	});
 });

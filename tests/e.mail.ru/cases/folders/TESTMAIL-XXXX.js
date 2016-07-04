@@ -1,10 +1,11 @@
 'use strict';
 
-let page = require('../../steps/folders');
+let Messages = require('../../steps/messages');
+// let Folders = require('../../steps/folders');
 
 describe('TESTMAIL-XXX', () => {
 	it('Открытие списка папок', () => {
-		page.auth();
-		page.open();
+		Messages.auth();
+		Messages.open();
 	});
 });

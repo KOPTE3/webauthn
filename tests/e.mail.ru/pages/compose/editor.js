@@ -22,12 +22,14 @@ class ComposeEditor extends ComposePage {
 	}
 
 	/**
-	 * Дождаться открытия страницы написания письма
+	 * Дождаться открытия редактора
 	 *
-	 * @return {boolean}
+	 * @return {Promise}
 	 */
 	wait () {
-		return this.page.waitForExist(this.locators.container);
+		this.page.waitForExist(this.locators.container);
+
+		return this.page.isVisible(this.locators.container);
 	}
 
 	/**

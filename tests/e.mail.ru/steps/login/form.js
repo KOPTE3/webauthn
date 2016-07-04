@@ -65,7 +65,9 @@ class LoginFormSteps extends Steps {
 	 * @param {string} provider
 	 */
 	getActiveDomain (provider) {
-		assert.equal(this.loginForm.getActiveDomain(), provider,
+		let actual = this.loginForm.getActiveDomain();
+
+		assert.equal(actual, provider,
 			`Передан неверный провайдер ${provider}`);
 	}
 
@@ -73,7 +75,9 @@ class LoginFormSteps extends Steps {
 	 * Проверить текст ссылки "Узнать больше"
 	 */
 	checkHelpText () {
-		assert.equal(this.loginForm.getHelpText(), 'Узнать больше',
+		let actual = this.loginForm.getHelpText();
+
+		assert.equal(actual, 'Узнать больше',
 			`Проверка ссылки "Узнать больше"`);
 	}
 
@@ -81,7 +85,9 @@ class LoginFormSteps extends Steps {
 	 * Проверить текст ссылки "Узнать больше"
 	 */
 	checkHelpLink () {
-		assert.equal(this.loginForm.getHelpLink(), 'http://mailblog.mail.ru/vvp-ios-and/',
+		let actual = this.loginForm.getHelpLink();
+
+		assert.equal(actual, 'http://mailblog.mail.ru/vvp-ios-and/',
 			`Проверка ссылки "Узнать больше"`);
 	}
 
@@ -89,7 +95,9 @@ class LoginFormSteps extends Steps {
 	 * Проверить текст контрола "Запомнить почту"
 	 */
 	checkRememberText () {
-		assert.equal(this.loginForm.getRememberText(), 'запомнить почту',
+		let actual = this.loginForm.getRememberText();
+
+		assert.equal(actual, 'запомнить почту',
 			`Проверка текста контрола "Запомнить почту"`);
 	}
 
@@ -97,7 +105,9 @@ class LoginFormSteps extends Steps {
 	 * Проверить состояние контрола "Запомнить почту"
 	 */
 	checkRememberState () {
-		assert.equal(this.loginForm.getRememberState(), '1',
+		let actual = this.loginForm.getRememberState();
+
+		assert.equal(actual, '1',
 			`Проверка состояние контрола "Запомнить почту"`);
 	}
 
@@ -129,7 +139,9 @@ class LoginFormSteps extends Steps {
 	 * Получить заголовок формы
 	 */
 	checkTitle () {
-		assert.equal(this.loginForm.title, 'Вход в почту',
+		let actual = this.loginForm.title;
+
+		assert.equal(actual, 'Вход в почту',
 			'Не удалось проверить заголовок формы');
 	}
 
@@ -137,16 +149,20 @@ class LoginFormSteps extends Steps {
 	 * Получить описание формы
 	 */
 	checkDescription () {
-		assert.equal(this.loginForm.description, 'Вы можете войти в почту с помощью аккаунта ' +
-			'любого почтового сервиса и легко переключаться между ними, не выходя из почты. ' +
-			'Узнать больше', 'Не удалось проверить описание формы');
+		let actual = this.loginForm.description;
+
+		assert.equal(actual, 'Вы можете войти в почту с помощью аккаунта ' +
+			'любого почтового сервиса и легко переключаться между ними, ' +
+			'не выходя из почты. Узнать больше', 'Не удалось проверить описание формы');
 	}
 
 	/**
 	 * Получить ссылку на восстановление пароля
 	 */
 	checkPassRemindLink () {
-		assert.equal(this.loginForm.getPassRemindLink(), 'https://e.mail.ru/cgi-bin/passremind',
+		let actual = this.loginForm.getPassRemindLink();
+
+		assert.equal(actual, 'https://e.mail.ru/cgi-bin/passremind',
 			'Некорректная ссылка на восстановление пароля');
 	}
 
@@ -156,14 +172,18 @@ class LoginFormSteps extends Steps {
 	 * @param {string} expected
 	 */
 	getError (expected) {
-		assert.equal(this.loginForm.getError(), expected, `Сообщение ошибки`);
+		let actual = this.loginForm.getError();
+
+		assert.equal(actual, expected, 'Сообщение ошибки');
 	}
 
 	/**
 	 * Проверить видимость списка доменов
 	 */
 	isSelectVisible () {
-		assert(!this.loginForm.isSelectVisible(), `Видимость списка доменов под вопросом`);
+		let actual = this.loginForm.isSelectVisible();
+
+		assert(!actual, 'Видимость списка доменов под вопросом');
 	}
 }
 
