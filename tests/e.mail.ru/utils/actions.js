@@ -11,12 +11,10 @@ class Actions {
 	 *
 	 * @param {string} method - имя вызываемого метоа
 	 * @param {options} options - параметры передаваемы в вызов
-	 *
 	 * @returns {Promise}
 	 */
 	call (method, options) {
 		/* eslint max-nested-callbacks: ["error", 4] */
-
 		return browser
 			.timeoutsAsyncScript(ASYNC_TIMEOUT)
 			.executeAsync(function (method, options,
@@ -60,6 +58,19 @@ class Actions {
 			subject,
 			body: { text },
 			correspondents: { to }
+		});
+	}
+
+	/**
+	 * Создаёт папки
+	 *
+	 * @param {array} folders - папки
+	 *
+	 * @returns {Promise}
+	 */
+	createFolders (folders) {
+		return this.call('folders/add', {
+			folders
 		});
 	}
 }
