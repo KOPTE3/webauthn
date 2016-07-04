@@ -24,6 +24,7 @@ describe('TESTMAIL-31552: Написание письма. Забытое вло
 		]);
 
 		Compose.open();
+
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', composeFieldsStore.fields.to);
 		composeEditor.writeMessage(text);
@@ -38,12 +39,12 @@ describe('TESTMAIL-31552: Написание письма. Забытое вло
 
 		missingAttachLayer.blockShouldHaveText(
 			'desc',
-			'Возможно, к письму должен быть прикреплен файл, однако он отсутствует.'
+			'Возможно, к письму должен быть прикреплён файл, однако он отсутствует.'
 		);
 
 		missingAttachLayer.blockShouldHaveText(
 			'apply',
-			'Все равно отправить'
+			'Всё равно отправить'
 		);
 
 		missingAttachLayer.blockShouldHaveText('cancel', 'Прикрепить файл');

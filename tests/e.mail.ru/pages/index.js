@@ -135,7 +135,7 @@ class PageObject {
 	 *
 	 * @param {Array} list — список фич, которые требуется включить
 	 */
-	features (...list) {
+	features (list) {
 		cache.features.push(...list);
 	}
 }
