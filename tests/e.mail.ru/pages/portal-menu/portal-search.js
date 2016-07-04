@@ -25,6 +25,8 @@ class PortalSearch extends PortalMenu {
 			container,
 			form: `${container} .js-search`,
 			advancedToggle: `${container} .js-dropdown-button`,
+			searchField: `${container} .pm-toolbar__search__label__wrapper`,
+			suggests: `${container} .pm-toolbar__suggests`,
 			operands: {
 				message: `${container} [data-operand-name="q_query"]`,
 				from:	 `${container} [data-operand-name="q_from"]`,
@@ -174,6 +176,13 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Кликнуть в поле поиска
+	 */
+	clickSearchField () {
+		this.page.click(this.locators.searchField);
+	}
+
+	/**
 	 * Кликнуть в операнд
 	 *
 	 * @param {string} name - имя операнда
@@ -191,6 +200,16 @@ class PortalSearch extends PortalMenu {
 		let locator = Utils.getOperandLocator(this.locators.operands, name, 'close');
 
 		this.page.click(locator);
+	}
+
+	/**
+	 * Есть ли саджесты
+	 *
+	 * @param {boolean} reverse - нет ли саджестов
+	 * @return {boolean}
+	 */
+	hasSuggests (reverse = false) {
+		return this.page.waitForVisible(this.locators.suggests, void 0, reverse);
 	}
 }
 

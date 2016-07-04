@@ -34,6 +34,15 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Кликнуть в поле поиска
+	 */
+	clickSearchField () {
+		this.portalSearch.clickSearchField();
+
+		this.isFocusInBlank();
+	}
+
+	/**
 	 * Проверка наличия операнда
 	 *
 	 * @param {string} name - имя операнда
@@ -126,6 +135,24 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 */
 	isFocusInBlank () {
 		this.operandHasFocus('blank');
+	}
+
+	/**
+	 * Саджесты показаны
+	 */
+	hasSuggests () {
+		let actual = this.portalSearch.hasSuggests();
+
+		assert(actual, 'Саджесты не показались');
+	}
+
+	/**
+	 * Саджесты не показаны
+	 */
+	noSuggests () {
+		let actual = this.portalSearch.hasSuggests(true);
+
+		assert(actual, 'Саджесты не показались');
 	}
 }
 
