@@ -24,7 +24,7 @@ class SearchPage extends PageObject {
 	 */
 	get locators () {
 		return {
-			container: '.b-fileSearch'
+			container: '.b-datalist_search'
 		};
 	}
 }

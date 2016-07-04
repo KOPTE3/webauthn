@@ -5,6 +5,26 @@ let AccountManager = require('@qa/account-manager');
 /** @namespace browser */
 /** Модуль для работы с данными */
 class Store {
+	constructor () { }
+
+	/**
+	 * Информация об аккаунте
+	 *
+	 * @param {Object} [options]
+	 * @returns {Promise}
+	 */
+	session (options = {}) {
+		let account = new AccountManager.Hooks();
+
+		Object.assign(options, {
+			host: browser.options.baseUrl
+		});
+
+		return browser.waitUntil(function async () {
+			return account.session(options);
+		});
+	}
+
 	/**
 	 * Информация об аккаунте
 	 *
@@ -14,8 +34,19 @@ class Store {
 		return new AccountManager.Session();
 	}
 
+	/*
 	cookies (cookie) {
 		cookie.qa = '77Gozo5bwoYF5Xned9Vns5dqh5WopOZQ';
+	}
+	*/
+
+	/**
+	 * Название браузера
+	 *
+	 * @type {string}
+	 */
+	get browser () {
+		return browser.desiredCapabilities.browserName;
 	}
 
 	/**
@@ -24,8 +55,9 @@ class Store {
 	 * @type {string}
 	 */
 	get platform () {
-		return browser.desiredCapabilities.platform ||
-			browser.execute('window.navigator.platform').value;
+		let status = browser.status();
+
+		return browser.desiredCapabilities.platform || status.value.os.name;
 	}
 }
 

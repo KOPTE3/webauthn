@@ -2,7 +2,7 @@
 
 let assert = require('assert');
 
-let ComposeSteps = require('../../steps/compose');
+let ComposeSteps = require('../compose');
 let ComposeEditor = require('../../pages/compose/editor');
 
 /** Модуль для работы с шагами редактора страницы написания письма */
@@ -14,7 +14,7 @@ class ComposeEditorSteps extends ComposeSteps {
 	}
 
 	/**
-	 * Дождаться появления редактора написания письма
+	 * Дождаться появления редактора
 	 */
 	wait () {
 		let actual = this.composeEditor.wait();

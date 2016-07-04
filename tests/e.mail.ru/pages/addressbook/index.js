@@ -24,7 +24,7 @@ class AddressBookPage extends PageObject {
 	 */
 	get locators () {
 		return {
-			container: '.addressbook_page_view'
+			container: '#addressbook_page_view'
 		};
 	}
 }

@@ -7,8 +7,14 @@ class Steps {
 	/**
 	 * Локаторы
 	 *
-	 * @param {string} name
+	 * @param {Array} list — список фич, которые требуется включить
 	 */
+	static features (...list) {
+		let pages = new Pages();
+
+		pages.features(...list);
+	}
+
 	static addFeature (name) {
 		Pages.addFeature(name);
 	}
@@ -30,15 +36,23 @@ class Steps {
 	}
 
 	/**
-	 *
 	 * Открыть страницу
 	 *
 	 * @param {Object} [query] — параметры запроса
 	 */
 	static open (query) {
+		try {
+			if (!this.page.locators.container) {
+				throw new Error();
+			}
+		} catch (error) {
+			assert(false, 'Не определен основной элемент страницы в ' +
+				'"locators.container"');
+		}
+
 		let actual = this.page.open(query);
 
-		assert(actual, 'Не удалось открыть страницу');
+		assert(actual, 'Не удалось авторизоваться');
 	}
 }
 

@@ -61,16 +61,22 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 npm start
 ```
 
-Зупустить тесты конкретного набора:
+Зупустить тесты конкретного тестового набора:
 
 ```
-grunt test-runner:e.mail.ru --suite=login
+npm test -- e.mail.ru --suite=login
+```
+
+`--suite` может принимать множество значений:
+
+```
+npm test -- e.mail.ru --suite='login,compose'
 ```
 
 Зупустить конкретный тест-кейс:
 
 ```
-grunt test-runner:e.mail.ru --suite=login --grep=TESTMAIL-XXXX
+npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674
 ```
 
 *Опция `--grep` принимает название тест-кейса, которое задается в секции `describe`*
@@ -78,11 +84,69 @@ grunt test-runner:e.mail.ru --suite=login --grep=TESTMAIL-XXXX
 Выполнить тесты на заданном адресе:
 
 ```
-grunt test-runner:e.mail.ru --suite=login --baseUrl=https://e.mail.ru/login
+npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --baseUrl=https://e.mail.ru/login
 ```
 
 Полный список доступных опций test-runner'a смотрите [здесь](https://stash.mail.ru/projects/QA/repos/grunt-test-runner/browse).
 
+
+### API
+
+Во всех тестах через степы доступны следующие методы:
+
+
+#### open
+
+Открытие требуемого представления
+
+```js
+let Messages = require('../../steps/messages');
+
+describe('TESTMAIL-31873', () => {
+	Messages.open();
+});
+```
+
+#### features
+
+Включение фич:
+
+```js
+let Messages = require('../../steps/messages');
+
+describe('TESTMAIL-31873', () => {
+	beforeEach(() => {
+		Messages.features([
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose'
+		]);
+
+		Messages.open();
+	});
+});
+```
+
+Используейте символ `:` если фиче требуется передать какое-то значение:
+
+```js
+Messages.features([
+	'check-missing-attach:1'
+])
+```
+
+#### auth
+
+Авторизация
+
+```js
+let Messages = require('../../steps/messages');
+
+describe('TESTMAIL-31873', () => {
+	Messages.auth();
+	Messages.open();
+});
+```
 
 ### Структура проекта
 

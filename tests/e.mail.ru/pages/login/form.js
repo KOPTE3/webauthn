@@ -1,6 +1,6 @@
 'use strict';
 
-let LoginPage = require('../../pages/login');
+let LoginPage = require('../login');
 let providers = require('../../store/authorization/providers');
 
 /** Модуль для работы с формой страницы логина */
@@ -57,7 +57,7 @@ class LoginForm extends LoginPage {
 	/**
 	 * Получить состояние видимости списка доменов
 	 *
-	 * @returns {string}
+	 * @returns {boolean}
 	 */
 	isSelectVisible () {
 		return this.page.isVisible(this.locators.select);
@@ -96,7 +96,7 @@ class LoginForm extends LoginPage {
 	/**
 	 * Получить адрес ссылки для восстановления пароля
 	 *
-	 * @returns {boolean}
+	 * @returns {string}
 	 */
 	getPassRemindLink () {
 		return this.page.getAttribute(this.locators.forgetLink, 'href');
@@ -105,7 +105,7 @@ class LoginForm extends LoginPage {
 	/**
 	 * Получить адрес ссылки на страницу помощи
 	 *
-	 * @returns {boolean}
+	 * @returns {string}
 	 */
 	getHelpLink () {
 		return this.page.getAttribute(this.locators.helpLink, 'href');
@@ -114,7 +114,7 @@ class LoginForm extends LoginPage {
 	/**
 	 * Получить текст ссылки "Узнать больше"
 	 *
-	 * @returns {boolean}
+	 * @returns {string}
 	 */
 	getHelpText () {
 		return this.page.getText(this.locators.helpText);
@@ -123,7 +123,7 @@ class LoginForm extends LoginPage {
 	/**
 	 * Получить текст контрола "Запомнить почту"
 	 *
-	 * @returns {boolean}
+	 * @returns {string}
 	 */
 	getRememberText () {
 		return this.page.getText(this.locators.rememberText);
@@ -132,7 +132,7 @@ class LoginForm extends LoginPage {
 	/**
 	 * Получить состояние контрола "Запомнить почту"
 	 *
-	 * @returns {boolean}
+	 * @returns {string}
 	 */
 	getRememberState () {
 		let state = this.page.element(this.locators.rememberState);

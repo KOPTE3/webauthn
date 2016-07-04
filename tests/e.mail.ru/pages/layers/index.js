@@ -71,6 +71,21 @@ class Layers extends PageObject {
 	close () {
 		this.page.click(this.locators.close);
 	}
+
+	/**
+	 * Метод нажимает "Принять" в леере
+	 * */
+	apply () {
+		this.page.click(this.locators.apply);
+	}
+
+	/**
+	 * Метод нажимает "Отменить" в леере
+	 * */
+	cancel () {
+		this.page.click(this.locators.cancel);
+	}
+
 }
 
 module.exports = Layers;

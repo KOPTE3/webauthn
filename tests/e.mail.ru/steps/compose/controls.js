@@ -2,7 +2,7 @@
 
 let assert = require('assert');
 
-let ComposeSteps = require('../../steps/compose');
+let ComposeSteps = require('../compose');
 let ComposeControls = require('../../pages/compose/controls');
 
 /** Модуль для работы с шагами контролов страницы написания письма */

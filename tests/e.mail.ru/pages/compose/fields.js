@@ -1,6 +1,6 @@
 'use strict';
 
-let ComposePage = require('../../pages/compose');
+let ComposePage = require('../compose');
 let ComposeFieldsStore = require('../../store/compose/fields');
 
 /** Модуль для работы с формой страницы написания письма */
@@ -34,11 +34,9 @@ class ComposeFields extends ComposePage {
 
 	/**
 	 * Дождаться появления формы написания письма
-	 *
-	 * @returns {boolean}
 	 */
 	wait () {
-		return this.page.waitForExist(this.locators.container);
+		this.page.waitForExist(this.locators.container);
 	}
 
 	/**

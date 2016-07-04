@@ -1,34 +1,36 @@
 module.exports = {
 	extends: [
-		"@qa/eslint-config-mail.ru",
+		'@qa/eslint-config-mail.ru',
 
 	],
 
-	"rules": {
-		"max-len"              : ["error", 100],
-		"array-callback-return": "off",
-		"require-jsdoc"        : ["error", {
-			"require": {
-				"FunctionDeclaration": true,
-				"MethodDefinition"   : false,
-				"ClassDeclaration"   : false
+	'rules': {
+		'array-callback-return': 'off',
+		'require-jsdoc'        : ['error', {
+			'require': {
+				'FunctionDeclaration': true,
+				'MethodDefinition'   : false,
+				'ClassDeclaration'   : false
 			}
 		}],
-		"max-statements": 0
+
+		'no-mixed-spaces-and-tabs': 'error',
+		'no-mixed-requires': 1,
+		'max-statements': 0
 	},
 
-	"env": {
-		"browser": true,
-		"node"   : true,
-		"es6"    : true,
-		"mocha"  : true
+	'env': {
+		'browser': true,
+		'node'   : true,
+		'es6'    : true,
+		'mocha'  : true
 	},
 
-	"parserOptions": {
-		"ecmaVersion": 6
+	'parserOptions': {
+		'ecmaVersion': 6
 	},
 
-	"globals": {
-		"browser": true
+	'globals': {
+		'browser': true
 	}
 };
