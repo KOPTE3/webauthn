@@ -12,7 +12,7 @@ class Actions {
 	 * @param {string} method - имя вызываемого метоа
 	 * @param {options} options - параметры передаваемы в вызов
 	 *
-	 * @return {Promise}
+	 * @returns {Promise}
 	 */
 	call (method, options) {
 		/* eslint max-nested-callbacks: ["error", 4] */
@@ -49,8 +49,7 @@ class Actions {
 	 * @param {string} from - адрес отправителя
 	 * @param {string} subject - тема письма
 	 * @param {string} text - текст пиьсма
-	 *
-	 * @return {Promise}
+	 * @returns {Promise}
 	 */
 	sendMessage (to, from, subject, text) {
 		const id = 'CqHSB5oZVN38ZCG9i0yvbi8gElq5I5G7';
@@ -63,7 +62,6 @@ class Actions {
 			correspondents: { to }
 		});
 	}
-
 }
 
 module.exports = new Actions();

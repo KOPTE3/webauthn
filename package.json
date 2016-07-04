@@ -26,7 +26,7 @@
 		"grunt"  : "grunt",
 		"start"  : "selenium-standalone start",
 		"install": "selenium-standalone install",
-		"lint"   : "eslint . --format node_modules/eslint-friendly-formatter --ext .js",
+		"lint"   : "eslint . --cache --format node_modules/eslint-friendly-formatter --ext .js",
 		"test"   : "sh utils/laucher.sh",
 		"wdio"   : "wdio"
 	},
@@ -60,7 +60,7 @@
 	},
 
 	"devDependencies": {
-		"@qa/eslint-config-mail.ru": "^0.0.10",
+		"@qa/eslint-config-mail.ru": "^0.0.11",
 		"eslint"                   : "^2.11.1",
 		"eslint-friendly-formatter": "^2.0.5",
 		"pre-commit"               : "^1.1.3"

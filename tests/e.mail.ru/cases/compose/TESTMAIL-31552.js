@@ -50,6 +50,6 @@ describe('TESTMAIL-31552: Написание письма. Забытое вло
 
 		missingAttachLayer.blockShouldHaveText('cancel', 'Прикрепить файл');
 		missingAttachLayer.close();
-		missingAttachLayer.shoulBeClosed();
+		missingAttachLayer.shouldBeClosed();
 	});
 });

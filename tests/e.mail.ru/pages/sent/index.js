@@ -31,11 +31,11 @@ class Sent extends PageObject {
 	/**
 	 * Проверить что страница отправки сообщения показана
 	 *
-	 * @return {Promise}
+	 * @returns {Promise}
 	 */
 	isVisible () {
 		this.page.waitForVisible(this.locators.container);
-		
+
 		return this.page.isVisible(this.locators.container);
 	}
 

@@ -34,6 +34,6 @@ describe('TESTMAIL-31551: НЕ AJAX. Забытое вложение. Прове
 		composeControls.send();
 		missingAttachLayer.show();
 		missingAttachLayer.close();
-		missingAttachLayer.shoulBeClosed();
+		missingAttachLayer.shouldBeClosed();
 	});
 });

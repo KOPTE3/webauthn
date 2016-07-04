@@ -35,7 +35,7 @@ describe('TESTMAIL-31553: НЕ AJAX. Написание письма. Забыт
 		composeControls.send();
 		missingAttachLayer.wait();
 		missingAttachLayer.apply();
-		missingAttachLayer.shoulBeClosed();
+		missingAttachLayer.shouldBeClosed();
 		SentPage.isVisible();
 	});
 });

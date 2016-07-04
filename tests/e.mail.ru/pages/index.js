@@ -39,7 +39,7 @@ class PageObject {
 	 * Проверяет залогинен ли пользователь
 	 *
 	 * @param {string} email
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	isActiveUser (email) {
 		return browser.waitUntil(function async () {

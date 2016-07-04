@@ -24,7 +24,7 @@ class ComposeEditor extends ComposePage {
 	/**
 	 * Дождаться открытия редактора
 	 *
-	 * @return {Promise}
+	 * @returns {boolean}
 	 */
 	wait () {
 		this.page.waitForExist(this.locators.container);
@@ -34,10 +34,10 @@ class ComposeEditor extends ComposePage {
 
 	/**
 	 * Получить редактор сообщения
-	 * @return {element}
+	 * @returns {Element}
 	 */
 	getEditor () {
-		var frameId = this.page.getAttribute(this.locators.editor, 'id');
+		let frameId = this.page.getAttribute(this.locators.editor, 'id');
 
 		return this.page.frame(frameId).element(this.locators.body);
 	}
@@ -45,7 +45,6 @@ class ComposeEditor extends ComposePage {
 	restoreParentFrame () {
 		this.page.frameParent();
 	}
-
 }
 
 module.exports = ComposeEditor;
