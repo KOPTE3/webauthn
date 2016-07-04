@@ -6,6 +6,7 @@ let PortalMenuSteps = require('../../steps/portal-menu');
 
 let PortalSearch = require('../../pages/portal-menu/portal-search');
 let Advanced = require('../../pages/portal-menu/advanced');
+let Search = require('../../pages/search');
 
 let PortalSearchStore = require('../../store/portal-menu/portal-search');
 
@@ -17,6 +18,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 
 		this.portalSearch = new PortalSearch();
 		this.advanced = new Advanced();
+		this.search = new Search();
 	}
 
 	/**
@@ -153,6 +155,21 @@ class PortalSearchSteps extends PortalMenuSteps {
 		let actual = this.portalSearch.hasSuggests(true);
 
 		assert(actual, 'Саджесты не показались');
+	}
+
+	/**
+	 * Выполнить простой поиск "в письме"
+	 * @param {string} query - текст запроса
+	 */
+	simpleSearch (query = 'test') {
+		this.portalSearch.removeAllOperands();
+		this.clickSearchField();
+		this.portalSearch.setOperandText('blank', query);
+		this.portalSearch.clickSearchButton();
+
+		let actual = this.search.wait();
+
+		assert(assert, 'не удалось дождаться открытия страницы поиска');
 	}
 }
 

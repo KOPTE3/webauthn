@@ -1,5 +1,7 @@
 'use strict';
 
+let PortalSearchStore = require('../../store/portal-menu/portal-search');
+
 /** Утилиты для работы с поиском в синей шапке */
 class PortalSearch {
 	/**
@@ -11,7 +13,19 @@ class PortalSearch {
 	 * @return {string}
 	 */
 	static getOperandLocator (locators, operandName, element) {
-		return locators[operandName] + ' ' + locators[element];
+		return `${locators[operandName]} ${locators[element]}`;
+	}
+
+	/**
+	 * Получить имя локатора операнда из значения атрибута операнда
+	 *
+	 * @param {string} attrName - значение из атрибута
+	 * @return {string}
+	 */
+	static getOperandName (attrName) {
+		let map = PortalSearchStore.fieldNames;
+
+		return map[attrName];
 	}
 }
 

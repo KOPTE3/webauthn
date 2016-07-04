@@ -24,10 +24,12 @@ class PortalSearch extends PortalMenu {
 		return this.extend(super.locators, {
 			container,
 			form: `${container} .js-search`,
+			searchButton: `${container} [type="submit"]`,
 			advancedToggle: `${container} .js-dropdown-button`,
 			searchField: `${container} .pm-toolbar__search__label__wrapper`,
 			suggests: `${container} .pm-toolbar__suggests`,
 			operands: {
+				all:	 `${container} .b-operand:not([style*="display: none"])`,
 				message: `${container} [data-operand-name="q_query"]`,
 				from:	 `${container} [data-operand-name="q_from"]`,
 				to:		 `${container} [data-operand-name="q_to"]`,
@@ -79,6 +81,15 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Получить все активные операнды
+	 *
+	 * @return {array}
+	 */
+	getAllOperands () {
+		return this.page.elements(this.locators.operands.all);
+	}
+
+	/**
 	 * Получить операнд по имени
 	 *
 	 * @param {string} name - имя операнда
@@ -112,6 +123,20 @@ class PortalSearch extends PortalMenu {
 		let input = this.getOperandInput(name);
 
 		return input && input.value ? input.getValue() : '';
+	}
+
+	/**
+	 * Ввести текст в операнд
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} value - что печатать
+	 */
+	setOperandText (name, value = '') {
+		let input = this.getOperandInput(name);
+
+		if (input && input.value) {
+			input.setValue(value);
+		}
 	}
 
 	/**
@@ -176,6 +201,13 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Кликнуть на лупу
+	 */
+	clickSearchButton () {
+		this.page.click(this.locators.searchButton);
+	}
+
+	/**
 	 * Кликнуть в поле поиска
 	 */
 	clickSearchField () {
@@ -200,6 +232,29 @@ class PortalSearch extends PortalMenu {
 		let locator = Utils.getOperandLocator(this.locators.operands, name, 'close');
 
 		this.page.click(locator);
+	}
+
+	/**
+	 * Удалить все операнды
+	 */
+	removeAllOperands () {
+		let blank = this.getOperand('blank');
+
+		if (blank.value) {
+			this.setOperandText('blank');
+		}
+
+		let operands = this.getAllOperands();
+
+		operands.value.forEach(item => {
+			let name = this.page.elementIdAttribute(item.ELEMENT, 'data-operand-name');
+
+			name = Utils.getOperandName(name.value);
+
+			if (name !== 'blank') {
+				this.clickOperandClose(name);
+			}
+		});
 	}
 
 	/**

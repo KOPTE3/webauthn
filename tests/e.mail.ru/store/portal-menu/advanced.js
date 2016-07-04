@@ -16,6 +16,15 @@ class Advanced extends Store {
 	static get checkboxes () {
 		return ['unread', 'flag', 'attach'];
 	}
+
+	/**
+	 * Список текстовых полей (кроме даты)
+	 *
+	 * @return {string[]}
+	 */
+	static get textFields () {
+		return ['from', 'to', 'subject', 'message'];
+	}
 }
 
 module.exports = Advanced;
