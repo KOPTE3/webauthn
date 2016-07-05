@@ -11,12 +11,10 @@ class Actions {
 	 *
 	 * @param {string} method - имя вызываемого метоа
 	 * @param {options} options - параметры передаваемы в вызов
-	 *
-	 * @return {Promise}
+	 * @returns {Promise}
 	 */
 	call (method, options) {
 		/* eslint max-nested-callbacks: ["error", 4] */
-
 		return browser
 			.timeoutsAsyncScript(ASYNC_TIMEOUT)
 			.executeAsync(function (method, options,
@@ -49,8 +47,7 @@ class Actions {
 	 * @param {string} from - адрес отправителя
 	 * @param {string} subject - тема письма
 	 * @param {string} text - текст пиьсма
-	 *
-	 * @return {Promise}
+	 * @returns {Promise}
 	 */
 	sendMessage (to, from, subject, text) {
 		const id = 'CqHSB5oZVN38ZCG9i0yvbi8gElq5I5G7';
@@ -64,6 +61,18 @@ class Actions {
 		});
 	}
 
+	/**
+	 * Создаёт папки
+	 *
+	 * @param {array} folders - папки
+	 *
+	 * @returns {Promise}
+	 */
+	createFolders (folders) {
+		return this.call('folders/add', {
+			folders
+		});
+	}
 }
 
 module.exports = new Actions();

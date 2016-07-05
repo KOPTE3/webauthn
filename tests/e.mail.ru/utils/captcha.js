@@ -8,11 +8,10 @@ const CAPTCHA_CRACKER_URL = 'https://c.mail.ru/c/get';
  * Модуль для работы с капчей Mail.Ru
  */
 class Captcha {
-
 	/**
 	 * Получить заголовок Captcha-Id
-	 * @param  {string} locator
-	 * @return {Object}
+	 * @param {string} locator
+	 * @returns {Object}
 	 */
 	static getCaptchaID (locator) {
 		let result = browser.executeAsync(
@@ -57,8 +56,8 @@ class Captcha {
 
 	/**
 	 * Получить значение каптчи по заголовку
-	 * @param  {string} cid
-	 * @return {Promise}
+	 * @param {string} cid
+	 * @returns {Promise}
 	 */
 	static getCaptchaValue (cid) {
 		return new Promise((resolve, reject) => {

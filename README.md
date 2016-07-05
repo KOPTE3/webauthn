@@ -95,7 +95,7 @@ npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --baseUrl=https://e.mai
 Во всех тестах через степы доступны следующие методы:
 
 
-#### open
+#### Page#open({...})
 
 Открытие требуемого представления
 
@@ -107,7 +107,15 @@ describe('TESTMAIL-31873', () => {
 });
 ```
 
-#### features
+Метод auth дополнительно принимает параметры запроса:
+
+```js
+Messages.open({
+	foo: 1
+});
+```
+
+#### Page#features([...])
 
 Включение фич:
 
@@ -135,7 +143,7 @@ Messages.features([
 ])
 ```
 
-#### auth
+#### Page#auth(type=basic)
 
 Авторизация
 
@@ -147,6 +155,45 @@ describe('TESTMAIL-31873', () => {
 	Messages.open();
 });
 ```
+
+Метод auth дополнительно принимает тип авторизации:
+
+```js
+Messages.auth('external');
+```
+
+Список доступных типов: pdd, external, basic (используется по умолчанию)
+
+
+#### Store#Authorization#account
+
+Получение авторизационных сведений текущего аккаунтпа
+
+```js
+let AuthStore = require('../../store/authorization');
+
+let authStore = new AuthStore();
+
+authStore.account;
+```
+
+Метод .credentials примает те же типы, что Page\#auth
+
+
+#### Store#Authorization#credentials
+
+Получение авторизационных данные указанного типа
+
+```js
+let AuthStore = require('../../store/authorization');
+
+let authStore = new AuthStore();
+
+authStore.credentials('external');
+```
+
+Метод .credentials примает те же типы, что Page\#auth
+
 
 ### Структура проекта
 
@@ -177,7 +224,7 @@ describe('TESTMAIL-31873', () => {
 |-----------|-------------------------|----------------|
 | **cases** | Тест-кейсы              | store, steps
 | **pages** | Элементы предстравления | store, browser
-| **steps** | Шаги                    | store, pages
+| **steps** | Шаги                    | store, pages, steps
 | **store** | Хранилище               | store
 | **utils** | Утилиты                 | store
 
@@ -237,6 +284,10 @@ let PageObject = require('../../pages');
 class Login extends PageObject {
 	constructor () {
 		super();
+	}
+
+	get location () {
+		return '/login'
 	}
 
 	get locators () {
@@ -435,15 +486,17 @@ class Providers extends authProviders {
 module.exports = new Providers();
 ```
 
-### Рекомендации
+### Требования
 
-* Не обращайтесь к объекту `browser` напрямую, только через `this.page` в `pages`
-* Все без исключения методы должны иметь аннотацию JSDoc
-* Всегда определяйте локатор с имененем `container`
+* Не обращайтесь в pages к объекту browser напрямую. Вместо этого используйте ссылку `this.page`.
+* Все без исключения методы должны иметь аннотацию JSDoc.
+* Все файлы в папке page должны возвращать ссылку на класс.
+* Все индесные файлы в папке steps должны возвращать ссылку на класс.
+* Всегда определяйте `location` и `locators.container` в индексоном файле вашего предствления (page).
 * Не используйте сокращения вида err, dfd, fn, и пр.
-* Для переменной, которая сохраняет состояние используйте название `actual`
-* Прижерживайтесь существующей структуры и организации кода проекта
-* Для работы с любыми данными используйте всегда хранилище (`store`)
+* Для переменной, которая сохраняет состояние используйте название `actual`.
+* Прижерживайтесь существующей структуры и организации кода проекта.
+* Для работы с любыми данными используйте всегда хранилище (`store`).
 * Если вы работаете с полями формы, то у вас должны быть определены как минимум следующие типы методов:
 
 

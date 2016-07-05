@@ -14,7 +14,9 @@ const text = 'Добрый день! Во вложении заявка, про�
 
 describe('TESTMAIL-31552: Написание письма. Забытое вложение. ' +
 	'Проверить закрытие попапа по клику на кнопку "Прикрепить файл"', () => {
-	before(Compose.auth);
+	before(() => {
+		Compose.auth();
+	});
 
 	it('проверяем содержимое леера', () => {
 		Compose.features([
@@ -49,6 +51,6 @@ describe('TESTMAIL-31552: Написание письма. Забытое вло
 
 		missingAttachLayer.blockShouldHaveText('cancel', 'Прикрепить файл');
 		missingAttachLayer.close();
-		missingAttachLayer.shoulBeClosed();
+		missingAttachLayer.shouldBeClosed();
 	});
 });
