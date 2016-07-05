@@ -40,9 +40,9 @@
 	},
 
 	"dependencies": {
-		"@qa/account-manager"  : "^0.0.13",
+		"@qa/account-manager"  : "^0.1.0",
 		"@qa/grunt-test-runner": "^0.2.1",
-		"@qa/test-tools"       : "^1.1.0",
+		"@qa/test-tools"       : "^1.1.1",
 		"@qa/wd-capabilities"  : "^0.0.4",
 		"@qa/wdio-api-mail.ru" : "^2.0.0",
 		"grunt"                : "^1.0.1",

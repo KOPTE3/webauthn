@@ -95,7 +95,7 @@ npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --baseUrl=https://e.mai
 Во всех тестах через степы доступны следующие методы:
 
 
-#### open
+#### Page#open({...})
 
 Открытие требуемого представления
 
@@ -107,7 +107,15 @@ describe('TESTMAIL-31873', () => {
 });
 ```
 
-#### features
+Метод auth дополнительно принимает параметры запроса:
+
+```js
+Messages.open({
+	foo: 1
+});
+```
+
+#### Page#features([...])
 
 Включение фич:
 
@@ -135,7 +143,7 @@ Messages.features([
 ])
 ```
 
-#### auth
+#### Page#auth(type=basic)
 
 Авторизация
 
@@ -147,6 +155,45 @@ describe('TESTMAIL-31873', () => {
 	Messages.open();
 });
 ```
+
+Метод auth дополнительно принимает тип авторизации:
+
+```js
+Messages.auth('external');
+```
+
+Список доступных типов: pdd, external, basic (используется по умолчанию)
+
+
+#### Store#Authorization#account
+
+Получение авторизационных сведений текущего аккаунтпа
+
+```js
+let AuthStore = require('../../store/authorization');
+
+let authStore = new AuthStore();
+
+authStore.account;
+```
+
+Метод .credentials примает те же типы, что Page\#auth
+
+
+#### Store#Authorization#credentials
+
+Получение авторизационных данные указанного типа
+
+```js
+let AuthStore = require('../../store/authorization');
+
+let authStore = new AuthStore();
+
+authStore.credentials('external');
+```
+
+Метод .credentials примает те же типы, что Page\#auth
+
 
 ### Структура проекта
 

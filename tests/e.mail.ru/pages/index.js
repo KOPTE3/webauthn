@@ -1,19 +1,18 @@
 'use strict';
 
-let Store = require('../store');
 let URL = require('../utils/url');
-let merge = require('deepmerge');
+let Support = require('../utils/support');
 
 let cache = {
-	user    : null,
+	session : false,
 	features: []
 };
 
+let support = new Support();
+
 /** @namespace browser */
 class PageObject {
-	constructor () {
-		this.store = new Store();
-	}
+	constructor () { }
 
 	/**
 	 * Локаторы
@@ -36,21 +35,28 @@ class PageObject {
 	}
 
 	/**
-	 * Проверяет залогинен ли пользователь
+	 * Получить заголовок страницы
 	 *
-	 * @param {string} email
-	 * @returns {boolean}
+	 * @type {string}
 	 */
-	isActiveUser (email) {
-		return browser.waitUntil(function async () {
-			return browser.executeAsync(function (user, resolve) {
-				if (window.__PH) {
-					if (window.__PH.activeUser() === user) {
-						resolve(true);
-					}
-				}
-			}, email);
-		});
+	get title () {
+		this.page.getTitle();
+	}
+
+	/**
+	 * Дождаться появления требуемого элемента
+	 */
+	wait () {
+		this.page.waitForExist(this.locators.container);
+	}
+
+	/**
+	 * Включение фичи
+	 *
+	 * @param {Array} list — список фич, которые требуется включить
+	 */
+	features (list) {
+		cache.features.push(...list);
 	}
 
 	/**
@@ -72,8 +78,8 @@ class PageObject {
 		this.page.url(url);
 		this.wait();
 
-		if (user) {
-			return this.isActiveUser(user);
+		if (cache.session) {
+			return support.isActiveUser();
 		}
 
 		return true;
@@ -82,30 +88,11 @@ class PageObject {
 	/**
 	 * Авторизация
 	 *
-	 * @param {string} type — типа авторизации
+	 * @param {string} type — тип авторизации
+	 * @param {Object} [credentials] — авторизационые данные
 	 */
-	static auth (type = 'basic') {
-		this.page.store.session({ type });
-
-		let { account } = this.page.store;
-
-		cache.user = account.get('email');
-
-		browser.url('/login');
-
-		try {
-			let cookie = account.get('cookie');
-
-			if (!cookie.length) {
-				throw new Error();
-			}
-
-			browser.setCookies(cookie);
-		} catch (error) {
-			throw new Error('Could not found cookie to continue');
-		}
-
-		console.log(`Used ${cache.user} account`);
+	static auth (type, credentials) {
+		cache.session = support.session(...arguments);
 	}
 
 	/**
@@ -115,32 +102,7 @@ class PageObject {
 	 * @returns {Object}
 	 */
 	extend (object) {
-		return merge(...arguments);
-	}
-
-	/**
-	 * Дождаться появления требуемого элемента
-	 */
-	wait () {
-		this.page.waitForExist(this.locators.container);
-	}
-
-	/**
-	 * Получить заголовок страницы
-	 *
-	 * @type {string}
-	 */
-	get title () {
-		this.page.getTitle();
-	}
-
-	/**
-	 * Включение фичи
-	 *
-	 * @param {Array} list — список фич, которые требуется включить
-	 */
-	features (list) {
-		cache.features.push(...list);
+		return support.extend(...arguments);
 	}
 }
 
