@@ -7,12 +7,15 @@ let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
-let ComposeFiledsStore = require('../../store/compose/fields');
-let composeFiledsStore = new ComposeFiledsStore();
+let ComposeFieldsStore = require('../../store/compose/fields');
+
+let composeFieldsStore = new ComposeFieldsStore();
 
 describe('TESTMAIL-31540: AJAX. Написание письма. Забытое вложение. ' +
 'Проверить появление попапа при отправке текстов', () => {
-	before(Compose.auth);
+	before(() => {
+		Compose.auth();
+	});
 
 	beforeEach(() => {
 		Messages.features([
@@ -28,7 +31,7 @@ describe('TESTMAIL-31540: AJAX. Написание письма. Забытое 
 	composeEditorStore.lettersWithAttach.forEach(text => {
 		it(text, () => {
 			composeFields.setFieldValue('subject', 'check attach');
-			composeFields.setFieldValue('to', composeFiledsStore.fields.to);
+			composeFields.setFieldValue('to', composeFieldsStore.fields.to);
 			composeEditor.writeMessage(text);
 			composeControls.send();
 			missingAttachLayer.show();

@@ -26,7 +26,7 @@
 		"grunt"  : "grunt",
 		"start"  : "selenium-standalone start",
 		"install": "selenium-standalone install",
-		"lint"   : "eslint . --format node_modules/eslint-friendly-formatter --ext .js",
+		"lint"   : "eslint . --cache --format node_modules/eslint-friendly-formatter --ext .js",
 		"test"   : "sh utils/laucher.sh",
 		"wdio"   : "wdio"
 	},
@@ -40,9 +40,9 @@
 	},
 
 	"dependencies": {
-		"@qa/account-manager"  : "^0.0.11",
+		"@qa/account-manager"  : "^0.1.0",
 		"@qa/grunt-test-runner": "^0.2.1",
-		"@qa/test-tools"       : "^1.1.0",
+		"@qa/test-tools"       : "^1.1.1",
 		"@qa/wd-capabilities"  : "^0.0.4",
 		"@qa/wdio-api-mail.ru" : "^2.0.0",
 		"grunt"                : "^1.0.1",
@@ -60,7 +60,7 @@
 	},
 
 	"devDependencies": {
-		"@qa/eslint-config-mail.ru": "^0.0.10",
+		"@qa/eslint-config-mail.ru": "^0.0.11",
 		"eslint"                   : "^2.11.1",
 		"eslint-friendly-formatter": "^2.0.5",
 		"pre-commit"               : "^1.1.3"
