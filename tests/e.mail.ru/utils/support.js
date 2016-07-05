@@ -3,6 +3,7 @@
 let TestTools = require('@qa/test-tools');
 let AccountManager = require('@qa/account-manager');
 let AuthStore = require('../store/authorization');
+let Providers = require('../store/authorization/providers');
 
 class Support extends TestTools.Support {
 	constructor () {
@@ -18,10 +19,20 @@ class Support extends TestTools.Support {
 	 * @param {Object} [options] — авторизационые данные
 	 */
 	session (type = 'basic', options = {}) {
-		let account = new AccountManager.Hooks();
+		let account = new AccountManager.Hooks(),
+			service = 'mail.ru';
+
+		// Пробуем авторизовать указанным адресом
+		if (options.username) {
+			let { name, host } = this.parseEmail(options.username);
+			let providers = new Providers();
+
+			service = providers.find(host);
+		}
 
 		Object.assign(options, {
 			host: browser.options.baseUrl,
+			service,
 			type
 		});
 
@@ -81,6 +92,22 @@ class Support extends TestTools.Support {
 			});
 		} catch (error) {
 			return false;
+		}
+	}
+
+	/**
+	 * Позволяет получить состовляющие email
+	 *
+	 * @param {string} email
+	 * @returns {Object}
+	 */
+	parseEmail (email) {
+		try {
+			let [, name, host] = email.match(/(.*)@(.{4,})$/);
+
+			return { name, host };
+		} catch (error) {
+			throw new Error(`Could not parse passed email "${email}"\n${error.stack}`);
 		}
 	}
 }
