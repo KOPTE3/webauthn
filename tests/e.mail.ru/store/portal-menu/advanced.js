@@ -11,7 +11,7 @@ class Advanced extends Store {
 	/**
 	 * Список чекбоксов
 	 *
-	 * @return {string[]}
+	 * @returns {string[]}
 	 */
 	static get checkboxes () {
 		return ['unread', 'flag', 'attach'];
@@ -20,7 +20,7 @@ class Advanced extends Store {
 	/**
 	 * Список текстовых полей (кроме даты)
 	 *
-	 * @return {string[]}
+	 * @returns {string[]}
 	 */
 	static get textFields () {
 		return ['from', 'to', 'subject', 'message'];
