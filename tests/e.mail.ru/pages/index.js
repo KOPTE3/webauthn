@@ -12,8 +12,6 @@ let support = new Support();
 
 /** @namespace browser */
 class PageObject {
-	constructor () { }
-
 	/**
 	 * Локаторы
 	 *
@@ -132,6 +130,20 @@ class PageObject {
 	 */
 	features (list) {
 		cache.features.push(...list);
+	}
+
+	refresh () {
+		this.page.refresh();
+	}
+
+	callApi (method, data) {
+		let result = this.page.timeoutsAsyncScript(5000).executeAsync((method, data, done) => {
+			window.patron.API.post(method, data, (response) => {
+				done(response.isOk());
+			});
+		}, method, data);
+
+		return (result.state === 'success') && result.value;
 	}
 }
 

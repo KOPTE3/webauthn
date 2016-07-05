@@ -3,6 +3,8 @@
 let assert = require('assert');
 let Pages = require('../pages');
 
+let page = new Pages();
+
 class Steps {
 	/**
 	 * Локаторы
@@ -53,6 +55,10 @@ class Steps {
 		let actual = this.page.open(query);
 
 		assert(actual, 'Не удалось авторизоваться');
+	}
+
+	static refresh () {
+		this.page.refresh();
 	}
 }
 

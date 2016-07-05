@@ -41,6 +41,63 @@ class Actions {
 	}
 
 	/**
+	 * Сохраняет данные в хелпере.
+	 *
+	 * @param {number} index
+	 * @param {number} data
+	 * @returns {Promise}
+	 */
+	updateHelper (index, data) {
+		return this.call('helpers/update', {
+			index,
+			update: data
+		});
+	}
+
+	/**
+	 * Удаляет хелпер.
+	 *
+	 * @param {number} index
+	 * @returns {Promise}
+	 */
+	removeHelper (index) {
+		return this.call('helpers/remove', {
+			indexes: [index]
+		});
+	}
+
+	/**
+	 * Регистрирует в браузере функцию-обработчик AJAX-ответа.
+	 *
+	 * @param {mixed} urlPattern Шаблон для проверки URL
+	 * @param {function} hook функция-обработчик, принимает 2 парметра (xhr и options),
+	 * в которые можно внести изменения
+	 * @returns {Promise}
+	 */
+	registerAjaxHook (urlPattern, hook) {
+		let result = browser
+			.timeoutsAsyncScript(ASYNC_TIMEOUT)
+			.executeAsync((urlPattern, hookString, done) => {
+				let originalParse = window.patron.OfflineCache.parse;
+
+				window.patron.OfflineCache.parse = function (jqXHR, textStatus, opts, doResult) {
+					if (o.url.match(new RegExp(urlPattern))) {
+						var body = '(' + hookString + ')(xhr, options)';
+
+						/* eslint no-new-func: 0 */
+						(new Function('xhr', 'options', body))(jqXHR, opts);
+					}
+
+					return originalParse.call(this, jqXHR, textStatus, opts, doResult);
+				};
+
+				done();
+			}, urlPattern, hook.toString());
+
+		return (result.state === 'success') && result.value;
+	}
+
+	/**
 	 * Отправляет пользователю письмо
 	 *
 	 * @param {string} to - адрес получателя
