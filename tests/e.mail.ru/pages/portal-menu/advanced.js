@@ -64,7 +64,7 @@ class Advanced extends PortalMenu {
 	 * Проверка, что курсор в поле
 	 *
 	 * @param {string} name - имя поля
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	isFocusInField (name) {
 		return this.page.hasFocus(this.locators.textFields[name]);
@@ -93,7 +93,7 @@ class Advanced extends PortalMenu {
 	 *
 	 * @param {string} name - имя поля
 	 * @param {boolean} reverse - нет ли саджестов
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	hasSuggests (name, reverse = false) {
 		return this.page.waitForVisible(this.locators.suggests[name], void 0, reverse);

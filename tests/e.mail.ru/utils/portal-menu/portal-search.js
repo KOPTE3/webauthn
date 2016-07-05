@@ -7,10 +7,10 @@ class PortalSearch {
 	/**
 	 * Собрать локатор для элемента в операнде
 	 *
-	 * @param {object} locators - локаторы операндов
+	 * @param {Object} locators - локаторы операндов
 	 * @param {string} operandName - имя операнда
 	 * @param {string} element - имя элемента
-	 * @return {string}
+	 * @returns {string}
 	 */
 	static getOperandLocator (locators, operandName, element) {
 		return `${locators[operandName]} ${locators[element]}`;
@@ -20,7 +20,7 @@ class PortalSearch {
 	 * Получить имя локатора операнда из значения атрибута операнда
 	 *
 	 * @param {string} attrName - значение из атрибута
-	 * @return {string}
+	 * @returns {string}
 	 */
 	static getOperandName (attrName) {
 		let map = PortalSearchStore.fieldNames;
