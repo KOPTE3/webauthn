@@ -175,7 +175,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 
 		let actual = this.search.wait();
 
-		assert(actual, 'не удалось дождаться открытия страницы поиска');
+		assert(actual, 'Не удалось дождаться открытия страницы поиска');
 	}
 }
 

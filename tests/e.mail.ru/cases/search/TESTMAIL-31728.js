@@ -18,7 +18,7 @@ describe('TESTMAIL-31728', () => {
 
 		let today = date.format('D.M.Y');
 		let todayDay = date.format('d');
-		let lapse = AdvancedStore.dateSelectValues.filter(({value}) => value === 1)[0];
+		let lapse = AdvancedStore.dateSelectValues.filter(({value}) => value === '1')[0];
 		let operandName = 'date';
 
 		AdvancedSteps.selectDateLapse(lapse.value);
