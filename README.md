@@ -143,7 +143,7 @@ Messages.features([
 ])
 ```
 
-#### Page#auth(type=basic)
+#### Page#auth(type=basic, { username, password })
 
 Авторизация
 
@@ -164,6 +164,14 @@ Messages.auth('external');
 
 Список доступных типов: pdd, external, basic (используется по умолчанию)
 
+Также есть возможность авторизоваться конкретным пользователем:
+
+```js
+Messages.auth('basic', {
+	username: 'aziza.voronova.52@list.ru',
+	password: 'dknMuWpuzvG9'
+});
+```
 
 #### Store#Authorization#account
 
@@ -402,7 +410,7 @@ class Providers extends Store {
 					'list.ru',
 					'bk.ru'
 				]
-			},
+			}
 	}
 
 	/**

@@ -40,7 +40,7 @@
 	},
 
 	"dependencies": {
-		"@qa/account-manager"  : "^0.1.0",
+		"@qa/account-manager"  : "^1.0.0",
 		"@qa/grunt-test-runner": "^0.2.1",
 		"@qa/test-tools"       : "^1.1.1",
 		"@qa/wd-capabilities"  : "^0.0.4",
@@ -60,7 +60,7 @@
 	},
 
 	"devDependencies": {
-		"@qa/eslint-config-mail.ru": "^0.0.11",
+		"@qa/eslint-config-mail.ru": "^0.0.12",
 		"eslint"                   : "^2.11.1",
 		"eslint-friendly-formatter": "^2.0.5",
 		"pre-commit"               : "^1.1.3"
