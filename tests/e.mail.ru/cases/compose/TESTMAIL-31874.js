@@ -1,18 +1,25 @@
 'use strict';
 
+// messages
 let Messages = require('../../steps/messages');
-let lettersSteps = require('../../steps/messages/letters');
-let fastanswerSteps = require('../../steps/message/fastanswer');
+let messagesLettersSteps = require('../../steps/messages/letters');
 
+// message
+let messageFastanswerSteps = require('../../steps/message/fastanswer');
+let messageToolbarSteps = require('../../steps/message/toolbar');
+
+// compose
 let Compose = require('../../steps/compose');
 let composeFields = require('../../steps/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
+
+// layers
+let missingAttachLayer = require('../../steps/layers/missingAttach');
+
 let actions = require('../../utils/actions');
-let messageToolbarSteps = require('../../steps/message/toolbar');
 
 const text = 'Тестовый текст';
 const subject = 'Тест';
@@ -48,20 +55,18 @@ describe('TESTMAIL-31874: Ответ на письмо. Забытое влож�
 		composeControls.cancel();
 	});
 
-	composeEditorStore.lettersWithAttach.forEach(text => {
-		it(text, () => {
-			let { fields } = new ComposeFieldsStore();
+	it('попап появился', () => {
+		let { fields } = new ComposeFieldsStore();
 
-			lettersSteps.openNewestLetter();
-			fastanswerSteps.clickButton('reply');
+		messagesLettersSteps.openNewestLetter();
+		messageFastanswerSteps.clickButton('reply');
 
-			composeEditor.wait();
-			composeFields.setFieldValue('subject', 'check attach');
-			composeFields.setFieldValue('to', fields.to);
-			composeEditor.writeMessage(text);
+		composeEditor.wait();
+		composeFields.setFieldValue('subject', 'check attach');
+		composeFields.setFieldValue('to', fields.to);
+		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 
-			messageToolbarSteps.clickFastreplyButton('replyAll');
-			missingAttachLayer.show();
-		});
+		messageToolbarSteps.clickFastreplyButton('replyAll');
+		missingAttachLayer.show();
 	});
 });

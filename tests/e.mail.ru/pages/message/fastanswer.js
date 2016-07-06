@@ -31,8 +31,7 @@ class MessageFastanswerPage extends MessagePage {
 	 * (reply, forward);
 	 */
 	clickButton (name) {
-		this.page.waitForExist(this.locators.buttons[name]);
-		this.page.click(this.locators.buttons[name]);
+		this.clickWithRetry(this.locators.buttons[name]);
 	}
 }
 

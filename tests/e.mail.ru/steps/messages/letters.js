@@ -2,23 +2,22 @@
 
 let assert = require('assert');
 
-let MessagesPage = require('../../pages/messages');
+let MessagesLettersPage = require('../../pages/messages/letters');
 let MessagesSteps = require('../messages');
 
 /** Модуль для работы с формой страницы написания письма */
-class LettersSteps extends MessagesSteps {
+class MessagesLettersSteps extends MessagesSteps {
 	constructor () {
 		super();
-
-		this.messagesPage = new MessagesPage();
+		this.lettersPage = new MessagesLettersPage();
 	}
 
 	/**
 	 * Открыть самое новое письмо
 	 */
 	openNewestLetter () {
-		this.messagesPage.openNewestLetter();
+		this.lettersPage.openNewestLetter();
 	}
 }
 
-module.exports = new LettersSteps();
+module.exports = new MessagesLettersSteps();

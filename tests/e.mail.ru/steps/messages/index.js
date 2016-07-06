@@ -20,14 +20,6 @@ class MessagesSteps extends Steps {
 		return new MessagesPage();
 	}
 
-	/**
-	 *
-	 * @static
-	 * */
-	static toCompose () {
-		this.page.clickButton('compose');
-	}
-
 }
 
 

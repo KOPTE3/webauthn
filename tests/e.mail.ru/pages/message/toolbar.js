@@ -21,6 +21,7 @@ class MessageToolbar extends MessagePage {
 		let fatsreply = '[data-mnemo="toolbar-fastreply"]';
 
 		return this.extend(super.locators, {
+			toolbar: '',
 			buttons: {
 				replyAll: `${toolbar} [data-name="replyAll"]`,
 				reply:  `${toolbar} [data-name="reply"]`,
@@ -30,9 +31,9 @@ class MessageToolbar extends MessagePage {
 				spam:  `${toolbar} [data-name="spam"]`
 			},
 			fastreply: {
-				replyAll: `${fatsreply} [data-mnemo="send-all"]`,
-				saveDraft: `${fatsreply} [data-name="saveDraft"]`,
-				resend: `${fatsreply} [data-mnemo="resend"]`
+				replyAll: `${toolbar} [data-mnemo="send-all"]`,
+				saveDraft: `${toolbar} [data-name="saveDraft"]`,
+				resend: `${toolbar} [data-mnemo="resend"]`
 			}
 		});
 	}
@@ -44,8 +45,7 @@ class MessageToolbar extends MessagePage {
 	 * доступные значения (send, replyAll, reply, forward, remove, archive, spam);
 	 */
 	clickButton (name) {
-		this.page.waitForExist(this.locators.buttons[name]);
-		this.page.click(this.locators.buttons[name]);
+		this.clickWithRetry(this.locators.buttons[name]);
 	}
 
 	/**
@@ -55,8 +55,7 @@ class MessageToolbar extends MessagePage {
 	 * доступные значения (replyAll, saveDraft, resend);
 	 */
 	clickFastreplyButton (name) {
-		this.page.waitForExist(this.locators.fastreply[name]);
-		this.page.click(this.locators.fastreply[name]);
+		this.clickWithRetry(this.locators.fastreply[name]);
 	}
 
 }

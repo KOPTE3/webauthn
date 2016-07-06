@@ -48,19 +48,17 @@ describe('TESTMAIL-31873: AJAX. Ответ на письмо. Забытое в�
 		composeControls.cancel();
 	});
 
-	composeEditorStore.lettersWithAttach.forEach(text => {
-		it(text, () => {
-			let { fields } = new ComposeFieldsStore();
+	it('попап должен появится', () => {
+		let { fields } = new ComposeFieldsStore();
 
-			lettersSteps.openNewestLetter();
-			messageToolbarSteps.clickButton('replyAll');
+		lettersSteps.openNewestLetter();
+		messageToolbarSteps.clickButton('replyAll');
 
-			composeEditor.wait();
-			composeFields.setFieldValue('subject', 'check attach');
-			composeFields.setFieldValue('to', fields.to);
-			composeEditor.writeMessage(text);
-			composeControls.send();
-			missingAttachLayer.show();
-		});
+		composeEditor.wait();
+		composeFields.setFieldValue('subject', 'check attach');
+		composeFields.setFieldValue('to', fields.to);
+		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
+		composeControls.send();
+		missingAttachLayer.show();
 	});
 });

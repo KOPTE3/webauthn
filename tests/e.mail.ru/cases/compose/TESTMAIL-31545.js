@@ -8,6 +8,7 @@ let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
+let messagesToolbarSteps = require('../../steps/messages/toolbar');
 
 const text = 'Добрый день! Во вложении заявка, прошу скинуть счет на оплату.';
 
@@ -23,7 +24,7 @@ describe('TESTMAIL-31545: AJAX. Написание письма. Забытое 
 		]);
 
 		Messages.open();
-		Messages.toCompose();
+		messagesToolbarSteps.clickButton('compose');
 	});
 
 	it('проверяем закрытие леера', () => {
@@ -35,6 +36,6 @@ describe('TESTMAIL-31545: AJAX. Написание письма. Забытое 
 		composeControls.send();
 		missingAttachLayer.wait();
 		missingAttachLayer.cancel();
-		missingAttachLayer.shoulBeClosed();
+		missingAttachLayer.shouldBeClosed();
 	});
 });

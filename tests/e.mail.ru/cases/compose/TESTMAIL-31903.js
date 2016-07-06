@@ -29,34 +29,32 @@ describe('TESTMAIL-31903: AJAX. Ответ на письмо. Забытое в�
 		composeControls.cancel();
 	});
 
-	composeEditorStore.lettersWithAttach.forEach(text => {
-		it(text, () => {
-			let { fields } = new ComposeFieldsStore();
+	it('попап должен появится', () => {
+		let { fields } = new ComposeFieldsStore();
 
-			let message = actions.sendMessage(
-				fields.to,
-				fields.from,
-				subject,
-				text
-			);
+		let message = actions.sendMessage(
+			fields.to,
+			fields.from,
+			subject,
+			composeEditorStore.texts.withAttach
+		);
 
-			Messages.features([
-				'check-missing-attach',
-				'disable-ballons',
-				'no-collectors-in-compose',
-				'disable-fastreply-landmark'
-			]);
+		Messages.features([
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose',
+			'disable-fastreply-landmark'
+		]);
 
-			Messages.open();
-			lettersSteps.openNewestLetter();
-			fastanswerSteps.clickButton('forward');
+		Messages.open();
+		lettersSteps.openNewestLetter();
+		fastanswerSteps.clickButton('forward');
 
-			composeEditor.wait();
-			composeFields.setFieldValue('subject', subject);
-			composeFields.setFieldValue('to', fields.to);
+		composeEditor.wait();
+		composeFields.setFieldValue('subject', subject);
+		composeFields.setFieldValue('to', fields.to);
 
-			messageToolbarSteps.clickFastreplyButton('resend');
-			missingAttachLayer.show();
-		});
+		messageToolbarSteps.clickFastreplyButton('resend');
+		missingAttachLayer.show();
 	});
 });

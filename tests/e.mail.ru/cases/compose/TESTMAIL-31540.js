@@ -8,6 +8,7 @@ let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
+let messagesToolbarSteps = require('../../steps/messages/toolbar');
 
 let composeFieldsStore = new ComposeFieldsStore();
 
@@ -25,18 +26,16 @@ describe('TESTMAIL-31540: AJAX. Написание письма. Забытое 
 		]);
 
 		Messages.open();
-		Messages.toCompose();
+		messagesToolbarSteps.clickButton('compose');
 	});
 
-	composeEditorStore.lettersWithAttach.forEach(text => {
-		it(text, () => {
-			composeFields.setFieldValue('subject', 'check attach');
-			composeFields.setFieldValue('to', composeFieldsStore.fields.to);
-			composeEditor.writeMessage(text);
-			composeControls.send();
-			missingAttachLayer.show();
-			missingAttachLayer.close();
-			composeControls.cancel();
-		});
+	it('попап должен появится', () => {
+		composeFields.setFieldValue('subject', 'check attach');
+		composeFields.setFieldValue('to', composeFieldsStore.fields.to);
+		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
+		composeControls.send();
+		missingAttachLayer.show();
+		missingAttachLayer.close();
+		composeControls.cancel();
 	});
 });

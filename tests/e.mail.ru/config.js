@@ -62,7 +62,7 @@ exports.config = {
 		'ui': 'bdd',
 
 		/* Количество попыток на выполнение теста, который не был пройден */
-		'retries': 0,
+		'retries': 1,
 
 		/** Включить профилирование (сильно увеличивает время выполения тестов) */
 		// 'prof': true,
@@ -87,7 +87,7 @@ exports.config = {
 	},
 
 	/* Директория, куда будут складываться скриншоты */
-	// screenshotPath: './cache/tests/shots',
+	screenshotPath: './cache/tests/shots',
 
 	/* Директория, куда будут складываться логи */
 	logfile: `./cache/tests/${project}/logs`,

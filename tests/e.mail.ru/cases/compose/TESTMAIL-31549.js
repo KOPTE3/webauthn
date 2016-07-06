@@ -29,13 +29,11 @@ describe('TESTMAIL-31549: НЕ AJAX. Написание письма. Забыт
 		Compose.open();
 	});
 
-	composeEditorStore.lettersWithoutAttach.forEach(text => {
-		it(text, () => {
-			composeFields.setFieldValue('subject', 'check attach');
-			composeFields.setFieldValue('to', composeFieldsStore.fields.to);
-			composeEditor.writeMessage(text);
-			composeControls.send();
-			SentPage.isVisible();
-		});
+	it('письмо должно отправится', () => {
+		composeFields.setFieldValue('subject', 'check attach');
+		composeFields.setFieldValue('to', composeFieldsStore.fields.to);
+		composeEditor.writeMessage(composeEditorStore.texts.withoutAttach);
+		composeControls.send();
+		SentPage.isVisible();
 	});
 });
