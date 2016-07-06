@@ -83,7 +83,7 @@ class PortalSearch extends PortalMenu {
 	/**
 	 * Получить все активные операнды
 	 *
-	 * @return {array}
+	 * @returns {Array}
 	 */
 	getAllOperands () {
 		return this.page.elements(this.locators.operands.all);
@@ -94,7 +94,7 @@ class PortalSearch extends PortalMenu {
 	 *
 	 * @param {string} name - имя операнда
 	 * (message|from|to|subject|unread|flag|attach|date|blank)
-	 * @returns {*}
+	 * @returns {Element}
 	 */
 	getOperand (name) {
 		return this.page.element(this.locators.operands[name]);
@@ -104,7 +104,7 @@ class PortalSearch extends PortalMenu {
 	 * Получить текстовый инпут операнда
 	 *
 	 * @param {string} name - имя операнда
-	 * @return {*}
+	 * @returns {Element}
 	 */
 	getOperandInput (name) {
 		let operand = this.getOperand(name);
@@ -180,7 +180,7 @@ class PortalSearch extends PortalMenu {
 	 * Операнд в режиме редактирования
 	 *
 	 * @param {string} name - имя операнда
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	isOperandActive (name) {
 		let operand = this.getOperand(name);
@@ -192,7 +192,7 @@ class PortalSearch extends PortalMenu {
 	/**
 	 * Фокус в инпуте операнда
 	 * @param {string} name - имя операнда
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	operandHasFocus (name) {
 		let locator = Utils.getOperandLocator(this.locators.operands, name, 'input');
@@ -261,7 +261,7 @@ class PortalSearch extends PortalMenu {
 	 * Есть ли саджесты
 	 *
 	 * @param {boolean} reverse - нет ли саджестов
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	hasSuggests (reverse = false) {
 		return this.page.waitForVisible(this.locators.suggests, void 0, reverse);

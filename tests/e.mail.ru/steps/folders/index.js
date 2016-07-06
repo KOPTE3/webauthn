@@ -4,7 +4,8 @@ let assert = require('assert');
 
 let Steps = require('../../steps');
 let FoldersPage = require('../../pages/folders');
-
+let actions = require('../../utils/actions');
+let date = require('../../utils/date');
 
 /** Модуль для работы с шагами списка папкок */
 class FoldersSteps extends Steps {
@@ -35,6 +36,20 @@ class FoldersSteps extends Steps {
 		let actual = this.page.isFolderVisible(folderId);
 
 		assert(actual, 'Папка должна быть раскрыта');
+	}
+
+	static createFolder (params) {
+		let [folderId] = actions.createFolders([params]).value;
+
+		return folderId;
+	}
+
+	static setTimeOffset (offset) {
+		return date.setTimeOffset(offset);
+	}
+
+	static resetTimeOffset () {
+		return date.resetTimeOffset();
 	}
 }
 
