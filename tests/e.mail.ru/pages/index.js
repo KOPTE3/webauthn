@@ -54,9 +54,11 @@ class PageObject {
 
 	/**
 	 * Дождаться появления требуемого элемента
+	 *
+	 * @returns {boolean}
 	 */
 	wait () {
-		this.page.waitForVisible(this.locators.container);
+		return this.page.waitForVisible(this.locators.container);
 	}
 
 	/**

@@ -38,6 +38,12 @@ class FoldersSteps extends Steps {
 		assert(actual, 'Папка должна быть раскрыта');
 	}
 
+	/**
+	 * Создать папку
+	 *
+	 * @param {Object} params - данные папки
+	 * @returns {string} - ID созданной папки
+	 */
 	static createFolder (params) {
 		let [folderId] = actions.createFolders([params]).value;
 

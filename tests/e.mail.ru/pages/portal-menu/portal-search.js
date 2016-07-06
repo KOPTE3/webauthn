@@ -46,7 +46,9 @@ class PortalSearch extends PortalMenu {
 				},
 				close: '.b-operand__close',
 				input: '.b-operand__input',
-				active: '.b-operand_active'
+				dateInput: '.b-operand__date-input',
+				active: '.b-operand_active',
+				lapse: `${container} [data-operand-name="q_date"] .b-operand__date-lapse`
 			}
 		});
 	}
@@ -110,6 +112,10 @@ class PortalSearch extends PortalMenu {
 		let operand = this.getOperand(name);
 		let locator = this.locators.operands.input;
 
+		if (name === 'date') {
+			locator = this.locators.operands.dateInput;
+		}
+
 		return this.page.elementIdElement(operand.value.ELEMENT, locator);
 	}
 
@@ -137,6 +143,21 @@ class PortalSearch extends PortalMenu {
 		if (input && input.value) {
 			input.setValue(value);
 		}
+	}
+
+	/**
+	 * Вернуть текст разброса даты в операнде, если он виден.
+	 *
+	 * @returns {string}
+	 */
+	getOperandDateLapse () {
+		let text = '';
+
+		if (this.page.isVisible(this.locators.operands.lapse)) {
+			text = this.page.getText(this.locators.operands.lapse);
+		}
+
+		return text;
 	}
 
 	/**
