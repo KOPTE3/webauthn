@@ -40,9 +40,9 @@
 	},
 
 	"dependencies": {
-		"@qa/account-manager"  : "^0.0.13",
+		"@qa/account-manager"  : "^0.2.0",
 		"@qa/grunt-test-runner": "^0.2.1",
-		"@qa/test-tools"       : "^1.1.0",
+		"@qa/test-tools"       : "^1.1.1",
 		"@qa/wd-capabilities"  : "^0.0.4",
 		"@qa/wdio-api-mail.ru" : "^2.0.0",
 		"grunt"                : "^1.0.1",
@@ -60,7 +60,7 @@
 	},
 
 	"devDependencies": {
-		"@qa/eslint-config-mail.ru": "^0.0.11",
+		"@qa/eslint-config-mail.ru": "^0.0.12",
 		"eslint"                   : "^2.11.1",
 		"eslint-friendly-formatter": "^2.0.5",
 		"pre-commit"               : "^1.1.3"

@@ -96,7 +96,7 @@ class PortalSearch extends PortalMenu {
 	 *
 	 * @param {string} name - имя операнда
 	 * (message|from|to|subject|unread|flag|attach|date|blank)
-	 * @returns {*}
+	 * @returns {Element}
 	 */
 	getOperand (name) {
 		return this.page.element(this.locators.operands[name]);
@@ -106,7 +106,7 @@ class PortalSearch extends PortalMenu {
 	 * Получить текстовый инпут операнда
 	 *
 	 * @param {string} name - имя операнда
-	 * @returns {*}
+	 * @returns {Element}
 	 */
 	getOperandInput (name) {
 		let operand = this.getOperand(name);

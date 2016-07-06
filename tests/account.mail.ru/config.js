@@ -130,12 +130,6 @@ exports.config = {
 		commands.export('all');
 	},
 
-	beforeSuite () {
-		return account.session({
-			host: browser.options.baseUrl
-		});
-	},
-
 	afterSuite () {
 		return account.discard();
 	}
