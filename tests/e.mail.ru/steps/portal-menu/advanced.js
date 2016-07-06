@@ -49,6 +49,41 @@ class AdvancedSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Кликнуть в селект выбора разброса даты
+	 */
+	clickDateSelect () {
+		this.advanced.clickDateSelect();
+	}
+
+	/**
+	 * Кликнуть в поле даты
+	 */
+	clickDateField () {
+		this.advanced.clickDateField();
+	}
+
+	/**
+	 * Кликнуть в сегодняшний день в календаре
+	 */
+	clickCalendarToday () {
+		this.advanced.clickCalendarToday();
+	}
+
+	/**
+	 * Выбрать разброс даты
+	 *
+	 * @param {string} value - (0|1|3|7|30)
+	 */
+	selectDateLapse (value) {
+		this.advanced.selectDateLapse(value);
+
+		let actual = this.advanced.getSelectDateValue();
+
+		assert(actual === value, `Не удалось установить разброс даты: ${value}`);
+	}
+
+
+	/**
 	 * Курсор в заданном поле
 	 *
 	 * @param {string} name - имя поля
@@ -69,6 +104,50 @@ class AdvancedSteps extends PortalMenuSteps {
 		let actual = this.advanced.isChecked(name);
 
 		assert(actual === !reverse, `Чекбокс ${name}${reverse ? '' : ' не'} выбран`);
+	}
+
+	/**
+	 * Проверка видимости календаря
+	 *
+	 * @param {boolean} reverse - невидимость
+	 */
+	isCalendarVisible (reverse = false) {
+		let actual = this.advanced.isCalendarVisible(reverse);
+
+		assert(actual, `Календарь${reverse ? '' : ' не'} виден`);
+	}
+
+	/**
+	 * В календаре отображается сегодняшнее число
+	 *
+	 * @param {string} day - сегодняшнее число
+	 */
+	calendarHasToday (day) {
+		let actual = this.advanced.getCalendarToday();
+
+		assert(actual === day, `В календаре не отображается сегодняшнее число (${day})`);
+	}
+
+	/**
+	 * Сравнить текст селекта
+	 *
+	 * @param {string} text - должен быть этот текст
+	 */
+	checkSelectDateText (text) {
+		let actual = this.advanced.getSelectDateText();
+
+		assert(actual === text, `Текст в селекте разброса даты не равен ${text}`);
+	}
+
+	/**
+	 * Сравнить текст поля даты
+	 *
+	 * @param {string} text - должен быть этот текст
+	 */
+	checkDateFieldText (text) {
+		let actual = this.advanced.getDateFieldText();
+
+		assert(actual === text, `Текст в поле даты не равен ${text}`);
 	}
 
 	/**

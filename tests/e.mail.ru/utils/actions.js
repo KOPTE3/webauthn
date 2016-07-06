@@ -64,7 +64,7 @@ class Actions {
 	/**
 	 * Создаёт папки
 	 *
-	 * @param {array} folders - папки
+	 * @param {Array} folders - папки
 	 *
 	 * @returns {Promise}
 	 */

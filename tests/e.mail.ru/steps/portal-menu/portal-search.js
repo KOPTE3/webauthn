@@ -83,10 +83,16 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 * @param {string} name - имя операнда
 	 * @param {string} text - текст
 	 */
-	operandHasText (name, text) {
+	checkOperandText (name, text) {
 		let actual = this.portalSearch.getOperandText(name);
 
 		assert(actual === text, `Текст операнда ${name} не равен "${text}"`);
+	}
+
+	checkDateOperandLapse (text) {
+		let actual = this.portalSearch.getOperandDateLapse();
+
+		assert(actual === text, `Текст разброса даты не равен ${text}`);
 	}
 
 	/**
@@ -169,7 +175,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 
 		let actual = this.search.wait();
 
-		assert(assert, 'не удалось дождаться открытия страницы поиска');
+		assert(actual, 'не удалось дождаться открытия страницы поиска');
 	}
 }
 
