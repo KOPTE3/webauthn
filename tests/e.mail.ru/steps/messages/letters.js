@@ -4,12 +4,15 @@ let assert = require('assert');
 
 let MessagesLettersPage = require('../../pages/messages/letters');
 let MessagesSteps = require('../messages');
+let MessagePage = require('../message');
+
 
 /** Модуль для работы с формой страницы написания письма */
 class MessagesLettersSteps extends MessagesSteps {
 	constructor () {
 		super();
 		this.lettersPage = new MessagesLettersPage();
+		this.messagePage = new MessagePage();
 	}
 
 	/**
@@ -17,6 +20,9 @@ class MessagesLettersSteps extends MessagesSteps {
 	 */
 	openNewestLetter () {
 		this.lettersPage.openNewestLetter();
+		this.messagePage.wait();
+
+		assert(this.messagePage.isVisible, 'страница сообщения не показана');
 	}
 }
 

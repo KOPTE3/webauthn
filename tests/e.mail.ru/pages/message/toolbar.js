@@ -14,11 +14,8 @@ class MessageToolbar extends MessagePage {
 	 * @type {Object}
 	 */
 	get locators () {
-		let toolbar =
-			'#LEGO>div:not([style *= "hidden"]) div:not([style *= "none"])>' +
-			'div[data-uniqid]:not([style *= "none"])>.b-toolbar[data-mnemo]';
-
-		let fatsreply = '[data-mnemo="toolbar-fastreply"]';
+		let toolbar = '.ui-toolbar-active';
+		let fatsreply = `#b-toolbar__right [data-mnemo="toolbar-fastreply"]`;
 
 		return this.extend(super.locators, {
 			toolbar: '',
@@ -31,9 +28,9 @@ class MessageToolbar extends MessagePage {
 				spam:  `${toolbar} [data-name="spam"]`
 			},
 			fastreply: {
-				replyAll: `${toolbar} [data-mnemo="send-all"]`,
-				saveDraft: `${toolbar} [data-name="saveDraft"]`,
-				resend: `${toolbar} [data-mnemo="resend"]`
+				replyAll: `${fatsreply} [data-mnemo="send-all"]`,
+				saveDraft: `${fatsreply} [data-name="saveDraft"]`,
+				resend: `${fatsreply} [data-mnemo="resend"]`
 			}
 		});
 	}

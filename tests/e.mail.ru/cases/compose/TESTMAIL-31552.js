@@ -32,7 +32,7 @@ describe('TESTMAIL-31552: Написание письма. Забытое вло
 		composeEditor.writeMessage(text);
 
 		composeControls.send();
-		missingAttachLayer.show();
+		missingAttachLayer.wait();
 
 		missingAttachLayer.blockShouldHaveText(
 			'head',

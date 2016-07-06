@@ -44,10 +44,19 @@ class PageObject {
 	}
 
 	/**
+	 * Метод проверяет, что контейнер урла был открыт
+	 *
+	 * @returns {boolean}
+	 */
+	isVisible () {
+		return this.page.isVisible(this.locators.container);
+	}
+
+	/**
 	 * Дождаться появления требуемого элемента
 	 */
 	wait () {
-		this.page.waitForExist(this.locators.container);
+		this.page.waitForVisible(this.locators.container);
 	}
 
 	/**
@@ -62,10 +71,20 @@ class PageObject {
 	/**
 	 * Открытие страницы
 	 *
+	 * @param {string} [path] - путь, который нужно подставить к location
 	 * @param {Object} [query] — параметры запроса
 	 * @returns {boolean}
 	 */
-	open (query = {}) {
+	open (path, query = {}) {
+		if (!path) {
+			path = this.location;
+		}
+
+		if (typeof path === 'object') {
+			query = path;
+			path = null;
+		}
+
 		let { user, features } = cache;
 
 		if (features.length) {
@@ -73,7 +92,7 @@ class PageObject {
 			cache.features = [];
 		}
 
-		let url = URL.request(this.location, query);
+		let url = URL.request(path, query);
 
 		this.page.url(url);
 		this.wait();
@@ -96,6 +115,14 @@ class PageObject {
 	}
 
 	/**
+	 * Обновить страницу
+	 *
+	 */
+	refresh () {
+		this.open(this.page.getUrl());
+	}
+
+	/**
 	 * Расширяет объект
 	 *
 	 * @param {Object} object
@@ -112,6 +139,8 @@ class PageObject {
 	 * @param {number} count - количество попыток (по умолчанию 10)
 	 * @param {number} interval - интервал в ms, через который делать
 	 * 							  попыкти (по умолчанию 500ms)
+	 *
+	 * @returns {boolean}
 	 * */
 	clickWithRetry (locator, count = 3, interval = 500) {
 		let page = this.page;
@@ -127,19 +156,22 @@ class PageObject {
 				let links = page.elements(locator);
 
 				page.elementIdClick(links.value[0].ELEMENT);
-			} catch (error) {
-				if (count-- === 0) {
-					console.log(locator);
-					throw error;
-				}
 
-				console.log(count);
+				return true;
+			} catch (error) {
 				browser.pause(interval);
-				tryClick();
+
+				return false;
 			}
 		};
 
-		tryClick();
+		for (let attempt = 0; i < count; attempt++) {
+			if (tryClick()) {
+				return true;
+			}
+		}
+
+		throw new Error('Can\'t click to element ' + locator);
 	};
 }
 

@@ -35,6 +35,6 @@ describe('TESTMAIL-31547: НЕ AJAX. Написание письма. Забыт
 		composeFields.setFieldValue('to', composeFieldsStore.fields.to);
 		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 		composeControls.send();
-		missingAttachLayer.show();
+		missingAttachLayer.wait();
 	});
 });

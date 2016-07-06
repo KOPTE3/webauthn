@@ -32,7 +32,7 @@ describe('TESTMAIL-31551: НЕ AJAX. Забытое вложение. Прове
 		composeFields.setFieldValue('to', fields.to);
 		composeEditor.writeMessage(text);
 		composeControls.send();
-		missingAttachLayer.show();
+		missingAttachLayer.wait();
 		missingAttachLayer.close();
 		missingAttachLayer.shouldBeClosed();
 	});

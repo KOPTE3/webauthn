@@ -27,7 +27,7 @@ class ComposeEditor extends ComposePage {
 	 * @returns {boolean}
 	 */
 	wait () {
-		this.page.waitForExist(this.locators.container);
+		this.page.waitForVisible(this.locators.container);
 
 		return this.page.isVisible(this.locators.container);
 	}

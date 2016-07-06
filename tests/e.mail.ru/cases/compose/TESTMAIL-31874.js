@@ -67,6 +67,6 @@ describe('TESTMAIL-31874: Ответ на письмо. Забытое влож�
 		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 
 		messageToolbarSteps.clickFastreplyButton('replyAll');
-		missingAttachLayer.show();
+		missingAttachLayer.wait();
 	});
 });

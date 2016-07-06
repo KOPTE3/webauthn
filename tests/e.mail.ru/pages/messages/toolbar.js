@@ -14,9 +14,11 @@ class MessagesToolbarPage extends MessagesPage {
 	 * @type {Object}
 	 */
 	get locators () {
+		let toolbar = '.ui-toolbar-active';
+
 		return this.extend(super.locators, {
 			buttons: {
-				compose: '.b-toolbar__btn[data-name="compose"]'
+				compose: `${toolbar} .b-toolbar__btn[data-name="compose"]`
 			}
 		});
 	}

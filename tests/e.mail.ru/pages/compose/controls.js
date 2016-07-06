@@ -15,9 +15,7 @@ class ComposeControls extends ComposePage {
 	 * @type {Object}
 	 */
 	get locators () {
-		let toolbar =
-			'#LEGO>div:not([style *= "hidden"]) div:not([style *= "none"])>' +
-			'div[data-uniqid]:not([style *= "none"])>.b-toolbar[data-mnemo]';
+		let toolbar = '.ui-toolbar-active';
 
 		return this.extend(super.locators, {
 			container: toolbar,
@@ -47,7 +45,11 @@ class ComposeControls extends ComposePage {
 	 * */
 	cancel () {
 		this.page.click(this.locators.cancel);
-		this.page.alertAccept();
+
+		try {
+			// алерт может быть не показан в некоторых случаях
+			this.page.alertAccept();
+		} catch (error) {}
 	}
 
 }

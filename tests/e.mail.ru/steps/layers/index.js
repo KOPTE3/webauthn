@@ -22,6 +22,15 @@ class LayerSteps extends Steps {
 	}
 
 	/**
+	 * Метод дожидается показа леера
+	 *
+	 */
+	wait () {
+		this.layer.wait();
+		assert(this.layer.isVisible(), 'Лаер не был показан');
+	}
+
+	/**
 	 * Метод закрывает открытый попап
 	 */
 	close () {

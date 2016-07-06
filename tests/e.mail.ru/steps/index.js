@@ -20,6 +20,14 @@ class Steps extends Pages {
 	}
 
 	/**
+	 * Обновить страницу
+	 *
+	 */
+	static refresh () {
+		this.page.refresh();
+	}
+
+	/**
 	 * Открыть страницу
 	 *
 	 * @param {Object} [query] — параметры запроса

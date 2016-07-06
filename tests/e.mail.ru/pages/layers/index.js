@@ -55,6 +55,17 @@ class Layers extends PageObject {
 	}
 
 	/**
+	 * Метод проверяет что леер показан
+	 *
+	 * Доступные значения (missingAttach, multiAttachToCompose, secure)
+	 *
+	 * @returns {boolean}
+	 */
+	isVisible () {
+		return this.page.isVisible(this.locators.container);
+	}
+
+	/**
 	 * Метод возвращает элемент лаера по его имени
 	 *
 	 * @returns {Promise}

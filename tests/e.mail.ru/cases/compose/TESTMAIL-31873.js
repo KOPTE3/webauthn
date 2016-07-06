@@ -59,6 +59,6 @@ describe('TESTMAIL-31873: AJAX. Ответ на письмо. Забытое в�
 		composeFields.setFieldValue('to', fields.to);
 		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 		composeControls.send();
-		missingAttachLayer.show();
+		missingAttachLayer.wait();
 	});
 });
