@@ -11,7 +11,7 @@ class PortalSearch extends Store {
 	/**
 	 * Все операнды
 	 *
-	 * @returns {*[]}
+	 * @type {Array}
 	 */
 	static get operands () {
 		return [
@@ -76,7 +76,7 @@ class PortalSearch extends Store {
 	/**
 	 * Получить имена операндов-флажков
 	 *
-	 * @returns {string[]}
+	 * @type {Array}
 	 */
 	static get flagOperands () {
 		return this.operands

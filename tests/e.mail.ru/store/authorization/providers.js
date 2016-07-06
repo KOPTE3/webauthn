@@ -230,6 +230,24 @@ class AuthProviders extends Store {
 
 		return this.list;
 	}
+
+	/**
+	 * Поиск провайдера по имени домена или email
+	 *
+	 * @param {string} domain
+	 * @returns {string|undefined}
+	 */
+	find (domain) {
+		let provider = this.list.find(provider => {
+			for (let alias of provider.data) {
+				if (alias === domain) {
+					return true;
+				}
+			}
+		});
+
+		return provider && provider.name;
+	}
 }
 
 module.exports = AuthProviders;
