@@ -1,10 +1,18 @@
 'use strict';
 
 let PageObject = require('../../../pages');
+let ControlsPage = require('./controls');
+let FieldsPage = require('./fields');
+let DropdownsPage = require('./dropdowns');
+let LayerFolderAdd = require('../../../steps/layers/folderAdd');
 
 class FoldersPage extends PageObject {
 	constructor () {
 		super();
+
+		this.controlsPage = new ControlsPage();
+		this.fieldsPage = new FieldsPage();
+		this.dropdownsPage = new DropdownsPage();
 	}
 
 	/**
@@ -30,11 +38,44 @@ class FoldersPage extends PageObject {
 		};
 	}
 
-	waitAddSuccess (data) {
-		let {container, item} = this.locators;
-		let locator = `${container} ${item} [data-parent="${data.parent}"]`;
+	/**
+	 * Создать папку
+	 *
+	 * @param {Object} params - данные папки
+	 * @returns {string} - ID созданной папки
+	 */
+	createFolder (params) {
+		let {name, parent} = params;
 
-		this.page.waitForExist(locator);
+		this.controlsPage.newFolder();
+		LayerFolderAdd.show();
+		this.fieldsPage.setFieldValue('name', name);
+		this.dropdownsPage.setDropdownValue('parent', parent);
+		LayerFolderAdd.apply();
+
+		return this.waitAddSuccess(params);
+	}
+
+	waitAddSuccess (params) {
+		let {parent, name} = params;
+		let {container, item} = this.locators;
+		let locator = `${container} ${item} [data-parent="${parent}"]`;
+		let folderId;
+
+		this.page.waitUntil(() => {
+			return this.page.elements(locator).value.find(item => {
+				let elementId = item.ELEMENT;
+				let result = this.page.elementIdText(elementId).value === name;
+
+				if (result) {
+					folderId = this.page.elementIdAttribute(elementId, 'data-id').value;
+				}
+
+				return result;
+			});
+		});
+
+		return folderId;
 	}
 }
 
