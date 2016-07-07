@@ -4,7 +4,6 @@ let assert = require('assert');
 
 let PasswordRestoreSteps = require('../restore');
 let selectTypeViewPage = require('../../../pages/passrestore/selectType');
-let Captcha = require('../../../utils/captcha');
 let Phones = require('../../../utils/phones');
 
 

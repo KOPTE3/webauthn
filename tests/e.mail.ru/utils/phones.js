@@ -9,7 +9,7 @@ class Phones {
 
 	/**
 	 * Записываем user/password/restore ответы
-	 * @return {Object}
+	 * @returns {Object}
 	 */
 	static registerPassrestoreLogger () {
 		return ajax.registerLogger('user/password/restore');
@@ -17,7 +17,7 @@ class Phones {
 
 	/**
 	 * Получение последнего reg_token ID восстановления пароля
-	 * @return {string|null}
+	 * @returns {string|null}
 	 */
 	static getLastPassremindRegTokenId () {
 		let result = ajax.getLoggerInfo('user/password/restore');

@@ -24,7 +24,7 @@ class Controls extends PageObject {
 			phoneTabBlock,
 			form: '.js-form-select-type',
 			phoneCaptchaImg: '#password-recovery__remind__new__phone_captcha',
-			phoneCaptchaField: `${phoneTabBlock} .js-captcha`,
+			phoneCaptchaField: `${phoneTabBlock} .js-captcha`
 		};
 	}
 

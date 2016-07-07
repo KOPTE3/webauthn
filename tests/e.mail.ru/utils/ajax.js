@@ -10,7 +10,7 @@ class Ajax {
 	/**
 	 * Добавляем обработчик запроса
 	 * @param  {string} path
-	 * @return {Object}
+	 * @returns {Object}
 	 */
 	static registerLogger (path) {
 		let result = browser.executeAsync(
@@ -40,7 +40,7 @@ class Ajax {
 	/**
 	 * Получаем все запросы по пути
 	 * @param  {string} path
-	 * @return {Object}
+	 * @returns {Object}
 	 */
 	static getLoggerInfo (path) {
 		let result = browser.executeAsync(

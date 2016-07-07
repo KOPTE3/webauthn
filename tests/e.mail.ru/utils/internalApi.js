@@ -12,7 +12,7 @@ class API {
 	/**
 	 * Получение кода SMS по reg_token.id
 	 * @param  {string} id
-	 * @return {Object}
+	 * @returns {Object}
 	 */
 	static getSmsCode (id) {
 		return {

@@ -23,7 +23,7 @@ class PasswordRestoreSteps extends PasswordSteps {
 
 	/**
 	 * Звписываем ajax для получения reg_token.id
-	 * @return {Object}
+	 * @returns {Object}
 	 */
 	initRegTokenIdLog () {
 		return phones.registerPassrestoreLogger();
