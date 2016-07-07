@@ -79,7 +79,7 @@ npm test -- e.mail.ru --suite='login,compose'
 npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674
 ```
 
-*Опция `--grep` принимает название тест-кейса, которое задается в секции `describe`*
+*Опция `--grep` принимает часть имени файла*
 
 Выполнить тесты на заданном адресе:
 

@@ -30,11 +30,11 @@ class Support extends TestTools.Support {
 			service = providers.find(host);
 		}
 
-		Object.assign(options, {
-			host: browser.options.baseUrl,
-			service,
-			type
-		});
+		// Ставим куку только на хост, который указан в конфиге
+		let host = browser.options.baseUrl;
+
+		// Добавляет обязательные поля
+		Object.assign(options, { host, type, service });
 
 		browser.waitUntil(function async () {
 			return account.session(options)
