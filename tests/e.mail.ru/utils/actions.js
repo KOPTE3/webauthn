@@ -98,7 +98,7 @@ class Actions {
 	 * Регистрирует в браузере функцию-обработчик AJAX-ответов.
 	 *
 	 * @param {mixed} urlPattern Шаблон для проверки URL
-	 * @param {function} hook функция-обработчик, принимает 2 парметра (xhr и options),
+	 * @param {Function} hook функция-обработчик, принимает 2 парметра (xhr и options),
 	 * в которые можно внести изменения
 	 * @returns {Promise}
 	 */

@@ -29,13 +29,55 @@ class FoldersSteps extends Steps {
 	static isFolderHidden (folderId) {
 		let actual = this.page.isFolderHidden(folderId);
 
-		assert(actual, 'Папка должна быть схлопнута');
+		assert(actual, `Папка "${folderId}" должна быть схлопнута`);
 	}
 
 	static isFolderVisible (folderId) {
 		let actual = this.page.isFolderVisible(folderId);
 
-		assert(actual, 'Папка должна быть раскрыта');
+		assert(actual, `Папка "${folderId}" должна быть раскрыта`);
+	}
+
+	static isFolderExists (folderId) {
+		let result = this.page.isFolderExists(folderId);
+
+		assert(result, `Папка "${folderId}" должна присутствовать`);
+	}
+
+	static isFolderNotExists (folderId) {
+		let result = this.page.isFolderExists(folderId);
+
+		assert(!result, `Папка "${folderId}" должна отсутствовать`);
+	}
+
+	static isArchiveExists () {
+		let id = this.page.getArchiveFolderId();
+
+		assert(id, 'Папка "Архив" должна присутствовать');
+	}
+
+	static isArchiveNotExists () {
+		let id = this.page.getArchiveFolderId();
+
+		assert(!id, 'Папка "Архив" должна отсутствовать');
+	}
+
+	static isSocialExistsInArchive () {
+		let result = this.page.isFolderIn('500011', this.page.getArchiveFolderId());
+
+		assert(result, `Папка "Социальные сети" должна присутствовать в папке "Архив"`);
+	}
+
+	static isPromotionsExistsInArchive () {
+		let result = this.page.isFolderIn('500012', this.page.getArchiveFolderId());
+
+		assert(result, `Папка "Скидки" должна присутствовать в папке "Архив"`);
+	}
+
+	static isNewslettersExistsInArchive () {
+		let result = this.page.isFolderIn('500013', this.page.getArchiveFolderId());
+
+		assert(result, `Папка "Рассылки" должна присутствовать в папке "Архив"`);
 	}
 
 	/**

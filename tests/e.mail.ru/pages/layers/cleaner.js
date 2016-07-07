@@ -10,13 +10,34 @@ class CleanerPage extends LayersPage {
 	 * @type {Object}
 	 */
 	get locators () {
-		return {
-			container: 'body'
-		};
+		return Object.assign(super.locators, {
+			container: 'body',
+			cleaner: '.js-cleaner',
+			mainPage: '.js-cleaner-main',
+			resultPage: '.js-cleaner-result',
+			processButton: '[data-name=process]',
+			finishButton: '[data-name=closeutil]'
+		});
 	}
 
 	waitForCleaner () {
-		this.page.waitForVisible('.js-cleaner1');
+		this.page.waitForVisible(this.locators.cleaner);
+	}
+
+	waitForCleanerMain () {
+		this.page.waitForVisible(this.locators.mainPage);
+	}
+
+	waitForCleanerResult () {
+		this.page.waitForVisible(this.locators.resultPage);
+	}
+
+	clickProcessButton () {
+		this.page.click(this.locators.processButton);
+	}
+
+	clickFinishButton () {
+		this.page.click(this.locators.finishButton);
 	}
 }
 

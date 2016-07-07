@@ -25,10 +25,11 @@ class Steps {
 	 * Авторизация
 	 *
 	 * @param {string} type — типа авторизации
+	 * @param {string} credentials — авторизационные данные
 	 * @returns {boolean}
 	 */
-	static auth (type) {
-		return Pages.auth(type);
+	static auth (type, credentials) {
+		return Pages.auth(...arguments);
 	}
 
 	static openPage () {

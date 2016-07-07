@@ -59,6 +59,27 @@ class FoldersPage extends PageObject {
 		return !this.isFolderVisible(folderId);
 	}
 
+	isFolderExists (folderId) {
+		let item = this.getFolderItem(folderId);
+
+		return item.state === 'success';
+	}
+
+	isFolderIn (folderId, parentId) {
+		let el = this.getFoldersContainer()
+			.element(`.//*[@data-id = ${parentId}][.//*[@data-id = ${folderId}]]`);
+
+		return item.state === 'success';
+	}
+
+	getArchiveFolderId () {
+		let el = this.getFoldersContainer()
+			.element('.//*[@data-id][.//i[contains(@class, "ico_folder_archive")]]');
+
+		return (el.state === 'success') &&
+			this.page.elementIdAttribute(el.value.ELEMENT, 'data-id').value;
+	}
+
 	goToFolder (folderId) {
 		let item = this.getFolderItem(folderId);
 

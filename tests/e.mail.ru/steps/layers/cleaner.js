@@ -15,6 +15,22 @@ class CleanerSteps extends LayerSteps {
 	static waitForCleaner () {
 		this.page.waitForCleaner();
 	}
+
+	static waitForCleanerMain () {
+		this.page.waitForCleanerMain();
+	}
+
+	static waitForCleanerResult () {
+		this.page.waitForCleanerResult();
+	}
+
+	static process () {
+		this.page.clickProcessButton();
+	}
+
+	static finish () {
+		this.page.clickFinishButton();
+	}
 }
 
 module.exports = CleanerSteps;
