@@ -17,26 +17,20 @@ class ComposeAttaches extends ComposePage {
 	 * @type {Object}
 	 */
 	get locators () {
-		let container = '.compose-attachments';
-		let attachments = '//*[contains(@class, "js-content")]';
+		let container = '.compose__header__row_uploader';
+		let attachments = '.js-file';
 
 		return this.extend(super.locators, {
-			container: container,
-			attachField: `${container} .compose-attachments__input`,
-			cloud: `${container} [data-source="cloud"]`,
-			mail: `${container} [data-source="mail"]`,
-			slider: `${container} .compose-attachments__content`,
-			remove: `${container} .ico_compose_remove`,
-			progress: `${container} .compose-attachment__progress-mask`,
+			container,
+			attachField: `${container} .compose__uploader__input`,
+			cloud: `${container} [data-title="Файлы из Облака и Почты"]`,
+			slider: `${container} .js-attachments`,
+			remove: `${container} .upload__file__ico_del`,
+			progress: `${container} .upload__file__progress`,
 
-			attachments: attachments,
-			attachmentByName: filename => `${attachments}[.//*[text()="${filename}"]]`
+			attachments,
+			attachmentByName: filename => `${attachments}[data-title="${filename}"]`
 		});
-	}
-
-	waitSlider () {
-		this.page.waitForExist(this.locators.slider);
-		return this.page.isVisible(this.locators.slider);
 	}
 
 	uploadAttach (filepath) {
@@ -62,6 +56,11 @@ class ComposeAttaches extends ComposePage {
 		let selector = this.locators.attachmentByName(filename);
 		let files = this.page.elements(selector);
 
+		let f = this.page.elements(this.locators.attachments);
+		console.log(files);
+		console.log(f);
+
+
 		return files.value.length > 0;
 	}
 
@@ -77,6 +76,7 @@ class ComposeAttaches extends ComposePage {
 	}
 
 	get attachField () {
+		console.log(this.page.element(this.locators.attachField));
 		return this.page.element(this.locators.attachField);
 	}
 
