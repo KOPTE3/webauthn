@@ -40,3 +40,4 @@ npm-debug.log
 *.sublime-workspace
 phantomjsdriver.log
 cache
+test-files

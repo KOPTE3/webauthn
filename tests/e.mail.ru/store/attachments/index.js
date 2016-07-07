@@ -18,13 +18,30 @@ class Attachments extends Store {
 	 */
 	get path () {
 		let system = new System(),
-			profile = '/var/lib/selenium/';
+			profile = '/var/lib/selenium/',
+			local = path.join('test-files', 'files', 'e.mail.ru');
+
+		if (/localhost/.test(system.host)) {
+			return path.resolve(local);
+		}
 
 		if (/win/.test(system.platform)) {
 			profile += '%USERPROFILE%';
 		}
 
 		return path.join(profile, '/Dropbox/feta/mail');
+	}
+
+	file (name) {
+		return path.join(this.path, name);
+	}
+
+	files (list) {
+		if (typeof list === 'string') {
+			return this.file(list);
+		}
+
+		return list.map(name => this.file(name));
 	}
 }
 
