@@ -5,14 +5,15 @@ let CalendarFactory = require('../../utils/calendar');
 let portalSearchSteps = require('../../steps/portal-menu/portal-search');
 let advancedSteps = require('../../steps/portal-menu/advanced');
 let advancedCalendar = CalendarFactory.create('advanced');
+let operandsCalendar = CalendarFactory.create('portal-search');
 
 let AdvancedStore = require('../../store/portal-menu/advanced');
 
 let date = require('../../utils/date');
 
-describe('TESTMAIL-31698', () => {
-	it('Проверка добавления операнда "дата" (только из расширенного поиска)' +
-		' с точной датой.', () => {
+describe('TESTMAIL-31699', () => {
+	it('Проверка редактирования операнда "дата" с точной датой ' +
+		'с использованием выбора временного промежутка', () => {
 		Messages.auth();
 		Messages.open();
 
@@ -34,6 +35,9 @@ describe('TESTMAIL-31698', () => {
 		portalSearchSteps.hasOperand(operandName);
 		portalSearchSteps.checkOperandText(operandName, today);
 		portalSearchSteps.checkDateOperandLapse(lapse.operandText);
-		portalSearchSteps.operandHasClose(operandName);
+
+		portalSearchSteps.clickOperand(operandName);
+		portalSearchSteps.operandHasFocus(operandName);
+		portalSearchSteps.isOperandInputReadonly(operandName);
 	});
 });

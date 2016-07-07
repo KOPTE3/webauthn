@@ -63,13 +63,6 @@ class AdvancedSteps extends PortalMenuSteps {
 	}
 
 	/**
-	 * Кликнуть в сегодняшний день в календаре
-	 */
-	clickCalendarToday () {
-		this.advanced.clickCalendarToday();
-	}
-
-	/**
 	 * Выбрать разброс даты
 	 *
 	 * @param {string} value - (0|1|3|7|30)
@@ -104,28 +97,6 @@ class AdvancedSteps extends PortalMenuSteps {
 		let actual = this.advanced.isChecked(name);
 
 		assert(actual === !reverse, `Чекбокс ${name}${reverse ? '' : ' не'} выбран`);
-	}
-
-	/**
-	 * Проверка видимости календаря
-	 *
-	 * @param {boolean} reverse - невидимость
-	 */
-	isCalendarVisible (reverse = false) {
-		let actual = this.advanced.isCalendarVisible(reverse);
-
-		assert(actual, `Календарь${reverse ? '' : ' не'} виден`);
-	}
-
-	/**
-	 * В календаре отображается сегодняшнее число
-	 *
-	 * @param {string} day - сегодняшнее число
-	 */
-	calendarHasToday (day) {
-		let actual = this.advanced.getCalendarToday();
-
-		assert(actual === day, `В календаре не отображается сегодняшнее число (${day})`);
 	}
 
 	/**

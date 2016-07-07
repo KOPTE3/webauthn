@@ -146,6 +146,17 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Проверка, что инпут операнда нередактируемый
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	isOperandInputReadonly (name) {
+		let actual = this.portalSearch.getOperandInputReadonly(name);
+
+		assert(!!actual, `Операнд ${name} редактируемый`);
+	}
+
+	/**
 	 * Саджесты показаны
 	 */
 	hasSuggests () {
