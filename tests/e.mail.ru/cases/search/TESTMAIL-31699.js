@@ -21,7 +21,7 @@ describe('TESTMAIL-31699', () => {
 
 		let today = date.format('D.M.Y');
 		let todayDay = date.format('d');
-		let lapse = AdvancedStore.dateSelectValues.filter(({value}) => value === '0')[0];
+		let lapses = AdvancedStore.dateSelectValues;
 		let operandName = 'date';
 
 		advancedSteps.clickDateField();
@@ -34,10 +34,20 @@ describe('TESTMAIL-31699', () => {
 
 		portalSearchSteps.hasOperand(operandName);
 		portalSearchSteps.checkOperandText(operandName, today);
-		portalSearchSteps.checkDateOperandLapse(lapse.operandText);
+		portalSearchSteps.checkDateOperandLapse(lapses[0].operandText);
 
 		portalSearchSteps.clickOperand(operandName);
 		portalSearchSteps.operandHasFocus(operandName);
+
 		portalSearchSteps.isOperandInputReadonly(operandName);
+
+		operandsCalendar.isVisible();
+
+		operandsCalendar.isLapseVisible();
+
+		operandsCalendar.checkLapse(lapses[0].value);
+
+		operandsCalendar.clickLapse(lapses[1].value);
+		portalSearchSteps.checkDateOperandLapse(lapses[1].operandText);
 	});
 });
