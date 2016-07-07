@@ -5,6 +5,7 @@ let assert = require('assert');
 let PasswordRestoreSteps = require('../restore');
 let selectTypeViewPage = require('../../../pages/passrestore/selectType');
 let Captcha = require('../../../utils/captcha');
+let Phones = require('../../../utils/phones');
 
 
 /** Модуль для работы с формой ввода адреса для восстановления */
@@ -31,6 +32,15 @@ class Controls extends PasswordRestoreSteps {
 		assert(captcha.isOK, 'Получаем код из SWA');
 
 		selectTypeViewPage.fillPhoneCaptcha(captcha.value);
+	}
+
+	/**
+	 * Crack SMS code
+	 */
+	fillPhoneCode () {
+		let regTokenId = Phones.getLastPassremindRegTokenId();
+
+		Internal.getSmsCode(regTokenId);
 	}
 }
 

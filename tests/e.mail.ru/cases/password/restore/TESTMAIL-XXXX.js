@@ -6,12 +6,20 @@ let slectTypeView = require('../../../steps/password/restore/selectType');
 
 let assert = require('assert');
 
-describe('TESTMAIL-XXXX', () => {
-	it('Открытие стрницы восстановления пароля', () => {
+describe('TESTMAIL-XXXX', function () {
+	it('Открытие стрницы восстановления пароля', function () {
+		this.timeout(100000); // Разгадываем капчу
 		PasswordRestore.open();
+
+		accountView.initRegTokenIdLog(); // start "recording"
+
 		accountView.setEmail('iketari@mail.ru');
 		accountView.submitForm();
 		slectTypeView.waitForPhone();
+
 		slectTypeView.fillPhoneCaptcha();
+		// slectTypeView.fillPhoneCode();
+
+		// browser.debug();
 	});
 });

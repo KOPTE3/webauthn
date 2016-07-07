@@ -1,8 +1,8 @@
 'use strict';
 
-const https = require('https');
+const http = require('http');
 const CAPTCHA_HEADER_NAME = 'X-Captcha-ID';
-const CAPTCHA_CRACKER_URL = 'https://c.mail.ru/c/get';
+const CAPTCHA_CRACKER_URL = 'http://test-proxy.win102.dev.mail.ru/captcha/';
 
 /**
  * Модуль для работы с капчей Mail.Ru
@@ -15,7 +15,7 @@ class Captcha {
 	 * @return {Object}
 	 */
 	static getCaptchaID (locator) {
-		let result = browser.executeAsync(
+		let result = browser.timeoutsAsyncScript(5000).executeAsync(
 			function renewCaptcha (locator, CAPTCHA_HEADER_NAME, done) {
 				var img = document.querySelector(locator);
 				var url = img.src;
@@ -62,9 +62,9 @@ class Captcha {
 	 */
 	static getCaptchaValue (cid) {
 		return new Promise((resolve, reject) => {
-			let url = `${CAPTCHA_CRACKER_URL}/?cid=${cid}`;
+			let url = `${CAPTCHA_CRACKER_URL}/{cid}`;
 
-			https.get(url, (res) => {
+			http.get(url, (res) => {
 				let body;
 
 				if (res.statusCode !== 200) {

@@ -4,6 +4,7 @@ let assert = require('assert');
 
 let PasswordSteps = require('../../password');
 let PasswordRestorePage = require('../../../pages/passrestore');
+let phones = require('../../../utils/phones');
 
 /** Модуль для работы с шагами страницы поиска */
 class PasswordRestoreSteps extends PasswordSteps {
@@ -18,6 +19,14 @@ class PasswordRestoreSteps extends PasswordSteps {
 	 */
 	static get page () {
 		return new PasswordRestorePage();
+	}
+
+	/**
+	 * Звписываем ajax для получения reg_token.id
+	 * @return {Object}
+	 */
+	initRegTokenIdLog () {
+		return phones.registerPassrestoreLogger();
 	}
 }
 
