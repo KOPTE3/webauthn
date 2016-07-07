@@ -23,10 +23,13 @@ class MessagesPage extends PageObject {
 	 * @type {Object}
 	 */
 	get locators () {
+		let letters = '[data-mnemo="letters"]';
+
 		return {
 			container: '#b-letters',
-			newestLetter: '[data-mnemo="letters"] .b-datalist__item:first-child',
-			letters: '[data-mnemo="letters"] .b-datalist__item',
+			newestLetter: `${letters} .b-datalist__item:first-child`,
+			letters: `${letters} .b-datalist__item`,
+			letterSubject: '.b-datalist__item__subj',
 			buttons: {
 				compose: '.b-toolbar__btn[data-name="compose"]'
 			}
@@ -49,6 +52,31 @@ class MessagesPage extends PageObject {
 	 * */
 	clickButton (name) {
 		this.page.click(this.locators.buttons[name]);
+	}
+
+	/**
+	 * Получить id письма по теме.
+	 * Если таких несколько, то только самый верхний
+	 *
+	 * @param {string} subject - тема письма.
+	 * @return {string}
+	 */
+	getLetterIdBySubject (subject) {
+		let {value: messages} = this.page.elements(this.locators.letters);
+		let subjectLocator = this.locators.letterSubject;
+		let id;
+
+		messages.some(({ELEMENT: ID}) => {
+			let title = this.page.elementIdElement(ID, subjectLocator);
+
+			if (title.getText() === subject) {
+				id = this.page.elementIdAttribute(ID, 'data-id').value;
+
+				return true;
+			}
+		});
+
+		return id;
 	}
 
 }
