@@ -24,7 +24,7 @@ class LoginForm extends LoginPage {
 			select         : '.b-select__dropdown',
 			login          : '[name="Username"]',
 			password       : '[name="Password"]',
-			submit         : '.js-login-page__external__submit',
+			submit         : '[data-name="submit"]:first-child',
 			error          : '.b-login__errors',
 			title          : '.b-login__header__title',
 			desc           : '.b-login__header__desc',
@@ -57,10 +57,18 @@ class LoginForm extends LoginPage {
 	 * Получить активный домен
 	 *
 	 * @param {string} provider
-	 * @returns {Promise}
 	 */
 	clickByDomain (provider) {
-		return this.page.click(`[data-domain="${provider}"]`);
+
+	}
+
+	/**
+	 * Отправить форму по клику
+	 *
+	 * @returns {Promise}
+	 */
+	clickBySignInButton () {
+		return this.page.click(this.locators.submit);
 	}
 
 	/**
@@ -73,13 +81,23 @@ class LoginForm extends LoginPage {
 	}
 
 	/**
-	 * Получить состояние видимости списка доменов
+	 * Заполнить поле логина
 	 *
 	 * @param {string} login
 	 * @returns {Promise}
 	 */
 	setLogin (login) {
 		return this.page.setValue(this.locators.login, login);
+	}
+
+	/**
+	 * Заполнить поле пароля
+	 *
+	 * @param {string} password
+	 * @returns {Promise}
+	 */
+	setPassword (password) {
+		return this.page.setValue(this.locators.password, password);
 	}
 
 	/**

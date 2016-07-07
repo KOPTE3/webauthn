@@ -13,6 +13,7 @@ class AuthStore extends Store {
 	 * Возвращает авторизационные данные указанного типа
 	 *
 	 * @param {string} type — тип авторизации
+	 * @param {Object} [options] — дополнительные опции
 	 * @returns {Object}
 	 *
 	 * Данные, которые возвращаются:
@@ -22,11 +23,13 @@ class AuthStore extends Store {
 	 *    user_agent, sex, last_name
 	 * }
 	 */
-	credentials (type = 'basic') {
+	credentials (type = 'basic', options = {}) {
 		let account = new AccountManager();
 
+		Object.assign(options, { type });
+
 		return browser.waitUntil(function async () {
-			return account.credentials({ type })
+			return account.credentials(options)
 				.then(({ body }) => body);
 		});
 	}

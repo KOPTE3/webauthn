@@ -188,7 +188,7 @@ authStore.account;
 Метод .credentials примает те же типы, что Page\#auth
 
 
-#### Store#Authorization#credentials
+#### Store#Authorization#credentials(type=basic, { id, login, domain, type })
 
 Получение авторизационных данные указанного типа
 
@@ -198,9 +198,13 @@ let AuthStore = require('../../store/authorization');
 let authStore = new AuthStore();
 
 authStore.credentials('external');
+
+authStore.credentials('external', {
+	domain: 'gmail.com'
+});
 ```
 
-Метод .credentials примает те же типы, что Page\#auth
+Метод .credentials принимает те же типы, что Page\#auth
 
 
 ### Структура проекта

@@ -248,6 +248,52 @@ class AuthProviders extends Store {
 
 		return provider && provider.name;
 	}
+
+	/**
+	 * Проектный топ провайдеров по типам авторизации
+	 *
+	 * @see http://mail-dashboard.mail.ru/?id=ext-rimap-daily
+	 * @see http://mail-dashboard.mail.ru/?id=instant-rimap-daily
+	 * @see https://jira.mail.ru/browse/MNT-113559
+	 * @see https://jira.mail.ru/browse/MNT-113560
+	 * @param {string} type — [ external | collectors | pdd ]
+	 * @param {string} [project]
+	 * @returns {Array}
+	 */
+	top (type, project = 'mail.ru') {
+		let providers = {
+			external: {
+				'my.com': [
+					'gmail.com',
+					'hotmail.com',
+					'libero.it',
+					'yahoo.com',
+					'outlook.com',
+					'mail.ru'
+				],
+
+				'mail.ru': [
+					'gmail.com',
+					'rambler.ru',
+					'outlook.com',
+					'hotmail.com',
+					'msn.com',
+					'qip.ru',
+					'ya.ru',
+					'yandex.ru',
+					'yandex.ua',
+					'yahoo.com',
+					'mail.ru'
+				]
+			}
+		};
+
+		try {
+			return providers[project][project];
+		} catch (error) {
+			return [];
+		}
+	}
 }
 
 module.exports = AuthProviders;
