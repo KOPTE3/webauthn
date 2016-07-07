@@ -68,7 +68,7 @@ exports.config = {
 		// 'prof': true,
 
 		/** Максимальное время на ожидание результата выполнения теста */
-		'timeout': 10 * 1000,
+		'timeout': 15 * (60 * 1000),
 
 		/** Показывать стек-трейс */
 		'trace': true,
@@ -80,7 +80,7 @@ exports.config = {
 	},
 
 	/* Для реппортера Allure требуется наличие установленного плагина в CI */
-	reporters: ['dot', 'junit'],
+	reporters: ['spec', 'junit'],
 
 	reporterOptions: {
 		outputDir: `./cache/tests/${project}/reports`
@@ -128,12 +128,6 @@ exports.config = {
 		let commands = new WebDriverAPI();
 
 		commands.export('all');
-	},
-
-	beforeSuite () {
-		return account.session({
-			host: browser.options.baseUrl
-		});
 	},
 
 	afterSuite () {

@@ -1,11 +1,14 @@
 'use strict';
 
 let Store = require('../../store');
+let AuthStore = require('../../store/authorization');
 
 /** Модуль для работы с данными формы страницы написания письма */
 class ComposeFields extends Store {
 	constructor () {
 		super();
+
+		this.authStore = new AuthStore();
 	}
 
 	/**
@@ -14,7 +17,7 @@ class ComposeFields extends Store {
 	 * @type {Object}
 	 */
 	get fields () {
-		let user = `${this.account.get('login')}@${this.account.get('domain')}`;
+		let user = this.authStore.account.get('email');
 
 		return {
 			from    : user,

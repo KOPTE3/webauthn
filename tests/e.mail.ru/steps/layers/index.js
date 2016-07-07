@@ -45,7 +45,7 @@ class LayerSteps extends Steps {
 	/**
 	 * Метод проверяет, что леер закрыт
 	 */
-	shoulBeClosed () {
+	shouldBeClosed () {
 		let layer = this.layer.getContainer();
 
 		assert(!layer.isVisible(), 'Лаер все еще не закрыт');
@@ -53,7 +53,7 @@ class LayerSteps extends Steps {
 
 	blockShouldHaveText (name, text) {
 		assert.equal(this.layer.getBlockText(name), text,
-			'Блок леера содержит не корректный текст');
+			'Блок леера содержит некорректный текст');
 	}
 }
 

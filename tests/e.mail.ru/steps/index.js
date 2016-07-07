@@ -11,12 +11,12 @@ class Steps extends Pages {
 	/**
 	 * Локаторы
 	 *
-	 * @param {string} name
+	 * @param {Array} list — список фич, которые требуется включить
 	 */
-	static addFeature (name) {
+	static features (...list) {
 		let pages = new Pages();
 
-		pages.addFeature(name);
+		pages.features(...list);
 	}
 
 	/**

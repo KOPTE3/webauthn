@@ -26,7 +26,7 @@
 		"grunt"  : "grunt",
 		"start"  : "selenium-standalone start",
 		"install": "selenium-standalone install",
-		"lint"   : "eslint . --format node_modules/eslint-friendly-formatter --ext .js",
+		"lint"   : "eslint . --cache --format node_modules/eslint-friendly-formatter --ext .js",
 		"test"   : "sh utils/laucher.sh",
 		"wdio"   : "wdio"
 	},
@@ -40,11 +40,11 @@
 	},
 
 	"dependencies": {
-		"@qa/account-manager"  : "^0.0.11",
+		"@qa/account-manager"  : "^1.0.1",
 		"@qa/grunt-test-runner": "^0.2.1",
-		"@qa/test-tools"       : "^1.1.0",
+		"@qa/test-tools"       : "^1.2.2",
 		"@qa/wd-capabilities"  : "^0.0.4",
-		"@qa/wdio-api-mail.ru" : "^1.2.0",
+		"@qa/wdio-api-mail.ru" : "^2.0.0",
 		"grunt"                : "^1.0.1",
 		"grunt-cli"            : "^1.2.0",
 		"jit-grunt"            : "^0.10.0",
@@ -54,13 +54,14 @@
 		"webdriverio"          : "^4.1.1",
 		"wdio-api-declaration" : "^0.0.1",
 		"wdio-dot-reporter"    : "^0.0.5",
+		"wdio-spec-reporter"   : "^0.0.1",
 		"wdio-mocha-framework" : "^0.3.4",
 		"wdio-json-reporter"   : "^0.0.2",
 		"wdio-junit-reporter"  : "^0.1.0"
 	},
 
 	"devDependencies": {
-		"@qa/eslint-config-mail.ru": "^0.0.10",
+		"@qa/eslint-config-mail.ru": "^0.0.12",
 		"eslint"                   : "^2.11.1",
 		"eslint-friendly-formatter": "^2.0.5",
 		"pre-commit"               : "^1.1.3"

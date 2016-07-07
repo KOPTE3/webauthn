@@ -13,12 +13,16 @@ const text = 'Добрый день! Во вложении заявка, про�
 
 describe('TESTMAIL-31554: AJAX. Написание письма. Забытое вложение.' +
 ' Проверить закрытие попапа по крестику ', () => {
-	before(Compose.auth);
+	before(() => {
+		Compose.auth();
+	});
 
 	beforeEach(() => {
-		Messages.addFeature('check-missing-attach');
-		Messages.addFeature('disable-ballons');
-		Messages.addFeature('no-collectors-in-compose');
+		Messages.features([
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose'
+		]);
 
 		Messages.open();
 		Messages.toCompose();
@@ -33,6 +37,6 @@ describe('TESTMAIL-31554: AJAX. Написание письма. Забытое 
 		composeControls.send();
 		missingAttachLayer.show();
 		missingAttachLayer.close();
-		missingAttachLayer.shoulBeClosed();
+		missingAttachLayer.shouldBeClosed();
 	});
 });

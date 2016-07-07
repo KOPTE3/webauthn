@@ -79,7 +79,7 @@ npm test -- e.mail.ru --suite='login,compose'
 npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674
 ```
 
-*Опция `--grep` принимает название тест-кейса, которое задается в секции `describe`*
+*Опция `--grep` принимает часть имени файла*
 
 Выполнить тесты на заданном адресе:
 
@@ -88,6 +88,119 @@ npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --baseUrl=https://e.mai
 ```
 
 Полный список доступных опций test-runner'a смотрите [здесь](https://stash.mail.ru/projects/QA/repos/grunt-test-runner/browse).
+
+
+### API
+
+Во всех тестах через степы доступны следующие методы:
+
+
+#### Page#open({...})
+
+Открытие требуемого представления
+
+```js
+let Messages = require('../../steps/messages');
+
+describe('TESTMAIL-31873', () => {
+	Messages.open();
+});
+```
+
+Метод auth дополнительно принимает параметры запроса:
+
+```js
+Messages.open({
+	foo: 1
+});
+```
+
+#### Page#features([...])
+
+Включение фич:
+
+```js
+let Messages = require('../../steps/messages');
+
+describe('TESTMAIL-31873', () => {
+	beforeEach(() => {
+		Messages.features([
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose'
+		]);
+
+		Messages.open();
+	});
+});
+```
+
+Используейте символ `:` если фиче требуется передать какое-то значение:
+
+```js
+Messages.features([
+	'check-missing-attach:1'
+])
+```
+
+#### Page#auth(type=basic, { username, password })
+
+Авторизация
+
+```js
+let Messages = require('../../steps/messages');
+
+describe('TESTMAIL-31873', () => {
+	Messages.auth();
+	Messages.open();
+});
+```
+
+Метод auth дополнительно принимает тип авторизации:
+
+```js
+Messages.auth('external');
+```
+
+Список доступных типов: pdd, external, basic (используется по умолчанию)
+
+Также есть возможность авторизоваться конкретным пользователем:
+
+```js
+Messages.auth('basic', {
+	username: 'aziza.voronova.52@list.ru',
+	password: 'dknMuWpuzvG9'
+});
+```
+
+#### Store#Authorization#account
+
+Получение авторизационных сведений текущего аккаунтпа
+
+```js
+let AuthStore = require('../../store/authorization');
+
+let authStore = new AuthStore();
+
+authStore.account;
+```
+
+Метод .credentials примает те же типы, что Page\#auth
+
+
+#### Store#Authorization#credentials
+
+Получение авторизационных данные указанного типа
+
+```js
+let AuthStore = require('../../store/authorization');
+
+let authStore = new AuthStore();
+
+authStore.credentials('external');
+```
+
+Метод .credentials примает те же типы, что Page\#auth
 
 
 ### Структура проекта
@@ -119,7 +232,7 @@ npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --baseUrl=https://e.mai
 |-----------|-------------------------|----------------|
 | **cases** | Тест-кейсы              | store, steps
 | **pages** | Элементы предстравления | store, browser
-| **steps** | Шаги                    | store, pages
+| **steps** | Шаги                    | store, pages, steps
 | **store** | Хранилище               | store
 | **utils** | Утилиты                 | store
 
@@ -179,6 +292,10 @@ let PageObject = require('../../pages');
 class Login extends PageObject {
 	constructor () {
 		super();
+	}
+
+	get location () {
+		return '/login'
 	}
 
 	get locators () {
@@ -293,7 +410,7 @@ class Providers extends Store {
 					'list.ru',
 					'bk.ru'
 				]
-			},
+			}
 	}
 
 	/**
@@ -377,15 +494,17 @@ class Providers extends authProviders {
 module.exports = new Providers();
 ```
 
-### Рекомендации
+### Требования
 
-* Не обращайтесь к объекту `browser` напрямую, только через `this.page` в `pages`
-* Все без исключения методы должны иметь аннотацию JSDoc
-* Всегда определяйте локатор с имененем `container`
+* Не обращайтесь в pages к объекту browser напрямую. Вместо этого используйте ссылку `this.page`.
+* Все без исключения методы должны иметь аннотацию JSDoc.
+* Все файлы в папке page должны возвращать ссылку на класс.
+* Все индесные файлы в папке steps должны возвращать ссылку на класс.
+* Всегда определяйте `location` и `locators.container` в индексоном файле вашего предствления (page).
 * Не используйте сокращения вида err, dfd, fn, и пр.
-* Для переменной, которая сохраняет состояние используйте название `actual`
-* Прижерживайтесь существующей структуры и организации кода проекта
-* Для работы с любыми данными используйте всегда хранилище (`store`)
+* Для переменной, которая сохраняет состояние используйте название `actual`.
+* Прижерживайтесь существующей структуры и организации кода проекта.
+* Для работы с любыми данными используйте всегда хранилище (`store`).
 * Если вы работаете с полями формы, то у вас должны быть определены как минимум следующие типы методов:
 
 

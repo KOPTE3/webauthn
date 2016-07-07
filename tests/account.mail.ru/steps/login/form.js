@@ -3,6 +3,7 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
+let Store = require('../../store/login/form');
 let LoginForm = require('../../pages/login/form');
 
 /** Модуль для работы с шагами формы страницы логина */
@@ -10,6 +11,7 @@ class LoginFormSteps extends Steps {
 	constructor () {
 		super();
 
+		this.store = new Store();
 		this.loginForm = new LoginForm();
 	}
 
@@ -78,7 +80,7 @@ class LoginFormSteps extends Steps {
 		let actual = this.loginForm.getRememberText();
 
 		assert.equal(actual, 'запомнить почту',
-			`Проверка текста контрола "Запомнить почту"`);
+			'Проверка текста контрола "Запомнить почту"');
 	}
 
 	/**
@@ -88,7 +90,7 @@ class LoginFormSteps extends Steps {
 		let actual = this.loginForm.getSessionState();
 
 		assert.equal(actual, '1',
-			`Проверка состояние контрола "Запомнить почту"`);
+			'Проверка состояние контрола "Запомнить почту"');
 	}
 
 	/**
@@ -97,7 +99,7 @@ class LoginFormSteps extends Steps {
 	checkActiveElement () {
 		let actual = this.loginForm.checkActiveElement();
 
-		assert(actual, `Неверный активный элемент`);
+		assert(actual, 'Неверный активный элемент');
 	}
 
 	/**
@@ -146,10 +148,30 @@ class LoginFormSteps extends Steps {
 	/**
 	 * Проверить ссылку восстановления пароля
 	 */
-	checkPassRemindLink () {
-		let url = 'https://e.mail.ru/password/restore/';
+	clickPassRemindLink () {
+		let actual = this.loginForm
+			.clickPassRemindLink(this.store.links.passwordRestore);
 
-		this.loginForm.checkPassRemindLink(url);
+		assert(actual, 'Указана неверная ссылка восстановления пароля');
+	}
+
+	/**
+	 * Проверить ссылку восстановления пароля
+	 */
+	clickSignUpLink () {
+		let actual = this.loginForm
+			.clickPassRemindLink(this.store.links.clickSignUpLink);
+
+		assert(actual, 'Указана неверная ссылка на регистрацию');
+	}
+
+	/**
+	 * Проверить видимость кнопки восстановления пароля
+	 */
+	isPassRemindLinkNotExist () {
+		let actual = this.loginForm.isPassRemindLinkExist();
+
+		assert(actual, 'Некорректная видимость кнопки восстановления пароля');
 	}
 
 	/**
@@ -160,7 +182,7 @@ class LoginFormSteps extends Steps {
 	getError (expected) {
 		let actual = this.loginForm.getError();
 
-		assert.equal(actual, expected, `Сообщение ошибки`);
+		assert.equal(actual, expected, 'Сообщение ошибки');
 	}
 
 	/**
@@ -169,7 +191,7 @@ class LoginFormSteps extends Steps {
 	isSelectVisible () {
 		let actual = this.loginForm.isSelectVisible();
 
-		assert(!actual, `Видимость списка доменов под вопросом`);
+		assert(!actual, 'Видимость списка доменов под вопросом');
 	}
 }
 

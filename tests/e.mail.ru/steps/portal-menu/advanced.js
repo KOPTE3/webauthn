@@ -23,6 +23,17 @@ class AdvancedSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Кликнуть в текстовое поле
+	 *
+	 * @param {string} name - имя поля
+	 */
+	clickField (name) {
+		this.advanced.clickField(name);
+
+		this.isFocusInField(name);
+	}
+
+	/**
 	 * Кликнуть в чекбокс
 	 *
 	 * @param {string} name - unread|flag|attach
@@ -38,6 +49,45 @@ class AdvancedSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Кликнуть в селект выбора разброса даты
+	 */
+	clickDateSelect () {
+		this.advanced.clickDateSelect();
+	}
+
+	/**
+	 * Кликнуть в поле даты
+	 */
+	clickDateField () {
+		this.advanced.clickDateField();
+	}
+
+	/**
+	 * Выбрать разброс даты
+	 *
+	 * @param {string} value - (0|1|3|7|30)
+	 */
+	selectDateLapse (value) {
+		this.advanced.selectDateLapse(value);
+
+		let actual = this.advanced.getSelectDateValue();
+
+		assert(actual === value, `Не удалось установить разброс даты: ${value}`);
+	}
+
+
+	/**
+	 * Курсор в заданном поле
+	 *
+	 * @param {string} name - имя поля
+	 */
+	isFocusInField (name) {
+		let actual = this.advanced.isFocusInField(name);
+
+		assert(actual, `Курсор не находится в поле ${name}`);
+	}
+
+	/**
 	 * Выбран ли чекбокс
 	 *
 	 * @param {string} name - unread|flag|attach
@@ -47,6 +97,50 @@ class AdvancedSteps extends PortalMenuSteps {
 		let actual = this.advanced.isChecked(name);
 
 		assert(actual === !reverse, `Чекбокс ${name}${reverse ? '' : ' не'} выбран`);
+	}
+
+	/**
+	 * Сравнить текст селекта
+	 *
+	 * @param {string} text - должен быть этот текст
+	 */
+	checkSelectDateText (text) {
+		let actual = this.advanced.getSelectDateText();
+
+		assert(actual === text, `Текст в селекте разброса даты не равен ${text}`);
+	}
+
+	/**
+	 * Сравнить текст поля даты
+	 *
+	 * @param {string} text - должен быть этот текст
+	 */
+	checkDateFieldText (text) {
+		let actual = this.advanced.getDateFieldText();
+
+		assert(actual === text, `Текст в поле даты не равен ${text}`);
+	}
+
+	/**
+	 * Показаны саджесты для поля
+	 *
+	 * @param {string} name - имя поля
+	 */
+	hasSuggests (name) {
+		let actual = this.advanced.hasSuggests(name);
+
+		assert(actual, `Для поля ${name} саджесты не показаны`);
+	}
+
+	/**
+	 * Не показаны саджесты для поля
+	 *
+	 * @param {string} name - имя поля
+	 */
+	noSuggests (name) {
+		let actual = this.advanced.hasSuggests(name, true);
+
+		assert(actual, `Для поля ${name} саджесты показаны`);
 	}
 }
 

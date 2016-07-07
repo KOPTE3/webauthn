@@ -2,6 +2,7 @@
 
 let path = require('path');
 let Store = require('../../store');
+let System = require('../../store/system');
 
 /** Модуль для работы с аттачами */
 class Attachments extends Store {
@@ -16,9 +17,10 @@ class Attachments extends Store {
 	 * @type {string}
 	 */
 	get path () {
-		let profile = '/var/lib/selenium/';
+		let system = new System(),
+			profile = '/var/lib/selenium/';
 
-		if (/win/.test(this.platform)) {
+		if (/win/.test(system.platform)) {
 			profile += '%USERPROFILE%';
 		}
 
