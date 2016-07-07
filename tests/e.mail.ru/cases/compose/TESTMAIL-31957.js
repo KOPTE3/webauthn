@@ -27,22 +27,43 @@ describe('TESTMAIL-31957: НЕ AJAX. Черновики. Забытое влож
 		Compose.auth();
 	});
 
-	beforeEach(next => {
+	it('письмо должно быть успешно отправленно', () => {
 		let { fields } = new ComposeFieldsStore();
 
 		var mail = new Mail({
-			from: fields.from,
 			to: fields.to,
 			subject,
 			text: composeEditorStore.texts.withAttach
 		});
 
-		mail.addAttach('image.png');
+		mail.addAttach('inline');
 		mail.send();
-	});
 
-	it('письмо должно быть успешно отправленно', () => {
 		Messages.open();
-		browser.debug();
+		lettersSteps.openNewestLetter();
+		messageToolbarSteps.clickButton('forward');
+
+		composeEditor.wait();
+		composeControls.draft();
+
+		Messages.open('/messages/drafts/');
+		lettersSteps.openNewestLetter();
+
+		composeEditor.wait();
+
+		Compose.features([
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose',
+			'disable-fastreply-landmark'
+		]);
+
+		Compose.refresh();
+		composeEditor.wait();
+		composeFields.setFieldValue('subject', subject);
+		composeFields.setFieldValue('to', fields.to);
+		composeControls.send();
+
+		SentPage.wait();
 	});
 });

@@ -19,6 +19,7 @@ class ComposeControls extends ComposePage {
 
 		return this.extend(super.locators, {
 			container: toolbar,
+			saveStatus: `${toolbar} [data-mnemo="saveStatus"`,
 			draft    : `${toolbar} [data-name="saveDraft"]`,
 			cancel   : `${toolbar} [data-name="cancel"]`,
 			template : `${toolbar} [data-name="saveTemplate"]`,
@@ -31,6 +32,7 @@ class ComposeControls extends ComposePage {
 	 */
 	draft () {
 		this.clickAll(this.locators.draft);
+		this.page.waitForVisible(this.locators.saveStatus);
 	}
 
 	/**

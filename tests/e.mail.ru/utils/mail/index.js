@@ -2,11 +2,11 @@
 
 let nodemailer = require('nodemailer');
 let fs = require('fs');
+let AuthStore = require('../../store/authorization');
 
 const ASYNC_TIMEOUT = 10000; // таймаут завершнеия асинхронного скрипта
-const DELIVERY_TIMEOUT = 1000; // таймаут ожидания фактической доствки письма
+const DELIVERY_TIMEOUT = 2000; // таймаут ожидания фактической доствки письма
 
-let AuthStore = require('../../store/authorization');
 
 /** Модуль создания и отправки письма */
 class Mail {
@@ -17,11 +17,13 @@ class Mail {
 	 * @param {Object} options - данные письма (см: https://www.npmjs.com/package/nodemailer)
 	 */
 	constructor (options) {
-		let account = new AuthStore().account;
-		let login = account.get('email');
+		let { account } = new AuthStore();
+		let email = account.get('email');
 		let pwd = account.get('password');
 
-		this.transport = nodemailer.createTransport(`smtps://${login}:${pwd}@smtp.mail.ru`);
+		options.from = email;
+
+		this.transport = nodemailer.createTransport(`smtps://${email}:${pwd}@smtp.mail.ru`);
 		this.options = options;
 	}
 
@@ -29,14 +31,22 @@ class Mail {
 	 * Прикрепить аттач к письму
 	 *
 	 * @param {string} name - имя аттача
-	 * Доступны (image.png)
+	 * Доступны (inline)
 	 */
 	addAttach (name) {
 		this.options.attachments = this.options.attachments || [];
 
+		if (name === 'inline') {
+			this.options.attachments.push({
+				path: 'data:text/plain;base64,aGVsbG8gd29ybGQ='
+			});
+
+			return;
+		}
+
 		this.options.attachments.push({
 			filename: name,
-			content: fs.createReadStream(`${__dirname}/attachments/${name}`)
+			path: `${__dirname}/attachments/${name}`
 		});
 	}
 

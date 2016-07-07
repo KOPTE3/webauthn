@@ -87,7 +87,7 @@ exports.config = {
 	},
 
 	/* Директория, куда будут складываться скриншоты */
-	screenshotPath: './cache/tests/shots',
+	screenshotPath: './cache/tests/${project}/shots',
 
 	/* Директория, куда будут складываться логи */
 	logfile: `./cache/tests/${project}/logs`,
