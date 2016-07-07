@@ -17,7 +17,9 @@ describe('TESTMAIL-31546: AJAX. Написание письма. Забытое 
 'отправку письма по клику на кнопку "Всё равно отправить"', () => {
 	before(Compose.auth);
 
-	beforeEach(() => {
+	it('проверям что сообщение было отправленно', () => {
+		let { fields } = new ComposeFieldsStore();
+
 		Messages.features([
 			'check-missing-attach',
 			'disable-ballons',
@@ -26,10 +28,7 @@ describe('TESTMAIL-31546: AJAX. Написание письма. Забытое 
 
 		Messages.open();
 		messagesToolbarSteps.clickButton('compose');
-	});
 
-	it('проверям что сообщение было отправленно', () => {
-		let { fields } = new ComposeFieldsStore();
 
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', fields.to);

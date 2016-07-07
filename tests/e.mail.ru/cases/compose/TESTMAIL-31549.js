@@ -19,7 +19,7 @@ describe('TESTMAIL-31549: НЕ AJAX. Написание письма. Забыт
 		Compose.auth();
 	});
 
-	beforeEach(() => {
+	it('письмо должно отправится', () => {
 		Compose.features([
 			'check-missing-attach',
 			'disable-ballons',
@@ -27,9 +27,7 @@ describe('TESTMAIL-31549: НЕ AJAX. Написание письма. Забыт
 		]);
 
 		Compose.open();
-	});
 
-	it('письмо должно отправится', () => {
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', composeFieldsStore.fields.to);
 		composeEditor.writeMessage(composeEditorStore.texts.withoutAttach);

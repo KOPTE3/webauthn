@@ -15,7 +15,7 @@ class ComposeControls extends ComposePage {
 	 * @type {Object}
 	 */
 	get locators () {
-		let toolbar = '.ui-toolbar-active';
+		let toolbar = '[data-mnemo="toolbar-compose"]';
 
 		return this.extend(super.locators, {
 			container: toolbar,
@@ -30,21 +30,21 @@ class ComposeControls extends ComposePage {
 	 * Сохранить черновик
 	 */
 	draft () {
-		this.page.click(this.locators.draft);
+		this.clickAll(this.locators.draft);
 	}
 
 	/**
 	 * Написать письмо
 	 */
 	send () {
-		this.page.click(this.locators.send);
+		this.clickAll(this.locators.send);
 	}
 
 	/**
 	 * Отменить письмо
 	 * */
 	cancel () {
-		this.page.click(this.locators.cancel);
+		this.clickAll(this.locators.cancel);
 
 		try {
 			// алерт может быть не показан в некоторых случаях

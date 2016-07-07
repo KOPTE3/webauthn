@@ -82,6 +82,8 @@ class PageObject {
 			path = this.location;
 		}
 
+		// query.JS_HOST = 'burlak.win105.dev.mail.ru';
+
 		if (typeof path === 'object') {
 			query = path;
 			path = null;
@@ -144,17 +146,12 @@ class PageObject {
 	 *
 	 * @returns {boolean}
 	 * */
-	clickWithRetry (locator, count = 3, interval = 500) {
+	clickWithRetry (locator, count = 3, interval = 1000) {
 		let page = this.page;
 
 		let tryClick = () => {
 			try {
 				page.waitForExist(locator);
-
-				if (!page.isVisible(locator)) {
-					page.scroll(locator);
-				}
-
 				let links = page.elements(locator);
 
 				page.elementIdClick(links.value[0].ELEMENT);
@@ -167,14 +164,44 @@ class PageObject {
 			}
 		};
 
-		for (let attempt = 0; i < count; attempt++) {
+		while (count--) {
 			if (tryClick()) {
 				return true;
 			}
 		}
 
 		throw new Error('Can\'t click to element ' + locator);
-	};
+	}
+
+	/**
+	 * Метод пробует кликнуть по всем найденным селектором элементам
+	 *
+	 * @param {string} locator - куда кликнуть
+	 */
+	clickAll (locator) {
+		let btns = this.page.elements(locator);
+		let page = this.page;
+		let isClicked = false;
+
+
+		btns.value.forEach(function (btn) {
+			if (isClicked) {
+				return;
+			}
+
+			try {
+				page.elementIdClick(btn.ELEMENT);
+				isClicked = true;
+			} catch (error) {}
+		});
+
+		if (!isClicked) {
+			console.log(locator);
+			browser.debug();
+			throw new Error('Can\'t click to all elements' + locator);
+		}
+	}
+
 }
 
 module.exports = PageObject;

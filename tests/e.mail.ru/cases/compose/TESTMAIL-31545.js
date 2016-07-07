@@ -18,7 +18,9 @@ describe('TESTMAIL-31545: AJAX. Написание письма. Забытое 
 		Compose.auth();
 	});
 
-	beforeEach(() => {
+	it('проверяем закрытие леера', () => {
+		let { fields } = new ComposeFieldsStore();
+
 		Messages.features([
 			'check-missing-attach',
 			'disable-ballons',
@@ -27,10 +29,6 @@ describe('TESTMAIL-31545: AJAX. Написание письма. Забытое 
 
 		Messages.open();
 		messagesToolbarSteps.clickButton('compose');
-	});
-
-	it('проверяем закрытие леера', () => {
-		let { fields } = new ComposeFieldsStore();
 
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', fields.to);

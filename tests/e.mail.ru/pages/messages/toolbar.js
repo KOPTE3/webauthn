@@ -14,11 +14,9 @@ class MessagesToolbarPage extends MessagesPage {
 	 * @type {Object}
 	 */
 	get locators () {
-		let toolbar = '.ui-toolbar-active';
-
 		return this.extend(super.locators, {
 			buttons: {
-				compose: `${toolbar} .b-toolbar__btn[data-name="compose"]`
+				compose: `.b-toolbar__btn[data-name="compose"]`
 			}
 		});
 	}
@@ -30,7 +28,7 @@ class MessagesToolbarPage extends MessagesPage {
 	 * Доступные значения (compose)
 	 * */
 	clickButton (name) {
-		this.clickWithRetry(this.locators.buttons[name]);
+		this.clickAll(this.locators.buttons[name]);
 	}
 
 }

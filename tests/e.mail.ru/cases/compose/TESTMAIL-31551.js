@@ -15,7 +15,9 @@ describe('TESTMAIL-31551: НЕ AJAX. Забытое вложение. Прове
 		Compose.auth();
 	});
 
-	beforeEach(() => {
+	it('проверяем закрытие леера', () => {
+		let { fields } = new ComposeFieldsStore();
+
 		Compose.features([
 			'check-missing-attach',
 			'disable-ballons',
@@ -23,10 +25,6 @@ describe('TESTMAIL-31551: НЕ AJAX. Забытое вложение. Прове
 		]);
 
 		Compose.open();
-	});
-
-	it('проверяем закрытие леера', () => {
-		let { fields } = new ComposeFieldsStore();
 
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', fields.to);

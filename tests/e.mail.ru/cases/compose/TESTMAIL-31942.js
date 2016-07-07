@@ -39,12 +39,6 @@ describe('TESTMAIL-31942 НЕ AJAX. Ответ на письмо. Забытое
 		Messages.auth();
 	});
 
-	afterEach(() => {
-		missingAttachLayer.close();
-		composeControls.cancel();
-	});
-
-
 	it('попап должен быть показан', () => {
 		const features = [
 			'check-missing-attach',
@@ -80,5 +74,8 @@ describe('TESTMAIL-31942 НЕ AJAX. Ответ на письмо. Забытое
 
 		messageToolbarSteps.clickFastreplyButton('resend');
 		missingAttachLayer.wait();
+
+		missingAttachLayer.close();
+		messageToolbarSteps.clickFastreplyButton('cancel');
 	});
 });

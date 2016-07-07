@@ -28,7 +28,7 @@ describe('TESTMAIL-31874: Ответ на письмо. Забытое влож�
 ' попапа для быстрого ответа с текстом и без аттача', done => {
 	before(Compose.auth);
 
-	beforeEach(() => {
+	it('попап появился', () => {
 		let { fields } = new ComposeFieldsStore();
 
 		Messages.open();
@@ -48,15 +48,6 @@ describe('TESTMAIL-31874: Ответ на письмо. Забытое влож�
 		]);
 
 		Messages.open();
-	});
-
-	afterEach(() => {
-		missingAttachLayer.close();
-		composeControls.cancel();
-	});
-
-	it('попап появился', () => {
-		let { fields } = new ComposeFieldsStore();
 
 		messagesLettersSteps.openNewestLetter();
 		messageFastanswerSteps.clickButton('reply');
@@ -68,5 +59,8 @@ describe('TESTMAIL-31874: Ответ на письмо. Забытое влож�
 
 		messageToolbarSteps.clickFastreplyButton('replyAll');
 		missingAttachLayer.wait();
+
+		missingAttachLayer.close();
+		messageToolbarSteps.clickFastreplyButton('cancel');
 	});
 });

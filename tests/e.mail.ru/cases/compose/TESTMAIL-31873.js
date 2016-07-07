@@ -22,7 +22,7 @@ describe('TESTMAIL-31873: AJAX. Ответ на письмо. Забытое в�
 		Compose.auth();
 	});
 
-	beforeEach(() => {
+	it('попап должен появится', () => {
 		let { fields } = new ComposeFieldsStore();
 
 		Messages.open();
@@ -41,16 +41,6 @@ describe('TESTMAIL-31873: AJAX. Ответ на письмо. Забытое в�
 		]);
 
 		Messages.open();
-	});
-
-	afterEach(() => {
-		missingAttachLayer.close();
-		composeControls.cancel();
-	});
-
-	it('попап должен появится', () => {
-		let { fields } = new ComposeFieldsStore();
-
 		lettersSteps.openNewestLetter();
 		messageToolbarSteps.clickButton('replyAll');
 
@@ -60,5 +50,8 @@ describe('TESTMAIL-31873: AJAX. Ответ на письмо. Забытое в�
 		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 		composeControls.send();
 		missingAttachLayer.wait();
+
+		missingAttachLayer.close();
+		composeControls.cancel();
 	});
 });

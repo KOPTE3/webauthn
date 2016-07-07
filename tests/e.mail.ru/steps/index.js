@@ -21,10 +21,16 @@ class Steps extends Pages {
 
 	/**
 	 * Обновить страницу
-	 *
 	 */
 	static refresh () {
 		this.page.refresh();
+	}
+
+	/**
+	 * Дождатся загрузки страницы
+	 */
+	static wait () {
+		this.page.wait();
 	}
 
 	/**

@@ -19,10 +19,9 @@ class MessagesLettersSteps extends MessagesSteps {
 	 * Открыть самое новое письмо
 	 */
 	openNewestLetter () {
-		this.lettersPage.openNewestLetter();
+		assert(this.lettersPage.openNewestLetter(), 'не удалось кликнуть по новому письму');
 		this.messagePage.wait();
-
-		assert(this.messagePage.isVisible, 'страница сообщения не показана');
+		assert(this.messagePage.isVisible(), 'страница сообщения не показана');
 	}
 }
 

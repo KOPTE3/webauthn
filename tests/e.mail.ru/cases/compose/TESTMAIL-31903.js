@@ -20,17 +20,10 @@ describe('TESTMAIL-31903: AJAX. Ответ на письмо. Забытое в�
 'появление попапа для быстрой пересылки с текстом и без аттача', done => {
 	before(Compose.auth);
 
-	beforeEach(() => {
-		Messages.open();
-	});
-
-	afterEach(() => {
-		missingAttachLayer.close();
-		composeControls.cancel();
-	});
-
 	it('попап должен появится', () => {
 		let { fields } = new ComposeFieldsStore();
+
+		Messages.open();
 
 		let message = actions.sendMessage(
 			fields.to,
@@ -56,5 +49,8 @@ describe('TESTMAIL-31903: AJAX. Ответ на письмо. Забытое в�
 
 		messageToolbarSteps.clickFastreplyButton('resend');
 		missingAttachLayer.wait();
+
+		missingAttachLayer.close();
+		messageToolbarSteps.clickFastreplyButton('cancel');
 	});
 });

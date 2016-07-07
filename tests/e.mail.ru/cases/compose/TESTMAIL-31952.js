@@ -23,11 +23,6 @@ describe('TESTMAIL-31952: НЕ AJAX. Черновики. Забытое влож
 		Compose.auth();
 	});
 
-	afterEach(() => {
-		missingAttachLayer.close();
-		composeControls.cancel();
-	});
-
 	it('попап должен быть показан', () => {
 		Messages.open();
 
@@ -60,5 +55,8 @@ describe('TESTMAIL-31952: НЕ AJAX. Черновики. Забытое влож
 		composeEditor.wait();
 		composeControls.send();
 		missingAttachLayer.wait();
+
+		missingAttachLayer.close();
+		composeControls.cancel();
 	});
 });

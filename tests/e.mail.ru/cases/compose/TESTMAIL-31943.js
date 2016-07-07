@@ -38,7 +38,6 @@ describe('TESTMAIL-31943: НЕ AJAX. Ответ на письмо. Забыто�
 		SettingsMessages.auth();
 	});
 
-
 	it('попап не должен быть показан', () => {
 		const features = [
 			'check-missing-attach',
@@ -65,6 +64,7 @@ describe('TESTMAIL-31943: НЕ AJAX. Ответ на письмо. Забыто�
 		Messages.features(features);
 		Messages.open();
 		messagesLettersSteps.openNewestLetter();
+		Message.wait();
 
 		Message.features(features);
 		Message.refresh();

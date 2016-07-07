@@ -18,17 +18,10 @@ describe('TESTMAIL-31875: AJAX. Ответ на письмо. Забытое в�
 'появление попапа для пересылки из тулбара с текстом и без аттача', done => {
 	before(Compose.auth);
 
-	beforeEach(() => {
-		Messages.open();
-	});
-
-	afterEach(() => {
-		missingAttachLayer.close();
-		composeControls.cancel();
-	});
-
 	it('попап должен появится', () => {
 		let { fields } = new ComposeFieldsStore();
+
+		Messages.open();
 
 		let message = actions.sendMessage(
 			fields.to,
@@ -45,7 +38,7 @@ describe('TESTMAIL-31875: AJAX. Ответ на письмо. Забытое в�
 		]);
 
 		Messages.open();
-		lettersSteps.openNewestLetter('Тестовый текст');
+		lettersSteps.openNewestLetter();
 		messageToolbarSteps.clickButton('forward');
 
 		composeEditor.wait();
@@ -54,5 +47,8 @@ describe('TESTMAIL-31875: AJAX. Ответ на письмо. Забытое в�
 
 		composeControls.send();
 		missingAttachLayer.wait();
+
+		missingAttachLayer.close();
+		composeControls.cancel();
 	});
 });

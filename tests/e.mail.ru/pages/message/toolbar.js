@@ -14,15 +14,15 @@ class MessageToolbar extends MessagePage {
 	 * @type {Object}
 	 */
 	get locators () {
-		let toolbar = '.ui-toolbar-active';
-		let fatsreply = `#b-toolbar__right [data-mnemo="toolbar-fastreply"]`;
+		let toolbar = '[data-mnemo="toolbar-letter"]';
+		let fatsreply = '[data-mnemo="toolbar-fastreply"]';
 
 		return this.extend(super.locators, {
 			toolbar: '',
 			buttons: {
 				replyAll: `${toolbar} [data-name="replyAll"]`,
 				reply:  `${toolbar} [data-name="reply"]`,
-				forward:  `${toolbar} [data-name="forward"]`,
+				forward:  `${toolbar} .b-toolbar__btn[data-name="forward"]`,
 				remove:  `${toolbar} [data-name="remove"]`,
 				archive:  `${toolbar} [data-name="archive"]`,
 				spam:  `${toolbar} [data-name="spam"]`
@@ -30,7 +30,8 @@ class MessageToolbar extends MessagePage {
 			fastreply: {
 				replyAll: `${fatsreply} [data-mnemo="send-all"]`,
 				saveDraft: `${fatsreply} [data-name="saveDraft"]`,
-				resend: `${fatsreply} [data-mnemo="resend"]`
+				resend: `${fatsreply} [data-mnemo="resend"]`,
+				cancel: `${fatsreply} [data-name="cancel"]`
 			}
 		});
 	}
@@ -42,7 +43,7 @@ class MessageToolbar extends MessagePage {
 	 * доступные значения (send, replyAll, reply, forward, remove, archive, spam);
 	 */
 	clickButton (name) {
-		this.clickWithRetry(this.locators.buttons[name]);
+		this.clickAll(this.locators.buttons[name]);
 	}
 
 	/**
@@ -52,7 +53,7 @@ class MessageToolbar extends MessagePage {
 	 * доступные значения (replyAll, saveDraft, resend);
 	 */
 	clickFastreplyButton (name) {
-		this.clickWithRetry(this.locators.fastreply[name]);
+		this.clickAll(this.locators.fastreply[name]);
 	}
 
 }

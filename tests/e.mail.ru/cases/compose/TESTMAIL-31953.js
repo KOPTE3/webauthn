@@ -23,11 +23,6 @@ describe('НЕ AJAX. Черновики. Забытое вложение. Про
 		Compose.auth();
 	});
 
-	afterEach(() => {
-		missingAttachLayer.close();
-		composeControls.cancel();
-	});
-
 	it('попап должен быть показан', () => {
 		Messages.open();
 
@@ -59,5 +54,8 @@ describe('НЕ AJAX. Черновики. Забытое вложение. Про
 		composeEditor.wait();
 		composeControls.send();
 		missingAttachLayer.wait();
+
+		missingAttachLayer.close();
+		composeControls.cancel();
 	});
 });
