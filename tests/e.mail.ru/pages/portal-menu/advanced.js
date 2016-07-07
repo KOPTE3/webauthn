@@ -40,10 +40,6 @@ class Advanced extends PortalMenu {
 				select: `${container} [name="q_date_lapse"]`,
 				selectText: `${container} .form__select__box__text`,
 				input: `${container} [name="q_date"]`
-			},
-			calendar: {
-				container: `${container} .form__calendar`,
-				today: `${container} .form__calendar__cell_today a`
 			}
 		});
 	}
@@ -90,13 +86,6 @@ class Advanced extends PortalMenu {
 	}
 
 	/**
-	 * Кликнуть в сегодняшний день в календаре
-	 */
-	clickCalendarToday () {
-		this.page.click(this.locators.calendar.today);
-	}
-
-	/**
 	 * Выбрать разброс даты
 	 *
 	 * @param {string} value - (0|1|3|7|30)
@@ -127,17 +116,6 @@ class Advanced extends PortalMenu {
 		return this.page.hasFocus(this.locators.textFields[name]);
 	}
 
-	/**
-	 * Проверка видимости календаря
-	 *
-	 * @param {boolean} reverse - невидимость
-	 * @returns {boolean}
-	 */
-	isCalendarVisible (reverse = false) {
-		let locator = this.locators.calendar.container;
-
-		return this.page.waitForVisible(locator, void 0, reverse);
-	}
 
 	/**
 	 * Получить выбранное значение разброса даты
@@ -164,15 +142,6 @@ class Advanced extends PortalMenu {
 	 */
 	getDateFieldText () {
 		return this.page.getValue(this.locators.date.input);
-	}
-
-	/**
-	 * Получить значение сегодняшнего числа в календаре, если оно есть
-	 *
-	 * @returns {string}
-	 */
-	getCalendarToday () {
-		return this.page.getText(this.locators.calendar.today);
 	}
 
 	/**
