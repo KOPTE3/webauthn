@@ -55,10 +55,6 @@ class FoldersPage extends PageObject {
 		return this.page.elementIdDisplayed(item.value.ELEMENT).value;
 	}
 
-	isFolderHidden (folderId) {
-		return !this.isFolderVisible(folderId);
-	}
-
 	isFolderExists (folderId) {
 		let item = this.getFolderItem(folderId);
 
@@ -66,18 +62,18 @@ class FoldersPage extends PageObject {
 	}
 
 	isFolderIn (folderId, parentId) {
-		let el = this.getFoldersContainer()
-			.element(`.//*[@data-id = ${parentId}][.//*[@data-id = ${folderId}]]`);
+		let item = this.getFoldersContainer()
+			.element(`.//*[@data-parent = ${parentId}][.//*[@data-id = ${folderId}]]`);
 
 		return item.state === 'success';
 	}
 
 	getArchiveFolderId () {
-		let el = this.getFoldersContainer()
+		let item = this.getFoldersContainer()
 			.element('.//*[@data-id][.//i[contains(@class, "ico_folder_archive")]]');
 
-		return (el.state === 'success') &&
-			this.page.elementIdAttribute(el.value.ELEMENT, 'data-id').value;
+		return (item.state === 'success') &&
+			this.page.elementIdAttribute(item.value.ELEMENT, 'data-id').value;
 	}
 
 	goToFolder (folderId) {

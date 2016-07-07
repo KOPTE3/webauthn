@@ -26,16 +26,16 @@ class FoldersSteps extends Steps {
 		return this.page.goToFolder(folderId);
 	}
 
-	static isFolderHidden (folderId) {
-		let actual = this.page.isFolderHidden(folderId);
-
-		assert(actual, `Папка "${folderId}" должна быть схлопнута`);
-	}
-
 	static isFolderVisible (folderId) {
 		let actual = this.page.isFolderVisible(folderId);
 
 		assert(actual, `Папка "${folderId}" должна быть раскрыта`);
+	}
+
+	static isFolderHidden (folderId) {
+		let actual = this.page.isFolderVisible(folderId);
+
+		assert(!actual, `Папка "${folderId}" должна быть схлопнута`);
 	}
 
 	static isFolderExists (folderId) {
@@ -62,22 +62,40 @@ class FoldersSteps extends Steps {
 		assert(!id, 'Папка "Архив" должна отсутствовать');
 	}
 
-	static isSocialExistsInArchive () {
-		let result = this.page.isFolderIn('500011', this.page.getArchiveFolderId());
+	static isFolderIn (folderId, parentId) {
+		let result = this.page.isFolderIn(folderId, parentId);
 
-		assert(result, `Папка "Социальные сети" должна присутствовать в папке "Архив"`);
+		assert(result, `Папка "${folderId}" должна быть внутри папки "${parentId}"`);
 	}
 
-	static isPromotionsExistsInArchive () {
-		let result = this.page.isFolderIn('500012', this.page.getArchiveFolderId());
+	static isFolderNotIn (folderId, parentId) {
+		let result = this.page.isFolderIn(folderId, parentId);
 
-		assert(result, `Папка "Скидки" должна присутствовать в папке "Архив"`);
+		assert(!result, `Папка "${folderId}" не должна быть внутри папки "${parentId}"`);
 	}
 
-	static isNewslettersExistsInArchive () {
-		let result = this.page.isFolderIn('500013', this.page.getArchiveFolderId());
+	static isFolderInArchive (folderId) {
+		let result = this.page.isFolderIn(folderId, this.page.getArchiveFolderId());
 
-		assert(result, `Папка "Рассылки" должна присутствовать в папке "Архив"`);
+		assert(result, `Папка "${folderId}" должна быть внутри папки "Архив"`);
+	}
+
+	static isFolderNotInArchive (folderId) {
+		let result = this.page.isFolderIn(folderId, this.page.getArchiveFolderId());
+
+		assert(!result, `Папка "${folderId}" не должна быть внутри папки "Архив"`);
+	}
+
+	static isArchiveIn (parentId) {
+		let result = this.page.isFolderIn(this.page.getArchiveFolderId(), parentId);
+
+		assert(result, `Папка "Архив" должна быть внутри папки "${parentId}"`);
+	}
+
+	static isArchiveNotIn (parentId) {
+		let result = this.page.isFolderIn(this.page.getArchiveFolderId(), parentId);
+
+		assert(!result, `Папка "Архив" не должна быть внутри папки "${parentId}"`);
 	}
 
 	/**
@@ -87,9 +105,53 @@ class FoldersSteps extends Steps {
 	 * @returns {string} - ID созданной папки
 	 */
 	static createFolder (params) {
-		let [folderId] = actions.createFolders([params]).value;
+		let result = actions.createFolders([params]);
 
-		return folderId;
+		assert(result.state && (result.state === 'success'));
+
+		return result.value[0];
+	}
+
+	static editFolder (params) {
+		let result = actions.editFolders([params]);
+
+		assert(result.state && (result.state === 'success'));
+	}
+
+	static deleteFolder (folderId) {
+		let result = actions.deleteFolders([folderId]);
+
+		assert(result.state && (result.state === 'success'));
+	}
+
+	static createArchive () {
+		return this.createFolder({
+			name: 'Архив',
+			parent: -1,
+			type: 'archive',
+			'only_web': true
+		});
+	}
+
+	static createArchiveIn (parentId) {
+		return this.createFolder({
+			name: 'Архив',
+			parent: parentId,
+			type: 'archive',
+			'only_web': false
+		});
+	}
+
+	static convertFolderToArchive (folderId) {
+		return this.editFolder({
+			id: folderId,
+			// type: 'archive' // Не работает, WTF?
+			archive: true // Работает, хотя эта опция deprecated
+		});
+	}
+
+	static deleteArchive () {
+		return this.deleteFolder(this.page.getArchiveFolderId());
 	}
 
 	static setTimeOffset (offset) {

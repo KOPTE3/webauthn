@@ -155,6 +155,18 @@ class Actions {
 			folders
 		});
 	}
+
+	editFolders (folders) {
+		return this.call('folders/edit', {
+			folders
+		});
+	}
+
+	deleteFolders (ids) {
+		return this.call('folders/remove', {
+			ids
+		});
+	}
 }
 
 module.exports = new Actions();

@@ -7,34 +7,35 @@ let CleanerSteps = require('../../steps/layers/cleaner');
 
 describe('TESTMAIL-31905', () => {
 	before(() => {
-		// Steps.auth('basic', {
-		// 	username: 'avgemr03@mail.ru',
-		// 	password: 'TestP4ss'
-		// });
 		Steps.auth();
-	});
 
-	beforeEach(() => {
-		// FiltersSteps.open();
-		// FiltersSteps.openPage();
-	});
+		Steps.features([
+			'mailboxsort-widget-archive',
+			'balloon-cleaner-archive'
+		]);
 
-	it('should create archive and subfolders', () => {
 		FoldersSteps.open();
 
 		try {
 			FoldersSteps.isArchiveNotExists();
 		} catch (exception) {
 			FoldersSteps.deleteArchive();
+
+			FoldersSteps.refresh();
+			FoldersSteps.isArchiveNotExists();
 		}
 
-		FiltersSteps.open();
-
 		FiltersSteps.enableCleaner();
-		FiltersSteps.refresh();
-		FiltersSteps.registerHook();
+	});
 
+	beforeEach(() => {
+		FiltersSteps.open();
+		FiltersSteps.registerHook();
+	});
+
+	it('should create archive and subfolders', () => {
 		FiltersSteps.waitForCleaner();
+
 		FiltersSteps.launchCleaner();
 		CleanerSteps.waitForCleanerMain();
 
@@ -46,8 +47,8 @@ describe('TESTMAIL-31905', () => {
 		FoldersSteps.open();
 
 		FoldersSteps.isArchiveExists();
-		FoldersSteps.isSocialExistsInArchive();
-		FoldersSteps.isPromotionsExistsInArchive();
-		FoldersSteps.isNewslettersExistsInArchive();
+		FoldersSteps.isFolderInArchive('500011'); // social
+		FoldersSteps.isFolderInArchive('500011'); // promotions
+		FoldersSteps.isFolderInArchive('500011'); // newsletters
 	});
 });

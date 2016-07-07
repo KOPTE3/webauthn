@@ -70,7 +70,7 @@ class PageObject {
 
 		if (features.length) {
 			query.ftrs = features.join(' ');
-			cache.features = [];
+			// cache.features = [];
 		}
 
 		let url = URL.request(this.location, query);
