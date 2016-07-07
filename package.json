@@ -40,9 +40,9 @@
 	},
 
 	"dependencies": {
-		"@qa/account-manager"  : "^1.0.0",
+		"@qa/account-manager"  : "^1.0.1",
 		"@qa/grunt-test-runner": "^0.2.1",
-		"@qa/test-tools"       : "^1.1.1",
+		"@qa/test-tools"       : "^1.2.2",
 		"@qa/wd-capabilities"  : "^0.0.4",
 		"@qa/wdio-api-mail.ru" : "^2.0.0",
 		"grunt"                : "^1.0.1",
@@ -54,6 +54,7 @@
 		"webdriverio"          : "^4.1.1",
 		"wdio-api-declaration" : "^0.0.1",
 		"wdio-dot-reporter"    : "^0.0.5",
+		"wdio-spec-reporter"   : "^0.0.1",
 		"wdio-mocha-framework" : "^0.3.4",
 		"wdio-json-reporter"   : "^0.0.2",
 		"wdio-junit-reporter"  : "^0.1.0"

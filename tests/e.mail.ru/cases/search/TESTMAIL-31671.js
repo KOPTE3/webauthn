@@ -1,8 +1,8 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
-let AdvancedSteps = require('../../steps/portal-menu/advanced');
+let portalSearchSteps = require('../../steps/portal-menu/portal-search');
+let advancedSteps = require('../../steps/portal-menu/advanced');
 let AdvancedStore = require('../../store/portal-menu/advanced');
 
 describe('TESTMAIL-31671', () => {
@@ -11,13 +11,13 @@ describe('TESTMAIL-31671', () => {
 		Messages.auth();
 		Messages.open();
 
-		PortalSearchSteps.simpleSearch();
+		portalSearchSteps.simpleSearch();
 		Messages.open();
-		PortalSearchSteps.toggleAdvanced();
+		portalSearchSteps.toggleAdvanced();
 
 		AdvancedStore.textFields.forEach(name => {
-			AdvancedSteps.clickField(name);
-			AdvancedSteps.noSuggests(name);
+			advancedSteps.clickField(name);
+			advancedSteps.noSuggests(name);
 		});
 	});
 });
