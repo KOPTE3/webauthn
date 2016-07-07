@@ -1,18 +1,19 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
+let CalendarFactory = require('../../utils/calendar');
 let portalSearchSteps = require('../../steps/portal-menu/portal-search');
 let advancedSteps = require('../../steps/portal-menu/advanced');
-let CalendarFactory = require('../../utils/calendar');
 let advancedCalendar = CalendarFactory.create('advanced');
+let operandsCalendar = CalendarFactory.create('portal-search');
 
 let AdvancedStore = require('../../store/portal-menu/advanced');
 
 let date = require('../../utils/date');
 
-describe('TESTMAIL-31728', () => {
-	it('Проверка добавления операнда "дата" (только из расширенного поиска)' +
-		' с выбором временного промежутка', () => {
+describe('TESTMAIL-31699', () => {
+	it('Проверка редактирования операнда "дата" с точной датой ' +
+		'с использованием выбора временного промежутка', () => {
 		Messages.auth();
 		Messages.open();
 
@@ -20,11 +21,8 @@ describe('TESTMAIL-31728', () => {
 
 		let today = date.format('D.M.Y');
 		let todayDay = date.format('d');
-		let lapse = AdvancedStore.dateSelectValues.filter(({value}) => value === '1')[0];
+		let lapses = AdvancedStore.dateSelectValues;
 		let operandName = 'date';
-
-		advancedSteps.selectDateLapse(lapse.value);
-		advancedSteps.checkSelectDateText(lapse.text);
 
 		advancedSteps.clickDateField();
 		advancedCalendar.isVisible();
@@ -36,6 +34,20 @@ describe('TESTMAIL-31728', () => {
 
 		portalSearchSteps.hasOperand(operandName);
 		portalSearchSteps.checkOperandText(operandName, today);
-		portalSearchSteps.checkDateOperandLapse(lapse.operandText);
+		portalSearchSteps.checkDateOperandLapse(lapses[0].operandText);
+
+		portalSearchSteps.clickOperand(operandName);
+		portalSearchSteps.operandHasFocus(operandName);
+
+		portalSearchSteps.isOperandInputReadonly(operandName);
+
+		operandsCalendar.isVisible();
+
+		operandsCalendar.isLapseVisible();
+
+		operandsCalendar.checkLapse(lapses[0].value);
+
+		operandsCalendar.clickLapse(lapses[1].value);
+		portalSearchSteps.checkDateOperandLapse(lapses[1].operandText);
 	});
 });

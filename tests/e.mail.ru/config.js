@@ -80,7 +80,7 @@ exports.config = {
 	},
 
 	/* Для реппортера Allure требуется наличие установленного плагина в CI */
-	reporters: ['dot', 'junit'],
+	reporters: ['spec', 'junit'],
 
 	reporterOptions: {
 		outputDir: `./cache/tests/${project}/reports`

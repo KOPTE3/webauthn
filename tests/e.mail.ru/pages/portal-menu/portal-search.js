@@ -120,6 +120,18 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Получить атрибут readonly инпута операнда
+	 *
+	 * @param {string} name - имя операнда
+	 * @returns {string}
+	 */
+	getOperandInputReadonly (name) {
+		let input = this.getOperandInput(name);
+
+		return input.getAttribute('readonly');
+	}
+
+	/**
 	 * Получить текст операнда.
 	 *
 	 * @param {string} name - имя операнда
@@ -206,8 +218,9 @@ class PortalSearch extends PortalMenu {
 	isOperandActive (name) {
 		let operand = this.getOperand(name);
 		let classes = operand.getAttribute('class').split(' ');
+		let active = this.locators.operands.active.slice(1);
 
-		return classes.indexOf(this.locators.operands.active) > -1;
+		return classes.indexOf(active) > -1;
 	}
 
 	/**
@@ -216,7 +229,8 @@ class PortalSearch extends PortalMenu {
 	 * @returns {boolean}
 	 */
 	operandHasFocus (name) {
-		let locator = Utils.getOperandLocator(this.locators.operands, name, 'input');
+		let inputName = name === 'date' ? 'dateInput' : 'input';
+		let locator = Utils.getOperandLocator(this.locators.operands, name, inputName);
 
 		return this.page.hasFocus(locator);
 	}

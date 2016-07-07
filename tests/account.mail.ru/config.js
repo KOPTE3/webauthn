@@ -62,7 +62,7 @@ exports.config = {
 		'ui': 'bdd',
 
 		/* Количество попыток на выполнение теста, который не был пройден */
-		'retries': 0,
+		'retries': 1,
 
 		/** Включить профилирование (сильно увеличивает время выполения тестов) */
 		// 'prof': true,
@@ -80,7 +80,7 @@ exports.config = {
 	},
 
 	/* Для реппортера Allure требуется наличие установленного плагина в CI */
-	reporters: ['dot', 'junit'],
+	reporters: ['spec', 'junit'],
 
 	reporterOptions: {
 		outputDir: `./cache/tests/${project}/reports`

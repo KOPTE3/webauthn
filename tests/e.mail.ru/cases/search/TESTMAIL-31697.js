@@ -1,23 +1,23 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
-let AdvancedSteps = require('../../steps/portal-menu/advanced');
+let portalSearchSteps = require('../../steps/portal-menu/portal-search');
+let advancedSteps = require('../../steps/portal-menu/advanced');
 
 describe('TESTMAIL-31697', () => {
 	it('Добавление операнда "отмеченные флажком" из расширенного поиска', () => {
 		Messages.auth();
 		Messages.open();
-		PortalSearchSteps.toggleAdvanced();
+		portalSearchSteps.toggleAdvanced();
 
 		let name = 'flag';
 
-		AdvancedSteps.clickCheckbox(name);
-		PortalSearchSteps.hasOperand(name);
-		PortalSearchSteps.operandHasIcon(name);
-		PortalSearchSteps.checkOperandText(name, '');
-		PortalSearchSteps.operandHasClose(name);
-		AdvancedSteps.isVisible();
-		AdvancedSteps.isChecked(name);
+		advancedSteps.clickCheckbox(name);
+		portalSearchSteps.hasOperand(name);
+		portalSearchSteps.operandHasIcon(name);
+		portalSearchSteps.checkOperandText(name, '');
+		portalSearchSteps.operandHasClose(name);
+		advancedSteps.isVisible();
+		advancedSteps.isChecked(name);
 	});
 });
