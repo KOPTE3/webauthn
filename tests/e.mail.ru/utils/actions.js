@@ -125,8 +125,6 @@ class Actions {
 			'save_as_template': saveAsTemplate
 		});
 	}
-
-
 }
 
 module.exports = new Actions();

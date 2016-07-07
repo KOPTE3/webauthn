@@ -29,7 +29,8 @@ describe('TESTMAIL-31545: AJAX. Написание письма. Забытое 
 
 		Messages.open();
 		messagesToolbarSteps.clickButton('compose');
-
+		composeEditor.wait();
+		
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', fields.to);
 		composeEditor.writeMessage(text);
