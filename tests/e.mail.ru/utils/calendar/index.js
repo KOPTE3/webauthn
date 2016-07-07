@@ -28,15 +28,20 @@ class CalendarFactory {
 	 * @returns {string}
 	 */
 	static getParent (name) {
+		let locators;
 		let parent = 'body';
 
 		switch (name) {
 			case 'advanced':
-				parent = new Advanced().locators.container;
+				({locators} = new Advanced());
+				parent = locators.container;
 				break;
+
 			case 'operands':
-				parent = new PortalSearch().locators.operands.date;
+				({locators} = new PortalSearch());
+				parent = locators.operands.date;
 				break;
+
 			default:
 				break;
 		}
