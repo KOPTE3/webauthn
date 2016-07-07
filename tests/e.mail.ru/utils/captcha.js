@@ -1,8 +1,10 @@
 'use strict';
 
 const http = require('http');
+const debug = require('debug')('captcha');
+
 const CAPTCHA_HEADER_NAME = 'X-Captcha-ID';
-const CAPTCHA_CRACKER_URL = 'http://test-proxy.win102.dev.mail.ru/captcha/';
+const CAPTCHA_CRACKER_URL = 'http://test-proxy.win102.dev.mail.ru/captcha';
 
 /**
  * Модуль для работы с капчей Mail.Ru
@@ -61,12 +63,14 @@ class Captcha {
 	 */
 	static getCaptchaValue (cid) {
 		return new Promise((resolve, reject) => {
-			let url = `${CAPTCHA_CRACKER_URL}/{cid}`;
+			let url = `${CAPTCHA_CRACKER_URL}/${cid}`;
 
+			debug('captcha cracker requst: ', url);
 			http.get(url, (res) => {
-				let body;
+				let body = '';
 
 				if (res.statusCode !== 200) {
+					debug('captcha cracker err: ', res.statusCode);
 					resolve('');
 				}
 
@@ -75,6 +79,7 @@ class Captcha {
 				});
 
 				res.on('end', () => {
+					debug('captcha cracker result:', body);
 					resolve(body);
 				});
 			});

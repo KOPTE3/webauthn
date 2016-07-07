@@ -22,9 +22,17 @@ class Controls extends PageObject {
 		return {
 			container,
 			phoneTabBlock,
+			form: '.js-form-select-type',
 			phoneCaptchaImg: '#password-recovery__remind__new__phone_captcha',
-			phoneCaptchaField: `${phoneTabBlock} .js-captcha`
+			phoneCaptchaField: `${phoneTabBlock} .js-captcha`,
 		};
+	}
+
+	/**
+	 * Попытка восстановить пароль
+	 */
+	submitForm () {
+		this.page.submitForm(this.locators.form);
 	}
 
 	/**

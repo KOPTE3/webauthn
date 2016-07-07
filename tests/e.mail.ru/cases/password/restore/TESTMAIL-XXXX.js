@@ -18,8 +18,9 @@ describe('TESTMAIL-XXXX', function () {
 		slectTypeView.waitForPhone();
 
 		slectTypeView.fillPhoneCaptcha();
+		slectTypeView.submitForm();
 		// slectTypeView.fillPhoneCode();
 
-		// browser.debug();
+		browser.debug();
 	});
 });

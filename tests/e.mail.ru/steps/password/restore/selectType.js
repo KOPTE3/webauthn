@@ -42,6 +42,13 @@ class Controls extends PasswordRestoreSteps {
 
 		Internal.getSmsCode(regTokenId);
 	}
+
+	/**
+	 * Submit form
+	 */
+	submitForm () {
+		selectTypeViewPage.submitForm();
+	}
 }
 
 module.exports = new Controls();

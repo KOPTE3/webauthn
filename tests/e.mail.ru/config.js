@@ -124,7 +124,7 @@ exports.config = {
 		capabilities.get('chrome')
 	],
 
-	before (capabilities, specs) {
+	before (capabilities, pecs) {
 		let commands = new WebDriverAPI();
 
 		commands.export('all');
