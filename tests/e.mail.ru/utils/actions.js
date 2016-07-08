@@ -92,13 +92,35 @@ class Actions {
 	/**
 	 * Создаёт папки
 	 *
-	 * @param {Array} folders - папки
+	 * @param {*[]} folders - папки
 	 *
 	 * @returns {Promise}
 	 */
 	createFolders (folders) {
 		return this.call('folders/add', {
 			folders
+		});
+	}
+
+	/**
+	 * Пометка писем
+	 *
+	 * @param {string} name - unread|flagged|pinned
+	 * @param {string[]} ids - массив id писем
+	 * @param {boolean} unset - снятие пометки
+	 *
+	 * @returns {Promise}
+	 */
+	markAs (name, ids, unset = false) {
+		let key = unset ? 'unset' : 'set';
+
+		return this.call('messages/marks', {
+			marks: [
+				{
+					name,
+					[key] : ids
+				}
+			]
 		});
 	}
 }
