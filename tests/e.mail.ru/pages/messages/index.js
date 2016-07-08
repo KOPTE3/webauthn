@@ -18,12 +18,21 @@ class MessagesPage extends PageObject {
 	}
 
 	/**
+	 * Базовый локатор для писем
+	 *
+	 * @return {string}
+	 */
+	get lettersLocator () {
+		return '[data-mnemo="letters"]';
+	}
+
+	/**
 	 * Локаторы
 	 *
 	 * @type {Object}
 	 */
 	get locators () {
-		let letters = '[data-mnemo="letters"]';
+		let letters = this.lettersLocator;
 
 		return {
 			container: '#b-letters',
@@ -55,6 +64,15 @@ class MessagesPage extends PageObject {
 	}
 
 	/**
+	 * Получить все письма
+	 *
+	 * @return {*}
+	 */
+	getLetters () {
+		return this.page.elements(this.locators.letters);
+	}
+
+	/**
 	 * Получить id письма по теме.
 	 * Если таких несколько, то только самый верхний
 	 *
@@ -62,14 +80,14 @@ class MessagesPage extends PageObject {
 	 * @return {string}
 	 */
 	getLetterIdBySubject (subject) {
-		let {value: messages} = this.page.elements(this.locators.letters);
+		let {value: letters} = this.getLetters();
 		let subjectLocator = this.locators.letterSubject;
 		let id;
 
-		messages.some(({ELEMENT: ID}) => {
-			let title = this.page.elementIdElement(ID, subjectLocator);
+		letters.some(({ELEMENT: ID}) => {
+			let item = this.page.elementIdElement(ID, subjectLocator);
 
-			if (title.getText() === subject) {
+			if (item.getText() === subject) {
 				id = this.page.elementIdAttribute(ID, 'data-id').value;
 
 				return true;
@@ -77,6 +95,17 @@ class MessagesPage extends PageObject {
 		});
 
 		return id;
+	}
+
+	/**
+	 * Получить количество писем
+	 *
+	 * @return {number}
+	 */
+	getLettersCount () {
+		let {value} = this.getLetters();
+
+		return value.length;
 	}
 
 }

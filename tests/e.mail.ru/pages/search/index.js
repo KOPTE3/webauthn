@@ -1,9 +1,9 @@
 'use strict';
 
-let PageObject = require('../../pages');
+let MessagesPage = require('../../pages/messages');
 
 /** Модуль для работы с представлением страницы поиска писем */
-class SearchPage extends PageObject {
+class SearchPage extends MessagesPage {
 	constructor () {
 		super();
 	}
@@ -17,15 +17,21 @@ class SearchPage extends PageObject {
 		return '/search';
 	}
 
+	get lettersLocator () {
+		return '.b-datalist_search';
+	}
+
 	/**
 	 * Локаторы
 	 *
 	 * @type {Object}
 	 */
 	get locators () {
-		return {
-			container: '.b-datalist_search'
-		};
+		let container = this.lettersLocator;
+
+		return this.extend(super.locators, {
+			container
+		});
 	}
 }
 
