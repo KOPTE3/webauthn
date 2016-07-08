@@ -1,8 +1,11 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let portalSearchSteps = require('../../steps/portal-menu/portal-search');
-let advancedSteps = require('../../steps/portal-menu/advanced');
+let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
+let AdvancedSteps = require('../../steps/portal-menu/advanced');
+
+let portalSearchSteps = new PortalSearchSteps();
+let advancedSteps = new AdvancedSteps();
 
 describe('TESTMAIL-31695', () => {
 	it('Добавление операнда "с вложениями" из расширенного поиска', () => {

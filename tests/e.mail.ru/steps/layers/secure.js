@@ -13,4 +13,4 @@ class LayerSecureSteps extends LayerSteps {
 	}
 }
 
-module.exports = new LayerSecureSteps();
+module.exports = LayerSecureSteps;

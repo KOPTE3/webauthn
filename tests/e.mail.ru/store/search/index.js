@@ -31,4 +31,4 @@ class Search extends Store {
 	}
 }
 
-module.exports = new Search();
+module.exports = Search;

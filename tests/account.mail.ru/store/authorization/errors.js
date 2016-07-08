@@ -13,7 +13,7 @@ class AuthorizationErrors extends AuthorizationStore {
 	 *
 	 * @type {Object}
 	 */
-	get codes () {
+	static get codes () {
 		return {
 			1: 'Повторите попытку через некоторое время.',
 
@@ -31,9 +31,9 @@ class AuthorizationErrors extends AuthorizationStore {
 		};
 	}
 
-	get (code) {
+	static get (code) {
 		return this.codes[code];
 	}
 }
 
-module.exports = new AuthorizationErrors();
+module.exports = AuthorizationErrors;

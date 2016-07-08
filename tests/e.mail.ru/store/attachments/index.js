@@ -16,7 +16,7 @@ class Attachments extends Store {
 	 * @todo stash.mail.ru/projects/QA/repos/test-files
 	 * @type {string}
 	 */
-	get path () {
+	static get path () {
 		let system = new System(),
 			profile = '/var/lib/selenium/';
 
@@ -28,4 +28,4 @@ class Attachments extends Store {
 	}
 }
 
-module.exports = new Attachments();
+module.exports = Attachments;

@@ -1,7 +1,8 @@
 'use strict';
 
 let LoginPage = require('../../steps/login');
-let loginForm = require('../../steps/login/form');
+let LoginForm = require('../../steps/login/form');
+let loginForm = new LoginForm();
 let AuthStore = require('../../store/authorization');
 let Providers = require('../../store/authorization/providers');
 

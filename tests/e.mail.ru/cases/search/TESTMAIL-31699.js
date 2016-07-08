@@ -2,14 +2,18 @@
 
 let Messages = require('../../steps/messages');
 let CalendarFactory = require('../../utils/calendar');
-let portalSearchSteps = require('../../steps/portal-menu/portal-search');
-let advancedSteps = require('../../steps/portal-menu/advanced');
+let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
+let AdvancedSteps = require('../../steps/portal-menu/advanced');
+
+let portalSearchSteps = new PortalSearchSteps();
+let advancedSteps = new AdvancedSteps();
 let advancedCalendar = CalendarFactory.create('advanced');
 let operandsCalendar = CalendarFactory.create('portal-search');
 
 let AdvancedStore = require('../../store/portal-menu/advanced');
 
-let date = require('../../utils/date');
+let DateUtils = require('../../utils/date');
+let date = new DateUtils();
 
 describe('TESTMAIL-31699', () => {
 	it('Проверка редактирования операнда "дата" с точной датой ' +

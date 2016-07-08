@@ -191,4 +191,4 @@ class Actions {
 	}
 }
 
-module.exports = new Actions();
+module.exports = Actions;

@@ -9,4 +9,4 @@ class Settings extends Store {
 	}
 }
 
-module.exports = new Settings();
+module.exports = Settings;

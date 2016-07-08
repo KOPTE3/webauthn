@@ -9,4 +9,4 @@ class Sent extends Store {
 	}
 }
 
-module.exports = new Sent();
+module.exports = Sent;

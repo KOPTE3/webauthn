@@ -144,4 +144,4 @@ class AdvancedSteps extends PortalMenuSteps {
 	}
 }
 
-module.exports = new AdvancedSteps();
+module.exports = AdvancedSteps;

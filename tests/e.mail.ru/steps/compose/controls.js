@@ -35,4 +35,4 @@ class ComposeControlSteps extends ComposeSteps {
 	}
 }
 
-module.exports = new ComposeControlSteps();
+module.exports = ComposeControlSteps;

@@ -41,4 +41,4 @@ class Controls extends PageObject {
 
 }
 
-module.exports = new Controls();
+module.exports = Controls;
