@@ -20,32 +20,30 @@ describe('TESTMAIL-31543: Написание письма. Забытое вло
 	});
 
 
-	composeEditorStore.classifierTest.lettersWithoutAttach.forEach(function (text) {
-		it('письмо должно быть успешно отправлено', () => {
-			let {fields} = new ComposeFieldsStore();
+	it('письмо должно быть успешно отправлено', () => {
+		let {fields} = new ComposeFieldsStore();
 
-			Compose.features([
-				'check-missing-attach',
-				'disable-ballons',
-				'no-collectors-in-compose',
-				'disable-fastreply-landmark'
-			]);
+		Compose.features([
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose',
+			'disable-fastreply-landmark'
+		]);
 
-			Compose.open();
+		Compose.open();
 
-			composeEditor.wait();
+		composeEditor.wait();
 
-			composeFields.setFieldValue('subject', 'check attach');
+		composeFields.setFieldValue('subject', 'check attach');
 
-			composeFields.setFieldValue('to', fields.to);
+		composeFields.setFieldValue('to', fields.to);
 
-			composeEditor.writeMessage(text);
+		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 
-			composeAttaches.uploadAttach('1exp.JPG');
+		composeAttaches.uploadAttach('1exp.JPG');
 
-			composeControls.send();
+		composeControls.send();
 
-			SentPage.wait();
-		});
+		SentPage.wait();
 	});
 });
