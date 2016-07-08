@@ -1,7 +1,8 @@
 'use strict';
 
 let LoginPage = require('../../steps/login');
-let loginForm = require('../../steps/login/form');
+let LoginForm = require('../../steps/login/form');
+let loginForm = new LoginForm();
 
 describe('TESTMAIL-8679', () => {
 	it('Проверка ошибки при авторизации с пустым полем пароль', () => {

@@ -197,4 +197,4 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 }
 
-module.exports = new PortalSearchSteps();
+module.exports = PortalSearchSteps;

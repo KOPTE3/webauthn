@@ -13,4 +13,4 @@ class FolderAddLayerSteps extends LayerSteps {
 	}
 }
 
-module.exports = new FolderAddLayerSteps();
+module.exports = FolderAddLayerSteps;

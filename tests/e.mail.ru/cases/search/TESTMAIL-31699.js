@@ -2,8 +2,11 @@
 
 let Messages = require('../../steps/messages');
 let CalendarFactory = require('../../utils/calendar');
-let portalSearchSteps = require('../../steps/portal-menu/portal-search');
-let advancedSteps = require('../../steps/portal-menu/advanced');
+let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
+let AdvancedSteps = require('../../steps/portal-menu/advanced');
+
+let portalSearchSteps = new PortalSearchSteps();
+let advancedSteps = new AdvancedSteps();
 let advancedCalendar = CalendarFactory.create('advanced');
 let operandsCalendar = CalendarFactory.create('portal-search');
 

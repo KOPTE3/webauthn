@@ -2,13 +2,16 @@
 
 let Messages = require('../../steps/messages');
 let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
+let ComposeFields = require('../../steps/compose/fields');
+let ComposeEditor = require('../../steps/compose/editor');
+let СomposeControls = require('../../steps/compose/controls');
 let composeEditorStore = require('../../store/compose/editor');
 let SentPage = require('../../steps/sent');
 let ComposeFieldsStore = require('../../store/compose/fields');
+
+let composeFields = new ComposeFields();
+let composeEditor = new ComposeEditor();
+let composeControls = new СomposeControls();
 
 let composeFieldsStore = new ComposeFieldsStore();
 

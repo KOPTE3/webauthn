@@ -26,4 +26,4 @@ class Controls extends PasswordRestoreSteps {
 	}
 }
 
-module.exports = new Controls();
+module.exports = Controls;

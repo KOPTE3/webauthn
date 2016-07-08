@@ -6,13 +6,20 @@ let lettersSteps = new LettersSteps();
 
 let Compose = require('../../steps/compose');
 let ComposeFieldsStore = require('../../store/compose/fields');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
+let ComposeFields = require('../../steps/compose/fields');
+let ComposeEditor = require('../../steps/compose/editor');
+let СomposeControls = require('../../steps/compose/controls');
+let MissingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
+let MessageToolbarSteps = require('../../steps/message/toolbar');
+
+let composeFields = new ComposeFields();
+let composeEditor = new ComposeEditor();
+let composeControls = new СomposeControls();
+let missingAttachLayer = new MissingAttachLayer();
+let messageToolbarSteps = new MessageToolbarSteps();
+
 let actions = require('../../utils/actions');
-let messageToolbarSteps = require('../../steps/message/toolbar');
 
 const text = 'Тестовый текст';
 const subject = 'Тест';
