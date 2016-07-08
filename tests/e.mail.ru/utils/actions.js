@@ -6,8 +6,7 @@ const ASYNC_TIMEOUT = 10000; // таймаут завершнеия асинхр
 const DELIVERY_TIMEOUT = 1000; // таймаут ожидания фактической доствки письма
 
 /** Модуль для работы с Actions */
-class Actions {
-
+module.exports = {
 	/**
 	 * Выполняет апи вызов
 	 *
@@ -66,7 +65,7 @@ class Actions {
 					});
 				});
 			}, {email, method, options}, ASYNC_TIMEOUT, DELIVERY_TIMEOUT);
-	}
+	},
 
 	/**
 	 * Сохраняет данные в хелпере.
@@ -80,7 +79,7 @@ class Actions {
 			index,
 			update: data
 		});
-	}
+	},
 
 	/**
 	 * Удаляет хелпер.
@@ -92,7 +91,7 @@ class Actions {
 		return this.call('helpers/remove', {
 			indexes: [index]
 		});
-	}
+	},
 
 	/**
 	 * Регистрирует в браузере функцию-обработчик AJAX-ответов.
@@ -102,25 +101,26 @@ class Actions {
 	 * в которые можно внести изменения
 	 * @returns {Promise}
 	 */
-	registerAjaxHook (urlPattern, hook) {
+	registerAjaxHook (urlPattern, hook, ...data) {
 		let result = browser
-			.execute((urlPattern, hookString) => {
+			.execute(function (urlPattern, hookString, data) {
 				var originalParse = window.patron.OfflineCache.parse;
+				var hookBody = '(' + hookString + ').apply(null, [xhr, options].concat(data))';
 
-				window.patron.OfflineCache.parse = function (jqXHR, textStatus, opts, doResult) {
-					if (opts.url.match(new RegExp(urlPattern))) {
-						var body = '(' + hookString + ')(xhr, options)';
+				/* eslint no-new-func: 0 */
+				var hook = new Function('xhr', 'options', 'data', hookBody);
 
-						/* eslint no-new-func: 0 */
-						(new Function('xhr', 'options', body))(jqXHR, opts);
+				patron.OfflineCache.parse = function (jqXHR, textStatus, options, doResult) {
+					if (options.url.match(new RegExp(urlPattern))) {
+						hook(jqXHR, options, data);
 					}
 
-					return originalParse.call(this, jqXHR, textStatus, opts, doResult);
+					return originalParse.call(this, jqXHR, textStatus, options, doResult);
 				};
-			}, urlPattern, hook.toString());
+			}, urlPattern, hook.toString(), data);
 
 		return (result.state === 'success') && result.value;
-	}
+	},
 
 	/**
 	 * Отправляет пользователю письмо
@@ -141,7 +141,7 @@ class Actions {
 			body: { text },
 			correspondents: { to }
 		});
-	}
+	},
 
 	/**
 	 * Создаёт папки
@@ -154,19 +154,19 @@ class Actions {
 		return this.call('folders/add', {
 			folders
 		});
-	}
+	},
 
 	editFolders (folders) {
 		return this.call('folders/edit', {
 			folders
 		});
-	}
+	},
 
 	deleteFolders (ids) {
 		return this.call('folders/remove', {
 			ids
 		});
-	}
+	},
 
 	/**
 	 * Пометка писем
@@ -189,6 +189,4 @@ class Actions {
 			]
 		});
 	}
-}
-
-module.exports = Actions;
+};

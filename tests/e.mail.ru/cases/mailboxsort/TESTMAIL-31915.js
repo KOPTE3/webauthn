@@ -5,6 +5,8 @@ let FoldersSteps = require('../../steps/folders');
 let FiltersSteps = require('../../steps/settings/filters');
 let CleanerSteps = require('../../steps/layers/cleaner');
 
+let foldersStore = require('../../store/folders');
+
 describe('TESTMAIL-31915', () => {
 	before(() => {
 		Steps.auth();
@@ -65,11 +67,9 @@ describe('TESTMAIL-31915', () => {
 
 		FoldersSteps.open();
 
-		FoldersSteps.isFolderExists('500011'); // social
-		FoldersSteps.isFolderNotInArchive('500011');
-		FoldersSteps.isFolderExists('500012'); // promotions
-		FoldersSteps.isFolderNotInArchive('500012');
-		FoldersSteps.isFolderExists('500013'); // newsletters
-		FoldersSteps.isFolderNotInArchive('500013');
+		['social', 'promotions', 'newsletters'].forEach((name) => {
+			FoldersSteps.isFolderExists(foldersStore.ids[name]);
+			FoldersSteps.isFolderNotInArchive(foldersStore.ids[name]);
+		});
 	});
 });

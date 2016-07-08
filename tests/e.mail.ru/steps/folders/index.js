@@ -4,9 +4,8 @@ let assert = require('assert');
 
 let Steps = require('../../steps');
 let FoldersPage = require('../../pages/folders');
-let Actions = require('../../utils/actions');
+let actions = require('../../utils/actions');
 let DateUtils = require('../../utils/date');
-let actions = new Actions();
 let date = new DateUtils();
 
 /** Модуль для работы с шагами списка папкок */
