@@ -3,6 +3,7 @@
 let nodemailer = require('nodemailer');
 let fs = require('fs');
 let AuthStore = require('../../store/authorization');
+let actions = require('../actions');
 
 const ASYNC_TIMEOUT = 10000; // таймаут завершнеия асинхронного скрипта
 const DELIVERY_TIMEOUT = 2000; // таймаут ожидания фактической доствки письма
@@ -60,6 +61,12 @@ class Mail {
 			}
 		});
 		browser.pause(DELIVERY_TIMEOUT);
+	}
+
+	draft () {
+		let {to, from, subject, text} = this.options;
+
+		actions.saveDraft(to, from, subject, text);
 	}
 }
 

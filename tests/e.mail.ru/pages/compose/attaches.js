@@ -55,10 +55,10 @@ class ComposeAttaches extends ComposePage {
 	isFileAttached (filename) {
 		let selector = this.locators.attachmentByName(filename);
 		let files = this.page.elements(selector);
+		let file = this.page.elements(this.locators.attachments);
 
-		let f = this.page.elements(this.locators.attachments);
 		console.log(files);
-		console.log(f);
+		console.log(file);
 
 
 		return files.value.length > 0;
@@ -77,6 +77,7 @@ class ComposeAttaches extends ComposePage {
 
 	get attachField () {
 		console.log(this.page.element(this.locators.attachField));
+		
 		return this.page.element(this.locators.attachField);
 	}
 
