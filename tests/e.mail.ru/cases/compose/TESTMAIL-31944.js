@@ -9,7 +9,7 @@ let composeFields = require('../../steps/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
-let ComposeEditorStore = require('../../store/compose/editor');
+let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
 let messageToolbarSteps = require('../../steps/message/toolbar');
@@ -19,9 +19,9 @@ let composeAttaches = require('../../steps/compose/attaches');
 // mail
 let Mail = require('../../utils/mail');
 
-const subject = 'TESTMAIL-31954';
+const subject = 'TESTMAIL-31944';
 
-describe('TESTMAIL-31954: НЕ AJAX. Черновики. Забытое вложение. ' +
+describe('TESTMAIL-31944: НЕ AJAX. Черновики. Забытое вложение. ' +
 	'Проверить отсутствие попапа при отправке с текстом и аттачем из шаблона ' +
 	'(исходный шаблон с аттачем)', done => {
 	before(() => {
@@ -30,7 +30,16 @@ describe('TESTMAIL-31954: НЕ AJAX. Черновики. Забытое влож
 
 	it('письмо должно быть успешно отправлено', () => {
 		let {fields} = new ComposeFieldsStore();
-		let {texts} = ComposeEditorStore;
+
+		var mail = new Mail({
+			to: fields.to,
+			subject,
+			text: composeEditorStore.texts.withAttach
+		});
+
+		mail.addAttach('file1.txt');
+
+		mail.send();
 
 		Compose.features([
 			'check-missing-attach',
@@ -39,27 +48,13 @@ describe('TESTMAIL-31954: НЕ AJAX. Черновики. Забытое влож
 			'disable-fastreply-landmark'
 		]);
 
-		Compose.open();
+		Messages.open();
+		lettersSteps.openNewestLetter();
+		messageToolbarSteps.clickButton('forward');
 
-		composeEditor.wait();
-
-		composeEditor.writeMessage(texts.withAttach);
-
-		composeAttaches.uploadAttach('file1.txt');
-
-		composeEditor.wait();
-
-		composeControls.template();
-
-		composeEditor.wait();
-
-		composeControls.cancel();
-
-		Compose.open();
-
-		composeControls.applyTemplate();
-
-		composeEditor.wait();
+		Compose.wait();
+		Compose.refresh();
+		Compose.wait();
 
 		composeFields.clickField('to');
 		composeFields.setFieldValue('to', fields.to);
