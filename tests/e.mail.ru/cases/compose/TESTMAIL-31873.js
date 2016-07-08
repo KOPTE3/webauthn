@@ -1,7 +1,8 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let lettersSteps = require('../../steps/messages/letters');
+let LettersSteps = require('../../steps/messages/letters');
+let lettersSteps = new LettersSteps();
 
 let Compose = require('../../steps/compose');
 let ComposeFieldsStore = require('../../store/compose/fields');

@@ -37,12 +37,40 @@ class LoginFormSteps extends Steps {
 	}
 
 	/**
-	 * Выбрать домен в списке
+	 * Отправить форму по клику
+	 *
+	 * @returns {Promise}
+	 */
+	clickBySignInButton () {
+		return this.loginForm.clickBySignInButton();
+	}
+
+	/**
+	 * Заполнить поле логина
 	 *
 	 * @param {string} login
 	 */
 	setLogin (login) {
 		this.loginForm.setLogin(login);
+	}
+
+	/**
+	 * Заполнить поле пароля
+	 *
+	 * @param {string} password
+	 */
+	setPassword (password) {
+		this.page.setPassword(password);
+	}
+
+	/**
+	 * Заполнить авторизационные поля
+	 *
+	 * @param {Object} credentials
+	 */
+	setCredentials ({ username, password }) {
+		this.setLogin(username);
+		this.setPassword(password);
 	}
 
 	/**
