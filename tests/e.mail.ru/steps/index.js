@@ -32,12 +32,6 @@ class Steps {
 		return Pages.auth(...arguments);
 	}
 
-	static openPage () {
-		let actual = this.page.open();
-
-		assert(actual, 'Не удалось открыть страницу');
-	}
-
 	/**
 	 * Открыть страницу
 	 *

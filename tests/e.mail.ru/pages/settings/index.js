@@ -4,10 +4,6 @@ let Page = require('..');
 
 /** Модуль для работы с представлением страницы настроек */
 class SettingsPage extends Page {
-	// constructor () {
-	// 	super();
-	// }
-
 	/**
 	 * Базовый адрес страницы
 	 *
