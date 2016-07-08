@@ -18,7 +18,7 @@ describe('TESTMAIL-31552: Написание письма. Забытое вло
 		Compose.auth();
 	});
 
-	it('проверяем содержимое леера', () => {
+	it('Проверяем содержимое леера', () => {
 		Compose.features([
 			'check-missing-attach',
 			'disable-ballons',

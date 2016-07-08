@@ -3,7 +3,7 @@
 let MessagePage = require('../message');
 
 /** Модуль для работы с формой страницы написания письма */
-class MessageFastanswerPage extends MessagePage {
+class MessagefastreplyPage extends MessagePage {
 	constructor () {
 		super();
 	}
@@ -35,4 +35,4 @@ class MessageFastanswerPage extends MessagePage {
 	}
 }
 
-module.exports = MessageFastanswerPage;
+module.exports = MessagefastreplyPage;

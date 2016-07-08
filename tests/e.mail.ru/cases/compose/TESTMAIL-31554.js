@@ -6,7 +6,6 @@ let composeFields = require('../../steps/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
-let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
 let messagesToolbarSteps = require('../../steps/messages/toolbar');
 
@@ -18,7 +17,7 @@ describe('TESTMAIL-31554: AJAX. Написание письма. Забытое 
 		Compose.auth();
 	});
 
-	it('проверяем закрытие леера', () => {
+	it('Проверяем закрытие леера', () => {
 		let { fields } = new ComposeFieldsStore();
 
 		Messages.features([

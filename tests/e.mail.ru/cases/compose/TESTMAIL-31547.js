@@ -15,7 +15,7 @@ describe('TESTMAIL-31547: НЕ AJAX. Написание письма. Забыт
 		Compose.auth();
 	});
 
-	it('попап должен появится', () => {
+	it('Попап должен появится', () => {
 		Compose.features([
 			'check-missing-attach',
 			'disable-ballons',

@@ -15,7 +15,7 @@ describe('TESTMAIL-31551: НЕ AJAX. Забытое вложение. Прове
 		Compose.auth();
 	});
 
-	it('проверяем закрытие леера', () => {
+	it('Проверяем закрытие леера', () => {
 		let { fields } = new ComposeFieldsStore();
 
 		Compose.features([

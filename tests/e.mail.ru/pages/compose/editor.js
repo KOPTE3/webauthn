@@ -16,6 +16,7 @@ class ComposeEditor extends ComposePage {
 	get locators () {
 		return this.extend(super.locators, {
 			container: '.mceToolbarRow1',
+			layout: '.mceLayout',
 			body: '.mceContentBody',
 			editor: '.mceIframeContainer iframe'
 		});

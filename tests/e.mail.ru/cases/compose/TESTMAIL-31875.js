@@ -18,12 +18,12 @@ describe('TESTMAIL-31875: AJAX. Ответ на письмо. Забытое в�
 'появление попапа для пересылки из тулбара с текстом и без аттача', done => {
 	before(Compose.auth);
 
-	it('попап должен появится', () => {
+	it('Попап должен появится', () => {
 		let { fields } = new ComposeFieldsStore();
 
 		Messages.open();
 
-		let message = actions.sendMessage(
+		actions.sendMessage(
 			fields.to,
 			fields.from,
 			subject,

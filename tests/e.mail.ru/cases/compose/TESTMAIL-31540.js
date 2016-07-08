@@ -18,7 +18,7 @@ describe('TESTMAIL-31540: AJAX. Написание письма. Забытое 
 		Compose.auth();
 	});
 
-	it('попап должен появится', () => {
+	it('Попап должен появится', () => {
 		Messages.features([
 			'check-missing-attach',
 			'disable-ballons',

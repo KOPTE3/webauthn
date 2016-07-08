@@ -5,14 +5,13 @@ let Messages = require('../../steps/messages');
 let messagesLettersSteps = require('../../steps/messages/letters');
 
 // message
-let messageFastanswerSteps = require('../../steps/message/fastanswer');
+let messagefastreplySteps = require('../../steps/message/fastreply');
 let messageToolbarSteps = require('../../steps/message/toolbar');
 
 // compose
 let Compose = require('../../steps/compose');
 let composeFields = require('../../steps/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
 let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
 
@@ -28,12 +27,12 @@ describe('TESTMAIL-31874: Ответ на письмо. Забытое влож�
 ' попапа для быстрого ответа с текстом и без аттача', done => {
 	before(Compose.auth);
 
-	it('попап появился', () => {
+	it('Попап появился', () => {
 		let { fields } = new ComposeFieldsStore();
 
 		Messages.open();
 
-		let message = actions.sendMessage(
+		actions.sendMessage(
 			fields.to,
 			fields.from,
 			subject,
@@ -50,7 +49,7 @@ describe('TESTMAIL-31874: Ответ на письмо. Забытое влож�
 		Messages.open();
 
 		messagesLettersSteps.openNewestLetter();
-		messageFastanswerSteps.clickButton('reply');
+		messagefastreplySteps.clickButton('reply');
 
 		composeEditor.wait();
 		composeFields.setFieldValue('subject', 'check attach');

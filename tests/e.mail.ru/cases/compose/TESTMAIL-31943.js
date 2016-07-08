@@ -6,18 +6,13 @@ let messagesLettersSteps = require('../../steps/messages/letters');
 
 // Message
 let Message = require('../../steps/message');
-let messageFastanswerSteps = require('../../steps/message/fastanswer');
+let messagefastreplySteps = require('../../steps/message/fastreply');
 let messageToolbarSteps = require('../../steps/message/toolbar');
 
 // Compose
-let Compose = require('../../steps/compose');
 let ComposeFieldsStore = require('../../store/compose/fields');
-let composeControls = require('../../steps/compose/controls');
 let composeEditorStore = require('../../store/compose/editor');
 let composeEditor = require('../../steps/compose/editor');
-
-// layers
-let missingAttachLayer = require('../../steps/layers/missingAttach');
 
 // settings
 let SettingsMessages = require('../../steps/settings/messages');
@@ -38,7 +33,7 @@ describe('TESTMAIL-31943: НЕ AJAX. Ответ на письмо. Забыто�
 		SettingsMessages.auth();
 	});
 
-	it('попап не должен быть показан', () => {
+	it('Попап не должен быть показан', () => {
 		const features = [
 			'check-missing-attach',
 			'disable-ballons',
@@ -54,7 +49,7 @@ describe('TESTMAIL-31943: НЕ AJAX. Ответ на письмо. Забыто�
 		settingsMessagesForm.toggleField('sendReplyIncludeMessage');
 		settingsMessagesForm.save();
 
-		let message = actions.sendMessage(
+		actions.sendMessage(
 			fields.to,
 			fields.from,
 			subject,
@@ -69,7 +64,7 @@ describe('TESTMAIL-31943: НЕ AJAX. Ответ на письмо. Забыто�
 		Message.features(features);
 		Message.refresh();
 
-		messageFastanswerSteps.clickButton('reply');
+		messagefastreplySteps.clickButton('reply');
 		composeEditor.wait();
 
 		composeEditor.writeMessage('Тест письма');

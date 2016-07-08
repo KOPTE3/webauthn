@@ -2,18 +2,13 @@
 
 let Messages = require('../../steps/messages');
 let lettersSteps = require('../../steps/messages/letters');
-let fastanswerSteps = require('../../steps/message/fastanswer');
-
 let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
-let messageToolbarSteps = require('../../steps/message/toolbar');
-let SentPage = require('../../steps/sent');
 
 const subject = 'Тестовый текст';
 
@@ -23,7 +18,7 @@ describe('TESTMAIL-31953: НЕ AJAX. Черновики. Забытое влож
 		Compose.auth();
 	});
 
-	it('попап должен быть показан', () => {
+	it('Попап должен быть показан', () => {
 		Messages.open();
 
 		let { fields } = new ComposeFieldsStore();

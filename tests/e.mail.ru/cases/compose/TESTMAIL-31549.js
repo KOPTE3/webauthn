@@ -1,11 +1,9 @@
 'use strict';
 
-let Messages = require('../../steps/messages');
 let Compose = require('../../steps/compose');
 let composeFields = require('../../steps/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
 let SentPage = require('../../steps/sent');
 let ComposeFieldsStore = require('../../store/compose/fields');
@@ -19,7 +17,7 @@ describe('TESTMAIL-31549: НЕ AJAX. Написание письма. Забыт
 		Compose.auth();
 	});
 
-	it('письмо должно отправится', () => {
+	it('Письмо должно отправится', () => {
 		Compose.features([
 			'check-missing-attach',
 			'disable-ballons',

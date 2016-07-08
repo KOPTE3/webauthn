@@ -6,7 +6,6 @@ let composeFields = require('../../steps/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
-let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
 let SentPage = require('../../steps/sent');
 let messagesToolbarSteps = require('../../steps/messages/toolbar');
@@ -17,7 +16,7 @@ describe('TESTMAIL-31546: AJAX. Написание письма. Забытое 
 'отправку письма по клику на кнопку "Всё равно отправить"', () => {
 	before(Compose.auth);
 
-	it('проверям что сообщение было отправленно', () => {
+	it('Проверям что сообщение было отправленно', () => {
 		let { fields } = new ComposeFieldsStore();
 
 		Messages.features([

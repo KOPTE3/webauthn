@@ -2,12 +2,11 @@
 
 let Messages = require('../../steps/messages');
 let lettersSteps = require('../../steps/messages/letters');
-let fastanswerSteps = require('../../steps/message/fastanswer');
+let fastreplySteps = require('../../steps/message/fastreply');
 
 let Compose = require('../../steps/compose');
 let composeFields = require('../../steps/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
@@ -20,12 +19,12 @@ describe('TESTMAIL-31903: AJAX. Ответ на письмо. Забытое в�
 'появление попапа для быстрой пересылки с текстом и без аттача', done => {
 	before(Compose.auth);
 
-	it('попап должен появится', () => {
+	it('Попап должен появится', () => {
 		let { fields } = new ComposeFieldsStore();
 
 		Messages.open();
 
-		let message = actions.sendMessage(
+		actions.sendMessage(
 			fields.to,
 			fields.from,
 			subject,
@@ -41,7 +40,7 @@ describe('TESTMAIL-31903: AJAX. Ответ на письмо. Забытое в�
 
 		Messages.open();
 		lettersSteps.openNewestLetter();
-		fastanswerSteps.clickButton('forward');
+		fastreplySteps.clickButton('forward');
 
 		composeEditor.wait();
 		composeFields.setFieldValue('subject', subject);

@@ -6,26 +6,17 @@ let messagesLettersSteps = require('../../steps/messages/letters');
 
 // Message
 let Message = require('../../steps/message');
-let messageFastanswerSteps = require('../../steps/message/fastanswer');
+let messagefastreplySteps = require('../../steps/message/fastreply');
 let messageToolbarSteps = require('../../steps/message/toolbar');
 
 // Compose
-let Compose = require('../../steps/compose');
 let ComposeFieldsStore = require('../../store/compose/fields');
-let composeControls = require('../../steps/compose/controls');
 let composeEditorStore = require('../../store/compose/editor');
 let composeEditor = require('../../steps/compose/editor');
 let composeFields = require('../../steps/compose/fields');
 
 // layers
 let missingAttachLayer = require('../../steps/layers/missingAttach');
-
-// settings
-let SettingsMessages = require('../../steps/settings/messages');
-let settingsMessagesForm = require('../../steps/settings/messages/form');
-
-// sent pages
-let SentPage = require('../../steps/sent');
 
 // utils
 let actions = require('../../utils/actions');
@@ -39,7 +30,7 @@ describe('TESTMAIL-31942 НЕ AJAX. Ответ на письмо. Забытое
 		Messages.auth();
 	});
 
-	it('попап должен быть показан', () => {
+	it('Попап должен быть показан', () => {
 		const features = [
 			'check-missing-attach',
 			'disable-ballons',
@@ -51,7 +42,7 @@ describe('TESTMAIL-31942 НЕ AJAX. Ответ на письмо. Забытое
 
 		Messages.open();
 
-		let message = actions.sendMessage(
+		actions.sendMessage(
 			fields.to,
 			fields.from,
 			subject,
@@ -65,7 +56,7 @@ describe('TESTMAIL-31942 НЕ AJAX. Ответ на письмо. Забытое
 		Message.features(features);
 		Message.refresh();
 
-		messageFastanswerSteps.clickButton('forward');
+		messagefastreplySteps.clickButton('forward');
 		composeEditor.wait();
 
 		composeFields.setFieldValue('subject', subject);
