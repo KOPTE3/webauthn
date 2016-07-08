@@ -20,8 +20,7 @@ describe('TESTMAIL-files', () => {
 		Messages.features([
 			'check-missing-attach',
 			'disable-ballons',
-			'no-collectors-in-compose',
-			'compose2'
+			'no-collectors-in-compose'
 		]);
 
 		Messages.open();

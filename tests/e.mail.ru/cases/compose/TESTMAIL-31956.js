@@ -2,10 +2,13 @@
 
 let Messages = require('../../steps/messages');
 let lettersSteps = require('../../steps/messages/letters');
+let fastanswerSteps = require('../../steps/message/fastanswer');
+
 let Compose = require('../../steps/compose');
 let composeFields = require('../../steps/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
+let missingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
@@ -16,33 +19,28 @@ let composeAttaches = require('../../steps/compose/attaches');
 // mail
 let Mail = require('../../utils/mail');
 
-const subject = 'Тестовый текст';
+const subject = 'ЖОПА!!';
 
-describe('TESTMAIL-31956: НЕ AJAX. Черновики. Забытое вложение. Проверить ' +
-'отсутствие попапа при отправке с текстом и аттачем из черновика (добавление ' +
-'аттача после сохранения черновика)', done => {
+describe('TESTMAIL-31956: НЕ AJAX. Черновики. Забытое вложение. ' +
+	'Проверить отсутствие попапа при отправке с текстом и аттачем из черновика ' +
+	'(добавление аттача после сохранения черновика)', done => {
 	before(() => {
 		Compose.auth();
 	});
 
-	it('Письмо должно быть успешно отправленно', () => {
-		let { fields } = new ComposeFieldsStore();
+	it('письмо должно быть успешно отправлено', () => {
+		let {fields} = new ComposeFieldsStore();
 
 		var mail = new Mail({
 			to: fields.to,
 			subject,
-			text: composeEditorStore.texts.withAttach
+			text: composeEditorStore.texts.withoutAttach
 		});
 
-		mail.send();
-
-		Messages.open();
-		lettersSteps.openNewestLetter();
-		messageToolbarSteps.clickButton('forward');
-		composeEditor.wait();
-		composeControls.draft();
+		mail.draft();
 
 		Messages.open('/messages/drafts/');
+
 		lettersSteps.openNewestLetter();
 		composeEditor.wait();
 
@@ -50,16 +48,15 @@ describe('TESTMAIL-31956: НЕ AJAX. Черновики. Забытое влож
 			'check-missing-attach',
 			'disable-ballons',
 			'no-collectors-in-compose',
-			'disable-fastreply-landmark',
-			'compose2',
-			'compose2-visible-toolbar'
+			'disable-fastreply-landmark'
 		]);
 
 		Compose.refresh();
+
 		composeEditor.wait();
+
 		composeAttaches.uploadAttach('1exp.JPG');
-		composeFields.setFieldValue('subject', subject);
-		composeFields.setFieldValue('to', fields.to);
+
 		composeControls.send();
 
 		SentPage.wait();

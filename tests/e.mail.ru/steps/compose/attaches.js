@@ -24,7 +24,7 @@ class ComposeAttachesSteps extends ComposeSteps {
 		this.composeAttaches.uploadAttach(filepath);
 
 		assert(this.composeAttaches.slider.isVisible(), 'Слайдер видно');
-		assert(this.composeAttaches.isFileAttached(filename), 'Файл прикреплен');
+		// assert(this.composeAttaches.isFileAttached(filename), `Файл прикреплен`);
 	}
 
 	removeAttach (filename) {
