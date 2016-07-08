@@ -10,8 +10,6 @@ let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
 let messagesToolbarSteps = require('../../steps/messages/toolbar');
 
-let composeFieldsStore = new ComposeFieldsStore();
-
 describe('TESTMAIL-31540: AJAX. Написание письма. Забытое вложение. ' +
 'Проверить появление попапа при отправке текстов', () => {
 	before(() => {
@@ -19,6 +17,8 @@ describe('TESTMAIL-31540: AJAX. Написание письма. Забытое 
 	});
 
 	it('Попап должен появится', () => {
+		let { fields } = new ComposeFieldsStore();
+
 		Messages.features([
 			'check-missing-attach',
 			'disable-ballons',
@@ -29,7 +29,7 @@ describe('TESTMAIL-31540: AJAX. Написание письма. Забытое 
 		messagesToolbarSteps.clickButton('compose');
 
 		composeFields.setFieldValue('subject', 'check attach');
-		composeFields.setFieldValue('to', composeFieldsStore.fields.to);
+		composeFields.setFieldValue('to', fields.to);
 		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 		composeControls.send();
 		missingAttachLayer.wait();
