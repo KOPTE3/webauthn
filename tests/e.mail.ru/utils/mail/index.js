@@ -47,7 +47,7 @@ class Mail {
 
 		this.options.attachments.push({
 			filename: name,
-			path: `${__dirname}/attachments/${name}`
+			path: `./test-files/files/e.mail.ru/${name}`
 		});
 	}
 

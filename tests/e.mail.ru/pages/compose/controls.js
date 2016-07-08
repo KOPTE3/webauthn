@@ -22,10 +22,12 @@ class ComposeControls extends ComposePage {
 			saveStatus: `${toolbar} [data-mnemo="saveStatus"]`,
 			draft    : `${toolbar} [data-name="saveDraft"]`,
 			cancel   : `${toolbar} [data-name="cancel"]`,
+			saveDropdown : `${toolbar} [data-group="save-more"]`,
 			template : `${toolbar} [data-name="saveTemplate"]`,
+			saved: `${toolbar} [data-mnemo="saveStatus"] .toolbar__message_info__link`,
 			send     : `${toolbar} [data-name="send"]`,
 			templates: `${toolbar} [data-group="templates"]`,
-			templateItem: `${toolbar} .b-dropdown__group .b-dropdown__list__item`
+			templateItem: `${toolbar} .b-dropdown__group .b-dropdown__list__item[data-name]`
 		});
 	}
 
@@ -35,6 +37,21 @@ class ComposeControls extends ComposePage {
 	draft () {
 		this.clickAll(this.locators.draft);
 		this.page.waitForVisible(this.locators.saveStatus);
+	}
+
+	/**
+	 * Открыть дропдаун сохранения
+	 */
+	openSaveDropdown () {
+		this.clickAll(this.locators.saveDropdown);
+	}
+
+	/**
+	 * Сохранить шаблон
+	 */
+	template () {
+		this.clickAll(this.locators.template);
+		this.page.waitForVisible(this.locators.saved);
 	}
 
 	/**
@@ -58,6 +75,8 @@ class ComposeControls extends ComposePage {
 
 	applyTemplate () {
 		this.page.click(this.locators.templates);
+
+		this.page.waitForVisible(this.locators.templateItem);
 
 		this.page.click(this.locators.templateItem);
 	}
