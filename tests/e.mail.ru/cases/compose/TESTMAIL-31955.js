@@ -19,11 +19,11 @@ let composeAttaches = require('../../steps/compose/attaches');
 // mail
 let Mail = require('../../utils/mail');
 
-const subject = 'тестовая тема';
+const subject = 'TESTMAIL-31955';
 
-describe('TESTMAIL-31956: НЕ AJAX. Черновики. Забытое вложение. ' +
-	'Проверить отсутствие попапа при отправке с текстом и аттачем из черновика ' +
-	'(добавление аттача после сохранения черновика)', done => {
+describe('TESTMAIL-31955: НЕ AJAX. Черновики. Забытое вложение. ' +
+	'Проверить отсутствие попапа при отправке с текстом и аттачем из шаблона ' +
+	'(добавление аттача после применения шаблона)', done => {
 	before(() => {
 		Compose.auth();
 	});
@@ -32,17 +32,12 @@ describe('TESTMAIL-31956: НЕ AJAX. Черновики. Забытое влож
 		let {fields} = new ComposeFieldsStore();
 
 		var mail = new Mail({
-			to: fields.to,
+			to: '',
 			subject,
 			text: composeEditorStore.texts.withoutAttach
 		});
 
-		mail.draft();
-
-		Messages.open('/messages/drafts/');
-
-		lettersSteps.openNewestLetter();
-		composeEditor.wait();
+		mail.template();
 
 		Compose.features([
 			'check-missing-attach',
@@ -51,11 +46,17 @@ describe('TESTMAIL-31956: НЕ AJAX. Черновики. Забытое влож
 			'disable-fastreply-landmark'
 		]);
 
-		Compose.refresh();
+		Compose.open();
+
+		composeEditor.wait();
+
+		composeControls.applyTemplate();
 
 		composeEditor.wait();
 
 		composeAttaches.uploadAttach('1exp.JPG');
+
+		composeFields.setFieldValue('to', fields.to);
 
 		composeControls.send();
 

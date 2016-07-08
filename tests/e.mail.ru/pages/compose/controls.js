@@ -19,11 +19,13 @@ class ComposeControls extends ComposePage {
 
 		return this.extend(super.locators, {
 			container: toolbar,
-			saveStatus: `${toolbar} [data-mnemo="saveStatus"`,
+			saveStatus: `${toolbar} [data-mnemo="saveStatus"]`,
 			draft    : `${toolbar} [data-name="saveDraft"]`,
 			cancel   : `${toolbar} [data-name="cancel"]`,
 			template : `${toolbar} [data-name="saveTemplate"]`,
-			send     : `${toolbar} [data-name="send"]`
+			send     : `${toolbar} [data-name="send"]`,
+			templates: `${toolbar} [data-group="templates"]`,
+			templateItem: `${toolbar} .b-dropdown__group .b-dropdown__list__item`
 		});
 	}
 
@@ -52,6 +54,12 @@ class ComposeControls extends ComposePage {
 			// алерт может быть не показан в некоторых случаях
 			this.page.alertAccept();
 		} catch (error) {}
+	}
+
+	applyTemplate () {
+		this.page.click(this.locators.templates);
+
+		this.page.click(this.locators.templateItem);
 	}
 
 }

@@ -68,6 +68,12 @@ class Mail {
 
 		actions.saveDraft(to, from, subject, text);
 	}
+
+	template () {
+		let {to, from, subject, text} = this.options;
+
+		actions.saveDraft(to, from, subject, text, true);
+	}
 }
 
 module.exports = Mail;
