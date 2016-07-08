@@ -29,4 +29,4 @@ class Thread extends PageObject {
 	}
 }
 
-module.exports = new Thread();
+module.exports = Thread;

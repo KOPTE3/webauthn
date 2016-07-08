@@ -3,7 +3,8 @@
 let assert = require('assert');
 
 let PasswordRestoreSteps = require('../restore');
-let selectTypeViewPage = require('../../../pages/passrestore/selectType');
+let SelectTypeViewPage = require('../../../pages/passrestore/selectType');
+let selectTypeViewPage = new SelectTypeViewPage();
 let Captcha = require('../../../utils/captcha');
 
 
@@ -34,4 +35,4 @@ class Controls extends PasswordRestoreSteps {
 	}
 }
 
-module.exports = new Controls();
+module.exports = Controls;

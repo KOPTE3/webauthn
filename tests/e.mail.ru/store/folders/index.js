@@ -9,4 +9,4 @@ class Folders extends Store {
 	}
 }
 
-module.exports = new Folders();
+module.exports = Folders;

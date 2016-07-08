@@ -34,4 +34,4 @@ class Date {
 	}
 }
 
-module.exports = new Date();
+module.exports = Date;

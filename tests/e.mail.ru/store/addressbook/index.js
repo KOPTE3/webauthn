@@ -9,4 +9,4 @@ class AddressBook extends Store {
 	}
 }
 
-module.exports = new AddressBook();
+module.exports = AddressBook;

@@ -1,14 +1,18 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let portalSearchSteps = require('../../steps/portal-menu/portal-search');
-let advancedSteps = require('../../steps/portal-menu/advanced');
+let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
+let AdvancedSteps = require('../../steps/portal-menu/advanced');
 let CalendarFactory = require('../../utils/calendar');
+
+let portalSearchSteps = new PortalSearchSteps();
+let advancedSteps = new AdvancedSteps();
 let advancedCalendar = CalendarFactory.create('advanced');
 
 let AdvancedStore = require('../../store/portal-menu/advanced');
 
-let date = require('../../utils/date');
+let DateUtils = require('../../utils/date');
+let date = new DateUtils();
 
 describe('TESTMAIL-31728', () => {
 	it('Проверка добавления операнда "дата" (только из расширенного поиска)' +
