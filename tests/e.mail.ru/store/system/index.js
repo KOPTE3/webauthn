@@ -23,9 +23,16 @@ class Sent extends Store {
 	 * @type {string}
 	 */
 	get platform () {
-		let status = browser.status();
+		return browser.desiredCapabilities.platform;
+	}
 
-		return browser.desiredCapabilities.platform || status.value.os.name;
+	/**
+	 * Тестовый урл
+	 *
+	 * @type {string}
+	 */
+	get host () {
+		return browser.options.hostname;
 	}
 }
 
