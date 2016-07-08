@@ -11,7 +11,8 @@ let advancedCalendar = CalendarFactory.create('advanced');
 
 let AdvancedStore = require('../../store/portal-menu/advanced');
 
-let date = require('../../utils/date');
+let DateUtils = require('../../utils/date');
+let date = new DateUtils();
 
 describe('TESTMAIL-31698', () => {
 	it('Проверка добавления операнда "дата" (только из расширенного поиска)' +

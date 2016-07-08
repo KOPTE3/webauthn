@@ -9,4 +9,4 @@ class Threads extends Store {
 	}
 }
 
-module.exports = new Threads();
+module.exports = Threads;

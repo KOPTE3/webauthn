@@ -8,4 +8,4 @@ class Support extends TestTools.Support {
 	}
 }
 
-module.exports = new Support();
+module.exports = Support;

@@ -19,7 +19,8 @@ let composeControls = new СomposeControls();
 let missingAttachLayer = new MissingAttachLayer();
 let messageToolbarSteps = new MessageToolbarSteps();
 
-let actions = require('../../utils/actions');
+let Actions = require('../../utils/actions');
+let actions = new Actions();
 
 const text = 'Тестовый текст';
 const subject = 'Тест';

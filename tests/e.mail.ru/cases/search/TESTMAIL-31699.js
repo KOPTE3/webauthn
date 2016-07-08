@@ -12,7 +12,8 @@ let operandsCalendar = CalendarFactory.create('portal-search');
 
 let AdvancedStore = require('../../store/portal-menu/advanced');
 
-let date = require('../../utils/date');
+let DateUtils = require('../../utils/date');
+let date = new DateUtils();
 
 describe('TESTMAIL-31699', () => {
 	it('Проверка редактирования операнда "дата" с точной датой ' +

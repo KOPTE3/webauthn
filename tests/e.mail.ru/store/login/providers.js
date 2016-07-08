@@ -40,4 +40,4 @@ class Providers extends AuthProviders {
 	}
 }
 
-module.exports = new Providers();
+module.exports = Providers;

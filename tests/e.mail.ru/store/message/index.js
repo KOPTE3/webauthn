@@ -9,4 +9,4 @@ class Message extends Store {
 	}
 }
 
-module.exports = new Message();
+module.exports = Message;
