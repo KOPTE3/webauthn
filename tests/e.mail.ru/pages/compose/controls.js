@@ -22,6 +22,7 @@ class ComposeControls extends ComposePage {
 			saveStatus: `${toolbar} [data-mnemo="saveStatus"]`,
 			draft    : `${toolbar} [data-name="saveDraft"]`,
 			cancel   : `${toolbar} [data-name="cancel"]`,
+			saveDropdown : `${toolbar} [data-group="save-more"]`,
 			template : `${toolbar} [data-name="saveTemplate"]`,
 			send     : `${toolbar} [data-name="send"]`,
 			templates: `${toolbar} [data-group="templates"]`,
@@ -37,6 +38,20 @@ class ComposeControls extends ComposePage {
 		this.page.waitForVisible(this.locators.saveStatus);
 	}
 
+	/**
+	 * Открыть дропдаун сохранения
+	 */
+	openSaveDropdown () {
+		this.clickAll(this.locators.saveDropdown);
+	}
+
+	/**
+	 * Сохранить шаблон
+	 */
+	template () {
+		this.clickAll(this.locators.template);
+	}
+	
 	/**
 	 * Написать письмо
 	 */

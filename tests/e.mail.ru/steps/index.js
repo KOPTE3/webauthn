@@ -34,6 +34,13 @@ class Steps extends Pages {
 	}
 
 	/**
+	 * Аппрувнуть конфирм
+	 */
+	static alertAccept () {
+		this.page.alertAccept();
+	}
+
+	/**
 	 * Открыть страницу
 	 *
 	 * @param {Object} [query] — параметры запроса
