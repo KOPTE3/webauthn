@@ -1,7 +1,6 @@
 'use strict';
 
 let LoginPage = require('../login');
-let providers = require('../../store/authorization/providers');
 
 /** Модуль для работы с формой страницы логина */
 class LoginForm extends LoginPage {
