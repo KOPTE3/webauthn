@@ -2,25 +2,22 @@
 
 let Messages = require('../../steps/messages');
 let LettersSteps = require('../../steps/messages/letters');
-let lettersSteps = new LettersSteps();
-
 let Compose = require('../../steps/compose');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 let ComposeFields = require('../../steps/compose/fields');
 let ComposeEditor = require('../../steps/compose/editor');
 let ComposeControls = require('../../steps/compose/controls');
-let MissingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
+let MissingAttachLayer = require('../../steps/layers/missingAttach');
 let MessageToolbarSteps = require('../../steps/message/toolbar');
+let actions = require('../../utils/actions');
 
 let composeFields = new ComposeFields();
 let composeEditor = new ComposeEditor();
 let composeControls = new ComposeControls();
 let missingAttachLayer = new MissingAttachLayer();
 let messageToolbarSteps = new MessageToolbarSteps();
-
-let Actions = require('../../utils/actions');
-let actions = new Actions();
+let lettersSteps = new LettersSteps();
 
 const text = 'Тестовый текст';
 const subject = 'Тест';
@@ -32,7 +29,7 @@ describe('TESTMAIL-31873: AJAX. Ответ на письмо. Забытое в�
 	});
 
 	beforeEach(() => {
-		let { fields } = new ComposeFieldsStore();
+		let { fields } = composeFieldsStore;
 
 		Messages.open();
 

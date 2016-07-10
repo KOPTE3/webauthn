@@ -1,7 +1,7 @@
 'use strict';
 
 /** Модуль для работы с Date */
-class Date {
+module.exports = {
 	/**
 	 * Смещает текущее время
 	 * @param {number} offset - секунды
@@ -10,7 +10,7 @@ class Date {
 		browser.execute(function (offset) {
 			Date.setNow(Date.now() + (offset * 1000));
 		}, offset);
-	}
+	},
 
 	/**
 	 * Восстанавливает оригинальную дату
@@ -19,7 +19,7 @@ class Date {
 		browser.execute(function () {
 			Date.setNow(new Date());
 		});
-	}
+	},
 
 	/**
 	 * Форматирует дату
@@ -32,6 +32,4 @@ class Date {
 			return new Date(time || Date.now()).format(mask);
 		}, mask, time).value;
 	}
-}
-
-module.exports = Date;
+};

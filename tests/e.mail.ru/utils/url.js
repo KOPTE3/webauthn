@@ -3,17 +3,17 @@
 let url = require('url');
 let querystring = require('querystring');
 
-/** Модуль для работы с URL */
-class URL {
+/** Набор методов для работы с URL */
+module.exports = {
 	/**
 	 * Сериализует параметры запроса
 	 *
 	 * @see querystring.stringify
 	 * @returns {string}
 	 */
-	static query () {
+	query () {
 		return querystring.stringify(...arguments);
-	}
+	},
 
 	/**
 	 * Десериализует параметры запроса
@@ -21,9 +21,9 @@ class URL {
 	 * @see querystring.parse
 	 * @returns {Object}
 	 */
-	static parse () {
+	parse () {
 		return querystring.parse(...arguments);
-	}
+	},
 
 	/**
 	 * Возвращает адрес запроса
@@ -32,15 +32,13 @@ class URL {
 	 * @param {Object} [query]
 	 * @returns {string}
 	 */
-	static request (path, query = {}) {
+	request (path, query = {}) {
 		let params = Object.keys(query);
 
 		if (params.length) {
-			return `${path}?${URL.query(query)}`;
+			return `${path}?${this.query(query)}`;
 		}
 
 		return path;
 	}
-}
-
-module.exports = URL;
+};

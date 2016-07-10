@@ -4,8 +4,8 @@ let assert = require('assert');
 
 let PasswordRestoreSteps = require('../restore');
 let SelectTypeViewPage = require('../../../pages/passrestore/selectType');
+
 let selectTypeViewPage = new SelectTypeViewPage();
-let Captcha = require('../../../utils/captcha');
 
 
 /** Модуль для работы с формой ввода адреса для восстановления */
@@ -22,7 +22,7 @@ class Controls extends PasswordRestoreSteps {
 	}
 
 	/**
-	 * Crack phone captch
+	 * Crack phone captcha
 	 */
 	fillPhoneCaptcha () {
 		let cid = selectTypeViewPage.phoneCaptchaID,

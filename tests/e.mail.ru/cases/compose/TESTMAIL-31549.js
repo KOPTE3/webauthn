@@ -7,13 +7,11 @@ let ComposeEditor = require('../../steps/compose/editor');
 let ComposeControls = require('../../steps/compose/controls');
 let composeEditorStore = require('../../store/compose/editor');
 let SentPage = require('../../steps/sent');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 
 let composeFields = new ComposeFields();
 let composeEditor = new ComposeEditor();
 let composeControls = new ComposeControls();
-
-let composeFieldsStore = new ComposeFieldsStore();
 
 describe('TESTMAIL-31549: НЕ AJAX. Написание письма. Забытое вложение. ' +
 'Проверить отсутствие попапа при отправке ' +

@@ -4,17 +4,13 @@ let Messages = require('../../steps/messages');
 let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
 let AdvancedSteps = require('../../steps/portal-menu/advanced');
 let SearchLettersSteps = require('../../steps/search/letters');
+let searchStore = require('../../store/search');
+let messagesUtils = require('../../utils/messages');
+let actions = require('../../utils/actions');
 
 let portalSearchSteps = new PortalSearchSteps();
 let advancedSteps = new AdvancedSteps();
 let searchLettersSteps = new SearchLettersSteps();
-
-let SearchStore = require('../../store/search');
-let searchStore = new SearchStore();
-
-let Actions = require('../../utils/actions');
-let actions = new Actions();
-let MessagesUtils = require('../../utils/messages');
 
 describe('TESTMAIL-31766', () => {
 	let messages;
@@ -37,7 +33,7 @@ describe('TESTMAIL-31766', () => {
 
 		Messages.open();
 
-		let id = MessagesUtils.getLetterIdBySubject(messages[0].subject);
+		let id = messagesUtils.getLetterIdBySubject(messages[0].subject);
 
 		actions.markAs('flagged', [id]);
 

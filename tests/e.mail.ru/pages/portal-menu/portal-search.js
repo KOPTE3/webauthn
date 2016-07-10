@@ -2,8 +2,7 @@
 
 let PortalMenu = require('../portal-menu');
 let Advanced = require('../portal-menu/advanced');
-
-let Utils = require('../../utils/portal-menu/portal-search');
+let searchUtils = require('../../utils/portal-menu/portal-search');
 
 /** Модуль для работы с поиском в синей шапке */
 class PortalSearch extends PortalMenu {
@@ -29,20 +28,20 @@ class PortalSearch extends PortalMenu {
 			searchField: `${container} .pm-toolbar__search__label__wrapper`,
 			suggests: `${container} .pm-toolbar__suggests`,
 			operands: {
-				all:	 `${container} .b-operand:not([style*="display: none"])`,
+				all    : `${container} .b-operand:not([style*="display: none"])`,
 				message: `${container} [data-operand-name="q_query"]`,
-				from:	 `${container} [data-operand-name="q_from"]`,
-				to:		 `${container} [data-operand-name="q_to"]`,
+				from   : `${container} [data-operand-name="q_from"]`,
+				to     : `${container} [data-operand-name="q_to"]`,
 				subject: `${container} [data-operand-name="q_subj"]`,
-				unread:	 `${container} [data-operand-name="q_read"]`,
-				flag:	 `${container} [data-operand-name="q_flag"]`,
-				attach:	 `${container} [data-operand-name="q_attach"]`,
-				date:	 `${container} [data-operand-name="q_date"]`,
-				blank:	 `${container} [data-operand-name="blank"]`,
+				unread : `${container} [data-operand-name="q_read"]`,
+				flag   : `${container} [data-operand-name="q_flag"]`,
+				attach : `${container} [data-operand-name="q_attach"]`,
+				date   : `${container} [data-operand-name="q_date"]`,
+				blank  : `${container} [data-operand-name="blank"]`,
 				icons: {
-					unread:	 `.ico_folder_unread`,
-					flag:	 `.ico_folder_important`,
-					attach:	 `.ico_folder_attachment`
+					unread: '.ico_folder_unread',
+					flag  : '.ico_folder_important',
+					attach: '.ico_folder_attachment'
 				},
 				close: '.b-operand__close',
 				input: '.b-operand__input',
@@ -230,7 +229,7 @@ class PortalSearch extends PortalMenu {
 	 */
 	operandHasFocus (name) {
 		let inputName = name === 'date' ? 'dateInput' : 'input';
-		let locator = Utils.getOperandLocator(this.locators.operands, name, inputName);
+		let locator = searchUtils.getOperandLocator(this.locators.operands, name, inputName);
 
 		return this.page.hasFocus(locator);
 	}
@@ -264,7 +263,7 @@ class PortalSearch extends PortalMenu {
 	 * @param {string} name - имя операнда
 	 */
 	clickOperandClose (name) {
-		let locator = Utils.getOperandLocator(this.locators.operands, name, 'close');
+		let locator = searchUtils.getOperandLocator(this.locators.operands, name, 'close');
 
 		this.page.click(locator);
 	}
@@ -284,7 +283,7 @@ class PortalSearch extends PortalMenu {
 		operands.value.forEach(item => {
 			let name = this.page.elementIdAttribute(item.ELEMENT, 'data-operand-name');
 
-			name = Utils.getOperandName(name.value);
+			name = searchUtils.getOperandName(name.value);
 
 			if (name !== 'blank') {
 				this.clickOperandClose(name);

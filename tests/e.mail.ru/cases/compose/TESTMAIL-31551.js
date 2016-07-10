@@ -5,7 +5,7 @@ let ComposeFields = require('../../steps/compose/fields');
 let ComposeEditor = require('../../steps/compose/editor');
 let ComposeControls = require('../../steps/compose/controls');
 let MissingAttachLayer = require('../../steps/layers/missingAttach');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 
 let composeFields = new ComposeFields();
 let composeEditor = new ComposeEditor();
@@ -31,7 +31,7 @@ describe('TESTMAIL-31551: НЕ AJAX. Забытое вложение. Прове
 	});
 
 	it('проверяем закрытие леера', () => {
-		let { fields } = new ComposeFieldsStore();
+		let { fields } = composeFieldsStore;
 
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', fields.to);

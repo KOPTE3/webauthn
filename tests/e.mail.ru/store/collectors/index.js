@@ -1,12 +1,4 @@
 'use strict';
 
-let Store = require('../../store');
-
-/** Модуль для работы с данными сборщиков */
-class Collectors extends Store {
-	constructor () {
-		super();
-	}
-}
-
-module.exports = Collectors;
+/** Набор методов для работы с данными сборщиков */
+module.exports = {};

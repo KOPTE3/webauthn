@@ -2,13 +2,9 @@
 
 let Messages = require('../../pages/messages');
 
-let messages = new Messages();
-
 /** Модуль для работы с письмами */
-class MessagesUtils {
-	static get messages () {
-		return messages;
-	}
+module.exports = {
+	messages: new Messages(),
 
 	/**
 	 * Получить id письма по теме.
@@ -17,9 +13,7 @@ class MessagesUtils {
 	 * @param {string} subject - тема письма.
 	 * @return {string}
 	 */
-	static getLetterIdBySubject (subject) {
+	getLetterIdBySubject (subject) {
 		return this.messages.getLetterIdBySubject(subject);
 	}
-}
-
-module.exports = MessagesUtils;
+};

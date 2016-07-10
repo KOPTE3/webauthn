@@ -1,14 +1,9 @@
 'use strict';
 
 let AccountManager = require('@qa/account-manager');
-let Store = require('../../store');
 
-/** Модуль для работы с авторизационными данными */
-class AuthStore extends Store {
-	constructor () {
-		super();
-	}
-
+/** Набор методов для работы с авторизационными данными */
+module.exports = {
 	/**
 	 * Возвращает авторизационные данные указанного типа
 	 *
@@ -32,7 +27,7 @@ class AuthStore extends Store {
 			return account.credentials(options)
 				.then(({ body }) => body);
 		});
-	}
+	},
 
 	/**
 	 * Получение авторизационных сведений о текущем аккаунте
@@ -42,6 +37,4 @@ class AuthStore extends Store {
 	get account () {
 		return new AccountManager.Session();
 	}
-}
-
-module.exports = AuthStore;
+};

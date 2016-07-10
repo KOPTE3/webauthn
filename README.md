@@ -393,29 +393,25 @@ module.exports = new LoginFormSteps();
 let Store = require('../../store');
 
 /** Модуль для работы с данными почтовых провайдеров */
-class Providers extends Store {
-	constructor () {
-		super();
-
-		/**
-		 * Cписок провайдеров
-		 *
-		 * @property
-		 * @returns {Array}
-		 */
-		this.list = [
-			{
-				name: 'mail.ru',
-				type: 'internal',
-				data: [
-					'mail.ru',
-					'mail.ua',
-					'inbox.ru',
-					'list.ru',
-					'bk.ru'
-				]
-			}
-	}
+module.exports = {
+	/**
+	 * Cписок провайдеров
+	 *
+	 * @returns {Array}
+	 */
+	list: [
+		{
+			name: 'mail.ru',
+			type: 'internal',
+			data: [
+				'mail.ru',
+				'mail.ua',
+				'inbox.ru',
+				'list.ru',
+				'bk.ru'
+			]
+		}
+	],
 
 	/**
 	 * Добаавляет список провайдеров
@@ -444,8 +440,6 @@ class Providers extends Store {
 		return this.list;
 	}
 }
-
-module.exports = Providers;
 ```
 
 **store/login/providers.js**
@@ -455,35 +449,29 @@ module.exports = Providers;
 
 let authProviders = require('../../store/authorization/providers');
 
-/** Модуль для работы с данными почтовых провайдеров */
-class Providers extends authProviders {
-	constructor () {
-		super();
-	}
-
+/** Модуль для работы с данными почтовых провайдеров на странице логина */
+module.exports = {
 	/**
 	 * Получить активный список провайдеров (пиктограммы)
 	 *
-	 * @property
-	 * @returns {Array}
+	 * @type {Array}
 	 */
 	get active () {
-		return this.get([
+		return authProviders.get([
 			'mail.ru',
 			'yandex.ru',
 			'rambler.ru',
 			'gmail.com'
 		]);
-	}
+	},
 
 	/**
 	 * Получить список провайдеров (селект)
 	 *
-	 * @property
-	 * @returns {Array}
+	 * @type {Array}
 	 */
 	get select () {
-		return this.get([
+		return authProviders.get([
 			'mail.ru',
 			'yandex.ru',
 			'rambler.ru',
@@ -493,9 +481,7 @@ class Providers extends authProviders {
 			'outlook.com'
 		]);
 	}
-}
-
-module.exports = new Providers();
+};
 ```
 
 ### Требования
