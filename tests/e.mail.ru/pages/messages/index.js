@@ -20,7 +20,7 @@ class MessagesPage extends PageObject {
 	/**
 	 * Базовый локатор для писем
 	 *
-	 * @return {string}
+	 * @typw {string}
 	 */
 	get lettersLocator () {
 		return '[data-mnemo="letters"]';
@@ -107,7 +107,6 @@ class MessagesPage extends PageObject {
 
 		return value.length;
 	}
-
 }
 
 module.exports = MessagesPage;

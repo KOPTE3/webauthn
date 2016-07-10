@@ -2,9 +2,10 @@
 
 let LoginPage = require('../../steps/login');
 let LoginForm = require('../../steps/login/form');
-let loginForm = new LoginForm();
 let AuthStore = require('../../store/authorization');
 let Providers = require('../../store/authorization/providers');
+
+let loginForm = new LoginForm();
 
 describe('TESTMAIL-30321', () => {
 	it('Успешная авторизация внешним аккаунтом, работающим по паролю, ' +
@@ -22,6 +23,7 @@ describe('TESTMAIL-30321', () => {
 
 			loginForm.setCredentials({ username, password });
 			loginForm.clickBySignInButton();
+			loginForm.waitForUrl(/messages/);
 		});
 	});
 });

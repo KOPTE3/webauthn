@@ -8,14 +8,14 @@ let Compose = require('../../steps/compose');
 let ComposeFieldsStore = require('../../store/compose/fields');
 let ComposeFields = require('../../steps/compose/fields');
 let ComposeEditor = require('../../steps/compose/editor');
-let СomposeControls = require('../../steps/compose/controls');
+let ComposeControls = require('../../steps/compose/controls');
 let MissingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
 let MessageToolbarSteps = require('../../steps/message/toolbar');
 
 let composeFields = new ComposeFields();
 let composeEditor = new ComposeEditor();
-let composeControls = new СomposeControls();
+let composeControls = new ComposeControls();
 let missingAttachLayer = new MissingAttachLayer();
 let messageToolbarSteps = new MessageToolbarSteps();
 

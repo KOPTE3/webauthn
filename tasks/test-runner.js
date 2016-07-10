@@ -1,7 +1,9 @@
 'use strict';
 
 let path = require('path');
+let childProcess = require('child_process');
 let fs = require('fs');
+
 let TestTools = require('@qa/test-tools');
 
 module.exports = grunt => {
@@ -19,6 +21,10 @@ module.exports = grunt => {
 
 			hooks: {
 				init () {
+					// Удаляем директорию с кешем
+					childProcess.execSync('rm -rf cache');
+
+					// Показ логотипа
 					fs.readFile('files/logo.txt', {
 						encoding: 'utf-8'
 					},

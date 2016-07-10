@@ -106,6 +106,19 @@ class PageObject {
 	extend (object) {
 		return support.extend(...arguments);
 	}
+
+	/**
+	 * Дожидается требуемного адреса
+	 *
+	 * @param {string|RegExp} url
+	 * @param {string} [query]
+	 * @returns {boolean}
+	 */
+	waitForUrl (url, query) {
+		url = URL.request(...arguments);
+
+		return this.page.waitForUrl(url);
+	}
 }
 
 module.exports = PageObject;

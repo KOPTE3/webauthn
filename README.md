@@ -55,7 +55,7 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 
 ### Использование
 
-Запустите сервер:
+Запуск сервера (запускается автоматически, скорее всего вам это не понадобится):
 
 ```
 npm start

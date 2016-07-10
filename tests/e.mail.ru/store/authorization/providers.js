@@ -289,7 +289,7 @@ class AuthProviders extends Store {
 		};
 
 		try {
-			return providers[project][project];
+			return providers[type][project];
 		} catch (error) {
 			return [];
 		}
