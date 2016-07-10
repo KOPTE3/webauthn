@@ -32,7 +32,7 @@ class URL {
 	 * @param {Object} [query]
 	 * @returns {string}
 	 */
-	static request (path, query) {
+	static request (path, query = {}) {
 		let params = Object.keys(query);
 
 		if (params.length) {

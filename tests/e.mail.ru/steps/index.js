@@ -44,8 +44,9 @@ class Steps extends Pages {
 	 *
 	 * @param {string|RegExp} url
 	 * @param {string} [query]
+	 * @param {number|string} [options] — timeout, revert
 	 */
-	waitForUrl (url, query) {
+	static waitForUrl (url, query, ...options) {
 		let actual = pages.waitForUrl(...arguments);
 
 		assert(actual, `Не найдено соответствие с ожидаемым адресом ${url}`);

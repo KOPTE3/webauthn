@@ -110,14 +110,21 @@ class PageObject {
 	/**
 	 * Дожидается требуемного адреса
 	 *
-	 * @param {string|RegExp} url
+	 * @param {string|RegExp|Function} value
 	 * @param {string} [query]
+	 * @param {number|string} [options] — timeout, revert
 	 * @returns {boolean}
 	 */
-	waitForUrl (url, query) {
-		url = URL.request(...arguments);
+	waitForUrl (value, query, ...options) {
+		if (typeof value === 'string') {
+			value = URL.request(...arguments);
+		}
 
-		return this.page.waitForUrl(url);
+		try {
+			return this.page.waitForUrl(value, ...options);
+		} catch (error) {
+			return false;
+		}
 	}
 }
 
