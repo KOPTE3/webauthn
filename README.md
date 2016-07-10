@@ -90,6 +90,13 @@ npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --baseUrl=https://e.mai
 Полный список доступных опций test-runner'a смотрите [здесь](https://stash.mail.ru/projects/QA/repos/grunt-test-runner/browse).
 
 
+### Логи и отчеты
+
+**cache/tests/<project>/logs** — логи сервера
+**cache/tests/<project>/shots** — скриншоты с упавшими тестами
+**cache/tests/<project>/reports** — отчеты о прогоне
+
+
 ### API
 
 Во всех тестах через степы доступны следующие методы:
