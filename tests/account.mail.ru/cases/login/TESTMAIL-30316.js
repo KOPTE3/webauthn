@@ -1,7 +1,9 @@
 'use strict';
 
 let LoginPage = require('../../steps/login');
-let loginForm = require('../../steps/login/form');
+let LoginForm = require('../../steps/login/form');
+
+let loginForm = new LoginForm();
 
 describe('TESTMAIL-30316', () => {
 	it('Проверка перехода на страницу регистрации', () => {

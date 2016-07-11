@@ -21,4 +21,4 @@ class MissingAttach extends Layers {
 	}
 }
 
-module.exports = new MissingAttach();
+module.exports = MissingAttach;

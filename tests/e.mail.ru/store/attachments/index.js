@@ -1,15 +1,10 @@
 'use strict';
 
 let path = require('path');
-let Store = require('../../store');
-let System = require('../../store/system');
+let system = require('../../store/system');
 
-/** Модуль для работы с аттачами */
-class Attachments extends Store {
-	constructor () {
-		super();
-	}
-
+/** Набор методов для работы с аттачами */
+module.exports = {
 	/**
 	 * Возвращает путь, где располагаются тестовые файлы
 	 *
@@ -17,8 +12,7 @@ class Attachments extends Store {
 	 * @type {string}
 	 */
 	get path () {
-		let system = new System(),
-			profile = '/var/lib/selenium/',
+		let profile = '/var/lib/selenium/',
 			local = path.join('test-files', 'files', 'e.mail.ru');
 
 		if (/localhost/.test(system.host)) {
@@ -30,11 +24,11 @@ class Attachments extends Store {
 		}
 
 		return path.join(profile, '/Dropbox/feta/mail');
-	}
+	},
 
 	file (name) {
 		return path.join(this.path, name);
-	}
+	},
 
 	files (list) {
 		if (typeof list === 'string') {
@@ -43,6 +37,4 @@ class Attachments extends Store {
 
 		return list.map(name => this.file(name));
 	}
-}
-
-module.exports = new Attachments();
+};

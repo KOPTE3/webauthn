@@ -1,7 +1,7 @@
 'use strict';
 
 let ComposePage = require('../compose');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 
 /** Модуль для работы с формой страницы написания письма */
 class ComposeFields extends ComposePage {
@@ -139,7 +139,7 @@ class ComposeFields extends ComposePage {
 	 * @param {boolean} state — состояние
 	 */
 	toggleAllFields (state) {
-		for (let name of ComposeFieldsStore.hiddenFields) {
+		for (let name of composeFieldsStore.hiddenFields) {
 			if (state) {
 				this.showField(name);
 			} else {

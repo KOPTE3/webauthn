@@ -1,12 +1,6 @@
 'use strict';
 
-let Store = require('../../store');
+let authorization = require('../../../e.mail.ru/store/authorization');
 
 /** Модуль для работы с авторизационными данными */
-class Authorization extends Store {
-	constructor () {
-		super();
-	}
-}
-
-module.exports = Authorization;
+module.exports = authorization;

@@ -55,7 +55,7 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 
 ### Использование
 
-Запустите сервер:
+Запуск сервера (запускается автоматически, скорее всего вам это не понадобится):
 
 ```
 npm start
@@ -88,6 +88,13 @@ npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --baseUrl=https://e.mai
 ```
 
 Полный список доступных опций test-runner'a смотрите [здесь](https://stash.mail.ru/projects/QA/repos/grunt-test-runner/browse).
+
+
+### Логи и отчеты
+
+**cache/tests/<project>/logs** — логи сервера
+**cache/tests/<project>/shots** — скриншоты с упавшими тестами
+**cache/tests/<project>/reports** — отчеты о прогоне
 
 
 ### API
@@ -188,7 +195,7 @@ authStore.account;
 Метод .credentials примает те же типы, что Page\#auth
 
 
-#### Store#Authorization#credentials
+#### Store#Authorization#credentials(type=basic, { id, login, domain, type })
 
 Получение авторизационных данные указанного типа
 
@@ -198,9 +205,13 @@ let AuthStore = require('../../store/authorization');
 let authStore = new AuthStore();
 
 authStore.credentials('external');
+
+authStore.credentials('external', {
+	domain: 'gmail.com'
+});
 ```
 
-Метод .credentials примает те же типы, что Page\#auth
+Метод .credentials принимает те же типы, что Page\#auth
 
 
 ### Структура проекта
@@ -389,29 +400,25 @@ module.exports = new LoginFormSteps();
 let Store = require('../../store');
 
 /** Модуль для работы с данными почтовых провайдеров */
-class Providers extends Store {
-	constructor () {
-		super();
-
-		/**
-		 * Cписок провайдеров
-		 *
-		 * @property
-		 * @returns {Array}
-		 */
-		this.list = [
-			{
-				name: 'mail.ru',
-				type: 'internal',
-				data: [
-					'mail.ru',
-					'mail.ua',
-					'inbox.ru',
-					'list.ru',
-					'bk.ru'
-				]
-			}
-	}
+module.exports = {
+	/**
+	 * Cписок провайдеров
+	 *
+	 * @returns {Array}
+	 */
+	list: [
+		{
+			name: 'mail.ru',
+			type: 'internal',
+			data: [
+				'mail.ru',
+				'mail.ua',
+				'inbox.ru',
+				'list.ru',
+				'bk.ru'
+			]
+		}
+	],
 
 	/**
 	 * Добаавляет список провайдеров
@@ -440,8 +447,6 @@ class Providers extends Store {
 		return this.list;
 	}
 }
-
-module.exports = Providers;
 ```
 
 **store/login/providers.js**
@@ -451,35 +456,29 @@ module.exports = Providers;
 
 let authProviders = require('../../store/authorization/providers');
 
-/** Модуль для работы с данными почтовых провайдеров */
-class Providers extends authProviders {
-	constructor () {
-		super();
-	}
-
+/** Модуль для работы с данными почтовых провайдеров на странице логина */
+module.exports = {
 	/**
 	 * Получить активный список провайдеров (пиктограммы)
 	 *
-	 * @property
-	 * @returns {Array}
+	 * @type {Array}
 	 */
 	get active () {
-		return this.get([
+		return authProviders.get([
 			'mail.ru',
 			'yandex.ru',
 			'rambler.ru',
 			'gmail.com'
 		]);
-	}
+	},
 
 	/**
 	 * Получить список провайдеров (селект)
 	 *
-	 * @property
-	 * @returns {Array}
+	 * @type {Array}
 	 */
 	get select () {
-		return this.get([
+		return authProviders.get([
 			'mail.ru',
 			'yandex.ru',
 			'rambler.ru',
@@ -489,9 +488,7 @@ class Providers extends authProviders {
 			'outlook.com'
 		]);
 	}
-}
-
-module.exports = new Providers();
+};
 ```
 
 ### Требования

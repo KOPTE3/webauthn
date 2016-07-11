@@ -29,4 +29,4 @@ class Settings extends PageObject {
 	}
 }
 
-module.exports = new Settings();
+module.exports = Settings;

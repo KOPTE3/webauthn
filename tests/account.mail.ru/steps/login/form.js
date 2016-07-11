@@ -3,7 +3,7 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let Store = require('../../store/login/form');
+let store = require('../../store/login/form');
 let LoginForm = require('../../pages/login/form');
 
 /** Модуль для работы с шагами формы страницы логина */
@@ -11,7 +11,6 @@ class LoginFormSteps extends Steps {
 	constructor () {
 		super();
 
-		this.store = new Store();
 		this.loginForm = new LoginForm();
 	}
 
@@ -37,12 +36,49 @@ class LoginFormSteps extends Steps {
 	}
 
 	/**
-	 * Выбрать домен в списке
+	 * Отправить форму по клику
+	 *
+	 * @returns {Promise}
+	 */
+	clickBySignInButton () {
+		return this.loginForm.clickBySignInButton();
+	}
+
+	/**
+	 * Заполнить поле логина
 	 *
 	 * @param {string} login
 	 */
 	setLogin (login) {
 		this.loginForm.setLogin(login);
+	}
+
+	/**
+	 * Заполнить поле пароля
+	 *
+	 * @param {string} password
+	 */
+	setPassword (password) {
+		this.loginForm.setPassword(password);
+	}
+
+	/**
+	 * Заполнить авторизационные поля
+	 *
+	 * @param {Object} credentials
+	 */
+	setCredentials ({ username, password }) {
+		this.setLogin(username);
+		this.setPassword(password);
+	}
+
+	/**
+	 * Получить активный домен
+	 *
+	 * @param {string} provider
+	 */
+	clickByDomain (provider) {
+		this.loginForm.clickByDomain(provider);
 	}
 
 	/**
@@ -150,7 +186,7 @@ class LoginFormSteps extends Steps {
 	 */
 	clickPassRemindLink () {
 		let actual = this.loginForm
-			.clickPassRemindLink(this.store.links.passwordRestore);
+			.clickPassRemindLink(store.links.passwordRestore);
 
 		assert(actual, 'Указана неверная ссылка восстановления пароля');
 	}
@@ -160,7 +196,7 @@ class LoginFormSteps extends Steps {
 	 */
 	clickSignUpLink () {
 		let actual = this.loginForm
-			.clickPassRemindLink(this.store.links.clickSignUpLink);
+			.clickPassRemindLink(store.links.clickSignUpLink);
 
 		assert(actual, 'Указана неверная ссылка на регистрацию');
 	}
@@ -195,4 +231,4 @@ class LoginFormSteps extends Steps {
 	}
 }
 
-module.exports = new LoginFormSteps();
+module.exports = LoginFormSteps;

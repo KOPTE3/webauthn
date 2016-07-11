@@ -1,13 +1,20 @@
 'use strict';
 
 let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
 let SentPage = require('../../steps/sent');
 let ComposeFieldsStore = require('../../store/compose/fields');
+let ComposeFields = require('../../steps/compose/fields');
+let ComposeEditor = require('../../steps/compose/editor');
+let ComposeControls = require('../../steps/compose/controls');
+let MissingAttachLayer = require('../../steps/layers/missingAttach');
+let SentPage = require('../../steps/sent');
+let composeFieldsStore = require('../../store/compose/fields');
+
+let composeFields = new ComposeFields();
 let composeFieldsStore = new ComposeFieldsStore();
+let composeEditor = new ComposeEditor();
+let composeControls = new ComposeControls();
+let missingAttachLayer = new MissingAttachLayer();
 
 const text = 'Добрый день! Во вложении заявка, прошу скинуть счет на оплату.';
 

@@ -36,6 +36,17 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Кликнуть на лупу
+	 */
+	clickSearchButton () {
+		this.portalSearch.clickSearchButton();
+
+		let actual = this.search.wait();
+
+		assert(actual, 'Не удалось дождаться открытия страницы поиска');
+	}
+
+	/**
 	 * Кликнуть в поле поиска
 	 */
 	clickSearchField () {
@@ -182,12 +193,8 @@ class PortalSearchSteps extends PortalMenuSteps {
 		this.portalSearch.removeAllOperands();
 		this.clickSearchField();
 		this.portalSearch.setOperandText('blank', query);
-		this.portalSearch.clickSearchButton();
-
-		let actual = this.search.wait();
-
-		assert(actual, 'Не удалось дождаться открытия страницы поиска');
+		this.clickSearchButton();
 	}
 }
 
-module.exports = new PortalSearchSteps();
+module.exports = PortalSearchSteps;

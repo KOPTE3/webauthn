@@ -2,12 +2,17 @@
 
 let Messages = require('../../steps/messages');
 let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
-let ComposeFieldsStore = require('../../store/compose/fields');
 let messagesToolbarSteps = require('../../steps/messages/toolbar');
+let ComposeFields = require('../../steps/compose/fields');
+let ComposeEditor = require('../../steps/compose/editor');
+let ComposeControls = require('../../steps/compose/controls');
+let MissingAttachLayer = require('../../steps/layers/missingAttach');
+let composeFieldsStore = require('../../store/compose/fields');
+
+let composeFields = new ComposeFields();
+let composeEditor = new ComposeEditor();
+let composeControls = new ComposeControls();
+let missingAttachLayer = new MissingAttachLayer();
 
 const text = 'Добрый день! Во вложении заявка, прошу скинуть счет на оплату.';
 
@@ -18,7 +23,7 @@ describe('TESTMAIL-31554: AJAX. Написание письма. Забытое 
 	});
 
 	it('Проверяем закрытие леера', () => {
-		let { fields } = new ComposeFieldsStore();
+		let { fields } = composeFieldsStore;
 
 		Messages.features([
 			'check-missing-attach',
@@ -27,7 +32,10 @@ describe('TESTMAIL-31554: AJAX. Написание письма. Забытое 
 		]);
 
 		Messages.open();
+
 		messagesToolbarSteps.clickButton('compose');
+
+		Messages.toCompose();
 
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', fields.to);

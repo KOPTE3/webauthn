@@ -13,4 +13,4 @@ class MissingAttachLayerSteps extends LayerSteps {
 	}
 }
 
-module.exports = new MissingAttachLayerSteps();
+module.exports = MissingAttachLayerSteps;

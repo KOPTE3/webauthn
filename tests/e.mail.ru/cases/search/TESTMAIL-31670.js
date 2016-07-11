@@ -1,7 +1,8 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let portalSearchSteps = require('../../steps/portal-menu/portal-search');
+let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
+let portalSearchSteps = new PortalSearchSteps();
 
 describe('TESTMAIL-31670', () => {
 	it('Проверка, что если в ящике не было никаких поисковых запросов,' +

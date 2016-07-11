@@ -49,11 +49,13 @@ exports.config = {
 	// sync: true,
 
 	/*
-	 * Опция позволяет отладчику остановить выполнение тестов
-	 * в месте вызова инструкции debugger.
+	 * Опция позволяет отладчику остановить выполнение тестов в месте вызова
+	 * инструкции debugger.
 	 * Для использования этой опции требуется наличие пакета node-inspector
 	 */
 	debug: false,
+
+	services: ['selenium-standalone'],
 
 	/* Доступные значения: cucumber, mocha, jasmine */
 	framework: 'mocha',
@@ -82,24 +84,21 @@ exports.config = {
 	/* Для реппортера Allure требуется наличие установленного плагина в CI */
 	reporters: ['spec', 'junit'],
 
+	/* Директории, куда будут складываться отчеты о прогонах */
 	reporterOptions: {
 		outputDir: `./cache/tests/${project}/reports`
 	},
 
 	/* Директория, куда будут складываться скриншоты */
-	// screenshotPath: './cache/tests/shots',
+	screenshotPath: `./cache/tests/${project}/shots`,
 
-	/* Директория, куда будут складываться логи */
-	logfile: `./cache/tests/${project}/logs`,
-
-	/*
-	 * Список файлов с тестами.
-	 * Порядок файлов сохраняется, дубликаты исключаются
-	 */
+	/* Директория, куда будут складываться логи сервера */
+	seleniumLogs: `./cache/tests/${project}/logs`,
 
 	/*
 	 * Список файлов, которые требуется запустить
 	 * Этот набор запускается всегда независимо от секции <suite>
+	 * Порядок файлов сохраняется, дубликаты исключаются
 	 */
 	// specs: [ ],
 
@@ -125,6 +124,7 @@ exports.config = {
 	],
 
 	before (capabilities, specs) {
+		// Добавляем кастомные команды
 		let commands = new WebDriverAPI();
 
 		commands.export('all');
@@ -134,3 +134,17 @@ exports.config = {
 		return account.discard();
 	}
 };
+
+let { config } = exports;
+
+if (/127\.0\.0\.1|localhost|::1/.test(config.host)) {
+	config.mochaOpts.retries = 0;
+} else {
+	let index = config.services.includes('selenium-standalone');
+
+	if (index) {
+		config.services.splice(index, 1);
+	}
+}
+
+exports.config = config;

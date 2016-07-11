@@ -8,7 +8,6 @@ class ControlsPage extends PageObject {
 	}
 
 	/**
-	 *
 	 * Локаторы
 	 *
 	 * @type {Object}
