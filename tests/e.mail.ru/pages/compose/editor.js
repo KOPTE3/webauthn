@@ -46,6 +46,13 @@ class ComposeEditor extends ComposePage {
 	restoreParentFrame () {
 		this.page.frameParent();
 	}
+
+	/**
+	 * Принимаем сообщение алерта
+	 */
+	alertAccept () {
+		this.page.alertAccept();
+	}
 }
 
 module.exports = ComposeEditor;

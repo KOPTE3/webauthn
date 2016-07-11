@@ -35,7 +35,7 @@ class ComposeEditorSteps extends ComposeSteps {
 	/**
 	 * Ввести текст сообщения
 	 *
-	 * @param {boolean} text
+	 * @param {string} text
 	 */
 	writeMessage (text) {
 		let editor = this.composeEditor.getEditor();
@@ -47,6 +47,10 @@ class ComposeEditorSteps extends ComposeSteps {
 
 		assert(actual, 'Текст письма не был введен');
 		this.composeEditor.restoreParentFrame();
+	}
+
+	allertAccept () {
+		this.composeEditor.alertAccept();
 	}
 }
 
