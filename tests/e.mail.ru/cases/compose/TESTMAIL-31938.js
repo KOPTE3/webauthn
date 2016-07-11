@@ -86,16 +86,35 @@ describe('TESTMAIL-31938 НЕ AJAX. Ответ на письмо. Забытое
 		missingAttachLayer.wait();
 
 		try {
-			missingAttachLayer.checkHeadText();
-			missingAttachLayer.checkDescText();
-			missingAttachLayer.checkButtons();
+			missingAttachLayer.blockShouldHaveText(
+				'head',
+				'Вы не забыли прикрепить файл?'
+			);
+
+			missingAttachLayer.blockShouldHaveText(
+				'desc',
+				'Возможно, к письму должен быть прикреплён файл, однако он отсутствует.'
+			);
+
+			missingAttachLayer.blockShouldHaveText(
+				'apply',
+				'Всё равно отправить'
+			);
+
+			missingAttachLayer.blockShouldHaveText('cancel', 'Прикрепить файл');
 		} catch (err) {
 			throw err;
 		} finally {
-			missingAttachLayer.close();
-			messageToolbarSteps.clickFastreplyButton('cancel');
-			// так как мы поменяли текст, выскочит алерт, нужно его принять
-			composeEditor.allertAccept();
+			try {
+				missingAttachLayer.close();
+				missingAttachLayer.shouldBeClosed();
+			} catch (err2) {
+				throw err2;
+			} finally {
+				messageToolbarSteps.clickFastreplyButton('cancel');
+				// так как мы поменяли текст, выскочит алерт после закрытия, нужно его принять
+				composeEditor.allertAccept();
+			}
 		}
 	});
 });

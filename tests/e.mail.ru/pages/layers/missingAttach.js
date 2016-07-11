@@ -20,19 +20,8 @@ class missingAttach extends Layers {
 
 		return this.extend(super.locators, {
 			popupHead: `${container} .popup__head`,
-			popupDesc: `${container} .popup__desc`,
-			popupControls: buttonContainer,
-			btnConfirmCancel: `${buttonContainer} .confirm-cancel`,
-			btnConfirmOk: `${buttonContainer} confirm-ok`
+			popupDesc: `${container} .popup__desc`
 		});
-	}
-
-	getTextDesc () {
-		return this.getBlockText('popupDesc');
-	}
-
-	getTextHead () {
-		return this.getBlockText('popupHead');
 	}
 }
 
