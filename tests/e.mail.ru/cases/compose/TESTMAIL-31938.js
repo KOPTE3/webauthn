@@ -86,22 +86,7 @@ describe('TESTMAIL-31938 НЕ AJAX. Ответ на письмо. Забытое
 		missingAttachLayer.wait();
 
 		try {
-			missingAttachLayer.blockShouldHaveText(
-				'head',
-				'Вы не забыли прикрепить файл?'
-			);
-
-			missingAttachLayer.blockShouldHaveText(
-				'desc',
-				'Возможно, к письму должен быть прикреплён файл, однако он отсутствует.'
-			);
-
-			missingAttachLayer.blockShouldHaveText(
-				'apply',
-				'Всё равно отправить'
-			);
-
-			missingAttachLayer.blockShouldHaveText('cancel', 'Прикрепить файл');
+			missingAttachLayer.checkTexts();
 		} catch (err) {
 			throw err;
 		} finally {
