@@ -19,7 +19,6 @@ class LoginForm extends LoginPage {
 			providersSelect: '.b-dropdown__list',
 			providersBlock : '.b-email-providers__list',
 			activeDomain   : '.b-email-providers__list__item_selected',
-			otherProvider  : '[data-id="other"]',
 			select         : '.b-select__dropdown',
 			login          : '[name="Username"]',
 			password       : '[name="Password"]',
@@ -30,7 +29,10 @@ class LoginForm extends LoginPage {
 			rememberState  : '.b-grid_restore [name="saveauth"]',
 			rememberText   : '.b-grid_restore .b-checkbox__label',
 			forgetLink     : '.b-link_passremind',
-			signUpLink     : '[data-name="signup-link"]'
+			signUpLink     : '[data-name="signup-link"]',
+			providers      : {
+				other      : '[data-id="other"]'
+			}
 		};
 	}
 
@@ -58,7 +60,7 @@ class LoginForm extends LoginPage {
 	 * @param {string} provider
 	 */
 	clickByDomain (provider) {
-
+		this.page.click(this.locators.providers[provider]);
 	}
 
 	/**

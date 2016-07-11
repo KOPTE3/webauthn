@@ -10,8 +10,8 @@ module.exports = {
 	list: [
 		{
 			name: 'mail.ru',
-			type: 'internal',
-			data: [
+			types: ['internal', 'oauth'],
+			hosts: [
 				'mail.ru',
 				'mail.ua',
 				'inbox.ru',
@@ -22,8 +22,8 @@ module.exports = {
 
 		{
 			name: 'yandex.ru',
-			type: 'external',
-			data: [
+			types: ['external'],
+			hosts: [
 				'yandex.ru',
 				'yandex.com',
 				'yandex.ua',
@@ -37,8 +37,8 @@ module.exports = {
 
 		{
 			name: 'rambler.ru',
-			type: 'external',
-			data: [
+			types: ['external'],
+			hosts: [
 				'rambler.ru',
 				'lenta.ru',
 				'myrambler.ru',
@@ -50,24 +50,24 @@ module.exports = {
 
 		{
 			name: 'gmail.com',
-			type: 'external',
-			data: [
+			types: ['external', 'oauth'],
+			hosts: [
 				'gmail.com'
 			]
 		},
 
 		{
 			name: 'aol.com',
-			type: 'external',
-			data: [
+			types: ['external'],
+			hosts: [
 				'aol.com'
 			]
 		},
 
 		{
 			name: 'icloud.com',
-			type: 'external',
-			data: [
+			types: ['external'],
+			hosts: [
 				'icloud.com',
 				'me.com'
 			]
@@ -75,24 +75,24 @@ module.exports = {
 
 		{
 			name: 'qq.com',
-			type: 'external',
-			data: [
+			types: ['external'],
+			hosts: [
 				'qq.com'
 			]
 		},
 
 		{
 			name: 'my.com',
-			type: 'external',
-			data: [
+			types: ['external'],
+			hosts: [
 				'my.com'
 			]
 		},
 
 		{
 			name: 'yahoo.com',
-			type: 'external',
-			data: [
+			types: ['external'],
+			hosts: [
 				'yahoo.com',
 				'ymail.com',
 				'rocketmail.com',
@@ -154,8 +154,8 @@ module.exports = {
 
 		{
 			name: 'qip.ru',
-			type: 'external',
-			data: [
+			types: ['external'],
+			hosts: [
 				'qip.ru',
 				'pochta.ru',
 				'fromru.com',
@@ -186,8 +186,8 @@ module.exports = {
 
 		{
 			name: 'outlook.com',
-			type: 'external',
-			data: [
+			types: ['external', 'oauth'],
+			hosts: [
 				'outlook.com',
 				'hotmail.com',
 				'msn.com',
@@ -232,7 +232,7 @@ module.exports = {
 	 */
 	find (domain) {
 		let provider = this.list.find(provider => {
-			for (let alias of provider.data) {
+			for (let alias of provider.hosts) {
 				if (alias === domain) {
 					return true;
 				}
@@ -240,6 +240,18 @@ module.exports = {
 		});
 
 		return provider && provider.name;
+	},
+
+	/**
+	 * Фильтр провайдеров по заданному предикату
+	 *
+	 * @param {Function} predicate
+	 * @returns {Array}
+	 */
+	filter (predicate) {
+		return this.list.filter(provider => {
+			return predicate(provider);
+		});
 	},
 
 	/**

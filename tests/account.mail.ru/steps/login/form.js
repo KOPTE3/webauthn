@@ -59,7 +59,7 @@ class LoginFormSteps extends Steps {
 	 * @param {string} password
 	 */
 	setPassword (password) {
-		this.page.setPassword(password);
+		this.loginForm.setPassword(password);
 	}
 
 	/**
@@ -70,6 +70,15 @@ class LoginFormSteps extends Steps {
 	setCredentials ({ username, password }) {
 		this.setLogin(username);
 		this.setPassword(password);
+	}
+
+	/**
+	 * Получить активный домен
+	 *
+	 * @param {string} provider
+	 */
+	clickByDomain (provider) {
+		this.loginForm.clickByDomain(provider);
 	}
 
 	/**
