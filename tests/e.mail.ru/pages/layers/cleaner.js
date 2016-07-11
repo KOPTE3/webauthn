@@ -10,7 +10,7 @@ class CleanerPage extends LayersPage {
 	 * @type {Object}
 	 */
 	get locators () {
-		return Object.assign(super.locators, {
+		return this.extend(super.locators, {
 			container: 'body',
 			cleaner: '.js-cleaner',
 			mainPage: '.js-cleaner-main',

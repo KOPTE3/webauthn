@@ -19,7 +19,7 @@ describe('TESTMAIL-31915', () => {
 		FoldersSteps.open();
 
 		try {
-			FoldersSteps.isArchiveIn('0');
+			FoldersSteps.isArchiveIn(foldersStore.ids.inbox);
 		} catch (exception) {
 			try {
 				FoldersSteps.isArchiveNotExists();
@@ -36,14 +36,14 @@ describe('TESTMAIL-31915', () => {
 			// Поэтому сначала создаем подпапку, потом конвертируем ее в архив
 			let id = FoldersSteps.createFolder({
 				name: 'Архив',
-				parent: '0',
+				parent: foldersStore.ids.inbox,
 				type: 'user'
 			});
 
 			FoldersSteps.convertFolderToArchive(id);
 
 			FoldersSteps.refresh();
-			FoldersSteps.isArchiveIn('0');
+			FoldersSteps.isArchiveIn(foldersStore.ids.inbox);
 		}
 
 		FiltersSteps.enableCleaner();

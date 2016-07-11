@@ -1,6 +1,9 @@
 'use strict';
 
 module.exports = {
+	/**
+	 * Статистика рассылок.
+	 */
 	stats: {
 		'maillings_stat': {
 			'read': 46,
