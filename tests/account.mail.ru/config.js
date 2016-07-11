@@ -134,3 +134,17 @@ exports.config = {
 		return account.discard();
 	}
 };
+
+let { config } = exports;
+
+if (/127\.0\.0\.1|localhost|::1/.test(config.host)) {
+	config.mochaOpts.retries = 0;
+} else {
+	let index = config.services.includes('selenium-standalone');
+
+	if (index) {
+		config.services.splice(index, 1);
+	}
+}
+
+exports.config = config;
