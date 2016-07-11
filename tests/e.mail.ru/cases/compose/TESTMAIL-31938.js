@@ -38,17 +38,6 @@ describe('TESTMAIL-31938 НЕ AJAX. Ответ на письмо. Забытое
 	});
 
 	it('Должен появится попап с текстом', () => {
-		/**
-		 *
-		 *
-		 */
-		const close = () => {
-			missingAttachLayer.close();
-			messageToolbarSteps.clickFastreplyButton('cancel');
-			// так как мы поменяли текст, выскочит алерт, нужно его принять
-			composeEditor.allertAccept();
-		};
-
 		const features = [
 			'check-missing-attach',
 			'disable-ballons',
@@ -70,7 +59,6 @@ describe('TESTMAIL-31938 НЕ AJAX. Ответ на письмо. Забытое
 		Messages.features(features);
 
 		Messages.open();
-
 
 		messagesLettersSteps.openNewestLetter();
 
@@ -101,13 +89,13 @@ describe('TESTMAIL-31938 НЕ AJAX. Ответ на письмо. Забытое
 			missingAttachLayer.checkHeadText();
 			missingAttachLayer.checkDescText();
 			missingAttachLayer.checkButtons();
-
-			close();
 		} catch (err) {
-			console.log(err);
-
-			close();
 			throw err;
+		} finally {
+			missingAttachLayer.close();
+			messageToolbarSteps.clickFastreplyButton('cancel');
+			// так как мы поменяли текст, выскочит алерт, нужно его принять
+			composeEditor.allertAccept();
 		}
 	});
 });
