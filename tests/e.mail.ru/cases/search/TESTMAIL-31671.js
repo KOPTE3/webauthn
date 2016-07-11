@@ -7,7 +7,7 @@ let AdvancedSteps = require('../../steps/portal-menu/advanced');
 let portalSearchSteps = new PortalSearchSteps();
 let advancedSteps = new AdvancedSteps();
 
-let AdvancedStore = require('../../store/portal-menu/advanced');
+let advancedStore = require('../../store/portal-menu/advanced');
 
 describe('TESTMAIL-31671', () => {
 	it('Проверка, что в расширенном поиске при клике в поля адресатов,' +
@@ -19,7 +19,7 @@ describe('TESTMAIL-31671', () => {
 		Messages.open();
 		portalSearchSteps.toggleAdvanced();
 
-		AdvancedStore.textFields.forEach(name => {
+		advancedStore.textFields.forEach(name => {
 			advancedSteps.clickField(name);
 			advancedSteps.noSuggests(name);
 		});

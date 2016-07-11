@@ -1,14 +1,13 @@
 'use strict';
 
+let helpers = require('../utils/helpers');
+let account = require('../utils/account');
 let URL = require('../utils/url');
-let Support = require('../utils/support');
 
 let cache = {
 	session : false,
 	features: []
 };
-
-let support = new Support();
 
 /** @namespace browser */
 class PageObject {
@@ -78,7 +77,7 @@ class PageObject {
 		this.wait();
 
 		if (cache.session) {
-			return support.isActiveUser();
+			return account.isActiveUser();
 		}
 
 		return true;
@@ -91,7 +90,7 @@ class PageObject {
 	 * @param {Object} [credentials] — авторизационые данные
 	 */
 	static auth (type, credentials) {
-		cache.session = support.session(...arguments);
+		cache.session = account.session(...arguments);
 	}
 
 	/**
@@ -101,7 +100,27 @@ class PageObject {
 	 * @returns {Object}
 	 */
 	extend (object) {
-		return support.extend(...arguments);
+		return helpers.extend(...arguments);
+	}
+
+	/**
+	 * Дожидается требуемного адреса
+	 *
+	 * @param {string|RegExp|Function} value
+	 * @param {string} [query]
+	 * @param {number|string} [options] — timeout, revert
+	 * @returns {boolean}
+	 */
+	waitForUrl (value, query, ...options) {
+		if (typeof value === 'string') {
+			value = URL.request(...arguments);
+		}
+
+		try {
+			return this.page.waitForUrl(value, ...options);
+		} catch (error) {
+			return false;
+		}
 	}
 
 	/**

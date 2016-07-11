@@ -1,6 +1,6 @@
 'use strict';
 
-let AuthStore = require('../store/authorization');
+let authStore = require('../store/authorization');
 
 const ASYNC_TIMEOUT = 10000; // таймаут завершнеия асинхронного скрипта
 const DELIVERY_TIMEOUT = 1000; // таймаут ожидания фактической доствки письма
@@ -17,18 +17,16 @@ module.exports = {
 	call (method, options) {
 		/* eslint max-nested-callbacks: ["error", 4] */
 
-		let authStore = new AuthStore();
 		let email = authStore.account.get('email');
 
 		return browser
 			.timeoutsAsyncScript(ASYNC_TIMEOUT)
-			.executeAsync(function (params,
-				ASYNC_TIMEOUT, DELIVERY_TIMEOUT, done) {
+			.executeAsync(function (params, ASYNC_TIMEOUT, DELIVERY_TIMEOUT, resolve) {
 				require(['RPC'], function (RPC) {
 					(function () { // RPC setup
 						RPC.setup({
 							version: 1,
-							baseUrl: '//' + location.hostname + '/api',
+							baseUrl: '//' + window.location.hostname + '/api',
 							email: params.email,
 							timeout: ASYNC_TIMEOUT
 						});
@@ -59,7 +57,7 @@ module.exports = {
 							.always(function (res) {
 								// дожидаемся фактической доставки сообщения
 								setTimeout(function () {
-									done(res.body);
+									resolve(res.body);
 								}, DELIVERY_TIMEOUT);
 							});
 					});

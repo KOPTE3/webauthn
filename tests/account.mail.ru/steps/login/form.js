@@ -3,7 +3,7 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let Store = require('../../store/login/form');
+let store = require('../../store/login/form');
 let LoginForm = require('../../pages/login/form');
 
 /** Модуль для работы с шагами формы страницы логина */
@@ -11,7 +11,6 @@ class LoginFormSteps extends Steps {
 	constructor () {
 		super();
 
-		this.store = new Store();
 		this.loginForm = new LoginForm();
 	}
 
@@ -60,7 +59,7 @@ class LoginFormSteps extends Steps {
 	 * @param {string} password
 	 */
 	setPassword (password) {
-		this.page.setPassword(password);
+		this.loginForm.setPassword(password);
 	}
 
 	/**
@@ -71,6 +70,15 @@ class LoginFormSteps extends Steps {
 	setCredentials ({ username, password }) {
 		this.setLogin(username);
 		this.setPassword(password);
+	}
+
+	/**
+	 * Получить активный домен
+	 *
+	 * @param {string} provider
+	 */
+	clickByDomain (provider) {
+		this.loginForm.clickByDomain(provider);
 	}
 
 	/**
@@ -178,7 +186,7 @@ class LoginFormSteps extends Steps {
 	 */
 	clickPassRemindLink () {
 		let actual = this.loginForm
-			.clickPassRemindLink(this.store.links.passwordRestore);
+			.clickPassRemindLink(store.links.passwordRestore);
 
 		assert(actual, 'Указана неверная ссылка восстановления пароля');
 	}
@@ -188,7 +196,7 @@ class LoginFormSteps extends Steps {
 	 */
 	clickSignUpLink () {
 		let actual = this.loginForm
-			.clickPassRemindLink(this.store.links.clickSignUpLink);
+			.clickPassRemindLink(store.links.clickSignUpLink);
 
 		assert(actual, 'Указана неверная ссылка на регистрацию');
 	}

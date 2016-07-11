@@ -20,7 +20,6 @@ class LoginForm extends LoginPage {
 			providersSelect: '.js-login-page__external__input_domain',
 			providersBlock : '.login-page__external_domains__list',
 			activeDomain   : '.login-page__external_domains__list_active',
-			otherProvider  : '.login-page__external_domains__item_other',
 			select         : '.login-page__external_select__box',
 			login          : '.login-page__external_input__login[name="Login"]',
 			submit         : '.js-login-page__external__submit',
@@ -31,7 +30,10 @@ class LoginForm extends LoginPage {
 			forgetLink     : '.js-login-page__external__forget a',
 			helpLink       : '.login-page__external__desc__parag a',
 			helpText       : '.login-page__external__desc__parag a',
-			desc           : '.login-page__external__desc__parag'
+			desc           : '.login-page__external__desc__parag',
+			providers      : {
+				other      : '.login-page__external_domains__item_other'
+			}
 		});
 	}
 

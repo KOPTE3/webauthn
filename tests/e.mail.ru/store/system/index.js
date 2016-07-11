@@ -1,13 +1,7 @@
 'use strict';
 
-let Store = require('../../store');
-
-/** Модуль для работы с данными пользовательского окружения */
-class Sent extends Store {
-	constructor () {
-		super();
-	}
-
+/** Набор методов для работы с данными пользовательского окружения */
+module.exports = {
 	/**
 	 * Название браузера
 	 *
@@ -15,7 +9,7 @@ class Sent extends Store {
 	 */
 	get browser () {
 		return browser.desiredCapabilities.browserName;
-	}
+	},
 
 	/**
 	 * Название платформы
@@ -27,6 +21,4 @@ class Sent extends Store {
 
 		return browser.desiredCapabilities.platform || status.value.os.name;
 	}
-}
-
-module.exports = Sent;
+};

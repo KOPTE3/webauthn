@@ -1,12 +1,4 @@
 'use strict';
 
-let Store = require('../../store');
-
-/** Модуль для работы с данными адресной книги */
-class AddressBook extends Store {
-	constructor () {
-		super();
-	}
-}
-
-module.exports = AddressBook;
+/** Набор методов для работы с данными адресной книги */
+module.exports = {};

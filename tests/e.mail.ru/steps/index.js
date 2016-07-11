@@ -3,7 +3,7 @@
 let assert = require('assert');
 let Pages = require('../pages');
 
-let page = new Pages();
+let pages = new Pages();
 
 class Steps {
 	/**
@@ -12,8 +12,6 @@ class Steps {
 	 * @param {Array} list — список фич, которые требуется включить
 	 */
 	static features (...list) {
-		let pages = new Pages();
-
 		pages.features(...list);
 	}
 
@@ -54,6 +52,19 @@ class Steps {
 
 	static refresh () {
 		this.page.refresh();
+	}
+
+	/**
+	 * Дожидается требуемного адреса
+	 *
+	 * @param {string|RegExp} url
+	 * @param {string} [query]
+	 * @param {number|string} [options] — timeout, revert
+	 */
+	static waitForUrl (url, query, ...options) {
+		let actual = pages.waitForUrl(...arguments);
+
+		assert(actual, `Не найдено соответствие с ожидаемым адресом ${url}`);
 	}
 }
 

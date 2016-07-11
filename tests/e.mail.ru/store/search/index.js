@@ -1,18 +1,11 @@
 'use strict';
 
-let Store = require('../../store');
-let AuthStore = require('../../store/authorization');
+let authStore = require('../../store/authorization');
 
-/** Модуль для работы с данными поиска */
-class Search extends Store {
-	constructor () {
-		super();
-
-		this.authStore = new AuthStore();
-	}
-
+/** Набор методов для работы с данными поиска */
+module.exports = {
 	get messages () {
-		let user = this.authStore.account.get('email');
+		let user = authStore.account.get('email');
 
 		return [
 			{
@@ -29,6 +22,4 @@ class Search extends Store {
 			}
 		];
 	}
-}
-
-module.exports = Search;
+};

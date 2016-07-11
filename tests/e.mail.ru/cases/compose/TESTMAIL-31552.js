@@ -3,16 +3,14 @@
 let Compose = require('../../steps/compose');
 let ComposeFields = require('../../steps/compose/fields');
 let ComposeEditor = require('../../steps/compose/editor');
-let СomposeControls = require('../../steps/compose/controls');
+let ComposeControls = require('../../steps/compose/controls');
 let MissingAttachLayer = require('../../steps/layers/missingAttach');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 
 let composeFields = new ComposeFields();
 let composeEditor = new ComposeEditor();
-let composeControls = new СomposeControls();
+let composeControls = new ComposeControls();
 let missingAttachLayer = new MissingAttachLayer();
-
-let composeFieldsStore = new ComposeFieldsStore();
 
 const text = 'Добрый день! Во вложении заявка, прошу скинуть счет на оплату.';
 

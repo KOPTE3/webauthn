@@ -2,26 +2,25 @@
 
 let LoginPage = require('../../steps/login');
 let LoginForm = require('../../steps/login/form');
+let authStore = require('../../store/authorization');
+let store = require('../../store/login/form');
+
 let loginForm = new LoginForm();
-let AuthStore = require('../../store/authorization');
-let Providers = require('../../store/authorization/providers');
 
 describe('TESTMAIL-30321', () => {
 	it('Успешная авторизация внешним аккаунтом, работающим по паролю, ' +
 		'при отсутствии авторизованных пользователей', () => {
-		LoginPage.open({ 'allow_external': 1 });
+		store.providers.external.forEach(domain => {
+			LoginPage.open({ 'allow_external': 1 });
 
-		let providers = new Providers();
+			let { email: username, password } = authStore.credentials('external', {
+				domain
+			});
 
-		providers = providers.top('external');
-
-		let auth = new AuthStore();
-
-		providers.forEach(domain => {
-			let { email: username, password } = auth.credentials('external', { domain });
-
+			loginForm.clickByDomain('other');
 			loginForm.setCredentials({ username, password });
 			loginForm.clickBySignInButton();
+			loginForm.waitForUrl(/messages/);
 		});
 	});
 });
