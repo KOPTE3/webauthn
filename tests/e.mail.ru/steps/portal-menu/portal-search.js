@@ -10,6 +10,8 @@ let Search = require('../../pages/search');
 
 let PortalSearchStore = require('../../store/portal-menu/portal-search');
 
+let actions = require('../../utils/actions');
+
 
 /** Модуль для работы с представлением страницы поиска писем */
 class PortalSearchSteps extends PortalMenuSteps {
@@ -19,6 +21,18 @@ class PortalSearchSteps extends PortalMenuSteps {
 		this.portalSearch = new PortalSearch();
 		this.advanced = new Advanced();
 		this.search = new Search();
+	}
+
+	/**
+	 * Поменить ответ АПИ
+	 *
+	 * @param {*[]} body - тело ответа
+	 */
+	mock (body = []) {
+		actions.mockRPC('messages/search/requests', {
+			status: '200',
+			body
+		});
 	}
 
 	/**

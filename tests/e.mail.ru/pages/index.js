@@ -123,31 +123,6 @@ class PageObject {
 		}
 	}
 
-	/**
-	 * Дождаться появления требуемого элемента
-	 */
-	wait () {
-		this.page.waitForExist(this.locators.container);
-	}
-
-	/**
-	 * Получить заголовок страницы
-	 *
-	 * @type {string}
-	 */
-	get title () {
-		this.page.getTitle();
-	}
-
-	/**
-	 * Включение фичи
-	 *
-	 * @param {Array} list — список фич, которые требуется включить
-	 */
-	features (list) {
-		cache.features.push(...list);
-	}
-
 	refresh () {
 		this.page.refresh();
 	}

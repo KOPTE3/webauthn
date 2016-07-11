@@ -121,6 +121,46 @@ module.exports = {
 	},
 
 	/**
+	 * Выполнить RPC.mock
+	 *
+	 * @param {string} path
+	 * @param {Object} settings - ответ
+	 * @returns {Promise}
+	 */
+	mockRPC (path, settings) {
+		let result = browser.execute(function (path, settings) {
+			var mock = function (path, settings) {
+				var RPC = require('RPC');
+
+				RPC.mock(path, settings);
+			};
+
+			if (typeof $.mockjax === 'function') {
+				mock(path, settings);
+			} else {
+				var el = document.createElement('script');
+
+				el.src = '//win105.dev.mail.ru/packages/jssdk/vendor/jquery.mockjax.js';
+				el.onload = function () {
+					require('jquery.mockjax');
+
+					var request = require('request');
+
+					request.mock = $.mockjax;
+					request.mock.once = $.mockjax.once;
+					request.mock.clear = $.mockjaxClear;
+
+					mock(path, settings);
+				};
+
+				document.body.appendChild(el);
+			}
+		}, path, settings);
+
+		return result.value;
+	},
+
+	/**
 	 * Отправляет пользователю письмо
 	 *
 	 * @param {string} to - адрес получателя
