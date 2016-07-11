@@ -28,11 +28,8 @@ describe('TESTMAIL-31847', () => {
 		});
 
 		Folders.open();
-
 		Folders.setTimeOffset(60 * 60 * 24);
-
 		Folders.goToFolder('500000');
-
 		Folders.isFolderHidden(firstFolderId);
 		Folders.isFolderHidden(secondFolderId);
 	});

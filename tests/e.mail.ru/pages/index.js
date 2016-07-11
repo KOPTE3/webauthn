@@ -1,19 +1,16 @@
 'use strict';
 
+let helpers = require('../utils/helpers');
+let account = require('../utils/account');
 let URL = require('../utils/url');
-let Support = require('../utils/support');
 
 let cache = {
 	session : false,
 	features: []
 };
 
-let support = new Support();
-
 /** @namespace browser */
 class PageObject {
-	constructor () { }
-
 	/**
 	 * Локаторы
 	 *
@@ -82,8 +79,6 @@ class PageObject {
 			path = this.location;
 		}
 
-		// query.JS_HOST = 'burlak.win105.dev.mail.ru';
-
 		if (typeof path === 'object') {
 			query = path;
 			path = null;
@@ -93,7 +88,6 @@ class PageObject {
 
 		if (features.length) {
 			query.ftrs = features.join(' ');
-			cache.features = [];
 		}
 
 		let url = URL.request(path, query);
@@ -102,7 +96,7 @@ class PageObject {
 		this.wait();
 
 		if (cache.session) {
-			return support.isActiveUser();
+			return account.isActiveUser();
 		}
 
 		return true;
@@ -115,7 +109,7 @@ class PageObject {
 	 * @param {Object} [credentials] — авторизационые данные
 	 */
 	static auth (type, credentials) {
-		cache.session = support.session(...arguments);
+		cache.session = account.session(...arguments);
 	}
 
 	/**
@@ -133,7 +127,27 @@ class PageObject {
 	 * @returns {Object}
 	 */
 	extend (object) {
-		return support.extend(...arguments);
+		return helpers.extend(...arguments);
+	}
+
+	/**
+	 * Дожидается требуемного адреса
+	 *
+	 * @param {string|RegExp|Function} value
+	 * @param {string} [query]
+	 * @param {number|string} [options] — timeout, revert
+	 * @returns {boolean}
+	 */
+	waitForUrl (value, query, ...options) {
+		if (typeof value === 'string') {
+			value = URL.request(...arguments);
+		}
+
+		try {
+			return this.page.waitForUrl(value, ...options);
+		} catch (error) {
+			return false;
+		}
 	}
 
 	/**
@@ -142,7 +156,7 @@ class PageObject {
 	 * @param {string} locator - локатор элемента
 	 * @param {number} count - количество попыток (по умолчанию 10)
 	 * @param {number} interval - интервал в ms, через который делать
-	 * 							  попыкти (по умолчанию 500ms)
+	 * попыкти (по умолчанию 500ms)
 	 *
 	 * @returns {boolean}
 	 * */
@@ -179,26 +193,24 @@ class PageObject {
 	 * @param {string} locator - куда кликнуть
 	 */
 	clickAll (locator) {
-		let btns = this.page.elements(locator);
-		let page = this.page;
-		let isClicked = false;
+		let elements = this.page.elements(locator);
+		let clicked = false;
 
-		btns.value.forEach(function (btn) {
-			if (isClicked) {
+		elements.value.forEach(element => {
+			if (clicked) {
 				return;
 			}
 
 			try {
-				page.elementIdClick(btn.ELEMENT);
-				isClicked = true;
+				this.page.elementIdClick(element.ELEMENT);
+				clicked = true;
 			} catch (error) {}
 		});
 
-		if (!isClicked) {
+		if (!clicked) {
 			throw new Error('Can\'t click to all elements' + locator);
 		}
 	}
-
 }
 
 module.exports = PageObject;

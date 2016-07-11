@@ -2,13 +2,18 @@
 
 let Messages = require('../../steps/messages');
 let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
-let composeEditorStore = require('../../store/compose/editor');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let ComposeFields = require('../../steps/compose/fields');
+let ComposeEditor = require('../../steps/compose/editor');
+let ComposeControls = require('../../steps/compose/controls');
+let MissingAttachLayer = require('../../steps/layers/missingAttach');
 let messagesToolbarSteps = require('../../steps/messages/toolbar');
+let composeEditorStore = require('../../store/compose/editor');
+let composeFieldsStore = require('../../store/compose/fields');
+
+let composeFields = new ComposeFields();
+let composeEditor = new ComposeEditor();
+let composeControls = new ComposeControls();
+let missingAttachLayer = new MissingAttachLayer();
 
 describe('TESTMAIL-31540: AJAX. Написание письма. Забытое вложение. ' +
 'Проверить появление попапа при отправке текстов', () => {
@@ -17,7 +22,7 @@ describe('TESTMAIL-31540: AJAX. Написание письма. Забытое 
 	});
 
 	it('Попап должен появится', () => {
-		let { fields } = new ComposeFieldsStore();
+		let { fields } = composeFieldsStore;
 
 		Messages.features([
 			'check-missing-attach',

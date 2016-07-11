@@ -1,12 +1,13 @@
 'use strict';
 
-let Store = require('../../store');
-
-/** Модуль для работы с данными списка папок */
-class Folders extends Store {
-	constructor () {
-		super();
+module.exports = {
+	/**
+	 * Идентификаторы папок.
+	 */
+	ids: {
+		'inbox': '0',
+		'social': '500011',
+		'promotions': '500012',
+		'newsletters': '500013'
 	}
-}
-
-module.exports = new Folders();
+};

@@ -1,20 +1,16 @@
 'use strict';
 
-let PageObject = require('../../pages');
+let Page = require('..');
 
 /** Модуль для работы с представлением страницы настроек */
-class Settings extends PageObject {
-	constructor () {
-		super();
-	}
-
+class SettingsPage extends Page {
 	/**
 	 * Базовый адрес страницы
 	 *
 	 * @type {string}
 	 */
 	get location () {
-		return '/search';
+		return '/settings';
 	}
 
 	/**
@@ -29,4 +25,4 @@ class Settings extends PageObject {
 	}
 }
 
-module.exports = new Settings();
+module.exports = SettingsPage;

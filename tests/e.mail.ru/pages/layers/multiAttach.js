@@ -15,8 +15,7 @@ class multiAttach extends Layers {
 	 * @type {Object}
 	 */
 	get locators () {
-		return this.extend(super.locators, {
-		});
+		return this.extend(super.locators, { });
 	}
 }
 

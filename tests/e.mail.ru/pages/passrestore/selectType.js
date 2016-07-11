@@ -1,7 +1,7 @@
 'use strict';
 
 let PageObject = require('../../pages');
-let Captcha = require('../../utils/captcha');
+let captcha = require('../../utils/captcha');
 
 /** Модуль для работы со страницей выбора типа восстановления пароля */
 class Controls extends PageObject {
@@ -32,7 +32,7 @@ class Controls extends PageObject {
 	 * @returns {Object}
 	 */
 	get phoneCaptchaID () {
-		return Captcha.getCaptchaID(this.locators.phoneCaptchaImg);
+		return captcha.getCaptchaID(this.locators.phoneCaptchaImg);
 	}
 
 	/**
@@ -44,7 +44,7 @@ class Controls extends PageObject {
 		let code;
 
 		this.page.waitUntil(function async () {
-			return Captcha.getCaptchaValue(cid).then(result => {
+			return captcha.getCaptchaValue(cid).then(result => {
 				code = result;
 
 				return true;
@@ -71,7 +71,6 @@ class Controls extends PageObject {
 	waitForPhone () {
 		this.page.waitForVisible(this.locators.phoneTabBlock);
 	}
-
 }
 
-module.exports = new Controls();
+module.exports = Controls;

@@ -1,15 +1,17 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let CalendarFactory = require('../../utils/calendar');
-let portalSearchSteps = require('../../steps/portal-menu/portal-search');
-let advancedSteps = require('../../steps/portal-menu/advanced');
-let advancedCalendar = CalendarFactory.create('advanced');
-let operandsCalendar = CalendarFactory.create('portal-search');
+let calendarUtils = require('../../utils/calendar');
+let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
+let AdvancedSteps = require('../../steps/portal-menu/advanced');
+let advancedStore = require('../../store/portal-menu/advanced');
+let dateUtils = require('../../utils/date');
 
-let AdvancedStore = require('../../store/portal-menu/advanced');
+let portalSearchSteps = new PortalSearchSteps();
+let advancedSteps = new AdvancedSteps();
 
-let date = require('../../utils/date');
+let advancedCalendar = calendarUtils.create('advanced');
+let operandsCalendar = calendarUtils.create('portal-search');
 
 describe('TESTMAIL-31699', () => {
 	it('Проверка редактирования операнда "дата" с точной датой ' +
@@ -19,9 +21,9 @@ describe('TESTMAIL-31699', () => {
 
 		portalSearchSteps.toggleAdvanced();
 
-		let today = date.format('D.M.Y');
-		let todayDay = date.format('d');
-		let lapses = AdvancedStore.dateSelectValues;
+		let today = dateUtils.format('D.M.Y');
+		let todayDay = dateUtils.format('d');
+		let lapses = advancedStore.dateSelectValues;
 		let operandName = 'date';
 
 		advancedSteps.clickDateField();
@@ -42,9 +44,7 @@ describe('TESTMAIL-31699', () => {
 		portalSearchSteps.isOperandInputReadonly(operandName);
 
 		operandsCalendar.isVisible();
-
 		operandsCalendar.isLapseVisible();
-
 		operandsCalendar.checkLapse(lapses[0].value);
 
 		operandsCalendar.clickLapse(lapses[1].value);

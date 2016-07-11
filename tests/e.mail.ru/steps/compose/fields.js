@@ -121,4 +121,4 @@ class ComposeFieldsSteps extends ComposeSteps {
 	}
 }
 
-module.exports = new ComposeFieldsSteps();
+module.exports = ComposeFieldsSteps;

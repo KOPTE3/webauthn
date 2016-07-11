@@ -1,14 +1,16 @@
 'use strict';
 
 let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
+let ComposeFields = require('../../steps/compose/fields');
+let ComposeEditor = require('../../steps/compose/editor');
+let ComposeControls = require('../../steps/compose/controls');
 let composeEditorStore = require('../../store/compose/editor');
 let SentPage = require('../../steps/sent');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 
-let composeFieldsStore = new ComposeFieldsStore();
+let composeFields = new ComposeFields();
+let composeEditor = new ComposeEditor();
+let composeControls = new ComposeControls();
 
 describe('TESTMAIL-31549: НЕ AJAX. Написание письма. Забытое вложение. ' +
 'Проверить отсутствие попапа при отправке ' +

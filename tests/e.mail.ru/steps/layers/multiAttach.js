@@ -13,4 +13,4 @@ class MultiAttachLayerSteps extends LayerSteps {
 	}
 }
 
-module.exports = new MultiAttachLayerSteps();
+module.exports = MultiAttachLayerSteps;

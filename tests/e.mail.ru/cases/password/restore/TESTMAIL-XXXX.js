@@ -1,8 +1,11 @@
 'use strict';
 
 let PasswordRestore = require('../../../steps/password/restore');
-let accountView = require('../../../steps/password/restore/account');
-let slectTypeView = require('../../../steps/password/restore/selectType');
+let AccountView = require('../../../steps/password/restore/account');
+let SelectTypeView = require('../../../steps/password/restore/selectType');
+
+let accountView = new AccountView();
+let selectTypeView = new SelectTypeView();
 
 let assert = require('assert');
 
@@ -11,7 +14,7 @@ describe('TESTMAIL-XXXX', () => {
 		PasswordRestore.open();
 		accountView.setEmail('iketari@mail.ru');
 		accountView.submitForm();
-		slectTypeView.waitForPhone();
-		slectTypeView.fillPhoneCaptcha();
+		selectTypeView.waitForPhone();
+		selectTypeView.fillPhoneCaptcha();
 	});
 });

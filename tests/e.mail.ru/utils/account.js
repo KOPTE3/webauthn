@@ -2,16 +2,11 @@
 
 let TestTools = require('@qa/test-tools');
 let AccountManager = require('@qa/account-manager');
-let AuthStore = require('../store/authorization');
+let authStore = require('../store/authorization');
 let Providers = require('../store/authorization/providers');
 
-class Support extends TestTools.Support {
-	constructor () {
-		super();
-
-		this.authStore = new AuthStore();
-	}
-
+/** Набор методов для аккаунтом пользователя */
+module.exports = {
 	/**
 	 * Получение сессии
 	 *
@@ -42,13 +37,13 @@ class Support extends TestTools.Support {
 		});
 
 		this.setCookie();
-	}
+	},
 
 	/**
 	 * Выставляет куки
 	 */
 	setCookie () {
-		let { account } = this.authStore;
+		let { account } = authStore;
 
 		browser.url('/login');
 
@@ -69,7 +64,7 @@ class Support extends TestTools.Support {
 
 			console.log(`Used ${email} account`);
 		}
-	}
+	},
 
 	/**
 	 * Проверяет залогинен ли пользователь
@@ -78,7 +73,7 @@ class Support extends TestTools.Support {
 	 */
 	isActiveUser () {
 		try {
-			let { account } = this.authStore;
+			let { account } = authStore;
 			let email = account.get('email');
 
 			return browser.waitUntil(function async () {
@@ -93,7 +88,7 @@ class Support extends TestTools.Support {
 		} catch (error) {
 			return false;
 		}
-	}
+	},
 
 	/**
 	 * Позволяет получить состовляющие email
@@ -110,6 +105,4 @@ class Support extends TestTools.Support {
 			throw new Error(`Could not parse passed email "${email}"\n${error.stack}`);
 		}
 	}
-}
-
-module.exports = Support;
+};

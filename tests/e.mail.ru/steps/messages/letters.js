@@ -6,9 +6,8 @@ let MessagesLettersPage = require('../../pages/messages/letters');
 let MessagesSteps = require('../messages');
 let MessagePage = require('../message');
 
-
-/** Модуль для работы с формой страницы написания письма */
-class MessagesLettersSteps extends MessagesSteps {
+/** Модуль для работы с письмами */
+class LettersSteps extends MessagesSteps {
 	constructor () {
 		super();
 		this.lettersPage = new MessagesLettersPage();
@@ -23,6 +22,33 @@ class MessagesLettersSteps extends MessagesSteps {
 		this.messagePage.wait();
 		assert(this.messagePage.isVisible(), 'страница сообщения не показана');
 	}
+
+	/**
+	 * Сравнить число писем
+	 *
+	 * @param {number} count
+	 */
+	checkLettersCount (count) {
+		let actual = this.messagesPage.getLettersCount();
+
+		assert(actual === count, `Число писем не равно ${count}`);
+	}
+
+	/**
+	 * Проверить наличие письма с заданной темой
+	 *
+	 * @param {string} subject - тема
+	 * @param {boolean} reverse - проверить отсутсвие письма
+	 */
+	checkLetterBySubject (subject, reverse = false) {
+		let actual = this.messagesPage.getLetterIdBySubject(subject);
+
+		if (reverse) {
+			assert(!actual, `Присутствует письмо с темой ${subject}`);
+		} else {
+			assert(actual, `Отсутствует письмо с темой ${subject}`);
+		}
+	}
 }
 
-module.exports = new MessagesLettersSteps();
+module.exports = LettersSteps;

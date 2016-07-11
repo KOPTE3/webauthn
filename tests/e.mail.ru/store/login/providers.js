@@ -1,43 +1,33 @@
 'use strict';
 
-let AuthProviders = require('../../store/authorization/providers');
+let providers = require('../../store/authorization/providers');
 
-/** Модуль для работы с данными почтовых провайдеров на странице логина */
-class Providers extends AuthProviders {
-	constructor () {
-		super();
-	}
-
+/** Набор методов для работы с данными почтовых провайдеров на странице логина */
+module.exports = {
 	/**
 	 * Получить активный список провайдеров (пиктограммы)
 	 *
 	 * @type {Array}
 	 */
-	get active () {
-		return this.get([
-			'mail.ru',
-			'yandex.ru',
-			'rambler.ru',
-			'gmail.com'
-		]);
-	}
+	active: providers.get([
+		'mail.ru',
+		'yandex.ru',
+		'rambler.ru',
+		'gmail.com'
+	]),
 
 	/**
 	 * Получить список провайдеров (селект)
 	 *
 	 * @type {Array}
 	 */
-	get select () {
-		return this.get([
-			'mail.ru',
-			'yandex.ru',
-			'rambler.ru',
-			'gmail.com',
-			'yahoo.com',
-			'hotmail.com',
-			'outlook.com'
-		]);
-	}
-}
-
-module.exports = new Providers();
+	select: providers.get([
+		'mail.ru',
+		'yandex.ru',
+		'rambler.ru',
+		'gmail.com',
+		'yahoo.com',
+		'hotmail.com',
+		'outlook.com'
+	])
+};

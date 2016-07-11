@@ -5,6 +5,7 @@ let ControlsPage = require('./controls');
 let FieldsPage = require('./fields');
 let DropdownsPage = require('./dropdowns');
 let LayerFolderAdd = require('../../../steps/layers/folderAdd');
+let layerFolderAdd = new LayerFolderAdd();
 
 class FoldersPage extends PageObject {
 	constructor () {
@@ -48,10 +49,10 @@ class FoldersPage extends PageObject {
 		let {name, parent} = params;
 
 		this.controlsPage.newFolder();
-		LayerFolderAdd.show();
+		layerFolderAdd.show();
 		this.fieldsPage.setFieldValue('name', name);
 		this.dropdownsPage.setDropdownValue('parent', parent);
-		LayerFolderAdd.apply();
+		layerFolderAdd.apply();
 
 		return this.waitAddSuccess(params);
 	}
