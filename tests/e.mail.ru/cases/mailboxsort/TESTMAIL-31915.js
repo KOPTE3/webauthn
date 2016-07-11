@@ -31,7 +31,7 @@ describe('TESTMAIL-31915', () => {
 			}
 
 			// В данный момент не работает из-за бага https://jira.mail.ru/browse/MAIL-51729
-			// FoldersSteps.createArchiveIn('0');
+			// FoldersSteps.createArchiveIn(foldersStore.ids.inbox);
 
 			// Поэтому сначала создаем подпапку, потом конвертируем ее в архив
 			let id = FoldersSteps.createFolder({
