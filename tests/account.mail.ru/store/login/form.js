@@ -25,27 +25,31 @@ module.exports = {
 		 *
 		 * @type {Array}
 		 */
-		buttons: providers.get([
+		buttons: [
 			'mail.ru',
 			'yandex.ru',
 			'rambler.ru',
 			'gmail.com'
-		]),
+		],
 
 		/**
 		 * Список провайдеров (селект)
 		 *
 		 * @type {Array}
 		 */
-		select: providers.get([
+		select: [
 			'mail.ru',
+			'inbox.ru',
+			'bk.ru',
+			'list.ru',
 			'yandex.ru',
 			'rambler.ru',
 			'gmail.com',
 			'yahoo.com',
 			'hotmail.com',
-			'outlook.com'
-		]),
+			'live.com',
+			'msn.com'
+		],
 
 		/**
 		 * Список провайдеров (OAuth)
