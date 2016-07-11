@@ -36,6 +36,8 @@ class MissingAttachLayerSteps extends LayerSteps {
 	 *
 	 */
 	checkButtons () {
+
+		
 		// есть две кнопки
 
 		// первая синяя с тексом таким-то
