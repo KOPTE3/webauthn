@@ -3,10 +3,11 @@
 let assert = require('assert');
 
 let PasswordRestoreSteps = require('../restore');
-let accountViewPage = require('../../../pages/passrestore/account');
+let AccountViewPage = require('../../../pages/passrestore/account');
+let accountViewPage = new AccountViewPage();
 
 /** Модуль для работы с формой ввода адреса для восстановления */
-class Controls extends PasswordRestoreSteps {
+class AccountViewSteps extends PasswordRestoreSteps {
 	constructor () {
 		super();
 	}
@@ -26,4 +27,4 @@ class Controls extends PasswordRestoreSteps {
 	}
 }
 
-module.exports = new Controls();
+module.exports = AccountViewSteps;

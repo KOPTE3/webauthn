@@ -1,10 +1,13 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let portalSearchSteps = require('../../steps/portal-menu/portal-search');
-let advancedSteps = require('../../steps/portal-menu/advanced');
-let PortalSearchStore = require('../../store/portal-menu/portal-search');
-let AdvancedStore = require('../../store/portal-menu/advanced');
+let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
+let AdvancedSteps = require('../../steps/portal-menu/advanced');
+let portalSearchStore = require('../../store/portal-menu/portal-search');
+let advancedStore = require('../../store/portal-menu/advanced');
+
+let portalSearchSteps = new PortalSearchSteps();
+let advancedSteps = new AdvancedSteps();
 
 describe('TESTMAIL-31700', () => {
 	it('Проверка, что при удалении операнда убирается чекбокс', () => {
@@ -12,19 +15,19 @@ describe('TESTMAIL-31700', () => {
 		Messages.open();
 		portalSearchSteps.toggleAdvanced();
 
-		AdvancedStore.checkboxes.forEach(name => {
+		advancedStore.checkboxes.forEach(name => {
 			advancedSteps.clickCheckbox(name);
 			portalSearchSteps.hasOperand(name);
 		});
 
 		portalSearchSteps.toggleAdvanced();
 
-		PortalSearchStore.flagOperands.forEach(name => {
+		portalSearchStore.flagOperands.forEach(name => {
 			portalSearchSteps.clickOperandClose(name);
 		});
 
 		portalSearchSteps.toggleAdvanced();
-		AdvancedStore.checkboxes.forEach(name => {
+		advancedStore.checkboxes.forEach(name => {
 			advancedSteps.isChecked(name, true);
 		});
 	});

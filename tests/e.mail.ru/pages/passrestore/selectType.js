@@ -113,7 +113,7 @@ class Controls extends PageObject {
 	/**
 	 * Waiting for the phone tab
 	 */
-	waitForPhone () {
+	waitForPhoneTab () {
 		this.page.waitForVisible(this.locators.phoneTabBlock);
 	}
 
@@ -123,7 +123,6 @@ class Controls extends PageObject {
 	waitForPhoneLayer () {
 		this.page.waitForVisible(this.locators.phoneLayer);
 	}
-
 }
 
-module.exports = new Controls();
+module.exports = Controls;

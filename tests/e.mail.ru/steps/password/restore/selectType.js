@@ -3,13 +3,15 @@
 let assert = require('assert');
 
 let PasswordRestoreSteps = require('../restore');
-let selectTypeViewPage = require('../../../pages/passrestore/selectType');
+let SelectTypeViewPage = require('../../../pages/passrestore/selectType');
+
 let Phones = require('../../../utils/phones');
 let Internal = require('../../../utils/internalApi');
+let selectTypeViewPage = new SelectTypeViewPage();
 
 
 /** Модуль для работы с формой ввода адреса для восстановления */
-class Controls extends PasswordRestoreSteps {
+class SelectTypeSteps extends PasswordRestoreSteps {
 	constructor () {
 		super();
 	}
@@ -17,8 +19,8 @@ class Controls extends PasswordRestoreSteps {
 	/**
 	 * Wait for phone tab
 	 */
-	waitForPhone () {
-		selectTypeViewPage.waitForPhone();
+	waitForPhoneTab () {
+		selectTypeViewPage.waitForPhoneTab();
 	}
 
 	/**
@@ -60,4 +62,4 @@ class Controls extends PasswordRestoreSteps {
 	}
 }
 
-module.exports = new Controls();
+module.exports = SelectTypeSteps;

@@ -1,9 +1,9 @@
 'use strict';
 
-let PortalSearchStore = require('../../store/portal-menu/portal-search');
+let portalSearchStore = require('../../store/portal-menu/portal-search');
 
 /** Утилиты для работы с поиском в синей шапке */
-class PortalSearch {
+module.exports = {
 	/**
 	 * Собрать локатор для элемента в операнде
 	 *
@@ -12,9 +12,9 @@ class PortalSearch {
 	 * @param {string} element - имя элемента
 	 * @returns {string}
 	 */
-	static getOperandLocator (locators, operandName, element) {
+	getOperandLocator (locators, operandName, element) {
 		return `${locators[operandName]} ${locators[element]}`;
-	}
+	},
 
 	/**
 	 * Получить имя локатора операнда из значения атрибута операнда
@@ -22,11 +22,9 @@ class PortalSearch {
 	 * @param {string} attrName - значение из атрибута
 	 * @returns {string}
 	 */
-	static getOperandName (attrName) {
-		let map = PortalSearchStore.fieldNames;
+	getOperandName (attrName) {
+		let map = portalSearchStore.fieldNames;
 
 		return map[attrName];
 	}
-}
-
-module.exports = PortalSearch;
+};

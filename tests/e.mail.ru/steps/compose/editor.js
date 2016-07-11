@@ -50,4 +50,4 @@ class ComposeEditorSteps extends ComposeSteps {
 	}
 }
 
-module.exports = new ComposeEditorSteps();
+module.exports = ComposeEditorSteps;

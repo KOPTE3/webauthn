@@ -1,7 +1,7 @@
 'use strict';
 
 /** Модуль для работы с фичами */
-class Features {
+module.exports = {
 	/**
 	 * Примениение фичи
 	 *
@@ -19,7 +19,7 @@ class Features {
 				});
 			}, name, value);
 		});
-	}
+	},
 
 	/**
 	 * Выключение фичи
@@ -45,7 +45,7 @@ class Features {
 				} catch (error) { }
 			}, name);
 		});
-	}
+	},
 
 	/**
 	 * Проверка доступности фичи
@@ -63,7 +63,7 @@ class Features {
 				});
 			}, name);
 		});
-	}
+	},
 
 	/**
 	 * Получение данных
@@ -82,6 +82,4 @@ class Features {
 			}, name);
 		});
 	}
-}
-
-module.exports = Features;
+};

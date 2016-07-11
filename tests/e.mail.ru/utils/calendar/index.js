@@ -2,24 +2,22 @@
 
 let PortalSearch = require('../../pages/portal-menu/portal-search');
 let Advanced = require('../../pages/portal-menu/advanced');
-
 let CalendarSteps = require('../../steps/calendar');
 
 /** Модуль для работы с календарем */
-class CalendarFactory {
+module.exports = {
 	/**
 	 * Создать экземпляр CalendarSteps
 	 *
 	 * @param {string} name - (advanced|operands) имя контейнера,
 	 * в котором находится календарь
-	 *
 	 * @returns {CalendarSteps}
 	 */
-	static create (name) {
+	create (name) {
 		let parent = this.getParent(name);
 
 		return new CalendarSteps(parent);
-	}
+	},
 
 	/**
 	 * Получить локатор контейнера, в который помещен календарь
@@ -27,18 +25,18 @@ class CalendarFactory {
 	 * @param {string} name - (advanced|operands)
 	 * @returns {string}
 	 */
-	static getParent (name) {
+	getParent (name) {
 		let locators;
 		let parent = 'body';
 
 		switch (name) {
 			case 'advanced':
-				({locators} = new Advanced());
+				({ locators } = new Advanced());
 				parent = locators.container;
 				break;
 
 			case 'operands':
-				({locators} = new PortalSearch());
+				({ locators } = new PortalSearch());
 				parent = locators.operands.date;
 				break;
 
@@ -48,6 +46,5 @@ class CalendarFactory {
 
 		return parent;
 	}
-}
+};
 
-module.exports = CalendarFactory;

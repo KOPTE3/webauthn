@@ -1,13 +1,12 @@
 'use strict';
 
-let AuthStore = require('../store/authorization');
+let authStore = require('../store/authorization');
 
 const ASYNC_TIMEOUT = 10000; // таймаут завершнеия асинхронного скрипта
 const DELIVERY_TIMEOUT = 1000; // таймаут ожидания фактической доствки письма
 
 /** Модуль для работы с Actions */
-class Actions {
-
+module.exports = {
 	/**
 	 * Выполняет апи вызов
 	 *
@@ -18,18 +17,16 @@ class Actions {
 	call (method, options) {
 		/* eslint max-nested-callbacks: ["error", 4] */
 
-		let authStore = new AuthStore();
 		let email = authStore.account.get('email');
 
 		return browser
 			.timeoutsAsyncScript(ASYNC_TIMEOUT)
-			.executeAsync(function (params,
-				ASYNC_TIMEOUT, DELIVERY_TIMEOUT, done) {
+			.executeAsync(function (params, ASYNC_TIMEOUT, DELIVERY_TIMEOUT, resolve) {
 				require(['RPC'], function (RPC) {
 					(function () { // RPC setup
 						RPC.setup({
 							version: 1,
-							baseUrl: '//' + location.hostname + '/api',
+							baseUrl: '//' + window.location.hostname + '/api',
 							email: params.email,
 							timeout: ASYNC_TIMEOUT
 						});
@@ -60,13 +57,13 @@ class Actions {
 							.always(function (res) {
 								// дожидаемся фактической доставки сообщения
 								setTimeout(function () {
-									done(res.body);
+									resolve(res.body);
 								}, DELIVERY_TIMEOUT);
 							});
 					});
 				});
-			}, {email, method, options}, ASYNC_TIMEOUT, DELIVERY_TIMEOUT);
-	}
+			}, { email, method, options }, ASYNC_TIMEOUT, DELIVERY_TIMEOUT);
+	},
 
 	/**
 	 * Отправляет пользователю письмо
@@ -87,12 +84,12 @@ class Actions {
 			body: { text },
 			correspondents: { to }
 		});
-	}
+	},
 
 	/**
 	 * Создаёт папки
 	 *
-	 * @param {Array} folders - папки
+	 * @param {*[]} folders - папки
 	 *
 	 * @returns {Promise}
 	 */
@@ -100,7 +97,27 @@ class Actions {
 		return this.call('folders/add', {
 			folders
 		});
-	}
-}
+	},
 
-module.exports = new Actions();
+	/**
+	 * Пометка писем
+	 *
+	 * @param {string} name - unread|flagged|pinned
+	 * @param {string[]} ids - массив id писем
+	 * @param {boolean} unset - снятие пометки
+	 *
+	 * @returns {Promise}
+	 */
+	markAs (name, ids, unset = false) {
+		let key = unset ? 'unset' : 'set';
+
+		return this.call('messages/marks', {
+			marks: [
+				{
+					name,
+					[key] : ids
+				}
+			]
+		});
+	}
+};

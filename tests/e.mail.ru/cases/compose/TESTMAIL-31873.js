@@ -1,17 +1,23 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let lettersSteps = require('../../steps/messages/letters');
-
+let LettersSteps = require('../../steps/messages/letters');
 let Compose = require('../../steps/compose');
-let ComposeFieldsStore = require('../../store/compose/fields');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
+let composeFieldsStore = require('../../store/compose/fields');
+let ComposeFields = require('../../steps/compose/fields');
+let ComposeEditor = require('../../steps/compose/editor');
+let ComposeControls = require('../../steps/compose/controls');
 let composeEditorStore = require('../../store/compose/editor');
+let MissingAttachLayer = require('../../steps/layers/missingAttach');
+let MessageToolbarSteps = require('../../steps/message/toolbar');
 let actions = require('../../utils/actions');
-let messageToolbarSteps = require('../../steps/message/toolbar');
+
+let composeFields = new ComposeFields();
+let composeEditor = new ComposeEditor();
+let composeControls = new ComposeControls();
+let missingAttachLayer = new MissingAttachLayer();
+let messageToolbarSteps = new MessageToolbarSteps();
+let lettersSteps = new LettersSteps();
 
 const text = 'Тестовый текст';
 const subject = 'Тест';
@@ -23,7 +29,7 @@ describe('TESTMAIL-31873: AJAX. Ответ на письмо. Забытое в�
 	});
 
 	beforeEach(() => {
-		let { fields } = new ComposeFieldsStore();
+		let { fields } = composeFieldsStore;
 
 		Messages.open();
 

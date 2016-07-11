@@ -9,17 +9,18 @@ const CAPTCHA_CRACKER_URL = 'http://test-proxy.win102.dev.mail.ru/captcha';
 /**
  * Модуль для работы с капчей Mail.Ru
  */
-class Captcha {
+module.exports = {
 	/**
 	 * Получить заголовок Captcha-Id
 	 * @param {string} locator
 	 * @returns {Object}
 	 */
-	static getCaptchaID (locator) {
+	getCaptchaID (locator) {
 		let result = browser.timeoutsAsyncScript(5000).executeAsync(
-			function renewCaptcha (locator, CAPTCHA_HEADER_NAME, done) {
+			function renewCaptcha (locator, CAPTCHA_HEADER_NAME, resolve) {
 				var img = document.querySelector(locator);
 				var url = img.src;
+
 				var loadImg = function () {
 					// Use a native XHR so we can use custom responseType
 					var xhr = new XMLHttpRequest();
@@ -40,7 +41,7 @@ class Captcha {
 						cid = this.getResponseHeader(CAPTCHA_HEADER_NAME);
 
 						// Return result to NodeJS context
-						done(cid);
+						resolve(cid);
 					};
 
 					xhr.send();
@@ -54,37 +55,36 @@ class Captcha {
 			isOK: result.state === 'success',
 			value: result.value
 		};
-	}
+	},
 
 	/**
 	 * Получить значение каптчи по заголовку
 	 * @param {string} cid
 	 * @returns {Promise}
 	 */
-	static getCaptchaValue (cid) {
+	getCaptchaValue (cid) {
 		return new Promise((resolve, reject) => {
 			let url = `${CAPTCHA_CRACKER_URL}/${cid}`;
 
+
 			debug('captcha cracker requst: ', url);
-			http.get(url, (res) => {
+			http.get(url, result => {
 				let body = '';
 
-				if (res.statusCode !== 200) {
+				if (result.statusCode !== 200) {
 					debug('captcha cracker err: ', res.statusCode);
 					resolve('');
 				}
 
-				res.on('data', (chunk) => {
+				result.on('data', chunk => {
 					body += chunk;
 				});
 
-				res.on('end', () => {
+				result.on('end', () => {
 					debug('captcha cracker result:', body);
 					resolve(body);
 				});
 			});
 		});
 	}
-}
-
-module.exports = Captcha;
+};

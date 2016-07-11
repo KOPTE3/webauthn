@@ -1,14 +1,15 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let portalSearchSteps = require('../../steps/portal-menu/portal-search');
-let advancedSteps = require('../../steps/portal-menu/advanced');
-let CalendarFactory = require('../../utils/calendar');
-let advancedCalendar = CalendarFactory.create('advanced');
+let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
+let AdvancedSteps = require('../../steps/portal-menu/advanced');
+let calendarUtils = require('../../utils/calendar');
+let advancedStore = require('../../store/portal-menu/advanced');
+let dateUtils = require('../../utils/date');
 
-let AdvancedStore = require('../../store/portal-menu/advanced');
-
-let date = require('../../utils/date');
+let portalSearchSteps = new PortalSearchSteps();
+let advancedSteps = new AdvancedSteps();
+let advancedCalendar = calendarUtils.create('advanced');
 
 describe('TESTMAIL-31728', () => {
 	it('Проверка добавления операнда "дата" (только из расширенного поиска)' +
@@ -18,9 +19,10 @@ describe('TESTMAIL-31728', () => {
 
 		portalSearchSteps.toggleAdvanced();
 
-		let today = date.format('D.M.Y');
-		let todayDay = date.format('d');
-		let lapse = AdvancedStore.dateSelectValues.filter(({value}) => value === '1')[0];
+		let today = dateUtils.format('D.M.Y');
+		let todayDay = dateUtils.format('d');
+		let lapse = advancedStore.dateSelectValues.filter(({value}) => value === '1')[0];
+
 		let operandName = 'date';
 
 		advancedSteps.selectDateLapse(lapse.value);

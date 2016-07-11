@@ -40,7 +40,7 @@ exports.config = {
 	waitforTimeout: 30 * 1000,
 
 	/* Максимальное время на выполнение повторного запроса. */
-	connectionRetryTimeout: 10 * 1000,
+	connectionRetryTimeout: 30 * 1000,
 
 	/* Количество инстансов параллельного запуска тестов */
 	maxInstances: 1,
@@ -54,6 +54,8 @@ exports.config = {
 	 * Для использования этой опции требуется наличие пакета node-inspector
 	 */
 	debug: false,
+
+	services: ['selenium-standalone'],
 
 	/* Доступные значения: cucumber, mocha, jasmine */
 	framework: 'mocha',
@@ -82,24 +84,21 @@ exports.config = {
 	/* Для реппортера Allure требуется наличие установленного плагина в CI */
 	reporters: ['spec', 'junit'],
 
+	/* Директории, куда будут складываться отчеты о прогонах */
 	reporterOptions: {
 		outputDir: `./cache/tests/${project}/reports`
 	},
 
 	/* Директория, куда будут складываться скриншоты */
-	// screenshotPath: './cache/tests/shots',
+	screenshotPath: `./cache/tests/${project}/shots`,
 
-	/* Директория, куда будут складываться логи */
-	logfile: `./cache/tests/${project}/logs`,
-
-	/*
-	 * Список файлов с тестами.
-	 * Порядок файлов сохраняется, дубликаты исключаются
-	 */
+	/* Директория, куда будут складываться логи сервера */
+	seleniumLogs: `./cache/tests/${project}/logs`,
 
 	/*
 	 * Список файлов, которые требуется запустить
 	 * Этот набор запускается всегда независимо от секции <suite>
+	 * Порядок файлов сохраняется, дубликаты исключаются
 	 */
 	// specs: [ ],
 

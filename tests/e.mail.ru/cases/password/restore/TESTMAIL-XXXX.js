@@ -1,8 +1,11 @@
 'use strict';
 
 let PasswordRestore = require('../../../steps/password/restore');
-let accountView = require('../../../steps/password/restore/account');
-let selectTypeView = require('../../../steps/password/restore/selectType');
+let AccountView = require('../../../steps/password/restore/account');
+let SelectTypeView = require('../../../steps/password/restore/selectType');
+
+let accountView = new AccountView();
+let selectTypeView = new SelectTypeView();
 
 let assert = require('assert');
 
@@ -17,14 +20,14 @@ describe('TESTMAIL-XXXX', function () {
 
 		accountView.setEmail(restoreEmail);
 		accountView.submitForm();
-		selectTypeView.waitForPhone();
+		selectTypeView.waitForPhoneTab();
 
 		selectTypeView.fillPhoneCaptcha(); // cracking code of captcha
+
 		selectTypeView.submitForm();
 
 		selectTypeView.waitForPhoneLayer();
 		selectTypeView.fillSmsCode(restoreEmail); // cracking code in sms
-
-		browser.debug();
+		// browser.debug(); // Check that everything is all right!
 	});
 });

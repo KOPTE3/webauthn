@@ -187,4 +187,4 @@ class LoginFormSteps extends Steps {
 	}
 }
 
-module.exports = new LoginFormSteps();
+module.exports = LoginFormSteps;

@@ -5,7 +5,7 @@ let assert = require('assert');
 let Steps = require('../../steps');
 let FoldersPage = require('../../pages/folders');
 let actions = require('../../utils/actions');
-let date = require('../../utils/date');
+let dateUtils = require('../../utils/date');
 
 /** Модуль для работы с шагами списка папкок */
 class FoldersSteps extends Steps {
@@ -51,11 +51,11 @@ class FoldersSteps extends Steps {
 	}
 
 	static setTimeOffset (offset) {
-		return date.setTimeOffset(offset);
+		return dateUtils.setTimeOffset(offset);
 	}
 
 	static resetTimeOffset () {
-		return date.resetTimeOffset();
+		return dateUtils.resetTimeOffset();
 	}
 }
 

@@ -1,8 +1,10 @@
 'use strict';
 
 let LoginPage = require('../../steps/login');
-let loginForm = require('../../steps/login/form');
+let LoginForm = require('../../steps/login/form');
 let providers = require('../../store/login/providers');
+
+let loginForm = new LoginForm();
 
 describe('TESTMAIL-8675', () => {
 	it('Выделение соответствующей иконки домена при вводе email с доменом', () => {
