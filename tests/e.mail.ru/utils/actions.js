@@ -62,7 +62,62 @@ module.exports = {
 							});
 					});
 				});
-			}, { email, method, options }, ASYNC_TIMEOUT, DELIVERY_TIMEOUT);
+			}, {email, method, options}, ASYNC_TIMEOUT, DELIVERY_TIMEOUT);
+	},
+
+	/**
+	 * Сохраняет данные в хелпере.
+	 *
+	 * @param {number} index
+	 * @param {number} data
+	 * @returns {Promise}
+	 */
+	updateHelper (index, data) {
+		return this.call('helpers/update', {
+			index,
+			update: data
+		});
+	},
+
+	/**
+	 * Удаляет хелпер.
+	 *
+	 * @param {number} index
+	 * @returns {Promise}
+	 */
+	removeHelper (index) {
+		return this.call('helpers/remove', {
+			indexes: [index]
+		});
+	},
+
+	/**
+	 * Регистрирует в браузере функцию-обработчик AJAX-ответов.
+	 *
+	 * @param {mixed} urlPattern Шаблон для проверки URL
+	 * @param {Function} hook функция-обработчик, принимает 2 парметра (xhr и options),
+	 * в которые можно внести изменения
+	 * @returns {Promise}
+	 */
+	registerAjaxHook (urlPattern, hook, ...data) {
+		let result = browser
+			.execute(function (urlPattern, hookString, data) {
+				var originalParse = window.patron.OfflineCache.parse;
+				var hookBody = '(' + hookString + ').apply(null, [xhr, options].concat(data))';
+
+				/* eslint no-new-func: 0 */
+				var hook = new Function('xhr', 'options', 'data', hookBody);
+
+				patron.OfflineCache.parse = function (jqXHR, textStatus, options, doResult) {
+					if (options.url.match(new RegExp(urlPattern))) {
+						hook(jqXHR, options, data);
+					}
+
+					return originalParse.call(this, jqXHR, textStatus, options, doResult);
+				};
+			}, urlPattern, hook.toString(), data);
+
+		return result.value;
 	},
 
 	/**
@@ -96,6 +151,18 @@ module.exports = {
 	createFolders (folders) {
 		return this.call('folders/add', {
 			folders
+		});
+	},
+
+	editFolders (folders) {
+		return this.call('folders/edit', {
+			folders
+		});
+	},
+
+	deleteFolders (ids) {
+		return this.call('folders/remove', {
+			ids
 		});
 	},
 

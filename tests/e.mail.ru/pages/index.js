@@ -11,8 +11,6 @@ let cache = {
 
 /** @namespace browser */
 class PageObject {
-	constructor () { }
-
 	/**
 	 * Локаторы
 	 *
@@ -71,7 +69,6 @@ class PageObject {
 
 		if (features.length) {
 			query.ftrs = features.join(' ');
-			cache.features = [];
 		}
 
 		let url = URL.request(this.location, query);
@@ -124,6 +121,35 @@ class PageObject {
 		} catch (error) {
 			return false;
 		}
+	}
+
+	/**
+	 * Дождаться появления требуемого элемента
+	 */
+	wait () {
+		this.page.waitForExist(this.locators.container);
+	}
+
+	/**
+	 * Получить заголовок страницы
+	 *
+	 * @type {string}
+	 */
+	get title () {
+		this.page.getTitle();
+	}
+
+	/**
+	 * Включение фичи
+	 *
+	 * @param {Array} list — список фич, которые требуется включить
+	 */
+	features (list) {
+		cache.features.push(...list);
+	}
+
+	refresh () {
+		this.page.refresh();
 	}
 }
 

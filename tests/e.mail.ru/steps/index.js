@@ -5,11 +5,7 @@ let Pages = require('../pages');
 
 let pages = new Pages();
 
-class Steps extends Pages {
-	constructor () {
-		super();
-	}
-
+class Steps {
 	/**
 	 * Локаторы
 	 *
@@ -17,6 +13,17 @@ class Steps extends Pages {
 	 */
 	static features (...list) {
 		pages.features(...list);
+	}
+
+	/**
+	 * Авторизация
+	 *
+	 * @param {string} type — типа авторизации
+	 * @param {string} credentials — авторизационные данные
+	 * @returns {boolean}
+	 */
+	static auth (type, credentials) {
+		return Pages.auth(...arguments);
 	}
 
 	/**
@@ -37,6 +44,10 @@ class Steps extends Pages {
 		let actual = this.page.open(query);
 
 		assert(actual, 'Не удалось авторизоваться');
+	}
+
+	static refresh () {
+		this.page.refresh();
 	}
 
 	/**
