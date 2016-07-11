@@ -25,7 +25,16 @@ module.exports = {
 
 		return browser.waitUntil(function async () {
 			return account.credentials(options)
-				.then(({ body }) => body);
+				.then(({ body }) => {
+					if (process.NODE_DEBUG) {
+						let border = '='.repeat(50);
+
+						console.log('%s\nUsed credentials:\n', border);
+						console.log('%s\n%s', JSON.stringify(body, null, '\t'), border);
+					}
+
+					return body;
+				});
 		});
 	},
 

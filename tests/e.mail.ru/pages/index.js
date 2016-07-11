@@ -148,6 +148,7 @@ class PageObject {
 		cache.features.push(...list);
 	}
 
+	/** Сбросить сессию */
 	refresh () {
 		this.page.refresh();
 	}

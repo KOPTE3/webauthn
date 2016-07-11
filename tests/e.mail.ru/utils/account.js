@@ -59,22 +59,27 @@ module.exports = {
 			throw new Error('Could not found cookie to continue');
 		}
 
-		if (process.env.NODE_DEBUG) {
-			let email = account.get('email');
+		if (process.NODE_DEBUG) {
+			let email = account.get('email'),
+				border = '='.repeat(50);
 
-			console.log(`Used ${email} account`);
+			console.log(`%s\nUsed ${email} account\n%s`, '='.repeat(50));
 		}
 	},
 
 	/**
 	 * Проверяет залогинен ли пользователь
 	 *
+	 * @param {string} [email]
 	 * @returns {boolean}
 	 */
-	isActiveUser () {
+	isActiveUser (email) {
 		try {
-			let { account } = authStore;
-			let email = account.get('email');
+			if (!email) {
+				let { account } = authStore;
+
+				email = account.get('email');
+			}
 
 			return browser.waitUntil(function async () {
 				return browser.executeAsync(function (user, resolve) {
