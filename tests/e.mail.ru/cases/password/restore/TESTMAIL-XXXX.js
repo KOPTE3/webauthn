@@ -8,26 +8,22 @@ let assert = require('assert');
 
 describe('TESTMAIL-XXXX', function () {
 	it('Открытие стрницы восстановления пароля', function () {
-		let restoreEmail = 'regtest14@mail.ru';
+		let restoreEmail = 'regtest17@mail.ru';
 
-		this.timeout(100000); // Разгадываем капчу
+		// this.timeout(100000); // need for debug
 		PasswordRestore.open();
 
-		accountView.initRegTokenIdLog(); // start "recording"
+		accountView.initRegTokenIdLog(); // start XHR "recording"
 
 		accountView.setEmail(restoreEmail);
 		accountView.submitForm();
 		selectTypeView.waitForPhone();
 
-		browser.debug();
-
-		selectTypeView.fillPhoneCaptcha();
+		selectTypeView.fillPhoneCaptcha(); // cracking code of captcha
 		selectTypeView.submitForm();
 
-		browser.debug();
-
 		selectTypeView.waitForPhoneLayer();
-		selectTypeView.fillSmsCode(restoreEmail);
+		selectTypeView.fillSmsCode(restoreEmail); // cracking code in sms
 
 		browser.debug();
 	});

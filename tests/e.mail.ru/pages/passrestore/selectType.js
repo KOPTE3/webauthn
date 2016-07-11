@@ -76,10 +76,14 @@ class Controls extends PageObject {
 	 * @returns {Object}
 	 */
 	getSmsCodeValue (email, id) {
-		let code = '123';
+		let code = null;
 
 		this.page.waitUntil(function async () {
 			return Phones.getSmsCodeValue(email, id).then(result => {
+				if (result.isOK) {
+					code = result.body.code;
+				}
+
 				return true;
 			});
 		});

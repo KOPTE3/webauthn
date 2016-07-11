@@ -10,12 +10,27 @@ const request = require('request');
  */
 const call = function (opts) {
 	return new Promise((resolve, reject) => {
-		request.get(`${PROXY_PATH}/${opts.path}`, (error, response, body) => {
+		request.get(`${PROXY_PATH}/${opts.path}`, (error, response, httpBody) => {
+			let result = {
+				isOK: false,
+				body: null
+			};
+
 			if (error) {
-				return reject(error);
+				result.body = error;
+
+				return resolve(result);
 			}
 
-			resolve(body);
+			try {
+				result.body = JSON.parse(httpBody).body;
+			} catch (err) {
+				result.body = err;
+			}
+
+			result.isOK = true;
+
+			resolve(result);
 		});
 	});
 };
@@ -28,6 +43,7 @@ class API {
 
 	/**
 	 * Получение кода SMS по reg_token.id
+	 * работает только для ящиков regtest{.*}@mail.ru
 	 * @param  {string} email
 	 * @param  {string} id
 	 * @returns {Promise}

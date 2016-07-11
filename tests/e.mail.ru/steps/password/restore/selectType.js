@@ -46,8 +46,8 @@ class Controls extends PasswordRestoreSteps {
 	 * @param {restoreEmail} restoreEmail
 	 */
 	fillSmsCode (restoreEmail) {
-		let regTokenId = Phones.getLastPassremindRegTokenId(),
-			code = selectTypeViewPage.getSmsCodeValue(restoreEmail, regTokenId);
+		let regTokenId = Phones.getLastPassremindRegTokenId();
+		let code = selectTypeViewPage.getSmsCodeValue(restoreEmail, regTokenId);
 
 		selectTypeViewPage.fillSmsCode(code.value);
 	}
