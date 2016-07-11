@@ -107,7 +107,7 @@ class FoldersSteps extends Steps {
 	static createFolder (params) {
 		let actual = actions.createFolders([params]);
 
-		assert(actual.state && (actual.state === 'success'));
+		assert(actual.state === 'success');
 
 		return actual.value[0];
 	}
@@ -115,13 +115,13 @@ class FoldersSteps extends Steps {
 	static editFolder (params) {
 		let actual = actions.editFolders([params]);
 
-		assert(actual.state && (actual.state === 'success'));
+		assert(actual.state === 'success');
 	}
 
 	static deleteFolder (folderId) {
 		let actual = actions.deleteFolders([folderId]);
 
-		assert(actual.state && (actual.state === 'success'));
+		assert(actual.state === 'success');
 	}
 
 	static createArchive () {

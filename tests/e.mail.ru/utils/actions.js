@@ -117,7 +117,7 @@ module.exports = {
 				};
 			}, urlPattern, hook.toString(), data);
 
-		return (result.state === 'success') && result.value;
+		return result.value;
 	},
 
 	/**
