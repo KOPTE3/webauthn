@@ -15,10 +15,6 @@ class Steps {
 		pages.features(...list);
 	}
 
-	static addFeature (name) {
-		Pages.addFeature(name);
-	}
-
 	/**
 	 * Авторизация
 	 *

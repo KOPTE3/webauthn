@@ -139,10 +139,6 @@ class PageObject {
 		this.page.getTitle();
 	}
 
-	static addFeature (name) {
-		features.push(name);
-	}
-
 	/**
 	 * Включение фичи
 	 *
