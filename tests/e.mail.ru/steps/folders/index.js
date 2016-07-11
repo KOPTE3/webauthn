@@ -39,15 +39,15 @@ class FoldersSteps extends Steps {
 	}
 
 	static isFolderExists (folderId) {
-		let result = this.page.isFolderExists(folderId);
+		let actual = this.page.isFolderExists(folderId);
 
-		assert(result, `Папка "${folderId}" должна присутствовать`);
+		assert(actual, `Папка "${folderId}" должна присутствовать`);
 	}
 
 	static isFolderNotExists (folderId) {
-		let result = this.page.isFolderExists(folderId);
+		let actual = this.page.isFolderExists(folderId);
 
-		assert(!result, `Папка "${folderId}" должна отсутствовать`);
+		assert(!actual, `Папка "${folderId}" должна отсутствовать`);
 	}
 
 	static isArchiveExists () {
@@ -63,39 +63,39 @@ class FoldersSteps extends Steps {
 	}
 
 	static isFolderIn (folderId, parentId) {
-		let result = this.page.isFolderIn(folderId, parentId);
+		let actual = this.page.isFolderIn(folderId, parentId);
 
-		assert(result, `Папка "${folderId}" должна быть внутри папки "${parentId}"`);
+		assert(actual, `Папка "${folderId}" должна быть внутри папки "${parentId}"`);
 	}
 
 	static isFolderNotIn (folderId, parentId) {
-		let result = this.page.isFolderIn(folderId, parentId);
+		let actual = this.page.isFolderIn(folderId, parentId);
 
-		assert(!result, `Папка "${folderId}" не должна быть внутри папки "${parentId}"`);
+		assert(!actual, `Папка "${folderId}" не должна быть внутри папки "${parentId}"`);
 	}
 
 	static isFolderInArchive (folderId) {
-		let result = this.page.isFolderIn(folderId, this.page.getArchiveFolderId());
+		let actual = this.page.isFolderIn(folderId, this.page.getArchiveFolderId());
 
-		assert(result, `Папка "${folderId}" должна быть внутри папки "Архив"`);
+		assert(actual, `Папка "${folderId}" должна быть внутри папки "Архив"`);
 	}
 
 	static isFolderNotInArchive (folderId) {
-		let result = this.page.isFolderIn(folderId, this.page.getArchiveFolderId());
+		let actual = this.page.isFolderIn(folderId, this.page.getArchiveFolderId());
 
-		assert(!result, `Папка "${folderId}" не должна быть внутри папки "Архив"`);
+		assert(!actual, `Папка "${folderId}" не должна быть внутри папки "Архив"`);
 	}
 
 	static isArchiveIn (parentId) {
-		let result = this.page.isFolderIn(this.page.getArchiveFolderId(), parentId);
+		let actual = this.page.isFolderIn(this.page.getArchiveFolderId(), parentId);
 
-		assert(result, `Папка "Архив" должна быть внутри папки "${parentId}"`);
+		assert(actual, `Папка "Архив" должна быть внутри папки "${parentId}"`);
 	}
 
 	static isArchiveNotIn (parentId) {
-		let result = this.page.isFolderIn(this.page.getArchiveFolderId(), parentId);
+		let actual = this.page.isFolderIn(this.page.getArchiveFolderId(), parentId);
 
-		assert(!result, `Папка "Архив" не должна быть внутри папки "${parentId}"`);
+		assert(!actual, `Папка "Архив" не должна быть внутри папки "${parentId}"`);
 	}
 
 	/**
@@ -105,23 +105,23 @@ class FoldersSteps extends Steps {
 	 * @returns {string} - ID созданной папки
 	 */
 	static createFolder (params) {
-		let result = actions.createFolders([params]);
+		let actual = actions.createFolders([params]);
 
-		assert(result.state && (result.state === 'success'));
+		assert(actual.state && (actual.state === 'success'));
 
-		return result.value[0];
+		return actual.value[0];
 	}
 
 	static editFolder (params) {
-		let result = actions.editFolders([params]);
+		let actual = actions.editFolders([params]);
 
-		assert(result.state && (result.state === 'success'));
+		assert(actual.state && (actual.state === 'success'));
 	}
 
 	static deleteFolder (folderId) {
-		let result = actions.deleteFolders([folderId]);
+		let actual = actions.deleteFolders([folderId]);
 
-		assert(result.state && (result.state === 'success'));
+		assert(actual.state && (actual.state === 'success'));
 	}
 
 	static createArchive () {

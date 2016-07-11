@@ -3,7 +3,7 @@
 let assert = require('assert');
 
 let CleanerPage = require('../../pages/layers/cleaner');
-let LayerSteps = require('.');
+let LayerSteps = require('../layers');
 
 let page = new CleanerPage();
 

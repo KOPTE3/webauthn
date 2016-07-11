@@ -4,7 +4,6 @@ module.exports = {
 	],
 
 	'rules': {
-		'max-len': ['error', 100],
 		'array-callback-return': 'off',
 
 		'require-jsdoc': [
