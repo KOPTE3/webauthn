@@ -5,6 +5,7 @@ let assert = require('assert');
 let PasswordRestoreSteps = require('../restore');
 let selectTypeViewPage = require('../../../pages/passrestore/selectType');
 let Phones = require('../../../utils/phones');
+let Internal = require('../../../utils/internalApi');
 
 
 /** Модуль для работы с формой ввода адреса для восстановления */
@@ -18,6 +19,13 @@ class Controls extends PasswordRestoreSteps {
 	 */
 	waitForPhone () {
 		selectTypeViewPage.waitForPhone();
+	}
+
+	/**
+	 * Wait for phone layer
+	 */
+	waitForPhoneLayer () {
+		selectTypeViewPage.waitForPhoneLayer();
 	}
 
 	/**
@@ -35,11 +43,13 @@ class Controls extends PasswordRestoreSteps {
 
 	/**
 	 * Crack SMS code
+	 * @param {restoreEmail} restoreEmail
 	 */
-	fillPhoneCode () {
-		let regTokenId = Phones.getLastPassremindRegTokenId();
+	fillSmsCode (restoreEmail) {
+		let regTokenId = Phones.getLastPassremindRegTokenId(),
+			code = selectTypeViewPage.getSmsCodeValue(restoreEmail, regTokenId);
 
-		Internal.getSmsCode(regTokenId);
+		selectTypeViewPage.fillSmsCode(code.value);
 	}
 
 	/**

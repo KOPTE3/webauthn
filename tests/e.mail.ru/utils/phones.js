@@ -1,6 +1,7 @@
 'use strict';
 
 let ajax = require('./ajax');
+let API = require('./internalApi');
 
 /**
  * Модуль для работы с телефонами Mail.Ru
@@ -31,6 +32,18 @@ class Phones {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Get SMS code from internal-api
+	 * @param  {string} email
+	 * @param  {string} id
+	 * @returns {Promise}
+	 */
+	static getSmsCodeValue (email, id) {
+		return API.getSmsCode(email, id).then(data => {
+			return data;
+		});
 	}
 }
 

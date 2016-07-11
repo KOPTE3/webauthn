@@ -2,24 +2,32 @@
 
 let PasswordRestore = require('../../../steps/password/restore');
 let accountView = require('../../../steps/password/restore/account');
-let slectTypeView = require('../../../steps/password/restore/selectType');
+let selectTypeView = require('../../../steps/password/restore/selectType');
 
 let assert = require('assert');
 
 describe('TESTMAIL-XXXX', function () {
 	it('Открытие стрницы восстановления пароля', function () {
+		let restoreEmail = 'regtest14@mail.ru';
+
 		this.timeout(100000); // Разгадываем капчу
 		PasswordRestore.open();
 
 		accountView.initRegTokenIdLog(); // start "recording"
 
-		accountView.setEmail('iketari@mail.ru');
+		accountView.setEmail(restoreEmail);
 		accountView.submitForm();
-		slectTypeView.waitForPhone();
+		selectTypeView.waitForPhone();
 
-		slectTypeView.fillPhoneCaptcha();
-		slectTypeView.submitForm();
-		// slectTypeView.fillPhoneCode();
+		browser.debug();
+
+		selectTypeView.fillPhoneCaptcha();
+		selectTypeView.submitForm();
+
+		browser.debug();
+
+		selectTypeView.waitForPhoneLayer();
+		selectTypeView.fillSmsCode(restoreEmail);
 
 		browser.debug();
 	});

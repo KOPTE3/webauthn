@@ -2,6 +2,7 @@
 
 let PageObject = require('../../pages');
 let Captcha = require('../../utils/captcha');
+let Phones = require('../../utils/phones');
 
 /** Модуль для работы со страницей выбора типа восстановления пароля */
 class Controls extends PageObject {
@@ -24,7 +25,9 @@ class Controls extends PageObject {
 			phoneTabBlock,
 			form: '.js-form-select-type',
 			phoneCaptchaImg: '#password-recovery__remind__new__phone_captcha',
-			phoneCaptchaField: `${phoneTabBlock} .js-captcha`
+			phoneCaptchaField: `${phoneTabBlock} .js-captcha`,
+			phoneCodeField: '#signupsms_code',
+			phoneLayer: '.is-signupsms_in'
 		};
 	}
 
@@ -66,6 +69,28 @@ class Controls extends PageObject {
 	}
 
 	/**
+	 * Get SMS code value by email and reg_token.id
+	 * http://api.tornado.dev.mail.ru/test/tokens/info
+	 * @param  {string} email
+	 * @param  {string} id
+	 * @returns {Object}
+	 */
+	getSmsCodeValue (email, id) {
+		let code = '123';
+
+		this.page.waitUntil(function async () {
+			return Phones.getSmsCodeValue(email, id).then(result => {
+				return true;
+			});
+		});
+
+		return {
+			value: code,
+			isOK: typeof code === 'string'
+		};
+	}
+
+	/**
 	 * Fill code field
 	 * @param {string} code
 	 */
@@ -74,10 +99,25 @@ class Controls extends PageObject {
 	}
 
 	/**
+	 * Fill sms code field
+	 * @param  {string} code
+	 */
+	fillSmsCode (code) {
+		this.page.setValue(this.locators.phoneCodeField, code);
+	}
+
+	/**
 	 * Waiting for the phone tab
 	 */
 	waitForPhone () {
 		this.page.waitForVisible(this.locators.phoneTabBlock);
+	}
+
+	/**
+	 * Waiting for this phone layer
+	 */
+	waitForPhoneLayer () {
+		this.page.waitForVisible(this.locators.phoneLayer);
 	}
 
 }

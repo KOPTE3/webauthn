@@ -1,6 +1,24 @@
 'use strict';
 
-const PROXY_PATH = 'http://test-proxy.win102.dev.mail.ru/internal/';
+const PROXY_PATH = 'http://test-proxy.win102.dev.mail.ru';
+const request = require('request');
+
+/**
+ * Makes requset
+ * @param  {Object} opts
+ * @returns {Promise}
+ */
+const call = function (opts) {
+	return new Promise((resolve, reject) => {
+		request.get(`${PROXY_PATH}/${opts.path}`, (error, response, body) => {
+			if (error) {
+				return reject(error);
+			}
+
+			resolve(body);
+		});
+	});
+};
 
 
 /**
@@ -8,17 +26,16 @@ const PROXY_PATH = 'http://test-proxy.win102.dev.mail.ru/internal/';
  */
 class API {
 
-
 	/**
 	 * Получение кода SMS по reg_token.id
+	 * @param  {string} email
 	 * @param  {string} id
-	 * @returns {Object}
+	 * @returns {Promise}
 	 */
-	static getSmsCode (id) {
-		return {
-			isOK: result.state === 'success',
-			value: result.value
-		};
+	static getSmsCode (email, id) {
+		return call({
+			path: `sms/${email}/${id}`
+		});
 	}
 }
 
