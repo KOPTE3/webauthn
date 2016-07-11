@@ -4,7 +4,6 @@ let Steps = require('../../steps');
 let LoginPage = require('../../steps/login');
 let LoginForm = require('../../steps/login/form');
 let authStore = require('../../store/authorization');
-let account = require('../../utils/account');
 
 let loginForm = new LoginForm();
 
