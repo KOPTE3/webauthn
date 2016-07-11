@@ -56,18 +56,14 @@ describe('TESTMAIL-31937 НЕ AJAX. Ответ на письмо. Забытое
 		);
 
 		Messages.features(features);
-
 		Messages.open();
 
 		messagesLettersSteps.openNewestLetter();
-
-		Message.features(features);
-
-		Message.refresh();
-
-		Message.wait();
-
 		messageToolbarSteps.clickButton('reply');
+
+		messageToolbarSteps.features(features);
+		messageToolbarSteps.refresh();
+		messageToolbarSteps.wait();
 
 		composeEditor.wait();
 		composeEditor.writeMessage(withAttach);
