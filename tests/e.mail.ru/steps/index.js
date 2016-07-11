@@ -5,11 +5,7 @@ let Pages = require('../pages');
 
 let pages = new Pages();
 
-class Steps extends Pages {
-	constructor () {
-		super();
-	}
-
+class Steps {
 	/**
 	 * Локаторы
 	 *
@@ -31,6 +27,17 @@ class Steps extends Pages {
 	 */
 	static wait () {
 		this.page.wait();
+	}
+
+	/**
+	 * Авторизация
+	 *
+	 * @param {string} type — типа авторизации
+	 * @param {string} credentials — авторизационные данные
+	 * @returns {boolean}
+	 */
+	static auth (type, credentials) {
+		return Pages.auth(...arguments);
 	}
 
 	/**

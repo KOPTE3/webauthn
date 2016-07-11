@@ -11,8 +11,6 @@ let cache = {
 
 /** @namespace browser */
 class PageObject {
-	constructor () { }
-
 	/**
 	 * Локаторы
 	 *
@@ -81,8 +79,6 @@ class PageObject {
 			path = this.location;
 		}
 
-		// query.JS_HOST = 'burlak.win105.dev.mail.ru';
-
 		if (typeof path === 'object') {
 			query = path;
 			path = null;
@@ -92,7 +88,6 @@ class PageObject {
 
 		if (features.length) {
 			query.ftrs = features.join(' ');
-			cache.features = [];
 		}
 
 		let url = URL.request(path, query);
@@ -161,7 +156,7 @@ class PageObject {
 	 * @param {string} locator - локатор элемента
 	 * @param {number} count - количество попыток (по умолчанию 10)
 	 * @param {number} interval - интервал в ms, через который делать
-	 * 							  попыкти (по умолчанию 500ms)
+	 * попыкти (по умолчанию 500ms)
 	 *
 	 * @returns {boolean}
 	 * */
@@ -198,26 +193,24 @@ class PageObject {
 	 * @param {string} locator - куда кликнуть
 	 */
 	clickAll (locator) {
-		let btns = this.page.elements(locator);
-		let page = this.page;
-		let isClicked = false;
+		let elements = this.page.elements(locator);
+		let clicked = false;
 
-		btns.value.forEach(function (btn) {
-			if (isClicked) {
+		elements.value.forEach(element => {
+			if (clicked) {
 				return;
 			}
 
 			try {
-				page.elementIdClick(btn.ELEMENT);
-				isClicked = true;
+				this.page.elementIdClick(element.ELEMENT);
+				clicked = true;
 			} catch (error) {}
 		});
 
-		if (!isClicked) {
+		if (!clicked) {
 			throw new Error('Can\'t click to all elements' + locator);
 		}
 	}
-
 }
 
 module.exports = PageObject;
