@@ -2,6 +2,7 @@
 
 let assert = require('assert');
 let Pages = require('../pages');
+let account = require('../utils/account');
 
 let pages = new Pages();
 
@@ -46,8 +47,20 @@ class Steps {
 		assert(actual, 'Не удалось авторизоваться');
 	}
 
+	/** Сбросить сессию */
 	static refresh () {
 		this.page.refresh();
+	}
+
+	/**
+	 * Проверяет залогинен ли пользователь
+	 *
+	 * @param {string} [email]
+	 */
+	static isActiveUser (email) {
+		let actual = account.isActiveUser(email);
+
+		assert(actual, 'Пользователь не авторизован');
 	}
 
 	/**
@@ -57,7 +70,7 @@ class Steps {
 	 * @param {string} [query]
 	 * @param {number|string} [options] — timeout, revert
 	 */
-	static waitForUrl (url, query, ...options) {
+	waitForUrl (url, query, ...options) {
 		let actual = pages.waitForUrl(...arguments);
 
 		assert(actual, `Не найдено соответствие с ожидаемым адресом ${url}`);

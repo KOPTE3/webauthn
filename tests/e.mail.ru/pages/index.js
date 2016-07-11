@@ -123,6 +123,7 @@ class PageObject {
 		}
 	}
 
+	/** Сбросить сессию */
 	refresh () {
 		this.page.refresh();
 	}
