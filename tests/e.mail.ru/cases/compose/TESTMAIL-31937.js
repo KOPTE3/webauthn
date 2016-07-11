@@ -7,13 +7,12 @@ let messagesLettersSteps = require('../../steps/messages/letters');
 
 // Message
 let Message = require('../../steps/message');
-let messagefastreplySteps = require('../../steps/message/fastreply');
 let messageToolbarSteps = require('../../steps/message/toolbar');
 
 // Compose
 let ComposeFieldsStore = require('../../store/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
-let composeFields = require('../../steps/compose/fields');
+let composeControls = require('../../steps/compose/controls');
 
 // layers
 let missingAttachLayer = require('../../steps/layers/missingAttach');
@@ -31,8 +30,8 @@ const testText = 'Тестовый текст';
 const withAttach = 'Добрый день!\nВо вложении заявка, ' +
 ' прошу скинуть счет на оплату.';
 
-describe('TESTMAIL-31938 НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
-	'Проверить появление попапа для быстрого ответа с текстом и без аттача', () => {
+describe('TESTMAIL-31937 НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
+	'Проверить появление попапа для полного ответа с текстом и без аттача', () => {
 	before(() => {
 		Messages.auth();
 	});
@@ -68,23 +67,14 @@ describe('TESTMAIL-31938 НЕ AJAX. Ответ на письмо. Забытое
 
 		Message.wait();
 
-
-		messagefastreplySteps.clickButton('reply');
+		messageToolbarSteps.clickButton('reply');
 
 		composeEditor.wait();
-
-		// костыль! поле должно было заполниться автоматом,
-		// а не заполнилось само
-		// видимо после перезагрузки страницы слишком быстро нажали на ответить
-		// и что то там не догрузилось
-		composeFields.setFieldValue('to', fields.to);
-
 		composeEditor.writeMessage(withAttach);
-
-		messageToolbarSteps.clickFastreplyButton('resend');
+		composeEditor.wait();
+		composeControls.send();
 
 		missingAttachLayer.wait();
-
 		try {
 			missingAttachLayer.checkTexts();
 		} catch (err) {
@@ -96,9 +86,8 @@ describe('TESTMAIL-31938 НЕ AJAX. Ответ на письмо. Забытое
 			} catch (err2) {
 				throw err2;
 			} finally {
-				messageToolbarSteps.clickFastreplyButton('cancel');
-				// так как мы поменяли текст, выскочит алерт после закрытия, нужно его принять
-				composeEditor.allertAccept();
+				composeEditor.wait();
+				composeControls.cancel();
 			}
 		}
 	});
