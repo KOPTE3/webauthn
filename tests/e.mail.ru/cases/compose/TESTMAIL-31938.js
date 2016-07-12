@@ -72,15 +72,9 @@ describe('TESTMAIL-31938 НЕ AJAX. Ответ на письмо. Забытое
 
 		composeEditor.wait();
 
-		// костыль! поле должно было заполниться автоматом,
-		// а не заполнилось само
-		// это не из-за того что что-то не прогружается,
-		// если добавить ожидание то не поможет
-		composeFields.setFieldValue('to', fields.to);
-
 		composeEditor.writeMessage(withAttach);
 
-		messageToolbarSteps.clickFastreplyButton('resend');
+		messageToolbarSteps.clickFastreplyButton('reply');
 
 		missingAttachLayer.wait();
 
