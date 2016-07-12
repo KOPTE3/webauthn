@@ -10,10 +10,11 @@ let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
 
-const subject = 'TESTMAIL-31884';
 
-describe('TESTMAIL-31884: AJAX. Черновики. Забытое вложение. Проверить появление попапа при' +
-' отправке с текстом из черновика', done => {
+const subject = 'TESTMAIL-31883';
+
+describe('TESTMAIL-31883: AJAX. Черновики. Забытое вложение. Проверить ' +
+' появление попапа при отправке с текстом из шаблона', () => {
 	before(() => {
 		Compose.auth();
 	});
@@ -27,7 +28,8 @@ describe('TESTMAIL-31884: AJAX. Черновики. Забытое вложен�
 			fields.to,
 			fields.from,
 			subject,
-			composeEditorStore.texts.withAttach
+			composeEditorStore.texts.withAttach,
+			true
 		);
 
 		Messages.features([
@@ -37,7 +39,7 @@ describe('TESTMAIL-31884: AJAX. Черновики. Забытое вложен�
 			'disable-fastreply-landmark'
 		]);
 
-		Messages.open('/messages/drafts/');
+		Messages.open('/messages/templates/');
 		lettersSteps.openNewestLetter();
 		composeEditor.wait();
 
