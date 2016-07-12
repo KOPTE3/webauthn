@@ -3,7 +3,7 @@
 let Layers = require('../../pages/layers');
 
 /** Модуль для работы с лером прикрепления аттачей */
-class FolderAdd extends Layers {
+class FolderEdit extends Layers {
 	constructor () {
 		super();
 	}
@@ -15,14 +15,14 @@ class FolderAdd extends Layers {
 	 */
 	get locators () {
 		return this.extend(super.locators, {
-			container: '.is-folder-add_in',
+			container: '.is-folder-edit_in',
 			fields: {
 				name: '[name="name"]',
 				apply: '[data-name="submit"]'
 			},
 			dropdowns: {
 				parent: {
-					container: '[data-blockid="dialog-folder-add"]',
+					container: '[data-blockid="dialog-folder-edit"]',
 					ctrl: '.b-dropdown__ctrl',
 					list: '.b-dropdown__list'
 				}
@@ -64,4 +64,4 @@ class FolderAdd extends Layers {
 	}
 }
 
-module.exports = FolderAdd;
+module.exports = FolderEdit;

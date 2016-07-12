@@ -180,6 +180,47 @@ module.exports = {
 	},
 
 	/**
+	 * Обновляет хелпер
+	 *
+	 * @param {number} index - индекс хелпера
+	 * @param {Object} data - данные
+	 *
+	 * @returns {Promise}
+	 */
+	helperUpdate (index, data) {
+		return this.call('helpers/update', {
+			index,
+			update: data
+		});
+	},
+
+	/**
+	 * Расхлопывает папку
+	 *
+	 * @param {Array} ids - идентификаторы папок
+	 *
+	 * @returns {Promise}
+	 */
+	expandFolders (ids) {
+		return this.call('folders/expand', {
+			ids
+		});
+	},
+
+	/**
+	 * Схлопывает папку
+	 *
+	 * @param {Array} ids - идентификаторы папок
+	 *
+	 * @returns {Promise}
+	 */
+	collapseFolders (ids) {
+		return this.call('folders/collapse', {
+			ids
+		});
+	},
+
+	/**
 	 * Создаёт папки
 	 *
 	 * @param {*[]} folders - папки
@@ -201,6 +242,19 @@ module.exports = {
 	deleteFolders (ids) {
 		return this.call('folders/remove', {
 			ids
+		});
+	},
+
+	/**
+	 * Редактирует папки
+	 *
+	 * @param {*[]} folders - папки
+	 *
+	 * @returns {Promise}
+	 */
+	editFolders (folders) {
+		return this.call('folders/edit', {
+			folders
 		});
 	},
 
