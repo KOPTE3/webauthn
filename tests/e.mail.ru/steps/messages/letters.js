@@ -49,6 +49,20 @@ class LettersSteps extends MessagesSteps {
 			assert(actual, `Отсутствует письмо с темой ${subject}`);
 		}
 	}
+
+	/**
+	 * Ждать пока новое письмо не появится
+	 */
+	waitForNewestLetter () {
+		let page = this.lettersPage;
+		let hasNewestLetter = page.hasNewestLetter.bind(page);
+
+		try {
+			page.refreshUntilCondition(hasNewestLetter);
+		} catch (error) {
+			assert(false, 'Нового сообщения нет: ' + error);
+		}
+	}
 }
 
 module.exports = LettersSteps;
