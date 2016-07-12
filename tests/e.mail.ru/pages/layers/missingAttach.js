@@ -19,6 +19,7 @@ class missingAttach extends Layers {
 		const buttonContainer = `${container} .popup__controls`;
 
 		return this.extend(super.locators, {
+			container: '.is-compose-missingAttach_in',
 			popupHead: `${container} .popup__head`,
 			popupDesc: `${container} .popup__desc`
 		});

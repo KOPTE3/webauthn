@@ -4,7 +4,7 @@ let assert = require('assert');
 
 let MessagesLettersPage = require('../../pages/messages/letters');
 let MessagesSteps = require('../messages');
-let MessagePage = require('../message');
+let MessagePage = require('../../pages/message');
 
 /** Модуль для работы с письмами */
 class LettersSteps extends MessagesSteps {

@@ -63,7 +63,7 @@ class PageObject {
 	 *
 	 * @param {Array} list — список фич, которые требуется включить
 	 */
-	features (list) {
+	static features (list) {
 		cache.features.push(...list);
 	}
 
@@ -126,7 +126,7 @@ class PageObject {
 	 * @param {Object} object
 	 * @returns {Object}
 	 */
-	extend (object) {
+	static extend (object) {
 		return helpers.extend(...arguments);
 	}
 

@@ -19,7 +19,7 @@ class Steps {
 	 * Обновить страницу
 	 */
 	static refresh () {
-		this.page.refresh();
+		pages.refresh();
 	}
 
 	/**
