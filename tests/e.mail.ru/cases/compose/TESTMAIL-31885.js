@@ -19,9 +19,9 @@ let composeAttaches = require('../../steps/compose/attaches');
 // mail
 let Mail = require('../../utils/mail');
 
-const subject = 'TESTMAIL-31954';
+const subject = 'TESTMAIL-31885';
 
-describe('TESTMAIL-31954: НЕ AJAX. Черновики. Забытое вложение. ' +
+describe('TESTMAIL-31885: AJAX. Черновики. Забытое вложение. ' +
 	'Проверить отсутствие попапа при отправке с текстом и аттачем из шаблона ' +
 	'(исходный шаблон с аттачем)', done => {
 	before(() => {
@@ -56,8 +56,6 @@ describe('TESTMAIL-31954: НЕ AJAX. Черновики. Забытое влож
 		composeControls.cancel();
 
 		Compose.open();
-		
-		Compose.refresh();
 
 		composeControls.applyTemplate();
 
