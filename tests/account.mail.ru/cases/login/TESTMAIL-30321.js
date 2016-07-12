@@ -22,8 +22,6 @@ describe('TESTMAIL-30321', () => {
 		loginForm.clickByDomain('other');
 		loginForm.setCredentials({ username, password });
 		loginForm.clickBySignInButton();
-		loginForm.waitForUrl(product.host);
-
 		Steps.isActiveUser(username);
 		// Steps.refresh();
 	});

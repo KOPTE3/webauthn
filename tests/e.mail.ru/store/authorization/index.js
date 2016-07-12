@@ -9,6 +9,7 @@ module.exports = {
 	 *
 	 * @param {string} type — тип авторизации
 	 * @param {Object} [options] — дополнительные опции
+	 * @param {number} [timeout] — максимальное время ожидания
 	 * @returns {Object}
 	 *
 	 * Данные, которые возвращаются:
@@ -18,7 +19,7 @@ module.exports = {
 	 *    user_agent, sex, last_name
 	 * }
 	 */
-	credentials (type = 'basic', options = {}) {
+	credentials (type = 'basic', options = {}, timeout) {
 		let account = new AccountManager();
 
 		Object.assign(options, { type });
@@ -35,7 +36,7 @@ module.exports = {
 
 					return body;
 				});
-		});
+		}, timeout, 'Could not get user credentials');
 	},
 
 	/**

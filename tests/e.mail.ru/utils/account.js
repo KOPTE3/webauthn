@@ -73,7 +73,7 @@ module.exports = {
 	 * @param {string} [email]
 	 * @returns {boolean}
 	 */
-	isActiveUser (email) {
+	isActiveUser (email = '') {
 		try {
 			if (!email) {
 				let { account } = authStore;
@@ -89,7 +89,7 @@ module.exports = {
 						}
 					}
 				}, email);
-			});
+			}, 1000, `Could not detect user authorization ${email}`);
 		} catch (error) {
 			return false;
 		}
