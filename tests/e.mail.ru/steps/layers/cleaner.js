@@ -36,6 +36,10 @@ class CleanerSteps extends LayerSteps {
 		this.page.hoverOnCategory(categoryId);
 		this.page.clickDeleteCategoryButton(categoryId);
 	}
+
+	static dragFromInboxToSpam () {
+		this.page.dragFromInboxToSpam();
+	}
 }
 
 module.exports = CleanerSteps;

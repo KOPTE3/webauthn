@@ -8,7 +8,7 @@ let CleanerSteps = require('../../steps/layers/cleaner');
 let foldersStore = require('../../store/folders');
 let cleanerStore = require('../../store/cleaner');
 
-describe('TESTMAIL-31906', () => {
+describe('TESTMAIL-31909', () => {
 	before(() => {
 		Steps.auth();
 
@@ -45,6 +45,8 @@ describe('TESTMAIL-31906', () => {
 		['social', 'promotions', 'newsletters'].forEach((name) => {
 			CleanerSteps.removeFolder(cleanerStore.categories[name]);
 		});
+
+		CleanerSteps.dragFromInboxToSpam();
 
 		CleanerSteps.process();
 		CleanerSteps.waitForCleanerResult();
