@@ -18,7 +18,7 @@ class MessagesLettersPage extends MessagesPage {
 
 		return this.extend(super.locators, {
 			container: '#b-letters',
-			newestLetter: '[data-mnemo="letters"] .b-datalist__item_unread .b-datalist__item__link'
+			newestLetter: '[data-mnemo="letters"] .b-datalist__item__link'
 		});
 	}
 
