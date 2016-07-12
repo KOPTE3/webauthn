@@ -1,19 +1,19 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let Compose = require('../../steps/compose');
 let composeFields = require('../../steps/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
+let SentPage = require('../../steps/sent');
 let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
 let messagesToolbarSteps = require('../../steps/messages/toolbar');
 
-describe('TESTMAIL-31540: AJAX. Написание письма. Забытое вложение. ' +
-'Проверить появление попапа при отправке текстов', () => {
+describe('TESTMAIL-31541: AJAX аписание письма. Забытое вложение. Проверить ' +
+	'отсутствие попапа при отправке ' +
+	'(тексты для которых не должен появляться попап)', () => {
 	before(() => {
-		Compose.auth();
+		Messages.auth();
 	});
 
 	it('Попап должен появится', () => {
@@ -30,10 +30,8 @@ describe('TESTMAIL-31540: AJAX. Написание письма. Забытое 
 
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', fields.to);
-		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
+		composeEditor.writeMessage(composeEditorStore.texts.withoutAttach);
 		composeControls.send();
-		missingAttachLayer.wait();
-		missingAttachLayer.close();
-		composeControls.cancel();
+		SentPage.isVisible();
 	});
 });

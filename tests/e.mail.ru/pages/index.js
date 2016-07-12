@@ -230,8 +230,6 @@ class PageObject {
 		});
 
 		if (!isClicked) {
-			console.log(locator);
-			browser.debug();
 			throw new Error('Can\'t click to all elements' + locator);
 		}
 	}
