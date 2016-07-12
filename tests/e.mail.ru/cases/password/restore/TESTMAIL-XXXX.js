@@ -13,7 +13,7 @@ describe('TESTMAIL-XXXX', function () {
 	it('Открытие стрницы восстановления пароля', function () {
 		let restoreEmail = 'regtest17@mail.ru';
 
-		// this.timeout(100000); // need for debug
+		this.timeout(100000); // need for debug
 		PasswordRestore.open();
 
 		accountView.initRegTokenIdLog(); // start XHR "recording"

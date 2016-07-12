@@ -1,6 +1,5 @@
 'use strict';
 
-
 /**
  * Модуль для работы с Ajax запросами на страницах Mail.Ru
  */
@@ -13,21 +12,23 @@ module.exports = {
 	 */
 	registerLogger (path) {
 		let result = browser.executeAsync(
+			/*eslint-disable */
 			function registerLogger (path, done) {
 				patron.ajaxStack = patron.ajaxStack || [];
 				$(document).ajaxComplete(function (event, xhr, settings) {
 					if (settings.url.contains(path)) {
 						patron.ajaxStack.push({
-							path,
-							xhr,
-							event,
-							settings
+							path: path,
+							xhr: xhr,
+							event: event,
+							settings: settings
 						});
 					}
 				});
 
 				done(true);
 			}, path
+			/*eslint-enable */
 		);
 
 		return {
