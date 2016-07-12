@@ -25,51 +25,31 @@ module.exports = {
 		 *
 		 * @type {Array}
 		 */
-		buttons: providers.get([
+		buttons: [
 			'mail.ru',
 			'yandex.ru',
 			'rambler.ru',
 			'gmail.com'
-		]),
+		],
 
 		/**
 		 * Список провайдеров (селект)
 		 *
 		 * @type {Array}
 		 */
-		select: providers.get([
+		select: [
 			'mail.ru',
+			'inbox.ru',
+			'bk.ru',
+			'list.ru',
 			'yandex.ru',
 			'rambler.ru',
 			'gmail.com',
 			'yahoo.com',
 			'hotmail.com',
-			'outlook.com'
-		]),
-
-		/**
-		 * Список провайдеров (OAuth)
-		 *
-		 * @type {Array}
-		 */
-		get oauth () {
-			providers.filter(provider => {
-				return provider.types.includes('oauth');
-			});
-		},
-
-		/**
-		 * Список провайдеров (External)
-		 *
-		 * @type {Array}
-		 */
-		get external () {
-			providers.filter(provider => {
-				let { types } = provider;
-
-				return types.includes('external') && !types.includes('oauth');
-			});
-		}
+			'live.com',
+			'msn.com'
+		]
 	},
 
 	/**

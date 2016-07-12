@@ -2,14 +2,11 @@
 
 let assert = require('assert');
 let Pages = require('../pages');
+let account = require('../utils/account');
 
 let pages = new Pages();
 
-class Steps extends Pages {
-	constructor () {
-		super();
-	}
-
+class Steps {
 	/**
 	 * Локаторы
 	 *
@@ -17,6 +14,17 @@ class Steps extends Pages {
 	 */
 	static features (...list) {
 		pages.features(...list);
+	}
+
+	/**
+	 * Авторизация
+	 *
+	 * @param {string} type — типа авторизации
+	 * @param {string} credentials — авторизационные данные
+	 * @returns {boolean}
+	 */
+	static auth (type, credentials) {
+		return Pages.auth(...arguments);
 	}
 
 	/**
@@ -39,6 +47,22 @@ class Steps extends Pages {
 		assert(actual, 'Не удалось авторизоваться');
 	}
 
+	/** Сбросить сессию */
+	static refresh () {
+		this.page.refresh();
+	}
+
+	/**
+	 * Проверяет залогинен ли пользователь
+	 *
+	 * @param {string} [email]
+	 */
+	static isActiveUser (email) {
+		let actual = account.isActiveUser(email);
+
+		assert(actual, 'Пользователь не авторизован');
+	}
+
 	/**
 	 * Дожидается требуемного адреса
 	 *
@@ -46,7 +70,7 @@ class Steps extends Pages {
 	 * @param {string} [query]
 	 * @param {number|string} [options] — timeout, revert
 	 */
-	static waitForUrl (url, query, ...options) {
+	waitForUrl (url, query, ...options) {
 		let actual = pages.waitForUrl(...arguments);
 
 		assert(actual, `Не найдено соответствие с ожидаемым адресом ${url}`);
