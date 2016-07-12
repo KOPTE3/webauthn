@@ -5,11 +5,12 @@ let assert = require('assert');
 let PasswordRestoreSteps = require('../restore');
 let SelectTypeViewPage = require('../../../pages/passrestore/selectType');
 
+let phonesUtils = require('../../../utils/phones');
 let selectTypeViewPage = new SelectTypeViewPage();
 
 
 /** Модуль для работы с формой ввода адреса для восстановления */
-class Controls extends PasswordRestoreSteps {
+class SelectTypeSteps extends PasswordRestoreSteps {
 	constructor () {
 		super();
 	}
@@ -17,12 +18,19 @@ class Controls extends PasswordRestoreSteps {
 	/**
 	 * Wait for phone tab
 	 */
-	waitForPhone () {
-		selectTypeViewPage.waitForPhone();
+	waitForPhoneTab () {
+		selectTypeViewPage.waitForPhoneTab();
 	}
 
 	/**
-	 * Crack phone captcha
+	 * Wait for phone layer
+	 */
+	waitForPhoneLayer () {
+		selectTypeViewPage.waitForPhoneLayer();
+	}
+
+	/**
+	 * Crack phone captch
 	 */
 	fillPhoneCaptcha () {
 		let cid = selectTypeViewPage.phoneCaptchaID,
@@ -33,6 +41,24 @@ class Controls extends PasswordRestoreSteps {
 
 		selectTypeViewPage.fillPhoneCaptcha(captcha.value);
 	}
+
+	/**
+	 * Crack SMS code
+	 * @param {restoreEmail} restoreEmail
+	 */
+	fillSmsCode (restoreEmail) {
+		let regTokenId = phonesUtils.getLastPassremindRegTokenId();
+		let code = selectTypeViewPage.getSmsCodeValue(restoreEmail, regTokenId);
+
+		selectTypeViewPage.fillSmsCode(code.value);
+	}
+
+	/**
+	 * Submit form
+	 */
+	submitForm () {
+		selectTypeViewPage.submitForm();
+	}
 }
 
-module.exports = Controls;
+module.exports = SelectTypeSteps;

@@ -21,5 +21,13 @@ module.exports = {
 				subject: 'Тема2'
 			}
 		];
+	},
+
+	get requests () {
+		return [
+			{
+				query: 'test'
+			}
+		];
 	}
 };

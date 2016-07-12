@@ -1,13 +1,13 @@
 'use strict';
 
-const FOLDER_COLLAPSE_TIMEOUT = 86400;
-const FOLDER_UPDATE_PERIOD = 10800;
+const FOLDER_COLLAPSE_TIMEOUT = 20;
+const FOLDER_UPDATE_PERIOD = 1;
 
 let Folders = require('../../steps/folders');
 
 let foldersStore = require('../../store/folders');
 
-describe('TESTMAIL-31844', () => {
+describe('TESTMAIL-31851', () => {
 	before(() => {
 		Folders.auth();
 	});
@@ -23,19 +23,26 @@ describe('TESTMAIL-31844', () => {
 	});
 
 	it('Список писем. Сворачивание папок по времени. ' +
-		'Проверка, что если в дефолтную папку и ее подпапку, ' +
-		'не заходили 1 день, то она свернется', () => {
+		'Если в подпапку за день хоть раз заходили, то папка не свернется', () => {
 		let folderId = Folders.createFolder({
 			name: 'Тестовая папка',
 			parent: foldersStore.ids.inbox
 		});
 
+		let timer = new Date();
+
 		Folders.open();
 
-		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT);
+		browser.pause(2000);
+
+		Folders.goToFolder(folderId);
+
+		let offset = Math.floor((new Date() - timer) / 1000);
+
+		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT - offset);
 
 		Folders.goToFolder(foldersStore.ids.sent);
 
-		Folders.isFolderHidden(folderId);
+		Folders.isFolderVisible(folderId);
 	});
 });
