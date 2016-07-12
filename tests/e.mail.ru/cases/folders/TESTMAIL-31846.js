@@ -33,11 +33,17 @@ describe('TESTMAIL-31846', () => {
 			parent: mainFolderId
 		});
 
+		let timer = new Date();
+
 		Folders.open();
+
+		browser.pause(2000);
 
 		Folders.goToFolder(mainFolderId);
 
-		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT);
+		let offset = Math.floor((new Date() - timer) / 1000);
+
+		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT - offset);
 
 		Folders.goToFolder('500000');
 

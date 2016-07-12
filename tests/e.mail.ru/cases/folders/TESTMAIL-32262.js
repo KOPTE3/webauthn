@@ -29,7 +29,7 @@ describe('TESTMAIL-32262', () => {
 			parent: '0'
 		});
 
-		let start = new Date();
+		let timer = new Date();
 
 		browser.pause(2000);
 
@@ -42,7 +42,7 @@ describe('TESTMAIL-32262', () => {
 
 		Folders.open();
 
-		let offset = Math.floor((new Date() - start) / 1000);
+		let offset = Math.floor((new Date() - timer) / 1000);
 
 		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT - offset);
 

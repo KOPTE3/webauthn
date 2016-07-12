@@ -27,7 +27,7 @@ describe('TESTMAIL-31851', () => {
 			parent: '0'
 		});
 
-		let start = new Date();
+		let timer = new Date();
 
 		Folders.open();
 
@@ -35,7 +35,7 @@ describe('TESTMAIL-31851', () => {
 
 		Folders.goToFolder(folderId);
 
-		let offset = Math.floor((new Date() - start) / 1000);
+		let offset = Math.floor((new Date() - timer) / 1000);
 
 		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT - offset);
 
