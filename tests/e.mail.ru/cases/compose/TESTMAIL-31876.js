@@ -53,9 +53,9 @@ describe('TESTMAIL-31876: НЕ AJAX. Ответ на письмо. Забыто�
 		Message.features(features);
 
 		messageToolbarSteps.clickButton('forward');
-		composeFields.setFieldValue('to', fields.to);
-		composeEditor.wait();
 
+		composeEditor.wait();
+		composeFields.setFieldValue('to', fields.to);
 		composeControls.send();
 
 		SentPage.wait();
