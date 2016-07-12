@@ -57,7 +57,7 @@ class ComposeEditorSteps extends ComposeSteps {
 	 * Получить текст сообщения
 	 *
 	 * @param {Element} editor - редактор
-	 * @return {string} result - текст
+	 * @returns {string} result - текст
 	 */
 	getMessage (editor) {
 		let currentEditor = editor || this.composeEditor.getEditor();

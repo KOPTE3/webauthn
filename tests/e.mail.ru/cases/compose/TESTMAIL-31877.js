@@ -28,8 +28,8 @@ let actions = require('../../utils/actions');
 
 const subject = 'Тестовый текст';
 
-describe('TESTMAIL-31943: НЕ AJAX. Ответ на письмо. Забытое вложение. Проверить' +
-' отсутствие попапа для быстрого ответа с текстом в цитате', done => {
+describe('TESTMAIL-31877: НЕ AJAX. Ответ на письмо. Забытое вложение. Проверить' +
+	' отсутствие попапа для быстрого ответа с текстом в цитате', done => {
 	before(() => {
 		SettingsMessages.auth();
 	});
@@ -60,9 +60,6 @@ describe('TESTMAIL-31943: НЕ AJAX. Ответ на письмо. Забыто�
 		Messages.open();
 		messagesLettersSteps.openNewestLetter();
 		Message.wait();
-
-		Message.features(features);
-		Message.refresh();
 
 		messagefastreplySteps.clickButton('reply');
 		composeEditor.wait();

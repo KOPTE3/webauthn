@@ -216,8 +216,6 @@ class PageObject {
 		let page = this.page;
 		let isClicked = false;
 
-		console.log(btns);
-		
 		btns.value.forEach(function (btn) {
 			if (isClicked) {
 				return;
