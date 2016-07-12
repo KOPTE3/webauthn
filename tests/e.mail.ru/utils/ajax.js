@@ -4,15 +4,14 @@
 /**
  * Модуль для работы с Ajax запросами на страницах Mail.Ru
  */
-class Ajax {
-
+module.exports = {
 
 	/**
 	 * Добавляем обработчик запроса
 	 * @param  {string} path
 	 * @returns {Object}
 	 */
-	static registerLogger (path) {
+	registerLogger (path) {
 		let result = browser.executeAsync(
 			function registerLogger (path, done) {
 				patron.ajaxStack = patron.ajaxStack || [];
@@ -35,14 +34,14 @@ class Ajax {
 			isOK: result.state === 'success',
 			value: result.value
 		};
-	}
+	},
 
 	/**
 	 * Получаем все запросы по пути
 	 * @param  {string} path
 	 * @returns {Object}
 	 */
-	static getLoggerInfo (path) {
+	getLoggerInfo (path) {
 		let result = browser.executeAsync(
 			function captureAjaxInfo (path, done) {
 				var result = patron.ajaxStack.filter(function (entity) {
@@ -58,6 +57,4 @@ class Ajax {
 			value: result.value
 		};
 	}
-}
-
-module.exports = Ajax;
+};
