@@ -6,21 +6,21 @@ let API = require('./internalApi');
 /**
  * Модуль для работы с телефонами Mail.Ru
  */
-class Phones {
+module.exports = {
 
 	/**
 	 * Записываем user/password/restore ответы
 	 * @returns {Object}
 	 */
-	static registerPassrestoreLogger () {
+	registerPassrestoreLogger () {
 		return ajax.registerLogger('user/password/restore');
-	}
+	},
 
 	/**
 	 * Получение последнего reg_token ID восстановления пароля
 	 * @returns {string|null}
 	 */
-	static getLastPassremindRegTokenId () {
+	getLastPassremindRegTokenId () {
 		let result = ajax.getLoggerInfo('user/password/restore');
 
 		if (result.isOK) {
@@ -32,7 +32,7 @@ class Phones {
 		}
 
 		return null;
-	}
+	},
 
 	/**
 	 * Get SMS code from internal-api
@@ -40,13 +40,11 @@ class Phones {
 	 * @param  {string} id
 	 * @returns {Promise}
 	 */
-	static getSmsCodeValue (email, id) {
+	getSmsCodeValue (email, id) {
 		return API.getSmsCode(email, id).then(data => {
 			return data;
 		}, err => {
 			throw new Error(err);
 		});
 	}
-}
-
-module.exports = Phones;
+};

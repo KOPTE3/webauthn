@@ -5,8 +5,7 @@ let assert = require('assert');
 let PasswordRestoreSteps = require('../restore');
 let SelectTypeViewPage = require('../../../pages/passrestore/selectType');
 
-let Phones = require('../../../utils/phones');
-let Internal = require('../../../utils/internalApi');
+let phonesUtils = require('../../../utils/phones');
 let selectTypeViewPage = new SelectTypeViewPage();
 
 
@@ -48,7 +47,7 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	 * @param {restoreEmail} restoreEmail
 	 */
 	fillSmsCode (restoreEmail) {
-		let regTokenId = Phones.getLastPassremindRegTokenId();
+		let regTokenId = phonesUtils.getLastPassremindRegTokenId();
 		let code = selectTypeViewPage.getSmsCodeValue(restoreEmail, regTokenId);
 
 		selectTypeViewPage.fillSmsCode(code.value);

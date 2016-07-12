@@ -1,8 +1,8 @@
 'use strict';
 
 let PageObject = require('../../pages');
-let Captcha = require('../../utils/captcha');
-let Phones = require('../../utils/phones');
+let captchaUtils = require('../../utils/captcha');
+let phonesUtils = require('../../utils/phones');
 
 /** Модуль для работы со страницей выбора типа восстановления пароля */
 class Controls extends PageObject {
@@ -43,7 +43,7 @@ class Controls extends PageObject {
 	 * @returns {Object}
 	 */
 	get phoneCaptchaID () {
-		return Captcha.getCaptchaID(this.locators.phoneCaptchaImg);
+		return captchaUtils.getCaptchaID(this.locators.phoneCaptchaImg);
 	}
 
 	/**
@@ -55,7 +55,7 @@ class Controls extends PageObject {
 		let code;
 
 		this.page.waitUntil(function async () {
-			return Captcha.getCaptchaValue(cid).then(result => {
+			return captchaUtils.getCaptchaValue(cid).then(result => {
 				code = result;
 
 				return true;
@@ -79,7 +79,7 @@ class Controls extends PageObject {
 		let code = null;
 
 		this.page.waitUntil(function async () {
-			return Phones.getSmsCodeValue(email, id).then(result => {
+			return phonesUtils.getSmsCodeValue(email, id).then(result => {
 				if (result.isOK) {
 					code = result.body.code;
 				}

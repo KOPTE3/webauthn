@@ -39,7 +39,7 @@ const call = function (opts) {
 /**
  * Модуль для работы с Internal API
  */
-class API {
+module.exports = {
 
 	/**
 	 * Получение кода SMS по reg_token.id
@@ -48,11 +48,9 @@ class API {
 	 * @param  {string} id
 	 * @returns {Promise}
 	 */
-	static getSmsCode (email, id) {
+	getSmsCode (email, id) {
 		return call({
 			path: `sms/${email}/${id}`
 		});
 	}
-}
-
-module.exports = API;
+};
