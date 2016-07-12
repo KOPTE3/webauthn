@@ -121,6 +121,44 @@ module.exports = {
 	},
 
 	/**
+	 * Выполнить RPC.mock
+	 *
+	 * @param {string} path
+	 * @param {Object} settings - ответ
+	 * @returns {Promise}
+	 */
+	mockRPC (path, settings) {
+		let result = browser.execute(function (path, settings) {
+			var mock = function (path, settings) {
+				require('RPC').mock(path, settings);
+			};
+
+			if (typeof $.mockjax === 'function') {
+				mock(path, settings);
+			} else {
+				var el = document.createElement('script');
+
+				el.src = '//win105.dev.mail.ru/packages/jssdk/vendor/jquery.mockjax.js';
+				el.onload = function () {
+					require('jquery.mockjax');
+
+					var request = require('request');
+
+					request.mock = $.mockjax;
+					request.mock.once = $.mockjax.once;
+					request.mock.clear = $.mockjaxClear;
+
+					mock(path, settings);
+				};
+
+				document.body.appendChild(el);
+			}
+		}, path, settings);
+
+		return result.value;
+	},
+
+	/**
 	 * Отправляет пользователю письмо
 	 *
 	 * @param {string} to - адрес получателя
@@ -186,5 +224,24 @@ module.exports = {
 				}
 			]
 		});
+	},
+
+	/**
+	 * Добавить контакт в АК
+	 * @param {string} nick - имя
+	 * @param {string} email - почта
+	 * @returns {Promise}
+	 */
+	addContact (nick, email) {
+		this.call('ab/contacts/add', {
+			contacts: [{
+				nick,
+				emails: [email]
+			}]
+		});
+
+		return browser.execute(function (name, email) {
+			patron.Utils.addToAddressBook([name ? name + ' <' + email + '>' : email]);
+		}, nick, email);
 	}
 };

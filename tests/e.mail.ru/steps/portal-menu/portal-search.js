@@ -10,6 +10,8 @@ let Search = require('../../pages/search');
 
 let PortalSearchStore = require('../../store/portal-menu/portal-search');
 
+let actions = require('../../utils/actions');
+
 
 /** Модуль для работы с представлением страницы поиска писем */
 class PortalSearchSteps extends PortalMenuSteps {
@@ -19,6 +21,18 @@ class PortalSearchSteps extends PortalMenuSteps {
 		this.portalSearch = new PortalSearch();
 		this.advanced = new Advanced();
 		this.search = new Search();
+	}
+
+	/**
+	 * Поменять ответ АПИ
+	 *
+	 * @param {*[]} body - тело ответа
+	 */
+	mock (body = []) {
+		actions.mockRPC('messages/search/requests', {
+			status: '200',
+			body
+		});
 	}
 
 	/**
@@ -53,6 +67,13 @@ class PortalSearchSteps extends PortalMenuSteps {
 		this.portalSearch.clickSearchField();
 
 		this.isFocusInBlank();
+	}
+
+	/**
+	 * Кликнуть куда-нибудь наружу поиска
+	 */
+	clickOutside () {
+		this.portalSearch.clickBody();
 	}
 
 	/**
@@ -98,6 +119,17 @@ class PortalSearchSteps extends PortalMenuSteps {
 		let actual = this.portalSearch.getOperandText(name);
 
 		assert(actual === text, `Текст операнда ${name} не равен "${text}"`);
+	}
+
+	/**
+	 * Ввести текст в операнд.
+	 * Операнд должен быть создан.
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} value - что печатать
+	 */
+	setOperandText (name, value = '') {
+		this.portalSearch.setOperandText(name, value);
 	}
 
 	checkDateOperandLapse (text) {
@@ -186,13 +218,41 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Проверить, что тип саджестов - сохраненные запросы
+	 */
+	isRequestsSuggest () {
+		let actual = this.portalSearch.getSuggestsTitle();
+
+		assert(actual === 'ВЫ НЕДАВНО ИСКАЛИ',
+			`Вместо сохраненных запросов показаны саджесты "${actual}"`);
+	}
+
+	/**
+	 * Проверить, что тип саджестов - люди
+	 */
+	isPeopleSuggest () {
+		let actual = this.portalSearch.getSuggestsTitle();
+
+		assert(actual === 'ЛЮДИ', `Вместо саджестов с людьми показаны саджесты "${actual}"`);
+	}
+
+	/**
+	 * Проверить, что тип саджестов - в письме
+	 */
+	isQuerySuggest () {
+		let actual = this.portalSearch.getSuggestsTitle();
+
+		assert(actual === 'В ПИСЬМЕ', `Вместо саджестов "В письме" показаны саджесты "${actual}"`);
+	}
+
+	/**
 	 * Выполнить простой поиск "в письме"
 	 * @param {string} query - текст запроса
 	 */
 	simpleSearch (query = 'test') {
 		this.portalSearch.removeAllOperands();
 		this.clickSearchField();
-		this.portalSearch.setOperandText('blank', query);
+		this.setOperandText('blank', query);
 		this.clickSearchButton();
 	}
 }
