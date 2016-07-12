@@ -15,9 +15,9 @@ let SentPage = require('../../steps/sent');
 // mail
 let Mail = require('../../utils/mail');
 
-const subject = 'Тестовый текст';
+const subject = 'TESTMAIL-31888';
 
-describe('TESTMAIL-31957: НЕ AJAX. Черновики. Забытое вложение. Проверить ' +
+describe('TESTMAIL-31888: AJAX. Черновики. Забытое вложение. Проверить ' +
 'отсутствие попапа при отправке с текстом и аттачем из черновика ' +
 '(исходный черновик с аттачем)', () => {
 	before(() => {
@@ -55,7 +55,6 @@ describe('TESTMAIL-31957: НЕ AJAX. Черновики. Забытое влож
 			'disable-fastreply-landmark'
 		]);
 
-		Compose.refresh();
 		composeEditor.wait();
 		composeFields.setFieldValue('subject', subject);
 		composeFields.setFieldValue('to', fields.to);
