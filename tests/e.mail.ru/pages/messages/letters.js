@@ -18,7 +18,7 @@ class MessagesLettersPage extends MessagesPage {
 
 		return this.extend(super.locators, {
 			container: '#b-letters',
-			newestLetter: `${active} [data-mnemo="letters"] .b-datalist__item__link`
+			newestLetter: '[data-mnemo="letters"] .b-datalist__item_unread .b-datalist__item__link'
 		});
 	}
 
@@ -31,6 +31,14 @@ class MessagesLettersPage extends MessagesPage {
 		return this.clickWithRetry(this.locators.newestLetter);
 	}
 
+	/**
+	 * Проверяет есть ли новое письмо
+	 *
+	 * @returns {boolean}
+	 */
+	hasNewestLetter () {
+		return browser.isExisting(this.locators.newestLetter);
+	}
 }
 
 module.exports = MessagesLettersPage;

@@ -34,6 +34,13 @@ class ComposeAttachesSteps extends ComposeSteps {
 
 		assert(!this.composeAttaches.isFileAttached(filename), 'Файл удален');
 	}
+
+	hasAttach (filename) {
+		let result = this.composeAttaches.isFileAttached(filename);
+
+
+		assert(result, `Файл ${filename} не прикреплен`);
+	}
 }
 
 module.exports = new ComposeAttachesSteps();
