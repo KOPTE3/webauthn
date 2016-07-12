@@ -41,7 +41,7 @@ class ComposeControlSteps extends ComposeSteps {
 	cancel () {
 		this.composeControls.cancel();
 	}
-	
+
 	applyTemplate () {
 		this.composeControls.applyTemplate();
 	}
