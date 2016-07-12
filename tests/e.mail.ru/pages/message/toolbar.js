@@ -15,7 +15,7 @@ class MessageToolbar extends MessagePage {
 	 */
 	get locators () {
 		let toolbar = '[data-mnemo="toolbar-letter"]';
-		let fatsreply = '[data-mnemo="toolbar-fastreply"]';
+		let fastreply = '[data-mnemo="toolbar-fastreply"]';
 
 		return this.extend(super.locators, {
 			toolbar: '',
@@ -28,10 +28,11 @@ class MessageToolbar extends MessagePage {
 				spam:  `${toolbar} [data-name="spam"]`
 			},
 			fastreply: {
-				replyAll: `${fatsreply} [data-mnemo="send-all"]`,
-				saveDraft: `${fatsreply} [data-name="saveDraft"]`,
-				resend: `${fatsreply} [data-mnemo="resend"]`,
-				cancel: `${fatsreply} [data-name="cancel"]`
+				reply: `${fatsreply} [data-name="send"]`,
+				replyAll: `${fastreply} [data-mnemo="send-all"]`,
+				saveDraft: `${fastreply} [data-name="saveDraft"]`,
+				resend: `${fastreply} [data-mnemo="resend"]`,
+				cancel: `${fastreply} [data-name="cancel"]`
 			}
 		});
 	}

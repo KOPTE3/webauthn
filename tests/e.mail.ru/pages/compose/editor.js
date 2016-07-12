@@ -40,14 +40,12 @@ class ComposeEditor extends ComposePage {
 	 * @returns {Element}
 	 */
 	getEditor () {
-		console.log('get');
 		let frameId = this.page.getAttribute(this.locators.editor, 'id');
 
 		return this.page.frame(frameId).element(this.locators.body);
 	}
 
 	restoreParentFrame () {
-		console.log('restore');
 		this.page.frameParent();
 	}
 

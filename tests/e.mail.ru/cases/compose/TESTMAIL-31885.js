@@ -9,7 +9,7 @@ let composeFields = require('../../steps/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');
-let composeEditorStore = require('../../store/compose/editor');
+let ComposeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
 let messageToolbarSteps = require('../../steps/message/toolbar');
@@ -19,25 +19,18 @@ let composeAttaches = require('../../steps/compose/attaches');
 // mail
 let Mail = require('../../utils/mail');
 
-const subject = 'TESTMAIL-31955';
+const subject = 'TESTMAIL-31885';
 
-describe('TESTMAIL-31955: НЕ AJAX. Черновики. Забытое вложение. ' +
+describe('TESTMAIL-31885: AJAX. Черновики. Забытое вложение. ' +
 	'Проверить отсутствие попапа при отправке с текстом и аттачем из шаблона ' +
-	'(добавление аттача после применения шаблона)', done => {
+	'(исходный шаблон с аттачем)', done => {
 	before(() => {
 		Compose.auth();
 	});
 
 	it('письмо должно быть успешно отправлено', () => {
 		let {fields} = new ComposeFieldsStore();
-
-		var mail = new Mail({
-			to: '',
-			subject,
-			text: composeEditorStore.texts.withoutAttach
-		});
-
-		mail.template();
+		let {texts} = ComposeEditorStore;
 
 		Compose.features([
 			'check-missing-attach',
@@ -50,14 +43,25 @@ describe('TESTMAIL-31955: НЕ AJAX. Черновики. Забытое влож
 
 		composeEditor.wait();
 
-		Compose.refresh();
+		composeEditor.writeMessage(texts.withAttach);
+
+		composeAttaches.uploadAttach('file1.txt');
 
 		composeEditor.wait();
 
+		composeControls.template();
+
+		composeEditor.wait();
+
+		composeControls.cancel();
+
+		Compose.open();
+
 		composeControls.applyTemplate();
 
-		composeAttaches.uploadAttach('1exp.JPG');
+		composeEditor.wait();
 
+		composeFields.clickField('to');
 		composeFields.setFieldValue('to', fields.to);
 
 		composeControls.send();
