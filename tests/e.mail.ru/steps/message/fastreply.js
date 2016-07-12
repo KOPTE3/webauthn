@@ -2,14 +2,14 @@
 
 let assert = require('assert');
 
-let MessagefastreplyPage = require('../../pages/message/fastreply');
+let MessageFastReplyPage = require('../../pages/message/fastreply');
 let MessageSteps = require('../message');
 
 /** Модуль для работы с формой страницы написания письма */
-class MessagefastreplySteps extends MessageSteps {
+class MessageFastReplySteps extends MessageSteps {
 	constructor () {
 		super();
-		this.fastreplyPage = new MessagefastreplyPage();
+		this.fastreplyPage = new MessageFastReplyPage();
 	}
 
 	/**
@@ -24,4 +24,4 @@ class MessagefastreplySteps extends MessageSteps {
 
 }
 
-module.exports = new MessagefastreplySteps();
+module.exports = MessageFastReplySteps;
