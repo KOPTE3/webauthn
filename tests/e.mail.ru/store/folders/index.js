@@ -5,6 +5,7 @@ module.exports = {
 	 * Идентификаторы папок.
 	 */
 	ids: {
+		'root': '-1',
 		'inbox': '0',
 		'spam': '950',
 		'social': '500011',
