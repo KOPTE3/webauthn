@@ -28,6 +28,7 @@ class MessageToolbar extends MessagePage {
 				spam:  `${toolbar} [data-name="spam"]`
 			},
 			fastreply: {
+				reply: `${fatsreply} [data-name="send"]`,
 				replyAll: `${fatsreply} [data-mnemo="send-all"]`,
 				saveDraft: `${fatsreply} [data-name="saveDraft"]`,
 				resend: `${fatsreply} [data-mnemo="resend"]`,

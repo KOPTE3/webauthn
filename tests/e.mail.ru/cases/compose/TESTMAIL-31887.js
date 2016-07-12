@@ -2,50 +2,46 @@
 
 let Messages = require('../../steps/messages');
 let lettersSteps = require('../../steps/messages/letters');
+let fastanswerSteps = require('../../steps/message/fastreply');
+
 let Compose = require('../../steps/compose');
 let composeFields = require('../../steps/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
+let missingAttachLayer = require('../../steps/layers/missingAttach');
 let composeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
 let messageToolbarSteps = require('../../steps/message/toolbar');
 let SentPage = require('../../steps/sent');
+let composeAttaches = require('../../steps/compose/attaches');
 
 // mail
 let Mail = require('../../utils/mail');
 
-const subject = 'Тестовый текст';
+const subject = 'TESTMAIL-31887';
 
-describe('TESTMAIL-31957: НЕ AJAX. Черновики. Забытое вложение. Проверить ' +
-'отсутствие попапа при отправке с текстом и аттачем из черновика ' +
-'(исходный черновик с аттачем)', () => {
+describe('TESTMAIL-31887: AJAX. Черновики. Забытое вложение. ' +
+	'Проверить отсутствие попапа при отправке с текстом и аттачем из черновика ' +
+	'(добавление аттача после сохранения черновика)', done => {
 	before(() => {
 		Compose.auth();
 	});
 
-	it('Письмо должно быть успешно отправлено', () => {
-		let { fields } = new ComposeFieldsStore();
+	it('письмо должно быть успешно отправлено', () => {
+		let {fields} = new ComposeFieldsStore();
 
 		var mail = new Mail({
 			to: fields.to,
 			subject,
-			text: composeEditorStore.texts.withAttach
+			text: composeEditorStore.texts.withoutAttach
 		});
 
-		mail.addAttach('inline');
-		mail.send();
-
-		Messages.open();
-		lettersSteps.openNewestLetter();
-		messageToolbarSteps.clickButton('forward');
-
-		composeEditor.wait();
-		composeControls.draft();
+		mail.draft();
 
 		Messages.open('/messages/drafts/');
-		lettersSteps.openNewestLetter();
 
+		lettersSteps.openNewestLetter();
 		composeEditor.wait();
 
 		Compose.features([
@@ -55,10 +51,10 @@ describe('TESTMAIL-31957: НЕ AJAX. Черновики. Забытое влож
 			'disable-fastreply-landmark'
 		]);
 
-		Compose.refresh();
 		composeEditor.wait();
-		composeFields.setFieldValue('subject', subject);
-		composeFields.setFieldValue('to', fields.to);
+
+		composeAttaches.uploadAttach('1exp.JPG');
+
 		composeControls.send();
 
 		SentPage.wait();
