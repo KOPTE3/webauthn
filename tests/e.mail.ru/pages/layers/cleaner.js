@@ -16,7 +16,13 @@ class CleanerPage extends LayersPage {
 			mainPage: '.js-cleaner-main',
 			resultPage: '.js-cleaner-result',
 			processButton: '[data-name=process]',
-			finishButton: '[data-name=closeutil]'
+			finishButton: '[data-name=closeutil]',
+
+			category: '.js-category',
+			categoryHead: '.js-category-head',
+			categoryDelete: '.js-category-delete',
+			categoryText: '.js-category-text',
+			categoryDropdown: '.cleaner-dropdown__list'
 		});
 	}
 
@@ -38,6 +44,14 @@ class CleanerPage extends LayersPage {
 
 	clickFinishButton () {
 		this.page.click(this.locators.finishButton);
+	}
+
+	hoverOnCategory (categoryId) {
+		this.page.moveToObject(this.locators.category + `[data-category-id="${categoryId}"] ` + this.locators.categoryHead);
+	}
+
+	clickDeleteCategoryButton (categoryId) {
+		this.page.click(this.locators.category + `[data-category-id="${categoryId}"] ` + this.locators.categoryDelete);
 	}
 }
 

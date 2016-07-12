@@ -6,8 +6,9 @@ let FiltersSteps = require('../../steps/settings/filters');
 let CleanerSteps = require('../../steps/layers/cleaner');
 
 let foldersStore = require('../../store/folders');
+let cleanerStore = require('../../store/cleaner');
 
-describe('TESTMAIL-31915', () => {
+describe('TESTMAIL-31906', () => {
 	before(() => {
 		Steps.auth();
 
@@ -19,31 +20,12 @@ describe('TESTMAIL-31915', () => {
 		FoldersSteps.open();
 
 		try {
-			FoldersSteps.isArchiveIn(foldersStore.ids.inbox);
+			FoldersSteps.isArchiveNotExists();
 		} catch (exception) {
-			try {
-				FoldersSteps.isArchiveNotExists();
-			} catch (exception) {
-				FoldersSteps.deleteArchive();
-
-				FoldersSteps.refresh();
-				FoldersSteps.isArchiveNotExists();
-			}
-
-			// В данный момент не работает из-за бага https://jira.mail.ru/browse/MAIL-51729
-			// FoldersSteps.createArchiveIn(foldersStore.ids.inbox);
-
-			// Поэтому сначала создаем подпапку, потом конвертируем ее в архив
-			let id = FoldersSteps.createFolder({
-				name: 'Архив',
-				parent: foldersStore.ids.inbox,
-				type: 'user'
-			});
-
-			FoldersSteps.convertFolderToArchive(id);
+			FoldersSteps.deleteArchive();
 
 			FoldersSteps.refresh();
-			FoldersSteps.isArchiveIn(foldersStore.ids.inbox);
+			FoldersSteps.isArchiveNotExists();
 		}
 
 		FiltersSteps.enableCleaner();
@@ -60,6 +42,10 @@ describe('TESTMAIL-31915', () => {
 		FiltersSteps.launchCleaner();
 		CleanerSteps.waitForCleanerMain();
 
+		['social', 'promotions', 'newsletters'].forEach((name) => {
+			CleanerSteps.removeFolder(cleanerStore.categories[name])
+		});
+
 		CleanerSteps.process();
 		CleanerSteps.waitForCleanerResult();
 
@@ -67,9 +53,10 @@ describe('TESTMAIL-31915', () => {
 
 		FoldersSteps.open();
 
+		FoldersSteps.isArchiveNotExists();
+
 		['social', 'promotions', 'newsletters'].forEach((name) => {
-			FoldersSteps.isFolderExists(foldersStore.ids[name]);
-			FoldersSteps.isFolderNotInArchive(foldersStore.ids[name]);
+			FoldersSteps.isFolderNotExists(foldersStore.ids[name]);
 		});
 	});
 });

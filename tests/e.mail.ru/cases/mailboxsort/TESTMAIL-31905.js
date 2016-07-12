@@ -32,7 +32,7 @@ describe('TESTMAIL-31905', () => {
 
 	beforeEach(() => {
 		FiltersSteps.open();
-		FiltersSteps.registerHook();
+		FiltersSteps.registerCleanerHook();
 	});
 
 	it('should create archive and subfolders', () => {
