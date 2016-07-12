@@ -18,6 +18,7 @@ class MessageToolbar extends MessagePage {
 		let fatsreply = '[data-mnemo="toolbar-fastreply"]';
 
 		return this.extend(super.locators, {
+			container: toolbar,
 			toolbar: '',
 			buttons: {
 				replyAll: `${toolbar} [data-name="replyAll"]`,

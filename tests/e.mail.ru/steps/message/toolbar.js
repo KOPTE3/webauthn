@@ -13,6 +13,15 @@ class MessageToolbarSteps extends MessageSteps {
 	}
 
 	/**
+	 * Дождаться появления редактора
+	 */
+	wait () {
+		let actual = this.toolbarPage.wait();
+
+		assert(actual, 'Не удалось дождаться появления редактора написания письма');
+	}
+
+	/**
 	 * Нажать на кнопку тулбара
 	 *
 	 * @param {string} name - имя кнопки, по которой нужно нажать

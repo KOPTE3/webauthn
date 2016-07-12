@@ -3,25 +3,30 @@
 
 // Messages
 let Messages = require('../../steps/messages');
-let messagesLettersSteps = require('../../steps/messages/letters');
+let MessagesLettersSteps = require('../../steps/messages/letters');
+let messagesLettersSteps = new MessagesLettersSteps();
 
 // Message
 let Message = require('../../steps/message');
-let messageToolbarSteps = require('../../steps/message/toolbar');
+let MessageToolbarSteps = require('../../steps/message/toolbar');
+let messageToolbarSteps = new MessageToolbarSteps();
 
 // Compose
-let ComposeFieldsStore = require('../../store/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
+let composeFieldsStore = require('../../store/compose/fields');
+let СomposeEditor = require('../../steps/compose/editor');
+let composeEditor = new СomposeEditor();
+let ComposeControls = require('../../steps/compose/controls');
+let composeControls = new ComposeControls();
 
 // layers
-let missingAttachLayer = require('../../steps/layers/missingAttach');
+let MissingAttachLayer = require('../../steps/layers/missingAttach');
+let missingAttachLayer = new MissingAttachLayer();
 
 // utils
 let actions = require('../../utils/actions');
 
 
-const subject = 'Tect';
+const subject = 'Teст';
 const testText = 'Тестовый текст';
 
 /**
@@ -44,7 +49,7 @@ describe('TESTMAIL-31937 НЕ AJAX. Ответ на письмо. Забытое
 			'disable-fastreply-landmark'
 		];
 
-		const { fields } = new ComposeFieldsStore();
+		const { fields } = composeFieldsStore;
 
 		Messages.open();
 
@@ -61,9 +66,8 @@ describe('TESTMAIL-31937 НЕ AJAX. Ответ на письмо. Забытое
 		messagesLettersSteps.openNewestLetter();
 		messageToolbarSteps.clickButton('reply');
 
-		messageToolbarSteps.features(features);
-		messageToolbarSteps.refresh();
-		messageToolbarSteps.wait();
+		Messages.features(features);
+		Messages.refresh();
 
 		composeEditor.wait();
 		composeEditor.writeMessage(withAttach);
