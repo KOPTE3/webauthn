@@ -6,6 +6,8 @@ const FOLDER_UPDATE_PERIOD = 1;
 let Folders = require('../../steps/folders');
 let SettingsFolders = require('../../steps/settings/folders');
 
+let foldersStore = require('../../store/folders');
+
 describe('TESTMAIL-32262', () => {
 	before(() => {
 		Folders.auth();
@@ -26,7 +28,7 @@ describe('TESTMAIL-32262', () => {
 		'часа даже если в папку и подпапку не заходили до этого', () => {
 		let firstFolderId = Folders.createFolder({
 			name: 'Тестовая папка',
-			parent: '0'
+			parent: foldersStore.ids.inbox
 		});
 
 		let timer = new Date();
@@ -46,13 +48,13 @@ describe('TESTMAIL-32262', () => {
 
 		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT - offset);
 
-		Folders.goToFolder('500000');
+		Folders.goToFolder(foldersStore.ids.sent);
 
 		Folders.isFolderVisible(firstFolderId);
 
 		Folders.setTimeOffset(offset, true);
 
-		Folders.goToFolder('500002');
+		Folders.goToFolder(foldersStore.ids.trash);
 
 		Folders.isFolderHidden(firstFolderId);
 	});

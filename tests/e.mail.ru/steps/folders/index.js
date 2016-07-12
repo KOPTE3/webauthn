@@ -8,6 +8,7 @@ let Steps = require('../../steps');
 let FoldersPage = require('../../pages/folders');
 let actions = require('../../utils/actions');
 let dateUtils = require('../../utils/date');
+let store = require('../../store');
 
 /** Модуль для работы с шагами списка папкок */
 class FoldersSteps extends Steps {
@@ -205,7 +206,7 @@ class FoldersSteps extends Steps {
 	}
 
 	static enableThreads () {
-		actions.helperUpdate(63, {
+		actions.helperUpdate(store.helpers.threads, {
 			state: true,
 			time: true
 		});
