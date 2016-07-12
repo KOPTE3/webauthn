@@ -87,6 +87,48 @@ module.exports = {
 	},
 
 	/**
+	 * Обновляет хелпер
+	 *
+	 * @param {number} index - индекс хелпера
+	 * @param {Object} data - данные
+	 *
+	 * @returns {Promise}
+	 */
+	helperUpdate (index, data) {
+		return this.call('helpers/update', {
+			index,
+			update: data
+		});
+	},
+
+	/**
+	 * Расхлопывает папку
+	 *
+	 * @param {Array} ids - идентификаторы папок
+	 *
+	 * @returns {Promise}
+	 */
+	expandFolders (ids) {
+		return this.call('folders/expand', {
+			ids,
+			folder_update_period: 1
+		});
+	},
+
+	/**
+	 * Схлопывает папку
+	 *
+	 * @param {Array} ids - идентификаторы папок
+	 *
+	 * @returns {Promise}
+	 */
+	collapseFolders (ids) {
+		return this.call('folders/collapse', {
+			ids
+		});
+	},
+
+	/**
 	 * Создаёт папки
 	 *
 	 * @param {*[]} folders - папки
@@ -95,6 +137,19 @@ module.exports = {
 	 */
 	createFolders (folders) {
 		return this.call('folders/add', {
+			folders
+		});
+	},
+
+	/**
+	 * Редактирует папки
+	 *
+	 * @param {*[]} folders - папки
+	 *
+	 * @returns {Promise}
+	 */
+	editFolders (folders) {
+		return this.call('folders/edit', {
 			folders
 		});
 	},

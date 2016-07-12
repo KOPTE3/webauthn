@@ -1,19 +1,15 @@
 'use strict';
 
 let PageObject = require('../../../pages');
-let ControlsPage = require('./controls');
-let FieldsPage = require('./fields');
-let DropdownsPage = require('./dropdowns');
 let LayerFolderAdd = require('../../../steps/layers/folderAdd');
-let layerFolderAdd = new LayerFolderAdd();
+let LayerFolderEdit = require('../../../steps/layers/folderEdit');
 
 class FoldersPage extends PageObject {
 	constructor () {
 		super();
 
-		this.controlsPage = new ControlsPage();
-		this.fieldsPage = new FieldsPage();
-		this.dropdownsPage = new DropdownsPage();
+		this.layerFolderAdd = new LayerFolderAdd();
+		this.layerFolderEdit = new LayerFolderEdit();
 	}
 
 	/**
@@ -35,7 +31,11 @@ class FoldersPage extends PageObject {
 		return {
 			container: '.b-folders',
 			item: '.b-folders__item',
-			itemWithParam: '.b-folders__item-col_title'
+			itemWithParam: '.b-folders__item-col_title',
+			controls: {
+				new: '[data-name="newFolder"]',
+				edit: '[data-name="edit"][data-id]'
+			}
 		};
 	}
 
@@ -48,13 +48,39 @@ class FoldersPage extends PageObject {
 	createFolder (params) {
 		let {name, parent} = params;
 
-		this.controlsPage.newFolder();
-		layerFolderAdd.show();
-		this.fieldsPage.setFieldValue('name', name);
-		this.dropdownsPage.setDropdownValue('parent', parent);
-		layerFolderAdd.apply();
+		this.newFolderControl();
+
+		this.layerFolderAdd.show();
+		this.layerFolderAdd.setFieldValue('name', name);
+		this.layerFolderAdd.setDropdownValue('parent', parent);
+		this.layerFolderAdd.apply();
 
 		return this.waitAddSuccess(params);
+	}
+
+	/**
+	 * Редактировать папку
+	 *
+	 * @param {Object} params - данные папки
+	 */
+	editFolder (params) {
+		let {id, name, parent} = params;
+
+		this.editFolderControl(id);
+
+		this.layerFolderEdit.show();
+
+		if (name !== void 0) {
+			this.layerFolderEdit.setFieldValue('name', name);
+		}
+
+		if (parent !== void 0) {
+			this.layerFolderEdit.setDropdownValue('parent', parent);
+		}
+
+		this.layerFolderEdit.apply();
+
+		return this.waitEditSuccess(params);
 	}
 
 	waitAddSuccess (params) {
@@ -77,6 +103,40 @@ class FoldersPage extends PageObject {
 		});
 
 		return folderId;
+	}
+
+	waitEditSuccess (params) {
+		let {id, parent, name} = params;
+		let {container, item} = this.locators;
+		let locator = `${container} ${item} [data-id="${id}"]`;
+
+		if (parent !== void 0) {
+			locator = `${locator}[data-parent="${parent}"]`;
+		}
+
+		if (name === void 0) {
+			this.page.waitForExist(locator);
+		} else {
+			this.page.waitUntil(() => {
+				return this.page.elements(locator).value.find(item => {
+					let elementId = item.ELEMENT;
+
+					return this.page.elementIdText(elementId).value === name;
+				});
+			});
+		}
+	}
+
+	newFolderControl () {
+		this.page.click(this.locators.controls.new);
+	}
+
+	editFolderControl (folderId) {
+
+		let {container} = this.locators;
+		let {edit} = this.locators.controls;
+
+		this.page.click(`${container} ${edit}[data-id="${folderId}"]`);
 	}
 }
 

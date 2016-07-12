@@ -5,11 +5,12 @@ module.exports = {
 	/**
 	 * Смещает текущее время
 	 * @param {number} offset - секунды
+	 * @param {boolean} [relative] - прибавить к текущему
 	 */
-	setTimeOffset (offset) {
-		browser.execute(function (offset) {
-			Date.setNow(Date.now() + (offset * 1000));
-		}, offset);
+	setTimeOffset (offset, relative) {
+		browser.execute(function (offset, relative) {
+			Date.setNow(+(relative ? Date.getNow() : new Date()) + (offset * 1000));
+		}, offset, relative);
 	},
 
 	/**

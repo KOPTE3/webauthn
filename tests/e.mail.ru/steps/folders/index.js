@@ -1,5 +1,7 @@
 'use strict';
 
+const FOLDER_COLLAPSE_FEATURE = 'collapse-folder';
+
 let assert = require('assert');
 
 let Steps = require('../../steps');
@@ -38,6 +40,14 @@ class FoldersSteps extends Steps {
 		assert(actual, 'Папка должна быть раскрыта');
 	}
 
+	static expandFolder (folderId) {
+		actions.expandFolders([folderId]);
+	}
+
+	static collapseFolder (folderId) {
+		actions.collapseFolders([folderId]);
+	}
+
 	/**
 	 * Создать папку
 	 *
@@ -50,12 +60,43 @@ class FoldersSteps extends Steps {
 		return folderId;
 	}
 
-	static setTimeOffset (offset) {
-		return dateUtils.setTimeOffset(offset);
+	/**
+	 * Редактировать папку
+	 *
+	 * @param {Object} params - данные папки
+	 */
+	static editFolder (params) {
+		actions.editFolders([params]);
 	}
 
+	/**
+	 * Смещает текущее время
+	 * @param {number} offset - секунды
+	 * @param {boolean} [relative] - прибавить к текущему
+	 */
+	static setTimeOffset (offset, relative) {
+		dateUtils.setTimeOffset(offset, relative);
+	}
+
+	/**
+	 * Восстанавливает оригинальную дату
+	 */
 	static resetTimeOffset () {
-		return dateUtils.resetTimeOffset();
+		dateUtils.resetTimeOffset();
+	}
+
+	static enableCollapseFeature (collapseTimeout, updatePeriod, useLastVisit) {
+		let params = `${collapseTimeout}|${updatePeriod}|${Number(useLastVisit)}`;
+		let feature = `${FOLDER_COLLAPSE_FEATURE}`;
+
+		this.features([`${feature}:${params}`]);
+	}
+
+	static enableThreads () {
+		actions.helperUpdate(63, {
+			state: true,
+			time: true
+		});
 	}
 }
 

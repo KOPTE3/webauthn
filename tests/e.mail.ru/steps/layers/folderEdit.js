@@ -3,13 +3,13 @@
 let assert = require('assert');
 
 let LayerSteps = require('../../steps/layers');
-let FolderAddLayer = require('../../pages/layers/folderAdd');
+let FolderEditLayer = require('../../pages/layers/folderEdit');
 
-class FolderAddLayerSteps extends LayerSteps {
+class FolderEditLayerSteps extends LayerSteps {
 	constructor () {
 		super();
 
-		this.layer = new FolderAddLayer();
+		this.layer = new FolderEditLayer();
 	}
 
 	setFieldValue (name, value) {
@@ -25,4 +25,4 @@ class FolderAddLayerSteps extends LayerSteps {
 	}
 }
 
-module.exports = FolderAddLayerSteps;
+module.exports = FolderEditLayerSteps;

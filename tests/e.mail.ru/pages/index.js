@@ -71,7 +71,6 @@ class PageObject {
 
 		if (features.length) {
 			query.ftrs = features.join(' ');
-			cache.features = [];
 		}
 
 		let url = URL.request(this.location, query);
