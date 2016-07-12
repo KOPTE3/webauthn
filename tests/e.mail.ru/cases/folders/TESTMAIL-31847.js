@@ -23,15 +23,13 @@ describe('TESTMAIL-31847', () => {
 
 	it('Список писем. Сворачивание папок по времени. ' +
 		'Проверка, что если к папке с подпапками через настройки добавили еще одну подпапку, ' +
-		'то папка свернется только через 24 часа даже если в нее не заходили до этого.', () => {
+		'то папка свернется только через 24 часа даже если в нее не заходили до этого', () => {
 		let firstFolderId = Folders.createFolder({
 			name: 'Тестовая папка',
 			parent: '0'
 		});
 
-		Folders.expandFolder('0');
-
-		let startExpand = new Date();
+		let start = new Date();
 
 		browser.pause(2000);
 
@@ -44,16 +42,16 @@ describe('TESTMAIL-31847', () => {
 
 		Folders.open();
 
-		let offsetExpand = Math.floor((new Date() - startExpand) / 1000);
+		let offset = Math.floor((new Date() - start) / 1000);
 
-		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT - offsetExpand);
+		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT - offset);
 
 		Folders.goToFolder('500000');
 
 		Folders.isFolderVisible(firstFolderId);
 		Folders.isFolderVisible(secondFolderId);
 
-		Folders.setTimeOffset(offsetExpand, true);
+		Folders.setTimeOffset(offset, true);
 
 		Folders.goToFolder('500002');
 

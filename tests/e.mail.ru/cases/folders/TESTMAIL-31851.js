@@ -1,7 +1,7 @@
-// https://jira.mail.ru/browse/TESTMAIL-31851?focusedCommentId=3688550
-
-/*
 'use strict';
+
+const FOLDER_COLLAPSE_TIMEOUT = 20;
+const FOLDER_UPDATE_PERIOD = 1;
 
 let Folders = require('../../steps/folders');
 
@@ -11,7 +11,9 @@ describe('TESTMAIL-31851', () => {
 	});
 
 	beforeEach(() => {
-		Folders.enableCollapseFeature();
+		Folders.enableCollapseFeature(FOLDER_COLLAPSE_TIMEOUT,
+			FOLDER_UPDATE_PERIOD, true);
+		Folders.enableThreads();
 	});
 
 	afterEach(() => {
@@ -25,17 +27,20 @@ describe('TESTMAIL-31851', () => {
 			parent: '0'
 		});
 
+		let start = new Date();
+
 		Folders.open();
 
-		Folders.setTimeOffset((Folders.collapseTimeout / 2) * 60);
+		browser.pause(2000);
 
 		Folders.goToFolder(folderId);
 
-		Folders.setTimeOffset((Folders.collapseTimeout * 60) - (60 * 60));
+		let offset = Math.floor((new Date() - start) / 1000);
+
+		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT - offset);
 
 		Folders.goToFolder('500002');
 
 		Folders.isFolderVisible(folderId);
 	});
 });
-*/

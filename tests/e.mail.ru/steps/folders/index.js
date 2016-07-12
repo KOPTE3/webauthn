@@ -193,6 +193,14 @@ class FoldersSteps extends Steps {
 		let params = `${collapseTimeout}|${updatePeriod}|${Number(useLastVisit)}`;
 		let feature = `${FOLDER_COLLAPSE_FEATURE}`;
 
+		browser.execute(function (updatePeriod) {
+			$.ajaxSetup({
+				data: {
+					folder_update_period: updatePeriod
+				}
+			});
+		}, updatePeriod);
+
 		this.features([`${feature}:${params}`]);
 	}
 

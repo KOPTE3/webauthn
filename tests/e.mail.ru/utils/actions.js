@@ -165,8 +165,7 @@ module.exports = {
 	 */
 	expandFolders (ids) {
 		return this.call('folders/expand', {
-			ids,
-			folder_update_period: 1
+			ids
 		});
 	},
 

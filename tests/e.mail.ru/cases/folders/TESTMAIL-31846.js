@@ -33,8 +33,6 @@ describe('TESTMAIL-31846', () => {
 			parent: mainFolderId
 		});
 
-		Folders.expandFolder(mainFolderId);
-
 		Folders.open();
 
 		Folders.goToFolder(mainFolderId);

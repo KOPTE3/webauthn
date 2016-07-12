@@ -33,8 +33,6 @@ describe('TESTMAIL-31845', () => {
 			parent: mainFolderId
 		});
 
-		Folders.expandFolder(mainFolderId);
-
 		Folders.open();
 
 		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT);

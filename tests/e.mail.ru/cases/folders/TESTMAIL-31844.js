@@ -28,8 +28,6 @@ describe('TESTMAIL-31844', () => {
 			parent: '0'
 		});
 
-		Folders.expandFolder('0');
-
 		Folders.open();
 
 		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT);

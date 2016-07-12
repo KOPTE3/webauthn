@@ -19,10 +19,6 @@ class FolderAddLayerSteps extends LayerSteps {
 	setDropdownValue (name, value) {
 		this.layer.setDropdownValue(name, value);
 	}
-
-	apply () {
-		this.layer.apply();
-	}
 }
 
 module.exports = FolderAddLayerSteps;
