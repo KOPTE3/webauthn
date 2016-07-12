@@ -13,6 +13,7 @@ let messageToolbarSteps = require('../../steps/message/toolbar');
 let ComposeFieldsStore = require('../../store/compose/fields');
 let composeEditorStore = require('../../store/compose/editor');
 let composeEditor = require('../../steps/compose/editor');
+let composeFields = require('../../steps/compose/fields');
 
 // settings
 let SettingsMessages = require('../../steps/settings/messages');
@@ -43,7 +44,6 @@ describe('TESTMAIL-31943: НЕ AJAX. Ответ на письмо. Забыто�
 
 		const { fields } = new ComposeFieldsStore();
 
-
 		SettingsMessages.open();
 
 		settingsMessagesForm.toggleField('sendReplyIncludeMessage');
@@ -68,7 +68,7 @@ describe('TESTMAIL-31943: НЕ AJAX. Ответ на письмо. Забыто�
 		composeEditor.wait();
 
 		composeEditor.writeMessage('Тест письма');
-		messageToolbarSteps.clickFastreplyButton('replyAll');
+		messageToolbarSteps.clickFastreplyButton('reply');
 		SentPage.isVisible();
 	});
 });

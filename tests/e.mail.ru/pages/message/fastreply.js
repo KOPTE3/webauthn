@@ -14,13 +14,13 @@ class MessagefastreplyPage extends MessagePage {
 	 * @type {Object}
 	 */
 	get locators () {
-		let active = '.b-letter_expanded';
+		let active = '.b-letter__foot__tab';
 		let toolbar = '[data-mnemo="toolbar-fastreply"]';
 
 		return this.extend(super.locators, {
 			buttons: {
-				reply: `${active} [data-name="fast-reply"]`,
-				forward: `${active} [data-compose-act="forward"]`
+				reply: `${active}[data-compose-act="reply"]`,
+				forward: `${active}[data-compose-act="forward"]`
 			},
 
 			toolbar: {
