@@ -224,5 +224,24 @@ module.exports = {
 				}
 			]
 		});
+	},
+
+	/**
+	 * Добавить контакт в АК
+	 * @param {string} nick - имя
+	 * @param {string} email - почта
+	 * @returns {Promise}
+	 */
+	addContact (nick, email) {
+		this.call('ab/contacts/add', {
+			contacts: [{
+				nick,
+				emails: [email]
+			}]
+		});
+
+		return browser.execute(function (name, email) {
+			patron.Utils.addToAddressBook([name ? name + ' <' + email + '>' : email]);
+		}, nick, email);
 	}
 };

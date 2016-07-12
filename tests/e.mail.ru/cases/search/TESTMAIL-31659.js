@@ -25,5 +25,6 @@ describe('TESTMAIL-31659', () => {
 		'при появлении курсора в пустом поле ввода', () => {
 		portalSearchSteps.clickSearchField();
 		portalSearchSteps.hasSuggests();
+		portalSearchSteps.isRequestsSuggest();
 	});
 });

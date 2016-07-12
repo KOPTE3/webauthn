@@ -26,7 +26,10 @@ class PortalSearch extends PortalMenu {
 			searchButton: `${container} [type="submit"]`,
 			advancedToggle: `${container} .js-dropdown-button`,
 			searchField: `${container} .pm-toolbar__search__label__wrapper`,
-			suggests: `${container} .pm-toolbar__suggests`,
+			suggests: {
+				container: `${container} .pm-toolbar__suggests`,
+				title: `${container} .pm-toolbar__suggests .pm-toolbar__suggests__group__title`
+			},
 			operands: {
 				all    : `${container} .b-operand:not([style*="display: none"])`,
 				message: `${container} [data-operand-name="q_query"]`,
@@ -306,7 +309,17 @@ class PortalSearch extends PortalMenu {
 	 * @returns {boolean}
 	 */
 	hasSuggests (reverse = false) {
-		return this.page.waitForVisible(this.locators.suggests, void 0, reverse);
+		return this.page.waitForVisible(this.locators.suggests.container,
+			void 0, reverse);
+	}
+
+	/**
+	 * Вернуть текст заголовка саджестов
+	 *
+	 * @return {string}
+	 */
+	getSuggestsTitle () {
+		return this.page.getText(this.locators.suggests.title);
 	}
 }
 

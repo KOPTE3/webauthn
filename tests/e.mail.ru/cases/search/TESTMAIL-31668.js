@@ -6,14 +6,18 @@ let portalSearchSteps = new PortalSearchSteps();
 
 let store = require('../../store/search');
 
+let actions = require('../../utils/actions');
+
 let text = 'test';
 
-describe('TESTMAIL-31669', () => {
+describe('TESTMAIL-31668', () => {
 	before(() => {
 		Messages.auth();
 		Messages.open();
 
 		portalSearchSteps.simpleSearch(text);
+
+		actions.addContact('', 'test1@mail.ru');
 
 		Messages.features(['search-saved-requests']);
 		Messages.open();
@@ -21,18 +25,15 @@ describe('TESTMAIL-31669', () => {
 		portalSearchSteps.mock(store.requests);
 	});
 
-	it('Проверка, что после добавления любого операнда' +
-		' популярные поисковые запросы не появляются.', () => {
+	it('Проверка, что при вводе букв в строку поиска ' +
+		'популярные поисковые запросы заменяются на саджесты', () => {
 		portalSearchSteps.clickSearchField();
 		portalSearchSteps.hasSuggests();
 		portalSearchSteps.isRequestsSuggest();
 
-		portalSearchSteps.setOperandText('blank', 'qwerty');
-		portalSearchSteps.clickOutside();
-		portalSearchSteps.hasOperand('message');
-
-		portalSearchSteps.clickSearchField();
-
-		portalSearchSteps.noSuggests();
+		portalSearchSteps.setOperandText('blank', 't');
+		browser.pause(1000);
+		portalSearchSteps.hasSuggests();
+		portalSearchSteps.isPeopleSuggest();
 	});
 });

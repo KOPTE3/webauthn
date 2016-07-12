@@ -24,7 +24,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
-	 * Поменить ответ АПИ
+	 * Поменять ответ АПИ
 	 *
 	 * @param {*[]} body - тело ответа
 	 */
@@ -215,6 +215,34 @@ class PortalSearchSteps extends PortalMenuSteps {
 		let actual = this.portalSearch.hasSuggests(true);
 
 		assert(actual, 'Саджесты не показались');
+	}
+
+	/**
+	 * Проверить, что тип саджестов - сохраненные запросы
+	 */
+	isRequestsSuggest () {
+		let actual = this.portalSearch.getSuggestsTitle();
+
+		assert(actual === 'ВЫ НЕДАВНО ИСКАЛИ',
+			`Вместо сохраненных запросов показаны саджесты "${actual}"`);
+	}
+
+	/**
+	 * Проверить, что тип саджестов - люди
+	 */
+	isPeopleSuggest () {
+		let actual = this.portalSearch.getSuggestsTitle();
+
+		assert(actual === 'ЛЮДИ', `Вместо саджестов с людьми показаны саджесты "${actual}"`);
+	}
+
+	/**
+	 * Проверить, что тип саджестов - в письме
+	 */
+	isQuerySuggest () {
+		let actual = this.portalSearch.getSuggestsTitle();
+
+		assert(actual === 'В ПИСЬМЕ', `Вместо саджестов "В письме" показаны саджесты "${actual}"`);
 	}
 
 	/**
