@@ -31,7 +31,7 @@ describe('TESTMAIL-31944: НЕ AJAX. Черновики. Забытое влож
 	it('письмо должно быть успешно отправлено', () => {
 		let {fields} = new ComposeFieldsStore();
 
-		var mail = new Mail({
+		let mail = new Mail({
 			to: fields.to,
 			subject,
 			text: composeEditorStore.texts.withAttach
@@ -52,9 +52,9 @@ describe('TESTMAIL-31944: НЕ AJAX. Черновики. Забытое влож
 		lettersSteps.openNewestLetter();
 		messageToolbarSteps.clickButton('forward');
 
-		Compose.wait();
+		composeEditor.wait();
 		Compose.refresh();
-		Compose.wait();
+		composeEditor.wait();
 
 		composeFields.clickField('to');
 		composeFields.setFieldValue('to', fields.to);

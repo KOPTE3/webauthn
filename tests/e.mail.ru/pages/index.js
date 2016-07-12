@@ -142,7 +142,7 @@ class PageObject {
 	 * @param {string} locator - локатор элемента
 	 * @param {number} count - количество попыток (по умолчанию 10)
 	 * @param {number} interval - интервал в ms, через который делать
-	 * 							  попыкти (по умолчанию 500ms)
+	 * 							  попытки (по умолчанию 500ms)
 	 *
 	 * @returns {boolean}
 	 * */
@@ -174,6 +174,39 @@ class PageObject {
 	}
 
 	/**
+	 * Метод обновляет страницу пока условие не будет выполнено
+	 *
+	 * @param {Function} conditionFunc
+	 * @param {number} count - количество попыток (по умолчанию 10)
+	 * @param {number} interval - интервал в ms, через который делать
+	 * 							  попытки (по умолчанию 500ms)
+	 *
+	 * @returns {boolean}
+	 * */
+	refreshUntilCondition (conditionFunc, count = 3, interval = 1000) {
+		let page = this.page;
+		let tryRefresh = () => {
+			if (conditionFunc()) {
+				return true;
+			} else {
+				browser.pause(interval);
+				page.refresh();
+				page.wait();
+
+				return false;
+			}
+		};
+
+		while (count--) {
+			if (tryRefresh()) {
+				return true;
+			}
+		}
+
+		throw new Error('Can\'t refresh on condition');
+	}
+
+	/**
 	 * Метод пробует кликнуть по всем найденным селектором элементам
 	 *
 	 * @param {string} locator - куда кликнуть
@@ -183,6 +216,8 @@ class PageObject {
 		let page = this.page;
 		let isClicked = false;
 
+		console.log(btns);
+		
 		btns.value.forEach(function (btn) {
 			if (isClicked) {
 				return;
@@ -191,7 +226,7 @@ class PageObject {
 			try {
 				page.elementIdClick(btn.ELEMENT);
 				isClicked = true;
-			} catch (error) {}
+			} catch (error) { }
 		});
 
 		if (!isClicked) {
