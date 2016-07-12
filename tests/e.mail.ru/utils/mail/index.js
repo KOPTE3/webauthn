@@ -2,7 +2,7 @@
 
 let nodemailer = require('nodemailer');
 let fs = require('fs');
-let AuthStore = require('../../store/authorization');
+let authStore = require('../../store/authorization');
 let actions = require('../actions');
 
 const ASYNC_TIMEOUT = 10000; // таймаут завершнеия асинхронного скрипта
@@ -18,7 +18,7 @@ class Mail {
 	 * @param {Object} options - данные письма (см: https://www.npmjs.com/package/nodemailer)
 	 */
 	constructor (options) {
-		let { account } = new AuthStore();
+		let { account } = authStore;
 		let email = account.get('email');
 		let pwd = account.get('password');
 
