@@ -19,6 +19,7 @@ class ComposeAttaches extends ComposePage {
 	get locators () {
 		let container = '.compose__header__row_uploader';
 		let attachments = '.js-file';
+		let loaded = '.upload__file_loaded';
 
 		return this.extend(super.locators, {
 			container,
@@ -29,7 +30,9 @@ class ComposeAttaches extends ComposePage {
 			progress: `${container} .upload__file__progress`,
 
 			attachments,
-			attachmentByName: filename => `${attachments}[data-title="${filename}"]`
+			attachmentName: `${attachments} .upload__file__name`,
+			attachmentByName: filename => `${attachments}[data-title="${filename}"]`,
+			loadedAttachmentByName: filename => `${attachments}${loaded}[data-title="${filename}"]`
 		});
 	}
 
@@ -45,23 +48,29 @@ class ComposeAttaches extends ComposePage {
 		this.page.chooseFile(this.locators.attachField, filepath);
 	}
 
-	isFileLoading (filename) {
-		let selector = this.locators.attachmentByName(filename);
-		let file = this.page.element(selector);
-
-		return file.element(this.locators.progress).isVisible();
-	}
-
 	isFileAttached (filename) {
-		let selector = this.locators.attachmentByName(filename);
-		let files = this.page.elements(selector);
-		let file = this.page.elements(this.locators.attachments);
+		let selector = this.locators.attachmentName;
+		let names;
+		let file;
 
-		console.log(files);
-		console.log(file);
+		try {
+			this.page.waitForExist(selector);
+			names = this.page.getText(selector);
 
+			if (typeof names === 'string') {
+				names = [names];
+			}
 
-		return files.value.length > 0;
+			file = names.find(name => {
+				return name === filename;
+			});
+
+			return file;
+		} catch (error) {
+			console.log('error', error);
+
+			return false;
+		}
 	}
 
 	removeAttach (filename) {
@@ -76,8 +85,6 @@ class ComposeAttaches extends ComposePage {
 	}
 
 	get attachField () {
-		console.log(this.page.element(this.locators.attachField));
-		
 		return this.page.element(this.locators.attachField);
 	}
 
