@@ -48,7 +48,8 @@ class PortalSearch extends PortalMenu {
 				dateInput: '.b-operand__date-input',
 				active: '.b-operand_active',
 				lapse: `${container} [data-operand-name="q_date"] .b-operand__date-lapse`
-			}
+			},
+			body: 'body'
 		});
 	}
 
@@ -266,6 +267,13 @@ class PortalSearch extends PortalMenu {
 		let locator = searchUtils.getOperandLocator(this.locators.operands, name, 'close');
 
 		this.page.click(locator);
+	}
+
+	/**
+	 * Кликнуть в "пустое место"
+	 */
+	clickBody () {
+		this.page.click(this.locators.body);
 	}
 
 	/**

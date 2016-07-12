@@ -70,6 +70,13 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Кликнуть куда-нибудь наружу поиска
+	 */
+	clickOutside () {
+		this.portalSearch.clickBody();
+	}
+
+	/**
 	 * Проверка наличия операнда
 	 *
 	 * @param {string} name - имя операнда
@@ -112,6 +119,17 @@ class PortalSearchSteps extends PortalMenuSteps {
 		let actual = this.portalSearch.getOperandText(name);
 
 		assert(actual === text, `Текст операнда ${name} не равен "${text}"`);
+	}
+
+	/**
+	 * Ввести текст в операнд.
+	 * Операнд должен быть создан.
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} value - что печатать
+	 */
+	setOperandText (name, value = '') {
+		this.portalSearch.setOperandText(name, value);
 	}
 
 	checkDateOperandLapse (text) {
@@ -206,7 +224,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 	simpleSearch (query = 'test') {
 		this.portalSearch.removeAllOperands();
 		this.clickSearchField();
-		this.portalSearch.setOperandText('blank', query);
+		this.setOperandText('blank', query);
 		this.clickSearchButton();
 	}
 }

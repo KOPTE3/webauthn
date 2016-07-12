@@ -130,9 +130,7 @@ module.exports = {
 	mockRPC (path, settings) {
 		let result = browser.execute(function (path, settings) {
 			var mock = function (path, settings) {
-				var RPC = require('RPC');
-
-				RPC.mock(path, settings);
+				require('RPC').mock(path, settings);
 			};
 
 			if (typeof $.mockjax === 'function') {
