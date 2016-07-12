@@ -51,6 +51,7 @@ describe('TESTMAIL-31950: НЕ AJAX. Ответ на письмо. Забыто�
 		messagesLettersSteps.openNewestLetter();
 
 		Message.features(features);
+		Messages.refresh();
 
 		messagesFastReplySteps.clickButton('forward');
 		composeEditor.wait();
