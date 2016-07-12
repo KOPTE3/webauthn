@@ -68,15 +68,14 @@ describe('TESTMAIL-31938 НЕ AJAX. Ответ на письмо. Забытое
 
 		Message.wait();
 
-
 		messagefastreplySteps.clickButton('reply');
 
 		composeEditor.wait();
 
 		// костыль! поле должно было заполниться автоматом,
 		// а не заполнилось само
-		// видимо после перезагрузки страницы слишком быстро нажали на ответить
-		// и что то там не догрузилось
+		// это не из-за того что что-то не прогружается,
+		// если добавить ожидание то не поможет
 		composeFields.setFieldValue('to', fields.to);
 
 		composeEditor.writeMessage(withAttach);
