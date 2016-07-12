@@ -80,7 +80,7 @@ class FoldersPage extends PageObject {
 
 		this.layerFolderEdit.apply();
 
-		return this.waitEditSuccess(params);
+		this.waitEditSuccess(params);
 	}
 
 	waitAddSuccess (params) {
@@ -132,7 +132,6 @@ class FoldersPage extends PageObject {
 	}
 
 	editFolderControl (folderId) {
-
 		let {container} = this.locators;
 		let {edit} = this.locators.controls;
 
