@@ -1,6 +1,7 @@
 'use strict';
 
 let Steps = require('../../steps');
+let store = require('../../store');
 let LoginPage = require('../../steps/login');
 let LoginForm = require('../../steps/login/form');
 let authStore = require('../../store/authorization');
@@ -16,9 +17,13 @@ describe('TESTMAIL-30321', () => {
 			domain: 'yandex.ru'
 		});
 
+		let product = store.product('mail.ru');
+
 		loginForm.clickByDomain('other');
 		loginForm.setCredentials({ username, password });
 		loginForm.clickBySignInButton();
+		loginForm.waitForUrl(product.host);
+
 		Steps.isActiveUser(username);
 		// Steps.refresh();
 	});
