@@ -166,15 +166,6 @@ class FoldersSteps extends Steps {
 	}
 
 	/**
-	 * Редактировать папку
-	 *
-	 * @param {Object} params - данные папки
-	 */
-	static editFolder (params) {
-		actions.editFolders([params]);
-	}
-
-	/**
 	 * Смещает текущее время
 	 * @param {number} offset - секунды
 	 * @param {boolean} [relative] - прибавить к текущему

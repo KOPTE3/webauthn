@@ -26,7 +26,7 @@ describe('TESTMAIL-32262', () => {
 	it('Список писем. Сворачивание папок по времени. ' +
 		'Проверка, что если подпапку редактировали, то папка свернется только через 24 ' +
 		'часа даже если в папку и подпапку не заходили до этого', () => {
-		let firstFolderId = Folders.createFolder({
+		let folderId = Folders.createFolder({
 			name: 'Тестовая папка',
 			parent: foldersStore.ids.inbox
 		});
@@ -38,11 +38,13 @@ describe('TESTMAIL-32262', () => {
 		SettingsFolders.open();
 
 		SettingsFolders.editFolder({
-			id: firstFolderId,
+			id: folderId,
 			name: 'Тестовая папка 2'
 		});
 
 		Folders.open();
+
+		Folders.isFolderVisible(folderId);
 
 		let offset = Math.floor((new Date() - timer) / 1000);
 
@@ -50,12 +52,12 @@ describe('TESTMAIL-32262', () => {
 
 		Folders.goToFolder(foldersStore.ids.sent);
 
-		Folders.isFolderVisible(firstFolderId);
+		Folders.isFolderVisible(folderId);
 
 		Folders.setTimeOffset(offset, true);
 
 		Folders.goToFolder(foldersStore.ids.trash);
 
-		Folders.isFolderHidden(firstFolderId);
+		Folders.isFolderHidden(folderId);
 	});
 });

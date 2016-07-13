@@ -37,6 +37,8 @@ describe('TESTMAIL-31845', () => {
 
 		Folders.open();
 
+		Folders.isFolderVisible(folderId);
+
 		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT);
 
 		Folders.goToFolder(foldersStore.ids.sent);
