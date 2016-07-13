@@ -8,7 +8,7 @@ let SettingsFolders = require('../../steps/settings/folders');
 
 let foldersStore = require('../../store/folders');
 
-describe('TESTMAIL-32262', () => {
+describe('TESTMAIL-32263', () => {
 	before(() => {
 		Folders.auth();
 	});
@@ -24,12 +24,15 @@ describe('TESTMAIL-32262', () => {
 	});
 
 	it('Список писем. Сворачивание папок по времени. ' +
-		'Проверка, что если подпапку редактировали, то папка свернется только через 24 ' +
-		'часа даже если в папку и подпапку не заходили до этого', () => {
-		let folderId = Folders.createFolder({
+		'Проверка, что если в папку с подпапками не заходили день ' +
+		'и удалили одну из подпапок, то папка свернется', () => {
+		let [firstFolderId, secondFolderId] = Folders.createFolders([{
 			name: 'Тестовая папка',
 			parent: foldersStore.ids.inbox
-		});
+		}, {
+			name: 'Тестовая папка 2',
+			parent: foldersStore.ids.inbox
+		}]);
 
 		let timer = new Date();
 
@@ -37,14 +40,11 @@ describe('TESTMAIL-32262', () => {
 
 		SettingsFolders.open();
 
-		SettingsFolders.editFolder({
-			id: folderId,
-			name: 'Тестовая папка 2'
-		});
+		SettingsFolders.removeFolder(secondFolderId);
 
 		Folders.open();
 
-		Folders.isFolderVisible(folderId);
+		Folders.isFolderVisible(firstFolderId);
 
 		let offset = Math.floor((new Date() - timer) / 1000);
 
@@ -52,12 +52,6 @@ describe('TESTMAIL-32262', () => {
 
 		Folders.goToFolder(foldersStore.ids.sent);
 
-		Folders.isFolderVisible(folderId);
-
-		Folders.setTimeOffset(offset, true);
-
-		Folders.goToFolder(foldersStore.ids.trash);
-
-		Folders.isFolderHidden(folderId);
+		Folders.isFolderHidden(firstFolderId);
 	});
 });

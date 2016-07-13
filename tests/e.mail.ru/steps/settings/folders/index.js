@@ -41,6 +41,15 @@ class Folders extends Steps {
 	static editFolder (params) {
 		this.page.editFolder(params);
 	}
+
+	/**
+	 * Удалить папку
+	 *
+	 * @param {string} folderId - ID папки
+	 */
+	static removeFolder (folderId) {
+		this.page.removeFolder(folderId);
+	}
 }
 
 module.exports = Folders;

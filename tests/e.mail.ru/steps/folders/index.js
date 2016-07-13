@@ -110,17 +110,27 @@ class FoldersSteps extends Steps {
 	}
 
 	/**
-	 * Создать папку
+	 * Создать папки
 	 *
-	 * @param {Object} params - данные папки
-	 * @returns {string} - ID созданной папки
+	 * @param {Object} folders - данные папок
+	 * @returns {string} - IDs созданных папок
 	 */
-	static createFolder (params) {
-		let actual = actions.createFolders([params]);
+	static createFolders (folders) {
+		let actual = actions.createFolders(folders);
 
 		assert(actual.state === 'success');
 
-		return actual.value[0];
+		return actual.value;
+	}
+
+	/**
+	 * Создать папку
+	 *
+	 * @param {Object} folder - данные папки
+	 * @returns {string} - ID созданной папки
+	 */
+	static createFolder (folder) {
+		return this.createFolders([folder])[0];
 	}
 
 	static editFolder (params) {
@@ -163,15 +173,6 @@ class FoldersSteps extends Steps {
 
 	static deleteArchive () {
 		return this.deleteFolder(this.page.getArchiveFolderId());
-	}
-
-	/**
-	 * Редактировать папку
-	 *
-	 * @param {Object} params - данные папки
-	 */
-	static editFolder (params) {
-		actions.editFolders([params]);
 	}
 
 	/**
