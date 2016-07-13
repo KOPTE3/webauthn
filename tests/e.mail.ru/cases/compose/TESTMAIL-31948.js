@@ -55,8 +55,8 @@ describe('TESTMAIL-31948: НЕ AJAX. Ответ на письмо. Забыто�
 		composeFields.setFieldValue('to', fields.to);
 
 		composeAttaches.uploadAttach('file1.txt');
-
-		messageToolbarSteps.clickFastreplyButton('reply');
+		
+		messageToolbarSteps.clickFastreplyButton('resend');
 
 		SentPage.wait();
 	});
