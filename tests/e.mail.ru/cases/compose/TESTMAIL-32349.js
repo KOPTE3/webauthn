@@ -1,27 +1,23 @@
 'use strict';
 
-let Messages = require('../../steps/messages');
 let Message = require('../../steps/message');
+let Messages = require('../../steps/messages');
 let lettersSteps = require('../../steps/messages/letters');
-let fastanswerSteps = require('../../steps/message/fastreply');
-
-let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
-let composeEditorStore = require('../../store/compose/editor');
+let composeFields = require('../../steps/compose/fields');
 let ComposeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
 let messageToolbarSteps = require('../../steps/message/toolbar');
 let SentPage = require('../../steps/sent');
-let composeAttaches = require('../../steps/compose/attaches');
+
+let composeEditorStore = require('../../store/compose/editor');
+
+const Compose = require('../../steps/compose');
 
 // mail
 let Mail = require('../../utils/mail');
 
-const subject = 'TESTMAIL-32344';
-
+const subject = 'TESTMAIL-32349';
 const features = [
 	'check-missing-attach',
 	'disable-ballons',
@@ -29,11 +25,12 @@ const features = [
 	'disable-fastreply-landmark'
 ];
 
-describe('TESTMAIL-32344 Из НЕ AJAX чтения. Ответ на письмо. Забытое вложение. ' +
-	'Проверить отсутствие попапа для полной пересылки с текстом в цитате, ' +
-	'с аттачем (исходное письмо с аттачем)', done => {
+describe('TESTMAIL-32349: Из НЕ AJAX чтения. ' +
+	'Ответ на письмо. Забытое вложение. ' +
+	'Проверить отсутствие попапа на полной пересылке ' +
+	'(текст, для которого попап не должен появляться)', () => {
 	before(() => {
-		Compose.auth();
+		Messages.auth();
 	});
 
 	it('письмо должно быть успешно отправлено', () => {
@@ -42,25 +39,23 @@ describe('TESTMAIL-32344 Из НЕ AJAX чтения. Ответ на письм
 		var mail = new Mail({
 			to: fields.to,
 			subject,
-			text: composeEditorStore.texts.withAttach
+			text: composeEditorStore.texts.withoutAttach
 		});
-
-		mail.addAttach('file1.txt');
 
 		mail.send();
 
+		Messages.features(features);
 		Messages.open();
 		lettersSteps.openNewestLetter();
-		Message.wait();
 
-		Message.features(features);
-		Message.refresh();
 		Message.wait();
 
 		messageToolbarSteps.clickButton('forward');
+
 		Compose.wait();
 
 		composeFields.setFieldValue('to', fields.to);
+
 		composeControls.send();
 
 		SentPage.wait();
