@@ -55,7 +55,7 @@ describe('TESTMAIL-32347: Из НЕ AJAX чтения. Ответ на пись�
 		Message.refresh();
 		Message.wait();
 
-		messageToolbarSteps.clickButton('replyAll');
+		messageToolbarSteps.clickButton('reply');
 		composeEditor.wait();
 
 		composeFields.setFieldValue('to', fields.to);
