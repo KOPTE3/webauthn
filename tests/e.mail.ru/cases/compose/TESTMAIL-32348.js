@@ -53,7 +53,7 @@ describe('TESTMAIL-32348:  НЕ AJAX чтения. Ответ на письмо.
 			fields.to,
 			fields.from,
 			subject,
-			composeEditorStore.texts.withAttach
+			composeEditorStore.texts.withoutAttach
 		);
 
 		Messages.features(features);
