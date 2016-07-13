@@ -1,8 +1,9 @@
 'use strict';
 
 let PageObject = require('../../../pages');
-let LayerFolderAdd = require('../../../steps/layers/folderAdd');
-let LayerFolderEdit = require('../../../steps/layers/folderEdit');
+let LayerFolderAdd = require('../../../steps/layers/folder/add');
+let LayerFolderEdit = require('../../../steps/layers/folder/edit');
+let LayerFolderRemove = require('../../../steps/layers/folder/remove');
 
 class FoldersPage extends PageObject {
 	constructor () {
@@ -10,6 +11,7 @@ class FoldersPage extends PageObject {
 
 		this.layerFolderAdd = new LayerFolderAdd();
 		this.layerFolderEdit = new LayerFolderEdit();
+		this.layerFolderRemove = new LayerFolderRemove();
 	}
 
 	/**
@@ -34,7 +36,8 @@ class FoldersPage extends PageObject {
 			itemWithParam: '.b-folders__item-col_title',
 			controls: {
 				new: '[data-name="newFolder"]',
-				edit: '[data-name="edit"][data-id]'
+				edit: '[data-name="edit"][data-id]',
+				remove: '[data-name="remove"][data-id]'
 			}
 		};
 	}
@@ -83,6 +86,20 @@ class FoldersPage extends PageObject {
 		this.waitEditSuccess(params);
 	}
 
+	/**
+	 * Удалить папку
+	 *
+	 * @param {string} folderId - ID папки
+	 */
+	removeFolder (folderId) {
+		this.removeFolderControl(folderId);
+
+		this.layerFolderRemove.show();
+		this.layerFolderRemove.apply();
+
+		this.waitRemoveSuccess(folderId);
+	}
+
 	waitAddSuccess (params) {
 		let {parent, name} = params;
 		let {container, item} = this.locators;
@@ -100,7 +117,7 @@ class FoldersPage extends PageObject {
 
 				return result;
 			});
-		});
+		}, null, 'Не дождались появления добавленной папки');
 
 		return folderId;
 	}
@@ -123,8 +140,17 @@ class FoldersPage extends PageObject {
 
 					return this.page.elementIdText(elementId).value === name;
 				});
-			});
+			}, null, 'Не дождались появления отредактированной папки');
 		}
+	}
+
+	waitRemoveSuccess (folderId) {
+		let {container, item} = this.locators;
+		let locator = `${container} ${item} [data-id="${folderId}"]`;
+
+		this.page.waitUntil(() => {
+			return !this.page.isExisting(locator);
+		}, null, 'Не дождались удаления папки');
 	}
 
 	newFolderControl () {
@@ -132,10 +158,23 @@ class FoldersPage extends PageObject {
 	}
 
 	editFolderControl (folderId) {
-		let {container} = this.locators;
-		let {edit} = this.locators.controls;
+		let {container, controls} = this.locators;
+		let locator = `${container} ${controls.edit}[data-id="${folderId}"]`;
+		let control = this.page.element(locator);
+		let elementId = control.value.ELEMENT;
 
-		this.page.click(`${container} ${edit}[data-id="${folderId}"]`);
+		this.page.moveTo(elementId);
+		this.page.elementIdClick(elementId);
+	}
+
+	removeFolderControl (folderId) {
+		let {container, controls} = this.locators;
+		let locator = `${container} ${controls.remove}[data-id="${folderId}"]`;
+		let control = this.page.element(locator);
+		let elementId = control.value.ELEMENT;
+
+		this.page.moveTo(elementId);
+		this.page.elementIdClick(elementId);
 	}
 }
 
