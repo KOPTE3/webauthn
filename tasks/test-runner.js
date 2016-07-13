@@ -65,7 +65,7 @@ module.exports = grunt => {
 		'account.mail.ru-omega': {
 			service: {
 				name: 'wdio',
-				file: config('tests/account.mail.ru/config.js'),
+				file: Config.path('tests/account.mail.ru/config.js'),
 				data: {
 					baseUrl: `https://${Git.branch}.account.omega.test.mail.ru`
 				}
