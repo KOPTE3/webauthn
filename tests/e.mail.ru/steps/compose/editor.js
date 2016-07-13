@@ -74,22 +74,50 @@ class ComposeEditorSteps extends ComposeSteps {
 	}
 
 	/**
+	 * Проверяет пустое ли сообщение
+	 *
+	 * @returns {boolean} если true значит письмо не пустое
+	 */
+	isMessageNotEmpty () {
+		let message = this.getMessage();
+
+		return !!message;
+	}
+
+	/**
+	 * Проверить, содержится ли в теле письма текст
+	 *
+	 * @param {string} text текст который должен находится в теле письма
+	 * @returns {boolean}
+	 */
+	hasMessage (text) {
+		let message = this.getMessage();
+
+		return message.includes(text);
+	}
+
+	/**
+	 * Проверить, содержит ли ответ следующий текст
+	 *
+	 * @param {string} text
+	 */
+	hasReplyMessage (text) {
+		assert(this.isMessageNotEmpty(), 'Тело письма какое-то пустое');
+		assert(this.hasMessage(text), 'Ответ на письмо не содержит текст');
+	}
+
+	/**
 	 * Проверить, содержит ли пересылка следующий текст
 	 *
 	 * @param {string} text содержание письма
 	 */
 	hasForwardedMessage (text) {
-		let message = this.getMessage();
-		let hasHeader;
-		let hasMessage;
-
-		assert(message, 'Тело письма какое-то пустое');
-
-		hasMessage = message.includes(text);
-		hasHeader = message.includes('-------- Пересылаемое сообщение --------');
-
-		assert(hasHeader, 'Письмо не из пересылки');
-		assert(hasMessage, 'Письмо не содержит пересылаемый текст');
+		assert(this.isMessageNotEmpty(), 'Тело письма какое-то пустое');
+		assert(
+			this.hasMessage('-------- Пересылаемое сообщение --------'),
+			'Письмо не из пересылки'
+		);
+		assert(this.hasMessage(text), 'Письмо не содержит пересылаемый текст');
 	}
 }
 

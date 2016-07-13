@@ -72,11 +72,9 @@ describe('TESTMAIL-31935 AJAX. Ответ на письмо. Забытое вл
 
 			messagesLettersSteps.openNewestLetter();
 	
-			messagefastreplySteps.clickButton('forward');
+			messagefastreplySteps.clickButton('reply');
 
 			composeEditor.wait();
-
-			composeFields.setFieldValue('to', fields.to);
 
 			composeEditor.writeMessage(testText);
 
@@ -85,7 +83,7 @@ describe('TESTMAIL-31935 AJAX. Ответ на письмо. Забытое вл
 			// если будет ошибка то нам надо обязательно уйти со страницы написания письма
 			// так как браузер при закрытии выдаст алерт
 			try {
-				composeEditor.hasForwardedMessage(withAttach);
+				composeEditor.hasReplyMessage(withAttach);
 			} catch (error) {
 				messageToolbarSteps.clickFastreplyButton('cancel');
 				// так как мы поменяли текст, выскочит алерт после закрытия,
@@ -94,7 +92,7 @@ describe('TESTMAIL-31935 AJAX. Ответ на письмо. Забытое вл
 				throw error;
 			}
 
-			messageToolbarSteps.clickFastreplyButton('resend');
+			messageToolbarSteps.clickFastreplyButton('reply');
 			try {
 				missingAttachLayer.wait(true);
 			} catch (error) {
