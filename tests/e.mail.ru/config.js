@@ -22,8 +22,6 @@ exports.config = {
 	 * Список доступных браузеров: Chrome, Firefox
 	 * Грид: http://win110.dev.mail.ru:4444/grid/console
 	 */
-
-	// host: 'vagabond3.dev.mail.ru',
 	host: 'localhost',
 	port: 4444,
 	path: '/wd/hub',
