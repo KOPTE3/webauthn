@@ -51,6 +51,7 @@ describe('TESTMAIL-32349: Из НЕ AJAX чтения. ' +
 		Message.features(features);
 		Message.refresh();
 		Message.wait();
+		Message.refresh();
 
 		messageToolbarSteps.clickButton('forward');
 
