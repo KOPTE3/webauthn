@@ -3,6 +3,7 @@
 let PortalMenu = require('../portal-menu');
 let Advanced = require('../portal-menu/advanced');
 let searchUtils = require('../../utils/portal-menu/portal-search');
+let constants = require('../../utils/constants');
 
 /** Модуль для работы с поиском в синей шапке */
 class PortalSearch extends PortalMenu {
@@ -20,6 +21,7 @@ class PortalSearch extends PortalMenu {
 	get locators () {
 		let container = '.pm-toolbar__search__container';
 
+		/* eslint-disable max-len */
 		return this.extend(super.locators, {
 			container,
 			form: `${container} .js-search`,
@@ -28,7 +30,8 @@ class PortalSearch extends PortalMenu {
 			searchField: `${container} .pm-toolbar__search__label__wrapper`,
 			suggests: {
 				container: `${container} .pm-toolbar__suggests`,
-				title: `${container} .pm-toolbar__suggests .pm-toolbar__suggests__group__title`
+				title: `${container} .pm-toolbar__suggests .pm-toolbar__suggests__group__title`,
+				selected: `${container} .pm-toolbar__suggests .b-dropdown__item-correspondent_selected`
 			},
 			operands: {
 				all    : `${container} .b-operand:not([style*="display: none"])`,
@@ -54,6 +57,8 @@ class PortalSearch extends PortalMenu {
 			},
 			body: 'body'
 		});
+
+		/* eslint-enable */
 	}
 
 	/**
@@ -158,6 +163,19 @@ class PortalSearch extends PortalMenu {
 		if (input && input.value) {
 			input.setValue(value);
 		}
+	}
+
+	/**
+	 * Нажать в операнде на стрелки клавиатуры
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} key - (Up|Down|Left|Right)
+	 */
+	operandArrowKey (name, key) {
+		let input = this.getOperandInput(name);
+		let keyCode = constants.UNICODE_CHARACTERS[key];
+
+		input.setValue(keyCode);
 	}
 
 	/**
@@ -320,6 +338,21 @@ class PortalSearch extends PortalMenu {
 	 */
 	getSuggestsTitle () {
 		return this.page.getText(this.locators.suggests.title);
+	}
+
+	/**
+	 * Получить текст выбранного пункта саджестов
+	 *
+	 * @return {string}
+	 */
+	getSelectedSuggestText () {
+		let text = '';
+
+		if (this.page.isVisible(this.locators.suggests.selected)) {
+			text = this.page.getText(this.locators.suggests.selected);
+		}
+
+		return text;
 	}
 }
 

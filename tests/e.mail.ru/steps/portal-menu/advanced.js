@@ -4,6 +4,7 @@ let assert = require('assert');
 
 let PortalMenuSteps = require('../../steps/portal-menu');
 let Advanced = require('../../pages/portal-menu/advanced');
+let Search = require('../../pages/search');
 
 /** Модуль для работы с представлением страницы поиска писем */
 class AdvancedSteps extends PortalMenuSteps {
@@ -11,6 +12,7 @@ class AdvancedSteps extends PortalMenuSteps {
 		super();
 
 		this.advanced = new Advanced();
+		this.search = new Search();
 	}
 
 	/**
@@ -20,6 +22,17 @@ class AdvancedSteps extends PortalMenuSteps {
 		let actual = this.advanced.isVisible();
 
 		assert(actual, 'Видимость расширенного поиска');
+	}
+
+	/**
+	 * Кликнуть на 'Найти'
+	 */
+	clickSubmit () {
+		this.advanced.clickSubmit();
+
+		let actual = this.search.wait();
+
+		assert(actual, 'Не удалось дождаться открытия страницы поиска');
 	}
 
 	/**
@@ -73,6 +86,17 @@ class AdvancedSteps extends PortalMenuSteps {
 		let actual = this.advanced.getSelectDateValue();
 
 		assert(actual === value, `Не удалось установить разброс даты: ${value}`);
+	}
+
+	/**
+	 * Ввести текст в поле
+	 *
+	 * @param {string} name - имя поля
+	 * (from|to|subject|message)
+	 * @param {string} text - содержимое
+	 */
+	setFieldText (name, text) {
+		this.advanced.setFieldText(name, text);
 	}
 
 
