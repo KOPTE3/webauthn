@@ -16,6 +16,9 @@ let composeEditor = require('../../steps/compose/editor');
 let composeFields = require('../../steps/compose/fields');
 
 
+let composeAttaches = require('../../steps/compose/attaches');
+
+
 let SentPage = require('../../steps/sent');
 
 // layers
@@ -62,7 +65,6 @@ describe('TESTMAIL-31935 AJAX. Ответ на письмо. Забытое вл
 				text: withAttach
 			});
 
-			mail.addAttach('file1.txt');
 			mail.send();
 
 			Messages.features(features);
@@ -77,6 +79,8 @@ describe('TESTMAIL-31935 AJAX. Ответ на письмо. Забытое вл
 			composeFields.setFieldValue('to', fields.to);
 
 			composeEditor.writeMessage(testText);
+
+			composeAttaches.uploadAttach('1exp.JPG');
 
 			// если будет ошибка то нам надо обязательно уйти со страницы написания письма
 			// так как браузер при закрытии выдаст алерт
