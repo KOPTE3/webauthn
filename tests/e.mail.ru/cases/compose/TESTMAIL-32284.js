@@ -67,7 +67,10 @@ describe('TESTMAIL-32284: ' +
 				missingAttachLayer.wait(true);
 			} catch (error) {
 				missingAttachLayer.close();
-				composeControls.cancel();
+				messageToolbarSteps.clickFastreplyButton('cancel');
+				// так как мы поменяли текст, выскочит алерт после закрытия,
+				// нужно его принять
+				composeEditor.allertAccept();
 				throw error;
 			}
 
