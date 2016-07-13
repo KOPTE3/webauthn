@@ -1,12 +1,12 @@
 'use strict';
 
-let Steps = require('../../steps');
-let FoldersSteps = require('../../steps/folders');
-let FiltersSteps = require('../../steps/settings/filters');
-let CleanerSteps = require('../../steps/layers/cleaner');
+let Steps = require('../../../steps');
+let FoldersSteps = require('../../../steps/folders');
+let FiltersSteps = require('../../../steps/settings/filters');
+let CleanerSteps = require('../../../steps/layers/cleaner');
 
-let foldersStore = require('../../store/folders');
-let cleanerStore = require('../../store/cleaner');
+let foldersStore = require('../../../store/folders');
+let cleanerStore = require('../../../store/cleaner');
 
 let login = function () {
 	Steps.auth();
@@ -90,6 +90,13 @@ let finishCleaner = function () {
 };
 
 module.exports = {
+	Steps,
+	FoldersSteps,
+	FiltersSteps,
+	CleanerSteps,
+	foldersStore,
+	cleanerStore,
+
 	login,
 	deleteArchive,
 	createArchive,
