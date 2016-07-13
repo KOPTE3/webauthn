@@ -8,7 +8,6 @@ const UNICODE_CHARACTERS = {
 	'NULL': '\uE000',
 	'Cancel': '\uE001',
 	'Help': '\uE002',
-	'Back space': '\uE003',
 	'Backspace': '\uE003',
 	'Tab': '\uE004',
 	'Clear': '\uE005',
@@ -20,20 +19,14 @@ const UNICODE_CHARACTERS = {
 	'Pause': '\uE00B',
 	'Escape': '\uE00C',
 	'Space': '\uE00D',
-	'Pageup': '\uE00E',
-	'Page_Up': '\uE00E',
-	'Pagedown': '\uE00F',
-	'Page_Down': '\uE00F',
+	'PageUp': '\uE00E',
+	'PageDown': '\uE00F',
 	'End': '\uE010',
 	'Home': '\uE011',
 	'Left': '\uE012',
-	'Arrow_Left': '\uE012',
 	'Up': '\uE013',
-	'Arrow_Up': '\uE013',
 	'Right': '\uE014',
-	'Arrow_Right': '\uE014',
 	'Down': '\uE015',
-	'Arrow_Down': '\uE015',
 	'Insert': '\uE016',
 	'Delete': '\uE017',
 	'Semicolon': '\uE018',
@@ -68,7 +61,7 @@ const UNICODE_CHARACTERS = {
 	'F12': '\uE03C',
 	'Command': '\uE03D',
 	'Meta': '\uE03D',
-	'Zenkaku_Hankaku': '\uE040'
+	'ZenkakuHankaku': '\uE040'
 };
 
 /** Набор полезных констант */

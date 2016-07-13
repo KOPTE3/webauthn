@@ -25,7 +25,7 @@ describe('TESTMAIL-31660: Список писем. Сохранение поис
 		portalSearchSteps.mock(store.requests);
 	});
 
-	it('удаление через крестик', () => {
+	it('Удаление через крестик', () => {
 		portalSearchSteps.addAnyOperand();
 
 		portalSearchSteps.clickSearchField();
@@ -36,7 +36,7 @@ describe('TESTMAIL-31660: Список писем. Сохранение поис
 		portalSearchSteps.isRequestsSuggest();
 	});
 
-	it('удаление через backspace', () => {
+	it('Удаление через backspace', () => {
 		portalSearchSteps.addAnyOperand();
 
 		portalSearchSteps.clickSearchField();
