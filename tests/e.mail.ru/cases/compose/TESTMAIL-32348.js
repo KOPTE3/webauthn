@@ -60,12 +60,14 @@ describe('TESTMAIL-32348:  НЕ AJAX чтения. Ответ на письмо.
 		Messages.open();
 		messagesLettersSteps.openNewestLetter();
 		Message.wait();
+		Messages.features(features);
 		Message.refresh();
 
 		messageToolbarSteps.clickButton('reply');
 		composeEditor.wait();
 
-		composeEditor.writeMessage('Тест письма');
+		composeEditor.writeMessage('Тестовый текст');
+
 		composeControls.send();
 		SentPage.isVisible();
 	});
