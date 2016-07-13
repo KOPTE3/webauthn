@@ -22,7 +22,9 @@ exports.config = {
 	 * Список доступных браузеров: Chrome, Firefox
 	 * Грид: http://win110.dev.mail.ru:4444/grid/console
 	 */
-	host: 'vagabond3.dev.mail.ru',
+
+	// host: 'vagabond3.dev.mail.ru',
+	host: 'localhost',
 	port: 4444,
 	path: '/wd/hub',
 
@@ -43,7 +45,7 @@ exports.config = {
 	connectionRetryTimeout: 10 * 1000,
 
 	/* Количество инстансов параллельного запуска тестов */
-	maxInstances: 1,
+	maxInstances: 10,
 
 	/** Использовать синхронное API */
 	// sync: true,

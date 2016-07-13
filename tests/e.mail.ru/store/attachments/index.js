@@ -21,15 +21,11 @@ class Attachments extends Store {
 			profile = '/var/lib/selenium/',
 			local = path.join('test-files', 'files', 'e.mail.ru');
 
-		if (/localhost/.test(system.host)) {
+		if (/localhost|vagabond|win110/.test(system.host)) {
 			return path.resolve(local);
 		}
 
-		if (/win/.test(system.platform)) {
-			profile += '%USERPROFILE%';
-		}
-
-		return path.join(profile, '/Dropbox/feta/mail');
+		throw new Error('No path to test-files!');
 	}
 
 	file (name) {
