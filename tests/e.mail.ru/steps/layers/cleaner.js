@@ -37,6 +37,11 @@ class CleanerSteps extends LayerSteps {
 		this.page.clickDeleteCategoryButton(categoryId);
 	}
 
+	static selectFolder (categoryId, folderId) {
+		this.page.openDropdown(categoryId);
+		this.page.clickDropdownFolder(categoryId, folderId);
+	}
+
 	static dragFromInboxToSpam () {
 		this.page.dragFromInboxToSpam();
 	}

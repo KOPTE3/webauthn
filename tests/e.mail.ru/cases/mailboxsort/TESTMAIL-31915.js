@@ -3,34 +3,24 @@
 let FoldersSteps = require('../../steps/folders');
 let foldersStore = require('../../store/folders');
 
-let {
-	login,
-	deleteArchive,
-	createArchive,
-	enableCleaner,
-	openFiltersSettings,
-	launchCleaner,
-	finishCleaner
-} = require('.');
+let mailboxsort = require('.');
 
 describe('TESTMAIL-31915', () => {
 	before(() => {
-		login();
-		createArchive(foldersStore.ids.inbox, 'Архив');
-		enableCleaner();
+		mailboxsort.login();
+		mailboxsort.createArchive(foldersStore.ids.inbox, 'Архив');
+		mailboxsort.enableCleaner();
 	});
 
 	beforeEach(() => {
-		openFiltersSettings();
+		mailboxsort.openFiltersSettings();
 	});
 
 	it('should create archive and subfolders', () => {
-		launchCleaner();
-
-		finishCleaner();
+		mailboxsort.launchCleaner();
+		mailboxsort.finishCleaner();
 
 		FoldersSteps.open();
-
 		['social', 'promotions', 'newsletters'].forEach((name) => {
 			FoldersSteps.isFolderExists(foldersStore.ids[name]);
 			FoldersSteps.isFolderNotInArchive(foldersStore.ids[name]);

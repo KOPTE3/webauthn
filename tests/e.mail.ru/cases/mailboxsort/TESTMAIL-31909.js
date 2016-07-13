@@ -1,46 +1,33 @@
 'use strict';
 
 let FoldersSteps = require('../../steps/folders');
-let CleanerSteps = require('../../steps/layers/cleaner');
 let foldersStore = require('../../store/folders');
+let CleanerSteps = require('../../steps/layers/cleaner');
 let cleanerStore = require('../../store/cleaner');
 
-let {
-	login,
-	deleteArchive,
-	createArchive,
-	enableCleaner,
-	openFiltersSettings,
-	launchCleaner,
-	finishCleaner
-} = require('.');
+let mailboxsort = require('.');
 
 describe('TESTMAIL-31909', () => {
 	before(() => {
-		login();
-		deleteArchive();
-		enableCleaner();
+		mailboxsort.login();
+		mailboxsort.deleteArchive();
+		mailboxsort.enableCleaner();
 	});
 
 	beforeEach(() => {
-		openFiltersSettings();
+		mailboxsort.openFiltersSettings();
 	});
 
 	it('should create archive and subfolders', () => {
-		launchCleaner();
-
+		mailboxsort.launchCleaner();
 		['social', 'promotions', 'newsletters'].forEach((name) => {
 			CleanerSteps.removeFolder(cleanerStore.categories[name]);
 		});
-
 		CleanerSteps.dragFromInboxToSpam();
-
-		finishCleaner();
+		mailboxsort.finishCleaner();
 
 		FoldersSteps.open();
-
 		FoldersSteps.isArchiveNotExists();
-
 		['social', 'promotions', 'newsletters'].forEach((name) => {
 			FoldersSteps.isFolderNotExists(foldersStore.ids[name]);
 		});

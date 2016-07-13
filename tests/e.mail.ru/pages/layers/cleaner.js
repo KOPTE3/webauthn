@@ -81,6 +81,17 @@ class CleanerPage extends LayersPage {
 		this.page.moveToObject(targetLocator, 20, 20); // надо немножко подвинуться :)
 		this.page.buttonUp();
 	}
+
+	openDropdown (categoryId, folderId) {
+		this.page.click(this.locators.category +
+			`[data-category-id="${categoryId}"] ` +
+			this.locators.categoryText);
+	}
+
+	clickDropdownFolder (categoryId, folderId) {
+		this.page.click(this.locators.category +
+			`[data-category-id="${categoryId}"] [data-id="${folderId}"]`);
+	}
 }
 
 module.exports = CleanerPage;
