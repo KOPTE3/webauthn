@@ -10,7 +10,8 @@ let portalSearchSteps = new PortalSearchSteps();
 let advancedSteps = new AdvancedSteps();
 
 describe('TESTMAIL-31700', () => {
-	it('Проверка, что при удалении операнда убирается чекбокс', () => {
+	it('Список писем. Сохранение поисковых запросов. ' +
+		'Проверка, что при удалении операнда убирается чекбокс', () => {
 		Messages.auth();
 		Messages.open();
 		portalSearchSteps.toggleAdvanced();

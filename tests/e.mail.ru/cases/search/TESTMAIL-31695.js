@@ -8,7 +8,8 @@ let portalSearchSteps = new PortalSearchSteps();
 let advancedSteps = new AdvancedSteps();
 
 describe('TESTMAIL-31695', () => {
-	it('Добавление операнда "с вложениями" из расширенного поиска', () => {
+	it('Список писем. Сохранение поисковых запросов. ' +
+		'Добавление операнда "с вложениями" из расширенного поиска', () => {
 		Messages.auth();
 		Messages.open();
 		portalSearchSteps.toggleAdvanced();

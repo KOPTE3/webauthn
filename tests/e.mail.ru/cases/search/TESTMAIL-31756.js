@@ -2,13 +2,16 @@
 
 let Messages = require('../../steps/messages');
 let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
+let AdvancedSteps = require('../../steps/portal-menu/advanced');
 let portalSearchSteps = new PortalSearchSteps();
+let advancedSteps = new AdvancedSteps();
+
 
 let store = require('../../store/search');
 
 let text = 'test';
 
-describe('TESTMAIL-31669', () => {
+describe('TESTMAIL-31756', () => {
 	before(() => {
 		Messages.auth();
 		Messages.open();
@@ -22,16 +25,19 @@ describe('TESTMAIL-31669', () => {
 	});
 
 	it('Список писем. Сохранение поисковых запросов. ' +
-		'Проверка, что после добавления любого операнда' +
-		' популярные поисковые запросы не появляются.', () => {
+		'Проверка открытия расширенного поиска через выпадушку популярных ' +
+		'поисковых запросов и через треугольник рядом с лупой.', () => {
 		portalSearchSteps.clickSearchField();
 		portalSearchSteps.hasSuggests();
 		portalSearchSteps.isRequestsSuggest();
 
-		portalSearchSteps.addAnyOperand();
+		portalSearchSteps.clickRequestsSuggestsAdvanced();
+		advancedSteps.isVisible();
 
-		portalSearchSteps.clickSearchField();
+		portalSearchSteps.toggleAdvanced();
+		advancedSteps.isHidden();
 
-		portalSearchSteps.noSuggests();
+		portalSearchSteps.toggleAdvanced();
+		advancedSteps.isVisible();
 	});
 });

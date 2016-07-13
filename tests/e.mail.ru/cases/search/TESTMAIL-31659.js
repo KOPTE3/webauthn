@@ -21,7 +21,8 @@ describe('TESTMAIL-31659', () => {
 		portalSearchSteps.mock(store.requests);
 	});
 
-	it('Проверка появления популярных поисковых запросов ' +
+	it('Список писем. Сохранение поисковых запросов. ' +
+		'Проверка появления популярных поисковых запросов ' +
 		'при появлении курсора в пустом поле ввода', () => {
 		portalSearchSteps.clickSearchField();
 		portalSearchSteps.hasSuggests();

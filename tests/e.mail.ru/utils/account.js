@@ -71,9 +71,10 @@ module.exports = {
 	 * Проверяет залогинен ли пользователь
 	 *
 	 * @param {string} [email]
+	 * @param {number} [timeout]
 	 * @returns {boolean}
 	 */
-	isActiveUser (email) {
+	isActiveUser (email = '', timeout = 1000) {
 		try {
 			if (!email) {
 				let { account } = authStore;
@@ -89,7 +90,7 @@ module.exports = {
 						}
 					}
 				}, email);
-			});
+			}, timeout, `Could not detect user authorization ${email}`);
 		} catch (error) {
 			return false;
 		}

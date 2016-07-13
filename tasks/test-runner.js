@@ -6,7 +6,10 @@ let fs = require('fs');
 
 let TestTools = require('@qa/test-tools');
 
+
 module.exports = grunt => {
+	let { Git, Config } = TestTools;
+
 	return {
 		options: {
 		/*
@@ -38,16 +41,16 @@ module.exports = grunt => {
 		'e.mail.ru': {
 			service: {
 				name: 'wdio',
-				file: path.resolve('tests/e.mail.ru/config.js')
+				file: Config.path('tests/e.mail.ru/config.js')
 			}
 		},
 
 		'e.mail.ru-omega': {
 			service: {
 				name: 'wdio',
-				file: path.resolve('tests/e.mail.ru/config.js'),
+				file: Config.path('tests/e.mail.ru/config.js'),
 				data: {
-					baseUrl: `https://${TestTools.Git.branch}.omega.test.mail.ru`
+					baseUrl: `https://${Git.branch}.omega.test.mail.ru`
 				}
 			}
 		},
@@ -55,16 +58,16 @@ module.exports = grunt => {
 		'account.mail.ru': {
 			service: {
 				name: 'wdio',
-				file: path.resolve('tests/account.mail.ru/config.js')
+				file: Config.path('tests/account.mail.ru/config.js')
 			}
 		},
 
 		'account.mail.ru-omega': {
 			service: {
 				name: 'wdio',
-				file: path.resolve('tests/account.mail.ru/config.js'),
+				file: Config.path('tests/account.mail.ru/config.js'),
 				data: {
-					baseUrl: `https://${TestTools.Git.branch}.account.omega.test.mail.ru`
+					baseUrl: `https://${Git.branch}.account.omega.test.mail.ru`
 				}
 			}
 		}

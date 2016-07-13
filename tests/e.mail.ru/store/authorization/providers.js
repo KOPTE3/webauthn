@@ -218,11 +218,11 @@ module.exports = {
 				],
 
 				'mail.ru': [
-					'rambler.ru',
-					'qip.ru',
-					'ya.ru',
+					// 'rambler.ru',
+					// 'qip.ru',
+					// 'ya.ru',
 					'yandex.ru',
-					'yandex.ua',
+					// 'yandex.ua',
 					'yahoo.com',
 					'aol.com'
 				]

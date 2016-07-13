@@ -49,16 +49,17 @@ class Steps {
 
 	/** Сбросить сессию */
 	static refresh () {
-		this.page.refresh();
+		pages.refresh();
 	}
 
 	/**
 	 * Проверяет залогинен ли пользователь
 	 *
 	 * @param {string} [email]
+	 * @param {number} [timeout]
 	 */
-	static isActiveUser (email) {
-		let actual = account.isActiveUser(email);
+	static isActiveUser (email, timeout) {
+		let actual = account.isActiveUser(...arguments);
 
 		assert(actual, 'Пользователь не авторизован');
 	}
