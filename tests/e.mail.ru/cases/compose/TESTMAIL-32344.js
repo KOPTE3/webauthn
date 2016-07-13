@@ -20,7 +20,7 @@ let composeAttaches = require('../../steps/compose/attaches');
 // mail
 let Mail = require('../../utils/mail');
 
-const subject = 'TESTMAIL-32345';
+const subject = 'TESTMAIL-32344';
 
 const features = [
 	'check-missing-attach',
@@ -44,7 +44,7 @@ describe('TESTMAIL-32344 Из НЕ AJAX чтения. Ответ на письм
 			subject,
 			text: composeEditorStore.texts.withAttach
 		});
-		
+
 		mail.addAttach('file1.txt');
 
 		mail.send();
