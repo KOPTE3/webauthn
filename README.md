@@ -53,6 +53,22 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 Обновите [JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
 
+### Конфигурирование
+
+Основной файл, который отвечает за конфигурирование сервера и запуск тестов распологается в директории:
+
+```
+tests/<ваш_проект>/config.js
+```
+
+Однако править этот файл не рекомендуется. Вместо этого используйте локальный конфиг:
+
+```
+tests/<ваш_проект>/config.local.js
+```
+
+Дополнительную информацию о формате конфига и его опциях смотрите [здесь](http://webdriver.io/guide/getstarted/configuration.html).
+
 ### Использование
 
 Запуск сервера (запускается автоматически, скорее всего вам это не понадобится):
@@ -187,8 +203,6 @@ Messages.auth('basic', {
 ```js
 let AuthStore = require('../../store/authorization');
 
-let authStore = new AuthStore();
-
 authStore.account;
 ```
 
@@ -201,8 +215,6 @@ authStore.account;
 
 ```js
 let AuthStore = require('../../store/authorization');
-
-let authStore = new AuthStore();
 
 authStore.credentials('external');
 
@@ -375,7 +387,7 @@ class LoginFormSteps extends Steps {
 	}
 }
 
-module.exports = new LoginFormSteps();
+module.exports = LoginFormSteps;
 ```
 
 #### store
