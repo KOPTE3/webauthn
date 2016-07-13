@@ -10,6 +10,7 @@ let Message = require('../../steps/message');
 let messageToolbarSteps = require('../../steps/message/toolbar');
 
 // Compose
+const Compose = require('../../steps/compose');
 let ComposeFieldsStore = require('../../store/compose/fields');
 let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
@@ -64,9 +65,9 @@ describe('TESTMAIL-31940 НЕ AJAX. Ответ на письмо. Забытое
 
 			messageToolbarSteps.clickButton('forward');
 
-			messageToolbarSteps.features(features);
-			messageToolbarSteps.refresh();
-			messageToolbarSteps.wait();
+			Compose.features(features);
+			Compose.refresh();
+			Compose.wait();
 
 			composeEditor.wait();
 			composeFields.setFieldValue('to', fields.to);
