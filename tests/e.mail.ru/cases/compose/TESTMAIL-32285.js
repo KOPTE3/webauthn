@@ -22,9 +22,9 @@ let composeAttaches = require('../../steps/compose/attaches');
 // mail
 let Mail = require('../../utils/mail');
 
-const subject = 'TESTMAIL-32289';
+const subject = 'TESTMAIL-32285';
 
-describe('TESTMAIL-32289: ' +
+describe('TESTMAIL-32285: ' +
 	'НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
 	'Проверить отсутствие попапа для полного ответа с текстом в цитате ' +
 	'(текст для которого попап появляться не должен)',
@@ -61,10 +61,6 @@ describe('TESTMAIL-32289: ' +
 			Messages.features(features);
 			Messages.open();
 			lettersSteps.openNewestLetter();
-			Message.wait();
-
-			Message.features(features);
-			Message.refresh();
 			Message.wait();
 
 			messageToolbarSteps.clickButton('reply');
