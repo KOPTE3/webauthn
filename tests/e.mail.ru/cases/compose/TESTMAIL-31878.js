@@ -19,10 +19,10 @@ let composeAttaches = require('../../steps/compose/attaches');
 // mail
 let Mail = require('../../utils/mail');
 
-const subject = 'TESTMAIL-31945';
+const subject = 'TESTMAIL-31878';
 
-describe('TESTMAIL-31945: ' +
-	'НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
+describe('TESTMAIL-31878: ' +
+	'AJAX. Ответ на письмо. Забытое вложение. ' +
 	'Проверить отсутствие попапа для полного ответа с текстом в теле письма, ' +
 	'с аттачем', done => {
 	before(() => {
@@ -53,11 +53,6 @@ describe('TESTMAIL-31945: ' +
 		Messages.open();
 		lettersSteps.openNewestLetter();
 		messageToolbarSteps.clickButton('reply');
-		Compose.wait();
-
-		// Обновляем страницу
-		Compose.features(features);
-		Compose.refresh();
 		Compose.wait();
 
 		// Вписываем текст с сообщением об атаче
