@@ -10,12 +10,14 @@ let actions = require('../../utils/actions');
 let messageToolbarSteps = require('../../steps/message/toolbar');
 let SentPage = require('../../steps/sent');
 
+let composeEditorStore = require('../../store/compose/editor');
+
+const Compose = require('../../steps/compose');
+
 // mail
 let Mail = require('../../utils/mail');
 
 const subject = 'TESTMAIL-32333';
-const text = 'акже по пятну отвода №5 у нас на одно замечание больше. Эксперт просит ' +
-	'предоставить аэродинамический расчет вентблока. И я в упор не вижу приложения 1 в ПЗ';
 
 
 const features = [
@@ -38,7 +40,7 @@ describe('TESTMAIL-32333: НЕ AJAX. Ответ на письмо. Забыто�
 		var mail = new Mail({
 			to: fields.to,
 			subject,
-			text
+			text: composeEditorStore.texts.withoutAttach
 		});
 
 		mail.send();
@@ -47,11 +49,13 @@ describe('TESTMAIL-32333: НЕ AJAX. Ответ на письмо. Забыто�
 		Messages.open();
 		lettersSteps.openNewestLetter();
 
-		Message.features(features);
-		Message.refresh();
 		Message.wait();
 
 		messageToolbarSteps.clickButton('forward');
+
+		Compose.features(features);
+		Compose.refresh();
+		Compose.wait();
 
 		composeFields.setFieldValue('to', fields.to);
 

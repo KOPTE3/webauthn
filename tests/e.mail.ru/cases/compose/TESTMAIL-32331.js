@@ -10,13 +10,14 @@ let actions = require('../../utils/actions');
 let messageToolbarSteps = require('../../steps/message/toolbar');
 let SentPage = require('../../steps/sent');
 
+const Compose = require('../../steps/compose');
+
+let composeEditorStore = require('../../store/compose/editor');
+
 // mail
 let Mail = require('../../utils/mail');
 
 const subject = 'TESTMAIL-32331';
-const text = 'акже по пятну отвода №5 у нас на одно замечание больше. Эксперт просит ' +
-	'предоставить аэродинамический расчет вентблока. И я в упор не вижу приложения 1 в ПЗ';
-
 
 const features = [
 	'check-missing-attach',
@@ -38,7 +39,7 @@ describe('TESTMAIL-32331: AJAX. Ответ на письмо. Забытое в�
 		var mail = new Mail({
 			to: fields.to,
 			subject,
-			text
+			text: composeEditorStore.texts.withoutAttach
 		});
 
 		mail.send();
@@ -48,6 +49,8 @@ describe('TESTMAIL-32331: AJAX. Ответ на письмо. Забытое в�
 		lettersSteps.openNewestLetter();
 		
 		messageToolbarSteps.clickButton('forward');
+
+		Compose.wait();
 
 		composeFields.setFieldValue('to', fields.to);
 
