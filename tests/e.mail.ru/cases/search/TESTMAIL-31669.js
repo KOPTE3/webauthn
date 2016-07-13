@@ -21,15 +21,14 @@ describe('TESTMAIL-31669', () => {
 		portalSearchSteps.mock(store.requests);
 	});
 
-	it('Проверка, что после добавления любого операнда' +
+	it('Список писем. Сохранение поисковых запросов. ' +
+		'Проверка, что после добавления любого операнда' +
 		' популярные поисковые запросы не появляются.', () => {
 		portalSearchSteps.clickSearchField();
 		portalSearchSteps.hasSuggests();
 		portalSearchSteps.isRequestsSuggest();
 
-		portalSearchSteps.setOperandText('blank', 'qwerty');
-		portalSearchSteps.clickOutside();
-		portalSearchSteps.hasOperand('message');
+		portalSearchSteps.addAnyOperand();
 
 		portalSearchSteps.clickSearchField();
 

@@ -9,6 +9,7 @@ const UNICODE_CHARACTERS = {
 	'Cancel': '\uE001',
 	'Help': '\uE002',
 	'Back space': '\uE003',
+	'Backspace': '\uE003',
 	'Tab': '\uE004',
 	'Clear': '\uE005',
 	'Return': '\uE006',

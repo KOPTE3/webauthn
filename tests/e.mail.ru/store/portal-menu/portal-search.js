@@ -89,5 +89,9 @@ module.exports = {
 		});
 
 		return result;
+	},
+
+	get anyOperandText () {
+		return 'any text';
 	}
 };

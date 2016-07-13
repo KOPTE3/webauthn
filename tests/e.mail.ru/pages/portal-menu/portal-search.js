@@ -55,7 +55,7 @@ class PortalSearch extends PortalMenu {
 				active: '.b-operand_active',
 				lapse: `${container} [data-operand-name="q_date"] .b-operand__date-lapse`
 			},
-			body: 'body'
+			body: '#ScrollBody'
 		});
 
 		/* eslint-enable */
@@ -305,7 +305,9 @@ class PortalSearch extends PortalMenu {
 	 * Кликнуть в "пустое место"
 	 */
 	clickBody () {
-		this.page.moveTo(this.locators.body, 1, 1);
+		let body = this.page.element(this.locators.body);
+
+		this.page.moveTo(body.value.ELEMENT, 1, 1);
 		this.page.leftClick();
 	}
 

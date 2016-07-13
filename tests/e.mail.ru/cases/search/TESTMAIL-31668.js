@@ -25,7 +25,8 @@ describe('TESTMAIL-31668', () => {
 		portalSearchSteps.mock(store.requests);
 	});
 
-	it('Проверка, что при вводе букв в строку поиска ' +
+	it('Список писем. Сохранение поисковых запросов. ' +
+		'Проверка, что при вводе букв в строку поиска ' +
 		'популярные поисковые запросы заменяются на саджесты', () => {
 		portalSearchSteps.clickSearchField();
 		portalSearchSteps.hasSuggests();

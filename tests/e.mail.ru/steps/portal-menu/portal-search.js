@@ -309,6 +309,17 @@ class PortalSearchSteps extends PortalMenuSteps {
 		this.setOperandText('blank', query);
 		this.clickSearchButton();
 	}
+
+	/**
+	 * Если нужно добавить операнд, неважно какой
+	 * Будет создан операнд 'message'
+	 */
+	addAnyOperand () {
+		this.clickSearchField();
+		this.setOperandText('blank', PortalSearchStore.anyOperandText);
+		this.clickOutside();
+		this.hasOperand('message');
+	}
 }
 
 module.exports = PortalSearchSteps;
