@@ -300,6 +300,13 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Нажать на расширенный поиск в саджестах сохраненных запросов
+	 */
+	clickRequestsSuggestsAdvanced () {
+		this.portalSearch.clickRequestsSuggestsAdvanced();
+	}
+
+	/**
 	 * Выполнить простой поиск "в письме"
 	 * @param {string} query - текст запроса
 	 */

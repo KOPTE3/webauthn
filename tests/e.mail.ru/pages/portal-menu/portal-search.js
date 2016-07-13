@@ -31,7 +31,8 @@ class PortalSearch extends PortalMenu {
 			suggests: {
 				container: `${container} .pm-toolbar__suggests`,
 				title: `${container} .pm-toolbar__suggests .pm-toolbar__suggests__group__title`,
-				selected: `${container} .pm-toolbar__suggests .b-dropdown__item-correspondent_selected`
+				selected: `${container} .pm-toolbar__suggests .b-dropdown__item-correspondent_selected`,
+				advanced: `${container} .pm-toolbar__suggests .pm-toolbar__suggests__advanced a`
 			},
 			operands: {
 				all    : `${container} .b-operand:not([style*="display: none"])`,
@@ -368,6 +369,13 @@ class PortalSearch extends PortalMenu {
 		}
 
 		return text;
+	}
+
+	/**
+	 * Нажать на расширенный поиск в саджестах сохраненных запросов
+	 */
+	clickRequestsSuggestsAdvanced () {
+		this.page.click(this.locators.suggests.advanced);
 	}
 }
 
