@@ -48,6 +48,8 @@ describe('TESTMAIL-32349: Из НЕ AJAX чтения. ' +
 		Messages.open();
 		lettersSteps.openNewestLetter();
 
+		Message.features(features);
+		Message.refresh();
 		Message.wait();
 
 		messageToolbarSteps.clickButton('forward');
