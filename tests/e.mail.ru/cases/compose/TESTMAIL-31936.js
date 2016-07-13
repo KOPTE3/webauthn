@@ -69,7 +69,7 @@ describe('TESTMAIL-31936 AJAX. Ответ на письмо. Забытое вл
 
 		messagesLettersSteps.openNewestLetter();
 
-		messagefastreplySteps.clickButton('reply');
+		messagefastreplySteps.clickButton('forward');
 
 		composeEditor.wait();
 

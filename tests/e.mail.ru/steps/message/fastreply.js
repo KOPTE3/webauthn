@@ -21,14 +21,6 @@ class MessagefastreplySteps extends MessageSteps {
 	clickButton (name) {
 		this.fastreplyPage.clickButton(name);
 	}
-
-	/**
-	 * Отправить письмо при пересылке из быстрого ответа
-	 */
-	resend () {
-		this.fastreplyPage.resend();
-	}
-
 }
 
 module.exports = new MessagefastreplySteps();

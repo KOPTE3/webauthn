@@ -63,13 +63,13 @@ describe('TESTMAIL-32289: ' +
 			lettersSteps.openNewestLetter();
 			Message.wait();
 
-			Message.features(features);
-			Message.refresh();
-			Message.wait();
-
 			messageToolbarSteps.clickButton('reply');
 
+			Compose.features(features);
+			Compose.refresh();
 			Compose.wait();
+
+			composeEditor.wait();
 
 			// Вписываем текст с сообщением
 			composeEditor.writeMessage(composeEditorStore.texts.withoutAttach);

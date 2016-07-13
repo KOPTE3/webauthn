@@ -4,17 +4,17 @@ let Messages = require('../../steps/messages');
 let messagesLettersSteps = require('../../steps/messages/letters');
 
 let Message = require('../../steps/message');
-let messagesFastReplySteps = require('../../steps/message/fastreply');
+let messageFastReplySteps = require('../../steps/message/fastreply');
+let messageToolbarSteps = require('../../steps/message/toolbar');
 
 let Compose = require('../../steps/compose');
 let composeEditor = require('../../steps/compose/editor');
 let composeFields = require('../../steps/compose/fields');
-let composeControls = require('../../steps/compose/controls');
 let composeAttaches = require('../../steps/compose/attaches');
 
 let SentPage = require('../../steps/sent');
 
-let composeEditorStore = require('../../store/compose/editor');
+let ComposeEditorStore = require('../../store/compose/editor');
 let ComposeFieldsStore = require('../../store/compose/fields');
 
 let Mail = require('../../utils/mail');
@@ -36,10 +36,11 @@ describe('TESTMAIL-31950: НЕ AJAX. Ответ на письмо. Забыто�
 
 	it('Письмо должно быть отправлено', () => {
 		let { fields } = new ComposeFieldsStore();
+		let { texts } = ComposeEditorStore;
 		let mail = new Mail({
 			to: fields.to,
 			subject,
-			text: composeEditorStore.classifierTest.lettersWithAttach[0]
+			text: texts.withAttach
 		});
 
 		mail.addAttach('file1.txt');
@@ -51,16 +52,16 @@ describe('TESTMAIL-31950: НЕ AJAX. Ответ на письмо. Забыто�
 		messagesLettersSteps.openNewestLetter();
 
 		Message.features(features);
-		Messages.refresh();
+		Message.refresh();
 
-		messagesFastReplySteps.clickButton('forward');
+		messageFastReplySteps.clickButton('forward');
 		composeEditor.wait();
 
 		composeFields.setFieldValue('to', fields.to);
 		composeAttaches.hasAttach('file1.txt');
-		composeEditor.hasForwardedMessage(composeEditorStore.classifierTest.lettersWithAttach[0]);
+		composeEditor.hasForwardedMessage(texts.withAttach);
 
-		messagesFastReplySteps.resend();
+		messageToolbarSteps.clickFastreplyButton('resend');
 
 		SentPage.wait();
 	});
