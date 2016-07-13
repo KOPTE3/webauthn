@@ -3,6 +3,7 @@
 let PortalMenu = require('../portal-menu');
 let Advanced = require('../portal-menu/advanced');
 let searchUtils = require('../../utils/portal-menu/portal-search');
+let constants = require('../../utils/constants');
 
 /** Модуль для работы с поиском в синей шапке */
 class PortalSearch extends PortalMenu {
@@ -20,13 +21,19 @@ class PortalSearch extends PortalMenu {
 	get locators () {
 		let container = '.pm-toolbar__search__container';
 
+		/* eslint-disable max-len */
 		return this.extend(super.locators, {
 			container,
 			form: `${container} .js-search`,
 			searchButton: `${container} [type="submit"]`,
 			advancedToggle: `${container} .js-dropdown-button`,
 			searchField: `${container} .pm-toolbar__search__label__wrapper`,
-			suggests: `${container} .pm-toolbar__suggests`,
+			suggests: {
+				container: `${container} .pm-toolbar__suggests`,
+				title: `${container} .pm-toolbar__suggests .pm-toolbar__suggests__group__title`,
+				selected: `${container} .pm-toolbar__suggests .b-dropdown__item-correspondent_selected`,
+				advanced: `${container} .pm-toolbar__suggests .pm-toolbar__suggests__advanced a`
+			},
 			operands: {
 				all    : `${container} .b-operand:not([style*="display: none"])`,
 				message: `${container} [data-operand-name="q_query"]`,
@@ -48,8 +55,11 @@ class PortalSearch extends PortalMenu {
 				dateInput: '.b-operand__date-input',
 				active: '.b-operand_active',
 				lapse: `${container} [data-operand-name="q_date"] .b-operand__date-lapse`
-			}
+			},
+			body: '#ScrollBody'
 		});
+
+		/* eslint-enable */
 	}
 
 	/**
@@ -157,6 +167,19 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Нажать в операнде на стрелки клавиатуры
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} key - (Up|Down|Left|Right)
+	 */
+	operandArrowKey (name, key) {
+		let input = this.getOperandInput(name);
+		let keyCode = constants.UNICODE_CHARACTERS[key];
+
+		input.setValue(keyCode);
+	}
+
+	/**
 	 * Вернуть текст разброса даты в операнде, если он виден.
 	 *
 	 * @returns {string}
@@ -242,10 +265,21 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
-	 * Кликнуть в поле поиска
+	 * Кликнуть в поле поиска,
+	 * но не в какой либо из операндов!
 	 */
 	clickSearchField () {
-		this.page.click(this.locators.searchField);
+		let operands = this.getAllOperands();
+
+		if (operands.value.length) {
+			let operandId = operands.value[0].ELEMENT;
+			let rect = this.page.elementIdSize(operandId);
+
+			this.page.moveTo(operandId, rect.value.width + 1, 1);
+			this.page.leftClick();
+		} else {
+			this.page.click(this.locators.searchField);
+		}
 	}
 
 	/**
@@ -269,12 +303,23 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Кликнуть в "пустое место"
+	 */
+	clickBody () {
+		let body = this.page.element(this.locators.body);
+
+		this.page.moveTo(body.value.ELEMENT, 1, 1);
+		this.page.leftClick();
+	}
+
+	/**
 	 * Удалить все операнды
 	 */
 	removeAllOperands () {
 		let blank = this.getOperand('blank');
 
 		if (blank.value) {
+			this.clickSearchField();
 			this.setOperandText('blank');
 		}
 
@@ -298,7 +343,39 @@ class PortalSearch extends PortalMenu {
 	 * @returns {boolean}
 	 */
 	hasSuggests (reverse = false) {
-		return this.page.waitForVisible(this.locators.suggests, void 0, reverse);
+		return this.page.waitForVisible(this.locators.suggests.container,
+			void 0, reverse);
+	}
+
+	/**
+	 * Вернуть текст заголовка саджестов
+	 *
+	 * @return {string}
+	 */
+	getSuggestsTitle () {
+		return this.page.getText(this.locators.suggests.title);
+	}
+
+	/**
+	 * Получить текст выбранного пункта саджестов
+	 *
+	 * @return {string}
+	 */
+	getSelectedSuggestText () {
+		let text = '';
+
+		if (this.page.isVisible(this.locators.suggests.selected)) {
+			text = this.page.getText(this.locators.suggests.selected);
+		}
+
+		return text;
+	}
+
+	/**
+	 * Нажать на расширенный поиск в саджестах сохраненных запросов
+	 */
+	clickRequestsSuggestsAdvanced () {
+		this.page.click(this.locators.suggests.advanced);
 	}
 }
 

@@ -144,10 +144,7 @@ class LoginFormSteps extends Steps {
 	 * @param {string} provider
 	 */
 	clickByDomain (provider) {
-		let actual = this.loginForm.clickByDomain(provider);
-
-		assert.equal(actual.state, 'success',
-			`Не удалось найти элемент для провайдера ${provider}`);
+		this.loginForm.clickByDomain(provider);
 	}
 
 	/**
@@ -156,10 +153,7 @@ class LoginFormSteps extends Steps {
 	 * @param {Object} data
 	 */
 	send (data) {
-		let actual = this.loginForm.send(data);
-
-		assert.equal(actual.state, 'success',
-			'Не удалось отправить форму c переданными данными');
+		this.loginForm.send(data);
 	}
 
 	/**

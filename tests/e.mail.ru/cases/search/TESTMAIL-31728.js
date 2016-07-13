@@ -12,7 +12,8 @@ let advancedSteps = new AdvancedSteps();
 let advancedCalendar = calendarUtils.create('advanced');
 
 describe('TESTMAIL-31728', () => {
-	it('Проверка добавления операнда "дата" (только из расширенного поиска)' +
+	it('Список писем. Сохранение поисковых запросов. ' +
+		'Проверка добавления операнда "дата" (только из расширенного поиска)' +
 		' с выбором временного промежутка', () => {
 		Messages.auth();
 		Messages.open();

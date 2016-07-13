@@ -1,7 +1,8 @@
 'use strict';
 
 let PageObject = require('../../pages');
-let captcha = require('../../utils/captcha');
+let captchaUtils = require('../../utils/captcha');
+let phonesUtils = require('../../utils/phones');
 
 /** Модуль для работы со страницей выбора типа восстановления пароля */
 class Controls extends PageObject {
@@ -22,9 +23,19 @@ class Controls extends PageObject {
 		return {
 			container,
 			phoneTabBlock,
+			form: '.js-form-select-type',
 			phoneCaptchaImg: '#password-recovery__remind__new__phone_captcha',
-			phoneCaptchaField: `${phoneTabBlock} .js-captcha`
+			phoneCaptchaField: `${phoneTabBlock} .js-captcha`,
+			phoneCodeField: '#signupsms_code',
+			phoneLayer: '.is-signupsms_in'
 		};
+	}
+
+	/**
+	 * Попытка восстановить пароль
+	 */
+	submitForm () {
+		this.page.submitForm(this.locators.form);
 	}
 
 	/**
@@ -32,7 +43,7 @@ class Controls extends PageObject {
 	 * @returns {Object}
 	 */
 	get phoneCaptchaID () {
-		return captcha.getCaptchaID(this.locators.phoneCaptchaImg);
+		return captchaUtils.getCaptchaID(this.locators.phoneCaptchaImg);
 	}
 
 	/**
@@ -44,8 +55,34 @@ class Controls extends PageObject {
 		let code;
 
 		this.page.waitUntil(function async () {
-			return captcha.getCaptchaValue(cid).then(result => {
+			return captchaUtils.getCaptchaValue(cid).then(result => {
 				code = result;
+
+				return true;
+			});
+		});
+
+		return {
+			value: code,
+			isOK: typeof code === 'string'
+		};
+	}
+
+	/**
+	 * Get SMS code value by email and reg_token.id
+	 * http://api.tornado.dev.mail.ru/test/tokens/info
+	 * @param  {string} email
+	 * @param  {string} id
+	 * @returns {Object}
+	 */
+	getSmsCodeValue (email, id) {
+		let code = null;
+
+		this.page.waitUntil(function async () {
+			return phonesUtils.getSmsCodeValue(email, id).then(result => {
+				if (result.isOK) {
+					code = result.body.code;
+				}
 
 				return true;
 			});
@@ -66,10 +103,25 @@ class Controls extends PageObject {
 	}
 
 	/**
+	 * Fill sms code field
+	 * @param  {string} code
+	 */
+	fillSmsCode (code) {
+		this.page.setValue(this.locators.phoneCodeField, code);
+	}
+
+	/**
 	 * Waiting for the phone tab
 	 */
-	waitForPhone () {
+	waitForPhoneTab () {
 		this.page.waitForVisible(this.locators.phoneTabBlock);
+	}
+
+	/**
+	 * Waiting for this phone layer
+	 */
+	waitForPhoneLayer () {
+		this.page.waitForVisible(this.locators.phoneLayer);
 	}
 }
 

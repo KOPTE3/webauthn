@@ -49,31 +49,7 @@ module.exports = {
 			'hotmail.com',
 			'live.com',
 			'msn.com'
-		],
-
-		/**
-		 * Список провайдеров (OAuth)
-		 *
-		 * @type {Array}
-		 */
-		get oauth () {
-			providers.filter(provider => {
-				return provider.types.includes('oauth');
-			});
-		},
-
-		/**
-		 * Список провайдеров (External)
-		 *
-		 * @type {Array}
-		 */
-		get external () {
-			providers.filter(provider => {
-				let { types } = provider;
-
-				return types.includes('external') && !types.includes('oauth');
-			});
-		}
+		]
 	},
 
 	/**

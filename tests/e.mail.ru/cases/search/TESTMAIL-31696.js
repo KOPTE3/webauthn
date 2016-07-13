@@ -8,7 +8,8 @@ let portalSearchSteps = new PortalSearchSteps();
 let advancedSteps = new AdvancedSteps();
 
 describe('TESTMAIL-31696', () => {
-	it('Добавление операнда "непрочитанные" из расширенного поиска', () => {
+	it('Список писем. Сохранение поисковых запросов. ' +
+		'Добавление операнда "непрочитанные" из расширенного поиска', () => {
 		Messages.auth();
 		Messages.open();
 		portalSearchSteps.toggleAdvanced();

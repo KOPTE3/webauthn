@@ -1,12 +1,9 @@
 'use strict';
 
-let Layers = require('../../pages/layers');
+let FolderLayers = require('./');
 
 /** Модуль для работы с лером прикрепления аттачей */
-class FolderAdd extends Layers {
-	constructor () {
-		super();
-	}
+class FolderRemove extends FolderLayers {
 
 	/**
 	 * Локаторы
@@ -15,10 +12,9 @@ class FolderAdd extends Layers {
 	 */
 	get locators () {
 		return this.extend(super.locators, {
-			container: '.is-folder-add_in',
-			apply: '.is-folder-add_in [data-name="submit"]'
+			container: '.is-folder-remove_in'
 		});
 	}
 }
 
-module.exports = FolderAdd;
+module.exports = FolderRemove;

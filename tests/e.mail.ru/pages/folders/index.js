@@ -35,18 +35,36 @@ class FoldersPage extends PageObject {
 		};
 	}
 
+	getFolderLocator (folderId) {
+		let {container, item} = this.locators;
+
+		return `${container} ${item}[data-id="${folderId}"]`;
+	}
+
+	getFolderLinkLocator (folderId) {
+		return `${this.getFolderLocator(folderId)} a`;
+	}
+
+	getDatalistLocator (folderId) {
+		let {datalist} = this.locators;
+
+		return `${datalist} [data-cache-key="${folderId}_undefined_false"]`;
+	}
+
 	getFoldersContainer () {
-		return this.page.element(this.locators.container);
+		let {container} = this.locators;
+
+		return this.page.element(container);
 	}
 
 	getParentFolderItem (folderId) {
 		return this.getFoldersContainer()
-			.element(this.locators.parent + '[data-parent="' + folderId + '"]');
+			.element(`${this.locators.parent}[data-parent="${folderId}"]`);
 	}
 
 	getFolderItem (folderId) {
 		return this.getFoldersContainer()
-			.element(this.locators.item + '[data-id="' + folderId + '"]');
+			.element(`${this.locators.item}[data-id="${folderId}"]`);
 	}
 
 	isFolderVisible (folderId) {
@@ -84,11 +102,19 @@ class FoldersPage extends PageObject {
 	}
 
 	goToFolder (folderId) {
-		let item = this.getFolderItem(folderId);
+		// let item = this.getFolderItem(folderId);
+		let linkLocator = this.getFolderLinkLocator(folderId);
+		let datalistLocator = this.getDatalistLocator(folderId);
 
-		this.page.elementIdClick(item.value.ELEMENT);
-		this.page.waitForExist(this.locators.datalist
-			+ ' [data-cache-key="' + folderId + '_undefined_false"]');
+		this.page.execute(function (selector) {
+			$(selector).trigger(new $.Event({
+				type: 'click',
+				which: 1
+			}));
+		}, linkLocator);
+
+		// this.page.elementIdClick(item.value.ELEMENT); // не работает с подпапками
+		this.page.waitForExist(datalistLocator);
 	}
 }
 

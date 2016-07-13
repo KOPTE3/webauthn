@@ -89,5 +89,13 @@ module.exports = {
 		});
 
 		return result;
+	},
+
+	/**
+	 * Вернуть содержимое операнда, когда просят создать любой операнд
+	 * @return {string}
+	 */
+	get anyOperandText () {
+		return 'any text';
 	}
 };

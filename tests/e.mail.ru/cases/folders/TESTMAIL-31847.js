@@ -1,35 +1,62 @@
 'use strict';
 
+const FOLDER_COLLAPSE_TIMEOUT = 20;
+const FOLDER_UPDATE_PERIOD = 1;
+
 let Folders = require('../../steps/folders');
 let SettingsFolders = require('../../steps/settings/folders');
+
+let foldersStore = require('../../store/folders');
 
 describe('TESTMAIL-31847', () => {
 	before(() => {
 		Folders.auth();
 	});
 
+	beforeEach(() => {
+		Folders.enableCollapseFeature(FOLDER_COLLAPSE_TIMEOUT,
+			FOLDER_UPDATE_PERIOD, true);
+		Folders.enableThreads();
+	});
+
 	afterEach(() => {
 		Folders.resetTimeOffset();
 	});
 
-	it('Список писем. Сворачивание папок по времени.' +
-		'Проверка, что если в дефолтную папку и ее подпапку,' +
-		'не заходили 1 день, то она свернется', () => {
+	it('Список писем. Сворачивание папок по времени. ' +
+		'Проверка, что если к папке с подпапками через настройки добавили еще одну подпапку, ' +
+		'то папка свернется только через 24 часа даже если в нее не заходили до этого', () => {
 		let firstFolderId = Folders.createFolder({
 			name: 'Тестовая папка',
-			parent: '0'
+			parent: foldersStore.ids.inbox
 		});
+
+		let timer = new Date();
+
+		browser.pause(2000);
 
 		SettingsFolders.open();
 
 		let secondFolderId = SettingsFolders.createFolder({
 			name: 'Тестовая папка 2',
-			parent: '0'
+			parent: foldersStore.ids.inbox
 		});
 
 		Folders.open();
-		Folders.setTimeOffset(60 * 60 * 24);
-		Folders.goToFolder('500000');
+
+		let offset = Math.floor((new Date() - timer) / 1000);
+
+		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT - offset);
+
+		Folders.goToFolder(foldersStore.ids.sent);
+
+		Folders.isFolderVisible(firstFolderId);
+		Folders.isFolderVisible(secondFolderId);
+
+		Folders.setTimeOffset(offset, true);
+
+		Folders.goToFolder(foldersStore.ids.trash);
+
 		Folders.isFolderHidden(firstFolderId);
 		Folders.isFolderHidden(secondFolderId);
 	});
