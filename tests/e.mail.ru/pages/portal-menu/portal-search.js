@@ -264,10 +264,21 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
-	 * Кликнуть в поле поиска
+	 * Кликнуть в поле поиска,
+	 * но не в какой либо из операндов!
 	 */
 	clickSearchField () {
-		this.page.click(this.locators.searchField);
+		let operands = this.getAllOperands();
+
+		if (operands.value.length) {
+			let operandId = operands.value[0].ELEMENT;
+			let rect = this.page.elementIdSize(operandId);
+
+			this.page.moveTo(operandId, rect.value.width + 1, 1);
+			this.page.leftClick();
+		} else {
+			this.page.click(this.locators.searchField);
+		}
 	}
 
 	/**
@@ -294,7 +305,8 @@ class PortalSearch extends PortalMenu {
 	 * Кликнуть в "пустое место"
 	 */
 	clickBody () {
-		this.page.click(this.locators.body);
+		this.page.moveTo(this.locators.body, 1, 1);
+		this.page.leftClick();
 	}
 
 	/**
@@ -304,6 +316,7 @@ class PortalSearch extends PortalMenu {
 		let blank = this.getOperand('blank');
 
 		if (blank.value) {
+			this.clickSearchField();
 			this.setOperandText('blank');
 		}
 

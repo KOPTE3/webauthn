@@ -60,5 +60,18 @@ module.exports = {
 			'От: test1@mail.ru с вложениями',
 			'От: test3@mail.ru кому: test2@mail.ru с темой: test непрочитанные отмеченные флажком'
 		];
+	},
+
+	get threeRequests () {
+		return this.twoRequests.concat({
+			flags: {
+				flagged: true
+			},
+			subject: 'test_test'
+		});
+	},
+
+	get threeRequestsSuggests () {
+		return this.twoRequestsSuggests.concat('Тема: test_test отмеченные флажком');
 	}
 };
