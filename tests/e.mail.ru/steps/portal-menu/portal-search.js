@@ -88,6 +88,17 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Проверка отсутсвия операнда
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	noOperand (name) {
+		let actual = this.portalSearch.hasOperand(name, true);
+
+		assert(actual, `Операнд ${name} не исчез`);
+	}
+
+	/**
 	 * Проверить, что у операнда есть иконка
 	 *
 	 * @param {string} name - имя операнда (unread|flag|attach)
@@ -171,6 +182,13 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Удалить все операнды
+	 */
+	removeAllOperands () {
+		this.portalSearch.removeAllOperands();
+	}
+
+	/**
 	 * Фокус находится в операнде
 	 *
 	 * @param {string} name - имя операнда
@@ -246,11 +264,47 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Проверить текст выбранного пункта в саджестах
+	 *
+	 * @param {string} text
+	 */
+	checkSelectedSuggestText (text) {
+		let actual = this.portalSearch.getSelectedSuggestText();
+
+		assert(actual === text, `В саджестах выбран "${actual}" вместо "${text}"`);
+	}
+
+	/**
+	 * Выбрать стрелкой вниз саджест с заданным текстом
+	 *
+	 * @param {string} text
+	 * @param {string} operandName - операнд, для которого показаны саджесты
+	 */
+	selectSuggestByArrowDown (text, operandName = 'blank') {
+		let counter = 0;
+		let done = false;
+		let currentText;
+
+		while (counter++ < 10) {
+			currentText = this.portalSearch.getSelectedSuggestText();
+
+			if (currentText === text) {
+				done = true;
+				break;
+			}
+
+			this.portalSearch.operandArrowKey(operandName, 'Down');
+		}
+
+		assert(done, `Не удалось выбрать пункт ${text} в саджестах`);
+	}
+
+	/**
 	 * Выполнить простой поиск "в письме"
 	 * @param {string} query - текст запроса
 	 */
 	simpleSearch (query = 'test') {
-		this.portalSearch.removeAllOperands();
+		this.removeAllOperands();
 		this.clickSearchField();
 		this.setOperandText('blank', query);
 		this.clickSearchButton();
