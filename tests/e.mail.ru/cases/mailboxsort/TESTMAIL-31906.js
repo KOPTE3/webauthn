@@ -1,55 +1,39 @@
 'use strict';
 
-let Steps = require('../../steps');
 let FoldersSteps = require('../../steps/folders');
-let FiltersSteps = require('../../steps/settings/filters');
 let CleanerSteps = require('../../steps/layers/cleaner');
-
 let foldersStore = require('../../store/folders');
 let cleanerStore = require('../../store/cleaner');
 
+let {
+	login,
+	deleteArchive,
+	createArchive,
+	enableCleaner,
+	openFiltersSettings,
+	launchCleaner,
+	finishCleaner
+} = require('.');
+
 describe('TESTMAIL-31906', () => {
 	before(() => {
-		Steps.auth();
-
-		Steps.features([
-			'mailboxsort-widget-archive',
-			'balloon-cleaner-archive'
-		]);
-
-		FoldersSteps.open();
-
-		try {
-			FoldersSteps.isArchiveNotExists();
-		} catch (exception) {
-			FoldersSteps.deleteArchive();
-
-			FoldersSteps.refresh();
-			FoldersSteps.isArchiveNotExists();
-		}
-
-		FiltersSteps.enableCleaner();
+		login();
+		deleteArchive();
+		enableCleaner();
 	});
 
 	beforeEach(() => {
-		FiltersSteps.open();
-		FiltersSteps.registerCleanerHook();
+		openFiltersSettings();
 	});
 
 	it('should create archive and subfolders', () => {
-		FiltersSteps.waitForCleaner();
-
-		FiltersSteps.launchCleaner();
-		CleanerSteps.waitForCleanerMain();
+		launchCleaner();
 
 		['social', 'promotions', 'newsletters'].forEach((name) => {
 			CleanerSteps.removeFolder(cleanerStore.categories[name]);
 		});
 
-		CleanerSteps.process();
-		CleanerSteps.waitForCleanerResult();
-
-		CleanerSteps.finish();
+		finishCleaner();
 
 		FoldersSteps.open();
 

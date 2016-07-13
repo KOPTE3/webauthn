@@ -1,69 +1,33 @@
 'use strict';
 
-let Steps = require('../../steps');
 let FoldersSteps = require('../../steps/folders');
-let FiltersSteps = require('../../steps/settings/filters');
-let CleanerSteps = require('../../steps/layers/cleaner');
-
 let foldersStore = require('../../store/folders');
+
+let {
+	login,
+	deleteArchive,
+	createArchive,
+	enableCleaner,
+	openFiltersSettings,
+	launchCleaner,
+	finishCleaner
+} = require('.');
 
 describe('TESTMAIL-31911', () => {
 	before(() => {
-		Steps.auth();
-
-		Steps.features([
-			'mailboxsort-widget-archive',
-			'balloon-cleaner-archive'
-		]);
-
-		FoldersSteps.open();
-
-		try {
-			FoldersSteps.isArchiveIn(foldersStore.ids.root);
-		} catch (exception) {
-			try {
-				FoldersSteps.isArchiveNotExists();
-			} catch (exception) {
-				FoldersSteps.deleteArchive();
-
-				FoldersSteps.refresh();
-				FoldersSteps.isArchiveNotExists();
-			}
-
-			// В данный момент не работает из-за бага https://jira.mail.ru/browse/MAIL-51729
-			// FoldersSteps.createArchiveIn(foldersStore.ids.inbox);
-
-			// Поэтому сначала создаем подпапку, потом конвертируем ее в архив
-			let id = FoldersSteps.createFolder({
-				name: 'Архив',
-				parent: foldersStore.ids.root,
-				type: 'user'
-			});
-
-			FoldersSteps.convertFolderToArchive(id);
-
-			FoldersSteps.refresh();
-			FoldersSteps.isArchiveIn(foldersStore.ids.root);
-		}
-
-		FiltersSteps.enableCleaner();
+		login();
+		createArchive(foldersStore.ids.root, 'Архив');
+		enableCleaner();
 	});
 
 	beforeEach(() => {
-		FiltersSteps.open();
-		FiltersSteps.registerCleanerHook();
+		openFiltersSettings();
 	});
 
 	it('should create archive and subfolders', () => {
-		FiltersSteps.waitForCleaner();
+		launchCleaner();
 
-		FiltersSteps.launchCleaner();
-		CleanerSteps.waitForCleanerMain();
-
-		CleanerSteps.process();
-		CleanerSteps.waitForCleanerResult();
-
-		CleanerSteps.finish();
+		finishCleaner();
 
 		FoldersSteps.open();
 
