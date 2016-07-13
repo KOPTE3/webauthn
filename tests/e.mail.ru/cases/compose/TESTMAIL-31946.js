@@ -58,7 +58,7 @@ describe('TESTMAIL-31946 ' +
 			];
 
 			const { fields } = new СomposeFieldsStore();
-			
+
 			Messages.open();
 
 			// Пишем себе письмо
@@ -72,6 +72,7 @@ describe('TESTMAIL-31946 ' +
 
 			Messages.features(features);
 			Messages.open();
+			Messages.wait();
 
 			// Заходим на чтение письма нашего
 			messagesLettersSteps.openNewestLetter();
@@ -79,7 +80,8 @@ describe('TESTMAIL-31946 ' +
 			// обновляем страницу, т.к. не ajax
 			Message.features(features);
 			Message.refresh();
-	
+			Message.wait();
+
 			// Кликаем на быстрый ответ
 			messagefastreplySteps.clickButton('reply');
 
