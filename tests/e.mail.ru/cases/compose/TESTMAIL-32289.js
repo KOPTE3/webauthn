@@ -4,6 +4,8 @@ let Messages = require('../../steps/messages');
 let Message = require('../../steps/message');
 let lettersSteps = require('../../steps/messages/letters');
 let fastreplySteps = require('../../steps/message/fastreply');
+let SettingsMessages = require('../../steps/settings/messages');
+let settingsMessagesForm = require('../../steps/settings/messages/form');
 
 let Compose = require('../../steps/compose');
 let composeFields = require('../../steps/compose/fields');
@@ -20,12 +22,12 @@ let composeAttaches = require('../../steps/compose/attaches');
 // mail
 let Mail = require('../../utils/mail');
 
-const subject = 'TESTMAIL-32288';
+const subject = 'TESTMAIL-32289';
 
-describe('TESTMAIL-32288: ' +
+describe('TESTMAIL-32289: ' +
 	'НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
-	'Проверить отсутствие попапа для полного ответа с текстом в теле ' +
-	'(текст для которого не должен появляться попап)',
+	'Проверить отсутствие попапа для полного ответа с текстом в цитате ' +
+	'(текст для которого попап появляться не должен)',
 	done => {
 		before(() => {
 			// Авторизуемся
@@ -41,6 +43,11 @@ describe('TESTMAIL-32288: ' +
 				'disable-fastreply-landmark'
 			];
 
+			SettingsMessages.open();
+
+			settingsMessagesForm.toggleField('sendReplyIncludeMessage');
+			settingsMessagesForm.save();
+
 			// Присылаем письмо себе
 			var mail = new Mail({
 				to: fields.to,
@@ -54,18 +61,19 @@ describe('TESTMAIL-32288: ' +
 			Messages.features(features);
 			Messages.open();
 			lettersSteps.openNewestLetter();
+			Message.wait();
 
 			Message.features(features);
 			Message.refresh();
 			Message.wait();
 
-			fastreplySteps.clickButton('reply');
+			messageToolbarSteps.clickButton('reply');
 
-			composeEditor.wait();
+			Compose.wait();
 
 			// Вписываем текст с сообщением
 			composeEditor.writeMessage(composeEditorStore.texts.withoutAttach);
-			messageToolbarSteps.clickFastreplyButton('reply');
+			composeControls.send();
 
 			try {
 				// попап не должен появится
