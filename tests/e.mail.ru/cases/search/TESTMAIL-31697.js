@@ -8,7 +8,8 @@ let portalSearchSteps = new PortalSearchSteps();
 let advancedSteps = new AdvancedSteps();
 
 describe('TESTMAIL-31697', () => {
-	it('Добавление операнда "отмеченные флажком" из расширенного поиска', () => {
+	it('Список писем. Сохранение поисковых запросов. ' +
+		'Добавление операнда "отмеченные флажком" из расширенного поиска', () => {
 		Messages.auth();
 		Messages.open();
 		portalSearchSteps.toggleAdvanced();

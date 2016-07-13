@@ -16,12 +16,21 @@ class AdvancedSteps extends PortalMenuSteps {
 	}
 
 	/**
-	 * Проверка видимости формы
+	 * Проверка видимости расширенного поиска
 	 */
 	isVisible () {
 		let actual = this.advanced.isVisible();
 
 		assert(actual, 'Видимость расширенного поиска');
+	}
+
+	/**
+	 * Проверка невидимости расширенного поиска
+	 */
+	isHidden () {
+		let actual = this.advanced.isVisible();
+
+		assert(!actual, 'Расширенный поиск остался виден');
 	}
 
 	/**

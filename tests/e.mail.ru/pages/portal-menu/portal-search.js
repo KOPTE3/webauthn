@@ -31,7 +31,8 @@ class PortalSearch extends PortalMenu {
 			suggests: {
 				container: `${container} .pm-toolbar__suggests`,
 				title: `${container} .pm-toolbar__suggests .pm-toolbar__suggests__group__title`,
-				selected: `${container} .pm-toolbar__suggests .b-dropdown__item-correspondent_selected`
+				selected: `${container} .pm-toolbar__suggests .b-dropdown__item-correspondent_selected`,
+				advanced: `${container} .pm-toolbar__suggests .pm-toolbar__suggests__advanced a`
 			},
 			operands: {
 				all    : `${container} .b-operand:not([style*="display: none"])`,
@@ -55,7 +56,7 @@ class PortalSearch extends PortalMenu {
 				active: '.b-operand_active',
 				lapse: `${container} [data-operand-name="q_date"] .b-operand__date-lapse`
 			},
-			body: 'body'
+			body: '#ScrollBody'
 		});
 
 		/* eslint-enable */
@@ -264,10 +265,21 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
-	 * Кликнуть в поле поиска
+	 * Кликнуть в поле поиска,
+	 * но не в какой либо из операндов!
 	 */
 	clickSearchField () {
-		this.page.click(this.locators.searchField);
+		let operands = this.getAllOperands();
+
+		if (operands.value.length) {
+			let operandId = operands.value[0].ELEMENT;
+			let rect = this.page.elementIdSize(operandId);
+
+			this.page.moveTo(operandId, rect.value.width + 1, 1);
+			this.page.leftClick();
+		} else {
+			this.page.click(this.locators.searchField);
+		}
 	}
 
 	/**
@@ -294,7 +306,10 @@ class PortalSearch extends PortalMenu {
 	 * Кликнуть в "пустое место"
 	 */
 	clickBody () {
-		this.page.click(this.locators.body);
+		let body = this.page.element(this.locators.body);
+
+		this.page.moveTo(body.value.ELEMENT, 1, 1);
+		this.page.leftClick();
 	}
 
 	/**
@@ -304,6 +319,7 @@ class PortalSearch extends PortalMenu {
 		let blank = this.getOperand('blank');
 
 		if (blank.value) {
+			this.clickSearchField();
 			this.setOperandText('blank');
 		}
 
@@ -353,6 +369,13 @@ class PortalSearch extends PortalMenu {
 		}
 
 		return text;
+	}
+
+	/**
+	 * Нажать на расширенный поиск в саджестах сохраненных запросов
+	 */
+	clickRequestsSuggestsAdvanced () {
+		this.page.click(this.locators.suggests.advanced);
 	}
 }
 

@@ -8,19 +8,19 @@ let advancedSteps = new AdvancedSteps();
 
 let store = require('../../store/search');
 
-describe('TESTMAIL-31746', () => {
+describe('TESTMAIL-31747', () => {
 	before(() => {
 		Messages.auth();
 		Messages.open();
 
-		let request = store.twoRequests[0];
+		let request = store.threeRequests[0];
 
 		portalSearchSteps.toggleAdvanced();
 		advancedSteps.clickCheckbox('attach');
 		advancedSteps.setFieldText('from', request.correspondents.from);
 		advancedSteps.clickSubmit();
 
-		request = store.twoRequests[1];
+		request = store.threeRequests[1];
 
 		portalSearchSteps.removeAllOperands();
 		portalSearchSteps.toggleAdvanced();
@@ -31,40 +31,43 @@ describe('TESTMAIL-31746', () => {
 		advancedSteps.setFieldText('to', request.correspondents.to);
 		advancedSteps.clickSubmit();
 
+		request = store.threeRequests[2];
+
+		portalSearchSteps.removeAllOperands();
+		portalSearchSteps.toggleAdvanced();
+		advancedSteps.clickCheckbox('flag');
+		advancedSteps.setFieldText('subject', request.subject);
+		advancedSteps.clickSubmit();
+
 		Messages.features(['search-saved-requests']);
 		Messages.open();
 
-		portalSearchSteps.mock(store.twoRequests);
+		portalSearchSteps.mock(store.threeRequests);
 	});
 
-	it('Список писем. Сохранение поисковых запросов. Проверка смены операндов ' +
-		'в строке быстрого поиска при переключении стрелками по строкам из списка ' +
-		'популярных поисковых запросов', () => {
+	it('Список писем. Сохранение поисковых запросов. Проверка, что после ' +
+		'выбора стрелкой одного из вариантов в списке популярных поисковых ' +
+		'запросов список вариантов все еще показывается.', () => {
 		portalSearchSteps.clickSearchField();
 		portalSearchSteps.hasSuggests();
 		portalSearchSteps.isRequestsSuggest();
 
-		let requests = store.twoRequests;
-		let suggests = store.twoRequestsSuggests;
+		let suggests = store.threeRequestsSuggests;
 
 		portalSearchSteps.selectSuggestByArrowDown(suggests[0]);
-
-		portalSearchSteps.hasOperand('attach');
-		portalSearchSteps.hasOperand('from');
-		portalSearchSteps.checkOperandText('from', requests[0].correspondents.from);
 		portalSearchSteps.hasSuggests();
 		portalSearchSteps.isRequestsSuggest();
 
 		portalSearchSteps.selectSuggestByArrowDown(suggests[1]);
+		portalSearchSteps.hasSuggests();
+		portalSearchSteps.isRequestsSuggest();
 
-		portalSearchSteps.noOperand('attach');
-		portalSearchSteps.hasOperand('unread');
-		portalSearchSteps.hasOperand('flag');
-		portalSearchSteps.hasOperand('subject');
-		portalSearchSteps.checkOperandText('subject', requests[1].subject);
-		portalSearchSteps.hasOperand('from');
-		portalSearchSteps.checkOperandText('from', requests[1].correspondents.from);
-		portalSearchSteps.hasOperand('to');
-		portalSearchSteps.checkOperandText('to', requests[1].correspondents.to);
+		portalSearchSteps.selectSuggestByArrowDown(suggests[2]);
+		portalSearchSteps.hasSuggests();
+		portalSearchSteps.isRequestsSuggest();
+
+		portalSearchSteps.selectSuggestByArrowDown(suggests[0]);
+		portalSearchSteps.hasSuggests();
+		portalSearchSteps.isRequestsSuggest();
 	});
 });

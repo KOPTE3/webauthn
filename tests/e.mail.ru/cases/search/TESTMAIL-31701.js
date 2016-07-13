@@ -10,7 +10,8 @@ let portalSearchSteps = new PortalSearchSteps();
 let advancedSteps = new AdvancedSteps();
 
 describe('TESTMAIL-31701', () => {
-	it('Проверка невозможности редактирования операндов-флажков', () => {
+	it('Список писем. Сохранение поисковых запросов. ' +
+		'Проверка невозможности редактирования операндов-флажков', () => {
 		Messages.auth();
 		Messages.open();
 		portalSearchSteps.toggleAdvanced();

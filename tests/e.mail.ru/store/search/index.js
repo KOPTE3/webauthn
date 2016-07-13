@@ -4,6 +4,11 @@ let authStore = require('../../store/authorization');
 
 /** Набор методов для работы с данными поиска */
 module.exports = {
+	/**
+	 * Письма для тестирования поиска по флажкам
+	 *
+	 * @return {*[]}
+	 */
 	get messages () {
 		let user = authStore.account.get('email');
 
@@ -23,6 +28,12 @@ module.exports = {
 		];
 	},
 
+	/**
+	 * Сохраненные запросы, когда был сделан 1 поиск
+	 * Можно использовать для RPC.mock
+	 *
+	 * @return {*[]}
+	 */
 	get requests () {
 		return [
 			{
@@ -31,6 +42,12 @@ module.exports = {
 		];
 	},
 
+	/**
+	 * Два сохраненных запроса
+	 * @see requests
+	 *
+	 * @return {*[]}
+	 */
 	get twoRequests () {
 		return [
 			{
@@ -55,10 +72,41 @@ module.exports = {
 		];
 	},
 
+	/**
+	 * Тексты в саджестах для двух сохраненных запросов
+	 * @see twoRequests
+	 *
+	 * @return {string[]}
+	 */
 	get twoRequestsSuggests () {
 		return [
 			'От: test1@mail.ru с вложениями',
 			'От: test3@mail.ru кому: test2@mail.ru с темой: test непрочитанные отмеченные флажком'
 		];
+	},
+
+	/**
+	 * Три сохраненных запроса
+	 * @see twoRequests
+	 *
+	 * @return {*[]}
+	 */
+	get threeRequests () {
+		return this.twoRequests.concat({
+			flags: {
+				flagged: true
+			},
+			subject: 'test_test'
+		});
+	},
+
+	/**
+	 * Тексты в саджестах для трех сохраненных запросов
+	 * @see threeRequests
+	 *
+	 * @return {string[]}
+	 */
+	get threeRequestsSuggests () {
+		return this.twoRequestsSuggests.concat('Тема: test_test отмеченные флажком');
 	}
 };

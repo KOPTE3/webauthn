@@ -300,6 +300,13 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Нажать на расширенный поиск в саджестах сохраненных запросов
+	 */
+	clickRequestsSuggestsAdvanced () {
+		this.portalSearch.clickRequestsSuggestsAdvanced();
+	}
+
+	/**
 	 * Выполнить простой поиск "в письме"
 	 * @param {string} query - текст запроса
 	 */
@@ -308,6 +315,17 @@ class PortalSearchSteps extends PortalMenuSteps {
 		this.clickSearchField();
 		this.setOperandText('blank', query);
 		this.clickSearchButton();
+	}
+
+	/**
+	 * Если нужно добавить операнд, неважно какой
+	 * Будет создан операнд 'message'
+	 */
+	addAnyOperand () {
+		this.clickSearchField();
+		this.setOperandText('blank', PortalSearchStore.anyOperandText);
+		this.clickOutside();
+		this.hasOperand('message');
 	}
 }
 
