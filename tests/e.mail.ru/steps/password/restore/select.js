@@ -27,11 +27,7 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	 * @param {int} [id]
 	 */
 	fillPhoneInput (value, id = null) {
-		let result;
-
 		this.page.fillPhoneInput(value, id);
-		result = this.page.getPhoneInputValue(id);
-		assert.equal(result, value, 'Не удалось ввести цифры номера');
 	}
 
 	/**
@@ -41,7 +37,7 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	checkPhoneInput (value) {
 		let result = this.page.getPhoneInputValue();
 
-		assert(value === result, 'Значение введенных цифр не совпадает с заданым');
+		assert(value === result, 'Значение введенных цифр не совпадает с заданым: ' + result);
 	}
 
 	/**
