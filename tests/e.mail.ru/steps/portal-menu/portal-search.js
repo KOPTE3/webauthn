@@ -133,6 +133,19 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Проверить порядок операндов
+	 *
+	 * @param {string[]} names - массив с именами операндов
+	 */
+	checkOperandsOrder (names) {
+		let actual = this.portalSearch.getAllOperandsNames();
+
+		actual = actual.filter(name => name !== 'blank');
+
+		assert.deepEqual(actual, names, `Порядок операндов не соответствует ${names}`);
+	}
+
+	/**
 	 * Ввести текст в операнд.
 	 * Операнд должен быть создан.
 	 *

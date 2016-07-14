@@ -108,5 +108,35 @@ module.exports = {
 	 */
 	get threeRequestsSuggests () {
 		return this.twoRequestsSuggests.concat('Тема: test_test отмеченные флажком');
+	},
+
+	/**
+	 * Один большой сохраненный запрос
+	 * @see twoRequests
+	 *
+	 * @return {*[]}
+	 */
+	get oneComplexRequest () {
+		return this.twoRequests.filter((item, index) => index === 1);
+	},
+
+	/**
+	 * Тексты в саджестах для трех сохраненных запросов
+	 * @see oneComplexRequest
+	 *
+	 * @return {string[]}
+	 */
+	get oneComplexRequestSuggests () {
+		return this.twoRequestsSuggests.filter((item, index) => index === 1);
+	},
+
+	/**
+	 * Порядок операндов в запросе
+	 * @see oneComplexRequest
+	 *
+	 * @return {string[]}
+	 */
+	get oneComplexRequestOperandsOrder () {
+		return ['from', 'to', 'subject', 'unread', 'flag'];
 	}
 };
