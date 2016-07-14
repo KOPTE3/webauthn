@@ -3,28 +3,29 @@
 const FOLDER_COLLAPSE_TIMEOUT = 86400;
 const FOLDER_UPDATE_PERIOD = 10800;
 
+let path = require('path');
 let Folders = require('../../steps/folders');
-
 let foldersStore = require('../../store/folders');
 
-describe('TESTMAIL-31846', () => {
+let {options = {
+	name: 'Список писем. Сворачивание папок по времени. ' +
+		'Проверка, что если в подпапку не заходили 1 день, ' +
+		'а в папку заходили, то папка свернется'
+}} = module.parent;
+
+let name = path.basename(module.parent ? module.parent.filename : module.filename, '.js');
+
+describe(name, () => {
 	before(() => {
 		Folders.auth();
+		Folders.enableCollapseFeature(FOLDER_COLLAPSE_TIMEOUT, FOLDER_UPDATE_PERIOD, true);
+
+		if (options.threads) {
+			Folders.enableThreads();
+		}
 	});
 
-	beforeEach(() => {
-		Folders.enableCollapseFeature(FOLDER_COLLAPSE_TIMEOUT,
-			FOLDER_UPDATE_PERIOD, true);
-		Folders.enableThreads();
-	});
-
-	afterEach(() => {
-		Folders.resetTimeOffset();
-	});
-
-	it('Список писем. Сворачивание папок по времени. ' +
-		'Проверка, что если в подпапку не заходили 1 день ' +
-		'а в папку заходили, то папка свернется', () => {
+	it(options.name, () => {
 		let mainFolderId = Folders.createFolder({
 			name: 'Папка',
 			parent: foldersStore.ids.root
@@ -38,7 +39,6 @@ describe('TESTMAIL-31846', () => {
 		let timer = new Date();
 
 		Folders.open();
-
 		Folders.isFolderVisible(folderId);
 
 		browser.pause(2000);
@@ -48,9 +48,7 @@ describe('TESTMAIL-31846', () => {
 		let offset = Math.floor((new Date() - timer) / 1000);
 
 		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT - offset);
-
 		Folders.goToFolder(foldersStore.ids.sent);
-
 		Folders.isFolderHidden(folderId);
 	});
 });
