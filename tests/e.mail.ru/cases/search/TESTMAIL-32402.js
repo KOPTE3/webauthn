@@ -6,7 +6,7 @@ let FoldersSteps = require('../../steps/folders');
 
 let portalSearchSteps = new PortalSearchSteps();
 
-describe('TESTMAIL-32401', () => {
+describe('TESTMAIL-32402', () => {
 	before(() => {
 		Messages.auth();
 		Messages.open();
@@ -14,8 +14,8 @@ describe('TESTMAIL-32401', () => {
 
 	it('Список писем. Сохранение поисковых запросов. ' +
 		'Проверка, что при поиске через компактные фильтры ' +
-		'в строке поиска появляются операнды с флажком.', () => {
-		const name = 'flag';
+		'в строке поиска появляются операнды с вложениями.', () => {
+		const name = 'attach';
 
 		FoldersSteps.clickFilter(name);
 
