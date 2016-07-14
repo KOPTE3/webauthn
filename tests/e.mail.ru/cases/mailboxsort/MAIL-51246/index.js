@@ -4,6 +4,7 @@ let Steps = require('../../../steps');
 let FoldersSteps = require('../../../steps/folders');
 let FiltersSteps = require('../../../steps/settings/filters');
 let CleanerSteps = require('../../../steps/layers/cleaner');
+let BalloonsSteps = require('../../../steps/balloons');
 
 let foldersStore = require('../../../store/folders');
 let cleanerStore = require('../../../store/cleaner');
@@ -94,6 +95,8 @@ module.exports = {
 	FoldersSteps,
 	FiltersSteps,
 	CleanerSteps,
+	BalloonsSteps,
+
 	foldersStore,
 	cleanerStore,
 
