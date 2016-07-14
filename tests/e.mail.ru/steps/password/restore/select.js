@@ -24,9 +24,14 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	/**
 	 * Fill phone input field
 	 * @param {string} value
+	 * @param {int} [id]
 	 */
-	fillPhoneInput (value) {
-		this.page.fillPhoneInput(value);
+	fillPhoneInput (value, id = null) {
+		let result;
+
+		this.page.fillPhoneInput(value, id);
+		result = this.page.getPhoneInputValue(id);
+		assert.equal(result, value, 'Не удалось ввести цифры номера');
 	}
 
 	/**
@@ -75,6 +80,49 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 		let code = this.page.getSmsCodeValue(restoreEmail, regTokenId);
 
 		this.page.fillSmsCode(code.value);
+	}
+
+	/**
+	 * Check if phone input is selected (multiple)
+	 * @param {int} id
+	 * @param {string} head - '+7 (912) 2'
+	 * @param {string} value - missing numbers '11'
+	 */
+	phoneInputIsActive (id, head, value) {
+		const data = this.page.getPhoneInputParameters(id);
+		const msg = `Телефон ${id} не выбран`;
+
+		assert.equal(data.head, head, `${msg} Начало телефона не совпадает`);
+		assert.equal(data.value, value, `${msg} Введенные цифры не совпадают`);
+		assert.equal(data.placeholder, '**', `${msg} Плейсхолдер не **`);
+		assert.equal(data.tail, '-**-**', `${msg} Конец номера не замаскирован`);
+		assert.equal(data.color, '#333333', `${msg} Цвет не совпадает`);
+		assert(data.isMaskVisible, `${msg} Введенные цифры не видно`);
+	}
+
+	/**
+	 * Check if phone input is disabled (multiple)
+	 * @param {int} id
+	 * @param {string} head - '+7 (912) 2'
+	 * @param {string} value - missing numbers '11'
+	 */
+	phoneInputIsDisabled (id, head) {
+		const data = this.page.getPhoneInputParameters(id);
+		const msg = `Телефон ${id} выбран`;
+
+		assert.equal(data.head, head, `${msg} Начало телефона не совпадает`);
+		assert.equal(data.body, '**', `${msg} Введенные цифры не замаскированы`);
+		assert.equal(data.tail, '-**-**', `${msg} Конец номера не замаскирован`);
+		assert.equal(data.color, '#a2a6a9', `${msg} Цвет не совпадает`);
+		assert(!data.isMaskVisible, `${msg} Введенные цифры видно`);
+	}
+
+	/**
+	 * Click on phone input (multiple)
+	 * @param {int} [id]
+	 */
+	selectPhoneInput (id) {
+		this.page.selectPhoneInput(id);
 	}
 
 	/**

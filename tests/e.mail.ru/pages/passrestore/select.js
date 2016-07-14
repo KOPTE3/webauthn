@@ -13,7 +13,7 @@ class SelectViewPage extends PassrestorePage {
 
 	/**
 	 * Открытие страницы
-	 *
+	 * @param {string} email
 	 * @returns {boolean}
 	 */
 	open (email) {
@@ -122,11 +122,60 @@ class SelectViewPage extends PassrestorePage {
 	}
 
 	/**
+	 *
+	 * @param {int} [id]
+	 * @returns {WebElement}
+	 */
+	getPhoneInput (id) {
+		let selector;
+
+		if (id) {
+			selector = this.locators.multiplePhoneInput + `[data-index="${id}"]`;
+		} else {
+			selector = this.locators.singlePhoneInput;
+		}
+
+		return this.page.element(selector);
+	}
+
+	/**
+	 *
+	 * @param {int} [id]
+	 * @returns {Object} !
+	 */
+	getPhoneInputParameters (id) {
+		const element = this.getPhoneInput(id);
+		const {phoneHead, phoneInput, phoneMask, phoneTail} = this.locators;
+
+		return {
+			head: element.getText(phoneHead),
+			value: element.getValue(phoneInput),
+			placeholder: element.getAttribute(phoneInput, 'placeholder'),
+			tail: element.getText(phoneTail),
+			color: element.getCssProperty('color').parsed.hex,
+			isMaskVisible: element.isVisible(phoneMask)
+		};
+	}
+
+	/**
+	 * Select b-segment-input
+	 * @param {int} [id]
+	 */
+	selectPhoneInput (id) {
+		const element = this.getPhoneInput(id);
+
+		this.page.click(element.selector);
+	}
+
+	/**
 	 * Get b-segment-input field value
+	 * @param {int} [id]
 	 * @return {string}
 	 */
-	getPhoneInputValue () {
-		return this.page.getValue(this.locators.phoneInput);
+	getPhoneInputValue (id) {
+		const element = this.getPhoneInput(id);
+
+		return element.getValue(this.locators.phoneInput);
 	}
 
 	/**
@@ -148,9 +197,12 @@ class SelectViewPage extends PassrestorePage {
 	/**
 	 * Fill b-segmented-input field
 	 * @param {string} value
+	 * @param {int} [id]
 	 */
-	fillPhoneInput (value) {
-		this.page.setValue(this.locators.phoneInput, value);
+	fillPhoneInput (value, id) {
+		let phone = this.getPhoneInput(id);
+
+		phone.setValue(value);
 	}
 
 	/**
