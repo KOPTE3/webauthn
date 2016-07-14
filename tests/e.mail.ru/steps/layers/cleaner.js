@@ -45,6 +45,30 @@ class CleanerSteps extends LayerSteps {
 	static dragFromInboxToSpam () {
 		this.page.dragFromInboxToSpam();
 	}
+
+	static isArchiveLabelVisible () {
+		let actual = this.page.isArchiveLabelVisible();
+
+		assert(actual, `Значок архива должен быть виден`);
+	}
+
+	static isArchiveLabelNotVisible () {
+		let actual = this.page.isArchiveLabelVisible();
+
+		assert(!actual, `Значок архива должен быть скрыт`);
+	}
+
+	static isArchiveGraphBranchVisible (number) {
+		let actual = this.page.isArchiveGraphBranchVisible(number);
+
+		assert(actual, `Линия ${number} должна быть видна`);
+	}
+
+	static isArchiveGraphBranchNotVisible (number) {
+		let actual = this.page.isArchiveGraphBranchVisible(number);
+
+		assert(!actual, `Линия ${number} должна быть скрыта`);
+	}
 }
 
 module.exports = CleanerSteps;

@@ -20,6 +20,9 @@ class CleanerPage extends LayersPage {
 			processButton: '[data-name=process]',
 			finishButton: '[data-name=closeutil]',
 
+			archiveLabel: '.js-archive',
+			archiveGraphBranch: '.js-branch',
+
 			category: '.js-category',
 			categoryHead: '.js-category-head',
 			categoryDelete: '.js-category-delete',
@@ -91,6 +94,20 @@ class CleanerPage extends LayersPage {
 	clickDropdownFolder (categoryId, folderId) {
 		this.page.click(this.locators.category +
 			`[data-category-id="${categoryId}"] [data-id="${folderId}"]`);
+	}
+
+	isArchiveLabelVisible () {
+		let element = this.getContainerElement()
+			.element(this.locators.archiveLabel);
+
+		return this.page.elementIdDisplayed(element.value.ELEMENT).value;
+	}
+
+	isArchiveGraphBranchVisible (number) {
+		let element = this.getContainerElement()
+			.element(this.locators.archiveGraphBranch + `:nth-child(${number}`);
+
+		return this.page.elementIdDisplayed(element.value.ELEMENT).value;
 	}
 }
 
