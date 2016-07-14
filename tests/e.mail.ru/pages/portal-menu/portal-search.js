@@ -94,10 +94,25 @@ class PortalSearch extends PortalMenu {
 	/**
 	 * Получить все активные операнды
 	 *
-	 * @returns {Array}
+	 * @returns {*[]}
 	 */
 	getAllOperands () {
 		return this.page.elements(this.locators.operands.all);
+	}
+
+	/**
+	 * Получить имена всех активных операндов
+	 *
+	 * @returns {string[]}
+	 */
+	getAllOperandsNames () {
+		let operands = this.getAllOperands();
+
+		return operands.value.map(item => {
+			let name = this.page.elementIdAttribute(item.ELEMENT, 'data-operand-name');
+
+			return searchUtils.getOperandName(name.value);
+		});
 	}
 
 	/**
@@ -323,13 +338,9 @@ class PortalSearch extends PortalMenu {
 			this.setOperandText('blank');
 		}
 
-		let operands = this.getAllOperands();
+		let operandsNames = this.getAllOperandsNames();
 
-		operands.value.forEach(item => {
-			let name = this.page.elementIdAttribute(item.ELEMENT, 'data-operand-name');
-
-			name = searchUtils.getOperandName(name.value);
-
+		operandsNames.forEach(name => {
 			if (name !== 'blank') {
 				this.clickOperandClose(name);
 			}

@@ -108,5 +108,80 @@ module.exports = {
 	 */
 	get threeRequestsSuggests () {
 		return this.twoRequestsSuggests.concat('Тема: test_test отмеченные флажком');
+	},
+
+	/**
+	 * Один большой сохраненный запрос
+	 * @see twoRequests
+	 *
+	 * @return {*[]}
+	 */
+	get oneComplexRequest () {
+		return this.twoRequests.filter((item, index) => index === 1);
+	},
+
+	/**
+	 * Тексты в саджестах для трех сохраненных запросов
+	 * @see oneComplexRequest
+	 *
+	 * @return {string[]}
+	 */
+	get oneComplexRequestSuggests () {
+		return this.twoRequestsSuggests.filter((item, index) => index === 1);
+	},
+
+	/**
+	 * Порядок операндов в запросе
+	 * @see oneComplexRequest
+	 *
+	 * @return {string[]}
+	 */
+	get oneComplexRequestOperandsOrder () {
+		return ['from', 'to', 'subject', 'unread', 'flag'];
+	},
+
+	/**
+	 * Два других сохраненных запроса
+	 * @see twoRequests
+	 *
+	 * @return {*[]}
+	 */
+	get anotherTwoRequests () {
+		return [
+			{
+				flags: {
+					attach: true
+				},
+				correspondents: {
+					from: 'test1@mail.ru'
+				}
+			},
+			{
+				flags: {
+					unread: true,
+					flagged: true,
+					attach: true
+				},
+				subject: 'test',
+				correspondents: {
+					from: 'test1@mail.ru',
+					to: 'test2@mail.ru'
+				}
+			}
+		];
+	},
+
+	/**
+	 * Тексты в саджестах для двух других сохраненных запросов
+	 * @see anotherTwoRequests
+	 *
+	 * @return {string[]}
+	 */
+	get anotherTwoRequestsSuggests () {
+		return [
+			'От: test1@mail.ru с вложениями',
+			'От: test1@mail.ru кому: test2@mail.ru с темой: test ' +
+			'с вложениями непрочитанные отмеченные флажком'
+		];
 	}
 };
