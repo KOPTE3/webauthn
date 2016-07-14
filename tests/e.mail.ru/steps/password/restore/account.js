@@ -3,28 +3,36 @@
 let assert = require('assert');
 
 let PasswordRestoreSteps = require('../restore');
-let AccountViewPage = require('../../../pages/passrestore/account');
-let accountViewPage = new AccountViewPage();
+let AccountPage = require('../../../pages/passrestore/account');
 
 /** Модуль для работы с формой ввода адреса для восстановления */
-class AccountViewSteps extends PasswordRestoreSteps {
+class AccountSteps extends PasswordRestoreSteps {
 	constructor () {
 		super();
 	}
 
 	/**
-	* @param {string} [email] - адрес для восстановления
-	*/
+	 * Возвращает ссылку на инстанс страницы
+	 *
+	 * @type {Object}
+	 */
+	static get page () {
+		return new AccountPage();
+	}
+
+	/**
+	 * @param {string} [email] - адрес для восстановления
+	 */
 	setEmail (email) {
-		accountViewPage.setEmail(email);
+		this.page.setEmail(email);
 	}
 
 	/**
 	 * Submit form with email to restore
 	 */
 	submitForm () {
-		accountViewPage.submitForm();
+		this.page.submitForm();
 	}
 }
 
-module.exports = AccountViewSteps;
+module.exports = AccountSteps;

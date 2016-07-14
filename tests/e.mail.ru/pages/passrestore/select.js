@@ -1,13 +1,26 @@
 'use strict';
 
-let PageObject = require('../../pages');
+let PassrestorePage = require('../passrestore');
 let captchaUtils = require('../../utils/captcha');
 let phonesUtils = require('../../utils/phones');
 
 /** Модуль для работы со страницей выбора типа восстановления пароля */
-class Controls extends PageObject {
+class SelectViewPage extends PassrestorePage {
 	constructor () {
 		super();
+	}
+
+
+	/**
+	 * Открытие страницы
+	 *
+	 * @returns {boolean}
+	 */
+	open (email) {
+		return super.open({
+			email,
+			type: 'method'
+		});
 	}
 
 	/**
@@ -23,7 +36,21 @@ class Controls extends PageObject {
 		return {
 			container,
 			phoneTabBlock,
+
 			form: '.js-form-select-type',
+			singlePhoneInput: '.password-recovery__remind__new-phone-editable_single',
+			multiplePhoneInput: '.password-recovery__remind__new-phone-editable',
+			simpleInput: '.b-segment-input',
+			editableInput: '.b-segment-input.b-segment-input_editable',
+
+			radioBtn: 'input[type="radio"]',
+
+			phoneHead: '.b-segment-input__head',
+			phoneBody: '.b-segment-input__body',
+			phoneMask: '.b-segment-input__mask',
+			phoneInput: '.b-segment-input__mask input',
+			phoneTail: '.b-segment-input__tail',
+
 			phoneCaptchaImg: '#password-recovery__remind__new__phone_captcha',
 			phoneCaptchaField: `${phoneTabBlock} .js-captcha`,
 			phoneCodeField: '#signupsms_code',
@@ -95,6 +122,14 @@ class Controls extends PageObject {
 	}
 
 	/**
+	 * Get b-segment-input field value
+	 * @return {string}
+	 */
+	getPhoneInputValue () {
+		return this.page.getValue(this.locators.phoneInput);
+	}
+
+	/**
 	 * Fill code field
 	 * @param {string} code
 	 */
@@ -104,10 +139,18 @@ class Controls extends PageObject {
 
 	/**
 	 * Fill sms code field
-	 * @param  {string} code
+	 * @param {string} code
 	 */
 	fillSmsCode (code) {
 		this.page.setValue(this.locators.phoneCodeField, code);
+	}
+
+	/**
+	 * Fill b-segmented-input field
+	 * @param {string} value
+	 */
+	fillPhoneInput (value) {
+		this.page.setValue(this.locators.phoneInput, value);
 	}
 
 	/**
@@ -125,4 +168,4 @@ class Controls extends PageObject {
 	}
 }
 
-module.exports = Controls;
+module.exports = SelectViewPage;

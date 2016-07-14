@@ -1,9 +1,16 @@
 'use strict';
 
-let PasswordRestore = require('../../../steps/password/restore');
+let SelectSteps = require('../../../steps/password/restore/select');
+let usersStore = require('../../../store/password/restore/users');
 
-describe.skip('TESTMAIL-31478: Восстановление пароля', () => {
-	it('Ввод скрытых цифр телефона', () => {
-		PasswordRestore.open();
+let selectSteps = new SelectSteps();
+
+describe.skip('TESTMAIL-31478: Восстановление пароля. ' +
+	'Ввод скрытых цифр телефона.', () => {
+
+	it('Проверить отсутствие возможности ввести более двух цифр', () => {
+		selectSteps.open(usersStore.simpe.one);
+		selectSteps.fillPhoneInput('123');
+		selectSteps.checkPhoneInput('12');
 	});
 });

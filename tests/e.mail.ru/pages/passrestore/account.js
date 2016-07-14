@@ -1,9 +1,9 @@
 'use strict';
 
-let PageObject = require('../../pages');
+let PassrestorePage = require('../passrestore/account');
 
 /** Модуль для работы с формой ввода адреса */
-class Controls extends PageObject {
+class AccountPage extends PassrestorePage {
 	constructor () {
 		super();
 	}
@@ -38,7 +38,6 @@ class Controls extends PageObject {
 	submitForm () {
 		this.page.submitForm(this.locators.form);
 	}
-
 }
 
-module.exports = Controls;
+module.exports = AccountPage;

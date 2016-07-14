@@ -2,7 +2,7 @@
 
 let PasswordRestore = require('../../../steps/password/restore');
 let AccountView = require('../../../steps/password/restore/account');
-let SelectTypeView = require('../../../steps/password/restore/selectType');
+let SelectTypeView = require('../../../steps/password/restore/select');
 
 let accountView = new AccountView();
 let selectTypeView = new SelectTypeView();
