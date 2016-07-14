@@ -6,19 +6,24 @@ let FoldersSteps = require('../../steps/folders');
 
 let portalSearchSteps = new PortalSearchSteps();
 
-describe('TESTMAIL-32400', () => {
+let foldersStore = require('../../store/folders');
+
+describe('TESTMAIL-32400: Список писем. Сохранение поисковых запросов. ' +
+	'Проверка, что при поиске через компактные фильтры ' +
+	'в строке поиска появляются операнды', () => {
 	before(() => {
 		Messages.auth();
+	});
+
+	beforeEach(() => {
 		Messages.open();
 	});
 
-	it('Список писем. Сохранение поисковых запросов. ' +
-		'Проверка, что при поиске через компактные фильтры ' +
-		'в строке поиска появляются операнды непрочитанное.', () => {
-		const name = 'unread';
+	foldersStore.filters.forEach(({name, title}) => {
+		it(title, () => {
+			FoldersSteps.clickFilter(name);
 
-		FoldersSteps.clickFilter(name);
-
-		portalSearchSteps.hasOperand(name);
+			portalSearchSteps.hasOperand(name);
+		});
 	});
 });
