@@ -7,4 +7,3 @@ module.options = {
 };
 
 require('./TESTMAIL-31851');
-
