@@ -23,6 +23,16 @@ class BalloonsSteps extends Steps {
 
 		assert(!actual, `Бабл ${id} должен быть скрыт`);
 	}
+
+	static clickBalloonClose (id) {
+		this.page.clickBalloonClose(id);
+		browser.pause(1000);
+	}
+
+	static clickOutside () {
+		this.page.clickOutside();
+		browser.pause(1000);
+	}
 }
 
 module.exports = BalloonsSteps;
