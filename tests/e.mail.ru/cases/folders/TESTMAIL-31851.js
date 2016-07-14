@@ -33,6 +33,8 @@ describe('TESTMAIL-31851', () => {
 
 		Folders.open();
 
+		Folders.isFolderVisible(folderId);
+
 		browser.pause(2000);
 
 		Folders.goToFolder(folderId);

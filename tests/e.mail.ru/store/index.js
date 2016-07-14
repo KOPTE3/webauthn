@@ -45,7 +45,7 @@ module.exports = {
 	},
 
 	helpers: {
-		'threads': 33,
+		'threads': 63,
 		'mailbox-sort': 33
 	}
 };
