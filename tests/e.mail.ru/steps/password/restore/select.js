@@ -41,6 +41,20 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	}
 
 	/**
+	 * Test b-segment-input visible number
+	 * @param {string} head - '+7 (912) 2'
+	 * @param {string} value - missing numbers '11'
+	 */
+	checkPhone (head, value) {
+		let data = this.page.getPhoneInputParameters();
+
+		assert.equal(data.head, head, 'Начало телефона не совпадает');
+		assert.equal(data.value, value, 'Введенное значение не совпадает');
+		assert.equal(data.placeholder, '**');
+		assert.equal(data.tail, '-**-**', 'Последние 4 цифры не замаскированы');
+	}
+
+	/**
 	 * Wait for phone tab
 	 */
 	waitForPhoneTab () {
@@ -100,7 +114,6 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	 * Check if phone input is disabled (multiple)
 	 * @param {int} id
 	 * @param {string} head - '+7 (912) 2'
-	 * @param {string} value - missing numbers '11'
 	 */
 	phoneInputIsDisabled (id, head) {
 		const data = this.page.getPhoneInputParameters(id);
