@@ -29,6 +29,8 @@ class CleanerPage extends LayersPage {
 			categoryText: '.js-category-text',
 			categoryDropdown: '.cleaner-dropdown__list',
 
+			phantom: '.js-phantom',
+
 			source: '.js-source',
 
 			dropPlaceholder: '.js-drop-placeholder'
@@ -53,6 +55,10 @@ class CleanerPage extends LayersPage {
 
 	clickFinishButton () {
 		this.page.click(this.locators.finishButton);
+	}
+
+	clickPhantom () {
+		this.page.click(this.locators.phantom + ' ' + this.locators.categoryText);
 	}
 
 	hoverOnCategory (categoryId) {

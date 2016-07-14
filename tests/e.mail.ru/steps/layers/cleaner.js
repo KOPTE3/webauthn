@@ -32,6 +32,10 @@ class CleanerSteps extends LayerSteps {
 		this.page.clickFinishButton();
 	}
 
+	static createFolder () {
+		this.page.clickPhantom();
+	}
+
 	static removeFolder (categoryId) {
 		this.page.hoverOnCategory(categoryId);
 		this.page.clickDeleteCategoryButton(categoryId);
