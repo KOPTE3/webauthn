@@ -8,7 +8,7 @@ let store = require('../../store/search');
 
 let text = 'test';
 
-describe('TESTMAIL-31659', () => {
+describe('TESTMAIL-32403', () => {
 	before(() => {
 		Messages.auth();
 		Messages.open();
@@ -21,8 +21,8 @@ describe('TESTMAIL-31659', () => {
 	});
 
 	it('Список писем. Сохранение поисковых запросов. ' +
-		'Проверка появления популярных поисковых запросов ' +
-		'при появлении курсора в пустом поле ввода', () => {
+		'Проверка, что если в ящике был поиск, но не включена фича, ' +
+		'то популярных поисковых запросов нет.', () => {
 		portalSearchSteps.clickSearchField();
 		portalSearchSteps.noSuggests();
 	});
