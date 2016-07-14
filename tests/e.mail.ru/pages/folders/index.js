@@ -26,12 +26,19 @@ class FoldersPage extends PageObject {
 	 * @type {Object}
 	 */
 	get locators () {
+		let container = '.b-nav_folders';
+
 		return {
-			container: '.b-nav_folders',
+			container,
 			datalist: this.messagesPage.locators.container,
 			item: '.b-nav__item[data-id]',
 			parent: '.b-nav__subitems[data-parent]',
-			textItem: '.b-nav__item__text'
+			textItem: '.b-nav__item__text',
+			filters: {
+				'unread': `${container} a[href*="q_read"]`,
+				'flag': `${container} a[href*="q_flag"]`,
+				'attach': `${container} a[href*="q_attach"]`
+			}
 		};
 	}
 
@@ -108,6 +115,15 @@ class FoldersPage extends PageObject {
 
 		// this.page.elementIdClick(item.value.ELEMENT); // не работает с подпапками
 		this.page.waitForExist(datalistLocator);
+	}
+
+	/**
+	 * Нажать на фильтр
+	 *
+	 * @param {string} name - (unread|flag|attach)
+	 */
+	clickFilter (name) {
+		this.page.click(this.locators.filters[name]);
 	}
 }
 

@@ -6,6 +6,7 @@ let assert = require('assert');
 
 let Steps = require('../../steps');
 let FoldersPage = require('../../pages/folders');
+let SearchPage = require('../../pages/search');
 let actions = require('../../utils/actions');
 let dateUtils = require('../../utils/date');
 let store = require('../../store');
@@ -23,6 +24,10 @@ class FoldersSteps extends Steps {
 	 */
 	static get page () {
 		return new FoldersPage();
+	}
+
+	static get search () {
+		return new SearchPage();
 	}
 
 	static goToFolder (folderId) {
@@ -211,6 +216,19 @@ class FoldersSteps extends Steps {
 			state: true,
 			time: true
 		});
+	}
+
+	/**
+	 * Нажать на фильтр
+	 *
+	 * @param {string} name - (unread|flag|attach)
+	 */
+	static clickFilter (name) {
+		this.page.clickFilter(name);
+
+		let actual = this.search.wait();
+
+		assert(actual, 'Не удалось дождаться открытия страницы поиска');
 	}
 }
 
