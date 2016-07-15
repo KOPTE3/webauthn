@@ -110,7 +110,7 @@ class FoldersSteps extends Steps {
 	}
 
 	static setCollapseFolder (folderId) {
-		let actual =actions.collapseFolders([folderId]);
+		let actual = actions.collapseFolders([folderId]);
 
 		assert(actual.state === 'success');
 	}
