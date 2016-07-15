@@ -25,6 +25,19 @@ module.exports = {
 		return querystring.parse(...arguments);
 	},
 
+	buildUrl (source, add = {}, remove = []) {
+		let data = url.parse(source);
+		let query = this.parse(data.query);
+
+		remove.forEach(name => {
+			delete query[name];
+		});
+
+		Object.assign(query, add);
+
+		return this.request(data.pathname, query);
+	},
+
 	/**
 	 * Возвращает адрес запроса
 	 *

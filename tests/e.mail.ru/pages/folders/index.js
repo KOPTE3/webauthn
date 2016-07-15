@@ -34,6 +34,7 @@ class FoldersPage extends PageObject {
 			item: '.b-nav__item[data-id]',
 			parent: '.b-nav__subitems[data-parent]',
 			textItem: '.b-nav__item__text',
+			toggler: '[data-name="toggle-folding"]',
 			filters: {
 				'unread': `${container} a[href*="q_read"]`,
 				'flag': `${container} a[href*="q_flag"]`,
@@ -42,20 +43,24 @@ class FoldersPage extends PageObject {
 		};
 	}
 
-	getFolderLocator (folderId) {
+	getFolderItemLocator (folderId) {
 		let {container, item} = this.locators;
 
 		return `${container} ${item}[data-id="${folderId}"]`;
 	}
 
 	getFolderLinkLocator (folderId) {
-		return `${this.getFolderLocator(folderId)} a`;
+		return `${this.getFolderItemLocator(folderId)} a`;
 	}
 
 	getDatalistLocator (folderId) {
-		let {datalist} = this.locators;
+		return `${this.locators.datalist} [data-cache-key="${folderId}_undefined_false"]`;
+	}
 
-		return `${datalist} [data-cache-key="${folderId}_undefined_false"]`;
+	getFolderParentLocator (folderId) {
+		let {container, parent} = this.locators;
+
+		return `${container} ${parent}[data-parent="${folderId}"]`;
 	}
 
 	getFoldersContainer () {
@@ -65,19 +70,22 @@ class FoldersPage extends PageObject {
 	}
 
 	getParentFolderItem (folderId) {
-		return this.getFoldersContainer()
-			.element(`${this.locators.parent}[data-parent="${folderId}"]`);
+		return this.page.element(this.getFolderParentLocator(folderId));
+	}
+
+	getFolderToggler (folderId) {
+		return this.getFolderItem(folderId)
+			.element(this.locators.toggler);
 	}
 
 	getFolderItem (folderId) {
-		return this.getFoldersContainer()
-			.element(`${this.locators.item}[data-id="${folderId}"]`);
+		return this.page.element(this.getFolderItemLocator(folderId));
 	}
 
 	isFolderVisible (folderId) {
-		let item = this.getFolderItem(folderId);
+		let locator = this.getFolderItemLocator(folderId);
 
-		return this.page.elementIdDisplayed(item.value.ELEMENT).value;
+		return this.page.isVisible(locator);
 	}
 
 	isFolderExists (folderId) {
@@ -91,6 +99,42 @@ class FoldersPage extends PageObject {
 			.element(`.//*[@data-parent = ${parentId}][.//*[@data-id = ${folderId}]]`);
 
 		return item.state === 'success';
+	}
+
+	isFolderCollapsed (folderId) {
+		return !this.isFolderExpanded(folderId);
+	}
+
+	isFolderExpanded (folderId) {
+		let locator = this.getFolderParentLocator(folderId);
+
+		return this.page.isVisible(locator);
+	}
+
+	expandFolder (folderId) {
+		if (this.isFolderCollapsed(folderId)) {
+			this.toggleFolder(folderId);
+
+			this.page.waitUntil(() => {
+				return this.isFolderExpanded(folderId);
+			}, 2000, 'Не дождались раскрытия папки');
+		}
+	}
+
+	collapseFolder (folderId) {
+		if (this.isFolderExpanded(folderId)) {
+			this.toggleFolder(folderId);
+
+			this.page.waitUntil(() => {
+				return this.isFolderCollapsed(folderId);
+			}, 2000, 'Не дождались схлопывания папки');
+		}
+	}
+
+	toggleFolder (folderId) {
+		let toggler = this.getFolderToggler(folderId);
+
+		this.page.elementIdClick(toggler.value.ELEMENT);
 	}
 
 	getArchiveFolderId () {

@@ -65,13 +65,13 @@ class PageObject {
 	 * @returns {boolean}
 	 */
 	open (query = {}) {
-		let { user, features } = cache;
+		let { features } = cache;
 
 		if (features.length) {
 			query.ftrs = features.join(' ');
 		}
 
-		let url = URL.request(this.location, query);
+		let url = URL.buildUrl(this.location, query);
 
 		this.page.url(url);
 		this.wait();
@@ -125,7 +125,16 @@ class PageObject {
 
 	/** Сбросить сессию */
 	refresh () {
-		this.page.refresh();
+		let { features } = cache;
+		let url = this.page.getUrl();
+
+		if (features.length) {
+			url = URL.buildUrl(url, {
+				ftrs: features.join(' ')
+			});
+		}
+
+		this.page.url(url);
 	}
 }
 

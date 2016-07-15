@@ -13,9 +13,6 @@ let store = require('../../store');
 
 /** Модуль для работы с шагами списка папкок */
 class FoldersSteps extends Steps {
-	constructor () {
-		super();
-	}
 
 	/**
 	 * Возвращает ссылку на инстанс страницы
@@ -106,12 +103,28 @@ class FoldersSteps extends Steps {
 		assert(!actual, `Папка "Архив" не должна быть внутри папки "${parentId}"`);
 	}
 
+	static setExpandFolder (folderId) {
+		let actual = actions.expandFolders([folderId]);
+
+		assert(actual.state === 'success');
+	}
+
+	static setCollapseFolder (folderId) {
+		let actual =actions.collapseFolders([folderId]);
+
+		assert(actual.state === 'success');
+	}
+
 	static expandFolder (folderId) {
-		actions.expandFolders([folderId]);
+		this.page.expandFolder(folderId);
 	}
 
 	static collapseFolder (folderId) {
-		actions.collapseFolders([folderId]);
+		this.page.collapseFolder(folderId);
+	}
+
+	static toggleFolder (folderId) {
+		this.page.toggleFolder(folderId);
 	}
 
 	/**
