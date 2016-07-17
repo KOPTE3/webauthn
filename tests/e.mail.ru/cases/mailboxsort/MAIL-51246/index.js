@@ -90,6 +90,11 @@ let finishCleaner = function () {
 	CleanerSteps.finish();
 };
 
+let launchCleanerInternally = function () {
+	CleanerSteps.launchCleanerInternally();
+	CleanerSteps.waitForCleanerMain();
+};
+
 module.exports = {
 	Steps,
 	FoldersSteps,
@@ -107,5 +112,6 @@ module.exports = {
 	enableCleaner,
 	openFiltersSettings,
 	launchCleaner,
-	finishCleaner
+	finishCleaner,
+	launchCleanerInternally
 };

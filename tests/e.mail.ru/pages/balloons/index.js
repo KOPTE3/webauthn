@@ -18,6 +18,10 @@ class BalloonsPage extends Page {
 		return this.page.element(this.locators[id]);
 	}
 
+	waitForVisible (id, reverse) {
+		return this.page.waitForVisible(this.locators[id], 1000, reverse);
+	}
+
 	isBalloonVisible (id) {
 		let element = this.getBalloonElement(id);
 

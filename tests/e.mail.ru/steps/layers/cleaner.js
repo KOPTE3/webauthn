@@ -12,6 +12,14 @@ class CleanerSteps extends LayerSteps {
 		return page;
 	}
 
+	static launchCleanerInternally () {
+		browser.execute(function () {
+			require(['patron.v2.layer/patron.layer.Cleaner'], function (cleaner) {
+				cleaner.showLayer();
+			});
+		});
+	}
+
 	static waitForCleaner () {
 		this.page.waitForCleaner();
 	}

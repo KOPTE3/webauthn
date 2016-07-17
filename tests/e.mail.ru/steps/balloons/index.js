@@ -26,12 +26,20 @@ class BalloonsSteps extends Steps {
 
 	static clickBalloonClose (id) {
 		this.page.clickBalloonClose(id);
-		browser.pause(1000);
+		this.waitForNotVisible(id);
 	}
 
-	static clickOutside () {
+	static clickOutside (id) {
 		this.page.clickOutside();
-		browser.pause(1000);
+		this.waitForNotVisible(id);
+	}
+
+	static waitForVisible (id) {
+		this.page.waitForVisible(id);
+	}
+
+	static waitForNotVisible (id) {
+		this.page.waitForVisible(id, false);
 	}
 }
 

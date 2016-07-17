@@ -18,7 +18,7 @@ describe('TESTMAIL-31930', () => {
 		all.finishCleaner();
 
 		all.FoldersSteps.open();
-		all.BalloonsSteps.clickOutside();
+		all.BalloonsSteps.clickOutside('balloon-cleaner-archive');
 		all.BalloonsSteps.isBalloonNotVisible('balloon-cleaner-archive');
 	});
 });
