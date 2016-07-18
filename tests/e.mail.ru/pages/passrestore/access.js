@@ -8,19 +8,6 @@ class AccessViewPage extends PassrestoreSelectPage {
 		super();
 	}
 
-
-	/**
-	 * Открытие страницы
-	 * @param {string} email
-	 * @returns {boolean}
-	 */
-	open (email) {
-		return super.open({
-			email,
-			type: 'mrim'
-		});
-	}
-
 	/**
 	 *
 	 * Локаторы

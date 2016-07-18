@@ -5,6 +5,6 @@ module.exports = {
 	symbols: {
 		cyrillic: 'ж',
 		latin: 'g',
-		special: '!"~`@#№$;%:^&?*()_-+={}[]\'|\\/,><.'
+		special: '!"~`@#№$;%:^&?*()_-+={}[]\'|\\/,><.'.split('')
 	}
 };

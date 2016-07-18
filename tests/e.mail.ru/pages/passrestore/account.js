@@ -1,6 +1,6 @@
 'use strict';
 
-let PassrestorePage = require('../passrestore/account');
+let PassrestorePage = require('../passrestore');
 
 /** Модуль для работы с формой ввода адреса */
 class AccountPage extends PassrestorePage {

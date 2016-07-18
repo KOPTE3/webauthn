@@ -2,18 +2,18 @@
 
 let assert = require('assert');
 
-let PasswordRestoreSteps = require('../restore');
+let SelectSteps = require('../restore/select');
 let AccessPage = require('../../../pages/passrestore/access');
 
 let phonesUtils = require('../../../utils/phones');
 
 
 /** Модуль для работы с формой ввода на восстановлении доступа (mrim) */
-class SelectTypeSteps extends PasswordRestoreSteps {
+class AccessSteps extends SelectSteps {
 	constructor () {
 		super();
 		this.page = new AccessPage();
 	}
 }
 
-module.exports = SelectTypeSteps;
+module.exports = AccessSteps;

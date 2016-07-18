@@ -5,10 +5,14 @@ let usersStore = require('../../../store/password/restore/users');
 
 let selectSteps = new SelectSteps();
 
-describe.skip('TESTMAIL-31478: Восстановление пароля. ' +
+let assert = require('assert');
+
+describe('TESTMAIL-31478: Восстановление пароля. ' +
 	'Ввод скрытых цифр телефона.', () => {
 	it('Проверить отсутствие возможности ввести более двух цифр', () => {
-		selectSteps.open(usersStore.simple.one);
+		const user = usersStore.simple.one;
+
+		selectSteps.open(user.email);
 		selectSteps.fillPhoneInput('123');
 		selectSteps.checkPhoneInput('12');
 	});

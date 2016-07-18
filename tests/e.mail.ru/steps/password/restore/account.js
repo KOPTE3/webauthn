@@ -16,7 +16,7 @@ class AccountSteps extends PasswordRestoreSteps {
 	 *
 	 * @type {Object}
 	 */
-	static get page () {
+	get page () {
 		return new AccountPage();
 	}
 

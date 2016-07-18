@@ -52,5 +52,17 @@ module.exports = {
 		return call({
 			path: `sms/${email}/${id}`
 		});
+	},
+
+	/**
+	 * Verify phone number through internal-api
+	 * @param  {string} email
+	 * @param  {string} phone
+	 * @returns {Promise}
+	 */
+	verifyPhone (email, phone) {
+		return call({
+			path: `test/user/phones/verify?email=${email}&phone=${phone}`
+		});
 	}
 };

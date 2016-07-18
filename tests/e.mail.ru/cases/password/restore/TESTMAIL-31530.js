@@ -7,10 +7,10 @@ let passwordStore = require('../../../store/password/restore');
 let accessSteps = new AccessSteps();
 let {symbols} = passwordStore;
 
-describe.skip('TESTMAIL-31530: mrim. Вериф телефон. ' +
+describe('TESTMAIL-31530: mrim. Вериф телефон. ' +
 	'Ввод скрытых цифр телефона.', () => {
 	beforeEach(() => {
-		accessSteps.open(usersStore.mrim.one);
+		accessSteps.open(usersStore.mrim.one.email);
 	});
 
 	it('Проверить ввод кириллицы, латиницы и спецсимволов с клавиатуры', () => {

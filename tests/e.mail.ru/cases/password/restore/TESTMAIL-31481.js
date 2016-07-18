@@ -5,31 +5,35 @@ let usersStore = require('../../../store/password/restore/users');
 
 let selectSteps = new SelectSteps();
 
-describe.skip('TESTMAIL-31481: Восстановление пароля. ' +
+let user = usersStore.simple.two;
+
+const phone1 = user.phones[0];
+const phone2 = user.phones[1];
+
+describe('TESTMAIL-31481: Восстановление пароля. ' +
 	'Ввод скрытых цифр телефона. ' +
 	'Выбор номера телефона, на который вы хотите ' +
 	'получить код восстановления (два телефона)', () => {
 	beforeEach(() => {
-		selectSteps.open(usersStore.simple.two);
+		selectSteps.open(user.email);
 	});
 
 	it('Проверка начального состояния', () => {
-		selectSteps.phoneInputIsActive(0, '+7 (920) 1', '');
-		selectSteps.phoneInputIsDisabled(1, '+7 (909) 2');
+		selectSteps.phoneInputIsActive(phone1.index, phone1.head, '');
+		selectSteps.phoneInputIsDisabled(phone2.index, phone2.head);
 	});
 
 	it('Переключение телефонов', () => {
-		const phone1 = 0;
-		const phone2 = 1;
+		const value = '11';
 
-		selectSteps.fillPhoneInput('11', phone1);
+		selectSteps.fillPhoneInput(value, phone1.index);
 
-		selectSteps.selectPhoneInput(phone2);
-		selectSteps.phoneInputIsActive(phone2, '+7 (920) 2', '');
-		selectSteps.phoneInputIsDisabled(phone1, '+7 (920) 1');
+		selectSteps.selectPhoneInput(phone2.index);
+		selectSteps.phoneInputIsActive(phone2.index, phone2.head, '');
+		selectSteps.phoneInputIsDisabled(phone1.index, phone1.head);
 
-		selectSteps.selectPhoneInput(phone1);
-		selectSteps.phoneInputIsActive(phone1, '+7 (920) 1', '11');
-		selectSteps.phoneInputIsDisabled(phone2, '+7 (920) 2');
+		selectSteps.selectPhoneInput(phone1.index);
+		selectSteps.phoneInputIsActive(phone1.index, phone1.head, value);
+		selectSteps.phoneInputIsDisabled(phone2.index, phone2.head);
 	});
 });

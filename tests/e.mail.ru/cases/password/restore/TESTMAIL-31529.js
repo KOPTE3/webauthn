@@ -7,10 +7,10 @@ let passwordStore = require('../../../store/password/restore');
 let selectSteps = new SelectSteps();
 let {symbols} = passwordStore;
 
-describe.skip('TESTMAIL-31529: Восстановление пароля. ' +
+describe('TESTMAIL-31529: Восстановление пароля. ' +
 	'Ввод скрытых цифр телефона.', () => {
 	beforeEach(() => {
-		selectSteps.open(usersStore.simple.one);
+		selectSteps.open(usersStore.simple.one.email);
 	});
 
 	it('Проверить ввод кириллицы, латиницы и спецсимволов с клавиатуры', () => {

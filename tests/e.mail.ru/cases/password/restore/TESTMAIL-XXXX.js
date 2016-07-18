@@ -9,7 +9,7 @@ let selectTypeView = new SelectTypeView();
 
 let assert = require('assert');
 
-describe('TESTMAIL-XXXX', function () {
+describe.skip('TESTMAIL-XXXX', function () {
 	it('Открытие стрницы восстановления пароля', function () {
 		let restoreEmail = 'regtest17@mail.ru';
 
@@ -21,7 +21,6 @@ describe('TESTMAIL-XXXX', function () {
 		accountView.setEmail(restoreEmail);
 		accountView.submitForm();
 		selectTypeView.waitForPhoneTab();
-
 		selectTypeView.fillPhoneCaptcha(); // cracking code of captcha
 
 		selectTypeView.submitForm();
@@ -29,5 +28,14 @@ describe('TESTMAIL-XXXX', function () {
 		selectTypeView.waitForPhoneLayer();
 		selectTypeView.fillSmsCode(restoreEmail); // cracking code in sms
 		// browser.debug(); // Check that everything is all right!
+	});
+
+	it.skip('Верификация номера телефона', function () {
+		let restoreEmail = 'regtest_phone_2@mail.ru';
+		let phone = '79154942271';
+
+		selectTypeView.open(restoreEmail);
+		selectTypeView.verifyPhone(restoreEmail, phone);
+		SelectTypeView.refresh();
 	});
 });

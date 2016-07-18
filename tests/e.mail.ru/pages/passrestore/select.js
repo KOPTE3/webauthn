@@ -38,10 +38,10 @@ class SelectViewPage extends PassrestorePage {
 			phoneTabBlock,
 
 			form: '.js-form-select-type',
-			singlePhoneInput: '.password-recovery__remind__new-phone-editable_single',
-			multiplePhoneInput: '.password-recovery__remind__new-phone-editable',
-			simpleInput: '.b-segment-input',
-			editableInput: '.b-segment-input.b-segment-input_editable',
+			singlePhone: '.password-recovery__remind__new-phone-editable_single',
+			multiplePhone: '.password-recovery__remind__new-phone-editable',
+			simplePhone: '.b-segment-input',
+			editablePhone: '.b-segment-input.b-segment-input_editable',
 
 			radioBtn: 'input[type="radio"]',
 
@@ -64,6 +64,7 @@ class SelectViewPage extends PassrestorePage {
 	submitForm () {
 		this.page.submitForm(this.locators.form);
 	}
+
 
 	/**
 	 * Get X-Captcha-Id header from page
@@ -124,15 +125,13 @@ class SelectViewPage extends PassrestorePage {
 	/**
 	 *
 	 * @param {int} [id]
-	 * @returns {WebElement}
+	 * @return {WebElement}
 	 */
-	getPhoneInput (id) {
-		let selector;
+	getPhoneContainer (id = null) {
+		let selector = this.locators.singlePhone;
 
-		if (id) {
-			selector = this.locators.multiplePhoneInput + `[data-index="${id}"]`;
-		} else {
-			selector = this.locators.singlePhoneInput;
+		if (id !== null) {
+			selector = this.locators.multiplePhone + `[data-index="${id}"]`;
 		}
 
 		return this.page.element(selector);
@@ -141,15 +140,35 @@ class SelectViewPage extends PassrestorePage {
 	/**
 	 *
 	 * @param {int} [id]
+	 * @returns {WebElement}
+	 */
+	getPhoneInput (id) {
+		const element = this.getPhoneContainer(id);
+
+		if (!element.value) {
+			return null;
+		}
+
+		return element.element(this.locators.phoneInput);
+	}
+
+	/**
+	 *
+	 * @param {int} [id]
 	 * @returns {Object} !
 	 */
-	getPhoneInputParameters (id) {
-		const element = this.getPhoneInput(id);
-		const {phoneHead, phoneInput, phoneMask, phoneTail} = this.locators;
+	getPhoneParameters (id) {
+		const element = this.getPhoneContainer(id);
+		const {phoneHead, phoneInput, phoneBody, phoneMask, phoneTail} = this.locators;
+
+		if (!element.value) {
+			return null;
+		}
 
 		return {
 			head: element.getText(phoneHead),
 			value: element.getValue(phoneInput),
+			body: element.getText(phoneBody),
 			placeholder: element.getAttribute(phoneInput, 'placeholder'),
 			tail: element.getText(phoneTail),
 			color: element.getCssProperty('color').parsed.hex,
@@ -161,8 +180,8 @@ class SelectViewPage extends PassrestorePage {
 	 * Select b-segment-input
 	 * @param {int} [id]
 	 */
-	selectPhoneInput (id) {
-		const element = this.getPhoneInput(id);
+	selectPhoneContainer (id) {
+		const element = this.getPhoneContainer(id);
 
 		this.page.click(element.selector);
 	}
@@ -175,7 +194,11 @@ class SelectViewPage extends PassrestorePage {
 	getPhoneInputValue (id) {
 		const element = this.getPhoneInput(id);
 
-		return element.getValue(this.locators.phoneInput);
+		if (!element) {
+			return null;
+		}
+
+		return element.getValue();
 	}
 
 	/**
@@ -217,6 +240,20 @@ class SelectViewPage extends PassrestorePage {
 	 */
 	waitForPhoneLayer () {
 		this.page.waitForVisible(this.locators.phoneLayer);
+	}
+
+	/**
+	 * Verify phone number
+	 * http://api.tornado.dev.mail.ru/test/user/phones/verify
+	 * @param  {string} email
+	 * @param  {string} phone
+	 */
+	verifyPhone (email, phone) {
+		this.page.waitUntil(function async () {
+			return phonesUtils.verifyPhone(email, phone).then(result => {
+				return true;
+			});
+		});
 	}
 }
 

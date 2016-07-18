@@ -5,10 +5,10 @@ let usersStore = require('../../../store/password/restore/users');
 
 let accessSteps = new AccessSteps();
 
-describe.skip('TESTMAIL-31526: mrim. Вериф телефон. ' +
+describe('TESTMAIL-31526: mrim. Вериф телефон. ' +
 	'Ввод скрытых цифр телефона.', () => {
 	it('Проверить отсутствие возможности ввести более двух цифр', () => {
-		accessSteps.open(usersStore.mrim.one);
+		accessSteps.open(usersStore.mrim.one.email);
 		accessSteps.fillPhoneInput('123');
 		accessSteps.checkPhoneInput('12');
 	});

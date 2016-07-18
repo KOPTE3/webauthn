@@ -1,5 +1,6 @@
 'use strict';
 
+let debug = require('debug')('phones');
 let ajax = require('./ajax');
 let API = require('./internalApi');
 
@@ -45,6 +46,20 @@ module.exports = {
 			return data;
 		}, error => {
 			throw new Error(error);
+		});
+	},
+
+	/**
+	 * Verify phone number through internal-api
+	 * @param  {string} email
+	 * @param  {string} phone
+	 * @returns {Promise}
+	 */
+	verifyPhone (email, phone) {
+		return API.verifyPhone(email, phone).then(data => {
+			return data;
+		}, err => {
+			throw new Error(err);
 		});
 	}
 };

@@ -3,11 +3,37 @@
 /** Аккаунты для восстановления пароля */
 module.exports = {
 	simple: {
-		one: 'ydzhonson@inbox.ru',
-		two: 'ren_test37@mail.ru'
+		one: {
+			phone: {
+				head: '+7 (915) 1',
+				value: '42'
+			},
+			email: 'regtest94@mail.ru'
+		},
+		two: {
+			phones: [
+				{
+					index: 0,
+					head: '+7 (915) 4',
+					value: '94'
+				},
+				{
+					index: 1,
+					head: '+7 (915) 1',
+					value: '42'
+				}
+			],
+			email: 'regtest_phone_2@mail.ru'
+		}
 	},
 
 	mrim: {
-		one: 'test_login_ren5@mail.ru'
+		one: {
+			phone: {
+				head: '+7 (909) 2',
+				value: '89'
+			},
+			email: 'test_login_ren5@mail.ru'
+		}
 	}
 };

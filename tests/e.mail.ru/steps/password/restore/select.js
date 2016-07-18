@@ -26,7 +26,7 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	 * @param {string} value
 	 * @param {int} [id]
 	 */
-	fillPhoneInput (value, id = null) {
+	fillPhoneInput (value, id) {
 		this.page.fillPhoneInput(value, id);
 	}
 
@@ -46,7 +46,7 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	 * @param {string} value - missing numbers '11'
 	 */
 	checkPhone (head, value) {
-		let data = this.page.getPhoneInputParameters();
+		let data = this.page.getPhoneParameters();
 
 		assert.equal(data.head, head, 'Начало телефона не совпадает');
 		assert.equal(data.value, value, 'Введенное значение не совпадает');
@@ -99,8 +99,10 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	 * @param {string} value - missing numbers '11'
 	 */
 	phoneInputIsActive (id, head, value) {
-		const data = this.page.getPhoneInputParameters(id);
-		const msg = `Телефон ${id} не выбран`;
+		const data = this.page.getPhoneParameters(id);
+		const msg = `Телефон ${id} не выбран.`;
+
+		assert(data, `Не удалось получить телефон ${id}`);
 
 		assert.equal(data.head, head, `${msg} Начало телефона не совпадает`);
 		assert.equal(data.value, value, `${msg} Введенные цифры не совпадают`);
@@ -116,8 +118,10 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	 * @param {string} head - '+7 (912) 2'
 	 */
 	phoneInputIsDisabled (id, head) {
-		const data = this.page.getPhoneInputParameters(id);
-		const msg = `Телефон ${id} выбран`;
+		const data = this.page.getPhoneParameters(id);
+		const msg = `Телефон ${id} выбран.`;
+
+		assert(data, `Не удалось получить телефон ${id}`);
 
 		assert.equal(data.head, head, `${msg} Начало телефона не совпадает`);
 		assert.equal(data.body, '**', `${msg} Введенные цифры не замаскированы`);
@@ -131,7 +135,7 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	 * @param {int} [id]
 	 */
 	selectPhoneInput (id) {
-		this.page.selectPhoneInput(id);
+		this.page.selectPhoneContainer(id);
 	}
 
 	/**
@@ -139,6 +143,15 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	 */
 	submitForm () {
 		this.page.submitForm();
+	}
+
+	/**
+	 * Verify phone number
+	 * @param {string} email
+	 * @param {string} phone '79151420923'
+	 */
+	verifyPhone (email, phone) {
+		this.page.verifyPhone(email, phone);
 	}
 }
 
