@@ -38,8 +38,7 @@ describe(name, () => {
 
 		let timer = new Date();
 
-		browser.pause(2000);
-
+		Folders.pause(2000);
 		Folders.goToFolder(foldersStore.ids.sent);
 		Folders.isFolderVisible(folderId);
 

@@ -47,6 +47,10 @@ class Steps {
 		assert(actual, 'Не удалось авторизоваться');
 	}
 
+	static pause () {
+		pages.pause(...arguments);
+	}
+
 	/** Сбросить сессию */
 	static refresh () {
 		pages.refresh();

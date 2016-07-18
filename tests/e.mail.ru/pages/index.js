@@ -113,7 +113,7 @@ class PageObject {
 	 */
 	waitForUrl (value, query, ...options) {
 		if (typeof value === 'string') {
-			value = URL.request(...arguments);
+			value = URL.format(...arguments);
 		}
 
 		try {
@@ -121,6 +121,10 @@ class PageObject {
 		} catch (error) {
 			return false;
 		}
+	}
+
+	pause () {
+		this.page.pause(...arguments);
 	}
 
 	/** Сбросить сессию */

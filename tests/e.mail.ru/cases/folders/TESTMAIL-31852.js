@@ -38,9 +38,7 @@ describe(name, () => {
 
 		Folders.open();
 		Folders.isFolderVisible(firstFolderId);
-
-		browser.pause(2000);
-
+		Folders.pause(2000);
 		Folders.goToFolder(firstFolderId);
 
 		let offset = Math.floor((new Date() - timer) / 1000);
