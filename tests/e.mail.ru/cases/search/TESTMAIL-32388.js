@@ -4,8 +4,6 @@ let Messages = require('../../steps/messages');
 let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
 let portalSearchSteps = new PortalSearchSteps();
 
-let store = require('../../store/search');
-
 const text = 'начало111222333444555666777888999000конецзапроса';
 
 describe('TESTMAIL-32388: Поиск. Новые операнды.', () => {

@@ -253,6 +253,18 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Курсор стоит в конце текста операнда
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	isOperandCursorAtEnd (name) {
+		let actual = this.portalSearch.getOperandInputSelection(name);
+		let text = this.portalSearch.getOperandText(name);
+
+		assert(actual.start === text.length, `Курсор не в конце текста операнда ${name}`);
+	}
+
+	/**
 	 * Саджесты показаны
 	 */
 	hasSuggests () {
@@ -313,12 +325,12 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 * Выбрать стрелкой вниз саджест с заданным текстом
 	 *
 	 * @param {string} text
-	 * @param {string} operandName - операнд, для которого показаны саджесты
 	 */
-	selectSuggestByArrowDown (text, operandName = 'blank') {
+	selectSuggestByArrowDown (text) {
 		let counter = 0;
 		let done = false;
 		let currentText;
+		let operandName;
 
 		while (counter++ < 10) {
 			currentText = this.portalSearch.getSelectedSuggestText();
@@ -327,6 +339,8 @@ class PortalSearchSteps extends PortalMenuSteps {
 				done = true;
 				break;
 			}
+
+			operandName = this.portalSearch.getActiveOperandName();
 
 			this.portalSearch.operandArrowKey(operandName, 'Down');
 		}

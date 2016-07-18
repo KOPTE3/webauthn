@@ -36,6 +36,7 @@ class PortalSearch extends PortalMenu {
 			},
 			operands: {
 				all    : `${container} .b-operand:not([style*="display: none"])`,
+				current: `${container} .b-operand_active`,
 				message: `${container} [data-operand-name="q_query"]`,
 				from   : `${container} [data-operand-name="q_from"]`,
 				to     : `${container} [data-operand-name="q_to"]`,
@@ -116,6 +117,27 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Получить активный операнд
+	 *
+	 * @return {Element}
+	 */
+	getActiveOperand () {
+		return this.page.element(this.locators.operands.current);
+	}
+
+	/**
+	 * Вернуть имя активного операнда
+	 *
+	 * @return {string}
+	 */
+	getActiveOperandName () {
+		let operand = this.getActiveOperand();
+		let name = this.page.elementIdAttribute(operand.value.ELEMENT, 'data-operand-name');
+
+		return searchUtils.getOperandName(name.value);
+	}
+
+	/**
 	 * Получить операнд по имени
 	 *
 	 * @param {string} name - имя операнда
@@ -162,11 +184,29 @@ class PortalSearch extends PortalMenu {
 	 * @returns {number}
 	 */
 	getOperandInputScroll (name) {
-		let inputName = name === 'date' ? 'dateInput' : 'input';
-		let locator = searchUtils.getOperandLocator(this.locators.operands, name, inputName);
+		let locator = searchUtils.getOperandInputLocator(this.locators.operands, name);
 
 		return this.page.execute(function (selector) {
 			return document.querySelector(selector).scrollLeft;
+		}, locator).value;
+	}
+
+	/**
+	 * Получить позицию каретки для инпута операнда
+	 *
+	 * @param {string} name - имя операнда
+	 * @return {*} - объект с полями start, end
+	 */
+	getOperandInputSelection (name) {
+		let locator = searchUtils.getOperandInputLocator(this.locators.operands, name);
+
+		return this.page.execute(function (selector) {
+			var input = document.querySelector(selector);
+
+			return {
+				start: input.selectionStart,
+				end: input.selectionEnd
+			};
 		}, locator).value;
 	}
 
@@ -279,8 +319,7 @@ class PortalSearch extends PortalMenu {
 	 * @returns {boolean}
 	 */
 	operandHasFocus (name) {
-		let inputName = name === 'date' ? 'dateInput' : 'input';
-		let locator = searchUtils.getOperandLocator(this.locators.operands, name, inputName);
+		let locator = searchUtils.getOperandInputLocator(this.locators.operands, name);
 
 		return this.page.hasFocus(locator);
 	}
