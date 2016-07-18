@@ -65,13 +65,13 @@ class PageObject {
 	 * @returns {boolean}
 	 */
 	open (query = {}) {
-		let { user, features } = cache;
+		let { features } = cache;
 
 		if (features.length) {
 			query.ftrs = features.join(' ');
 		}
 
-		let url = URL.request(this.location, query);
+		let url = URL.format(this.location, query);
 
 		this.page.url(url);
 		this.wait();
@@ -113,7 +113,7 @@ class PageObject {
 	 */
 	waitForUrl (value, query, ...options) {
 		if (typeof value === 'string') {
-			value = URL.request(...arguments);
+			value = URL.format(...arguments);
 		}
 
 		try {
@@ -123,9 +123,22 @@ class PageObject {
 		}
 	}
 
+	pause () {
+		this.page.pause(...arguments);
+	}
+
 	/** Сбросить сессию */
 	refresh () {
-		this.page.refresh();
+		let { features } = cache;
+		let url = this.page.getUrl();
+
+		if (features.length) {
+			url = URL.format(url, {
+				ftrs: features.join(' ')
+			});
+		}
+
+		this.page.url(url);
 	}
 
 	getContainerElement () {

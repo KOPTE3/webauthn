@@ -37,7 +37,7 @@ describe(name, () => {
 
 		let timer = new Date();
 
-		browser.pause(2000);
+		Folders.pause(2000);
 
 		SettingsFolders.open();
 		SettingsFolders.removeFolder(secondFolderId);
