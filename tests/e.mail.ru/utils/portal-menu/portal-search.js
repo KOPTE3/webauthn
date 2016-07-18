@@ -30,6 +30,19 @@ module.exports = {
 	},
 
 	/**
+	 * Собрать локатор для дропдауна в операнде
+	 *
+	 * @param {Object} locators - локаторы операндов
+	 * @param {string} operandName - имя операнда
+	 * @param {string} element - элемент дропдауна
+	 *
+	 * @return {string}
+	 */
+	getOperandDropdownLocator (locators, operandName, element) {
+		return `${locators[operandName]} ${locators.dropdown[element]}`;
+	},
+
+	/**
 	 * Получить имя локатора операнда из значения атрибута операнда
 	 *
 	 * @param {string} attrName - значение из атрибута
