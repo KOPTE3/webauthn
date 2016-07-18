@@ -71,7 +71,7 @@ class PageObject {
 			query.ftrs = features.join(' ');
 		}
 
-		let url = URL.buildUrl(this.location, query);
+		let url = URL.format(this.location, query);
 
 		this.page.url(url);
 		this.wait();
@@ -129,7 +129,7 @@ class PageObject {
 		let url = this.page.getUrl();
 
 		if (features.length) {
-			url = URL.buildUrl(url, {
+			url = URL.format(url, {
 				ftrs: features.join(' ')
 			});
 		}

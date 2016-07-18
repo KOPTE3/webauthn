@@ -25,7 +25,15 @@ module.exports = {
 		return querystring.parse(...arguments);
 	},
 
-	buildUrl (source, add = {}, remove = []) {
+	/**
+	 * Формирует URL
+	 *
+	 * @param {string} source - исходный URL
+	 * @param {Object} [add] - параметры которые добавить
+	 * @param {Array} [remove] - параметры которые удалить
+	 * @returns {string}
+	 */
+	format (source, add = {}, remove = []) {
 		let data = url.parse(source);
 		let query = this.parse(data.query);
 
@@ -35,23 +43,12 @@ module.exports = {
 
 		Object.assign(query, add);
 
-		return this.request(data.pathname, query);
-	},
+		let result = data.pathname;
 
-	/**
-	 * Возвращает адрес запроса
-	 *
-	 * @param {string} path
-	 * @param {Object} [query]
-	 * @returns {string}
-	 */
-	request (path, query = {}) {
-		let params = Object.keys(query);
-
-		if (params.length) {
-			return `${path}?${this.query(query)}`;
+		if (Object.keys(query).length) {
+			result += `?${this.query(query)}`;
 		}
 
-		return path;
+		return result;
 	}
 };
