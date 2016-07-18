@@ -55,7 +55,15 @@ class PortalSearch extends PortalMenu {
 				input: '.b-operand__input',
 				dateInput: '.b-operand__date-input',
 				active: '.b-operand_active',
-				lapse: `${container} [data-operand-name="q_date"] .b-operand__date-lapse`
+				lapse: `${container} [data-operand-name="q_date"] .b-operand__date-lapse`,
+				dropdown: {
+					ctrl: '.b-operand__dropdown-ctrl',
+					list: '.b-dropdown__list',
+					from: '.b-dropdown__list [data-name="q_from"]',
+					to: '.b-dropdown__list [data-name="q_to"]',
+					subject: '.b-dropdown__list [data-name="q_subj"]',
+					message: '.b-dropdown__list [data-name="q_query"]'
+				}
 			},
 			body: '#ScrollBody'
 		});
@@ -276,6 +284,16 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Операнд существует прямо сейчас (не ждать его появления)
+	 *
+	 * @param {string} name - имя операнда
+	 * @returns {boolean}
+	 */
+	hasOperandImmediate (name) {
+		return this.page.isVisible(this.locators.operands[name]);
+	}
+
+	/**
 	 * У операнда есть иконка
 	 *
 	 * @param {string} name - имя операнда (unread|flag|attach)
@@ -365,6 +383,29 @@ class PortalSearch extends PortalMenu {
 	 */
 	clickOperandClose (name) {
 		let locator = searchUtils.getOperandLocator(this.locators.operands, name, 'close');
+
+		this.page.click(locator);
+	}
+
+	/**
+	 * Нажать на дропдаун в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	clickOperandDropdown (name) {
+		let locator = searchUtils.getOperandDropdownLocator(this.locators.operands, name, 'ctrl');
+
+		this.page.click(locator);
+	}
+
+	/**
+	 * Нажать на элемент дропдауна в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} item - пункт меню дродпауна (message|subject|from|to)
+	 */
+	clickOperandDropdownItem (name, item) {
+		let locator = searchUtils.getOperandDropdownLocator(this.locators.operands, name, item);
 
 		this.page.click(locator);
 	}

@@ -163,6 +163,20 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Проверить, что когда появился новый операнд,
+	 * старый операнд скрылся (не должно быть одновременно два операнда)
+	 *
+	 * @param {string} newName - имя нового операнда
+	 * @param {string} oldName - имя старого операнда
+	 */
+	checkOperandSwitch (newName, oldName) {
+		this.portalSearch.hasOperand(newName);
+		let actual = !this.portalSearch.hasOperandImmediate(oldName);
+
+		assert(actual, `В момент появления ${newName} операнд ${oldName} еще виден`);
+	}
+
+	/**
 	 * Кликнуть в операнд
 	 *
 	 * @param {string} name - имя операнда
@@ -192,6 +206,25 @@ class PortalSearchSteps extends PortalMenuSteps {
 		let actual = this.portalSearch.hasOperand(name, true);
 
 		assert(actual, `Операнд ${name} не удалился`);
+	}
+
+	/**
+	 * Нажать на дропдаун в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	clickOperandDropdown (name) {
+		this.portalSearch.clickOperandDropdown(name);
+	}
+
+	/**
+	 * Нажать на элемент дропдауна в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} item - пункт меню дродпауна (message|subject|from|to)
+	 */
+	clickOperandDropdownItem (name, item) {
+		this.portalSearch.clickOperandDropdownItem(name, item);
 	}
 
 	/**
