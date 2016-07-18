@@ -156,6 +156,21 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Получить положение скролла в инпуте операнда
+	 *
+	 * @param {string} name - имя операнда
+	 * @returns {number}
+	 */
+	getOperandInputScroll (name) {
+		let inputName = name === 'date' ? 'dateInput' : 'input';
+		let locator = searchUtils.getOperandLocator(this.locators.operands, name, inputName);
+
+		return this.page.execute(function (selector) {
+			return document.querySelector(selector).scrollLeft;
+		}, locator).value;
+	}
+
+	/**
 	 * Получить текст операнда.
 	 *
 	 * @param {string} name - имя операнда
@@ -253,11 +268,9 @@ class PortalSearch extends PortalMenu {
 	 * @returns {boolean}
 	 */
 	isOperandActive (name) {
-		let operand = this.getOperand(name);
-		let classes = operand.getAttribute('class').split(' ');
 		let active = this.locators.operands.active.slice(1);
 
-		return classes.indexOf(active) > -1;
+		return this.page.hasClass(this.locators.operands[name], active);
 	}
 
 	/**

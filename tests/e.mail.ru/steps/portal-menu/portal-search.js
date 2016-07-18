@@ -220,6 +220,17 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Операнд свернут
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	operandNotActive (name) {
+		let actual = this.portalSearch.isOperandActive(name);
+
+		assert(!actual, `Операнд ${name} активен`);
+	}
+
+	/**
 	 * Проверка, что инпут операнда нередактируемый
 	 *
 	 * @param {string} name - имя операнда
@@ -228,6 +239,17 @@ class PortalSearchSteps extends PortalMenuSteps {
 		let actual = this.portalSearch.getOperandInputReadonly(name);
 
 		assert(!!actual, `Операнд ${name} редактируемый`);
+	}
+
+	/**
+	 * Видно начало длинного текста в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	isOperandTextStartVisible (name) {
+		let actual = this.portalSearch.getOperandInputScroll(name);
+
+		assert(actual === 0, `Начало текста операнда ${name} не видно`);
 	}
 
 	/**
