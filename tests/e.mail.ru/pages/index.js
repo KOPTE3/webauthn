@@ -127,6 +127,10 @@ class PageObject {
 	refresh () {
 		this.page.refresh();
 	}
+
+	getContainerElement () {
+		return this.page.element(this.locators.container);
+	}
 }
 
 module.exports = PageObject;

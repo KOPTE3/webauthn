@@ -17,7 +17,7 @@ class FiltersSteps extends SettingsSteps {
 		return page;
 	}
 
-	static registerHook () {
+	static registerCleanerHook () {
 		actions.registerAjaxHook('maillist', function (xhr, options, stats) {
 			var response = JSON.parse(xhr.responseText);
 
