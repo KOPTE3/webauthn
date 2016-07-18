@@ -25,7 +25,7 @@
 	"scripts": {
 		"grunt" : "grunt",
 		"start" : "selenium-standalone start",
-		"install": "sh hooks/config.sh && selenium-standalone install",
+		"install": "sh ./hooks/{outdated,config}.sh; selenium-standalone install",
 		"lint": "eslint . --cache --format node_modules/eslint-friendly-formatter --ext .js",
 		"test": "sh utils/laucher.sh"
 	},
@@ -43,7 +43,7 @@
 		"@qa/grunt-test-runner" : "^0.2.2",
 		"@qa/test-tools": "^1.3.0",
 		"@qa/wd-capabilities": "^0.0.4",
-		"@qa/wdio-api-mail.ru": "^2.1.3",
+		"@qa/wdio-api-mail.ru": "^2.2.0",
 		"grunt": "^1.0.1",
 		"grunt-cli" : "^1.2.0",
 		"jit-grunt" : "^0.10.0",
