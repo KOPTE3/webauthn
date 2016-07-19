@@ -1,20 +1,20 @@
 'use strict';
 
-let Messages = require('../../steps/messages');
-let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
-let AdvancedSteps = require('../../steps/portal-menu/advanced');
+let Messages = require('../../../steps/messages');
+let PortalSearchSteps = require('../../../steps/portal-menu/portal-search');
+let AdvancedSteps = require('../../../steps/portal-menu/advanced');
 
 let portalSearchSteps = new PortalSearchSteps();
 let advancedSteps = new AdvancedSteps();
 
-describe('TESTMAIL-31697', () => {
+describe('TESTMAIL-31696', () => {
 	it('Список писем. Сохранение поисковых запросов. ' +
-		'Добавление операнда "отмеченные флажком" из расширенного поиска', () => {
+		'Добавление операнда "непрочитанные" из расширенного поиска', () => {
 		Messages.auth();
 		Messages.open();
 		portalSearchSteps.toggleAdvanced();
 
-		let name = 'flag';
+		let name = 'unread';
 
 		advancedSteps.clickCheckbox(name);
 		portalSearchSteps.hasOperand(name);

@@ -1,10 +1,10 @@
 'use strict';
 
-let Messages = require('../../steps/messages');
-let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
+let Messages = require('../../../steps/messages');
+let PortalSearchSteps = require('../../../steps/portal-menu/portal-search');
 let portalSearchSteps = new PortalSearchSteps();
 
-let actions = require('../../utils/actions');
+let actions = require('../../../utils/actions');
 
 const firstEmail = 'test1@mail.ru';
 const secondEmail = 'test2@mail.ru';
