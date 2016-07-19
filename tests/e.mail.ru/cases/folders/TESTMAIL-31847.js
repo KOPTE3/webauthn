@@ -14,7 +14,7 @@ let {options = {
 		'то папка свернется только через 24 часа даже если в нее не заходили до этого'
 }} = module.parent;
 
-let name = path.basename(module.parent.options ? module.parent.filename : module.filename, '.js');
+let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
 describe(name, () => {
 	before(() => {

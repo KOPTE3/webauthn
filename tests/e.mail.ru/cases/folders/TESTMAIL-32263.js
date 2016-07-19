@@ -14,7 +14,7 @@ let {options = {
 		'и удалили одну из подпапок, то папка свернется'
 }} = module.parent;
 
-let name = path.basename(module.parent.options ? module.parent.filename : module.filename, '.js');
+let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
 describe(name, () => {
 	before(() => {

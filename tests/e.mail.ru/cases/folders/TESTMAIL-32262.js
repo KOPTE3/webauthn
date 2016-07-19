@@ -14,7 +14,7 @@ let {options = {
 		'часа даже если в папку и подпапку не заходили до этого'
 }} = module.parent;
 
-let name = path.basename(module.parent.options ? module.parent.filename : module.filename, '.js');
+let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
 describe(name, () => {
 	before(() => {
