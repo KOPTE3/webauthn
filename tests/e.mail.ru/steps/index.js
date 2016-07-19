@@ -56,9 +56,13 @@ class Steps {
 		pages.pause(ms);
 	}
 
-	/** Обновить страницу */
-	static refresh () {
-		pages.refresh();
+	/**
+	 * Обновить страницу
+	 *
+	 * @param {Object} [query] — параметры запроса
+	 */
+	static refresh (query) {
+		pages.refresh(query);
 	}
 
 	/** Сбросить текущую сессию */

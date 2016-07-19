@@ -132,16 +132,20 @@ class PageObject {
 		this.page.pause(ms);
 	}
 
-	/** Обновить страницу */
-	refresh () {
+	/**
+	 * Обновить страницу
+	 *
+	 * @param {Object} [query] — параметры запроса
+	 */
+	refresh (query = {}) {
 		let { features } = cache;
 		let url = this.page.getUrl();
 
 		if (features.length) {
-			url = URL.format(url, {
-				ftrs: features.join(' ')
-			});
+			query.ftrs = features.join(' ');
 		}
+
+		url = URL.format(url, query);
 
 		this.page.url(url);
 	}
