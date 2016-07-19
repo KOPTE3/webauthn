@@ -1,12 +1,12 @@
 'use strict';
 
-let Messages = require('../../steps/messages');
-let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
-let AdvancedSteps = require('../../steps/portal-menu/advanced');
-let SearchLettersSteps = require('../../steps/search/letters');
-let searchStore = require('../../store/search');
-let messagesUtils = require('../../utils/messages');
-let actions = require('../../utils/actions');
+let Messages = require('../../../steps/messages');
+let PortalSearchSteps = require('../../../steps/portal-menu/portal-search');
+let AdvancedSteps = require('../../../steps/portal-menu/advanced');
+let SearchLettersSteps = require('../../../steps/search/letters');
+let searchStore = require('../../../store/search');
+let messagesUtils = require('../../../utils/messages');
+let actions = require('../../../utils/actions');
 
 let portalSearchSteps = new PortalSearchSteps();
 let advancedSteps = new AdvancedSteps();
