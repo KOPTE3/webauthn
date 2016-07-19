@@ -13,7 +13,7 @@ let {options = {
 		'то после обновления страницы папка свернется'
 }} = module.parent;
 
-let name = path.basename(module.parent ? module.parent.filename : module.filename, '.js');
+let name = path.basename(module.parent.options ? module.parent.filename : module.filename, '.js');
 
 describe(name, () => {
 	before(() => {

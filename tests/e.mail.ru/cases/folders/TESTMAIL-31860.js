@@ -13,7 +13,7 @@ let {options = {
 		'то через день папки свернуться'
 }} = module.parent;
 
-let name = path.basename(module.parent ? module.parent.filename : module.filename, '.js');
+let name = path.basename(module.parent.options ? module.parent.filename : module.filename, '.js');
 
 describe(name, () => {
 	before(() => {
@@ -26,13 +26,17 @@ describe(name, () => {
 	});
 
 	it(options.name, () => {
+		let query = {
+			folder_update_period: FOLDER_UPDATE_PERIOD
+		};
+
 		let folderId = Folders.createFolder({
 			name: 'Тестовая папка',
 			parent: foldersStore.ids.inbox
 		});
 
 		Folders.setCollapseFolder(foldersStore.ids.inbox);
-		Folders.open();
+		Folders.open(query);
 		Folders.isFolderHidden(folderId);
 		Folders.expandFolder(foldersStore.ids.inbox);
 
