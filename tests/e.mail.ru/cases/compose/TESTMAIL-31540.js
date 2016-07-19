@@ -6,7 +6,10 @@ let ComposeFields = require('../../steps/compose/fields');
 let ComposeEditor = require('../../steps/compose/editor');
 let ComposeControls = require('../../steps/compose/controls');
 let MissingAttachLayer = require('../../steps/layers/missingAttach');
-let messagesToolbarSteps = require('../../steps/messages/toolbar');
+
+let MessagesToolbarSteps = require('../../steps/messages/toolbar');
+let messagesToolbarSteps = new MessagesToolbarSteps();
+
 let composeEditorStore = require('../../store/compose/editor');
 let composeFieldsStore = require('../../store/compose/fields');
 

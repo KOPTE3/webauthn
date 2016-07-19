@@ -2,7 +2,10 @@
 
 let Messages = require('../../steps/messages');
 let Compose = require('../../steps/compose');
-let messagesToolbarSteps = require('../../steps/messages/toolbar');
+
+let MessagesToolbarSteps = require('../../steps/messages/toolbar');
+let messagesToolbarSteps = new MessagesToolbarSteps();
+
 let ComposeFields = require('../../steps/compose/fields');
 let ComposeEditor = require('../../steps/compose/editor');
 let ComposeControls = require('../../steps/compose/controls');
@@ -34,8 +37,6 @@ describe('TESTMAIL-31554: AJAX. Написание письма. Забытое 
 		Messages.open();
 
 		messagesToolbarSteps.clickButton('compose');
-
-		Messages.toCompose();
 
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', fields.to);

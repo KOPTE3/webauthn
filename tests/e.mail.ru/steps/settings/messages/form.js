@@ -32,9 +32,9 @@ class FormSteps extends SettingsMessagesSteps {
 	 * Сохранить значения формы
 	 * */
 	save () {
-		this.formPage.save(this.locators.save);
-		this.settingsPage.wait();
+		this.formPage.save();
+		SettingsPage.wait();
 	}
 }
 
-module.exports = new FormSteps();
+module.exports = FormSteps;

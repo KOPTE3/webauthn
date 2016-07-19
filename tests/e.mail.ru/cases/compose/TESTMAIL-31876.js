@@ -1,22 +1,28 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let messagesLettersSteps = require('../../steps/messages/letters');
+let MessagesLettersSteps = require('../../steps/messages/letters');
+let messagesLettersSteps = new MessagesLettersSteps();
 
 let Message = require('../../steps/message');
-let messageToolbarSteps = require('../../steps/message/toolbar');
+let MessageToolbarSteps = require('../../steps/message/toolbar');
+let messageToolbarSteps = new MessageToolbarSteps();
 
 let Compose = require('../../steps/compose');
 
-let composeEditor = require('../../steps/compose/editor');
-let composeFields = require('../../steps/compose/fields');
-let composeControls = require('../../steps/compose/controls');
-let composeAttaches = require('../../steps/compose/attaches');
+let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
+let ComposeFields = require('../../steps/compose/fields');
+let composeFields = new ComposeFields();
+let ComposeControls = require('../../steps/compose/controls');
+let composeControls = new ComposeControls();
+let ComposeAttaches = require('../../steps/compose/attaches');
+let composeAttaches = new ComposeAttaches();
 
 let SentPage = require('../../steps/sent');
 
 let composeEditorStore = require('../../store/compose/editor');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 
 let Mail = require('../../utils/mail');
 
@@ -37,7 +43,7 @@ describe('TESTMAIL-31876: НЕ AJAX. Ответ на письмо. Забыто�
 	});
 
 	it('Письмо должно быть отправлено', () => {
-		let { fields } = new ComposeFieldsStore();
+		let { fields } = composeFieldsStore;
 
 		// TODO: Проверить все остальные текста из теста юнит-тестами
 		Compose.sendMail({

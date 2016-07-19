@@ -2,21 +2,27 @@
 
 // messages
 let Messages = require('../../steps/messages');
-let messagesLettersSteps = require('../../steps/messages/letters');
+let MessagesLettersSteps = require('../../steps/messages/letters');
+let messagesLettersSteps = new MessagesLettersSteps();
 
 // message
-let messagefastreplySteps = require('../../steps/message/fastreply');
-let messageToolbarSteps = require('../../steps/message/toolbar');
+let MessagefastreplySteps = require('../../steps/message/fastreply');
+let messagefastreplySteps = new MessagefastreplySteps();
+let MessageToolbarSteps = require('../../steps/message/toolbar');
+let messageToolbarSteps = new MessageToolbarSteps();
 
 // compose
 let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
+let ComposeFields = require('../../steps/compose/fields');
+let composeFields = new ComposeFields();
+let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
 let composeEditorStore = require('../../store/compose/editor');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 
 // layers
-let missingAttachLayer = require('../../steps/layers/missingAttach');
+let MissingAttachLayer = require('../../steps/layers/missingAttach');
+let missingAttachLayer = new MissingAttachLayer();
 
 let actions = require('../../utils/actions');
 
@@ -28,7 +34,7 @@ describe('TESTMAIL-31874: Ответ на письмо. Забытое влож�
 	before(Compose.auth);
 
 	it('Попап появился', () => {
-		let { fields } = new ComposeFieldsStore();
+		let { fields } = composeFieldsStore;
 
 		Messages.open();
 

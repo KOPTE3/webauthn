@@ -24,4 +24,4 @@ class MessagesToolbarSteps extends MessagesSteps {
 
 }
 
-module.exports = new MessagesToolbarSteps();
+module.exports = MessagesToolbarSteps;

@@ -1,13 +1,21 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
+let ComposeFields = require('../../steps/compose/fields');
+let composeFields = new ComposeFields();
+
+let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
+
+let ComposeControls = require('../../steps/compose/controls');
+let composeControls = new ComposeControls();
+
 let SentPage = require('../../steps/sent');
 let composeEditorStore = require('../../store/compose/editor');
-let ComposeFieldsStore = require('../../store/compose/fields');
-let messagesToolbarSteps = require('../../steps/messages/toolbar');
+let composeFieldsStore = require('../../store/compose/fields');
+
+let MessagesToolbarSteps = require('../../steps/messages/toolbar');
+let messagesToolbarSteps = new MessagesToolbarSteps();
 
 describe('TESTMAIL-31541: AJAX аписание письма. Забытое вложение. Проверить ' +
 	'отсутствие попапа при отправке ' +
@@ -17,7 +25,7 @@ describe('TESTMAIL-31541: AJAX аписание письма. Забытое в�
 	});
 
 	it('Попап должен появится', () => {
-		let { fields } = new ComposeFieldsStore();
+		let { fields } = composeFieldsStore;
 
 		Messages.features([
 			'check-missing-attach',

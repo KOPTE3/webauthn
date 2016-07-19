@@ -235,12 +235,12 @@ class PageObject {
 			}
 
 			try {
-				page.elementIdClick(btn.ELEMENT);
-				isClicked = true;
-			} catch (error) { }
+				this.page.elementIdClick(element.ELEMENT);
+				clicked = true;
+			} catch (error) {}
 		});
 
-		if (!isClicked) {
+		if (!clicked) {
 			throw new Error('Can\'t click to all elements' + locator);
 		}
 	}

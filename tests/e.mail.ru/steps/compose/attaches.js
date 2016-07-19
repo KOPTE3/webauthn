@@ -43,4 +43,4 @@ class ComposeAttachesSteps extends ComposeSteps {
 	}
 }
 
-module.exports = new ComposeAttachesSteps();
+module.exports = ComposeAttachesSteps;

@@ -5,7 +5,9 @@ let lettersSteps = require('../../steps/messages/letters');
 let fastreplySteps = require('../../steps/message/fastreply');
 
 let Compose = require('../../steps/compose');
+
 let composeFields = require('../../steps/compose/fields');
+
 let composeEditor = require('../../steps/compose/editor');
 let composeControls = require('../../steps/compose/controls');
 let missingAttachLayer = require('../../steps/layers/missingAttach');

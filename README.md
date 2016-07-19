@@ -322,7 +322,7 @@ class Login extends PageObject {
 	}
 }
 
-module.exports = new Login();
+module.exports = Login;
 ```
 
 #### steps
@@ -375,7 +375,7 @@ class LoginFormSteps extends Steps {
 	}
 }
 
-module.exports = new LoginFormSteps();
+module.exports = LoginFormSteps;
 ```
 
 #### store
