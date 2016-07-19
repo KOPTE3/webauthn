@@ -56,6 +56,8 @@ describe('TESTMAIL-31954: НЕ AJAX. Черновики. Забытое влож
 		composeControls.cancel();
 
 		Compose.open();
+		
+		Compose.refresh();
 
 		composeControls.applyTemplate();
 

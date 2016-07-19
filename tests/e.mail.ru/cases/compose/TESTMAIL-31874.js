@@ -53,10 +53,9 @@ describe('TESTMAIL-31874: Ответ на письмо. Забытое влож�
 
 		composeEditor.wait();
 		composeFields.setFieldValue('subject', 'check attach');
-		composeFields.setFieldValue('to', fields.to);
 		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 
-		messageToolbarSteps.clickFastreplyButton('replyAll');
+		messageToolbarSteps.clickFastreplyButton('reply');
 		missingAttachLayer.wait();
 
 		missingAttachLayer.close();

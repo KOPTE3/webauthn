@@ -21,15 +21,25 @@ let Mail = require('../../utils/mail');
 
 const subject = 'TESTMAIL-31945';
 
-describe('TESTMAIL-31945: НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
-	'Проверить отсутствие попапа для полного ответа с текстом в теле письма, с аттачем', done => {
+describe('TESTMAIL-31945: ' +
+	'НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
+	'Проверить отсутствие попапа для полного ответа с текстом в теле письма, ' +
+	'с аттачем', done => {
 	before(() => {
+		// Авторизуемся
 		Compose.auth();
 	});
 
-	it('письмо должно быть успешно отправлено', () => {
+	it('Попап не должен появиться', () => {
 		let {fields} = new ComposeFieldsStore();
+		const features = [
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose',
+			'disable-fastreply-landmark'
+		];
 
+		// Присылаем письмо себе
 		var mail = new Mail({
 			to: fields.to,
 			subject,
@@ -38,26 +48,33 @@ describe('TESTMAIL-31945: НЕ AJAX. Ответ на письмо. Забыто�
 
 		mail.send();
 
-		Compose.features([
-			'check-missing-attach',
-			'disable-ballons',
-			'no-collectors-in-compose',
-			'disable-fastreply-landmark'
-		]);
-
+		// Заходим на чтение письма и нажимаем ответить в тулбаре
+		Compose.features(features);
 		Messages.open();
 		lettersSteps.openNewestLetter();
 		messageToolbarSteps.clickButton('reply');
-
 		Compose.wait();
+
+		// Обновляем страницу
+		Compose.features(features);
 		Compose.refresh();
 		Compose.wait();
 
+		// Вписываем текст с сообщением об атаче
 		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 		composeAttaches.uploadAttach('file1.txt');
-
 		composeControls.send();
 
+		try {
+			// попап не должен появится
+			missingAttachLayer.wait(true);
+		} catch (error) {
+			missingAttachLayer.close();
+			composeControls.cancel();
+			throw error;
+		}
+
+		// должно в конце перейти на страницу успешной отправки
 		SentPage.wait();
 	});
 });

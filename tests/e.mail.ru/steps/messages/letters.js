@@ -15,6 +15,17 @@ class LettersSteps extends MessagesSteps {
 	}
 
 	/**
+	 * Открыть письмо по теме
+	 * @param  {string} subject
+	 */
+	openBySubject (subject) {
+		assert(this.lettersPage.openBySubject(subject),
+			`не удалось кликнуть пописьму c темой ${subject}`);
+		this.messagePage.wait();
+		assert(this.messagePage.isVisible(), 'страница сообщения не показана');
+	}
+
+	/**
 	 * Открыть самое новое письмо
 	 */
 	openNewestLetter () {

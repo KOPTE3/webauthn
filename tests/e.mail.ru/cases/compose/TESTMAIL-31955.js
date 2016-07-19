@@ -50,9 +50,11 @@ describe('TESTMAIL-31955: НЕ AJAX. Черновики. Забытое влож
 
 		composeEditor.wait();
 
-		composeControls.applyTemplate();
+		Compose.refresh();
 
 		composeEditor.wait();
+
+		composeControls.applyTemplate();
 
 		composeAttaches.uploadAttach('1exp.JPG');
 

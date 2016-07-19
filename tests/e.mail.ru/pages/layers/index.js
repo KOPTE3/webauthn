@@ -49,6 +49,8 @@ class Layers extends PageObject {
 	 * Метод дожидается показа лаера
 	 *
 	 * Доступные значения (missingAttach, multiAttachToCompose, secure)
+	 *
+	 * @returns {*|utility}
 	 */
 	wait () {
 		return this.page.waitForVisible(this.locators.container, 3000);

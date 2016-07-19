@@ -24,7 +24,7 @@ describe('TESTMAIL-31957: НЕ AJAX. Черновики. Забытое влож
 		Compose.auth();
 	});
 
-	it('Письмо должно быть успешно отправленно', () => {
+	it('Письмо должно быть успешно отправлено', () => {
 		let { fields } = new ComposeFieldsStore();
 
 		var mail = new Mail({

@@ -43,7 +43,7 @@ exports.config = {
 	connectionRetryTimeout: 30 * 1000,
 
 	/* Количество инстансов параллельного запуска тестов */
-	maxInstances: 1,
+	maxInstances: 10,
 
 	/** Использовать синхронное API */
 	// sync: true,
@@ -122,7 +122,7 @@ exports.config = {
 	 * @see https://stash.mail.ru/projects/QA/repos/wd-capabilities/browse
 	 */
 	capabilities: [
-		// capabilities.get('phantomjs'),
+		// capabilities.get('phantomjs')
 		capabilities.get('chrome')
 	],
 

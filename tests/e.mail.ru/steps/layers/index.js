@@ -24,10 +24,22 @@ class LayerSteps extends Steps {
 	/**
 	 * Метод дожидается показа леера
 	 *
+	 * @param {boolean} notShow если true, то ожидается что он не покажется
 	 */
-	wait () {
-		this.layer.wait();
-		assert(this.layer.isVisible(), 'Лаер не был показан');
+	wait (notShow) {
+		try {
+			this.layer.wait();
+		} catch (error) {
+			if (error.type !== 'WaitUntilTimeoutError') {
+				throw error;
+			}
+		}
+
+		if (notShow) {
+			assert(!this.layer.isVisible(), 'Лаер не должен быть показан');
+		} else {
+			assert(this.layer.isVisible(), 'Лаер не был показан');
+		}
 	}
 
 	/**

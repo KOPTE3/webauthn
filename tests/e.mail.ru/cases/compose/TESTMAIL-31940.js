@@ -70,9 +70,10 @@ describe('TESTMAIL-31940 НЕ AJAX. Ответ на письмо. Забытое
 
 			messageToolbarSteps.clickButton('forward');
 
-			Messages.features(features);
-			Messages.refresh();
-
+			Compose.features(features);
+			Compose.refresh();
+			Compose.wait();
+			
 			composeEditor.wait();
 
 			composeFields.setFieldValue('to', fields.to);
@@ -83,7 +84,7 @@ describe('TESTMAIL-31940 НЕ AJAX. Ответ на письмо. Забытое
 			composeControls.send();
 
 			missingAttachLayer.wait();
-			
+
 			try {
 				missingAttachLayer.checkTexts();
 			} catch (err) {

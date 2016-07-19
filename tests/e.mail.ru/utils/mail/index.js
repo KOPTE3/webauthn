@@ -6,7 +6,7 @@ let authStore = require('../../store/authorization');
 let actions = require('../actions');
 
 const ASYNC_TIMEOUT = 10000; // таймаут завершнеия асинхронного скрипта
-const DELIVERY_TIMEOUT = 2000; // таймаут ожидания фактической доствки письма
+const DELIVERY_TIMEOUT = 5000; // таймаут ожидания фактической доствки письма
 
 
 /** Модуль создания и отправки письма */

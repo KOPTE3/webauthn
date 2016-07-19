@@ -5,6 +5,7 @@ let messagesLettersSteps = require('../../steps/messages/letters');
 
 let Message = require('../../steps/message');
 let messagesFastReplySteps = require('../../steps/message/fastreply');
+let messageToolbarSteps = require('../../steps/message/toolbar');
 
 let Compose = require('../../steps/compose');
 let composeEditor = require('../../steps/compose/editor');
@@ -36,10 +37,11 @@ describe('TESTMAIL-31950: НЕ AJAX. Ответ на письмо. Забыто�
 
 	it('Письмо должно быть отправлено', () => {
 		let { fields } = new ComposeFieldsStore();
+		let { texts } = ComposeEditorStore;
 		let mail = new Mail({
 			to: fields.to,
 			subject,
-			text: composeEditorStore.classifierTest.lettersWithAttach[0]
+			text: texts.withAttach
 		});
 
 		mail.addAttach('file1.txt');
@@ -51,15 +53,16 @@ describe('TESTMAIL-31950: НЕ AJAX. Ответ на письмо. Забыто�
 		messagesLettersSteps.openNewestLetter();
 
 		Message.features(features);
+		Message.refresh();
 
-		messagesFastReplySteps.clickButton('forward');
+		messageToolbarSteps.clickButton('forward');
 		composeEditor.wait();
 
 		composeFields.setFieldValue('to', fields.to);
 		composeAttaches.hasAttach('file1.txt');
-		composeEditor.hasForwardedMessage(composeEditorStore.classifierTest.lettersWithAttach[0]);
 
-		messagesFastReplySteps.resend();
+		composeEditor.hasForwardedMessage(texts.withAttach);
+		messageToolbarSteps.clickFastreplyButton('resend');
 
 		SentPage.wait();
 	});

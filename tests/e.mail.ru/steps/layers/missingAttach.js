@@ -13,16 +13,6 @@ class MissingAttachLayerSteps extends LayerSteps {
 	}
 
 	/**
-	 * Дождаться появления редактора
-	 */
-	wait () {
-		let actual = this.layer.wait();
-
-		assert(actual, 'Не удалось дождаться появления layer с попапом ' +
-			'(Сообщение о том что забыли прикрепить файл)');
-	}
-
-	/**
 	 * проверяем правильность всех текстов
 	 */
 	checkTexts () {
