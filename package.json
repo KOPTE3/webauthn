@@ -25,7 +25,7 @@
 	"scripts": {
 		"grunt" : "grunt",
 		"start" : "selenium-standalone start",
-		"install": "sh ./hooks/{outdated,config}.sh; selenium-standalone install",
+		"install": "sh ./hooks/{outdated,config}.sh && selenium-standalone install",
 		"lint": "eslint . --cache --format node_modules/eslint-friendly-formatter --ext .js",
 		"test": "sh utils/laucher.sh"
 	},
