@@ -17,14 +17,38 @@ module.exports = {
 	},
 
 	/**
+	 * Собрать локатор для инпута в операнде
+	 *
+	 * @param {Object} locators - локаторы операндов
+	 * @param {string} operandName - имя операнда
+	 * @return {string}
+	 */
+	getOperandInputLocator (locators, operandName) {
+		let inputName = operandName === 'date' ? 'dateInput' : 'input';
+
+		return this.getOperandLocator(locators, operandName, inputName);
+	},
+
+	/**
+	 * Собрать локатор для дропдауна в операнде
+	 *
+	 * @param {Object} locators - локаторы операндов
+	 * @param {string} operandName - имя операнда
+	 * @param {string} element - элемент дропдауна
+	 *
+	 * @return {string}
+	 */
+	getOperandDropdownLocator (locators, operandName, element) {
+		return `${locators[operandName]} ${locators.dropdown[element]}`;
+	},
+
+	/**
 	 * Получить имя локатора операнда из значения атрибута операнда
 	 *
 	 * @param {string} attrName - значение из атрибута
 	 * @returns {string}
 	 */
 	getOperandName (attrName) {
-		let map = portalSearchStore.fieldNames;
-
-		return map[attrName];
+		return portalSearchStore.fieldNames[attrName];
 	}
 };

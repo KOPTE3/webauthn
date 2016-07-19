@@ -144,6 +144,10 @@ class PageObject {
 
 		this.page.url(url);
 	}
+
+	getContainerElement () {
+		return this.page.element(this.locators.container);
+	}
 }
 
 module.exports = PageObject;

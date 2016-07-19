@@ -163,6 +163,20 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Проверить, что когда появился новый операнд,
+	 * старый операнд скрылся (не должно быть одновременно два операнда)
+	 *
+	 * @param {string} newName - имя нового операнда
+	 * @param {string} oldName - имя старого операнда
+	 */
+	checkOperandSwitch (newName, oldName) {
+		this.portalSearch.hasOperand(newName);
+		let actual = !this.portalSearch.hasOperandImmediate(oldName);
+
+		assert(actual, `В момент появления ${newName} операнд ${oldName} еще виден`);
+	}
+
+	/**
 	 * Кликнуть в операнд
 	 *
 	 * @param {string} name - имя операнда
@@ -195,6 +209,25 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Нажать на дропдаун в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	clickOperandDropdown (name) {
+		this.portalSearch.clickOperandDropdown(name);
+	}
+
+	/**
+	 * Нажать на элемент дропдауна в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} item - пункт меню дродпауна (message|subject|from|to)
+	 */
+	clickOperandDropdownItem (name, item) {
+		this.portalSearch.clickOperandDropdownItem(name, item);
+	}
+
+	/**
 	 * Удалить все операнды
 	 */
 	removeAllOperands () {
@@ -220,6 +253,17 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Операнд свернут
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	operandNotActive (name) {
+		let actual = this.portalSearch.isOperandActive(name);
+
+		assert(!actual, `Операнд ${name} активен`);
+	}
+
+	/**
 	 * Проверка, что инпут операнда нередактируемый
 	 *
 	 * @param {string} name - имя операнда
@@ -228,6 +272,29 @@ class PortalSearchSteps extends PortalMenuSteps {
 		let actual = this.portalSearch.getOperandInputReadonly(name);
 
 		assert(!!actual, `Операнд ${name} редактируемый`);
+	}
+
+	/**
+	 * Видно начало длинного текста в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	isOperandTextStartVisible (name) {
+		let actual = this.portalSearch.getOperandInputScroll(name);
+
+		assert(actual === 0, `Начало текста операнда ${name} не видно`);
+	}
+
+	/**
+	 * Курсор стоит в конце текста операнда
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	isOperandCursorAtEnd (name) {
+		let actual = this.portalSearch.getOperandInputSelection(name);
+		let text = this.portalSearch.getOperandText(name);
+
+		assert(actual.start === text.length, `Курсор не в конце текста операнда ${name}`);
 	}
 
 	/**
@@ -291,12 +358,12 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 * Выбрать стрелкой вниз саджест с заданным текстом
 	 *
 	 * @param {string} text
-	 * @param {string} operandName - операнд, для которого показаны саджесты
 	 */
-	selectSuggestByArrowDown (text, operandName = 'blank') {
+	selectSuggestByArrowDown (text) {
 		let counter = 0;
 		let done = false;
 		let currentText;
+		let operandName;
 
 		while (counter++ < 10) {
 			currentText = this.portalSearch.getSelectedSuggestText();
@@ -305,6 +372,8 @@ class PortalSearchSteps extends PortalMenuSteps {
 				done = true;
 				break;
 			}
+
+			operandName = this.portalSearch.getActiveOperandName();
 
 			this.portalSearch.operandArrowKey(operandName, 'Down');
 		}

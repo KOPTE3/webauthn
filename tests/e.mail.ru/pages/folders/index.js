@@ -104,8 +104,15 @@ class FoldersPage extends PageObject {
 	}
 
 	isFolderIn (folderId, parentId) {
-		let item = this.getFoldersContainer()
-			.element(`.//*[@data-parent = ${parentId}][.//*[@data-id = ${folderId}]]`);
+		let item;
+
+		if (parentId === '-1') {
+			item = this.getFoldersContainer()
+				.element(`./*[@data-id = ${folderId}]`);
+		} else {
+			item = this.getFoldersContainer()
+				.element(`.//*[@data-parent = ${parentId}][.//*[@data-id = ${folderId}]]`);
+		}
 
 		return item.state === 'success';
 	}
