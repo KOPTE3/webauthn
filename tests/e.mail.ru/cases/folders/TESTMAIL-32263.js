@@ -1,7 +1,7 @@
 'use strict';
 
-const FOLDER_COLLAPSE_TIMEOUT = 20;
-const FOLDER_UPDATE_PERIOD = 1;
+const FOLDER_COLLAPSE_TIMEOUT = 86400;
+const FOLDER_UPDATE_PERIOD = 10;
 
 let path = require('path');
 let Folders = require('../../steps/folders');

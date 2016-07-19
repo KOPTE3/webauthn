@@ -124,7 +124,7 @@ class FoldersPage extends PageObject {
 
 			this.page.waitUntil(() => {
 				return this.isFolderExpanded(folderId);
-			}, 2000, 'Не дождались раскрытия папки');
+			}, 3000, 'Не дождались раскрытия папки');
 		}
 	}
 
@@ -134,7 +134,7 @@ class FoldersPage extends PageObject {
 
 			this.page.waitUntil(() => {
 				return this.isFolderCollapsed(folderId);
-			}, 2000, 'Не дождались схлопывания папки');
+			}, 3000, 'Не дождались схлопывания папки');
 		}
 	}
 
@@ -165,7 +165,7 @@ class FoldersPage extends PageObject {
 		}, linkLocator);
 
 		// this.page.elementIdClick(item.value.ELEMENT); // не работает с подпапками
-		this.page.waitForExist(datalistLocator);
+		this.page.waitForExist(datalistLocator, 3000);
 	}
 
 	/**
