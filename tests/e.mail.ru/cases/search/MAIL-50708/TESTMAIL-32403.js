@@ -1,10 +1,10 @@
 'use strict';
 
-let Messages = require('../../steps/messages');
-let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
+let Messages = require('../../../steps/messages');
+let PortalSearchSteps = require('../../../steps/portal-menu/portal-search');
 let portalSearchSteps = new PortalSearchSteps();
 
-let store = require('../../store/search');
+let store = require('../../../store/search');
 
 let text = 'test';
 

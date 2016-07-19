@@ -1,14 +1,14 @@
 'use strict';
 
-let Messages = require('../../steps/messages');
-let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
+let Messages = require('../../../steps/messages');
+let PortalSearchSteps = require('../../../steps/portal-menu/portal-search');
 let portalSearchSteps = new PortalSearchSteps();
 
-let store = require('../../store/search');
+let store = require('../../../store/search');
 
 let text = 'test';
 
-describe('TESTMAIL-31669', () => {
+describe('TESTMAIL-31659', () => {
 	before(() => {
 		Messages.auth();
 		Messages.open();
@@ -22,16 +22,10 @@ describe('TESTMAIL-31669', () => {
 	});
 
 	it('Список писем. Сохранение поисковых запросов. ' +
-		'Проверка, что после добавления любого операнда' +
-		' популярные поисковые запросы не появляются.', () => {
+		'Проверка появления популярных поисковых запросов ' +
+		'при появлении курсора в пустом поле ввода', () => {
 		portalSearchSteps.clickSearchField();
 		portalSearchSteps.hasSuggests();
 		portalSearchSteps.isRequestsSuggest();
-
-		portalSearchSteps.addAnyOperand();
-
-		portalSearchSteps.clickSearchField();
-
-		portalSearchSteps.noSuggests();
 	});
 });
