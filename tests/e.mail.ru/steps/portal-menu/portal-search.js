@@ -147,6 +147,34 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Проверить, что при открытии расширенного поиска
+	 * не дергаются операнды
+	 */
+	checkScrollOnToggleAdvanced () {
+		let scrolled = false;
+		let toggled = false;
+
+		try {
+			browser.waitUntil(() => {
+				if (!toggled) {
+					toggled = true;
+					this.portalSearch.toggleAdvanced();
+				}
+
+				if (this.portalSearch.getFieldScroll() > 0) {
+					scrolled = true;
+
+					return true;
+				}
+			}, 1000, '', 50);
+		} catch (error) {
+			// В данном случае exception в waitUntil - ожидаемое поведение
+		}
+
+		assert(!scrolled, `При открытии расширенного поиска дергаются операнды`);
+	}
+
+	/**
 	 * Ввести текст в операнд.
 	 * Операнд должен быть создан.
 	 *
