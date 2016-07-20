@@ -12,15 +12,6 @@ class FoldersPage extends PageObject {
 	}
 
 	/**
-	 * Сколько ждать методу wait
-	 *
-	 * @returns {number}
-	 */
-	get waitTime () {
-		return 3000;
-	}
-
-	/**
 	 * Базовый адрес страницы
 	 *
 	 * @type {string}
