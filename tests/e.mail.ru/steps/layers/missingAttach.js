@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('assert');
+let assert = require('assert');
 
 let LayerSteps = require('../../steps/layers');
 let MissingAttachLayer = require('../../pages/layers/missingAttach');

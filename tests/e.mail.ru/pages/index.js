@@ -75,7 +75,7 @@ class PageObject {
 	 * @returns {boolean}
 	 */
 	open (path, query = {}) {
-		if (typeof path === 'object') {
+		if (typeof path === 'object' && path !== null) {
 			query = path;
 			path = null;
 		}

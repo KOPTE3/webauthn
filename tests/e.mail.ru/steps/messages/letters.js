@@ -84,7 +84,7 @@ class LettersSteps extends MessagesSteps {
 		try {
 			page.refreshUntilCondition(hasNewestLetter);
 		} catch (error) {
-			assert(false, 'Нового сообщения нет: ' + error);
+			assert(false, 'Нового сообщения нет: ' + error.message);
 		}
 	}
 }

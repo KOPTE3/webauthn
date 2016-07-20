@@ -14,7 +14,7 @@ let MessageToolbarSteps = require('../../steps/message/toolbar');
 let messageToolbarSteps = new MessageToolbarSteps();
 let SentPage = require('../../steps/sent');
 
-const Compose = require('../../steps/compose');
+let Compose = require('../../steps/compose');
 
 let composeEditorStore = require('../../store/compose/editor');
 

@@ -17,7 +17,9 @@ module.exports = {
 	 * @type {string}
 	 */
 	get platform () {
-		return browser.desiredCapabilities.platform;
+		let status = browser.status();
+
+		return browser.desiredCapabilities.platform || status.value.os.name;
 	},
 
 	/**
