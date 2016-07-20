@@ -27,6 +27,7 @@ class PortalSearch extends PortalMenu {
 			searchButton: `${container} [type="submit"]`,
 			advancedToggle: `${container} .js-dropdown-button`,
 			searchField: `${container} .pm-toolbar__search__label__wrapper`,
+			searchScroll: `${container} .w-portal-menu__search__operands__width_inner`,
 			suggests: {
 				container: `${container} .pm-toolbar__suggests`,
 				title: `${container} .pm-toolbar__suggests .pm-toolbar__suggests__group__title`,
@@ -98,6 +99,19 @@ class PortalSearch extends PortalMenu {
 		this.toggleAdvanced();
 
 		return !!this.page.waitForVisible(this.advanced.locators.container);
+	}
+
+	/**
+	 * Получить значение скролла поля поиска
+	 *
+	 * @return {number}
+	 */
+	getFieldScroll () {
+		let locator = this.locators.searchScroll;
+
+		return this.page.execute(function (selector) {
+			return document.querySelector(selector).scrollLeft;
+		}, locator).value;
 	}
 
 	/**
@@ -270,6 +284,7 @@ class PortalSearch extends PortalMenu {
 
 		return text;
 	}
+
 
 	/**
 	 * Операнд существует
