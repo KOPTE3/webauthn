@@ -74,7 +74,7 @@ module.exports = {
 	 * @param {number} [timeout]
 	 * @returns {boolean}
 	 */
-	isActiveUser (email = '', timeout = 1000) {
+	isActiveUser (email = '', timeout = 30 * 1000) {
 		try {
 			if (!email) {
 				let { account } = authStore;

@@ -14,42 +14,42 @@ module.exports = {
 	list: [
 		{
 			provider: 'mail.ru',
-			features: ['basic', 'oauth'],
+			features: ['internal', 'oauth'],
 			username: 'jelza.lezhdej@mail.ru',
 			password: 'KqFyxBq74oOx'
 		},
 
 		{
 			provider: 'mail.ua',
-			features: ['basic', 'oauth'],
+			features: ['internal', 'oauth'],
 			username: 'austen_jane@mail.ua',
 			password: 'dfgrty35t6'
 		},
 
 		{
 			provider: 'inbox.ru',
-			features: ['basic', 'oauth'],
+			features: ['internal', 'oauth'],
 			username: 'toropova.1964@inbox.ru',
 			password: 'yHACdyYPzWq5'
 		},
 
 		{
 			provider: 'mail.ru',
-			features: ['basic', 'oauth'],
+			features: ['internal', 'oauth'],
 			username: 'jelza.lezhdej@mail.ru',
 			password: 'KqFyxBq74oOx'
 		},
 
 		{
 			provider: 'list.ru',
-			features: ['basic', 'oauth'],
+			features: ['internal', 'oauth'],
 			username: 'hohlov.2017@list.ru',
 			password: 'RxhhJq3fgQoa'
 		},
 
 		{
 			provider: 'bk.ru',
-			features: ['basic', 'oauth'],
+			features: ['internal', 'oauth'],
 			username: 'jaromirp@bk.ru',
 			password: 'z84c24f3ag'
 		},

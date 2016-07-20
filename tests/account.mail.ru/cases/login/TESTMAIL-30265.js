@@ -8,7 +8,6 @@ let loginForm = new LoginForm();
 
 describe('TESTMAIL-30265', () => {
 	it('Отображение ошибки errno=1', () => {
-		LoginPage.open({ errno: 1 });
 		let errno = 1;
 
 		LoginPage.open({ errno });
