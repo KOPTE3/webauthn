@@ -12,6 +12,7 @@ let PortalSearchStore = require('../../store/portal-menu/portal-search');
 
 let actions = require('../../utils/actions');
 
+const constants = require('../../utils/constants');
 
 /** Модуль для работы с представлением страницы поиска писем */
 class PortalSearchSteps extends PortalMenuSteps {
@@ -154,6 +155,18 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 */
 	setOperandText (name, value = '') {
 		this.portalSearch.setOperandText(name, value);
+	}
+
+	/**
+	 * Напечатать в операнде и нажать Enter
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} value - что печатать
+	 */
+	setOperandTextAndEnter (name, value) {
+		this.portalSearch.setOperandText(name, value + constants.UNICODE_CHARACTERS.Enter);
+
+		this.search.wait();
 	}
 
 	checkDateOperandLapse (text) {
@@ -356,6 +369,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 
 	/**
 	 * Выбрать стрелкой вниз саджест с заданным текстом
+	 * У саджестов емейлов текст состоит из двух строчек с \n
 	 *
 	 * @param {string} text
 	 */
@@ -379,6 +393,19 @@ class PortalSearchSteps extends PortalMenuSteps {
 		}
 
 		assert(done, `Не удалось выбрать пункт ${text} в саджестах`);
+	}
+
+	/**
+	 * Кликнуть на саджест с заданным текстом
+	 *
+	 * @param {string} text
+	 */
+	clickSuggest (text) {
+		let actual = this.portalSearch.clickSuggest(text);
+
+		assert(actual, `Не удалось кликнуть по саджесту ${text}`);
+
+		this.search.wait();
 	}
 
 	/**

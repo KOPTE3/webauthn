@@ -40,7 +40,7 @@ exports.config = {
 	waitforTimeout: 30 * 1000,
 
 	/* Максимальное время на выполнение повторного запроса. */
-	connectionRetryTimeout: 10 * 1000,
+	connectionRetryTimeout: 30 * 1000,
 
 	/* Количество инстансов параллельного запуска тестов */
 	maxInstances: 1,
@@ -70,7 +70,7 @@ exports.config = {
 		// 'prof': true,
 
 		/** Максимальное время на ожидание результата выполнения теста */
-		'timeout': 10 * 1000,
+		'timeout': 15 * (60 * 1000),
 
 		/** Показывать стек-трейс */
 		'trace': true,

@@ -34,7 +34,7 @@ module.exports = {
 		browser.waitUntil(function async () {
 			return account.session(options)
 				.then(result => true);
-		});
+		}, 15 * 1000, 'Could not user session');
 
 		this.setCookie();
 	},
@@ -74,7 +74,7 @@ module.exports = {
 	 * @param {number} [timeout]
 	 * @returns {boolean}
 	 */
-	isActiveUser (email = '', timeout = 1000) {
+	isActiveUser (email = '', timeout = 30 * 1000) {
 		try {
 			if (!email) {
 				let { account } = authStore;

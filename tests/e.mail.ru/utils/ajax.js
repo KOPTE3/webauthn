@@ -6,7 +6,8 @@
 module.exports = {
 
 	/**
-	 * Добавляем обработчик запроса
+	 * Добавляет обработчик запроса
+	 *
 	 * @param  {string} path
 	 * @returns {Object}
 	 */

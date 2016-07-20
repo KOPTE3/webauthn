@@ -123,8 +123,13 @@ class PageObject {
 		}
 	}
 
-	pause () {
-		this.page.pause(...arguments);
+	/**
+	 * Откладывает выполнение следюущего шага на заданное время
+	 *
+	 * @param {number} ms
+	 */
+	pause (ms) {
+		this.page.pause(ms);
 	}
 
 	/**
@@ -145,6 +150,17 @@ class PageObject {
 		this.page.url(url);
 	}
 
+	/** Сбросить текущую сессию */
+	reload () {
+		this.page.deleteCookie();
+		// this.page.reload();
+	}
+
+	/**
+	 * Получить элемент контейнера
+	 *
+	 * @returns {Element}
+	 */
 	getContainerElement () {
 		return this.page.element(this.locators.container);
 	}

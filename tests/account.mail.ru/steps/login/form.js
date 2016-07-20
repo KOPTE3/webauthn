@@ -36,15 +36,6 @@ class LoginFormSteps extends Steps {
 	}
 
 	/**
-	 * Отправить форму по клику
-	 *
-	 * @returns {Promise}
-	 */
-	clickBySignInButton () {
-		return this.loginForm.clickBySignInButton();
-	}
-
-	/**
 	 * Заполнить поле логина
 	 *
 	 * @param {string} login
@@ -65,20 +56,17 @@ class LoginFormSteps extends Steps {
 	/**
 	 * Заполнить авторизационные поля
 	 *
-	 * @param {Object} credentials
+	 * @property {string} username
+	 * @property {string} password
+	 * @param {boolean} [mobile] — представиться мобильным пользователем
 	 */
-	setCredentials ({ username, password }) {
+	setCredentials ({ username, password }, mobile) {
 		this.setLogin(username);
 		this.setPassword(password);
-	}
 
-	/**
-	 * Получить активный домен
-	 *
-	 * @param {string} provider
-	 */
-	clickByDomain (provider) {
-		this.loginForm.clickByDomain(provider);
+		if (mobile) {
+			this.loginForm.meetMeAsMobileUser();
+		}
 	}
 
 	/**
@@ -173,6 +161,24 @@ class LoginFormSteps extends Steps {
 		assert.equal(actual, 'Авторизуйтесь несколькими почтовыми ' +
 			'ящиками, и вы сможете легко переключаться между ними.',
 			'Не удалось проверить описание формы');
+	}
+
+	/**
+	 * Получить активный домен
+	 *
+	 * @param {string} provider
+	 */
+	clickByDomain (provider) {
+		this.loginForm.clickByDomain(provider);
+	}
+
+	/**
+	 * Отправить форму по клику
+	 *
+	 * @returns {Promise}
+	 */
+	clickBySignInButton () {
+		return this.loginForm.clickBySignInButton();
 	}
 
 	/**

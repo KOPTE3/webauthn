@@ -6,7 +6,6 @@ let fs = require('fs');
 
 let TestTools = require('@qa/test-tools');
 
-
 module.exports = grunt => {
 	let { Git, Config } = TestTools;
 

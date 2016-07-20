@@ -1,11 +1,11 @@
 'use strict';
 
-let Messages = require('../../steps/messages');
-let calendarUtils = require('../../utils/calendar');
-let PortalSearchSteps = require('../../steps/portal-menu/portal-search');
-let AdvancedSteps = require('../../steps/portal-menu/advanced');
-let advancedStore = require('../../store/portal-menu/advanced');
-let dateUtils = require('../../utils/date');
+let Messages = require('../../../steps/messages');
+let calendarUtils = require('../../../utils/calendar');
+let PortalSearchSteps = require('../../../steps/portal-menu/portal-search');
+let AdvancedSteps = require('../../../steps/portal-menu/advanced');
+let advancedStore = require('../../../store/portal-menu/advanced');
+let dateUtils = require('../../../utils/date');
 
 let portalSearchSteps = new PortalSearchSteps();
 let advancedSteps = new AdvancedSteps();

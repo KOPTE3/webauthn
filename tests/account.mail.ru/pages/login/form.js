@@ -21,6 +21,7 @@ class LoginForm extends LoginPage {
 			activeDomain   : '.b-email-providers__list__item_selected',
 			select         : '.b-select__dropdown',
 			login          : '[name="Username"]',
+			form           : '[data-bem="b-form"]',
 			password       : '[name="Password"]',
 			submit         : '[data-name="submit"]:first-child',
 			error          : '.b-login__errors',
@@ -52,6 +53,30 @@ class LoginForm extends LoginPage {
 	 */
 	checkActiveElement () {
 		return this.page.hasFocus(this.locators.login);
+	}
+
+	/**
+	 * Проверить переход по ссылке восстановления пароля
+	 *
+	 * @param {string} url
+	 * @returns {boolean}
+	 */
+	clickPassRemindLink (url) {
+		this.page.click(this.locators.forgetLink);
+
+		return this.page.waitForUrl(url);
+	}
+
+	/**
+	 * Проверить переход по ссылке регистрации
+	 *
+	 * @param {string} url
+	 * @returns {boolean}
+	 */
+	clickSignUpLink (url) {
+		this.page.click(this.locators.signUpLink);
+
+		return this.page.waitForUrl(url);
 	}
 
 	/**
@@ -140,27 +165,13 @@ class LoginForm extends LoginPage {
 	}
 
 	/**
-	 * Проверить переход по ссылке восстановления пароля
-	 *
-	 * @param {string} url
-	 * @returns {boolean}
+	 * Прикинуться мобильным пользователем
+	 * Это требуется для пропуска формы дорегистрации
 	 */
-	clickPassRemindLink (url) {
-		this.page.click(this.locators.forgetLink);
-
-		return this.page.waitForUrl(url);
-	}
-
-	/**
-	 * Проверить переход по ссылке регистрации
-	 *
-	 * @param {string} url
-	 * @returns {boolean}
-	 */
-	clickSignUpLink (url) {
-		this.page.click(this.locators.signUpLink);
-
-		return this.page.waitForUrl(url);
+	meetMeAsMobileUser () {
+		for (let field of ['mp', 'mmp']) {
+			this.page.addHiddenValue(this.locators.form, field, 1);
+		}
 	}
 
 	/**

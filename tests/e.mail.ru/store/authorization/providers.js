@@ -200,6 +200,10 @@ module.exports = {
 	/**
 	 * Проектный топ провайдеров по типам авторизации
 	 *
+	 * ВНИМАНИЕ: изменения в этот списке должны согласовываться с
+	 * store/authorization/accounts.
+	 * В противном случае, можно запросить учетную запись, которой нет.
+	 *
 	 * @see http://mail-dashboard.mail.ru/?id=ext-rimap-daily
 	 * @see http://mail-dashboard.mail.ru/?id=instant-rimap-daily
 	 * @see https://jira.mail.ru/browse/MNT-113559

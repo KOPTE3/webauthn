@@ -31,6 +31,7 @@ class PortalSearch extends PortalMenu {
 			suggests: {
 				container: `${container} .pm-toolbar__suggests`,
 				title: `${container} .pm-toolbar__suggests .pm-toolbar__suggests__group__title`,
+				items: `${container} .pm-toolbar__suggests [data-suggest-idx]:not([style*="display: none"])`,
 				selected: `${container} .pm-toolbar__suggests .b-dropdown__item-correspondent_selected`,
 				advanced: `${container} .pm-toolbar__suggests .pm-toolbar__suggests__advanced a`
 			},
@@ -473,6 +474,26 @@ class PortalSearch extends PortalMenu {
 		}
 
 		return text;
+	}
+
+	/**
+	 * Кликнуть на саджест с заданным текстом
+	 *
+	 * @param {string} text
+	 * @returns {boolean}
+	 */
+	clickSuggest (text) {
+		let items = this.page.elements(this.locators.suggests.items);
+
+		return items.value.some(({ ELEMENT }) => {
+			let itemText = this.page.elementIdText(ELEMENT).value;
+
+			if (itemText === text) {
+				this.page.elementIdClick(ELEMENT);
+
+				return true;
+			}
+		});
 	}
 
 	/**

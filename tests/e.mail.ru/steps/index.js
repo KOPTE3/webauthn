@@ -47,8 +47,13 @@ class Steps {
 		assert(actual, 'Не удалось авторизоваться');
 	}
 
-	static pause () {
-		pages.pause(...arguments);
+	/**
+	 * Откладывает выполнение следюущего шага на заданное время
+	 *
+	 * @param {number} ms
+	 */
+	static pause (ms) {
+		pages.pause(ms);
 	}
 
 	/**
@@ -60,6 +65,11 @@ class Steps {
 		pages.refresh(query);
 	}
 
+	/** Сбросить текущую сессию */
+	static reload () {
+		pages.reload();
+	}
+
 	/**
 	 * Проверяет залогинен ли пользователь
 	 *
@@ -69,7 +79,7 @@ class Steps {
 	static isActiveUser (email, timeout) {
 		let actual = account.isActiveUser(...arguments);
 
-		assert(actual, 'Пользователь не авторизован');
+		assert(actual, `Пользователь "${email}" не авторизован`);
 	}
 
 	/**
