@@ -75,13 +75,13 @@ class PageObject {
 	 * @returns {boolean}
 	 */
 	open (path, query = {}) {
-		if (!path) {
-			path = this.location;
-		}
-
 		if (typeof path === 'object') {
 			query = path;
 			path = null;
+		}
+
+		if (!path) {
+			path = this.location;
 		}
 
 		let { user, features } = cache;
