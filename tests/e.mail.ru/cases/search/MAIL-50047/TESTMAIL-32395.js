@@ -16,13 +16,13 @@ describe('TESTMAIL-32395: Поиск. Новые операнды.', () => {
 
 		portalSearchSteps.setOperandText('blank', 'от:');
 		portalSearchSteps.setOperandText('from', 'test@mail.ru');
-		portalSearchSteps.setOperandEnter('from');
+		portalSearchSteps.operandEnter('from');
 
 		portalSearchSteps.clickOperandClose('from');
 		portalSearchSteps.isFocusInBlank();
 
 		portalSearchSteps.setOperandText('blank', 'test');
-		portalSearchSteps.setOperandEnter('blank');
+		portalSearchSteps.operandEnter('blank');
 
 		portalSearchSteps.hasOperand('message');
 		portalSearchSteps.operandNotActive('message');

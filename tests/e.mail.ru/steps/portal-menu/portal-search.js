@@ -190,10 +190,27 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 *
 	 * @param {string} name - имя операнда
 	 */
-	setOperandEnter (name) {
+	operandEnter (name) {
 		this.portalSearch.operandKeys(name, constants.UNICODE_CHARACTERS.Enter);
 
 		this.search.wait();
+	}
+
+	/**
+	 * Нажать в операнде на Tab или Shift Tab
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {boolean} shift - Shift Tab
+	 */
+	operandTab (name, shift = false) {
+		if (shift) {
+			this.portalSearch.operandKeys(name, constants.UNICODE_CHARACTERS.Shift);
+		}
+		this.portalSearch.operandKeys(name, constants.UNICODE_CHARACTERS.Tab);
+		if (shift) {
+			// отпустить шифт
+			this.portalSearch.operandKeys(name, constants.UNICODE_CHARACTERS.Shift);
+		}
 	}
 
 	checkDateOperandLapse (text) {
@@ -224,15 +241,25 @@ class PortalSearchSteps extends PortalMenuSteps {
 	clickOperand (name) {
 		this.portalSearch.clickOperand(name);
 
-		let actual = this.portalSearch.isOperandActive(name);
+		let isFlag = PortalSearchStore.flagOperands.indexOf(name) > -1;
+		let actual = this.portalSearch.isOperandActive(name, isFlag);
 
-		if (PortalSearchStore.flagOperands.indexOf(name) > -1) {
+		if (isFlag) {
 			// Операнд-флаг не должен кликаться,
-			assert(!actual, `По клику операнд ${name} активен`);
+			assert(actual, `По клику операнд ${name} активен`);
 		} else {
 			// а обычный операнд должен кликаться
 			assert(actual, `По клику операнд ${name} не активен`);
 		}
+	}
+
+	/**
+	 * Кликнуть в край операнда (не напрямую в инпут и не по дропдауну/крестику)
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	clickOperandEdge (name) {
+		this.portalSearch.clickOperandEdge(name);
 	}
 
 	/**
@@ -298,9 +325,9 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 * @param {string} name - имя операнда
 	 */
 	operandNotActive (name) {
-		let actual = this.portalSearch.isOperandActive(name);
+		let actual = this.portalSearch.isOperandActive(name, true);
 
-		assert(!actual, `Операнд ${name} активен`);
+		assert(actual, `Операнд ${name} активен`);
 	}
 
 	/**
