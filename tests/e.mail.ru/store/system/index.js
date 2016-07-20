@@ -20,5 +20,14 @@ module.exports = {
 		let status = browser.status();
 
 		return browser.desiredCapabilities.platform || status.value.os.name;
+	},
+
+	/**
+	 * Тестовый урл
+	 *
+	 * @type {string}
+	 */
+	get host () {
+		return browser.options.hostname;
 	}
 };

@@ -196,7 +196,7 @@ class LoginFormSteps extends Steps {
 	 */
 	clickSignUpLink () {
 		let actual = this.loginForm
-			.clickPassRemindLink(store.links.clickSignUpLink);
+			.clickSignUpLink(store.links.signUp);
 
 		assert(actual, 'Указана неверная ссылка на регистрацию');
 	}

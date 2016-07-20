@@ -17,6 +17,20 @@ class Steps {
 	}
 
 	/**
+	 * Обновить страницу
+	 */
+	static refresh () {
+		pages.refresh();
+	}
+
+	/**
+	 * Дождатся загрузки страницы
+	 */
+	static wait () {
+		this.page.wait();
+	}
+
+	/**
 	 * Авторизация
 	 *
 	 * @param {string} type — типа авторизации

@@ -14,18 +14,26 @@ class MessageToolbar extends MessagePage {
 	 * @type {Object}
 	 */
 	get locators () {
-		let toolbar =
-			'#LEGO>div:not([style *= "hidden"]) div:not([style *= "none"])>' +
-			'div[data-uniqid]:not([style *= "none"])>.b-toolbar[data-mnemo]';
+		let toolbar = '[data-mnemo="toolbar-letter"]';
+		let fastreply = '[data-mnemo="toolbar-fastreply"]';
 
 		return this.extend(super.locators, {
+			container: toolbar,
+			toolbar: '',
 			buttons: {
 				replyAll: `${toolbar} [data-name="replyAll"]`,
 				reply:  `${toolbar} [data-name="reply"]`,
-				forward:  `${toolbar} [data-name="forward"]`,
+				forward:  `${toolbar} .b-toolbar__btn[data-name="forward"]`,
 				remove:  `${toolbar} [data-name="remove"]`,
 				archive:  `${toolbar} [data-name="archive"]`,
 				spam:  `${toolbar} [data-name="spam"]`
+			},
+			fastreply: {
+				reply: `${fastreply} [data-mnemo="send"]`,
+				replyAll: `${fastreply} [data-mnemo="send-all"]`,
+				saveDraft: `${fastreply} [data-name="saveDraft"]`,
+				resend: `${fastreply} [data-mnemo="resend"]`,
+				cancel: `${fastreply} [data-name="cancel"]`
 			}
 		});
 	}
@@ -34,12 +42,22 @@ class MessageToolbar extends MessagePage {
 	 * Нажать на кнопку тулбара
 	 *
 	 * @param {string} name - имя кнопки, по которой нужно нажать
-	 * доступные значения (replyAll, reply, forward, remove, archive, spam);
+	 * доступные значения (send, replyAll, reply, forward, remove, archive, spam);
 	 */
 	clickButton (name) {
-		this.page.waitForExist(this.locators.buttons[name]);
-		this.page.click(this.locators.buttons[name]);
+		this.clickAll(this.locators.buttons[name]);
 	}
+
+	/**
+	 * Нажать на кнопку из тулбара быстрого ответа
+	 *
+	 * @param {string} name - имя кнопки, по которой нужно нажать
+	 * доступные значения (replyAll, saveDraft, resend);
+	 */
+	clickFastreplyButton (name) {
+		this.clickAll(this.locators.fastreply[name]);
+	}
+
 }
 
 module.exports = MessageToolbar;

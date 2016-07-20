@@ -41,6 +41,15 @@ class PageObject {
 	}
 
 	/**
+	 * Метод проверяет, что контейнер урла был открыт
+	 *
+	 * @returns {boolean}
+	 */
+	isVisible () {
+		return this.page.isVisible(this.locators.container);
+	}
+
+	/**
 	 * Дождаться появления требуемого элемента
 	 *
 	 * @returns {boolean}
@@ -61,17 +70,27 @@ class PageObject {
 	/**
 	 * Открытие страницы
 	 *
+	 * @param {string} [path] - путь, который нужно подставить к location
 	 * @param {Object} [query] — параметры запроса
 	 * @returns {boolean}
 	 */
-	open (query = {}) {
-		let { features } = cache;
+	open (path, query = {}) {
+		if (typeof path === 'object' && path !== null) {
+			query = path;
+			path = null;
+		}
+
+		if (!path) {
+			path = this.location;
+		}
+
+		let { user, features } = cache;
 
 		if (features.length) {
 			query.ftrs = features.join(' ');
 		}
 
-		let url = URL.format(this.location, query);
+		let url = URL.format(path, query);
 
 		this.page.url(url);
 		this.wait();
@@ -91,6 +110,14 @@ class PageObject {
 	 */
 	static auth (type, credentials) {
 		cache.session = account.session(...arguments);
+	}
+
+	/**
+	 * Обновить страницу
+	 *
+	 */
+	refresh () {
+		this.open(this.page.getUrl());
 	}
 
 	/**
@@ -120,6 +147,101 @@ class PageObject {
 			return this.page.waitForUrl(value, ...options);
 		} catch (error) {
 			return false;
+		}
+	}
+
+	/**
+	 * Метод пробует кликнуть по элементу несколько раз (осторожно костыль)
+	 *
+	 * @param {string} locator - локатор элемента
+	 * @param {number} count - количество попыток (по умолчанию 10)
+	 * @param {number} interval - интервал в ms, через который делать
+	 * попытки (по умолчанию 500ms)
+	 *
+	 * @returns {boolean}
+	 * */
+	clickWithRetry (locator, count = 3, interval = 1000) {
+		let page = this.page;
+
+		let tryClick = () => {
+			try {
+				page.waitForExist(locator);
+				let links = page.elements(locator);
+
+				page.elementIdClick(links.value[0].ELEMENT);
+
+				return true;
+			} catch (error) {
+				browser.pause(interval);
+
+				return false;
+			}
+		};
+
+		while (count--) {
+			if (tryClick()) {
+				return true;
+			}
+		}
+
+		throw new Error('Can\'t click to element ' + locator);
+	}
+
+	/**
+	 * Метод обновляет страницу пока условие не будет выполнено
+	 *
+	 * @param {Function} conditionFunc
+	 * @param {number} count - количество попыток (по умолчанию 10)
+	 * @param {number} interval - интервал в ms, через который делать
+	 * 							  попытки (по умолчанию 500ms)
+	 *
+	 * @returns {boolean}
+	 * */
+	refreshUntilCondition (conditionFunc, count = 3, interval = 1000) {
+		let page = this.page;
+		let tryRefresh = () => {
+			if (conditionFunc()) {
+				return true;
+			} else {
+				browser.pause(interval);
+				page.refresh();
+				page.wait();
+
+				return false;
+			}
+		};
+
+		while (count--) {
+			if (tryRefresh()) {
+				return true;
+			}
+		}
+
+		throw new Error('Can\'t refresh on condition');
+	}
+
+	/**
+	 * Метод пробует кликнуть по всем найденным селектором элементам
+	 *
+	 * @param {string} locator - куда кликнуть
+	 */
+	clickAll (locator) {
+		let elements = this.page.elements(locator);
+		let clicked = false;
+
+		elements.value.forEach(element => {
+			if (clicked) {
+				return;
+			}
+
+			try {
+				this.page.elementIdClick(element.ELEMENT);
+				clicked = true;
+			} catch (error) {}
+		});
+
+		if (!clicked) {
+			throw new Error('Can\'t click to all elements' + locator);
 		}
 	}
 

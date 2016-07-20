@@ -12,12 +12,25 @@ module.exports = {
 	 * @type {string}
 	 */
 	get path () {
-		let profile = '/var/lib/selenium/';
+		let profile = '/var/lib/selenium/',
+			local = path.join('test-files', 'files', 'e.mail.ru');
 
-		if (/win/.test(system.platform)) {
-			profile += '%USERPROFILE%';
+		if (/localhost|vagabond|win110/.test(system.host)) {
+			return path.resolve(local);
 		}
 
-		return path.join(profile, '/Dropbox/feta/mail');
+		throw new Error('No path to test-files!');
+	},
+
+	file (name) {
+		return path.join(this.path, name);
+	},
+
+	files (list) {
+		if (typeof list === 'string') {
+			return this.file(list);
+		}
+
+		return list.map(name => this.file(name));
 	}
 };

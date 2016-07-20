@@ -35,7 +35,7 @@ class ComposeEditorSteps extends ComposeSteps {
 	/**
 	 * Ввести текст сообщения
 	 *
-	 * @param {boolean} text
+	 * @param {string} text
 	 */
 	writeMessage (text) {
 		let editor = this.composeEditor.getEditor();
@@ -43,10 +43,81 @@ class ComposeEditorSteps extends ComposeSteps {
 		this.setFocus(editor);
 		editor.keys(text); // вводим текст
 
-		let actual = editor.getText('').includes(text);
+		let actual = this.getMessage(editor).includes(text);
 
 		assert(actual, 'Текст письма не был введен');
 		this.composeEditor.restoreParentFrame();
+	}
+
+	allertAccept () {
+		this.composeEditor.alertAccept();
+	}
+
+	/**
+	 * Получить текст сообщения
+	 *
+	 * @param {Element} editor - редактор
+	 * @returns {string} result - текст
+	 */
+	getMessage (editor) {
+		let currentEditor = editor || this.composeEditor.getEditor();
+		let result;
+
+		assert(currentEditor, 'Редактор письма не найден');
+		result = currentEditor.getText('');
+
+		if (!editor) {
+			this.composeEditor.restoreParentFrame();
+		}
+
+		return result;
+	}
+
+	/**
+	 * Проверяет пустое ли сообщение
+	 *
+	 * @returns {boolean} если true значит письмо не пустое
+	 */
+	isMessageNotEmpty () {
+		let message = this.getMessage();
+
+		return !!message;
+	}
+
+	/**
+	 * Проверить, содержится ли в теле письма текст
+	 *
+	 * @param {string} text текст который должен находится в теле письма
+	 * @returns {boolean}
+	 */
+	hasMessage (text) {
+		let message = this.getMessage();
+
+		return message.includes(text);
+	}
+
+	/**
+	 * Проверить, содержит ли ответ следующий текст
+	 *
+	 * @param {string} text
+	 */
+	hasReplyMessage (text) {
+		assert(this.isMessageNotEmpty(), 'Тело письма какое-то пустое');
+		assert(this.hasMessage(text), 'Ответ на письмо не содержит текст');
+	}
+
+	/**
+	 * Проверить, содержит ли пересылка следующий текст
+	 *
+	 * @param {string} text содержание письма
+	 */
+	hasForwardedMessage (text) {
+		assert(this.isMessageNotEmpty(), 'Тело письма какое-то пустое');
+		assert(
+			this.hasMessage('-------- Пересылаемое сообщение --------'),
+			'Письмо не из пересылки'
+		);
+		assert(this.hasMessage(text), 'Письмо не содержит пересылаемый текст');
 	}
 }
 

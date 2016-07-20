@@ -356,7 +356,7 @@ class Login extends PageObject {
 	}
 }
 
-module.exports = new Login();
+module.exports = Login;
 ```
 
 #### steps

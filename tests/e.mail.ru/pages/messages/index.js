@@ -80,7 +80,7 @@ class MessagesPage extends PageObject {
 	 * @return {string}
 	 */
 	getLetterIdBySubject (subject) {
-		let {value: letters} = this.getLetters();
+		let { value: letters } = this.getLetters();
 		let subjectLocator = this.locators.letterSubject;
 		let id;
 
@@ -103,7 +103,7 @@ class MessagesPage extends PageObject {
 	 * @return {number}
 	 */
 	getLettersCount () {
-		let {value} = this.getLetters();
+		let { value } = this.getLetters();
 
 		return value.length;
 	}

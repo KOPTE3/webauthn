@@ -2,7 +2,7 @@
 
 let assert = require('assert');
 
-let Steps = require('..');
+let Steps = require('../../steps');
 let SettingsPage = require('../../pages/settings');
 
 let page = new SettingsPage();

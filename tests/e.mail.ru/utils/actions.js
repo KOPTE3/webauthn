@@ -62,7 +62,8 @@ module.exports = {
 							});
 					});
 				});
-			}, {email, method, options}, ASYNC_TIMEOUT, DELIVERY_TIMEOUT);
+			},
+			{ email, method, options }, ASYNC_TIMEOUT, DELIVERY_TIMEOUT);
 	},
 
 	/**
@@ -242,6 +243,30 @@ module.exports = {
 	deleteFolders (ids) {
 		return this.call('folders/remove', {
 			ids
+		});
+	},
+
+	/**
+	 * Создает черновик
+	 *
+	 * @param {string} to - адрес получателя
+	 * @param {string} from - адрес отправителя
+	 * @param {string} subject - тема письма
+	 * @param {string} text - текст пиьсма
+	 * @param {boolean} [saveAsTemplate] - Сохранять шаблон
+	 * (в папку шаблоны, а не в черновики)
+	 * @returns {Promise}
+	 */
+	saveDraft (to, from, subject, text, saveAsTemplate = false) {
+		const id = 'CqHSB5oZVN38ZCG9i0yvbi8gElq5I5G7';
+
+		return this.call('messages/draft', {
+			id,
+			from,
+			subject,
+			body: {text},
+			correspondents: {to},
+			'save_as_template': saveAsTemplate
 		});
 	},
 

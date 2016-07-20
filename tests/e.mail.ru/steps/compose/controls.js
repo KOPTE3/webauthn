@@ -21,6 +21,14 @@ class ComposeControlSteps extends ComposeSteps {
 	}
 
 	/**
+	 * Сохранить шаблон
+	 */
+	template () {
+		this.composeControls.openSaveDropdown();
+		this.composeControls.template();
+	}
+
+	/**
 	 * Отправить сообщение
 	 */
 	send () {
@@ -32,6 +40,10 @@ class ComposeControlSteps extends ComposeSteps {
 	 * */
 	cancel () {
 		this.composeControls.cancel();
+	}
+
+	applyTemplate () {
+		this.composeControls.applyTemplate();
 	}
 }
 
