@@ -76,7 +76,7 @@ describe('TESTMAIL-31947: ' +
 			} catch (error) {
 				missingAttachLayer.close();
 				composeControls.cancel();
-				throw error;
+				throw new Error(error);
 			}
 
 			// должно в конце перейти на страницу успешной отправки

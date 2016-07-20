@@ -106,7 +106,7 @@ describe('TESTMAIL-31946 ' +
 				// так как мы поменяли текст, выскочит алерт после закрытия,
 				// нужно его принять
 				composeEditor.allertAccept();
-				throw error;
+				throw new Error(error);
 			}
 
 			// должны перейти на старницу /sendmsgok

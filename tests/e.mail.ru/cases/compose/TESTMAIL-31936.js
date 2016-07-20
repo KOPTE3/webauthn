@@ -1,6 +1,8 @@
 /* global describe, it*/
 'use strict';
 
+let assert = require('assert');
+
 // Messages
 let Messages = require('../../steps/messages');
 let MessagesLettersSteps = require('../../steps/messages/letters');
@@ -92,7 +94,7 @@ describe('TESTMAIL-31936 AJAX. Ответ на письмо. Забытое вл
 			// так как мы поменяли текст, выскочит алерт после закрытия,
 			// нужно его принять
 			composeEditor.allertAccept();
-			throw error;
+			throw new Error(error);
 		}
 
 		messageToolbarSteps.clickFastreplyButton('resend');
@@ -104,7 +106,7 @@ describe('TESTMAIL-31936 AJAX. Ответ на письмо. Забытое вл
 			// так как мы поменяли текст, выскочит алерт после закрытия,
 			// нужно его принять
 			composeEditor.allertAccept();
-			throw error;
+			throw new Error(error);
 		}
 	});
 });

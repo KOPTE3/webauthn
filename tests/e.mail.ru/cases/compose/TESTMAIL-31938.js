@@ -87,14 +87,14 @@ describe('TESTMAIL-31938 НЕ AJAX. Ответ на письмо. Забытое
 
 		try {
 			missingAttachLayer.checkTexts();
-		} catch (err) {
-			throw err;
+		} catch (error) {
+			throw new Error(error);
 		} finally {
 			try {
 				missingAttachLayer.close();
 				missingAttachLayer.shouldBeClosed();
-			} catch (err2) {
-				throw err2;
+			} catch (error) {
+				throw new Error(error);
 			} finally {
 				messageToolbarSteps.clickFastreplyButton('cancel');
 				// так как мы поменяли текст, выскочит алерт после закрытия, нужно его принять

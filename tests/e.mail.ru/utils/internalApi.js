@@ -24,8 +24,8 @@ const call = function (opts) {
 
 			try {
 				result.body = JSON.parse(httpBody).body;
-			} catch (err) {
-				result.body = err;
+			} catch (error) {
+				result.body = error;
 			}
 
 			result.isOK = true;

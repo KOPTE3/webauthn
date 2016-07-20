@@ -57,7 +57,7 @@ class Mail {
 	send () {
 		this.transport.sendMail(this.options, function (error, info) {
 			if (error) {
-				throw error;
+				throw new Error(error);
 			}
 		});
 		browser.pause(DELIVERY_TIMEOUT);

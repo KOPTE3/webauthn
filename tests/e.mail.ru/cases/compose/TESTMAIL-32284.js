@@ -73,7 +73,7 @@ describe('TESTMAIL-32284: ' +
 				// так как мы поменяли текст, выскочит алерт после закрытия,
 				// нужно его принять
 				composeEditor.allertAccept();
-				throw error;
+				throw new Error(error);
 			}
 
 			// должно в конце перейти на страницу успешной отправки

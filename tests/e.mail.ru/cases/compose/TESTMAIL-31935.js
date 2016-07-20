@@ -31,8 +31,6 @@ let Mail = require('../../utils/mail');
 const subject = 'Tect';
 const testText = 'Тестовый текст';
 
-const endUrl = '/sendmsgok';
-
 /**
  * Текст с упоминанием прикрепленного аттача
  */
@@ -89,7 +87,7 @@ describe('TESTMAIL-31935 AJAX. Ответ на письмо. Забытое вл
 				// так как мы поменяли текст, выскочит алерт после закрытия,
 				// нужно его принять
 				composeEditor.allertAccept();
-				throw error;
+				throw new Error(error);
 			}
 
 			messageToolbarSteps.clickFastreplyButton('reply');
@@ -101,7 +99,7 @@ describe('TESTMAIL-31935 AJAX. Ответ на письмо. Забытое вл
 				// так как мы поменяли текст, выскочит алерт после закрытия,
 				// нужно его принять
 				composeEditor.allertAccept();
-				throw error;
+				throw new Error(error);
 			}
 		});
 	}

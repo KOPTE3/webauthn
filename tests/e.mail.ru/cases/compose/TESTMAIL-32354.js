@@ -77,14 +77,14 @@ describe('TESTMAIL-32354 ' +
 			MissingAttachLayer.wait();
 			try {
 				missingAttachLayer.checkTexts();
-			} catch (err) {
-				throw err;
+			} catch (error) {
+				throw new Error(error);
 			} finally {
 				try {
 					missingAttachLayer.close();
 					missingAttachLayer.shouldBeClosed();
-				} catch (err2) {
-					throw err2;
+				} catch (error) {
+					throw new Error(error);
 				} finally {
 					composeEditor.wait();
 					composeControls.cancel();

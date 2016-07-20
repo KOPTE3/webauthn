@@ -31,7 +31,7 @@ class LayerSteps extends Steps {
 			this.layer.wait();
 		} catch (error) {
 			if (error.type !== 'WaitUntilTimeoutError') {
-				throw error;
+				throw new Error(error);
 			}
 		}
 
