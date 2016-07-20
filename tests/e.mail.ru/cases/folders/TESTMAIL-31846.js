@@ -13,7 +13,7 @@ let {options = {
 		'а в папку заходили, то папка свернется'
 }} = module.parent;
 
-let name = path.basename(module.parent ? module.parent.filename : module.filename, '.js');
+let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
 describe(name, () => {
 	before(() => {
@@ -26,6 +26,10 @@ describe(name, () => {
 	});
 
 	it(options.name, () => {
+		let query = {
+			folder_update_period: FOLDER_UPDATE_PERIOD
+		};
+
 		let mainFolderId = Folders.createFolder({
 			name: 'Папка',
 			parent: foldersStore.ids.root
@@ -38,7 +42,7 @@ describe(name, () => {
 
 		let timer = new Date();
 
-		Folders.open();
+		Folders.open(query);
 		Folders.isFolderVisible(folderId);
 		Folders.pause(2000);
 		Folders.goToFolder(mainFolderId);

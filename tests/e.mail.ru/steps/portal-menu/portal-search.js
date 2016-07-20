@@ -147,6 +147,34 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Проверить, что при открытии расширенного поиска
+	 * не дергаются операнды
+	 */
+	checkScrollOnToggleAdvanced () {
+		let scrolled = false;
+		let toggled = false;
+
+		try {
+			browser.waitUntil(() => {
+				if (!toggled) {
+					toggled = true;
+					this.portalSearch.toggleAdvanced();
+				}
+
+				if (this.portalSearch.getFieldScroll() > 0) {
+					scrolled = true;
+
+					return true;
+				}
+			}, 1000, '', 50);
+		} catch (error) {
+			// В данном случае exception в waitUntil - ожидаемое поведение
+		}
+
+		assert(!scrolled, `При открытии расширенного поиска дергаются операнды`);
+	}
+
+	/**
 	 * Ввести текст в операнд.
 	 * Операнд должен быть создан.
 	 *
@@ -158,13 +186,12 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
-	 * Напечатать в операнде и нажать Enter
+	 * Нажать в операнде на enter
 	 *
 	 * @param {string} name - имя операнда
-	 * @param {string} value - что печатать
 	 */
-	setOperandTextAndEnter (name, value) {
-		this.portalSearch.setOperandText(name, value + constants.UNICODE_CHARACTERS.Enter);
+	setOperandEnter (name) {
+		this.portalSearch.operandKeys(name, constants.UNICODE_CHARACTERS.Enter);
 
 		this.search.wait();
 	}
@@ -374,6 +401,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 * @param {string} text
 	 */
 	selectSuggestByArrowDown (text) {
+		const downKey = constants.UNICODE_CHARACTERS.Down;
 		let counter = 0;
 		let done = false;
 		let currentText;
@@ -389,7 +417,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 
 			operandName = this.portalSearch.getActiveOperandName();
 
-			this.portalSearch.operandArrowKey(operandName, 'Down');
+			this.portalSearch.operandKeys(operandName, downKey);
 		}
 
 		assert(done, `Не удалось выбрать пункт ${text} в саджестах`);

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# -----------------------------------------
+# Добавляет название текущей ветки в коммит
+# -----------------------------------------
+
 # An example hook script to prepare the commit log message.
 # Called by "git commit" with the name of the file that has the
 # commit message, followed by the description of the commit

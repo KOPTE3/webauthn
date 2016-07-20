@@ -14,7 +14,7 @@ let {options = {
 		'то папка свернется только через 24 часа даже если в нее не заходили до этого'
 }} = module.parent;
 
-let name = path.basename(module.parent ? module.parent.filename : module.filename, '.js');
+let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
 describe(name, () => {
 	before(() => {
@@ -27,6 +27,10 @@ describe(name, () => {
 	});
 
 	it(options.name, () => {
+		let query = {
+			folder_update_period: FOLDER_UPDATE_PERIOD
+		};
+
 		let firstFolderId = Folders.createFolder({
 			name: 'Тестовая папка',
 			parent: foldersStore.ids.inbox
@@ -43,7 +47,7 @@ describe(name, () => {
 			parent: foldersStore.ids.inbox
 		});
 
-		Folders.open();
+		Folders.open(query);
 		Folders.isFolderVisible(firstFolderId);
 		Folders.isFolderVisible(secondFolderId);
 
