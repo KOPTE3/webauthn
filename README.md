@@ -53,6 +53,23 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 Обновите [JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
 
+### Конфигурирование
+
+Основной файл, который отвечает за конфигурирование сервера и запуск тестов распологается в директории:
+
+```
+tests/<ваш_проект>/config.js
+```
+
+Однако править этот файл не рекомендуется. Вместо этого используйте локальный конфиг:
+
+```
+tests/<ваш_проект>/config.local.js
+```
+
+Дополнительную информацию о формате конфига и его опциях смотрите [здесь](http://webdriver.io/guide/getstarted/configuration.html).
+
+
 ### Использование
 
 Запуск сервера (запускается автоматически, скорее всего вам это не понадобится):
@@ -180,38 +197,55 @@ Messages.auth('basic', {
 });
 ```
 
-#### Store#Authorization#account
+#### store/authorization.account
 
 Получение авторизационных сведений текущего аккаунтпа
 
 ```js
-let AuthStore = require('../../store/authorization');
+let authorization = require('../../store/authorization');
 
-let authStore = new AuthStore();
-
-authStore.account;
+authorization.account;
 ```
 
 Метод .credentials примает те же типы, что Page\#auth
 
 
-#### Store#Authorization#credentials(type=basic, { id, login, domain, type })
+#### store/authorization.credentials(type=basic, { id, login, domain, type }, timeout)
 
 Получение авторизационных данные указанного типа
 
 ```js
-let AuthStore = require('../../store/authorization');
+let authorization = require('../../store/authorization');
 
-let authStore = new AuthStore();
+authorization.credentials('external');
 
-authStore.credentials('external');
-
-authStore.credentials('external', {
+authorization.credentials('external', {
 	domain: 'gmail.com'
 });
 ```
 
 Метод .credentials принимает те же типы, что Page\#auth
+
+ВНИМАНИЕ: обязательно вызываейте этот метод `discard` для осовобождения занимаемого аккаунта!
+
+#### store/authorization/accounts.get
+
+Возвращает учетную запись из локального хранилища
+
+ВНИМАНИЕ: Данные учетные записи разрешается использтвать только в тестах, которые не изменяют состояние аккаунта (например, авторизация). Во всех остальных случаях — используейте store/authorization.credentials
+
+```js
+let accounts = require('../../store/authorization/accounts');
+
+accounts.get('gmail.com', ['pdd']);
+```
+
+Второй параметр опциональный и, как правило, имеет смысл только с некоторыми значениями, например `pdd`.
+
+
+#### store/authorization/providers
+
+Здесь содержится набор методов для получения списка провайдеров с учетом различных фильтров, в т.ч. и топа.
 
 
 ### Структура проекта

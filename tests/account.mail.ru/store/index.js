@@ -1,3 +1,5 @@
 'use strict';
 
-module.exports = {};
+let store = require('../../e.mail.ru/store');
+
+module.exports = store;

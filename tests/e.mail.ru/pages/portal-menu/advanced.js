@@ -19,6 +19,7 @@ class Advanced extends PortalMenu {
 		return this.extend(super.locators, {
 			container,
 			form: `${container} form`,
+			submit: `${container} [type="submit"]`,
 			checkboxes: {
 				unread:	 `${container} [name="q_read"]`,
 				flag:	 `${container} [name="q_flag"]`,
@@ -51,6 +52,13 @@ class Advanced extends PortalMenu {
 	 */
 	isVisible () {
 		return this.page.isVisible(this.locators.form);
+	}
+
+	/**
+	 * Кликнуть на 'Найти'
+	 */
+	clickSubmit () {
+		this.page.click(this.locators.submit);
 	}
 
 	/**
@@ -92,6 +100,19 @@ class Advanced extends PortalMenu {
 	 */
 	selectDateLapse (value) {
 		this.page.selectByValue(this.locators.date.select, value);
+	}
+
+	/**
+	 * Ввести текст в поле
+	 *
+	 * @param {string} name - имя поля
+	 * (from|to|subject|message)
+	 * @param {string} text - содержимое
+	 */
+	setFieldText (name, text) {
+		let input = this.page.element(this.locators.textFields[name]);
+
+		input.setValue(text);
 	}
 
 	/**

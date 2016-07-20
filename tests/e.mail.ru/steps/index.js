@@ -2,6 +2,7 @@
 
 let assert = require('assert');
 let Pages = require('../pages');
+let account = require('../utils/account');
 
 let pages = new Pages();
 
@@ -61,13 +62,48 @@ class Steps {
 	}
 
 	/**
+	 * Откладывает выполнение следюущего шага на заданное время
+	 *
+	 * @param {number} ms
+	 */
+	static pause (ms) {
+		pages.pause(ms);
+	}
+
+	/**
+	 * Обновить страницу
+	 *
+	 * @param {Object} [query] — параметры запроса
+	 */
+	static refresh (query) {
+		pages.refresh(query);
+	}
+
+	/** Сбросить текущую сессию */
+	static reload () {
+		pages.reload();
+	}
+
+	/**
+	 * Проверяет залогинен ли пользователь
+	 *
+	 * @param {string} [email]
+	 * @param {number} [timeout]
+	 */
+	static isActiveUser (email, timeout) {
+		let actual = account.isActiveUser(...arguments);
+
+		assert(actual, `Пользователь "${email}" не авторизован`);
+	}
+
+	/**
 	 * Дожидается требуемного адреса
 	 *
 	 * @param {string|RegExp} url
 	 * @param {string} [query]
 	 * @param {number|string} [options] — timeout, revert
 	 */
-	static waitForUrl (url, query, ...options) {
+	waitForUrl (url, query, ...options) {
 		let actual = pages.waitForUrl(...arguments);
 
 		assert(actual, `Не найдено соответствие с ожидаемым адресом ${url}`);

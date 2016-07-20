@@ -90,7 +90,7 @@ class PageObject {
 			query.ftrs = features.join(' ');
 		}
 
-		let url = URL.request(path, query);
+		let url = URL.format(path, query);
 
 		this.page.url(url);
 		this.wait();
@@ -140,7 +140,7 @@ class PageObject {
 	 */
 	waitForUrl (value, query, ...options) {
 		if (typeof value === 'string') {
-			value = URL.request(...arguments);
+			value = URL.format(...arguments);
 		}
 
 		try {
@@ -243,6 +243,48 @@ class PageObject {
 		if (!clicked) {
 			throw new Error('Can\'t click to all elements' + locator);
 		}
+	}
+
+	/**
+	 * Откладывает выполнение следюущего шага на заданное время
+	 *
+	 * @param {number} ms
+	 */
+	pause (ms) {
+		this.page.pause(ms);
+	}
+
+	/**
+	 * Обновить страницу
+	 *
+	 * @param {Object} [query] — параметры запроса
+	 */
+	refresh (query = {}) {
+		let { features } = cache;
+		let url = this.page.getUrl();
+
+		if (features.length) {
+			query.ftrs = features.join(' ');
+		}
+
+		url = URL.format(url, query);
+
+		this.page.url(url);
+	}
+
+	/** Сбросить текущую сессию */
+	reload () {
+		this.page.deleteCookie();
+		// this.page.reload();
+	}
+
+	/**
+	 * Получить элемент контейнера
+	 *
+	 * @returns {Element}
+	 */
+	getContainerElement () {
+		return this.page.element(this.locators.container);
 	}
 }
 

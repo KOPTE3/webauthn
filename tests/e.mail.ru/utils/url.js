@@ -26,19 +26,29 @@ module.exports = {
 	},
 
 	/**
-	 * Возвращает адрес запроса
+	 * Формирует URL
 	 *
-	 * @param {string} path
-	 * @param {Object} [query]
+	 * @param {string} source - исходный URL
+	 * @param {Object} [add] - параметры которые добавить
+	 * @param {Array} [remove] - параметры которые удалить
 	 * @returns {string}
 	 */
-	request (path, query = {}) {
-		let params = Object.keys(query);
+	format (source, add = {}, remove = []) {
+		let data = url.parse(source);
+		let query = this.parse(data.query);
 
-		if (params.length) {
-			return `${path}?${this.query(query)}`;
+		remove.forEach(name => {
+			delete query[name];
+		});
+
+		Object.assign(query, add);
+
+		let result = data.pathname;
+
+		if (Object.keys(query).length) {
+			result += `?${this.query(query)}`;
 		}
 
-		return path;
+		return result;
 	}
 };

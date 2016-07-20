@@ -1,17 +1,18 @@
 'use strict';
 
+const FOLDER_COLLAPSE_FEATURE = 'collapse-folder';
+
 let assert = require('assert');
 
 let Steps = require('../../steps');
 let FoldersPage = require('../../pages/folders');
+let SearchPage = require('../../pages/search');
 let actions = require('../../utils/actions');
 let dateUtils = require('../../utils/date');
+let store = require('../../store');
 
 /** Модуль для работы с шагами списка папкок */
 class FoldersSteps extends Steps {
-	constructor () {
-		super();
-	}
 
 	/**
 	 * Возвращает ссылку на инстанс страницы
@@ -20,6 +21,10 @@ class FoldersSteps extends Steps {
 	 */
 	static get page () {
 		return new FoldersPage();
+	}
+
+	static get search () {
+		return new SearchPage();
 	}
 
 	static goToFolder (folderId) {
@@ -98,18 +103,52 @@ class FoldersSteps extends Steps {
 		assert(!actual, `Папка "Архив" не должна быть внутри папки "${parentId}"`);
 	}
 
+	static setExpandFolder (folderId) {
+		let actual = actions.expandFolders([folderId]);
+
+		assert(actual.state === 'success');
+	}
+
+	static setCollapseFolder (folderId) {
+		let actual = actions.collapseFolders([folderId]);
+
+		assert(actual.state === 'success');
+	}
+
+	static expandFolder (folderId) {
+		this.page.expandFolder(folderId);
+	}
+
+	static collapseFolder (folderId) {
+		this.page.collapseFolder(folderId);
+	}
+
+	static toggleFolder (folderId) {
+		this.page.toggleFolder(folderId);
+	}
+
 	/**
-	 * Создать папку
+	 * Создать папки
 	 *
-	 * @param {Object} params - данные папки
-	 * @returns {string} - ID созданной папки
+	 * @param {Object} folders - данные папок
+	 * @returns {string} - IDs созданных папок
 	 */
-	static createFolder (params) {
-		let actual = actions.createFolders([params]);
+	static createFolders (folders) {
+		let actual = actions.createFolders(folders);
 
 		assert(actual.state === 'success');
 
-		return actual.value[0];
+		return actual.value;
+	}
+
+	/**
+	 * Создать папку
+	 *
+	 * @param {Object} folder - данные папки
+	 * @returns {string} - ID созданной папки
+	 */
+	static createFolder (folder) {
+		return this.createFolders([folder])[0];
 	}
 
 	static editFolder (params) {
@@ -154,12 +193,55 @@ class FoldersSteps extends Steps {
 		return this.deleteFolder(this.page.getArchiveFolderId());
 	}
 
-	static setTimeOffset (offset) {
-		return dateUtils.setTimeOffset(offset);
+	/**
+	 * Смещает текущее время
+	 * @param {number} offset - секунды
+	 * @param {boolean} [relative] - прибавить к текущему
+	 */
+	static setTimeOffset (offset, relative) {
+		dateUtils.setTimeOffset(offset, relative);
 	}
 
+	/**
+	 * Восстанавливает оригинальную дату
+	 */
 	static resetTimeOffset () {
-		return dateUtils.resetTimeOffset();
+		dateUtils.resetTimeOffset();
+	}
+
+	static enableCollapseFeature (collapseTimeout, updatePeriod, useLastVisit) {
+		let params = `${collapseTimeout}|${updatePeriod}|${Number(useLastVisit)}`;
+		let feature = `${FOLDER_COLLAPSE_FEATURE}`;
+
+		browser.execute(function (updatePeriod) {
+			$.ajaxSetup({
+				data: {
+					folder_update_period: updatePeriod
+				}
+			});
+		}, updatePeriod);
+
+		this.features([`${feature}:${params}`]);
+	}
+
+	static enableThreads () {
+		actions.helperUpdate(store.helpers.threads, {
+			state: true,
+			time: true
+		});
+	}
+
+	/**
+	 * Нажать на фильтр
+	 *
+	 * @param {string} name - (unread|flag|attach)
+	 */
+	static clickFilter (name) {
+		this.page.clickFilter(name);
+
+		let actual = this.search.wait();
+
+		assert(actual, 'Не удалось дождаться открытия страницы поиска');
 	}
 }
 

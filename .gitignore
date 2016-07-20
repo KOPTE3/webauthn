@@ -30,14 +30,15 @@ npm-debug.log
 # Project
 # --------------------------
 
-.idea
-.eslintcache
-.grunt
-.idea_modules/
 *.tmlanguage.cache
 *.tmPreferences.cache
 *.stTheme.cache
 *.sublime-workspace
+.idea
+.eslintcache
+.grunt
+.idea_modules/
 phantomjsdriver.log
 cache
 test-files
+config.local.js

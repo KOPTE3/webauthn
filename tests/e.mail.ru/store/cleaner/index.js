@@ -2,6 +2,15 @@
 
 module.exports = {
 	/**
+	 * Категории рассылок.
+	 */
+	categories: {
+		'promotions': 1,
+		'newsletters': 2,
+		'social': 3
+	},
+
+	/**
 	 * Статистика рассылок.
 	 */
 	stats: {

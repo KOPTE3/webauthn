@@ -10,6 +10,9 @@ let Search = require('../../pages/search');
 
 let PortalSearchStore = require('../../store/portal-menu/portal-search');
 
+let actions = require('../../utils/actions');
+
+const constants = require('../../utils/constants');
 
 /** Модуль для работы с представлением страницы поиска писем */
 class PortalSearchSteps extends PortalMenuSteps {
@@ -19,6 +22,18 @@ class PortalSearchSteps extends PortalMenuSteps {
 		this.portalSearch = new PortalSearch();
 		this.advanced = new Advanced();
 		this.search = new Search();
+	}
+
+	/**
+	 * Поменять ответ АПИ
+	 *
+	 * @param {*[]} body - тело ответа
+	 */
+	mock (body = []) {
+		actions.mockRPC('messages/search/requests', {
+			status: '200',
+			body
+		});
 	}
 
 	/**
@@ -56,6 +71,13 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Кликнуть куда-нибудь наружу поиска
+	 */
+	clickOutside () {
+		this.portalSearch.clickBody();
+	}
+
+	/**
 	 * Проверка наличия операнда
 	 *
 	 * @param {string} name - имя операнда
@@ -64,6 +86,17 @@ class PortalSearchSteps extends PortalMenuSteps {
 		let actual = this.portalSearch.hasOperand(name);
 
 		assert(actual, `Операнд ${name} не появился`);
+	}
+
+	/**
+	 * Проверка отсутсвия операнда
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	noOperand (name) {
+		let actual = this.portalSearch.hasOperand(name, true);
+
+		assert(actual, `Операнд ${name} не исчез`);
 	}
 
 	/**
@@ -100,10 +133,60 @@ class PortalSearchSteps extends PortalMenuSteps {
 		assert(actual === text, `Текст операнда ${name} не равен "${text}"`);
 	}
 
+	/**
+	 * Проверить порядок операндов
+	 *
+	 * @param {string[]} names - массив с именами операндов
+	 */
+	checkOperandsOrder (names) {
+		let actual = this.portalSearch.getAllOperandsNames();
+
+		actual = actual.filter(name => name !== 'blank');
+
+		assert.deepEqual(actual, names, `Порядок операндов не соответствует ${names}`);
+	}
+
+	/**
+	 * Ввести текст в операнд.
+	 * Операнд должен быть создан.
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} value - что печатать
+	 */
+	setOperandText (name, value = '') {
+		this.portalSearch.setOperandText(name, value);
+	}
+
+	/**
+	 * Напечатать в операнде и нажать Enter
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} value - что печатать
+	 */
+	setOperandTextAndEnter (name, value) {
+		this.portalSearch.setOperandText(name, value + constants.UNICODE_CHARACTERS.Enter);
+
+		this.search.wait();
+	}
+
 	checkDateOperandLapse (text) {
 		let actual = this.portalSearch.getOperandDateLapse();
 
 		assert(actual === text, `Текст разброса даты не равен ${text}`);
+	}
+
+	/**
+	 * Проверить, что когда появился новый операнд,
+	 * старый операнд скрылся (не должно быть одновременно два операнда)
+	 *
+	 * @param {string} newName - имя нового операнда
+	 * @param {string} oldName - имя старого операнда
+	 */
+	checkOperandSwitch (newName, oldName) {
+		this.portalSearch.hasOperand(newName);
+		let actual = !this.portalSearch.hasOperandImmediate(oldName);
+
+		assert(actual, `В момент появления ${newName} операнд ${oldName} еще виден`);
 	}
 
 	/**
@@ -139,6 +222,32 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Нажать на дропдаун в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	clickOperandDropdown (name) {
+		this.portalSearch.clickOperandDropdown(name);
+	}
+
+	/**
+	 * Нажать на элемент дропдауна в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} item - пункт меню дродпауна (message|subject|from|to)
+	 */
+	clickOperandDropdownItem (name, item) {
+		this.portalSearch.clickOperandDropdownItem(name, item);
+	}
+
+	/**
+	 * Удалить все операнды
+	 */
+	removeAllOperands () {
+		this.portalSearch.removeAllOperands();
+	}
+
+	/**
 	 * Фокус находится в операнде
 	 *
 	 * @param {string} name - имя операнда
@@ -157,6 +266,17 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Операнд свернут
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	operandNotActive (name) {
+		let actual = this.portalSearch.isOperandActive(name);
+
+		assert(!actual, `Операнд ${name} активен`);
+	}
+
+	/**
 	 * Проверка, что инпут операнда нередактируемый
 	 *
 	 * @param {string} name - имя операнда
@@ -165,6 +285,29 @@ class PortalSearchSteps extends PortalMenuSteps {
 		let actual = this.portalSearch.getOperandInputReadonly(name);
 
 		assert(!!actual, `Операнд ${name} редактируемый`);
+	}
+
+	/**
+	 * Видно начало длинного текста в операнде
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	isOperandTextStartVisible (name) {
+		let actual = this.portalSearch.getOperandInputScroll(name);
+
+		assert(actual === 0, `Начало текста операнда ${name} не видно`);
+	}
+
+	/**
+	 * Курсор стоит в конце текста операнда
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	isOperandCursorAtEnd (name) {
+		let actual = this.portalSearch.getOperandInputSelection(name);
+		let text = this.portalSearch.getOperandText(name);
+
+		assert(actual.start === text.length, `Курсор не в конце текста операнда ${name}`);
 	}
 
 	/**
@@ -186,14 +329,112 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Проверить, что тип саджестов - сохраненные запросы
+	 */
+	isRequestsSuggest () {
+		let actual = this.portalSearch.getSuggestsTitle();
+
+		assert(actual === 'ВЫ НЕДАВНО ИСКАЛИ',
+			`Вместо сохраненных запросов показаны саджесты "${actual}"`);
+	}
+
+	/**
+	 * Проверить, что тип саджестов - люди
+	 */
+	isPeopleSuggest () {
+		let actual = this.portalSearch.getSuggestsTitle();
+
+		assert(actual === 'ЛЮДИ', `Вместо саджестов с людьми показаны саджесты "${actual}"`);
+	}
+
+	/**
+	 * Проверить, что тип саджестов - в письме
+	 */
+	isQuerySuggest () {
+		let actual = this.portalSearch.getSuggestsTitle();
+
+		assert(actual === 'В ПИСЬМЕ', `Вместо саджестов "В письме" показаны саджесты "${actual}"`);
+	}
+
+	/**
+	 * Проверить текст выбранного пункта в саджестах
+	 *
+	 * @param {string} text
+	 */
+	checkSelectedSuggestText (text) {
+		let actual = this.portalSearch.getSelectedSuggestText();
+
+		assert(actual === text, `В саджестах выбран "${actual}" вместо "${text}"`);
+	}
+
+	/**
+	 * Выбрать стрелкой вниз саджест с заданным текстом
+	 * У саджестов емейлов текст состоит из двух строчек с \n
+	 *
+	 * @param {string} text
+	 */
+	selectSuggestByArrowDown (text) {
+		let counter = 0;
+		let done = false;
+		let currentText;
+		let operandName;
+
+		while (counter++ < 10) {
+			currentText = this.portalSearch.getSelectedSuggestText();
+
+			if (currentText === text) {
+				done = true;
+				break;
+			}
+
+			operandName = this.portalSearch.getActiveOperandName();
+
+			this.portalSearch.operandArrowKey(operandName, 'Down');
+		}
+
+		assert(done, `Не удалось выбрать пункт ${text} в саджестах`);
+	}
+
+	/**
+	 * Кликнуть на саджест с заданным текстом
+	 *
+	 * @param {string} text
+	 */
+	clickSuggest (text) {
+		let actual = this.portalSearch.clickSuggest(text);
+
+		assert(actual, `Не удалось кликнуть по саджесту ${text}`);
+
+		this.search.wait();
+	}
+
+	/**
+	 * Нажать на расширенный поиск в саджестах сохраненных запросов
+	 */
+	clickRequestsSuggestsAdvanced () {
+		this.portalSearch.clickRequestsSuggestsAdvanced();
+	}
+
+	/**
 	 * Выполнить простой поиск "в письме"
 	 * @param {string} query - текст запроса
 	 */
 	simpleSearch (query = 'test') {
-		this.portalSearch.removeAllOperands();
+		this.removeAllOperands();
 		this.clickSearchField();
-		this.portalSearch.setOperandText('blank', query);
+		this.setOperandText('blank', query);
 		this.clickSearchButton();
+	}
+
+	/**
+	 * Если нужно добавить операнд, неважно какой
+	 * Будет создан операнд 'message'
+	 */
+	addAnyOperand () {
+		this.clickSearchField();
+		this.setOperandText('blank', PortalSearchStore.anyOperandText);
+		this.clickOutside();
+		this.hasOperand('message');
 	}
 }
 

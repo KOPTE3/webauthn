@@ -34,7 +34,7 @@ module.exports = {
 		browser.waitUntil(function async () {
 			return account.session(options)
 				.then(result => true);
-		});
+		}, 15 * 1000, 'Could not user session');
 
 		this.setCookie();
 	},
@@ -59,22 +59,28 @@ module.exports = {
 			throw new Error('Could not found cookie to continue');
 		}
 
-		if (process.env.NODE_DEBUG) {
-			let email = account.get('email');
+		if (process.NODE_DEBUG) {
+			let email = account.get('email'),
+				border = '='.repeat(50);
 
-			console.log(`Used ${email} account`);
+			console.log(`%s\nUsed ${email} account\n%s`, '='.repeat(50));
 		}
 	},
 
 	/**
 	 * Проверяет залогинен ли пользователь
 	 *
+	 * @param {string} [email]
+	 * @param {number} [timeout]
 	 * @returns {boolean}
 	 */
-	isActiveUser () {
+	isActiveUser (email = '', timeout = 30 * 1000) {
 		try {
-			let { account } = authStore;
-			let email = account.get('email');
+			if (!email) {
+				let { account } = authStore;
+
+				email = account.get('email');
+			}
 
 			return browser.waitUntil(function async () {
 				return browser.executeAsync(function (user, resolve) {
@@ -84,7 +90,7 @@ module.exports = {
 						}
 					}
 				}, email);
-			});
+			}, timeout, `Could not detect user authorization ${email}`);
 		} catch (error) {
 			return false;
 		}
