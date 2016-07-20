@@ -15,6 +15,15 @@ class FoldersPage extends PageObject {
 	}
 
 	/**
+	 * Сколько ждать методу wait
+	 *
+	 * @returns {number}
+	 */
+	get waitTime () {
+		return 3000;
+	}
+
+	/**
 	 * Базовый адрес страницы
 	 *
 	 * @type {string}
@@ -117,7 +126,7 @@ class FoldersPage extends PageObject {
 
 				return result;
 			});
-		}, null, 'Не дождались появления добавленной папки');
+		}, 3000, 'Не дождались появления добавленной папки');
 
 		return folderId;
 	}
@@ -140,7 +149,7 @@ class FoldersPage extends PageObject {
 
 					return this.page.elementIdText(elementId).value === name;
 				});
-			}, null, 'Не дождались появления отредактированной папки');
+			}, 3000, 'Не дождались появления отредактированной папки');
 		}
 	}
 
@@ -150,7 +159,7 @@ class FoldersPage extends PageObject {
 
 		this.page.waitUntil(() => {
 			return !this.page.isExisting(locator);
-		}, null, 'Не дождались удаления папки');
+		}, 3000, 'Не дождались удаления папки');
 	}
 
 	newFolderControl () {

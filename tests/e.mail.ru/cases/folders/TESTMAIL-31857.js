@@ -13,7 +13,7 @@ let {options = {
 		'если пользователь сам свернул папку'
 }} = module.parent;
 
-let name = path.basename(module.parent ? module.parent.filename : module.filename, '.js');
+let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
 describe(name, () => {
 	before(() => {
@@ -26,12 +26,16 @@ describe(name, () => {
 	});
 
 	it(options.name, () => {
+		let query = {
+			folder_update_period: FOLDER_UPDATE_PERIOD
+		};
+
 		let folderId = Folders.createFolder({
 			name: 'Тестовая папка',
 			parent: foldersStore.ids.inbox
 		});
 
-		Folders.open();
+		Folders.open(query);
 		Folders.isFolderVisible(folderId);
 		Folders.collapseFolder(foldersStore.ids.inbox);
 
