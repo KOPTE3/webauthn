@@ -158,13 +158,12 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
-	 * Напечатать в операнде и нажать Enter
+	 * Нажать в операнде на enter
 	 *
 	 * @param {string} name - имя операнда
-	 * @param {string} value - что печатать
 	 */
-	setOperandTextAndEnter (name, value) {
-		this.portalSearch.setOperandText(name, value + constants.UNICODE_CHARACTERS.Enter);
+	setOperandEnter (name) {
+		this.portalSearch.operandKeys(name, constants.UNICODE_CHARACTERS.Enter);
 
 		this.search.wait();
 	}
@@ -374,6 +373,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 * @param {string} text
 	 */
 	selectSuggestByArrowDown (text) {
+		const downKey = constants.UNICODE_CHARACTERS.Down;
 		let counter = 0;
 		let done = false;
 		let currentText;
@@ -389,7 +389,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 
 			operandName = this.portalSearch.getActiveOperandName();
 
-			this.portalSearch.operandArrowKey(operandName, 'Down');
+			this.portalSearch.operandKeys(operandName, downKey);
 		}
 
 		assert(done, `Не удалось выбрать пункт ${text} в саджестах`);
