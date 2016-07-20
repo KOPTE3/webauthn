@@ -64,6 +64,8 @@ describe('TESTMAIL-32287: ' +
 			Compose.refresh();
 			Compose.wait();
 
+			composeEditor.wait();
+
 			// Вписываем текст с сообщением
 			composeEditor.writeMessage(composeEditorStore.texts.withoutAttach);
 			composeControls.send();

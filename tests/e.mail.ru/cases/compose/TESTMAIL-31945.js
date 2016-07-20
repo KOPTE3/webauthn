@@ -64,6 +64,8 @@ describe('TESTMAIL-31945: ' +
 		Compose.refresh();
 		Compose.wait();
 
+		composeEditor.wait();
+
 		// Вписываем текст с сообщением об атаче
 		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 		composeAttaches.uploadAttach('file1.txt');

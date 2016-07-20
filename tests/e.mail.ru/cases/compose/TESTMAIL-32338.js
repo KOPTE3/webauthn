@@ -12,6 +12,9 @@ let сomposeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
 let SentPage = require('../../steps/sent');
 
+let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
+
 // mail
 let Mail = require('../../utils/mail');
 
@@ -50,6 +53,8 @@ describe('TESTMAIL-32338: AJAX. Черновики. Забытое вложен�
 		
 		lettersSteps.openFirstCompose();
 		Compose.wait();
+
+		composeEditor.wait();
 		
 		composeControls.send();
 
