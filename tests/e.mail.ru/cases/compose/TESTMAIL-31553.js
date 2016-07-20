@@ -7,7 +7,6 @@ let ComposeFields = require('../../steps/compose/fields');
 let ComposeEditor = require('../../steps/compose/editor');
 let ComposeControls = require('../../steps/compose/controls');
 let MissingAttachLayer = require('../../steps/layers/missingAttach');
-let composeFieldsStore = require('../../store/compose/fields');
 
 let composeFields = new ComposeFields();
 let composeEditor = new ComposeEditor();

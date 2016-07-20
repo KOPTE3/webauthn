@@ -1,14 +1,16 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let messagesLettersToolbarSteps = require('../../steps/messages/toolbar');
+let MessagesLettersToolbarSteps = require('../../steps/messages/toolbar');
+let messagesLettersToolbarSteps = new MessagesLettersToolbarSteps();
 
 let Compose = require('../../steps/compose');
 let ComposeFields = require('../../steps/compose/fields');
 let composeFields = new ComposeFields();
 let ComposeEditor = require('../../steps/compose/editor');
 let composeEditor = new ComposeEditor();
-let composeControls = require('../../steps/compose/controls');
+let ComposeControls = require('../../steps/compose/controls');
+let composeControls = new ComposeControls();
 let ComposeEditorStore = require('../../store/compose/editor');
 let composeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
