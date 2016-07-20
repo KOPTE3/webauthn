@@ -1,22 +1,31 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let messagesLettersSteps = require('../../steps/messages/letters');
+let MessagesLettersSteps = require('../../steps/messages/letters');
+let messagesLettersSteps = new MessagesLettersSteps();
 
 let Message = require('../../steps/message');
-let messagesFastReplySteps = require('../../steps/message/fastreply');
-let messageToolbarSteps = require('../../steps/message/toolbar');
+let MessageToolbarSteps = require('../../steps/message/toolbar');
+let messageToolbarSteps = new MessageToolbarSteps();
+
+let MessagesFastReplySteps = require('../../steps/message/fastreply');
+let messagesFastReplySteps = new MessagesFastReplySteps();
+
 
 let Compose = require('../../steps/compose');
-let composeEditor = require('../../steps/compose/editor');
-let composeFields = require('../../steps/compose/fields');
-let composeControls = require('../../steps/compose/controls');
-let composeAttaches = require('../../steps/compose/attaches');
+let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
+let ComposeFields = require('../../steps/compose/fields');
+let composeFields = new ComposeFields();
+let ComposeAttaches = require('../../steps/compose/attaches');
+let composeAttaches = new ComposeAttaches();
+
+let ComposeControls = require('../../steps/compose/controls');
 
 let SentPage = require('../../steps/sent');
 
 let composeEditorStore = require('../../store/compose/editor');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 
 let Mail = require('../../utils/mail');
 
@@ -36,8 +45,8 @@ describe('TESTMAIL-31950: НЕ AJAX. Ответ на письмо. Забыто�
 	});
 
 	it('Письмо должно быть отправлено', () => {
-		let { fields } = new ComposeFieldsStore();
-		let { texts } = ComposeEditorStore;
+		let { fields } = composeFieldsStore;
+		let { texts } = composeEditorStore;
 		let mail = new Mail({
 			to: fields.to,
 			subject,
@@ -55,7 +64,7 @@ describe('TESTMAIL-31950: НЕ AJAX. Ответ на письмо. Забыто�
 		Message.features(features);
 		Message.refresh();
 
-		messageToolbarSteps.clickButton('forward');
+		messagesFastReplySteps.clickButton('forward');
 		composeEditor.wait();
 
 		composeFields.setFieldValue('to', fields.to);

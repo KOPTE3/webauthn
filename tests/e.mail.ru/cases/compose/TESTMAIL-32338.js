@@ -2,15 +2,14 @@
 
 let Message = require('../../steps/message');
 let Messages = require('../../steps/messages');
-let lettersSteps = require('../../steps/messages/letters');
-let fastreplySteps = require('../../steps/message/fastreply');
+let LettersSteps = require('../../steps/messages/letters');
+let lettersSteps = new LettersSteps();
 
 let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
-let composeControls = require('../../steps/compose/controls');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let ComposeControls = require('../../steps/compose/controls');
+let composeControls = new ComposeControls();
+let сomposeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
-let messageToolbarSteps = require('../../steps/message/toolbar');
 let SentPage = require('../../steps/sent');
 
 // mail
@@ -36,7 +35,7 @@ describe('TESTMAIL-32338: AJAX. Черновики. Забытое вложен�
 	});
 
 	it('письмо должно быть успешно отправлено', () => {
-		let {fields} = new ComposeFieldsStore();
+		let {fields} = сomposeFieldsStore;
 
 		var mail = new Mail({
 			to: fields.to,
@@ -48,7 +47,8 @@ describe('TESTMAIL-32338: AJAX. Черновики. Забытое вложен�
 
 		Messages.features(features);
 		Messages.open('/messages/drafts/');
-		lettersSteps.openNewestLetter();
+		
+		lettersSteps.openFirstCompose();
 		Compose.wait();
 		
 		composeControls.send();

@@ -1,15 +1,19 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let lettersSteps = require('../../steps/messages/letters');
+let LettersSteps = require('../../steps/messages/letters');
+let lettersSteps = new LettersSteps();
 let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
+let ComposeFields = require('../../steps/compose/fields');
+let composeFields = new ComposeFields();
+let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
 let composeControls = require('../../steps/compose/controls');
 let composeEditorStore = require('../../store/compose/editor');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
-let messageToolbarSteps = require('../../steps/message/toolbar');
+let MessageToolbarSteps = require('../../steps/message/toolbar');
+let messageToolbarSteps = new MessageToolbarSteps();
 let SentPage = require('../../steps/sent');
 
 // mail
@@ -25,7 +29,7 @@ describe('TESTMAIL-31888: AJAX. Черновики. Забытое вложен�
 	});
 
 	it('Письмо должно быть успешно отправлено', () => {
-		let { fields } = new ComposeFieldsStore();
+		let { fields } = composeFieldsStore;
 
 		var mail = new Mail({
 			to: fields.to,
@@ -44,7 +48,7 @@ describe('TESTMAIL-31888: AJAX. Черновики. Забытое вложен�
 		composeControls.draft();
 
 		Messages.open('/messages/drafts/');
-		lettersSteps.openNewestLetter();
+		lettersSteps.openFirstCompose();
 
 		composeEditor.wait();
 

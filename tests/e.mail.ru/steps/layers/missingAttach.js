@@ -13,6 +13,15 @@ class MissingAttachLayerSteps extends LayerSteps {
 	}
 
 	/**
+	 * Возвращает ссылку на инстанс страницы
+	 *
+	 * @type {Object}
+	 */
+	static get page () {
+		return new MissingAttachLayer();
+	}
+
+	/**
 	 * проверяем правильность всех текстов
 	 */
 	checkTexts () {

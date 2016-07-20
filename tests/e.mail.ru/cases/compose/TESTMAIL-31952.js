@@ -1,13 +1,17 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let lettersSteps = require('../../steps/messages/letters');
+let LettersSteps = require('../../steps/messages/letters');
+let lettersSteps = new LettersSteps();
 let Compose = require('../../steps/compose');
-let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
+let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
+let ComposeControls = require('../../steps/compose/controls');
+let composeControls = new ComposeControls();
+let MissingAttachLayer = require('../../steps/layers/missingAttach');
+let missingAttachLayer = new MissingAttachLayer();
 let composeEditorStore = require('../../store/compose/editor');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
 
 
@@ -22,7 +26,7 @@ describe('TESTMAIL-31952: НЕ AJAX. Черновики. Забытое влож
 	it('Попап должен быть показан', () => {
 		Messages.open();
 
-		let { fields } = new ComposeFieldsStore();
+		let { fields } = composeFieldsStore;
 
 		actions.saveDraft(
 			fields.to,
@@ -37,7 +41,7 @@ describe('TESTMAIL-31952: НЕ AJAX. Черновики. Забытое влож
 		]);
 
 		Messages.open('/messages/templates/');
-		lettersSteps.openNewestLetter();
+		lettersSteps.openFirstCompose();
 		composeEditor.wait();
 
 		Messages.features([

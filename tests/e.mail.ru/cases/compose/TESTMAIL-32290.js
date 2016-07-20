@@ -2,21 +2,26 @@
 
 // Messages
 let Messages = require('../../steps/messages');
-let messagesLettersSteps = require('../../steps/messages/letters');
+let MessagesLettersSteps = require('../../steps/messages/letters');
+let messagesLettersSteps = new MessagesLettersSteps();
 
 // Message
 let Message = require('../../steps/message');
-let messagefastreplySteps = require('../../steps/message/fastreply');
-let messageToolbarSteps = require('../../steps/message/toolbar');
+let MessagefastreplySteps = require('../../steps/message/fastreply');
+let messagefastreplySteps = new MessagefastreplySteps();
+let MessageToolbarSteps = require('../../steps/message/toolbar');
+let messageToolbarSteps = new MessageToolbarSteps();
 
 // Compose
-let ComposeFieldsStore = require('../../store/compose/fields');
+let сomposeFieldsStore = require('../../store/compose/fields');
 let composeEditorStore = require('../../store/compose/editor');
-let composeEditor = require('../../steps/compose/editor');
+let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
 
 // settings
 let SettingsMessages = require('../../steps/settings/messages');
-let settingsMessagesForm = require('../../steps/settings/messages/form');
+let SettingsMessagesForm = require('../../steps/settings/messages/form');
+let settingsMessagesForm = new SettingsMessagesForm();
 
 // sent pages
 let SentPage = require('../../steps/sent');
@@ -43,7 +48,7 @@ describe('TESTMAIL-32290: НЕ AJAX. Ответ на письмо. Забыто�
 	});
 
 	it('Попап не должен быть показан', () => {
-		const { fields } = new ComposeFieldsStore();
+		const { fields } = сomposeFieldsStore;
 
 		SettingsMessages.open();
 

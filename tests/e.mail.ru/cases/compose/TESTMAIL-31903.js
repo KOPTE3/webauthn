@@ -1,17 +1,25 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let lettersSteps = require('../../steps/messages/letters');
-let fastreplySteps = require('../../steps/message/fastreply');
+
+let LettersSteps = require('../../steps/messages/letters');
+let lettersSteps = new LettersSteps();
+
+let FastreplySteps = require('../../steps/message/fastreply');
+let fastreplySteps = new FastreplySteps();
 
 let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
+let ComposeFields = require('../../steps/compose/fields');
+let composeFields = new ComposeFields();
+let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
+let MissingAttachLayer = require('../../steps/layers/missingAttach');
+let missingAttachLayer = new MissingAttachLayer();
 let composeEditorStore = require('../../store/compose/editor');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
-let messageToolbarSteps = require('../../steps/message/toolbar');
+let MessageToolbarSteps = require('../../steps/message/toolbar');
+let messageToolbarSteps = new MessageToolbarSteps();
 
 const subject = 'Тестовый текст';
 
@@ -20,7 +28,7 @@ describe('TESTMAIL-31903: AJAX. Ответ на письмо. Забытое в�
 	before(Compose.auth);
 
 	it('Попап должен появится', () => {
-		let { fields } = new ComposeFieldsStore();
+		let { fields } = composeFieldsStore;
 
 		Messages.open();
 

@@ -6,12 +6,15 @@ let MessagesLettersPage = require('../../pages/messages/letters');
 let MessagesSteps = require('../messages');
 let MessagePage = require('../../pages/message');
 
+let ComposePage = require('../../pages/compose');
+
 /** Модуль для работы с письмами */
 class LettersSteps extends MessagesSteps {
 	constructor () {
 		super();
 		this.lettersPage = new MessagesLettersPage();
 		this.messagePage = new MessagePage();
+		this.composePage = new ComposePage();
 	}
 
 	/**
@@ -32,6 +35,16 @@ class LettersSteps extends MessagesSteps {
 		assert(this.lettersPage.openNewestLetter(), 'не удалось кликнуть по новому письму');
 		this.messagePage.wait();
 		assert(this.messagePage.isVisible(), 'страница сообщения не показана');
+	}
+
+	/**
+	 * Открыть первый шаблон/черновик
+	 *
+	 */
+	openFirstCompose () {
+		assert(this.lettersPage.openNewestLetter(), 'не удалось кликнуть по шаблону/черновику');
+		this.composePage.wait();
+		assert(this.composePage.isVisible(), 'страница с открытм шаблоном/черновиком не показана');
 	}
 
 	/**

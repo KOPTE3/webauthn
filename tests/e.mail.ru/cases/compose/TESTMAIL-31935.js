@@ -3,26 +3,26 @@
 
 // Messages
 let Messages = require('../../steps/messages');
-let messagesLettersSteps = require('../../steps/messages/letters');
+let MessagesLettersSteps = require('../../steps/messages/letters');
+let messagesLettersSteps = new MessagesLettersSteps();
 
 // Message
-let Message = require('../../steps/message');
-let messagefastreplySteps = require('../../steps/message/fastreply');
-let messageToolbarSteps = require('../../steps/message/toolbar');
+let MessagefastreplySteps = require('../../steps/message/fastreply');
+let messagefastreplySteps = new MessagefastreplySteps();
+let MessageToolbarSteps = require('../../steps/message/toolbar');
+let messageToolbarSteps = new MessageToolbarSteps();
 
 // Compose
-let СomposeFieldsStore = require('../../store/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
-let composeFields = require('../../steps/compose/fields');
+let сomposeFieldsStore = require('../../store/compose/fields');
+let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
 
-
-let composeAttaches = require('../../steps/compose/attaches');
-
-
-let SentPage = require('../../steps/sent');
+let ComposeAttaches = require('../../steps/compose/attaches');
+let composeAttaches = new ComposeAttaches();
 
 // layers
-let missingAttachLayer = require('../../steps/layers/missingAttach');
+let MissingAttachLayer = require('../../steps/layers/missingAttach');
+let missingAttachLayer = new MissingAttachLayer();
 
 // utils
 let actions = require('../../utils/actions');
@@ -55,7 +55,7 @@ describe('TESTMAIL-31935 AJAX. Ответ на письмо. Забытое вл
 				'disable-fastreply-landmark'
 			];
 
-			const { fields } = new СomposeFieldsStore();
+			const { fields } = сomposeFieldsStore;
 
 			Messages.open();
 

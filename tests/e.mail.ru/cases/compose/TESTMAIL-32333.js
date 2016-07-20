@@ -2,12 +2,16 @@
 
 let Message = require('../../steps/message');
 let Messages = require('../../steps/messages');
-let lettersSteps = require('../../steps/messages/letters');
-let composeControls = require('../../steps/compose/controls');
-let composeFields = require('../../steps/compose/fields');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let LettersSteps = require('../../steps/messages/letters');
+let lettersSteps = new LettersSteps();
+let ComposeControls = require('../../steps/compose/controls');
+let composeControls = new ComposeControls();
+let ComposeFields = require('../../steps/compose/fields');
+let composeFields = new ComposeFields();
+let сomposeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
-let messageToolbarSteps = require('../../steps/message/toolbar');
+let MessageToolbarSteps = require('../../steps/message/toolbar');
+let messageToolbarSteps = new MessageToolbarSteps();
 let SentPage = require('../../steps/sent');
 
 let composeEditorStore = require('../../store/compose/editor');
@@ -35,7 +39,7 @@ describe('TESTMAIL-32333: НЕ AJAX. Ответ на письмо. Забыто�
 	});
 
 	it('письмо должно быть успешно отправлено', () => {
-		let {fields} = new ComposeFieldsStore();
+		let {fields} = сomposeFieldsStore;
 
 		var mail = new Mail({
 			to: fields.to,

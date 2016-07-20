@@ -2,22 +2,25 @@
 
 let Messages = require('../../steps/messages');
 let Message = require('../../steps/message');
-let lettersSteps = require('../../steps/messages/letters');
-let fastreplySteps = require('../../steps/message/fastreply');
+let LettersSteps = require('../../steps/messages/letters');
+let lettersSteps = new LettersSteps();
 let SettingsMessages = require('../../steps/settings/messages');
-let settingsMessagesForm = require('../../steps/settings/messages/form');
+let SettingsMessagesForm = require('../../steps/settings/messages/form');
+let settingsMessagesForm = new SettingsMessagesForm();
 
 let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
+let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
+let ComposeControls = require('../../steps/compose/controls');
+let composeControls = new ComposeControls();
+let MissingAttachLayer = require('../../steps/layers/missingAttach');
+let missingAttachLayer = new MissingAttachLayer();
 let composeEditorStore = require('../../store/compose/editor');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
-let messageToolbarSteps = require('../../steps/message/toolbar');
+let MessageToolbarSteps = require('../../steps/message/toolbar');
+let messageToolbarSteps = new MessageToolbarSteps();
 let SentPage = require('../../steps/sent');
-let composeAttaches = require('../../steps/compose/attaches');
 
 // mail
 let Mail = require('../../utils/mail');
@@ -35,7 +38,7 @@ describe('TESTMAIL-32285: ' +
 		});
 
 		it('Попап не должен появиться', () => {
-			let {fields} = new ComposeFieldsStore();
+			let {fields} = composeFieldsStore;
 			const features = [
 				'check-missing-attach',
 				'disable-ballons',

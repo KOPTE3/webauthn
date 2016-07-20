@@ -1,20 +1,23 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let lettersSteps = require('../../steps/messages/letters');
+let LettersSteps = require('../../steps/messages/letters');
+let lettersSteps = new LettersSteps();
 let Message = require('../../steps/message');
 
 let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
+let ComposeFields = require('../../steps/compose/fields');
+let composeFields = new ComposeFields();
+let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
+let ComposeControls = require('../../steps/compose/controls');
+let composeControls = new ComposeControls();
 let composeEditorStore = require('../../store/compose/editor');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
-let messageToolbarSteps = require('../../steps/message/toolbar');
+let MessageToolbarSteps = require('../../steps/message/toolbar');
+let messageToolbarSteps = new MessageToolbarSteps();
 let SentPage = require('../../steps/sent');
-let composeAttaches = require('../../steps/compose/attaches');
 
 // mail
 let Mail = require('../../utils/mail');
@@ -36,7 +39,7 @@ describe('TESTMAIL-32347: Из НЕ AJAX чтения. Ответ на пись�
 	});
 
 	it('письмо должно быть успешно отправлено', () => {
-		let {fields} = new ComposeFieldsStore();
+		let {fields} = composeFieldsStore;
 
 		var mail = new Mail({
 			to: fields.to,
@@ -58,7 +61,6 @@ describe('TESTMAIL-32347: Из НЕ AJAX чтения. Ответ на пись�
 		messageToolbarSteps.clickButton('reply');
 		composeEditor.wait();
 
-		composeFields.setFieldValue('to', fields.to);
 		composeEditor.writeMessage(composeEditorStore.texts.withoutAttach);
 
 		composeControls.send();

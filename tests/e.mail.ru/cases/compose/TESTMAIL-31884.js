@@ -1,13 +1,16 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let lettersSteps = require('../../steps/messages/letters');
+let LettersSteps = require('../../steps/messages/letters');
+let lettersSteps = new LettersSteps();
 let Compose = require('../../steps/compose');
-let composeEditor = require('../../steps/compose/editor');
+let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
 let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
+let MissingAttachLayer = require('../../steps/layers/missingAttach');
+let missingAttachLayer = new MissingAttachLayer();
 let composeEditorStore = require('../../store/compose/editor');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
 
 const subject = 'TESTMAIL-31884';
@@ -21,7 +24,7 @@ describe('TESTMAIL-31884: AJAX. Черновики. Забытое вложен�
 	it('Попап должен быть показан', () => {
 		Messages.open();
 
-		let { fields } = new ComposeFieldsStore();
+		let { fields } = composeFieldsStore;
 
 		actions.saveDraft(
 			fields.to,
@@ -38,7 +41,7 @@ describe('TESTMAIL-31884: AJAX. Черновики. Забытое вложен�
 		]);
 
 		Messages.open('/messages/drafts/');
-		lettersSteps.openNewestLetter();
+		lettersSteps.openFirstCompose();
 		composeEditor.wait();
 
 		composeEditor.wait();

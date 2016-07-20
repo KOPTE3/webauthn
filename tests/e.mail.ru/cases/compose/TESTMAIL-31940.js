@@ -12,6 +12,7 @@ let MessageToolbarSteps = require('../../steps/message/toolbar');
 let messageToolbarSteps = new MessageToolbarSteps();
 
 // Compose
+let Compose = require('../../steps/compose');
 let composeFieldsStore = require('../../store/compose/fields');
 let ComposeEditor = require('../../steps/compose/editor');
 let composeEditor = new ComposeEditor();

@@ -1,16 +1,19 @@
 'use strict';
 
 let Messages = require('../../steps/messages');
-let lettersSteps = require('../../steps/messages/letters');
-let fastreplySteps = require('../../steps/message/fastreply');
+let LettersSteps = require('../../steps/messages/letters');
+let lettersSteps = new LettersSteps();
+let FastreplySteps = require('../../steps/message/fastreply');
+let fastreplySteps = new FastreplySteps();
 
 let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let ComposeFields = require('../../steps/compose/fields');
+let composeFields = new ComposeFields();
+let сomposeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
-let messageToolbarSteps = require('../../steps/message/toolbar');
+let MessageToolbarSteps = require('../../steps/message/toolbar');
+let messageToolbarSteps = new MessageToolbarSteps();
 let SentPage = require('../../steps/sent');
-let composeAttaches = require('../../steps/compose/attaches');
 
 // mail
 let Mail = require('../../utils/mail');
@@ -28,7 +31,7 @@ describe('TESTMAIL-32332: AJAX. Ответ на письмо. ' +
 	});
 
 	it('письмо должно быть успешно отправлено', () => {
-		let {fields} = new ComposeFieldsStore();
+		let {fields} = сomposeFieldsStore;
 
 		var mail = new Mail({
 			to: fields.to,

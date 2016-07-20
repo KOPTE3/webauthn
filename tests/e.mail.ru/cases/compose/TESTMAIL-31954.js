@@ -1,20 +1,18 @@
 'use strict';
 
-let Messages = require('../../steps/messages');
-let lettersSteps = require('../../steps/messages/letters');
-let fastanswerSteps = require('../../steps/message/fastreply');
-
 let Compose = require('../../steps/compose');
-let composeFields = require('../../steps/compose/fields');
-let composeEditor = require('../../steps/compose/editor');
-let composeControls = require('../../steps/compose/controls');
-let missingAttachLayer = require('../../steps/layers/missingAttach');
+let ComposeFields = require('../../steps/compose/fields');
+let composeFields = new ComposeFields();
+let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
+let ComposeControls = require('../../steps/compose/controls');
+let composeControls = new ComposeControls();
 let ComposeEditorStore = require('../../store/compose/editor');
-let ComposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
-let messageToolbarSteps = require('../../steps/message/toolbar');
 let SentPage = require('../../steps/sent');
-let composeAttaches = require('../../steps/compose/attaches');
+let ComposeAttaches = require('../../steps/compose/attaches');
+let composeAttaches = new ComposeAttaches();
 
 // mail
 let Mail = require('../../utils/mail');
@@ -29,7 +27,7 @@ describe('TESTMAIL-31954: НЕ AJAX. Черновики. Забытое влож
 	});
 
 	it('письмо должно быть успешно отправлено', () => {
-		let {fields} = new ComposeFieldsStore();
+		let {fields} = composeFieldsStore;
 		let {texts} = ComposeEditorStore;
 
 		Compose.features([
