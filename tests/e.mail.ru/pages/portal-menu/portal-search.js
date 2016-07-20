@@ -262,7 +262,7 @@ class PortalSearch extends PortalMenu {
 	 * Ввести текст в операнд, не стирая предыдущий
 	 *
 	 * @param {string} name - имя операнда
-	 * @param {string} keys - что печатать
+	 * @param {string|string[]} keys - что печатать
 	 */
 	operandKeys (name, keys) {
 		let input = this.getOperandInput(name);
@@ -337,12 +337,17 @@ class PortalSearch extends PortalMenu {
 	 * Операнд в режиме редактирования
 	 *
 	 * @param {string} name - имя операнда
+	 * @param {boolean} reverse - обратная проверка
 	 * @returns {boolean}
 	 */
-	isOperandActive (name) {
+	isOperandActive (name, reverse = false) {
 		let active = this.locators.operands.active.slice(1);
 
-		return this.page.hasClass(this.locators.operands[name], active);
+		return this.page.waitUntil(() => {
+			return reverse ?
+				!this.page.hasClass(this.locators.operands[name], active) :
+				this.page.hasClass(this.locators.operands[name], active);
+		});
 	}
 
 	/**
@@ -388,6 +393,18 @@ class PortalSearch extends PortalMenu {
 	 */
 	clickOperand (name) {
 		this.page.click(this.locators.operands[name]);
+	}
+
+	/**
+	 * Кликнуть в край операнда (не напрямую в инпут и не по дропдауну/крестику)
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	clickOperandEdge (name) {
+		let operand = this.getOperand(name);
+
+		this.page.moveTo(operand.value.ELEMENT, 1, 1);
+		this.page.leftClick();
 	}
 
 	/**

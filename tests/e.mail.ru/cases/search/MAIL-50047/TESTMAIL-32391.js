@@ -33,7 +33,7 @@ describe('TESTMAIL-32391: Поиск. Новые операнды.', () => {
 
 		portalSearchSteps.clickSearchField();
 		portalSearchSteps.setOperandText('blank', 'аттач');
-		portalSearchSteps.setOperandEnter('blank');
+		portalSearchSteps.operandEnter('blank');
 
 		portalSearchSteps.clickOperandClose('message');
 
