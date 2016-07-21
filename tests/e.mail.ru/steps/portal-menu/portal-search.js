@@ -111,6 +111,28 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Проверить что у операнда виден аватар
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	operandHasAvatar (name) {
+		let actual = this.portalSearch.operandHasAvatar(name);
+
+		assert(actual, `У операнда ${name} не виден аватар`);
+	}
+
+	/**
+	 * Проверить что у операнда не виден аватар
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	operandNoAvatar (name) {
+		let actual = !this.portalSearch.operandHasAvatar(name);
+
+		assert(actual, `У операнда ${name} виден аватар`);
+	}
+
+	/**
 	 * Проверить, что у операнда есть крестик
 	 *
 	 * @param {string} name - имя операнда
@@ -131,6 +153,19 @@ class PortalSearchSteps extends PortalMenuSteps {
 		let actual = this.portalSearch.getOperandText(name);
 
 		assert(actual === text, `Текст операнда ${name} не равен "${text}"`);
+	}
+
+	/**
+	 * Проверить наличие email в урле аватара
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string} email - email, для которого должен быть аватар
+	 */
+	checkOperandAvatar (name, email) {
+		let avatarSrc = this.portalSearch.getOperandAvatarSrc(name);
+		let actual = avatarSrc.value.includes(`email=${encodeURIComponent(email)}`);
+
+		assert(actual, `Аватар операнда ${name} не содержит емейл "${email}"`);
 	}
 
 	/**
@@ -211,6 +246,15 @@ class PortalSearchSteps extends PortalMenuSteps {
 			// отпустить шифт
 			this.portalSearch.operandKeys(name, constants.UNICODE_CHARACTERS.Shift);
 		}
+	}
+
+	/**
+	 * Нажать в операнде на Escape
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	operandEscape (name) {
+		this.portalSearch.operandKeys(name, constants.UNICODE_CHARACTERS.Escape);
 	}
 
 	checkDateOperandLapse (text) {

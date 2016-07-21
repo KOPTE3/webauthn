@@ -2,7 +2,7 @@
 
 let PortalMenu = require('../portal-menu');
 let Advanced = require('../portal-menu/advanced');
-let searchUtils = require('../../utils/portal-menu/portal-search');
+let utils = require('../../utils/portal-menu/portal-search');
 
 /** Модуль для работы с поиском в синей шапке */
 class PortalSearch extends PortalMenu {
@@ -57,6 +57,8 @@ class PortalSearch extends PortalMenu {
 				dateInput: '.b-operand__date-input',
 				active: '.b-operand_active',
 				lapse: `${container} [data-operand-name="q_date"] .b-operand__date-lapse`,
+				avatar: '.b-operand__userpic',
+				avatarElement: '.b-userpic',
 				dropdown: {
 					ctrl: '.b-operand__dropdown-ctrl',
 					list: '.b-dropdown__list',
@@ -134,7 +136,7 @@ class PortalSearch extends PortalMenu {
 		return operands.value.map(item => {
 			let name = this.page.elementIdAttribute(item.ELEMENT, 'data-operand-name');
 
-			return searchUtils.getOperandName(name.value);
+			return utils.getOperandName(name.value);
 		});
 	}
 
@@ -156,7 +158,7 @@ class PortalSearch extends PortalMenu {
 		let operand = this.getActiveOperand();
 		let name = this.page.elementIdAttribute(operand.value.ELEMENT, 'data-operand-name');
 
-		return searchUtils.getOperandName(name.value);
+		return utils.getOperandName(name.value);
 	}
 
 	/**
@@ -206,7 +208,7 @@ class PortalSearch extends PortalMenu {
 	 * @returns {number}
 	 */
 	getOperandInputScroll (name) {
-		let locator = searchUtils.getOperandInputLocator(this.locators.operands, name);
+		let locator = utils.getOperandInputLocator(this.locators.operands, name);
 
 		return this.page.execute(function (selector) {
 			return document.querySelector(selector).scrollLeft;
@@ -220,7 +222,7 @@ class PortalSearch extends PortalMenu {
 	 * @return {*} - объект с полями start, end
 	 */
 	getOperandInputSelection (name) {
-		let locator = searchUtils.getOperandInputLocator(this.locators.operands, name);
+		let locator = utils.getOperandInputLocator(this.locators.operands, name);
 
 		return this.page.execute(function (selector) {
 			var input = document.querySelector(selector);
@@ -271,6 +273,19 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Получить значение background-image для аватара
+	 *
+	 * @param {string} name - имя операнда
+	 * @return {Object} { property: 'background-image', value: '...' }
+	 */
+	getOperandAvatarSrc (name) {
+		let locator = utils.getOperandLocator(this.locators.operands, name, 'avatarElement');
+		let avatar = this.page.element(locator);
+
+		return avatar.getCssProperty('background-image');
+	}
+
+	/**
 	 * Вернуть текст разброса даты в операнде, если он виден.
 	 *
 	 * @returns {string}
@@ -284,7 +299,6 @@ class PortalSearch extends PortalMenu {
 
 		return text;
 	}
-
 
 	/**
 	 * Операнд существует
@@ -318,6 +332,19 @@ class PortalSearch extends PortalMenu {
 		let locator = this.locators.operands.icons[name];
 
 		return !!this.page.elementIdElement(operand.value.ELEMENT, locator);
+	}
+
+	/**
+	 * Проверить что у операнда существует и виден аватар
+	 *
+	 * @param {string} name - имя операнда
+	 * @return {boolean}
+	 */
+	operandHasAvatar (name) {
+		let locator = utils.getOperandLocator(this.locators.operands, name, 'avatar');
+		let avatar = this.page.element(locator);
+
+		return avatar.value && this.page.isVisible(locator);
 	}
 
 	/**
@@ -356,7 +383,7 @@ class PortalSearch extends PortalMenu {
 	 * @returns {boolean}
 	 */
 	operandHasFocus (name) {
-		let locator = searchUtils.getOperandInputLocator(this.locators.operands, name);
+		let locator = utils.getOperandInputLocator(this.locators.operands, name);
 
 		return this.page.hasFocus(locator);
 	}
@@ -413,7 +440,7 @@ class PortalSearch extends PortalMenu {
 	 * @param {string} name - имя операнда
 	 */
 	clickOperandClose (name) {
-		let locator = searchUtils.getOperandLocator(this.locators.operands, name, 'close');
+		let locator = utils.getOperandLocator(this.locators.operands, name, 'close');
 
 		this.page.click(locator);
 	}
@@ -424,7 +451,7 @@ class PortalSearch extends PortalMenu {
 	 * @param {string} name - имя операнда
 	 */
 	clickOperandDropdown (name) {
-		let locator = searchUtils.getOperandDropdownLocator(this.locators.operands, name, 'ctrl');
+		let locator = utils.getOperandDropdownLocator(this.locators.operands, name, 'ctrl');
 
 		this.page.click(locator);
 	}
@@ -436,7 +463,7 @@ class PortalSearch extends PortalMenu {
 	 * @param {string} item - пункт меню дродпауна (message|subject|from|to)
 	 */
 	clickOperandDropdownItem (name, item) {
-		let locator = searchUtils.getOperandDropdownLocator(this.locators.operands, name, item);
+		let locator = utils.getOperandDropdownLocator(this.locators.operands, name, item);
 
 		this.page.click(locator);
 	}
