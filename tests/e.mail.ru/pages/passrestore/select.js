@@ -65,6 +65,7 @@ class SelectViewPage extends PassrestorePage {
 			phoneCaptchaField: `${phoneTabBlock} .js-captcha`,
 
 			phoneLayer,
+			phoneLayerInfo: `${phoneLayer} .info`,
 			phoneLayerForm: `${phoneLayer} form`,
 			phoneCodeField: '#signupsms_code',
 			phoneCodeSubmitBtn: `${phoneLayer} [type="submit"]`
@@ -193,6 +194,15 @@ class SelectViewPage extends PassrestorePage {
 			color: element.getCssProperty('color').parsed.hex,
 			isMaskVisible: element.isVisible(phoneMask)
 		};
+	}
+
+	/**
+	 * Get indfo message in phoneLayer
+	 *
+	 * @return {string} value
+	 */
+	getPhoneLayerInfo () {
+		return this.page.getText(this.locators.phoneLayerInfo);
 	}
 
 	/**

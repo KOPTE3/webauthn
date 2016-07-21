@@ -65,6 +65,20 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	}
 
 	/**
+	 * Test phone displayed in phoneLayer
+	 *
+	 * @param {string} head - '+7 (912) 2'
+	 * @param {string} value - missing numbers '11'
+	 */
+	checkPhoneLayer (head, value) {
+		let result = this.page.getPhoneLayerInfo();
+		let phone = head + value + '-**-**';
+		let message = 'Код подтверждения отправлен на номер ' + phone + '.';
+
+		assert.equal(result, message, 'В номере телефона цифры некорректны');
+	}
+
+	/**
 	 * Wait for phone tab
 	 */
 	waitForPhoneTab () {
