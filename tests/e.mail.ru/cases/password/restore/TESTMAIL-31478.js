@@ -5,8 +5,6 @@ let usersStore = require('../../../store/password/restore/users');
 
 let selectSteps = new SelectSteps();
 
-let assert = require('assert');
-
 describe('TESTMAIL-31478: Восстановление пароля. ' +
 	'Ввод скрытых цифр телефона.', () => {
 	it('Проверить отсутствие возможности ввести более двух цифр', () => {

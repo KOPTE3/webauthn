@@ -24,6 +24,15 @@ class SelectViewPage extends PassrestorePage {
 	}
 
 	/**
+	 * Дождаться открытия страницы
+	 *
+	 * @returns {boolean}
+	 */
+	wait () {
+		return this.page.waitForVisible(this.locators.container);
+	}
+
+	/**
 	 *
 	 * Локаторы
 	 *
@@ -31,7 +40,8 @@ class SelectViewPage extends PassrestorePage {
 	 */
 	get locators () {
 		let container = '.js-view-select-type',
-			phoneTabBlock = '.js-phones-tab-block';
+			phoneTabBlock = '.js-phones-tab-block',
+			phoneLayer = '.is-signupsms_in';
 
 		return {
 			container,
@@ -53,8 +63,11 @@ class SelectViewPage extends PassrestorePage {
 
 			phoneCaptchaImg: '#password-recovery__remind__new__phone_captcha',
 			phoneCaptchaField: `${phoneTabBlock} .js-captcha`,
+
+			phoneLayer,
+			phoneLayerForm: `${phoneLayer} form`,
 			phoneCodeField: '#signupsms_code',
-			phoneLayer: '.is-signupsms_in'
+			phoneCodeSubmitBtn: `${phoneLayer} [type="submit"]`
 		};
 	}
 
@@ -65,6 +78,12 @@ class SelectViewPage extends PassrestorePage {
 		this.page.submitForm(this.locators.form);
 	}
 
+	/**
+	 * Попытка восстановить пароль
+	 */
+	submitPhoneCodeLayer () {
+		this.page.submitForm(this.locators.phoneCodeSubmitBtn);
+	}
 
 	/**
 	 * Get X-Captcha-Id header from page

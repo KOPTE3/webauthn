@@ -22,6 +22,16 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	}
 
 	/**
+	 * Дождаться открытия страницы
+	 *
+	 */
+	wait () {
+		let result = this.page.wait();
+
+		assert(result, `Страница восстановления пароля не открылась`);
+	}
+
+	/**
 	 * Fill phone input field
 	 * @param {string} value
 	 * @param {int} [id]
@@ -68,6 +78,7 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 		this.page.waitForPhoneLayer();
 	}
 
+
 	/**
 	 * Crack phone captch
 	 */
@@ -91,6 +102,7 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 
 		this.page.fillSmsCode(code.value);
 	}
+
 
 	/**
 	 * Check if phone input is selected (multiple)
@@ -143,6 +155,13 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	 */
 	submitForm () {
 		this.page.submitForm();
+	}
+
+	/**
+	 * Submit sms code layer
+	 */
+	submitPhoneLayer () {
+		this.page.submitPhoneCodeLayer();
 	}
 
 	/**
