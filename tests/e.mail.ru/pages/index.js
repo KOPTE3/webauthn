@@ -55,7 +55,7 @@ class PageObject {
 	 * @returns {boolean}
 	 */
 	wait () {
-		return this.page.waitForExist(this.locators.container, this.waitTime);
+		return this.page.waitForVisible(this.locators.container);
 	}
 
 	/**

@@ -27,6 +27,7 @@ class ComposePage extends PageObject {
 			container: '#b-compose'
 		};
 	}
+
 }
 
 module.exports = ComposePage;
