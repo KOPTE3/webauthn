@@ -152,7 +152,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 	checkOperandText (name, text) {
 		let actual = this.portalSearch.getOperandText(name);
 
-		assert(actual === text, `Текст операнда ${name} не равен "${text}"`);
+		assert.equal(actual, text, `Текст операнда ${name} не равен "${text}"`);
 	}
 
 	/**
@@ -260,7 +260,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 	checkDateOperandLapse (text) {
 		let actual = this.portalSearch.getOperandDateLapse();
 
-		assert(actual === text, `Текст разброса даты не равен ${text}`);
+		assert.equal(actual, text, `Текст разброса даты не равен ${text}`);
 	}
 
 	/**
@@ -404,7 +404,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 	isOperandTextStartVisible (name) {
 		let actual = this.portalSearch.getOperandInputScroll(name);
 
-		assert(actual === 0, `Начало текста операнда ${name} не видно`);
+		assert.equal(actual, 0, `Начало текста операнда ${name} не видно`);
 	}
 
 	/**
@@ -416,7 +416,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 		let actual = this.portalSearch.getOperandInputSelection(name);
 		let text = this.portalSearch.getOperandText(name);
 
-		assert(actual.start === text.length, `Курсор не в конце текста операнда ${name}`);
+		assert.equal(actual.start, text.length, `Курсор не в конце текста операнда ${name}`);
 	}
 
 	/**
@@ -443,7 +443,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 	isRequestsSuggest () {
 		let actual = this.portalSearch.getSuggestsTitle();
 
-		assert(actual === 'ВЫ НЕДАВНО ИСКАЛИ',
+		assert.equal(actual, 'ВЫ НЕДАВНО ИСКАЛИ',
 			`Вместо сохраненных запросов показаны саджесты "${actual}"`);
 	}
 
@@ -453,7 +453,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 	isPeopleSuggest () {
 		let actual = this.portalSearch.getSuggestsTitle();
 
-		assert(actual === 'ЛЮДИ', `Вместо саджестов с людьми показаны саджесты "${actual}"`);
+		assert.equal(actual, 'ЛЮДИ', `Вместо саджестов с людьми показаны саджесты "${actual}"`);
 	}
 
 	/**
@@ -462,7 +462,8 @@ class PortalSearchSteps extends PortalMenuSteps {
 	isQuerySuggest () {
 		let actual = this.portalSearch.getSuggestsTitle();
 
-		assert(actual === 'В ПИСЬМЕ', `Вместо саджестов "В письме" показаны саджесты "${actual}"`);
+		assert.equal(actual, 'В ПИСЬМЕ',
+			`Вместо саджестов "В письме" показаны саджесты "${actual}"`);
 	}
 
 	/**
@@ -473,7 +474,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 	checkSelectedSuggestText (text) {
 		let actual = this.portalSearch.getSelectedSuggestText();
 
-		assert(actual === text, `В саджестах выбран "${actual}" вместо "${text}"`);
+		assert.equal(actual, text, `В саджестах выбран "${actual}" вместо "${text}"`);
 	}
 
 	/**

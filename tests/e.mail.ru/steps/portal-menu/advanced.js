@@ -94,7 +94,7 @@ class AdvancedSteps extends PortalMenuSteps {
 
 		let actual = this.advanced.getSelectDateValue();
 
-		assert(actual === value, `Не удалось установить разброс даты: ${value}`);
+		assert.equal(actual, value, `Не удалось установить разброс даты: ${value}`);
 	}
 
 	/**
@@ -118,7 +118,7 @@ class AdvancedSteps extends PortalMenuSteps {
 	checkFieldText (name, text) {
 		let actual = this.advanced.getFieldText(name);
 
-		assert(actual === text, `Текст поля ${name} не равен ${text}`);
+		assert.equal(actual, text, `Текст поля ${name} не равен ${text}`);
 	}
 
 	/**
@@ -141,7 +141,7 @@ class AdvancedSteps extends PortalMenuSteps {
 	isChecked (name, reverse) {
 		let actual = this.advanced.isChecked(name);
 
-		assert(actual === !reverse, `Чекбокс ${name}${reverse ? '' : ' не'} выбран`);
+		assert.equal(actual, !reverse, `Чекбокс ${name}${reverse ? '' : ' не'} выбран`);
 	}
 
 	/**
@@ -152,7 +152,7 @@ class AdvancedSteps extends PortalMenuSteps {
 	checkSelectDateText (text) {
 		let actual = this.advanced.getSelectDateText();
 
-		assert(actual === text, `Текст в селекте разброса даты не равен ${text}`);
+		assert.equal(actual, text, `Текст в селекте разброса даты не равен ${text}`);
 	}
 
 	/**
@@ -163,7 +163,7 @@ class AdvancedSteps extends PortalMenuSteps {
 	checkDateFieldText (text) {
 		let actual = this.advanced.getDateFieldText();
 
-		assert(actual === text, `Текст в поле даты не равен ${text}`);
+		assert.equal(actual, text, `Текст в поле даты не равен ${text}`);
 	}
 
 	/**
