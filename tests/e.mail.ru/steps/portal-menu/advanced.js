@@ -108,6 +108,18 @@ class AdvancedSteps extends PortalMenuSteps {
 		this.advanced.setFieldText(name, text);
 	}
 
+	/**
+	 * Проверить текст в поле
+	 *
+	 * @param {string} name - имя поля
+	 * (from|to|subject|message)
+	 * @param {string} text - содержимое
+	 */
+	checkFieldText (name, text) {
+		let actual = this.advanced.getFieldText(name);
+
+		assert(actual === text, `Текст поля ${name} не равен ${text}`);
+	}
 
 	/**
 	 * Курсор в заданном поле

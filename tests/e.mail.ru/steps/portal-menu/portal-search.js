@@ -375,6 +375,17 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Проверить, что операнд полностью виден
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	isOperandVisible (name) {
+		let actual = this.portalSearch.isOperandVisible(name);
+
+		assert(actual, `Операнд ${name} не виден`);
+	}
+
+	/**
 	 * Проверка, что инпут операнда нередактируемый
 	 *
 	 * @param {string} name - имя операнда
