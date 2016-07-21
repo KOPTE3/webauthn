@@ -221,6 +221,16 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Ввести текст в операнд, не стирая предыдущий
+	 *
+	 * @param {string} name - имя операнда
+	 * @param {string|string[]} keys - что печатать
+	 */
+	operandKeys (name, keys) {
+		this.portalSearch.operandKeys(name, keys);
+	}
+
+	/**
 	 * Нажать в операнде на enter
 	 *
 	 * @param {string} name - имя операнда
