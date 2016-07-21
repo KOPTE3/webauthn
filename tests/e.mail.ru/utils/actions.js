@@ -222,6 +222,19 @@ module.exports = {
 	},
 
 	/**
+	 * Закрывает запароленную папку
+	 *
+	 * @param {Array} ids - идентификаторы папок
+	 *
+	 * @returns {Promise}
+	 */
+	closeFolders (ids) {
+		return this.call('folders/close', {
+			ids
+		});
+	},
+
+	/**
 	 * Создаёт папки
 	 *
 	 * @param {*[]} folders - папки

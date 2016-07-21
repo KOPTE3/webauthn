@@ -103,6 +103,12 @@ class FoldersSteps extends Steps {
 		assert(!actual, `Папка "Архив" не должна быть внутри папки "${parentId}"`);
 	}
 
+	static setCloseFolder (folderId) {
+		let actual = actions.closeFolders([folderId]);
+
+		assert(actual.state === 'success');
+	}
+
 	static setExpandFolder (folderId) {
 		let actual = actions.expandFolders([folderId]);
 
