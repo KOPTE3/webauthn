@@ -116,6 +116,17 @@ class Advanced extends PortalMenu {
 	}
 
 	/**
+	 * Получить значение текстового поля
+	 *
+	 * @param {string} name - имя поля
+	 * (from|to|subject|message)
+	 * @return {string}
+	 */
+	getFieldText (name) {
+		return this.page.getValue(this.locators.textFields[name]);
+	}
+
+	/**
 	 * Выбран ли чекбокс
 	 *
 	 * @param {string} name - unread|flag|attach

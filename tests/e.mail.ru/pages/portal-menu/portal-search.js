@@ -28,6 +28,7 @@ class PortalSearch extends PortalMenu {
 			advancedToggle: `${container} .js-dropdown-button`,
 			searchField: `${container} .pm-toolbar__search__label__wrapper`,
 			searchScroll: `${container} .w-portal-menu__search__operands__width_inner`,
+			operandsWrapper: `${container} .w-portal-menu__search__operands`,
 			suggests: {
 				container: `${container} .pm-toolbar__suggests`,
 				title: `${container} .pm-toolbar__suggests .pm-toolbar__suggests__group__title`,
@@ -375,6 +376,22 @@ class PortalSearch extends PortalMenu {
 				!this.page.hasClass(this.locators.operands[name], active) :
 				this.page.hasClass(this.locators.operands[name], active);
 		});
+	}
+
+	/**
+	 * Проверить, что операнд полностью виден
+	 *
+	 * @param {string} name - имя операнда
+	 * @return {boolean}
+	 */
+	isOperandVisible (name) {
+		let wrapperOffset = this.page.getLocation(this.locators.operandsWrapper);
+		let wrapperSize = this.page.getElementSize(this.locators.operandsWrapper);
+		let operandOffset = this.page.getLocation(this.locators.operands[name]);
+		let operandSize = this.page.getElementSize(this.locators.operands[name]);
+
+		return operandOffset.x >= wrapperOffset.x &&
+			operandOffset.x + operandSize.width <= wrapperOffset.x + wrapperSize.width;
 	}
 
 	/**
