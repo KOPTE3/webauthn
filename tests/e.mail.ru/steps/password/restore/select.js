@@ -103,7 +103,6 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 		this.page.fillSmsCode(code.value);
 	}
 
-
 	/**
 	 * Check if phone input is selected (multiple)
 	 * @param {int} id
