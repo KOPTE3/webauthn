@@ -106,19 +106,19 @@ class FoldersSteps extends Steps {
 	static setCloseFolder (folderId) {
 		let actual = actions.closeFolders([folderId]);
 
-		assert(actual.state === 'success');
+		assert.equal(actual.state, 'success', 'Не удалось закрыть запароленную папку');
 	}
 
 	static setExpandFolder (folderId) {
 		let actual = actions.expandFolders([folderId]);
 
-		assert(actual.state === 'success');
+		assert.equal(actual.state, 'success', 'Не удалось расхлопнуть папку');
 	}
 
 	static setCollapseFolder (folderId) {
 		let actual = actions.collapseFolders([folderId]);
 
-		assert(actual.state === 'success');
+		assert.equal(actual.state, 'success', 'Не удалось схлопнуть папку');
 	}
 
 	static expandFolder (folderId) {
@@ -142,7 +142,7 @@ class FoldersSteps extends Steps {
 	static createFolders (folders) {
 		let actual = actions.createFolders(folders);
 
-		assert(actual.state === 'success');
+		assert.equal(actual.state, 'success', 'Не удалось создать папки');
 
 		return actual.value;
 	}
@@ -160,13 +160,13 @@ class FoldersSteps extends Steps {
 	static editFolder (params) {
 		let actual = actions.editFolders([params]);
 
-		assert(actual.state === 'success');
+		assert.equal(actual.state, 'success', 'Не удалось отредактировать папку');
 	}
 
 	static deleteFolder (folderId) {
 		let actual = actions.deleteFolders([folderId]);
 
-		assert(actual.state === 'success');
+		assert.equal(actual.state, 'success', 'Не удалось удалить папку');
 	}
 
 	static createArchive () {
