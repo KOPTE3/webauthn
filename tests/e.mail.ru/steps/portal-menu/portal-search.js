@@ -213,6 +213,15 @@ class PortalSearchSteps extends PortalMenuSteps {
 		}
 	}
 
+	/**
+	 * Нажать в операнде на Escape
+	 *
+	 * @param {string} name - имя операнда
+	 */
+	operandEscape (name) {
+		this.portalSearch.operandKeys(name, constants.UNICODE_CHARACTERS.Escape);
+	}
+
 	checkDateOperandLapse (text) {
 		let actual = this.portalSearch.getOperandDateLapse();
 
