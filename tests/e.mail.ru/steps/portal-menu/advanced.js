@@ -6,6 +6,8 @@ let PortalMenuSteps = require('../../steps/portal-menu');
 let Advanced = require('../../pages/portal-menu/advanced');
 let Search = require('../../pages/search');
 
+const constants = require('../../utils/constants');
+
 /** Модуль для работы с представлением страницы поиска писем */
 class AdvancedSteps extends PortalMenuSteps {
 	constructor () {
@@ -122,6 +124,16 @@ class AdvancedSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Нажать на клавиши в поле
+	 *
+	 * @param {string} name - имя поля
+	 * @param {string|string[]} keys - что печатать
+	 */
+	setFieldKeys (name, keys) {
+		this.advanced.setFieldKeys(name, keys);
+	}
+
+	/**
 	 * Курсор в заданном поле
 	 *
 	 * @param {string} name - имя поля
@@ -186,6 +198,33 @@ class AdvancedSteps extends PortalMenuSteps {
 		let actual = this.advanced.hasSuggests(name, true);
 
 		assert(actual, `Для поля ${name} саджесты показаны`);
+	}
+
+	/**
+	 * Выбрать стрелкой вниз саджест с заданным текстом
+	 * У саджестов емейлов текст состоит из двух строчек с \n
+	 *
+	 * @param {string} name - имя поля
+	 * @param {string} suggest - текст саджеста
+	 */
+	selectSuggestByKeys (name, suggest) {
+		const downKey = constants.UNICODE_CHARACTERS.Down;
+		let counter = 0;
+		let done = false;
+		let currentText;
+
+		while (counter++ < 10) {
+			currentText = this.advanced.getSelectedSuggestText(name);
+
+			if (currentText === suggest) {
+				done = true;
+				break;
+			}
+
+			this.advanced.setFieldKeys(name, downKey);
+		}
+
+		assert(done, `Не удалось выбрать пункт ${suggest} в саджестах`);
 	}
 }
 
