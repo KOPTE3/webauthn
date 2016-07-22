@@ -7,7 +7,7 @@ let path = require('path');
 let Folders = require('../../steps/folders');
 let foldersStore = require('../../store/folders');
 
-let {options = {
+let { options = {
 	name: 'Список писем. Сворачивание папок по времени. ' +
 		'Проверка, что если в дефолтную папку и ее подпапку, ' +
 		'не заходили 1 день, то она свернется'

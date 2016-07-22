@@ -28,8 +28,8 @@ module.exports = {
 		buttons: [
 			'mail.ru',
 			'yandex.ru',
-			'rambler.ru',
-			'gmail.com'
+			'gmail.com',
+			'yahoo.com'
 		],
 
 		/**
@@ -43,7 +43,6 @@ module.exports = {
 			'bk.ru',
 			'list.ru',
 			'yandex.ru',
-			'rambler.ru',
 			'gmail.com',
 			'yahoo.com',
 			'hotmail.com',

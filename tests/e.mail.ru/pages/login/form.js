@@ -52,7 +52,7 @@ class LoginForm extends LoginPage {
 	 * @param {string} provider
 	 * @returns {Promise}
 	 */
-	clickByDomain (provider) {
+	clickDomain (provider) {
 		return this.page.click(`[data-domain="${provider}"]`);
 	}
 

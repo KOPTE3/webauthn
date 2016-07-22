@@ -8,7 +8,7 @@ let loginForm = new LoginForm();
 describe('TESTMAIL-8676', () => {
 	it('Отсутствие списка доменов при выборе иконки домена "Другие"', () => {
 		LoginPage.open();
-		loginForm.clickByDomain('other');
+		loginForm.clickDomain('other');
 		loginForm.isSelectVisible();
 	});
 });

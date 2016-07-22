@@ -3,7 +3,7 @@
 let TestTools = require('@qa/test-tools');
 let AccountManager = require('@qa/account-manager');
 let authStore = require('../store/authorization');
-let Providers = require('../store/authorization/providers');
+let providers = require('../store/authorization/providers');
 
 /** Набор методов для аккаунтом пользователя */
 module.exports = {
@@ -20,7 +20,6 @@ module.exports = {
 		// Пробуем авторизовать указанным адресом
 		if (options.username) {
 			let { name, host } = this.parseEmail(options.username);
-			let providers = new Providers();
 
 			service = providers.find(host);
 		}
@@ -94,6 +93,22 @@ module.exports = {
 		} catch (error) {
 			return false;
 		}
+	},
+
+	/**
+	 * Позволяет определить тип аккаунта
+	 *
+	 * @param {string} provider
+	 * @param {string} type
+	 * Допустимые значения: [internal, external, pdd, oauth]
+	 * @returns {boolean}
+	 */
+	hasAccountType (provider, type) {
+		let result = providers.filter(({ hosts, types }) => {
+			return hosts.includes(provider) && types.includes(type);
+		});
+
+		return result.length > 0;
 	},
 
 	/**

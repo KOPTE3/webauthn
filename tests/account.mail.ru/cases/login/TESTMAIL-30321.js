@@ -12,13 +12,13 @@ describe('TESTMAIL-30321', () => {
 	it('Успешная авторизация внешним аккаунтом, работающим по паролю, ' +
 		'при отсутствии авторизованных пользователей', () => {
 		for (let provider of providers.top('external')) {
-			LoginPage.open({ 'allow_external': 1 });
+			LoginPage.open({ allow_external: 1 });
 
 			let { username, password } = accounts.get(provider, ['external']);
 
-			loginForm.clickByDomain('other');
+			loginForm.clickDomain('other');
 			loginForm.setCredentials({ username, password });
-			loginForm.clickBySignInButton();
+			loginForm.clickSignInButton();
 
 			Steps.isActiveUser(username, 2000);
 			Steps.reload();
