@@ -62,6 +62,22 @@ class PortalSearchSteps extends PortalMenuSteps {
 	}
 
 	/**
+	 * Нажать на энтер и открыть поиск
+	 */
+	searchButtonEnter () {
+		this.keyEnter();
+
+		this.search.wait();
+	}
+
+	/**
+	 * Нажать на enter
+	 */
+	keyEnter () {
+		this.portalSearch.keys(constants.UNICODE_CHARACTERS.Enter);
+	}
+
+	/**
 	 * Кликнуть в поле поиска
 	 */
 	clickSearchField () {
@@ -371,6 +387,15 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 */
 	isFocusInBlank () {
 		this.operandHasFocus('blank');
+	}
+
+	/**
+	 * Фокус находится на лупе
+	 */
+	isFocusInSearchButton () {
+		let actual = this.portalSearch.isFocusInSearchButton();
+
+		assert(actual, `Фокус не находится на лупе`);
 	}
 
 	/**
