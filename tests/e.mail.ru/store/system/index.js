@@ -20,7 +20,7 @@ module.exports = {
 		}
 
 		if (/127\.0\.0\.1|localhost/.test(this.host)) {
-			profile = path.resolve('../test-files/files');
+			profile = path.resolve('../test-files/files/e.mail.ru');
 
 			fs.stat(profile, (error, stat) => {
 				if (error) {

@@ -5,7 +5,7 @@ let assert = require('assert');
 let ComposeSteps = require('../compose');
 let ComposeAttaches = require('../../pages/compose/attaches');
 
-let AttachesStore = require('../../store/attachments');
+let SystemStore = require('../../store/system');
 
 
 /** Модуль для работы с шагами прикрепления файлов написания письма */
@@ -17,7 +17,7 @@ class ComposeAttachesSteps extends ComposeSteps {
 	}
 
 	uploadAttach (filename) {
-		const filepath = AttachesStore.file(filename);
+		const filepath = SystemStore.file(filename);
 
 		assert(this.composeAttaches.attachField.isExisting(), 'Инпут загрузки файла существует');
 
