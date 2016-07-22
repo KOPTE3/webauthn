@@ -20,7 +20,9 @@ describe('TESTMAIL-31551: НЕ AJAX. Забытое вложение. Прове
 		Compose.auth();
 	});
 
-	beforeEach(() => {
+	it('Проверяем закрытие леера', () => {
+		let { fields } = composeFieldsStore;
+
 		Compose.features([
 			'check-missing-attach',
 			'disable-ballons',
@@ -28,16 +30,12 @@ describe('TESTMAIL-31551: НЕ AJAX. Забытое вложение. Прове
 		]);
 
 		Compose.open();
-	});
-
-	it('проверяем закрытие леера', () => {
-		let { fields } = composeFieldsStore;
 
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', fields.to);
 		composeEditor.writeMessage(text);
 		composeControls.send();
-		missingAttachLayer.show();
+		missingAttachLayer.wait();
 		missingAttachLayer.close();
 		missingAttachLayer.shouldBeClosed();
 	});

@@ -2,6 +2,10 @@
 
 let Messages = require('../../steps/messages');
 let Compose = require('../../steps/compose');
+
+let MessagesToolbarSteps = require('../../steps/messages/toolbar');
+let messagesToolbarSteps = new MessagesToolbarSteps();
+
 let ComposeFields = require('../../steps/compose/fields');
 let ComposeEditor = require('../../steps/compose/editor');
 let ComposeControls = require('../../steps/compose/controls');
@@ -21,7 +25,9 @@ describe('TESTMAIL-31554: AJAX. Написание письма. Забытое 
 		Compose.auth();
 	});
 
-	beforeEach(() => {
+	it('Проверяем закрытие леера', () => {
+		let { fields } = composeFieldsStore;
+
 		Messages.features([
 			'check-missing-attach',
 			'disable-ballons',
@@ -29,17 +35,14 @@ describe('TESTMAIL-31554: AJAX. Написание письма. Забытое 
 		]);
 
 		Messages.open();
-		Messages.toCompose();
-	});
 
-	it('проверяем закрытие леера', () => {
-		let { fields } = composeFieldsStore;
+		messagesToolbarSteps.clickButton('compose');
 
 		composeFields.setFieldValue('subject', 'check attach');
 		composeFields.setFieldValue('to', fields.to);
 		composeEditor.writeMessage(text);
 		composeControls.send();
-		missingAttachLayer.show();
+		missingAttachLayer.wait();
 		missingAttachLayer.close();
 		missingAttachLayer.shouldBeClosed();
 	});

@@ -43,8 +43,8 @@ module.exports = {
 	getSmsCodeValue (email, id) {
 		return API.getSmsCode(email, id).then(data => {
 			return data;
-		}, err => {
-			throw new Error(err);
+		}, error => {
+			throw new Error(error);
 		});
 	}
 };

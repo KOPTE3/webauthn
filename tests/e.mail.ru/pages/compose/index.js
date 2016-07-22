@@ -24,9 +24,10 @@ class ComposePage extends PageObject {
 	 */
 	get locators () {
 		return {
-			container: '.b-compose'
+			container: '#b-compose'
 		};
 	}
+
 }
 
 module.exports = ComposePage;

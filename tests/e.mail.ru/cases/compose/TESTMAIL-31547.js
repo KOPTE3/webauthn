@@ -18,7 +18,7 @@ describe('TESTMAIL-31547: НЕ AJAX. Написание письма. Забыт
 		Compose.auth();
 	});
 
-	beforeEach(() => {
+	it('Попап должен появится', () => {
 		Compose.features([
 			'check-missing-attach',
 			'disable-ballons',
@@ -26,25 +26,14 @@ describe('TESTMAIL-31547: НЕ AJAX. Написание письма. Забыт
 		]);
 
 		Compose.open();
-	});
 
-	afterEach(() => {
+		composeFields.setFieldValue('subject', 'check attach');
+		composeFields.setFieldValue('to', composeFieldsStore.fields.to);
+		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
+		composeControls.send();
+		missingAttachLayer.wait();
+
 		missingAttachLayer.close();
 		composeControls.cancel();
-	});
-
-	composeEditorStore.lettersWithAttach.forEach(text => {
-		it(text, () => {
-			composeFields.setFieldValue('subject', 'check attach');
-			composeFields.setFieldValue('to', composeFieldsStore.fields.to);
-
-			try {
-				composeEditor.writeMessage(text);
-				composeControls.send();
-				missingAttachLayer.show();
-			} catch (error) {
-				console.log(error);
-			}
-		});
 	});
 });

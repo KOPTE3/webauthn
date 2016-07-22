@@ -24,7 +24,8 @@ class MessagePage extends PageObject {
 	 */
 	get locators () {
 		return {
-			container: '.b-letter'
+			container: '#b-letter',
+			fastreply: '.b-letter_expanded [data-name="fast-reply"]'
 		};
 	}
 

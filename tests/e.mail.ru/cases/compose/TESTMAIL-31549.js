@@ -1,6 +1,5 @@
 'use strict';
 
-let Messages = require('../../steps/messages');
 let Compose = require('../../steps/compose');
 let ComposeFields = require('../../steps/compose/fields');
 let ComposeEditor = require('../../steps/compose/editor');
@@ -20,7 +19,7 @@ describe('TESTMAIL-31549: НЕ AJAX. Написание письма. Забыт
 		Compose.auth();
 	});
 
-	beforeEach(() => {
+	it('Письмо должно отправится', () => {
 		Compose.features([
 			'check-missing-attach',
 			'disable-ballons',
@@ -28,15 +27,11 @@ describe('TESTMAIL-31549: НЕ AJAX. Написание письма. Забыт
 		]);
 
 		Compose.open();
-	});
 
-	composeEditorStore.lettersWithoutAttach.forEach(text => {
-		it(text, () => {
-			composeFields.setFieldValue('subject', 'check attach');
-			composeFields.setFieldValue('to', composeFieldsStore.fields.to);
-			composeEditor.writeMessage(text);
-			composeControls.send();
-			SentPage.isVisible();
-		});
+		composeFields.setFieldValue('subject', 'check attach');
+		composeFields.setFieldValue('to', composeFieldsStore.fields.to);
+		composeEditor.writeMessage(composeEditorStore.texts.withoutAttach);
+		composeControls.send();
+		SentPage.isVisible();
 	});
 });

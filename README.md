@@ -19,6 +19,12 @@
 git clone ssh://git@stash.mail.ru:2222/qa/yoda.git
 ```
 
+Тестовые файлы следует расположить в соседней директории:
+
+```
+git clone ssh://git@stash.mail.ru:2222/qa/test-files.git
+```
+
 **npm**
 
 ```
@@ -248,6 +254,16 @@ accounts.get('gmail.com', ['pdd']);
 Здесь содержится набор методов для получения списка провайдеров с учетом различных фильтров, в т.ч. и топа.
 
 
+### Файловая система
+
+Для работы с файлами, которые хранятся на диске используйте системное хранилище:
+
+```js
+let system = require('./store/system');
+
+system.file('имя_файла');
+```
+
 ### Структура проекта
 
 Ниже будет рассмотрена структура проекта на примере e.mail.ru:
@@ -356,7 +372,7 @@ class Login extends PageObject {
 	}
 }
 
-module.exports = new Login();
+module.exports = Login;
 ```
 
 #### steps

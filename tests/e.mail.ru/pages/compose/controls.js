@@ -15,16 +15,19 @@ class ComposeControls extends ComposePage {
 	 * @type {Object}
 	 */
 	get locators () {
-		let toolbar =
-			'#LEGO>div:not([style *= "hidden"]) div:not([style *= "none"])>' +
-			'div[data-uniqid]:not([style *= "none"])>.b-toolbar[data-mnemo]';
+		let toolbar = '[data-mnemo="toolbar-compose"]';
 
 		return this.extend(super.locators, {
 			container: toolbar,
+			saveStatus: `${toolbar} [data-mnemo="saveStatus"]`,
 			draft    : `${toolbar} [data-name="saveDraft"]`,
 			cancel   : `${toolbar} [data-name="cancel"]`,
+			saveDropdown : `${toolbar} [data-group="save-more"]`,
 			template : `${toolbar} [data-name="saveTemplate"]`,
-			send     : `${toolbar} [data-name="send"]`
+			saved: `${toolbar} [data-mnemo="saveStatus"] .toolbar__message_info__link`,
+			send     : `${toolbar} [data-name="send"]`,
+			templates: `${toolbar} [data-group="templates"]`,
+			templateItem: `${toolbar} .b-dropdown__group .b-dropdown__list__item[data-name]`
 		});
 	}
 
@@ -32,22 +35,50 @@ class ComposeControls extends ComposePage {
 	 * Сохранить черновик
 	 */
 	draft () {
-		this.page.click(this.locators.draft);
+		this.clickAll(this.locators.draft);
+		this.page.waitForVisible(this.locators.saveStatus);
+	}
+
+	/**
+	 * Открыть дропдаун сохранения
+	 */
+	openSaveDropdown () {
+		this.clickAll(this.locators.saveDropdown);
+	}
+
+	/**
+	 * Сохранить шаблон
+	 */
+	template () {
+		this.clickAll(this.locators.template);
+		this.page.waitForVisible(this.locators.saved);
 	}
 
 	/**
 	 * Написать письмо
 	 */
 	send () {
-		this.page.click(this.locators.send);
+		this.clickAll(this.locators.send);
 	}
 
 	/**
 	 * Отменить письмо
 	 * */
 	cancel () {
-		this.page.click(this.locators.cancel);
-		this.page.alertAccept();
+		this.clickAll(this.locators.cancel);
+
+		try {
+			// алерт может быть не показан в некоторых случаях
+			this.page.alertAccept();
+		} catch (error) {}
+	}
+
+	applyTemplate () {
+		this.page.click(this.locators.templates);
+
+		this.page.waitForVisible(this.locators.templateItem);
+
+		this.page.click(this.locators.templateItem);
 	}
 
 }

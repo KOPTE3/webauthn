@@ -16,6 +16,7 @@ class ComposeEditor extends ComposePage {
 	get locators () {
 		return this.extend(super.locators, {
 			container: '.mceToolbarRow1',
+			layout: '.mceLayout',
 			body: '.mceContentBody',
 			editor: '.mceIframeContainer iframe'
 		});
@@ -27,13 +28,15 @@ class ComposeEditor extends ComposePage {
 	 * @returns {boolean}
 	 */
 	wait () {
-		this.page.waitForExist(this.locators.container);
+		this.page.waitForVisible(this.locators.container);
 
 		return this.page.isVisible(this.locators.container);
 	}
 
 	/**
 	 * Получить редактор сообщения
+	 * После этого вызова обязательно restoreParentFrame!
+	 *
 	 * @returns {Element}
 	 */
 	getEditor () {
@@ -44,6 +47,13 @@ class ComposeEditor extends ComposePage {
 
 	restoreParentFrame () {
 		this.page.frameParent();
+	}
+
+	/**
+	 * Принимаем сообщение алерта
+	 */
+	alertAccept () {
+		this.page.alertAccept();
 	}
 }
 

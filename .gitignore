@@ -40,4 +40,5 @@ npm-debug.log
 .idea_modules/
 phantomjsdriver.log
 cache
+test-files
 config.local.js

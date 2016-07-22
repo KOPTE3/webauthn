@@ -58,7 +58,7 @@ class ComposeFields extends ComposePage {
 	 * @param {string} name — имя поля
 	 */
 	clickField (name) {
-		this.page.click(this.locators.filds[name]);
+		this.page.click(this.locators.fields[name]);
 	}
 
 	/**

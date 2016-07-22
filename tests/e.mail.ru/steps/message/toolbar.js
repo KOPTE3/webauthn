@@ -13,6 +13,15 @@ class MessageToolbarSteps extends MessageSteps {
 	}
 
 	/**
+	 * Дождаться появления редактора
+	 */
+	wait () {
+		let actual = this.toolbarPage.wait();
+
+		assert(actual, 'Не удалось дождаться появления редактора написания письма');
+	}
+
+	/**
 	 * Нажать на кнопку тулбара
 	 *
 	 * @param {string} name - имя кнопки, по которой нужно нажать
@@ -20,6 +29,16 @@ class MessageToolbarSteps extends MessageSteps {
 	 */
 	clickButton (name) {
 		this.toolbarPage.clickButton(name);
+	}
+
+	/**
+	 * Нажать на кнопку из тулбара быстрого ответа
+	 *
+	 * @param {string} name - имя кнопки, по которой нужно нажать
+	 * доступные значения (replyAll, saveDraft);
+	 */
+	clickFastreplyButton (name) {
+		this.toolbarPage.clickFastreplyButton(name);
 	}
 
 }

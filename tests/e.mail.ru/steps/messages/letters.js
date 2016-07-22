@@ -2,22 +2,49 @@
 
 let assert = require('assert');
 
-let MessagesPage = require('../../pages/messages');
+let MessagesLettersPage = require('../../pages/messages/letters');
 let MessagesSteps = require('../messages');
+let MessagePage = require('../../pages/message');
+
+let ComposePage = require('../../pages/compose');
 
 /** Модуль для работы с письмами */
 class LettersSteps extends MessagesSteps {
 	constructor () {
 		super();
+		this.lettersPage = new MessagesLettersPage();
+		this.messagePage = new MessagePage();
+		this.composePage = new ComposePage();
+	}
 
-		this.messagesPage = new MessagesPage();
+	/**
+	 * Открыть письмо по теме
+	 * @param  {string} subject
+	 */
+	openBySubject (subject) {
+		assert(this.lettersPage.openBySubject(subject),
+			`не удалось кликнуть пописьму c темой ${subject}`);
+		this.messagePage.wait();
+		assert(this.messagePage.isVisible(), 'страница сообщения не показана');
 	}
 
 	/**
 	 * Открыть самое новое письмо
 	 */
 	openNewestLetter () {
-		this.messagesPage.openNewestLetter();
+		assert(this.lettersPage.openNewestLetter(), 'не удалось кликнуть по новому письму');
+		this.messagePage.wait();
+		assert(this.messagePage.isVisible(), 'страница сообщения не показана');
+	}
+
+	/**
+	 * Открыть первый шаблон/черновик
+	 *
+	 */
+	openFirstCompose () {
+		assert(this.lettersPage.openNewestLetter(), 'не удалось кликнуть по шаблону/черновику');
+		this.composePage.wait();
+		assert(this.composePage.isVisible(), 'страница с открытм шаблоном/черновиком не показана');
 	}
 
 	/**
@@ -44,6 +71,20 @@ class LettersSteps extends MessagesSteps {
 			assert(!actual, `Присутствует письмо с темой ${subject}`);
 		} else {
 			assert(actual, `Отсутствует письмо с темой ${subject}`);
+		}
+	}
+
+	/**
+	 * Ждать пока новое письмо не появится
+	 */
+	waitForNewestLetter () {
+		let page = this.lettersPage;
+		let hasNewestLetter = page.hasNewestLetter.bind(page);
+
+		try {
+			page.refreshUntilCondition(hasNewestLetter);
+		} catch (error) {
+			assert(false, 'Нового сообщения нет: ' + error.message);
 		}
 	}
 }
