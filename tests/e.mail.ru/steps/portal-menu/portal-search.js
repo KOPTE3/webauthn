@@ -32,7 +32,9 @@ class PortalSearchSteps extends PortalMenuSteps {
 	mock (body = []) {
 		actions.mockRPC('messages/search/requests', {
 			status: '200',
-			body
+			body: {
+				requests: body
+			}
 		});
 	}
 
