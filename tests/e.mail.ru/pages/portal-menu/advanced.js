@@ -35,7 +35,8 @@ class Advanced extends PortalMenu {
 				'from':		 '.b-dropdown__list_suggest[data-original-name="q_from"]',
 				'to':		 '.b-dropdown__list_suggest[data-original-name="q_to"]',
 				'subject':	 `${container} [name="q_subj"]+.js-suggest`,
-				'message':	 `${container} [name="q_query"]+.js-suggest`
+				'message':	 `${container} [name="q_query"]+.js-suggest`,
+				selected:	 '.b-dropdown__item-correspondent_selected'
 			},
 			date: {
 				select: `${container} [name="q_date_lapse"]`,
@@ -127,6 +128,18 @@ class Advanced extends PortalMenu {
 	}
 
 	/**
+	 * Нажать на клавиши в поле
+	 *
+	 * @param {string} name - имя поля
+	 * @param {string|string[]} keys - что печатать
+	 */
+	setFieldKeys (name, keys) {
+		let input = this.page.element(this.locators.textFields[name]);
+
+		input.keys(keys);
+	}
+
+	/**
 	 * Выбран ли чекбокс
 	 *
 	 * @param {string} name - unread|flag|attach
@@ -185,6 +198,23 @@ class Advanced extends PortalMenu {
 	 */
 	hasSuggests (name, reverse = false) {
 		return this.page.waitForVisible(this.locators.suggests[name], void 0, reverse);
+	}
+
+	/**
+	 * Получить текст выбранного пункта саджестов
+	 *
+	 * @param {string} name - имя поля
+	 * @return {string}
+	 */
+	getSelectedSuggestText (name) {
+		let text = '';
+		let locator = `${this.locators.suggests[name]} ${this.locators.suggests.selected}`;
+
+		if (this.page.isVisible(locator)) {
+			text = this.page.getText(locator);
+		}
+
+		return text;
 	}
 }
 

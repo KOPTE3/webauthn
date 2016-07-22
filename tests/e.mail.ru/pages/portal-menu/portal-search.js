@@ -262,6 +262,15 @@ class PortalSearch extends PortalMenu {
 	}
 
 	/**
+	 * Нажать на клавиши
+	 *
+	 * @param {string|string[]} keys - что печатать
+	 */
+	keys (keys) {
+		this.page.keys(keys);
+	}
+
+	/**
 	 * Ввести текст в операнд, не стирая предыдущий
 	 *
 	 * @param {string} name - имя операнда
@@ -403,6 +412,15 @@ class PortalSearch extends PortalMenu {
 		let locator = utils.getOperandInputLocator(this.locators.operands, name);
 
 		return this.page.hasFocus(locator);
+	}
+
+	/**
+	 * Фокус находится на лупе
+	 *
+	 * @return {boolean}
+	 */
+	isFocusInSearchButton () {
+		return this.page.hasFocus(this.locators.searchButton);
 	}
 
 	/**

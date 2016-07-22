@@ -17,6 +17,13 @@ module.exports = {
 	textFields: ['from', 'to', 'subject', 'message'],
 
 	/**
+	 * Список полей для емейлов
+	 *
+	 * @type {string[]}
+	 */
+	emailFields: ['from', 'to'],
+
+	/**
 	 * Поля селекта разброса даты
 	 *
 	 * @type {*[]}
