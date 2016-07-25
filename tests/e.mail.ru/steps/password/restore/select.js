@@ -40,6 +40,12 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 		this.page.fillPhoneInput(value, id);
 	}
 
+	checkPhoneCaptcha (value, equal) {
+		const result = this.getPhoneCaptchaValue() === value;
+
+		assert.equal(result, equal, 'Значение капчи не совпало');
+	}
+
 	/**
 	 * Test phone input field value
 	 * @param {string} value
@@ -79,6 +85,17 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	}
 
 	/**
+	 * Check that selected tab has error message
+	 *
+	 * @param {string} text
+	 */
+	checkTabError (text) {
+		let result = this.page.getTabErrorValue();
+
+		assert.equal(result, text, 'Текст ошибки не совпадает');
+	}
+
+	/**
 	 * Wait for phone tab
 	 */
 	waitForPhoneTab () {
@@ -92,18 +109,32 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 		this.page.waitForPhoneLayer();
 	}
 
-
 	/**
-	 * Crack phone captch
+	 * Crack phone captcha
+	 *
+	 * @returns {string} captcha value
 	 */
-	fillPhoneCaptcha () {
+	getPhoneCaptchaValue () {
 		let cid = this.page.phoneCaptchaID,
 			captcha = this.page.getPhoneCaptchaValue(cid.value);
 
 		assert(cid.isOK, 'Загружаем новую капчку и читаем ее ID');
 		assert(captcha.isOK, 'Получаем код из SWA');
 
-		this.page.fillPhoneCaptcha(captcha.value);
+		return captcha.value;
+	}
+
+	/**
+	 * Fill phone captcha field
+	 *
+	 * @param {string} value
+	 */
+	fillPhoneCaptcha (value) {
+		if (!value) {
+			value = this.getPhoneCaptchaValue();
+		}
+
+		this.page.fillPhoneCaptcha(value);
 	}
 
 	/**

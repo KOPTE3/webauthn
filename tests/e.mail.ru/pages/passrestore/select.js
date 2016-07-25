@@ -41,11 +41,13 @@ class SelectViewPage extends PassrestorePage {
 	get locators () {
 		let container = '.js-view-select-type',
 			phoneTabBlock = '.js-phones-tab-block',
-			phoneLayer = '.is-signupsms_in';
+			phoneLayer = '.is-signupsms_in',
+			error = '.password-recovery__remind__new-tabs__header_error';
 
 		return {
 			container,
 			phoneTabBlock,
+			tabError: `.selected ${error}`,
 
 			form: '.js-form-select-type',
 			singlePhone: '.password-recovery__remind__new-phone-editable_single',
@@ -199,10 +201,23 @@ class SelectViewPage extends PassrestorePage {
 	/**
 	 * Get indfo message in phoneLayer
 	 *
-	 * @return {string} value
+	 * @returns {string} value
 	 */
 	getPhoneLayerInfo () {
 		return this.page.getText(this.locators.phoneLayerInfo);
+	}
+
+	/**
+	 * Get error message from current tab
+	 *
+	 * @returns {string} text
+	 */
+	getTabErrorValue () {
+		const {tabError} = this.locators;
+
+		this.page.waitForVisible(tabError);
+
+		return this.page.getText(tabError);
 	}
 
 	/**

@@ -35,5 +35,17 @@ module.exports = {
 			},
 			email: 'test_login_ren5@mail.ru'
 		}
+	},
+
+	getIncorrectValue (value) {
+		let result = +value[0] + 1;
+
+		if (result > 9) {
+			result = 0;
+		}
+
+		value = result + value[1];
+
+		return value;
 	}
 };
