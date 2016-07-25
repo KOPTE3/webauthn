@@ -13,14 +13,8 @@ module.exports = {
 	 * @returns {string}
 	 */
 	file (name) {
-		let profile = '/var/lib/selenium/';
-
-		if (/win/.test(this.platform)) {
-			profile = '%USERPROFILE%';
-		}
-
 		if (/127\.0\.0\.1|localhost/.test(this.host)) {
-			profile = path.resolve('../test-files/files/e.mail.ru');
+			let profile = path.resolve('../test-files/files');
 
 			fs.stat(profile, (error, stat) => {
 				if (error) {
@@ -28,9 +22,15 @@ module.exports = {
 						'"git clone ssh://git@stash.mail.ru:2222/qa/test-files.git"');
 				}
 			});
+
+			return path.join(profile, name);
 		}
 
-		return path.join(profile, name);
+		if (/win/i.test(this.platform)) {
+			return `C:\\Users\\tester\\Dropbox\\feta\\mail\\${name}`;
+		}
+
+		return `/var/lib/selenium/Dropbox/feta/mail/${name}`;
 	},
 
 	/**
@@ -48,9 +48,11 @@ module.exports = {
 	 * @type {string}
 	 */
 	get platform () {
-		let status = browser.status();
+		let status = browser.execute(function () {
+			return window.navigator.platform;
+		});
 
-		return browser.desiredCapabilities.platform || status.value.os.name;
+		return browser.desiredCapabilities.platform || status.value;
 	},
 
 	/**
