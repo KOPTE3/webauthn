@@ -15,10 +15,7 @@ describe('TESTMAIL-31514: Восстановление пароля. ' +
 		'телефона в попапе ввода кода из смс', () => {
 		const user = usersStore.simple.one;
 
-		AccountSteps.open();
-		accountSteps.initRegTokenIdLog();
-		accountSteps.setEmail(user.email);
-		accountSteps.submitForm();
+		accountSteps.openForEmail(user.email);
 
 		selectSteps.wait();
 		selectSteps.fillPhoneInput(user.phone.value);

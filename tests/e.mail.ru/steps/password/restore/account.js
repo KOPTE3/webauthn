@@ -33,6 +33,18 @@ class AccountSteps extends PasswordRestoreSteps {
 	submitForm () {
 		this.page.submitForm();
 	}
+
+	/**
+	 * Open passrestore / accessrestore for user
+	 *
+	 * @param {string} email
+	 */
+	openForEmail (email) {
+		AccountSteps.open();
+		this.initRegTokenIdLog();
+		this.setEmail(email);
+		this.submitForm();
+	}
 }
 
 module.exports = AccountSteps;

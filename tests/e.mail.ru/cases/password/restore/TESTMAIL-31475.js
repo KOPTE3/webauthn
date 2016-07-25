@@ -14,10 +14,7 @@ describe('TESTMAIL-31475: Восстановление пароля. ' +
 	it('Ввод корректных данных', () => {
 		const user = usersStore.simple.one;
 
-		AccountSteps.open();
-		accountSteps.initRegTokenIdLog();
-		accountSteps.setEmail(user.email);
-		accountSteps.submitForm();
+		accountSteps.openForEmail(user.email);
 
 		selectSteps.wait();
 		selectSteps.fillPhoneInput(user.phone.value);

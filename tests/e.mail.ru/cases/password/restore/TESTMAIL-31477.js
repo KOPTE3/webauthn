@@ -2,28 +2,25 @@
 
 let AccountSteps = require('../../../steps/password/restore/account');
 let SelectSteps = require('../../../steps/password/restore/select');
-let RecoverySteps = require('../../../steps/password/restore/recovery');
 let usersStore = require('../../../store/password/restore/users');
 
 let accountSteps = new AccountSteps();
 let selectSteps = new SelectSteps();
 
-describe('TESTMAIL-31476: Восстановление пароля. ' +
+describe('TESTMAIL-31477: Восстановление пароля. ' +
 	'Ввод скрытых цифр телефона.', () => {
-	it('Проверить ввод некорректных цифр', () => {
-		const user = usersStore.simple.one;
-		const incorrect = usersStore.getIncorrectValue(user.phone.value);
+	it('Проверить получение ошибки при пустом поле ввода', () => {
+		let user = usersStore.simple.one;
 		let captcha;
 
 		accountSteps.openForEmail(user.email);
 		selectSteps.wait();
 
 		captcha = selectSteps.getPhoneCaptchaValue();
-		selectSteps.fillPhoneInput(incorrect);
 		selectSteps.fillPhoneCaptcha(captcha);
 		selectSteps.submitForm();
 
-		selectSteps.checkTabError('Вы указали неправильный номер телефона');
+		selectSteps.checkTabError('Пожалуйста, введите недостающие цифры.');
 		selectSteps.checkPhoneCaptcha(captcha, false);
 	});
 });
