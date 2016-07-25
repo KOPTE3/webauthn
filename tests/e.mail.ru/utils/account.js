@@ -125,5 +125,23 @@ module.exports = {
 		} catch (error) {
 			throw new Error(`Could not parse passed email "${email}"\n${error.stack}`);
 		}
+	},
+
+	generatePassword (length = 10) {
+		let symbols = '0123456789' +
+			'abcdefghiklmnopqrstuvwxyz' +
+			'ABCDEFGHIJKLMNOPQRSTUVWXTZ' +
+			'!@#$%^&*()-_+=;:,./?\\|`~[]{}';
+
+		let randomItems = (array, length) => {
+			return Array.from(
+				{length},
+				() => {
+					return array[Math.floor(Math.random() * array.length)];
+				}
+			);
+		};
+
+		return randomItems(symbols, length).join('');
 	}
 };

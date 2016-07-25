@@ -4,6 +4,7 @@ let assert = require('assert');
 
 let Steps = require('../../../steps');
 let SettingsFoldersPage = require('../../../pages/settings/folders');
+let authStore = require('../../../store/authorization');
 
 class Folders extends Steps {
 	constructor () {
@@ -49,6 +50,90 @@ class Folders extends Steps {
 	 */
 	static removeFolder (folderId) {
 		this.page.removeFolder(folderId);
+	}
+
+	/**
+	 * Открыть попап редактирования папки
+	 *
+	 * @param {string} id - folderId
+	 */
+	static openEditLayer (id) {
+		this.page.openEditLayer(id);
+	}
+
+	/**
+	 * Сохранить изменения в попапе редактирования
+	 */
+	static submitEditLayer () {
+		this.page.submitEditLayer();
+
+		assert(!this.page.LayerFolderEdit.isVisible(), 'Попап не скрылся');
+	}
+
+	/**
+	 * Заполнить попап редактирования
+	 * Проверить, что приизменения поля secret меняется вид
+	 *
+	 * @param {Object} params
+	 */
+	static fillEditLayer (params) {
+		if (params.userPassword) {
+			params.userPassword = authStore.account.get('password');
+		}
+
+		this.page.fillEditLayer(params);
+		this.checkEditLayerField('secret', params.secret);
+		this.checkEditLayerField('userPassword', params.userPassword);
+	}
+
+	/**
+	 * Проверка поля в попапе редактирования
+	 *
+	 * @param {Object} field
+	 */
+	static checkEditLayerField (field) {
+		const {name, value} = field;
+		const fields = this.page.LayerFolderEdit.getFields();
+
+		if (name === 'secret' && value === false) {
+			const hidden = ['folderPassword', 'folderRepassword', 'question', 'answer'];
+			const visible = ['userPassword'];
+
+			hidden.forEach(name => {
+				assert(!fields[name].isVisible(), `Поле ${name} не скрыто`);
+			});
+
+			visible.forEach(name => {
+				assert(fields[name].isVisible(), `Поле ${name} скрыто`);
+			});
+		} else if (name === 'userPassword' && value) {
+			assert(fields[name].isVisbile(), `Поле ${name} скрыто`);
+		}
+	}
+
+	/**
+	 * Проверяет наличие у папки иконки
+	 *
+	 * @param {number} id - folderId
+	 * @param {string} type - user | secret | secretOpen
+	 */
+	static checkFolderIcon (id, type) {
+		const element = this.page.getFolderIcon(id, type);
+
+		assert(element.isVisible(), `Иконка не ${type}`);
+	}
+
+	/**
+	 * Ожидает появление нотифая с таким типом и текстом
+	 *
+	 * @param {string} type - ok | error
+	 * @param {string} text - текст в попапе
+	 */
+	static waitForNotify (type, text) {
+		const element = this.page.getNotify(type);
+
+		assert(element.isVisible(), 'Нотифай не показался');
+		assert.equal(element.getText(), text, 'Текст не совпал');
 	}
 }
 

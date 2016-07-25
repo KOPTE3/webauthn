@@ -28,6 +28,16 @@ class FolderAdd extends Layers {
 		return this.page.element(`${container} ${fields[name]}`);
 	}
 
+	getFields () {
+		let {fields} = this.locators;
+
+		Object.keys(fields).forEach(name => {
+			fields[name] = this.getField(name);
+		});
+
+		return fields;
+	}
+
 	setFieldValue (name, value) {
 		this.getField(name).setValue(value);
 	}
@@ -49,6 +59,19 @@ class FolderAdd extends Layers {
 		let locator = `${container} ${dropdown.container} ${dropdown.list} [data-value="${value}"]`;
 
 		this.page.click(locator);
+	}
+
+	setCheckboxValue (name, checked) {
+		let {checkboxes} = this.locators;
+		let checkbox = this.page.element(checkboxes[name]);
+
+		if (checkbox.isSelected() !== checked) {
+			checkbox.click();
+		}
+	}
+
+	isVisible () {
+		return this.page.isVisible(this.locators.container);
 	}
 }
 
