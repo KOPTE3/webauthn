@@ -67,7 +67,7 @@ class Folders extends Steps {
 	static submitEditLayer () {
 		this.page.submitEditLayer();
 
-		assert(!this.page.layerFolderEdit.isVisible(), 'Попап не скрылся');
+		assert(!this.page.LayerFolderEdit.isVisible(), 'Попап не скрылся');
 	}
 
 	/**
@@ -93,7 +93,7 @@ class Folders extends Steps {
 	 */
 	static checkEditLayerField (field) {
 		const {name, value} = field;
-		const fields = this.page.layerFolderEdit.getFields();
+		const fields = this.page.LayerFolderEdit.getFields();
 
 		if (name === 'secret' && value === false) {
 			const hidden = ['folderPassword', 'folderRepassword', 'question', 'answer'];
@@ -124,9 +124,9 @@ class Folders extends Steps {
 	}
 
 	/**
-	 * Ожидает появление нотивая с таким типом и текстом
+	 * Ожидает появление нотифая с таким типом и текстом
 	 *
-	 * @param {string} type - 'ok'
+	 * @param {string} type - ok | error
 	 * @param {string} text - текст в попапе
 	 */
 	static waitForNotify (type, text) {

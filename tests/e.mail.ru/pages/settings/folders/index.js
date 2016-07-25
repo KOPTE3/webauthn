@@ -10,11 +10,12 @@ class FoldersPage extends PageObject {
 		super();
 
 		this.layerFolderAdd = new LayerFolderAdd();
+		this.layerFolderEdit = new LayerFolderEdit();
 		this.layerFolderRemove = new LayerFolderRemove();
 	}
 
-	get layerFolderEdit () {
-		return new LayerFolderEdit();
+	get LayerFolderEdit () {
+		return this.layerFolderEdit;
 	}
 
 	/**
@@ -50,7 +51,8 @@ class FoldersPage extends PageObject {
 			},
 			notify: {
 				container: '.notify',
-				ok: '.notify-message__title__text_ok'
+				ok: '.notify-message__title__text_ok',
+				error: '.notify-message__title__text_error'
 			}
 		};
 	}
@@ -203,7 +205,6 @@ class FoldersPage extends PageObject {
 	}
 
 	submitEditLayer () {
-
 		this.layerFolderEdit.apply();
 	}
 

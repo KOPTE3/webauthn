@@ -30,7 +30,6 @@ class FolderAdd extends Layers {
 
 	getFields () {
 		let {fields} = this.locators;
-		let result = {};
 
 		Object.keys(fields).forEach(name => {
 			fields[name] = this.getField(name);

@@ -3,6 +3,7 @@
 let Folders = require('../../../steps/folders');
 let FoldersSettings = require('../../../steps/settings/folders');
 let foldersStore = require('../../../store/folders');
+let accountUtils = require('../../../utils/account');
 
 describe('TESTMAIL-32572. Папки. Проверить редактирование ' +
 	'запароленной папки из настроек папок.', () => {
@@ -12,8 +13,8 @@ describe('TESTMAIL-32572. Папки. Проверить редактирова�
 
 	it('Снятие запароленности', () => {
 		let parent = foldersStore.ids.inbox;
+		let password = accountUtils.generatePassword();
 		let name = 'Запароленная папка';
-		let password = 'очень сложный пароль';
 
 		let folderId = Folders.createSecretFolder({
 			name,
