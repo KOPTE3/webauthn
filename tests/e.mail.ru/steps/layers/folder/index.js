@@ -11,6 +11,18 @@ class FolderLayerSteps extends LayerSteps {
 	setDropdownValue (name, value) {
 		this.layer.setDropdownValue(name, value);
 	}
+
+	setCheckboxValue (name, value) {
+		this.layer.setCheckboxValue(name, value);
+	}
+
+	getFields () {
+		return this.layer.getFields();
+	}
+
+	isVisible () {
+		return this.layer.isVisible();
+	}
 }
 
 module.exports = FolderLayerSteps;

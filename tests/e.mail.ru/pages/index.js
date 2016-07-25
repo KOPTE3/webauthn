@@ -286,6 +286,12 @@ class PageObject {
 	getContainerElement () {
 		return this.page.element(this.locators.container);
 	}
+
+	hasAttribute (selector, name, value) {
+		const attr = this.page.getAttribute(selector, name);
+
+		return attr === value;
+	}
 }
 
 module.exports = PageObject;

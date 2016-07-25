@@ -1,8 +1,8 @@
 'use strict';
 
 let nodemailer = require('nodemailer');
-let fs = require('fs');
-let authStore = require('../../store/authorization');
+let authorization = require('../../store/authorization');
+let system = require('../../store/system');
 let actions = require('../actions');
 
 const ASYNC_TIMEOUT = 10000; // таймаут завершнеия асинхронного скрипта
@@ -18,14 +18,17 @@ class Mail {
 	 * @param {Object} options - данные письма (см: https://www.npmjs.com/package/nodemailer)
 	 */
 	constructor (options) {
-		let { account } = authStore;
+		let { account } = authorization;
 		let email = account.get('email');
-		let pwd = account.get('password');
+		let password = account.get('password');
 
-		options.from = email;
+		let scheme = `smtps://${email}:${password}@smtp.mail.ru`;
 
-		this.transport = nodemailer.createTransport(`smtps://${email}:${pwd}@smtp.mail.ru`);
-		this.options = options;
+		this.transport = nodemailer.createTransport(scheme);
+
+		this.options = Object.assign(options, {
+			from: email
+		});
 	}
 
 	/**
@@ -41,14 +44,12 @@ class Mail {
 			this.options.attachments.push({
 				path: 'data:text/plain;base64,aGVsbG8gd29ybGQ='
 			});
-
-			return;
+		} else {
+			this.options.attachments.push({
+				filename: name,
+				path: system.file(name)
+			});
 		}
-
-		this.options.attachments.push({
-			filename: name,
-			path: `./test-files/files/e.mail.ru/${name}`
-		});
 	}
 
 	/**
@@ -60,17 +61,18 @@ class Mail {
 				throw new Error(error);
 			}
 		});
+
 		browser.pause(DELIVERY_TIMEOUT);
 	}
 
 	draft () {
-		let {to, from, subject, text} = this.options;
+		let { to, from, subject, text } = this.options;
 
 		actions.saveDraft(to, from, subject, text);
 	}
 
 	template () {
-		let {to, from, subject, text} = this.options;
+		let { to, from, subject, text } = this.options;
 
 		actions.saveDraft(to, from, subject, text, true);
 	}

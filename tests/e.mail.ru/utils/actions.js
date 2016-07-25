@@ -260,6 +260,18 @@ module.exports = {
 	},
 
 	/**
+	 * Открыть запароленные папки
+	 *
+	 * @param {*[]} folders
+	 * @returns {Promise}
+	 */
+	openFolders (folders) {
+		return this.call('folders/open', {
+			folders
+		});
+	},
+
+	/**
 	 * Создает черновик
 	 *
 	 * @param {string} to - адрес получателя
