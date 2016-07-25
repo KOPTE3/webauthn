@@ -3,8 +3,10 @@
 let assert = require('assert');
 
 let Steps = require('../../steps');
-let store = require('../../store/login/form');
 let LoginForm = require('../../pages/login/form');
+let authorization = require('../../store/authorization');
+let store = require('../../store/login/form');
+let providers = require('../../store/authorization/providers');
 
 /** Модуль для работы с шагами формы страницы логина */
 class LoginFormSteps extends Steps {
@@ -19,11 +21,28 @@ class LoginFormSteps extends Steps {
 	 *
 	 * @param {string} provider
 	 */
-	selectDomain (provider) {
-		let actual = this.loginForm.getSelectedDomain(provider);
+	clickDomain (provider) {
+		this.loginForm.clickDomain(provider);
+	}
 
-		assert.equal(actual.state, 'success',
-			`Не удалось найти элемент с заданным провайдером: ${provider}`);
+	/**
+	 * Выбрать домен из списка
+	 *
+	 * @param {string} provider
+	 */
+	selectDomain (provider) {
+		this.loginForm.selectDomain(provider);
+	}
+
+	/**
+	 * Получить имя домена из списка
+	 *
+	 * @param {string} provider
+	 */
+	getSelectedDomain (provider) {
+		let actual = this.loginForm.getSelectedDomain();
+
+		assert.equal(actual, `@${provider}`, 'Имя домена не совпадает');
 	}
 
 	/**
@@ -93,8 +112,13 @@ class LoginFormSteps extends Steps {
 	getActiveDomain (provider) {
 		let actual = this.loginForm.getActiveDomain();
 
-		assert.equal(actual, provider,
-			`Передан неверный провайдер ${provider}`);
+		provider = providers.find(provider);
+
+		if (!provider || !store.providers.buttons.includes(provider)) {
+			provider = 'other';
+		}
+
+		assert.equal(actual, provider, 'Активный провайдер');
 	}
 
 	/**
@@ -131,8 +155,8 @@ class LoginFormSteps extends Steps {
 	 *
 	 * @param {string} provider
 	 */
-	clickByDomain (provider) {
-		this.loginForm.clickByDomain(provider);
+	clickDomain (provider) {
+		this.loginForm.clickDomain(provider);
 	}
 
 	/**
@@ -168,17 +192,85 @@ class LoginFormSteps extends Steps {
 	 *
 	 * @param {string} provider
 	 */
-	clickByDomain (provider) {
-		this.loginForm.clickByDomain(provider);
+	clickDomain (provider) {
+		this.loginForm.clickDomain(provider);
 	}
 
 	/**
 	 * Отправить форму по клику
-	 *
-	 * @returns {Promise}
 	 */
-	clickBySignInButton () {
-		return this.loginForm.clickBySignInButton();
+	clickSignInButton () {
+		this.loginForm.clickSignInButton();
+	}
+
+	/**
+	 * Получить состояние видимости блока восстановления телефона
+	 */
+	restoreBlockVisibility () {
+		let actual = this.loginForm.isVisibleRestoreBlock();
+
+		assert(actual, 'Видимость блока восстановления телефона');
+
+		actual = this.loginForm.sendCodeText();
+
+		assert(actual, 'Текст кнопки отправки кода');
+
+		actual = this.loginForm.textRestoreBlockTitle();
+
+		assert(actual, 'Текст загловка блока с телефоном для восстановления');
+	}
+
+	/**
+	 * Получить состояние видимости формы восстановления телефона
+	 */
+	restoreFormVisibility () {
+		let actual = this.loginForm.textRestoreFormTitle();
+
+		assert(actual, 'Код с картинки', 'Текст текста каптчи');
+
+		actual = this.loginForm.textRestoreFormCaptcha();
+
+		assert(actual, 'Восстановление пароля', 'Текст ссылки обновления каптчи');
+
+		actual = this.loginForm.textCaptchaLink();
+
+		assert(actual, 'Не вижу код', 'Текст ссылки обновления каптчи');
+
+		actual = this.loginForm.captchaImage();
+
+		let captcha = authorization.captcha(1);
+
+		actual = actual.startsWith(captcha);
+
+		assert(actual, 'Ссылка на изображение каптчей');
+
+		actual = this.loginForm.textRestoreFormSend();
+
+		assert.equal(actual, 'Продолжить',
+			'Текст кнопки отправки формы телефона для восстановления');
+
+		actual = this.loginForm.textRestoreFormCancel();
+
+		assert.equal(actual, 'Отменить',
+			'Текст кнопки отмены формы телефона для восстановления');
+	}
+
+	/**
+	 * Проверить сокрытие последних цифр телефонного номера
+	 */
+	isMaskedPhoneNumber () {
+		let number = this.loginForm.getPhoneNumber(),
+			actual = number.endsWith('-**-**');
+
+		assert(actual, '4 последние цифры номера должны быть скрыты');
+	}
+
+	/**
+	 * Переход на форму отправки кода
+	 */
+	sendCode () {
+		this.loginForm.sendCode();
+		this.loginForm.waitForUrl(/recovery/);
 	}
 
 	/**

@@ -1,9 +1,14 @@
 'use strict';
 
-let LoginPage = require('../../steps/login');
+module.options = {
+	name: 'Страница логина. Успешная авторизация локальными аккаунтами ' +
+		'(при включенных социальных и отсутствии авторизованных пользователей)',
 
-describe('TESTMAIL-30381', () => {
-	it('Отображение ошибки errno=1', () => {
-		LoginPage.open();
-	});
-});
+	query: {
+		vk: 1,
+		ok: 1,
+		fb: 1
+	}
+};
+
+require('./TESTMAIL-30323');

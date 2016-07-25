@@ -298,7 +298,7 @@ module.exports = {
 			}
 		});
 
-		return provider && provider.name;
+		return (provider && provider.name) || domain;
 	},
 
 	/**

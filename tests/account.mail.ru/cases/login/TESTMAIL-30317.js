@@ -7,7 +7,7 @@ let loginForm = new LoginForm();
 
 describe('TESTMAIL-30317', () => {
 	it('Проверить отсутствие кнопки "Забыли пароль?" для внешних аккаунтов', () => {
-		LoginPage.open({ 'allow_external': 1 });
+		LoginPage.open({ allow_external: 1 });
 		loginForm.isPassRemindLinkNotExist();
 	});
 });

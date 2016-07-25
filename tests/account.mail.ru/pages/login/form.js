@@ -15,24 +15,42 @@ class LoginForm extends LoginPage {
 	 */
 	get locators () {
 		return {
-			container      : '.b-login',
-			providersSelect: '.b-dropdown__list',
-			providersBlock : '.b-email-providers__list',
-			activeDomain   : '.b-email-providers__list__item_selected',
-			select         : '.b-select__dropdown',
-			login          : '[name="Username"]',
-			form           : '[data-bem="b-form"]',
-			password       : '[name="Password"]',
-			submit         : '[data-name="submit"]:first-child',
-			error          : '.b-login__errors',
-			title          : '.b-login__header__title',
-			desc           : '.b-login__header__desc',
-			rememberState  : '.b-grid_restore [name="saveauth"]',
-			rememberText   : '.b-grid_restore .b-checkbox__label',
-			forgetLink     : '.b-link_passremind',
-			signUpLink     : '[data-name="signup-link"]',
-			providers      : {
-				other      : '[data-id="other"]'
+			container: '.b-login',
+			selectedDomain  : '.b-email__domain .b-dropdown__ctrl__text',
+			selectControl   : '.b-email__domain .b-dropdown__ctrl',
+			providersBlock  : '.b-email-providers__list',
+			activeDomain    : '.b-email-providers__list__item_selected',
+			select          : '.b-select__dropdown',
+			login           : '[name="Username"]',
+			form            : '[data-bem="b-form"]',
+			password        : '[name="Password"]',
+			submit          : '[data-name="submit"]:first-child',
+			error           : '.b-login__errors',
+			title           : '.b-login__header__title',
+			desc            : '.b-login__header__desc',
+			rememberState   : '.b-grid_restore [name="saveauth"]',
+			rememberText    : '.b-grid_restore .b-checkbox__label',
+			forgetLink      : '.b-link_passremind',
+			signUpLink      : '[data-name="signup-link"]',
+			restoreContainer: '.b-login_container-for-restore',
+			restoreBlockTitle: '.b-phone-restore__title',
+			restoreFormTitle : '.b-panel__header__text',
+			restoreFormSend : '.b-form__controls button',
+			restoreFormCancel : '.b-form__controls a',
+			captchaDescription: '.b-captha__description',
+			captchaLink: '.b-captcha__code__reload',
+			captchaImage: '.b-captcha__captcha',
+
+			selectedItem (provider) {
+				return `.b-email__domain .b-dropdown__list [data-value="${provider}"]`;
+			},
+
+			get restorePhone () {
+				return `${this.restoreContainer} .b-segment-input__head`;
+			},
+
+			get sendCode () {
+				return `${this.restoreContainer} .b-phone-btn__cell button`;
 			}
 		};
 	}
@@ -43,7 +61,7 @@ class LoginForm extends LoginPage {
 	 * @returns {string}
 	 */
 	getActiveDomain () {
-		return this.page.getAttribute(this.locators.activeDomain, 'data-domain');
+		return this.page.getAttribute(this.locators.activeDomain, 'data-provider');
 	}
 
 	/**
@@ -80,21 +98,128 @@ class LoginForm extends LoginPage {
 	}
 
 	/**
-	 * Получить активный домен
+	 * Выбрать домен по клику
 	 *
 	 * @param {string} provider
 	 */
-	clickByDomain (provider) {
-		this.page.click(this.locators.providers[provider]);
+	clickDomain (provider) {
+		this.page.click(`[data-id="${provider}"]`);
+	}
+
+	/**
+	 * Выбрать домен из списка
+	 *
+	 * @param {string} provider
+	 */
+	selectDomain (provider) {
+		let { selectControl, selectedItem } = this.locators;
+
+		this.page.click(selectControl);
+		this.page.click(selectedItem(provider));
 	}
 
 	/**
 	 * Отправить форму по клику
-	 *
-	 * @returns {Promise}
 	 */
-	clickBySignInButton () {
-		return this.page.click(this.locators.submit);
+	clickSignInButton () {
+		this.page.click(this.locators.submit);
+	}
+
+	/**
+	 * Получить состояние видимости блока восстановления телефона
+	 *
+	 * @returns {boolean}
+	 */
+	isVisibleRestoreBlock () {
+		return this.page.isVisible(this.locators.restoreContainer);
+	}
+
+	/**
+	 * Получить текст загловка блока с телефоном для восстановления
+	 *
+	 * @returns {string}
+	 */
+	textRestoreBlockTitle () {
+		return this.page.isVisible(this.locators.restoreBlockTitle);
+	}
+
+	/**
+	 * Получить текст загловка формы с телефоном для восстановления
+	 *
+	 * @returns {string}
+	 */
+	textRestoreFormTitle () {
+		return this.page.getText(this.locators.restoreFormTitle);
+	}
+
+	/**
+	 * Получить текст каптчи
+	 *
+	 * @returns {string}
+	 */
+	textRestoreFormCaptcha () {
+		return this.page.getText(this.locators.captchaDescription);
+	}
+
+	/**
+	 * Получить текст ссылки обновления каптчи
+	 *
+	 * @returns {string}
+	 */
+	textCaptchaLink () {
+		return this.page.getText(this.locators.captchaLink);
+	}
+
+	/**
+	 * Получить текст кнопки отправки формы телефона для восстановления
+	 *
+	 * @returns {string}
+	 */
+	textRestoreFormSend () {
+		return this.page.getText(this.locators.restoreFormSend);
+	}
+
+	/**
+	 * Получить текст кнопки отмены формы телефона для восстановления
+	 *
+	 * @returns {string}
+	 */
+	textRestoreFormCancel () {
+		return this.page.getText(this.locators.restoreFormCancel);
+	}
+
+	/**
+	 * Проверить ссылку на изображение с каптчей
+	 *
+	 * @returns {string}
+	 */
+	captchaImage () {
+		return this.page.getAttribute(this.locators.captchaImage, 'src');
+	}
+
+	/**
+	 * Переход на форму отправки кода
+	 */
+	sendCode () {
+		this.page.click(this.locators.sendCode);
+	}
+
+	/**
+	 * Получить текст кнопки отправки кода
+	 *
+	 * @returns {string}
+	 */
+	sendCodeText () {
+		return this.page.getText(this.locators.sendCode);
+	}
+
+	/**
+	 * Получить номер телефона для восстановления
+	 *
+	 * @returns {boolean}
+	 */
+	getPhoneNumber () {
+		return this.page.getText(this.locators.restorePhone);
 	}
 
 	/**
@@ -193,6 +318,15 @@ class LoginForm extends LoginPage {
 	}
 
 	/**
+	 * Получить имя домена из списка
+	 *
+	 * @returns {string}
+	 */
+	getSelectedDomain () {
+		return this.page.getText(this.locators.selectedDomain);
+	}
+
+	/**
 	 * Получить заголовок формы
 	 *
 	 * @type {string}
@@ -232,8 +366,8 @@ class LoginForm extends LoginPage {
 	 *
 	 * @param {string} provider
 	 */
-	getSelectedDomain (provider) {
-
+	clickDomain (provider) {
+		this.page.click(`[data-provider="${provider}"]`);
 	}
 }
 
