@@ -66,9 +66,6 @@ describe(suite + ': ' + options.name, () => {
 	it('авторизация через outlook', () => {
 		for (let { hosts } of providers.get(['outlook.com'])) {
 			for (let host of hosts) {
-				// берем самый первый хост основной outlook
-				console.log(host);
-
 				LoginPage.open({ allow_external: 1 });
 
 				let { username, password } = accounts.get({
