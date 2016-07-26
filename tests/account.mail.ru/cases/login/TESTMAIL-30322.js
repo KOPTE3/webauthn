@@ -37,11 +37,13 @@ describe(suite + ': ' + options.name, () => {
 
 				// вписываем логин
 				loginForm.setLogin(username);
+
 				// нажимаем на кнопку продолжить
 				loginForm.clickNextButton();
 
 				// ожидаем урл гугловский
 				gmailSteps.waitForUrl(/https:\/\/accounts.google.com\//);
+
 				// ожидаем загрузки страницы
 				GmailSteps.wait();
 
@@ -62,7 +64,6 @@ describe(suite + ': ' + options.name, () => {
 	});
 
 	it('авторизация через outlook', () => {
-		console.log(providers.get(['outlook.com']));
 		for (let { hosts } of providers.get(['outlook.com'])) {
 			// берем самый первый хост основной outlook
 			let host = hosts[0];
