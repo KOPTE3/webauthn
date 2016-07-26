@@ -2,7 +2,7 @@
 
 let OauthPage = require('../../pages/oauth');
 
-/** Модуль для работы с представлением страницы логина */
+/** Модуль для работы с представлением сервиса gmail.com */
 class GmailPage extends OauthPage {
 	constructor () {
 		super();
@@ -61,7 +61,7 @@ class GmailPage extends OauthPage {
 	/**
 	 * Ожидаем пока пароль будет виден
 	 */
-	waitPassowrd () {
+	waitPassword () {
 		this.page.waitForVisible(this.locators.password);
 	}
 

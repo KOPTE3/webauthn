@@ -3,10 +3,9 @@
 let assert = require('assert');
 
 let OauthSteps = require('../../steps/oauth');
-
 let OutlookPage = require('../../pages/oauth/outlook');
 
-/** Модуль для работы с шагами формы страницы логина */
+/** Модуль для работы с шагами сервиса outlook.com */
 class OutlookSteps extends OauthSteps {
 	constructor () {
 		super();

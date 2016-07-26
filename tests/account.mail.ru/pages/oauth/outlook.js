@@ -2,7 +2,7 @@
 
 let OauthPage = require('../../pages/oauth');
 
-/** Модуль для работы с представлением страницы логина */
+/** Модуль для работы с представлением сервиса outlook.com */
 class OutlookPage extends OauthPage {
 	constructor () {
 		super();

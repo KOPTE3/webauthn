@@ -3,10 +3,9 @@
 let assert = require('assert');
 
 let OauthSteps = require('../../steps/oauth');
-
 let GmailPage = require('../../pages/oauth/gmail');
 
-/** Модуль для работы с шагами формы страницы логина */
+/** Модуль для работы с шагами сервиса gmail.com */
 class GmailSteps extends OauthSteps {
 	constructor () {
 		super();
@@ -45,7 +44,7 @@ class GmailSteps extends OauthSteps {
 	 * @param {string} password
 	 */
 	setPassword (password) {
-		this.gmailPage.waitPassowrd();
+		this.gmailPage.waitPassword();
 		this.gmailPage.setPassword(password);
 	}
 }
