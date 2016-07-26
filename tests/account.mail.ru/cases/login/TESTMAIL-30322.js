@@ -25,7 +25,6 @@ let { options = {
 let suite = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
 describe(suite + ': ' + options.name, () => {
-	/*
 	it('авторизация через gmail.com', () => {
 		for (let { hosts } of providers.get(['gmail.com'])) {
 			for (let host of hosts) {
@@ -63,7 +62,7 @@ describe(suite + ': ' + options.name, () => {
 			}
 		}
 	});
-*/
+
 	it('авторизация через outlook', () => {
 		for (let { hosts } of providers.get(['outlook.com'])) {
 			for (let host of hosts) {
