@@ -45,6 +45,10 @@ class ComposeFieldsSteps extends ComposeSteps {
 		this.composeFields.setFieldValue(...arguments);
 	}
 
+	setDropdownValue (name, value) {
+		this.composeFields.setDropdownValue(...arguments);
+	}
+
 	/**
 	 * Очистить поле заданное поле
 	 *
@@ -94,7 +98,15 @@ class ComposeFieldsSteps extends ComposeSteps {
 	isVisibleField (name) {
 		let active = this.composeFields.isVisibleField(name);
 
-		asert(active, `Видимость поля ${name} под вопросом`);
+		assert(active, `Видимость поля ${name} под вопросом`);
+	}
+
+	expandField (name) {
+		let actual = this.composeFields.isVisibleField(name.toLowerCase());
+
+		if (!actual) {
+			this.clickSelectFieldItem(name);
+		}
 	}
 
 	/**
@@ -103,7 +115,16 @@ class ComposeFieldsSteps extends ComposeSteps {
 	isVisibleSelectFields () {
 		let active = this.composeFields.isVisibleSelectFields();
 
-		asert(active, 'Видимость списка полей под вопросом');
+		assert(active, 'Видимость списка полей под вопросом');
+	}
+
+	showSelectFields () {
+		this.composeFields.showSelectFields();
+	}
+
+	clickSelectFieldItem (name) {
+		this.showSelectFields();
+		this.composeFields.clickSelectFieldItem(name);
 	}
 
 	/**

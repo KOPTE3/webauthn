@@ -254,6 +254,11 @@ class PageObject {
 		this.page.pause(ms);
 	}
 
+	/** Подтвердить алерт */
+	alertAccept () {
+		this.page.alertAccept();
+	}
+
 	/**
 	 * Обновить страницу
 	 *

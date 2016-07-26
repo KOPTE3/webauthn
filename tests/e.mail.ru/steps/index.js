@@ -79,6 +79,11 @@ class Steps {
 		pages.refresh(query);
 	}
 
+	/** Подтвердить алерт */
+	static alertAccept () {
+		pages.alertAccept();
+	}
+
 	/** Сбросить текущую сессию */
 	static reload () {
 		pages.reload();

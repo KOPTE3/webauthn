@@ -96,6 +96,14 @@ class ComposeEditorSteps extends ComposeSteps {
 		return message.includes(text);
 	}
 
+	messageContains (text, reverse) {
+		if (reverse) {
+			assert(!this.hasMessage(text), 'Письмо содержит текст');
+		} else {
+			assert(this.hasMessage(text), 'Письмо не содержит текст');
+		}
+	}
+
 	/**
 	 * Проверить, содержит ли ответ следующий текст
 	 *
