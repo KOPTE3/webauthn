@@ -14,6 +14,10 @@ class FoldersPage extends PageObject {
 		this.layerFolderRemove = new LayerFolderRemove();
 	}
 
+	get LayerFolderEdit () {
+		return this.layerFolderEdit;
+	}
+
 	/**
 	 * Базовый адрес страницы
 	 *
@@ -33,11 +37,22 @@ class FoldersPage extends PageObject {
 		return {
 			container: '.b-folders',
 			item: '.b-folders__item',
+			icons: {
+				container: '.ico_folder',
+				user: '.ico_folder_user',
+				secret: '.ico_folder_secret',
+				secretOpen: '.ico_folder_secret_open'
+			},
 			itemWithParam: '.b-folders__item-col_title',
 			controls: {
 				new: '[data-name="newFolder"]',
 				edit: '[data-name="edit"][data-id]',
 				remove: '[data-name="remove"][data-id]'
+			},
+			notify: {
+				container: '.notify',
+				ok: '.notify-message__title__text_ok',
+				error: '.notify-message__title__text_error'
 			}
 		};
 	}
@@ -67,22 +82,9 @@ class FoldersPage extends PageObject {
 	 * @param {Object} params - данные папки
 	 */
 	editFolder (params) {
-		let {id, name, parent} = params;
-
-		this.editFolderControl(id);
-
-		this.layerFolderEdit.show();
-
-		if (name !== void 0) {
-			this.layerFolderEdit.setFieldValue('name', name);
-		}
-
-		if (parent !== void 0) {
-			this.layerFolderEdit.setDropdownValue('parent', parent);
-		}
-
-		this.layerFolderEdit.apply();
-
+		this.openEditLayer(params.id);
+		this.fillEditLayer(params);
+		this.submitEditLayer();
 		this.waitEditSuccess(params);
 	}
 
@@ -175,6 +177,57 @@ class FoldersPage extends PageObject {
 
 		this.page.moveTo(elementId);
 		this.page.elementIdClick(elementId);
+	}
+
+	openEditLayer (id) {
+		this.editFolderControl(id);
+		this.layerFolderEdit.show();
+	}
+
+	fillEditLayer (params) {
+		let {name, parent, secret, userPassword} = params;
+
+		if (name !== void 0) {
+			this.layerFolderEdit.setFieldValue('name', name);
+		}
+
+		if (parent !== void 0) {
+			this.layerFolderEdit.setDropdownValue('parent', parent);
+		}
+
+		if (secret !== void 0) {
+			this.layerFolderEdit.setCheckboxValue('secret', secret);
+		}
+
+		if (userPassword !== void 0) {
+			this.layerFolderEdit.setFieldValue('userPassword', userPassword);
+		}
+	}
+
+	submitEditLayer () {
+		this.layerFolderEdit.apply();
+	}
+
+	getFolderElement (id) {
+		const item = this.locators.itemWithParam.replace('.', '');
+		const xpath = `//*[contains(@class, "${item}")][@data-id="${id}"]/..`;
+
+		return this.page.element(xpath);
+	}
+
+	getFolderIcon (id, type) {
+		const element = this.getFolderElement(id);
+
+		return element.element(this.locators.icons[type]);
+	}
+
+	getNotify (type) {
+		const notify = this.locators.notify;
+		const locator = `${notify.container} ${notify[type]}`;
+
+		this.page.waitForExist(locator);
+
+		return this.page.element(locator);
 	}
 }
 

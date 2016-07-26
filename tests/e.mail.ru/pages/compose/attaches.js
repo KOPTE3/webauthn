@@ -45,7 +45,7 @@ class ComposeAttaches extends ComposePage {
 			}, attachField);
 		}
 
-		this.page.chooseFile(this.locators.attachField, filepath);
+		this.page.setValue(this.locators.attachField, filepath);
 	}
 
 	isFileAttached (filename) {

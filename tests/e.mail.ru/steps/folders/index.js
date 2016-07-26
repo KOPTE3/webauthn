@@ -10,6 +10,8 @@ let SearchPage = require('../../pages/search');
 let actions = require('../../utils/actions');
 let dateUtils = require('../../utils/date');
 let store = require('../../store');
+let folderStore = require('../../store/folders');
+let auth = require('../../store/authorization');
 
 /** Модуль для работы с шагами списка папкок */
 class FoldersSteps extends Steps {
@@ -169,10 +171,35 @@ class FoldersSteps extends Steps {
 		assert.equal(actual.state, 'success', 'Не удалось удалить папку');
 	}
 
+	static createSecretFolder (folder) {
+		let {password, question = 'кто я?', answer = 'никто'} = folder.secret;
+		let folderParams = Object.assign({}, folder);
+
+		folderParams.secret = {
+			folder_password: password,
+			user_password: auth.account.get('password'),
+			question,
+			answer
+		};
+
+		return this.createFolder(folderParams);
+	}
+
+	static openSecretFolder (folderId, password) {
+		let actual = actions.openFolders([{
+			id: folderId,
+			secret: {
+				folder_password: password
+			}
+		}]);
+
+		assert.equal(actual.state, 'success', 'Не удалось открыть папку');
+	}
+
 	static createArchive () {
 		return this.createFolder({
 			name: 'Архив',
-			parent: -1,
+			parent: folderStore.ids.root,
 			type: 'archive',
 			'only_web': true
 		});
