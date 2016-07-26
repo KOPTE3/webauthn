@@ -1,16 +1,28 @@
 'use strict';
 
+// const PROXY_PATH = 'http://localhost:8091';
 const PROXY_PATH = 'http://test-proxy.win102.dev.mail.ru';
 const request = require('request');
+const signup = require('./user/signup');
 
 /**
- * Makes requset
- * @param  {Object} opts
+ * Makes request
+ *
+ * @param  {string} path
+ * @param {string} method
+ * @param {Object} body
  * @returns {Promise}
  */
-const call = function (opts) {
+const call = function ({path, method = 'GET', body = {}}) {
+	let params = {
+		url: `${PROXY_PATH}/${path}`,
+		method,
+		body,
+		json: true
+	};
+
 	return new Promise((resolve, reject) => {
-		request.get(`${PROXY_PATH}/${opts.path}`, (error, response, httpBody) => {
+		request(params, (error, response, httpBody) => {
 			let result = {
 				isOK: false,
 				body: null
@@ -22,13 +34,9 @@ const call = function (opts) {
 				return resolve(result);
 			}
 
-			try {
-				result.body = JSON.parse(httpBody).body;
-			} catch (error) {
-				result.body = error;
-			}
-
+			result.body = httpBody.body;
 			result.isOK = true;
+			result.requestBody = body;
 
 			resolve(result);
 		});
@@ -63,6 +71,22 @@ module.exports = {
 	verifyPhone (email, phone) {
 		return call({
 			path: `test/user/phones/verify?email=${email}&phone=${phone}`
+		});
+	},
+
+	/**
+	 * Signup new user
+	 *
+	 * @param {Object} params
+	 * {array | number} phones
+	 * {object} restore
+	 * @returns {Promise}
+	 */
+	userAdd (params) {
+		return call({
+			path: 'users/add',
+			method: 'POST',
+			body: signup.generateSignupData(params)
 		});
 	}
 };

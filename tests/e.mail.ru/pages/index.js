@@ -3,6 +3,7 @@
 let helpers = require('../utils/helpers');
 let account = require('../utils/account');
 let URL = require('../utils/url');
+let user = require('../utils/user/add');
 
 let cache = {
 	session : false,
@@ -110,6 +111,26 @@ class PageObject {
 	 */
 	static auth (type, credentials) {
 		cache.session = account.session(...arguments);
+	}
+
+	/**
+	 * Регистрация нового пользователя
+	 *
+	 * @param {Object} params - {phones, restore, mrim}
+	 * @returns {Object} response
+	 */
+	createUser (params) {
+		let response;
+
+		this.page.waitUntil(function async () {
+			return user.userAdd(params).then(result => {
+				response = result;
+
+				return true;
+			});
+		});
+
+		return response;
 	}
 
 	/**

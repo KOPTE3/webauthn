@@ -7,10 +7,17 @@ let SelectTypeView = require('../../../steps/password/restore/select');
 let accountView = new AccountView();
 let selectTypeView = new SelectTypeView();
 
-let assert = require('assert');
 
 describe.skip('TESTMAIL-XXXX', function () {
-	it('Открытие стрницы восстановления пароля', function () {
+	it('Регистрация нового пользователя', () => {
+		let user = AccountView.createUser({
+			phones: 2
+		});
+
+		accountView.openForEmail(user.email);
+	});
+
+	it.skip('Открытие стрницы восстановления пароля', () => {
 		let restoreEmail = 'regtest17@mail.ru';
 
 		this.timeout(100000); // need for debug
@@ -30,7 +37,7 @@ describe.skip('TESTMAIL-XXXX', function () {
 		// browser.debug(); // Check that everything is all right!
 	});
 
-	it.skip('Верификация номера телефона', function () {
+	it('Верификация номера телефона', () => {
 		let restoreEmail = 'regtest_phone_2@mail.ru';
 		let phone = '79154942271';
 

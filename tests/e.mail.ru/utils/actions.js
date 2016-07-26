@@ -1,6 +1,7 @@
 'use strict';
 
 let authStore = require('../store/authorization');
+const signup = require('./user/signup');
 
 const ASYNC_TIMEOUT = 10000; // таймаут завершнеия асинхронного скрипта
 const DELIVERY_TIMEOUT = 1000; // таймаут ожидания фактической доствки письма
