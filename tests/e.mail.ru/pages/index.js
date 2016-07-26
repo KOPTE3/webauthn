@@ -279,8 +279,7 @@ class PageObject {
 
 	/** Сбросить текущую сессию */
 	reload () {
-		this.page.deleteCookie();
-		// this.page.reload();
+		this.page.reload();
 	}
 
 	/**

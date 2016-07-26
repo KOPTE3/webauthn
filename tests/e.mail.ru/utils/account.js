@@ -3,7 +3,7 @@
 let TestTools = require('@qa/test-tools');
 let AccountManager = require('@qa/account-manager');
 let authStore = require('../store/authorization');
-let Providers = require('../store/authorization/providers');
+let providers = require('../store/authorization/providers');
 
 /** Набор методов для аккаунтом пользователя */
 module.exports = {
@@ -20,7 +20,6 @@ module.exports = {
 		// Пробуем авторизовать указанным адресом
 		if (options.username) {
 			let { name, host } = this.parseEmail(options.username);
-			let providers = new Providers();
 
 			service = providers.find(host);
 		}
@@ -34,7 +33,7 @@ module.exports = {
 		browser.waitUntil(function async () {
 			return account.session(options)
 				.then(result => true);
-		}, 15 * 1000, 'Could not user session');
+		}, 15 * 1000, 'Could not get user session');
 
 		this.setCookie();
 	},
@@ -97,6 +96,22 @@ module.exports = {
 	},
 
 	/**
+	 * Позволяет определить тип аккаунта
+	 *
+	 * @param {string} provider
+	 * @param {string} type
+	 * Допустимые значения: [internal, external, pdd, oauth]
+	 * @returns {boolean}
+	 */
+	hasAccountType (provider, type) {
+		let result = providers.filter(({ hosts, types }) => {
+			return hosts.includes(provider) && types.includes(type);
+		});
+
+		return result.length > 0;
+	},
+
+	/**
 	 * Позволяет получить состовляющие email
 	 *
 	 * @param {string} email
@@ -110,5 +125,23 @@ module.exports = {
 		} catch (error) {
 			throw new Error(`Could not parse passed email "${email}"\n${error.stack}`);
 		}
+	},
+
+	generatePassword (length = 10) {
+		let symbols = '0123456789' +
+			'abcdefghiklmnopqrstuvwxyz' +
+			'ABCDEFGHIJKLMNOPQRSTUVWXTZ' +
+			'!@#$%^&*()-_+=;:,./?\\|`~[]{}';
+
+		let randomItems = (array, length) => {
+			return Array.from(
+				{length},
+				() => {
+					return array[Math.floor(Math.random() * array.length)];
+				}
+			);
+		};
+
+		return randomItems(symbols, length).join('');
 	}
 };

@@ -20,6 +20,13 @@ module.exports = {
 		},
 
 		{
+			provider: 'testmail.3proxy.ru',
+			features: ['external', 'pdd'],
+			username: 'user-1@testmail.3proxy.ru',
+			password: 'eA]7i1aUXVhn'
+		},
+
+		{
 			provider: 'mail.ua',
 			features: ['internal', 'oauth'],
 			username: 'austen_jane@mail.ua',
@@ -31,6 +38,13 @@ module.exports = {
 			features: ['internal', 'oauth'],
 			username: 'toropova.1964@inbox.ru',
 			password: 'yHACdyYPzWq5'
+		},
+
+		{
+			provider: 'inbox.ru',
+			features: ['internal', 'oauth', 'phone_verified'],
+			username: 'regtest_29_06_2016_15_33_58_48@inbox.ru',
+			password: '6x518ww20s'
 		},
 
 		{
@@ -107,20 +121,22 @@ module.exports = {
 	/**
 	 * Получает учетную запись с заданными характеристиками
 	 *
-	 * @param {string} domain
-	 * @param {Array} [features]
+	 * @property {string} provider
+	 * @property {Array} features
 	 * @returns {Object|undefined}
 	 */
-	get (domain, features = []) {
+	get ({ provider, features = [] }) {
 		return this.list.find(account => {
-			if (domain) {
-				let filtered = features.every(feature => {
-					return account.features.includes(feature);
-				});
+			let filtered = features.every(feature => {
+				return account.features.includes(feature);
+			});
 
-				if (account.provider === domain) {
+			if (provider) {
+				if (account.provider === provider && (!features.length || filtered)) {
 					return account;
 				}
+			} else if (filtered) {
+				return account;
 			}
 		});
 	}

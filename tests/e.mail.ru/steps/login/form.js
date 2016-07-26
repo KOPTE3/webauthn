@@ -116,8 +116,8 @@ class LoginFormSteps extends Steps {
 	 *
 	 * @param {string} provider
 	 */
-	clickByDomain (provider) {
-		let actual = this.loginForm.clickByDomain(provider);
+	clickDomain (provider) {
+		let actual = this.loginForm.clickDomain(provider);
 
 		assert.equal(actual.state, 'success',
 			`Не удалось найти элемент для провайдера ${provider}`);

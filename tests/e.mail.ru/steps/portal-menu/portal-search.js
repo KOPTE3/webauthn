@@ -32,7 +32,9 @@ class PortalSearchSteps extends PortalMenuSteps {
 	mock (body = []) {
 		actions.mockRPC('messages/search/requests', {
 			status: '200',
-			body
+			body: {
+				requests: body
+			}
 		});
 	}
 
@@ -59,6 +61,22 @@ class PortalSearchSteps extends PortalMenuSteps {
 		let actual = this.search.wait();
 
 		assert(actual, 'Не удалось дождаться открытия страницы поиска');
+	}
+
+	/**
+	 * Нажать на энтер и открыть поиск
+	 */
+	searchButtonEnter () {
+		this.keyEnter();
+
+		this.search.wait();
+	}
+
+	/**
+	 * Нажать на enter
+	 */
+	keyEnter () {
+		this.portalSearch.keys(constants.UNICODE_CHARACTERS.Enter);
 	}
 
 	/**
@@ -371,6 +389,15 @@ class PortalSearchSteps extends PortalMenuSteps {
 	 */
 	isFocusInBlank () {
 		this.operandHasFocus('blank');
+	}
+
+	/**
+	 * Фокус находится на лупе
+	 */
+	isFocusInSearchButton () {
+		let actual = this.portalSearch.isFocusInSearchButton();
+
+		assert(actual, `Фокус не находится на лупе`);
 	}
 
 	/**

@@ -11,7 +11,7 @@ describe('TESTMAIL-8675', () => {
 		LoginPage.open();
 
 		providers.active.forEach(({ name }) => {
-			loginForm.clickByDomain(name);
+			loginForm.clickDomain(name);
 			loginForm.getLoginValue(name);
 		});
 	});
