@@ -115,6 +115,34 @@ module.exports = {
 			features: ['external', 'oauth'],
 			username: 'out.collector3@outlook.com',
 			password: 'NkIPDXKBHW'
+		},
+
+		{
+			provider: 'msn.com',
+			features: ['external', 'oauth'],
+			username: 'out.collector3@outlook.com',
+			password: 'NkIPDXKBHW'
+		},
+
+		{
+			provider: 'live.com',
+			features: ['external', 'oauth'],
+			username: 'out.collector3@outlook.com',
+			password: 'NkIPDXKBHW'
+		},
+
+		{
+			provider: 'live.ru',
+			features: ['external', 'oauth'],
+			username: 'out.collector3@outlook.com',
+			password: 'NkIPDXKBHW'
+		},
+
+		{
+			provider: 'hotmail.com',
+			features: ['external', 'oauth'],
+			username: 'out.collector3@outlook.com',
+			password: 'NkIPDXKBHW'
 		}
 	],
 

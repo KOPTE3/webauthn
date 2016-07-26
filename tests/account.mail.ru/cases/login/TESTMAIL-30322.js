@@ -25,6 +25,7 @@ let { options = {
 let suite = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
 describe(suite + ': ' + options.name, () => {
+	/*
 	it('авторизация через gmail.com', () => {
 		for (let { hosts } of providers.get(['gmail.com'])) {
 			for (let host of hosts) {
@@ -62,38 +63,40 @@ describe(suite + ': ' + options.name, () => {
 			}
 		}
 	});
-
+*/
 	it('авторизация через outlook', () => {
 		for (let { hosts } of providers.get(['outlook.com'])) {
-			// берем самый первый хост основной outlook
-			let host = hosts[0];
+			for (let host of hosts) {
+				// берем самый первый хост основной outlook
+				console.log(host);
 
-			LoginPage.open({ allow_external: 1 });
+				LoginPage.open({ allow_external: 1 });
 
-			let { username, password } = accounts.get({
-				provider: host,
-				features: ['oauth']
-			});
+				let { username, password } = accounts.get({
+					provider: host,
+					features: ['oauth']
+				});
 
-			// вписываем логин
-			loginForm.setLogin(username);
-			// нажимаем на кнопку продолжить
+				// вписываем логин
+				loginForm.setLogin(username);
+				// нажимаем на кнопку продолжить
 
-			loginForm.clickNextButton();
+				loginForm.clickNextButton();
 
-			// ожидаем урл гугловский
-			outlookSteps.waitForUrl(new RegExp('https://login.live.com/oauth20_authorize.srf'));
-			// ожидаем загрузки страницы
-			OutlookSteps.wait();
+				// ожидаем урл гугловский
+				outlookSteps.waitForUrl(new RegExp('https://login.live.com/oauth20_authorize.srf'));
+				// ожидаем загрузки страницы
+				OutlookSteps.wait();
 
-			// вписываем пароль
-			outlookSteps.setPassword(password);
+				// вписываем пароль
+				outlookSteps.setPassword(password);
 
-			outlookSteps.clickSignInBtn();
+				outlookSteps.clickSignInBtn();
 
-			// делаем побольше таймаут, оутлук очень долго отрабатывает
-			Steps.isActiveUser(username, 4000);
-			Steps.reload();
+				// делаем побольше таймаут, оутлук очень долго отрабатывает
+				Steps.isActiveUser(username, 4000);
+				Steps.reload();
+			}
 		}
 	});
 });
