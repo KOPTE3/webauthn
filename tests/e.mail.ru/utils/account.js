@@ -33,7 +33,7 @@ module.exports = {
 		browser.waitUntil(function async () {
 			return account.session(options)
 				.then(result => true);
-		}, 15 * 1000, 'Could not user session');
+		}, 15 * 1000, 'Could not get user session');
 
 		this.setCookie();
 	},
