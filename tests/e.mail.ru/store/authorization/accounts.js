@@ -78,8 +78,8 @@ module.exports = {
 		{
 			provider: 'gmail.com',
 			features: ['external', 'oauth'],
-			username: 'gml.collector8@gmail.com',
-			password: 'KqFyxBq74oOx'
+			username: 'gml.collector10@gmail.com',
+			password: 'u28D23GtIG'
 		},
 
 		{

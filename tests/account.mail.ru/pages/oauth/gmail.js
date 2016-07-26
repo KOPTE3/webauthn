@@ -1,0 +1,70 @@
+'use strict';
+
+let OauthPage = require('../../pages/oauth');
+
+/** Модуль для работы с представлением страницы логина */
+class GmailPage extends OauthPage {
+	constructor () {
+		super();
+	}
+
+	/**
+	 * Базовый адрес страницы
+	 *
+	 * @type {string}
+	 */
+	get location () {
+		return 'https://accounts.google.com/';
+	}
+
+	/**
+	 * Локаторы
+	 *
+	 * @type {Object}
+	 */
+	get locators () {
+		let container = '.card.signin-card';
+
+		return {
+			container,
+			nextBtn: `${container} .rc-button.rc-button-submit`,
+			password: `${container} #Passwd[name=Passwd]`,
+			signIn: `${container} #signIn`
+		};
+	}
+
+	/**
+	 * Клик по кнопке Продолжить
+	 *
+	 * @returns {*}
+	 */
+	clickNextBtn () {
+		return this.clickAll(this.locators.nextBtn);
+	}
+
+	/**
+	 * Клик по кнопке "Войти"
+	 */
+	clickSignInBtn () {
+		this.clickAll(this.locators.signIn);
+	}
+
+	/**
+	 * Заполнить поле пароля
+	 *
+	 * @param {string} password
+	 */
+	setPassword (password) {
+		this.page.setValue(this.locators.password, password);
+	}
+
+	/**
+	 * Ожидаем пока пароль будет виден
+	 */
+	waitPassowrd () {
+		this.page.waitForVisible(this.locators.password);
+	}
+
+}
+
+module.exports = GmailPage;

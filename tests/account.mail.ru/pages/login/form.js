@@ -25,6 +25,7 @@ class LoginForm extends LoginPage {
 			form            : '[data-bem="b-form"]',
 			password        : '[name="Password"]',
 			submit          : '[data-name="submit"]:first-child',
+			submitNext      : '.next[data-name="submit"]',
 			error           : '.b-login__errors',
 			title           : '.b-login__header__title',
 			desc            : '.b-login__header__desc',
@@ -123,6 +124,14 @@ class LoginForm extends LoginPage {
 	 */
 	clickSignInButton () {
 		this.page.click(this.locators.submit);
+	}
+
+	/**
+	 * Клик по кнопке продолжить появляется вместо кнопки войти
+	 * когда у нас oauth
+	 */
+	clickNextButton () {
+		this.page.click(this.locators.submitNext);
 	}
 
 	/**
