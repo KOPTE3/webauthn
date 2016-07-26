@@ -29,6 +29,10 @@ class FoldersSteps extends Steps {
 		return new SearchPage();
 	}
 
+	static getArchiveFolderId () {
+		return this.page.getArchiveFolderId();
+	}
+
 	static goToFolder (folderId) {
 		return this.page.goToFolder(folderId);
 	}
@@ -275,6 +279,28 @@ class FoldersSteps extends Steps {
 		let actual = this.search.wait();
 
 		assert(actual, 'Не удалось дождаться открытия страницы поиска');
+	}
+
+	static openEditPopup (folderId) {
+		this.page.rightClick(folderId);
+		this.page.clickDropdownItem('rename');
+
+		let actual = this.page.isPopupVisible();
+
+		assert(actual, 'Попап редактирования должен быть виден');
+	}
+
+	static changeParentInPopup (folderId) {
+		this.page.openPopupPropdown();
+		this.page.clickPopupDropdownItem(folderId);
+	}
+
+	static submitPopup () {
+		this.page.clickPopupSubmit();
+
+		let actual = this.page.isPopupVisible(true);
+
+		assert(actual, 'Попап редактирования должен быть скрыт');
 	}
 }
 
