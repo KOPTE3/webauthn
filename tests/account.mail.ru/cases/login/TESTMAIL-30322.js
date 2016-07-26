@@ -9,13 +9,9 @@ let accounts = require('../../store/authorization/accounts');
 let providers = require('../../store/authorization/providers');
 
 let GmailSteps = require('../../steps/oauth/gmail');
-
 let gmailSteps = new GmailSteps();
-
 let OutlookSteps = require('../../steps/oauth/outlook');
-
 let outlookSteps = new OutlookSteps();
-
 let loginForm = new LoginForm();
 
 let { options = {
