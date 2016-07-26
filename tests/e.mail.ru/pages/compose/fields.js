@@ -33,8 +33,8 @@ class ComposeFields extends ComposePage {
 				fromEmail: {
 					ctrl: '.js-compose__select_email .js-compose__dropdown_email',
 					list: '.js-compose__select_email .js-compose__select_email-item',
-					item: value => '.js-compose__select_email ' +
-						`.js-compose__select_email-item [data-email="${value}"]`
+					item: email => '.js-compose__select_email ' +
+						`.js-compose__select_email-item [data-email="${email}"]`
 				}
 			}
 		});

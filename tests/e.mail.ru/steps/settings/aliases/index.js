@@ -6,9 +6,6 @@ let Steps = require('../../../steps');
 let SettingsAliasesPage = require('../../../pages/settings/aliases');
 
 class Aliases extends Steps {
-	constructor () {
-		super();
-	}
 
 	/**
 	 * Возвращает ссылку на инстанс страницы
@@ -23,14 +20,14 @@ class Aliases extends Steps {
 	 * Создать алиас
 	 *
 	 * @param {Object} params - данные алиаса
-	 * @returns {string} - ID созданной папки
+	 * @returns {string} - ID созданного алиаса
 	 */
 	static createAlias (params) {
-		let folderId = this.page.createAlias(params);
+		let aliasId = this.page.createAlias(params);
 
-		assert(folderId, 'createFolder должен вернуть folderId');
+		assert(aliasId, 'createAlias должен вернуть aliasId');
 
-		return folderId;
+		return aliasId;
 	}
 }
 

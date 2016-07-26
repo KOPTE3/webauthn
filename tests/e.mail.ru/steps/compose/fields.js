@@ -45,7 +45,7 @@ class ComposeFieldsSteps extends ComposeSteps {
 		this.composeFields.setFieldValue(...arguments);
 	}
 
-	setDropdownValue (name, value) {
+	setDropdownValue () {
 		this.composeFields.setDropdownValue(...arguments);
 	}
 

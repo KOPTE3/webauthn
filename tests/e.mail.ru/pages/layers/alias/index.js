@@ -37,9 +37,23 @@ class AliasLayers extends Layers {
 
 	getDropdownValue (name) {
 		let dropdown = this.locators.dropdowns[name];
-		let ctrl = this.page.element(`${dropdown.ctrl}`);
+		let ctrl = this.page.element(dropdown.ctrl);
 
 		return ctrl.getText();
+	}
+
+	clickDropdownCtrl (name) {
+		let dropdown = this.locators.dropdowns[name];
+
+		this.page.click(dropdown.ctrl);
+		this.page.waitForVisible(dropdown.list);
+	}
+
+	setDropdownValue (name, value) {
+		let dropdown = this.locators.dropdowns[name];
+
+		this.clickDropdownCtrl(name);
+		this.page.click(dropdown.item(value));
 	}
 }
 

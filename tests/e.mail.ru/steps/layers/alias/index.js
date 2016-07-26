@@ -8,6 +8,10 @@ class AliasLayerSteps extends LayerSteps {
 		this.layer.setFieldValue(name, value);
 	}
 
+	setDropdownValue (name, value) {
+		this.layer.setDropdownValue(name, value);
+	}
+
 	getFieldValue (name) {
 		return this.layer.getFieldValue(name);
 	}

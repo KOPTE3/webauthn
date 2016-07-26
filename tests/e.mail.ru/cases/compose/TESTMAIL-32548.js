@@ -18,6 +18,12 @@ let SettingsAliases = require('../../steps/settings/aliases');
 let SettingsSignature = require('../../steps/settings/signature');
 let SentSteps = require('../../steps/sent');
 
+let LettersSteps = require('../../steps/messages/letters');
+let lettersSteps = new LettersSteps();
+
+let MessageToolbarSteps = require('../../steps/message/toolbar');
+let messageToolbarSteps = new MessageToolbarSteps();
+
 let ComposeEmptyTextLayerSteps = require('../../steps/layers/compose/emptyText');
 let composeEmptyTextLayerSteps = new ComposeEmptyTextLayerSteps();
 
@@ -25,6 +31,7 @@ let MessagesToolbarSteps = require('../../steps/messages/toolbar');
 let messagesToolbarSteps = new MessagesToolbarSteps();
 
 let composeFieldsStore = require('../../store/compose/fields');
+let foldersStore = require('../../store/folders');
 
 let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
@@ -33,8 +40,8 @@ describe(name, () => {
 		Compose.auth();
 	});
 
-	it('Написание письма. Временный адрес. Проверка, что после отправки письма ' +
-		'от временного адреса на написании письма есть подпись', () => {
+	it('Написание письма. Временный адрес. Проверка, что при ответе на письмо ' +
+		'от временного адреса, подпись вырезается', () => {
 		let { fields: composeData } = composeFieldsStore;
 		let signature = 'Такая вот необычная подпись!';
 
@@ -48,7 +55,9 @@ describe(name, () => {
 		SettingsSignature.save();
 
 		SettingsAliases.open();
-		let aliasId = SettingsAliases.createAlias();
+		let aliasId = SettingsAliases.createAlias({
+			folder: foldersStore.ids.inbox
+		});
 
 		Messages.open();
 		messagesToolbarSteps.clickButton('compose');
@@ -57,7 +66,7 @@ describe(name, () => {
 		composeFields.expandField('From');
 		composeFields.setDropdownValue('fromEmail', aliasId);
 		composeFields.setFieldValue('subject', composeData.subject);
-		composeFields.setFieldValue('to', composeData.to);
+		composeFields.setFieldValue('to', aliasId);
 
 		composeEditor.messageContains(signature, true);
 
@@ -68,13 +77,12 @@ describe(name, () => {
 
 		SentSteps.isVisible();
 
-		messagesToolbarSteps.clickButton('compose');
+		Messages.open();
+		lettersSteps.openNewestLetter();
+
+		messageToolbarSteps.clickButton('reply');
 		Compose.wait();
 
-		composeEditor.messageContains(signature);
-
-		Compose.open();
-
-		composeEditor.messageContains(signature);
+		composeEditor.messageContains(signature, true);
 	});
 });

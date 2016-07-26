@@ -14,6 +14,7 @@ class AliasAdd extends AliasLayers {
 	get locators () {
 		let container = '.is-aliases-add_in';
 		let domainDropdownContainer = `${container} [data-blockid="email_select"]`;
+		let folderDropdownContainer = `${container} [data-input="folder"]`;
 
 		return this.extend(super.locators, {
 			container,
@@ -25,7 +26,15 @@ class AliasAdd extends AliasLayers {
 			dropdowns: {
 				domain: {
 					ctrl: `${domainDropdownContainer} .b-dropdown__ctrl`,
-					list: `${domainDropdownContainer} .b-dropdown__list`
+					list: `${domainDropdownContainer} .b-dropdown__list`,
+					item: value => `${domainDropdownContainer} ` +
+						`.b-dropdown__list [data-value="${value}"]`
+				},
+				folder: {
+					ctrl: `${folderDropdownContainer} .b-dropdown__ctrl`,
+					list: `${folderDropdownContainer} .b-dropdown__list`,
+					item: value => `${folderDropdownContainer} ` +
+						`.b-dropdown__list [data-value="${value}"]`
 				}
 			}
 		});

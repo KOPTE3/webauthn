@@ -4,21 +4,20 @@ let path = require('path');
 
 let Messages = require('../../steps/messages');
 let Compose = require('../../steps/compose');
+
 let ComposeFields = require('../../steps/compose/fields');
+let composeFields = new ComposeFields();
+
 let ComposeEditor = require('../../steps/compose/editor');
+let composeEditor = new ComposeEditor();
+
 let SettingsAliases = require('../../steps/settings/aliases');
 let SettingsSignature = require('../../steps/settings/signature');
-
-let ComposeEmptyTextLayerSteps = require('../../steps/layers/compose/emptyText');
-let composeEmptyTextLayerSteps = new ComposeEmptyTextLayerSteps();
 
 let MessagesToolbarSteps = require('../../steps/messages/toolbar');
 let messagesToolbarSteps = new MessagesToolbarSteps();
 
 let composeFieldsStore = require('../../store/compose/fields');
-
-let composeFields = new ComposeFields();
-let composeEditor = new ComposeEditor();
 
 let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
@@ -27,8 +26,9 @@ describe(name, () => {
 		Compose.auth();
 	});
 
-	it('Написание письма. Временный адрес. Проверка, что после отправки письма ' +
-		'от временного адреса на написании письма есть подпись', () => {
+	it('Написание письма. Временный адрес. Проверка, что если на написании письма ' +
+		'выбрать временный адрес, а затем еще раз нажать ' +
+		'кнопку "написать письмо", то подпись есть', () => {
 		let { fields: composeData } = composeFieldsStore;
 		let signature = 'Такая вот необычная подпись!';
 

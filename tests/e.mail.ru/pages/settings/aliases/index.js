@@ -30,7 +30,9 @@ class AliasPage extends PageObject {
 
 		return {
 			container,
-			item: `${container} .b-list__list .b-settings-aliases`,
+			item: {
+				container: id => `${container} .b-list__list .b-settings-aliases [data-id="${id}"]`
+			},
 			controls: {
 				new: `${container} .js-create-alias`
 			}
@@ -44,6 +46,8 @@ class AliasPage extends PageObject {
 	 * @returns {string} - ID созданной папки
 	 */
 	createAlias (params) {
+		let {folder} = params;
+
 		this.newAliasControl();
 
 		this.layerAliasAdd.show();
@@ -51,6 +55,11 @@ class AliasPage extends PageObject {
 		let id = this.layerAliasAdd.getAlias();
 
 		this.layerAliasAdd.fillCaptcha();
+
+		if (folder !== void 0) {
+			this.layerAliasAdd.setDropdownValue('folder', folder);
+		}
+
 		this.layerAliasAdd.apply();
 
 		this.waitAddSuccess(id);
@@ -60,9 +69,9 @@ class AliasPage extends PageObject {
 
 	waitAddSuccess (id) {
 		let {item} = this.locators;
-		let locator = `${item} [data-id="${id}"]`;
 
-		this.page.waitForExist(locator, 5000, 'Не дождались появления добавленного алиаса');
+		this.page.waitForExist(item.container(id), 5000,
+			'Не дождались появления добавленного алиаса');
 	}
 
 	newAliasControl () {
