@@ -25,31 +25,12 @@ class VkSteps extends OAuthSteps {
 	}
 
 	/**
-	 * Клик по кнопке авторизации
-	 */
-	clickSignInBtn () {
-		this.vkPage.clickSignInBtn();
-	}
-
-	/**
-	 * Вписываем логин
+	 * ссылка на текущий page
 	 *
-	 * @param {string} login
+	 * @returns {VkPage}
 	 */
-	setLogin (login) {
-		this.vkPage.waitElem(this.vkPage.locators.login);
-		this.vkPage.setValue(login, this.vkPage.locators.login);
-	}
-
-	/**
-	 * Вводим пароль
-	 * а до этого дожидаемся появления поля инпут
-	 *
-	 * @param {string} password
-	 */
-	setPassword (password) {
-		this.vkPage.waitElem(this.vkPage.locators.password);
-		this.vkPage.setValue(password, this.vkPage.locators.password);
+	get page () {
+		return this.vkPage;
 	}
 }
 

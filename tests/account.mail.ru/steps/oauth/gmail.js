@@ -25,29 +25,12 @@ class GmailSteps extends OAuthSteps {
 	}
 
 	/**
+	 * ссылка на текущий page
 	 *
-	 * Нажатие на кнопку next
+	 * @returns {VkPage}
 	 */
-	clickNextBtn () {
-		this.gmailPage.clickNextBtn();
-	}
-
-	/**
-	 * Клик по кнопке авторизации
-	 */
-	clickSignInBtn () {
-		this.gmailPage.clickSignInBtn();
-	}
-
-	/**
-	 * Вводим пароль
-	 * а до этого дожидаемся появления поля инпут
-	 *
-	 * @param {string} password
-	 */
-	setPassword (password) {
-		this.gmailPage.waitPassword();
-		this.gmailPage.setPassword(password);
+	get page () {
+		return this.gmailPage;
 	}
 }
 

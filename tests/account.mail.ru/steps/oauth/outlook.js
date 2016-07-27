@@ -25,29 +25,12 @@ class OutlookSteps extends OAuthSteps {
 	}
 
 	/**
+	 * ссылка на текущий page
 	 *
-	 * Нажатие на кнопку next
+	 * @returns {VkPage}
 	 */
-	clickNextBtn () {
-		this.outlookPage.clickNextBtn();
-	}
-
-	/**
-	 * Клик по кнопке авторизации
-	 */
-	clickSignInBtn () {
-		this.outlookPage.clickSignInBtn();
-	}
-
-	/**
-	 * Вводим пароль
-	 * а до этого дожидаемся появления поля инпут
-	 *
-	 * @param {string} password
-	 */
-	setPassword (password) {
-		this.outlookPage.waitPassowrd();
-		this.outlookPage.setPassword(password);
+	get page () {
+		return this.outlookPage;
 	}
 }
 

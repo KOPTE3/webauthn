@@ -16,40 +16,21 @@ class FbSteps extends OAuthSteps {
 	}
 
 	/**
+	 * ссылка на текущий page
+	 *
+	 * @returns {VkPage}
+	 */
+	get page () {
+		return this.fbPage;
+	}
+
+	/**
 	 * Возвращает ссылку на инстанс страницы
 	 *
 	 * @type {Object}
 	 */
 	static get page () {
 		return new FbPage();
-	}
-
-	/**
-	 * Клик по кнопке авторизации
-	 */
-	clickSignInBtn () {
-		this.fbPage.clickSignInBtn();
-	}
-
-	/**
-	 * Вписываем логин
-	 *
-	 * @param {string} login
-	 */
-	setLogin (login) {
-		this.fbPage.waitElem(this.fbPage.locators.login);
-		this.fbPage.setValue(login, this.fbPage.locators.login);
-	}
-
-	/**
-	 * Вводим пароль
-	 * а до этого дожидаемся появления поля инпут
-	 *
-	 * @param {string} password
-	 */
-	setPassword (password) {
-		this.fbPage.waitElem(this.fbPage.locators.password);
-		this.fbPage.setValue(password, this.fbPage.locators.password);
 	}
 }
 

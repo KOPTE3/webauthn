@@ -25,31 +25,12 @@ class OkSteps extends OAuthSteps {
 	}
 
 	/**
-	 * Клик по кнопке авторизации
-	 */
-	clickSignInBtn () {
-		this.okPage.clickSignInBtn();
-	}
-
-	/**
-	 * Вписываем логин
+	 * ссылка на текущий page
 	 *
-	 * @param {string} login
+	 * @returns {VkPage}
 	 */
-	setLogin (login) {
-		this.okPage.waitElem(this.okPage.locators.login);
-		this.okPage.setValue(login, this.okPage.locators.login);
-	}
-
-	/**
-	 * Вводим пароль
-	 * а до этого дожидаемся появления поля инпут
-	 *
-	 * @param {string} password
-	 */
-	setPassword (password) {
-		this.okPage.waitElem(this.okPage.locators.password);
-		this.okPage.setValue(password, this.okPage.locators.password);
+	get page () {
+		return this.okPage;
 	}
 }
 
