@@ -1,15 +1,33 @@
 'use strict';
 
+let AccountSteps = require('../../../steps/password/restore/account');
 let SelectSteps = require('../../../steps/password/restore/select');
-let usersStore = require('../../../store/password/restore/users');
 
+let accountSteps = new AccountSteps();
 let selectSteps = new SelectSteps();
-const user = usersStore.simple.one;
 
-describe('TESTMAIL-31538: Восстановление пароля. ' +
-	'Ввод скрытых цифр телефона.', () => {
-	it('Проверка отображения номера телефона на странице ввода капчи', () => {
-		selectSteps.open(user.email);
-		selectSteps.checkPhone(user.phone.head, '');
+let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
+
+let {options = {
+	name: 'Восстановление пароля. ' +
+	'Ввод скрытых цифр телефона. ' +
+	'Проверка отображения номера телефона на странице ввода капчи'
+}} = module.parent;
+
+let user = {};
+let steps = options.mrim ? accessSteps : selectSteps;
+
+describe(name, () => {
+	before(() => {
+		user = AccountSteps.addUser({
+			phones: 1,
+			mrim: options.mrim
+		});
+	});
+
+	it(options.name, () => {
+		accountSteps.openForEmail(user.email);
+		steps.wait();
+		steps.checkPhone(user.phones[0].head, '');
 	});
 });
