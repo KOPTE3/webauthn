@@ -126,7 +126,7 @@ class PageObject {
 			return user.userAdd(params).then(result => {
 				response = result;
 
-				return true;
+				return result.isOK;
 			});
 		});
 

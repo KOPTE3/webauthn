@@ -3,10 +3,12 @@
 let path = require('path');
 
 let AccountSteps = require('../../../steps/password/restore/account');
+let AccessSteps = require('../../../steps/password/restore/access');
 let SelectSteps = require('../../../steps/password/restore/select');
 let RecoverySteps = require('../../../steps/password/restore/recovery');
 
 let accountSteps = new AccountSteps();
+let accessSteps = new AccessSteps();
 let selectSteps = new SelectSteps();
 
 let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
