@@ -143,6 +143,26 @@ module.exports = {
 			features: ['external', 'oauth'],
 			username: 'out.collector3@outlook.com',
 			password: 'NkIPDXKBHW'
+		},
+
+		{
+			provider: 'vk.com',
+			features: ['social', 'oauth'],
+			username: '+79162143406',
+			password: 'f23fe23rGsf'
+		},
+
+		{
+			provider: 'ok.ru',
+			features: ['social', 'oauth'],
+			username: '9162143406',
+			password: 'mjdhJF843JFSjf'
+		},
+		{
+			provider: 'fb.com',
+			features: ['social', 'oauth'],
+			username: '+79162143406',
+			password: 'fd3FWfn3fd'
 		}
 	],
 

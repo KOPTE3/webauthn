@@ -36,6 +36,8 @@ describe(suite + ': ' + options.name, () => {
 
 		console.log(username, password);
 
+
+		return;
 		browser.debug();
 
 		// вписываем логин
