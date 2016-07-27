@@ -1,39 +1,58 @@
 'use strict';
 
-let SelectSteps = require('../../../steps/password/restore/select');
-let usersStore = require('../../../store/password/restore/users');
 
+let AccountSteps = require('../../../steps/password/restore/account');
+let AccessSteps = require('../../../steps/password/restore/access');
+let SelectSteps = require('../../../steps/password/restore/select');
+
+let accountSteps = new AccountSteps();
+let accessSteps = new AccessSteps();
 let selectSteps = new SelectSteps();
 
-let user = usersStore.simple.two;
+let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
-const phone1 = user.phones[0];
-const phone2 = user.phones[1];
-
-describe('TESTMAIL-31481: Восстановление пароля. ' +
+let {options = {
+	name: 'Восстановление пароля. ' +
 	'Ввод скрытых цифр телефона. ' +
-	'Выбор номера телефона, на который вы хотите ' +
-	'получить код восстановления (два телефона)', () => {
+	'Проверить получение ошибки при пустом поле ввода'
+}} = module.parent;
+
+let steps = options.mrim ? accessSteps : selectSteps;
+let user = {};
+let phone1, phone2;
+
+describe(name, () => {
+	before(() => {
+		user = AccountSteps.createUser({
+			phones: 2,
+			mrim: options.mrim
+		});
+
+		phone1 = user.phones[0];
+		phone2 = user.phones[1];
+	});
+
 	beforeEach(() => {
-		selectSteps.open(user.email);
+		accountSteps.openForEmail(user.email);
+		steps.wait();
 	});
 
-	it('Проверка начального состояния', () => {
-		selectSteps.phoneInputIsActive(phone1.index, phone1.head, '');
-		selectSteps.phoneInputIsDisabled(phone2.index, phone2.head);
+	it(options.name + ': Проверка начального состояния', () => {
+		steps.phoneInputIsActive(phone1.index, phone1.head, '');
+		steps.phoneInputIsDisabled(phone2.index, phone2.head);
 	});
 
-	it('Переключение телефонов', () => {
+	it(options.name + ': Переключение телефонов', () => {
 		const value = '11';
 
-		selectSteps.fillPhoneInput(value, phone1.index);
+		steps.fillPhoneInput(value, phone1.index);
 
-		selectSteps.selectPhoneInput(phone2.index);
-		selectSteps.phoneInputIsActive(phone2.index, phone2.head, '');
-		selectSteps.phoneInputIsDisabled(phone1.index, phone1.head);
+		steps.selectPhoneInput(phone2.index);
+		steps.phoneInputIsActive(phone2.index, phone2.head, '');
+		steps.phoneInputIsDisabled(phone1.index, phone1.head);
 
-		selectSteps.selectPhoneInput(phone1.index);
-		selectSteps.phoneInputIsActive(phone1.index, phone1.head, value);
-		selectSteps.phoneInputIsDisabled(phone2.index, phone2.head);
+		steps.selectPhoneInput(phone1.index);
+		steps.phoneInputIsActive(phone1.index, phone1.head, value);
+		steps.phoneInputIsDisabled(phone2.index, phone2.head);
 	});
 });

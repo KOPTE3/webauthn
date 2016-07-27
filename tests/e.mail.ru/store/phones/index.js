@@ -4,6 +4,7 @@
 module.exports = {
 	phones: [
 		{
+			index: 0,
 			phone: '79162143406',
 			head: '+7 (916) 2',
 			value: '14',
@@ -11,6 +12,7 @@ module.exports = {
 			id: 'id_KPFVb+EGhXQDWjPNlISdwcXnWMNNZbnW71ZqFCZZx0Q='
 		},
 		{
+			index: 1,
 			phone: '79163870193',
 			head: '+7 (916) 3',
 			value: '87',
