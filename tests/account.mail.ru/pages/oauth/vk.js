@@ -1,9 +1,9 @@
 'use strict';
 
-let OauthPage = require('../../pages/oauth');
+let OAuthPage = require('../../pages/oauth');
 
 /** Модуль для работы с представлением сервиса vk.com */
-class VkPage extends OauthPage {
+class VkPage extends OAuthPage {
 	constructor () {
 		super();
 	}
@@ -22,15 +22,6 @@ class VkPage extends OauthPage {
 			password: `${container} [name="pass"]`,
 			signIn: `${container} #install_allow`
 		};
-	}
-
-	/**
-	 * Клик по кнопке "Войти"
-	 *
-	 * @returns {*}
-	 */
-	clickSignInBtn () {
-		return this.page.click(this.locators.signIn);
 	}
 }
 

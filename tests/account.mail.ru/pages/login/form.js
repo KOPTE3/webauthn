@@ -43,11 +43,11 @@ class LoginForm extends LoginPage {
 			captchaDescription: '.b-captha__description',
 			captchaLink: '.b-captcha__code__reload',
 			captchaImage: '.b-captcha__captcha',
-			socialBtns: {
-				vk: `${container} .b-btn-social__social__link_vk`,
-				ok: `${container} .b-btn-social__social__link_ok`,
-				fb: `${container} .b-btn-social__social__link_fb`
-			},
+			socialBtns: new Proxy({}, {
+				get (target, name) {
+					return `${container} .b-btn-social__social__link_${name}`;
+				}
+			}),
 			selectedItem (provider) {
 				return `.b-email__domain .b-dropdown__list [data-value="${provider}"]`;
 			},

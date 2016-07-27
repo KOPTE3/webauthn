@@ -1,9 +1,9 @@
 'use strict';
 
-let OauthPage = require('../../pages/oauth');
+let OAuthPage = require('../../pages/oauth');
 
 /** Модуль для работы с представлением сервиса gmail.com */
-class GmailPage extends OauthPage {
+class GmailPage extends OAuthPage {
 	constructor () {
 		super();
 	}
@@ -31,15 +31,6 @@ class GmailPage extends OauthPage {
 	 */
 	clickNextBtn () {
 		return this.page.click(this.locators.nextBtn);
-	}
-
-	/**
-	 * Клик по кнопке "Войти"
-	 *
-	 * @returns {*}
-	 */
-	clickSignInBtn () {
-		return this.page.click(this.locators.signIn);
 	}
 
 	/**

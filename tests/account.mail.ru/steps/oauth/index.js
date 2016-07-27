@@ -5,7 +5,7 @@ let assert = require('assert');
 let Steps = require('../../steps');
 
 /** Модуль для работы с шагами внешних сервисов */
-class OauthSteps extends Steps {
+class OAuthSteps extends Steps {
 	constructor () {
 		super();
 	}
@@ -20,4 +20,4 @@ class OauthSteps extends Steps {
 	}
 }
 
-module.exports = OauthSteps;
+module.exports = OAuthSteps;

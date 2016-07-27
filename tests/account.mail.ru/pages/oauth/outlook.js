@@ -1,9 +1,9 @@
 'use strict';
 
-let OauthPage = require('../../pages/oauth');
+let OAuthPage = require('../../pages/oauth');
 
 /** Модуль для работы с представлением сервиса outlook.com */
-class OutlookPage extends OauthPage {
+class OutlookPage extends OAuthPage {
 	constructor () {
 		super();
 	}
@@ -21,15 +21,6 @@ class OutlookPage extends OauthPage {
 			password: `${container} [name="passwd"]`,
 			signIn: `${container} .btn-block[type="submit"]`
 		};
-	}
-
-	/**
-	 * Клик по кнопке авторизации
-	 *
-	 * @returns {*}
-	 */
-	clickSignInBtn () {
-		return this.page.click(this.locators.signIn);
 	}
 
 	/**

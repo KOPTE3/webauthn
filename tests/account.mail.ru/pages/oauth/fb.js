@@ -1,9 +1,9 @@
 'use strict';
 
-let OauthPage = require('../../pages/oauth');
+let OAuthPage = require('../../pages/oauth');
 
 /** Модуль для работы с представлением сервиса fb.com */
-class FbPage extends OauthPage {
+class FbPage extends OAuthPage {
 	constructor () {
 		super();
 	}
@@ -22,15 +22,6 @@ class FbPage extends OauthPage {
 			password: `${container} #pass`,
 			signIn: `${container} #loginbutton`
 		};
-	}
-
-	/**
-	 * Клик по кнопке "Войти"
-	 *
-	 * @returns {*}
-	 */
-	clickSignInBtn () {
-		return this.page.click(this.locators.signIn);
 	}
 }
 

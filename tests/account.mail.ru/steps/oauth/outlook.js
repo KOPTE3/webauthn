@@ -2,13 +2,13 @@
 
 let assert = require('assert');
 
-let OauthSteps = require('../../steps/oauth');
+let OAuthSteps = require('../../steps/oauth');
 let OutlookPage = require('../../pages/oauth/outlook');
 
-let oauthSteps = new OauthSteps();
+let oauthSteps = new OAuthSteps();
 
 /** Модуль для работы с шагами сервиса outlook.com */
-class OutlookSteps extends OauthSteps {
+class OutlookSteps extends OAuthSteps {
 	constructor () {
 		super();
 

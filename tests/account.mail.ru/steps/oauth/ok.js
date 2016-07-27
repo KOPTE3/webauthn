@@ -2,13 +2,13 @@
 
 let assert = require('assert');
 
-let OauthSteps = require('../../steps/oauth');
+let OAuthSteps = require('../../steps/oauth');
 let OkPage = require('../../pages/oauth/ok');
 
-let oauthSteps = new OauthSteps();
+let oauthSteps = new OAuthSteps();
 
 /** Модуль для работы с шагами сервиса ok.com */
-class OkSteps extends OauthSteps {
+class OkSteps extends OAuthSteps {
 	constructor () {
 		super();
 

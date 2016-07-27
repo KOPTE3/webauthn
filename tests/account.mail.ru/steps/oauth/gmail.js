@@ -2,13 +2,13 @@
 
 let assert = require('assert');
 
-let OauthSteps = require('../../steps/oauth');
+let OAuthSteps = require('../../steps/oauth');
 let GmailPage = require('../../pages/oauth/gmail');
 
-let oauthSteps = new OauthSteps();
+let oauthSteps = new OAuthSteps();
 
 /** Модуль для работы с шагами сервиса gmail.com */
-class GmailSteps extends OauthSteps {
+class GmailSteps extends OAuthSteps {
 	constructor () {
 		super();
 

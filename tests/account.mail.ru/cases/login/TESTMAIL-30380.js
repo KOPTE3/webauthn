@@ -17,7 +17,7 @@ let vkSteps = new VkSteps();
 let okSteps = new OkSteps();
 let fbSteps = new FbSteps();
 
-let socialStore = require('../../store/authorization/socials');
+let providersStore = require('../../store/authorization/providers');
 
 let { options = {
 	name: 'Account. Страница логина. Авторизация соц. аккаунтами (вк/ок/фб) ' +
@@ -55,7 +55,7 @@ describe(suite + ': ' + options.name, () => {
 		}
 	].forEach(function (item) {
 		it(`авторизация через ${item.name}`, () => {
-			let social = socialStore.get(item.name)[0];
+			let social = providersStore.get(item.name)[0];
 
 			LoginPage.open(options.query);
 

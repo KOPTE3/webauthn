@@ -1,9 +1,9 @@
 'use strict';
 
-let OauthPage = require('../../pages/oauth');
+let OAuthPage = require('../../pages/oauth');
 
 /** Модуль для работы с представлением сервиса ok.com */
-class OkPage extends OauthPage {
+class OkPage extends OAuthPage {
 	constructor () {
 		super();
 	}
@@ -22,15 +22,6 @@ class OkPage extends OauthPage {
 			password: `${container} #field_password`,
 			signIn: `${container} .button-pro[value="Sign in"]`
 		};
-	}
-
-	/**
-	 * Клик по кнопке "Войти"
-	 *
-	 * @returns {*}
-	 */
-	clickSignInBtn () {
-		return this.page.click(this.locators.signIn);
 	}
 }
 

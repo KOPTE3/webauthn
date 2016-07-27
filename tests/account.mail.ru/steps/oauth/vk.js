@@ -2,13 +2,13 @@
 
 let assert = require('assert');
 
-let OauthSteps = require('../../steps/oauth');
+let OAuthSteps = require('../../steps/oauth');
 let VkPage = require('../../pages/oauth/vk');
 
-let oauthSteps = new OauthSteps();
+let oauthSteps = new OAuthSteps();
 
 /** Модуль для работы с шагами сервиса vk.com */
-class VkSteps extends OauthSteps {
+class VkSteps extends OAuthSteps {
 	constructor () {
 		super();
 

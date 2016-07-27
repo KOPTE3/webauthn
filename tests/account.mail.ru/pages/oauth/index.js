@@ -3,7 +3,7 @@
 let Pages = require('../../pages');
 
 /** Модуль для работы с представлениями внешних сервисов */
-class OauthPage extends Pages {
+class OAuthPage extends Pages {
 	constructor () {
 		super();
 	}
@@ -28,6 +28,15 @@ class OauthPage extends Pages {
 	waitElem (locator) {
 		this.page.waitForVisible(locator);
 	}
+
+	/**
+	 * Клик по кнопке "Войти"
+	 *
+	 * @returns {*}
+	 */
+	clickSignInBtn () {
+		return this.page.click(this.locators.signIn);
+	}
 }
 
-module.exports = OauthPage;
+module.exports = OAuthPage;
