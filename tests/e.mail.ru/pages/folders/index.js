@@ -39,7 +39,11 @@ class FoldersPage extends PageObject {
 				'unread': `${container} a[href*="q_read"]`,
 				'flag': `${container} a[href*="q_flag"]`,
 				'attach': `${container} a[href*="q_attach"]`
-			}
+			},
+			dropdown: '[data-mnemo=folders_contextmenu]',
+			editPopup: '.is-folder-edit_in',
+			popupDropdown: '.b-form__row[data-input=parent] .b-select',
+			popupDropdownSubmit: '.b-form__controls [data-name=submit]'
 		};
 	}
 
@@ -51,6 +55,10 @@ class FoldersPage extends PageObject {
 
 	getFolderLinkLocator (folderId) {
 		return `${this.getFolderItemLocator(folderId)} a`;
+	}
+
+	getFolderTextLocator (folderId) {
+		return `${this.getFolderItemLocator(folderId)} ${this.locators.textItem}`;
 	}
 
 	getDatalistLocator (folderId) {
@@ -67,6 +75,14 @@ class FoldersPage extends PageObject {
 		let {container} = this.locators;
 
 		return this.page.element(container);
+	}
+
+	getDropdownContainer () {
+		return this.page.element(this.locators.dropdown);
+	}
+
+	getPopupDropdownItem (folderId) {
+		return `${this.locators.popupDropdown} [data-value="${folderId}"]`;
 	}
 
 	getParentFolderItem (folderId) {
@@ -175,6 +191,32 @@ class FoldersPage extends PageObject {
 	 */
 	clickFilter (name) {
 		this.page.click(this.locators.filters[name]);
+	}
+
+	rightClick (folderId) {
+		let locator = this.getFolderTextLocator(folderId);
+
+		this.page.rightClick(locator);
+	}
+
+	clickDropdownItem (name) {
+		this.getDropdownContainer().click(`[data-name=${name}]`);
+	}
+
+	isPopupVisible (reverse) {
+		return this.page.waitForVisible(this.locators.editPopup, 1000, reverse);
+	}
+
+	openPopupPropdown () {
+		this.page.click(this.locators.popupDropdown);
+	}
+
+	clickPopupDropdownItem (folderId) {
+		this.page.click(this.getPopupDropdownItem(folderId));
+	}
+
+	clickPopupSubmit () {
+		this.page.click(this.locators.popupDropdownSubmit);
 	}
 }
 
