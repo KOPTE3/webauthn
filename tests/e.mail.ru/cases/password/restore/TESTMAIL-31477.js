@@ -1,26 +1,44 @@
 'use strict';
 
 let AccountSteps = require('../../../steps/password/restore/account');
+let AccessSteps = require('../../../steps/password/restore/access');
 let SelectSteps = require('../../../steps/password/restore/select');
-let usersStore = require('../../../store/password/restore/users');
 
 let accountSteps = new AccountSteps();
+let accessSteps = new AccessSteps();
 let selectSteps = new SelectSteps();
 
-describe('TESTMAIL-31477: Восстановление пароля. ' +
-	'Ввод скрытых цифр телефона.', () => {
-	it('Проверить получение ошибки при пустом поле ввода', () => {
-		let user = usersStore.simple.one;
-		let captcha;
+let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
+let {options = {
+	name: 'Восстановление пароля. ' +
+	'Ввод скрытых цифр телефона. ' +
+	'Проверить получение ошибки при пустом поле ввода'
+}} = module.parent;
+
+let user = {};
+let steps = options.mrim ? accessSteps : selectSteps;
+
+describe(name, () => {
+	before(() => {
+		user = AccountSteps.createUser({
+			phones: 1,
+			mrim: options.name
+		});
+	});
+
+	beforeEach(() => {
 		accountSteps.openForEmail(user.email);
-		selectSteps.wait();
+		steps.wait();
+	});
 
-		captcha = selectSteps.getPhoneCaptchaValue();
-		selectSteps.fillPhoneCaptcha(captcha);
-		selectSteps.submitForm();
+	it(options.name, () => {
+		let captcha = steps.getPhoneCaptchaValue();
 
-		selectSteps.checkTabError('Пожалуйста, введите недостающие цифры.');
-		selectSteps.checkPhoneCaptcha(captcha, false);
+		steps.fillPhoneCaptcha(captcha);
+		steps.submitForm();
+
+		steps.checkTabError('Пожалуйста, введите недостающие цифры.');
+		steps.checkPhoneCaptcha(captcha, false);
 	});
 });
