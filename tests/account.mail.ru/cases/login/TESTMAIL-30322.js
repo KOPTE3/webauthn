@@ -43,7 +43,7 @@ describe(suite + ': ' + options.name, () => {
 				loginForm.clickNextButton();
 
 				// ожидаем урл гугловский
-				gmailSteps.waitSelfUrl();
+				gmailSteps.waitForUrl(hosts.url);
 
 				// ожидаем загрузки страницы
 				GmailSteps.wait();
@@ -80,8 +80,8 @@ describe(suite + ': ' + options.name, () => {
 
 				loginForm.clickNextButton();
 
-				// ожидаем урл гугловский
-				outlookSteps.waitSelfUrl();
+				// ожидаем урл аутлуковский
+				gmailSteps.waitForUrl(hosts.url);
 
 				// ожидаем загрузки страницы
 				OutlookSteps.wait();

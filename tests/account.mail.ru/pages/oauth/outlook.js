@@ -34,11 +34,11 @@ class OutlookPage extends OauthPage {
 
 	/**
 	 * Клик по кнопке авторизации
+	 *
+	 * @returns {*}
 	 */
 	clickSignInBtn () {
-		const btn = this.page.element(this.locators.signIn);
-
-		btn.click();
+		return this.page.click(this.locators.signIn);
 	}
 
 	/**
