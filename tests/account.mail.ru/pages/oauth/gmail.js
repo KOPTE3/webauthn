@@ -9,15 +9,6 @@ class GmailPage extends OauthPage {
 	}
 
 	/**
-	 * Базовый адрес страницы
-	 *
-	 * @type {string}
-	 */
-	get location () {
-		return 'https://accounts.google.com/';
-	}
-
-	/**
 	 * Локаторы
 	 *
 	 * @type {Object}

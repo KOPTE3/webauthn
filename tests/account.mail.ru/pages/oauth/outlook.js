@@ -9,15 +9,6 @@ class OutlookPage extends OauthPage {
 	}
 
 	/**
-	 * Базовый адрес страницы
-	 *
-	 * @type {string}
-	 */
-	get location () {
-		return 'https://login.live.com/oauth20_authorize.srf';
-	}
-
-	/**
 	 * Локаторы
 	 *
 	 * @type {Object}

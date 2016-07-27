@@ -204,6 +204,15 @@ class LoginFormSteps extends Steps {
 	}
 
 	/**
+	 * Кликаем по кнопке социальной сети
+	 *
+	 * @param {vk|fb|ok} social
+	 */
+	clickSocialBtn (social) {
+		this.loginForm.clickSocialBtn(social);
+	}
+
+	/**
 	 * Кликнуть по кнопке продолжить
 	 * она например появляется при выборе oauth провайдеров
 	 */

@@ -147,21 +147,24 @@ module.exports = {
 
 		{
 			provider: 'vk.com',
-			features: ['social', 'oauth'],
-			username: '+79162143406',
+			features: ['external', 'social', 'oauth'],
+			username: '376365389@vk',
+			login: '+79162143406',
 			password: 'f23fe23rGsf'
 		},
 
 		{
 			provider: 'ok.ru',
-			features: ['social', 'oauth'],
-			username: '9162143406',
+			features: ['external', 'social', 'oauth'],
+			username: '589496710165@ok',
+			login: '9162143406',
 			password: 'mjdhJF843JFSjf'
 		},
 		{
 			provider: 'fb.com',
-			features: ['social', 'oauth'],
-			username: '+79162143406',
+			features: ['external', 'social', 'oauth'],
+			username: '130452877392632@fb',
+			login: '9162143406',
 			password: 'fd3FWfn3fd'
 		}
 	],

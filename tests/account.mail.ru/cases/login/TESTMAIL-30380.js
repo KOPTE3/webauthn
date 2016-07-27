@@ -7,9 +7,17 @@ let LoginPage = require('../../steps/login');
 let LoginForm = require('../../steps/login/form');
 let accounts = require('../../store/authorization/accounts');
 let providers = require('../../store/authorization/providers');
+let VkSteps = require('../../steps/oauth/vk');
+let OkSteps = require('../../steps/oauth/ok');
+let FbSteps = require('../../steps/oauth/fb');
 
 
 let loginForm = new LoginForm();
+let vkSteps = new VkSteps();
+let okSteps = new OkSteps();
+let fbSteps = new FbSteps();
+
+let socialStore = require('../../store/authorization/socials');
 
 let { options = {
 	name: 'Account. Страница логина. Авторизация соц. аккаунтами (вк/ок/фб) ' +
@@ -25,38 +33,88 @@ let suite = path.basename((module.parent.options ? module.parent : module).filen
 
 describe(suite + ': ' + options.name, () => {
 	it('авторизация через vk.com', () => {
-		const host = 'vk.com';
+		let social = socialStore.get('vk.com')[0];
 
 		LoginPage.open(options.query);
 
-		let { username, password } = accounts.get({
-			provider: host,
+		let { username, password, login } = accounts.get({
+			provider: social.name,
 			features: ['oauth']
 		});
 
-		console.log(username, password);
+		// кликаем на соцкнопку
+		loginForm.clickSocialBtn('vk');
 
+		// ожидаем урл вконтактский
+		vkSteps.waitForUrl(social.url);
 
-		return;
-		browser.debug();
-
-		// вписываем логин
-		loginForm.setLogin(username);
-		// нажимаем на кнопку продолжить
-
-		loginForm.clickNextButton();
-
-		// ожидаем урл гугловский
-		outlookSteps.waitForUrl(new RegExp('https://login.live.com/oauth20_authorize.srf'));
 		// ожидаем загрузки страницы
-		OutlookSteps.wait();
+		VkSteps.wait();
 
-		// вписываем пароль
-		outlookSteps.setPassword(password);
+		// вводим логин пароль
+		vkSteps.setLogin(login);
+		vkSteps.setPassword(password);
 
-		outlookSteps.clickSignInBtn();
+		vkSteps.clickSignInBtn();
 
-		// делаем побольше таймаут, оутлук очень долго отрабатывает
+		Steps.isActiveUser(username, 4000);
+		Steps.reload();
+	});
+
+	it('авторизация через ok.com', () => {
+		let social = socialStore.get('ok.ru')[0];
+
+		LoginPage.open(options.query);
+
+		let { username, password, login } = accounts.get({
+			provider: social.name,
+			features: ['oauth']
+		});
+
+		// кликаем на соцкнопку
+		loginForm.clickSocialBtn('ok');
+
+		// ожидаем урл одноклассиноквский
+		okSteps.waitForUrl(social.url);
+
+		// ожидаем загрузки страницы
+		OkSteps.wait();
+
+		// вводим логин пароль
+		okSteps.setLogin(login);
+		okSteps.setPassword(password);
+
+		okSteps.clickSignInBtn();
+
+		Steps.isActiveUser(username, 4000);
+		Steps.reload();
+	});
+
+	it('авторизация через fb.com', () => {
+		let social = socialStore.get('fb.com')[0];
+
+		LoginPage.open(options.query);
+
+		let { username, password, login } = accounts.get({
+			provider: social.name,
+			features: ['oauth']
+		});
+
+		// кликаем на соцкнопку
+		loginForm.clickSocialBtn('fb');
+
+		// ожидаем урл фейсбучный
+		fbSteps.waitForUrl(social.url);
+
+		// ожидаем загрузки страницы
+		FbSteps.wait();
+
+		// вводим логин пароль
+		fbSteps.setLogin(login);
+		fbSteps.setPassword(password);
+
+		fbSteps.clickSignInBtn();
+
 		Steps.isActiveUser(username, 4000);
 		Steps.reload();
 	});
