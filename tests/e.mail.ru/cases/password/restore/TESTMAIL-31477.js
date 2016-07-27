@@ -1,5 +1,7 @@
 'use strict';
 
+let path = require('path');
+
 let AccountSteps = require('../../../steps/password/restore/account');
 let AccessSteps = require('../../../steps/password/restore/access');
 let SelectSteps = require('../../../steps/password/restore/select');
@@ -38,7 +40,7 @@ describe(name, () => {
 		steps.fillPhoneCaptcha(captcha);
 		steps.submitForm();
 
-		steps.checkTabError('Пожалуйста, введите недостающие цифры.');
+		steps.checkTabError('Вы указали неправильный номер телефона');
 		steps.checkPhoneCaptcha(captcha, false);
 	});
 });

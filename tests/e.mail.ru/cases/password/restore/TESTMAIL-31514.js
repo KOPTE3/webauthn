@@ -25,7 +25,7 @@ let steps = options.mrim ? accessSteps : selectSteps;
 
 describe(name, () => {
 	before(() => {
-		user = AccountSteps.addUser({
+		user = AccountSteps.createUser({
 			phones: 1,
 			mrim: options.mrim
 		});
@@ -36,7 +36,7 @@ describe(name, () => {
 		steps.wait();
 	});
 
-	it(params.name, () => {
+	it(options.name, () => {
 		let phone = user.phones[0];
 
 		steps.fillPhoneInput(phone.value);

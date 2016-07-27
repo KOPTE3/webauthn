@@ -28,6 +28,10 @@ class PasswordRestoreSteps extends Steps {
 	initRegTokenIdLog () {
 		return phonesUtils.registerPassrestoreLogger();
 	}
+
+	wait () {
+		PasswordRestoreSteps.page.wait();
+	}
 }
 
 module.exports = PasswordRestoreSteps;

@@ -1,5 +1,7 @@
 'use strict';
 
+let path = require('path');
+
 let AccountSteps = require('../../../steps/password/restore/account');
 let AccessSteps = require('../../../steps/password/restore/access');
 let SelectSteps = require('../../../steps/password/restore/select');
@@ -21,7 +23,7 @@ let steps = options.mrim ? accessSteps : selectSteps;
 
 describe(name, () => {
 	before(() => {
-		user = AccountSteps.addUser({
+		user = AccountSteps.createUser({
 			phones: 1,
 			mrim: options.mrim
 		});

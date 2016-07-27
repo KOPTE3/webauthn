@@ -4,7 +4,7 @@ let path = require('path');
 
 let AccountSteps = require('../../../steps/password/restore/account');
 let AccessSteps = require('../../../steps/password/restore/access');
-let SelectSteps = require('../../../steps/password/restore/');
+let SelectSteps = require('../../../steps/password/restore/select');
 let RecoverySteps = require('../../../steps/password/restore/recovery');
 
 let accountSteps = new AccountSteps();

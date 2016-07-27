@@ -1,5 +1,6 @@
 'use strict';
 
+let path = require('path');
 
 let AccountSteps = require('../../../steps/password/restore/account');
 let AccessSteps = require('../../../steps/password/restore/access');
