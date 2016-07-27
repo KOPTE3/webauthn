@@ -36,17 +36,20 @@ class GmailPage extends OauthPage {
 	/**
 	 * Клик по кнопке Продолжить
 	 *
-	 * @returns {*}
 	 */
 	clickNextBtn () {
-		return this.clickAll(this.locators.nextBtn);
+		const btn = this.page.element(this.locators.nextBtn);
+
+		btn.click();
 	}
 
 	/**
 	 * Клик по кнопке "Войти"
 	 */
 	clickSignInBtn () {
-		this.clickAll(this.locators.signIn);
+		const btn = this.page.element(this.locators.signIn);
+
+		btn.click();
 	}
 
 	/**

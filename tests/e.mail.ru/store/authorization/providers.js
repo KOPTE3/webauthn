@@ -188,11 +188,11 @@ module.exports = {
 			name: 'outlook.com',
 			types: ['external', 'oauth'],
 			hosts: [
-				'outlook.com'
-				// 'hotmail.com',
-				// 'msn.com',
-				// 'live.com'
-				// 'live.ru'
+				'outlook.com',
+				'hotmail.com',
+				'msn.com',
+				'live.com',
+				'live.ru'
 			]
 		}
 	],

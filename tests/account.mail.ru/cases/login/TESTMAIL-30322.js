@@ -13,6 +13,7 @@ let gmailSteps = new GmailSteps();
 let OutlookSteps = require('../../steps/oauth/outlook');
 let outlookSteps = new OutlookSteps();
 let loginForm = new LoginForm();
+let steps = new Steps();
 
 let { options = {
 	name: 'Страница логина. Успешная авторизация локальными аккаунтами ' +
@@ -42,7 +43,7 @@ describe(suite + ': ' + options.name, () => {
 				loginForm.clickNextButton();
 
 				// ожидаем урл гугловский
-				gmailSteps.waitForUrl(/https:\/\/accounts.google.com\//);
+				gmailSteps.waitSelfUrl();
 
 				// ожидаем загрузки страницы
 				GmailSteps.wait();
@@ -80,7 +81,8 @@ describe(suite + ': ' + options.name, () => {
 				loginForm.clickNextButton();
 
 				// ожидаем урл гугловский
-				outlookSteps.waitForUrl(new RegExp('https://login.live.com/oauth20_authorize.srf'));
+				outlookSteps.waitSelfUrl();
+
 				// ожидаем загрузки страницы
 				OutlookSteps.wait();
 
