@@ -32,91 +32,56 @@ let { options = {
 let suite = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
 describe(suite + ': ' + options.name, () => {
-	it('авторизация через vk.com', () => {
-		let social = socialStore.get('vk.com')[0];
+	[
+		{
+			name: 'vk.com',
+			btn: 'vk',
+			steps: vkSteps,
+			Steps: VkSteps
+		},
+		{
+			name: 'ok.ru',
+			btn: 'ok',
+			steps: okSteps,
+			Steps: OkSteps
 
-		LoginPage.open(options.query);
+		},
+		{
+			name: 'fb.com',
+			btn: 'fb',
+			steps: fbSteps,
+			Steps: FbSteps
 
-		let { username, password, login } = accounts.get({
-			provider: social.name,
-			features: ['oauth']
+		}
+	].forEach(function (item) {
+		it(`авторизация через ${item.name}`, () => {
+			let social = socialStore.get(item.name)[0];
+
+			LoginPage.open(options.query);
+
+			let { username, password, login } = accounts.get({
+				provider: social.name,
+				features: ['oauth']
+			});
+
+			// кликаем на соцкнопку
+			loginForm.clickSocialBtn(item.btn);
+
+			// ожидаем урл
+			item.steps.waitForUrl(social.url);
+
+			// ожидаем загрузки страницы
+			item.Steps.wait();
+
+			// вводим логин пароль
+			item.steps.setLogin(login);
+			item.steps.setPassword(password);
+
+			item.steps.clickSignInBtn();
+
+			Steps.isActiveUser(username, 4000);
+			Steps.reload();
 		});
-
-		// кликаем на соцкнопку
-		loginForm.clickSocialBtn('vk');
-
-		// ожидаем урл вконтактский
-		vkSteps.waitForUrl(social.url);
-
-		// ожидаем загрузки страницы
-		VkSteps.wait();
-
-		// вводим логин пароль
-		vkSteps.setLogin(login);
-		vkSteps.setPassword(password);
-
-		vkSteps.clickSignInBtn();
-
-		Steps.isActiveUser(username, 4000);
-		Steps.reload();
-	});
-
-	it('авторизация через ok.com', () => {
-		let social = socialStore.get('ok.ru')[0];
-
-		LoginPage.open(options.query);
-
-		let { username, password, login } = accounts.get({
-			provider: social.name,
-			features: ['oauth']
-		});
-
-		// кликаем на соцкнопку
-		loginForm.clickSocialBtn('ok');
-
-		// ожидаем урл одноклассиноквский
-		okSteps.waitForUrl(social.url);
-
-		// ожидаем загрузки страницы
-		OkSteps.wait();
-
-		// вводим логин пароль
-		okSteps.setLogin(login);
-		okSteps.setPassword(password);
-
-		okSteps.clickSignInBtn();
-
-		Steps.isActiveUser(username, 4000);
-		Steps.reload();
-	});
-
-	it('авторизация через fb.com', () => {
-		let social = socialStore.get('fb.com')[0];
-
-		LoginPage.open(options.query);
-
-		let { username, password, login } = accounts.get({
-			provider: social.name,
-			features: ['oauth']
-		});
-
-		// кликаем на соцкнопку
-		loginForm.clickSocialBtn('fb');
-
-		// ожидаем урл фейсбучный
-		fbSteps.waitForUrl(social.url);
-
-		// ожидаем загрузки страницы
-		FbSteps.wait();
-
-		// вводим логин пароль
-		fbSteps.setLogin(login);
-		fbSteps.setPassword(password);
-
-		fbSteps.clickSignInBtn();
-
-		Steps.isActiveUser(username, 4000);
-		Steps.reload();
 	});
 });
 
