@@ -3,7 +3,7 @@
 let Layers = require('../../../pages/layers');
 
 /** Модуль для работы с лером прикрепления аттачей */
-class FolderAdd extends Layers {
+class FolderLayers extends Layers {
 
 	/**
 	 * Локаторы
@@ -75,4 +75,4 @@ class FolderAdd extends Layers {
 	}
 }
 
-module.exports = FolderAdd;
+module.exports = FolderLayers;
