@@ -5,6 +5,10 @@ let assert = require('assert');
 let OauthSteps = require('../../steps/oauth');
 let OutlookPage = require('../../pages/oauth/outlook');
 
+let oauthSteps = new OauthSteps();
+
+let oauthStore = require('../../store/authorization/oauth');
+
 /** Модуль для работы с шагами сервиса outlook.com */
 class OutlookSteps extends OauthSteps {
 	constructor () {
@@ -46,6 +50,13 @@ class OutlookSteps extends OauthSteps {
 	setPassword (password) {
 		this.outlookPage.waitPassowrd();
 		this.outlookPage.setPassword(password);
+	}
+
+	/**
+	 * Ожидаем пока урл изменится на нужный
+	 */
+	waitSelfUrl () {
+		oauthSteps.waitForUrl(new RegExp(oauthStore.url.outlook));
 	}
 }
 
