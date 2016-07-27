@@ -204,6 +204,14 @@ class LoginFormSteps extends Steps {
 	}
 
 	/**
+	 * Кликнуть по кнопке продолжить
+	 * она например появляется при выборе oauth провайдеров
+	 */
+	clickNextButton () {
+		this.loginForm.clickNextButton();
+	}
+
+	/**
 	 * Получить состояние видимости блока восстановления телефона
 	 */
 	restoreBlockVisibility () {
