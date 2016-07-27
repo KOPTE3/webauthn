@@ -88,7 +88,8 @@ module.exports = {
 		return restoreData;
 	},
 
-	generateSignupData ({ phones, restore, mrim }) {
+	generateSignupData (params) {
+		let {phones, restore, mrim, credentials = {}} = params;
 		let {login, domain, name, birthday, sex} = this;
 		let data = {
 			login,
@@ -97,9 +98,10 @@ module.exports = {
 			birthday,
 			sex,
 			lang: 'ru_RU',
-			password: this.generatePassword(),
-			more_password_strength: 1
+			password: this.generatePassword()
 		};
+
+		data = Object.assign({}, data, credentials);
 
 		if (phones) {
 			data.phones = this.bindPhones(phones);

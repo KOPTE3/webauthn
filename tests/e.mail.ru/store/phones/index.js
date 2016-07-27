@@ -34,5 +34,17 @@ module.exports = {
 
 			return result;
 		});
+	},
+
+	getIncorrectValue (value) {
+		let result = +value[0] + 1;
+
+		if (result > 9) {
+			result = 0;
+		}
+
+		value = result + value[1];
+
+		return value;
 	}
 };

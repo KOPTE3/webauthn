@@ -76,10 +76,15 @@ module.exports = {
 
 	/**
 	 * Signup new user
+	 * http://api.tornado.dev.mail.ru/users/add
 	 *
 	 * @param {Object} params
-	 * {array | number} phones
-	 * {object} restore
+	 * {array|number} params.phones
+	 * 		{array} массив привязанных к аккаунту телефонов как в апи
+	 * 		{number} количество телефонов (1 или 2) - привяжет безлимитные
+	 * {Object} params.restore секретный вопрос как в апи
+	 * {boolean} params.mrim - замримить ли пользователя
+	 * {Object} params.credentials - любые поля из апи, кроме вышеперечисленных
 	 * @returns {Promise}
 	 */
 	userAdd (params) {

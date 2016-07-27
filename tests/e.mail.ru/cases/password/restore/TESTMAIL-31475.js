@@ -1,29 +1,49 @@
 'use strict';
 
+let path = require('path');
+
 let AccountSteps = require('../../../steps/password/restore/account');
-let SelectSteps = require('../../../steps/password/restore/select');
+let AccessSteps = require('../../../steps/password/restore/access');
+let SelectSteps = require('../../../steps/password/restore/');
 let RecoverySteps = require('../../../steps/password/restore/recovery');
-let usersStore = require('../../../store/password/restore/users');
 
 let accountSteps = new AccountSteps();
 let selectSteps = new SelectSteps();
+let accessSteps = new AccessSteps();
 let recoverySteps = new RecoverySteps();
 
-describe('TESTMAIL-31475: Восстановление пароля. ' +
-	'Ввод скрытых цифр телефона.', () => {
-	it('Ввод корректных данных', () => {
-		const user = usersStore.simple.one;
+let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
+let {options = {
+	name: 'Восстановление пароля. ' +
+	'Ввод скрытых цифр телефона. ' +
+	'Ввод корректных данных.'
+}} = module.parent;
+
+let user = {};
+let steps = options.mrim ? accessSteps : selectSteps;
+
+describe(name, () => {
+	before(() => {
+		user = AccountSteps.createUser({
+			phones: 1,
+			mrim: options.mrim
+		});
+	});
+
+	beforeEach(() => {
 		accountSteps.openForEmail(user.email);
+		steps.wait();
+	});
 
-		selectSteps.wait();
-		selectSteps.fillPhoneInput(user.phone.value);
-		selectSteps.fillPhoneCaptcha();
-		selectSteps.submitForm();
+	it(options.name, () => {
+		steps.fillPhoneInput(user.phones[0].value);
+		steps.fillPhoneCaptcha();
+		steps.submitForm();
 
-		selectSteps.waitForPhoneLayer();
-		selectSteps.fillSmsCode(user.email);
-		selectSteps.submitPhoneLayer();
+		steps.waitForPhoneLayer();
+		steps.fillSmsCode(user.email);
+		steps.submitPhoneLayer();
 		recoverySteps.wait();
 	});
 });
