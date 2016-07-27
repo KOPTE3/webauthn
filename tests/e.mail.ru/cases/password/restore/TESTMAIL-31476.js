@@ -5,7 +5,6 @@ let path = require('path');
 let AccountSteps = require('../../../steps/password/restore/account');
 let AccessSteps = require('../../../steps/password/restore/access');
 let SelectSteps = require('../../../steps/password/restore/');
-let RecoverySteps = require('../../../steps/password/restore/recovery');
 let phoneStore = require('../../../store/phones');
 
 let accountSteps = new AccountSteps();
@@ -26,7 +25,7 @@ let steps = options.mrim ? accessSteps : selectSteps;
 
 describe(name, () => {
 	before(() => {
-		user = AccessSteps.addUser({
+		user = AccountSteps.addUser({
 			phones: 1,
 			mrim: options.mrim
 		});
