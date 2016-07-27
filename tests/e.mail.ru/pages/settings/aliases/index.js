@@ -43,9 +43,9 @@ class AliasPage extends PageObject {
 	 * Создать алиас
 	 *
 	 * @param {Object} params - данные алиаса
-	 * @returns {string} - ID созданной папки
+	 * @returns {string} - ID созданного алиаса
 	 */
-	createAlias (params) {
+	createAlias (params = {}) {
 		let {folder} = params;
 
 		this.newAliasControl();
@@ -67,6 +67,11 @@ class AliasPage extends PageObject {
 		return id;
 	}
 
+	/**
+	 * Ждём появление добавленного алиаса в списке
+	 *
+	 * @param {string} id - ID созданного алиаса
+	 */
 	waitAddSuccess (id) {
 		let {item} = this.locators;
 

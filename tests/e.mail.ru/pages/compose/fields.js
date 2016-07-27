@@ -132,6 +132,12 @@ class ComposeFields extends ComposePage {
 		this.getField(name).setValue(value);
 	}
 
+	/**
+	 * Задать значение дропдауна
+	 *
+	 * @param {string} name — имя дропдауна
+	 * @param {string} value — значение
+	 */
 	setDropdownValue (name, value) {
 		let dropdown = this.locators.dropdowns[name];
 
@@ -207,6 +213,11 @@ class ComposeFields extends ComposePage {
 		}
 	}
 
+	/**
+	 * Кликнуть по полю из списка
+	 *
+	 * @param {string} name - имя поля
+	 */
 	clickSelectFieldItem (name) {
 		this.page.click(`${this.locators.selectFieldItem} [data-type="${name}"]`);
 	}

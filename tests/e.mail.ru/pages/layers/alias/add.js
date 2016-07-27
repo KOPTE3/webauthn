@@ -56,7 +56,7 @@ class AliasAdd extends AliasLayers {
 
 				return true;
 			});
-		});
+		}, 5000, 'Не дождались значения капчи');
 
 		return code;
 	}

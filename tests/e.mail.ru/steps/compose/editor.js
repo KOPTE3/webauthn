@@ -96,12 +96,16 @@ class ComposeEditorSteps extends ComposeSteps {
 		return message.includes(text);
 	}
 
-	messageContains (text, reverse) {
-		if (reverse) {
-			assert(!this.hasMessage(text), 'Письмо содержит текст');
-		} else {
-			assert(this.hasMessage(text), 'Письмо не содержит текст');
-		}
+	/**
+	 * Содержится ли в теле письма текст
+	 *
+	 * @param {string} text - текст который должен находится в теле письма
+	 * @param {string} reverse - реверс
+	 */
+	messageContains (text, reverse = false) {
+		let actual = this.hasMessage(text);
+
+		assert.equal(actual, !reverse, 'Содержимое письма');
 	}
 
 	/**
