@@ -46,6 +46,16 @@ class ComposeFieldsSteps extends ComposeSteps {
 	}
 
 	/**
+	 * Задать значение дропдауна
+	 *
+	 * @param {string} name — имя дропдауна
+	 * @param {string} value — значение
+	 */
+	setDropdownValue (name, value) {
+		this.composeFields.setDropdownValue(...arguments);
+	}
+
+	/**
 	 * Очистить поле заданное поле
 	 *
 	 * @see this.composeFields.getField
@@ -94,7 +104,20 @@ class ComposeFieldsSteps extends ComposeSteps {
 	isVisibleField (name) {
 		let active = this.composeFields.isVisibleField(name);
 
-		asert(active, `Видимость поля ${name} под вопросом`);
+		assert(active, `Видимость поля ${name} под вопросом`);
+	}
+
+	/**
+	 * Раскрыть поле
+	 *
+	 * @param {string} name — имя поля
+	 */
+	expandField (name) {
+		let actual = this.composeFields.isVisibleField(name.toLowerCase());
+
+		if (!actual) {
+			this.clickSelectFieldItem(name);
+		}
 	}
 
 	/**
@@ -103,7 +126,24 @@ class ComposeFieldsSteps extends ComposeSteps {
 	isVisibleSelectFields () {
 		let active = this.composeFields.isVisibleSelectFields();
 
-		asert(active, 'Видимость списка полей под вопросом');
+		assert(active, 'Видимость списка полей под вопросом');
+	}
+
+	/**
+	 * Показать список полей
+	 */
+	showSelectFields () {
+		this.composeFields.showSelectFields();
+	}
+
+	/**
+	 * Кликнуть по полю из списка
+	 *
+	 * @param {string} name - имя поля
+	 */
+	clickSelectFieldItem (name) {
+		this.showSelectFields();
+		this.composeFields.clickSelectFieldItem(name);
 	}
 
 	/**

@@ -7,8 +7,6 @@ let GmailPage = require('../../pages/oauth/gmail');
 
 let oauthSteps = new OauthSteps();
 
-let oauthStore = require('../../store/authorization/oauth');
-
 /** Модуль для работы с шагами сервиса gmail.com */
 class GmailSteps extends OauthSteps {
 	constructor () {
@@ -50,14 +48,6 @@ class GmailSteps extends OauthSteps {
 	setPassword (password) {
 		this.gmailPage.waitPassword();
 		this.gmailPage.setPassword(password);
-	}
-
-	/**
-	 * Ожидаем пока появится нужный урл
-	 *
-	 */
-	waitSelfUrl () {
-		oauthSteps.waitForUrl(new RegExp(oauthStore.url.gmail));
 	}
 }
 

@@ -16,7 +16,7 @@ class ComposeFields extends ComposePage {
 	 */
 	get locators () {
 		return this.extend(super.locators, {
-			container: '.compose-head',
+			container: '.js-compose-header',
 			fields: {
 				priority: '[name="Priority"]',
 				receipt : '[name="Receipt"]',
@@ -28,7 +28,15 @@ class ComposeFields extends ComposePage {
 				subject : '.compose__header__field[name="Subject"]'
 			},
 			selectField    : '#dropdown-select-fields .dropdown__checkbox',
-			selectFieldItem: '#dropdown-select-fields .dropdown__list_multiselect'
+			selectFieldItem: '#dropdown-select-fields .dropdown__list_multiselect',
+			dropdowns: {
+				fromEmail: {
+					ctrl: '.js-compose__select_email .js-compose__dropdown_email',
+					list: '.js-compose__select_email .js-compose__select_email-item',
+					item: email => '.js-compose__select_email ' +
+						`.js-compose__select_email-item [data-email="${email}"]`
+				}
+			}
 		});
 	}
 
@@ -125,6 +133,20 @@ class ComposeFields extends ComposePage {
 	}
 
 	/**
+	 * Задать значение дропдауна
+	 *
+	 * @param {string} name — имя дропдауна
+	 * @param {string} value — значение
+	 */
+	setDropdownValue (name, value) {
+		let dropdown = this.locators.dropdowns[name];
+
+		this.page.click(dropdown.ctrl);
+		this.page.waitForVisible(dropdown.list);
+		this.page.click(dropdown.item(value));
+	}
+
+	/**
 	 * Получить ссылку на элемент списка полей
 	 *
 	 * @returns {Promise}
@@ -168,7 +190,7 @@ class ComposeFields extends ComposePage {
 	 * @returns {boolean}
 	 */
 	isVisibleSelectFields () {
-		return this.page.isVisible(this.locators.selectField);
+		return this.page.isVisible(this.locators.selectFieldItem);
 	}
 
 	/**
@@ -177,6 +199,7 @@ class ComposeFields extends ComposePage {
 	hideSelectFields () {
 		if (this.isVisibleSelectFields()) {
 			this.page.click(this.locators.selectField);
+			this.page.waitForVisible(this.locators.selectFieldItem, 3000, true);
 		}
 	}
 
@@ -186,7 +209,17 @@ class ComposeFields extends ComposePage {
 	showSelectFields () {
 		if (!this.isVisibleSelectFields()) {
 			this.page.click(this.locators.selectField);
+			this.page.waitForVisible(this.locators.selectFieldItem, 3000);
 		}
+	}
+
+	/**
+	 * Кликнуть по полю из списка
+	 *
+	 * @param {string} name - имя поля
+	 */
+	clickSelectFieldItem (name) {
+		this.page.click(`${this.locators.selectFieldItem} [data-type="${name}"]`);
 	}
 }
 

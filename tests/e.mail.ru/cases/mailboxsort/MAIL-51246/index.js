@@ -20,6 +20,18 @@ let login = function () {
 	FoldersSteps.open();
 };
 
+let moveFolder = function (folderId, parentId) {
+	FoldersSteps.openEditPopup(folderId);
+	FoldersSteps.changeParentInPopup(parentId);
+	FoldersSteps.submitPopup();
+};
+
+let moveArchive = function (parentId) {
+	let folderId = FoldersSteps.getArchiveFolderId();
+
+	moveFolder(folderId, parentId);
+};
+
 let deleteArchive = function () {
 	try {
 		FoldersSteps.isArchiveNotExists();
@@ -106,6 +118,8 @@ module.exports = {
 	cleanerStore,
 
 	login,
+	moveFolder,
+	moveArchive,
 	deleteArchive,
 	createArchive,
 	createUserFolders,

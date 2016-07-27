@@ -53,7 +53,8 @@ module.exports = {
 			types: ['external', 'oauth'],
 			hosts: [
 				'gmail.com'
-			]
+			],
+			url: 'https://accounts.google.com/'
 		},
 
 		{
@@ -193,7 +194,8 @@ module.exports = {
 				'msn.com',
 				'live.com',
 				'live.ru'
-			]
+			],
+			url: 'https://login.live.com/oauth20_authorize.srf'
 		}
 	],
 
