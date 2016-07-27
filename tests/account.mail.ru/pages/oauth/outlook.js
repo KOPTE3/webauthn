@@ -22,23 +22,6 @@ class OutlookPage extends OAuthPage {
 			signIn: `${container} .btn-block[type="submit"]`
 		};
 	}
-
-	/**
-	 * Заполнить поле пароля
-	 *
-	 * @param {string} password
-	 */
-	setPassword (password) {
-		this.page.setValue(this.locators.password, password);
-	}
-
-	/**
-	 * Ожиданеие пока элемент пароля будет виден
-	 */
-	waitPassowrd () {
-		this.page.waitForVisible(this.locators.password);
-	}
-
 }
 
 module.exports = OutlookPage;

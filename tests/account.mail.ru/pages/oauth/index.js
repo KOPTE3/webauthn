@@ -37,6 +37,15 @@ class OAuthPage extends Pages {
 	clickSignInBtn () {
 		return this.page.click(this.locators.signIn);
 	}
+
+	/**
+	 * Клик по кнопке Продолжить
+	 *
+	 * @returns {*}
+	 */
+	clickNextBtn () {
+		return this.page.click(this.locators.nextBtn);
+	}
 }
 
 module.exports = OAuthPage;

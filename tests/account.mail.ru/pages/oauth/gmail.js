@@ -23,32 +23,6 @@ class GmailPage extends OAuthPage {
 			signIn: `${container} #signIn`
 		};
 	}
-
-	/**
-	 * Клик по кнопке Продолжить
-	 *
-	 * @returns {*}
-	 */
-	clickNextBtn () {
-		return this.page.click(this.locators.nextBtn);
-	}
-
-	/**
-	 * Заполнить поле пароля
-	 *
-	 * @param {string} password
-	 */
-	setPassword (password) {
-		this.page.setValue(this.locators.password, password);
-	}
-
-	/**
-	 * Ожидаем пока пароль будет виден
-	 */
-	waitPassword () {
-		this.page.waitForVisible(this.locators.password);
-	}
-
 }
 
 module.exports = GmailPage;
