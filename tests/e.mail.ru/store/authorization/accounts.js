@@ -157,14 +157,14 @@ module.exports = {
 			provider: 'ok.ru',
 			features: ['external', 'social', 'oauth'],
 			username: '589496710165@ok',
-			login: '9162143406',
+			login: '+79162143406',
 			password: 'mjdhJF843JFSjf'
 		},
 		{
 			provider: 'fb.com',
 			features: ['external', 'social', 'oauth'],
 			username: '130452877392632@fb',
-			login: '9162143406',
+			login: '+79162143406',
 			password: 'fd3FWfn3fd'
 		}
 	],

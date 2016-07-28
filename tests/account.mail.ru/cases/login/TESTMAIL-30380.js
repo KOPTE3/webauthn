@@ -11,11 +11,7 @@ let VkSteps = require('../../steps/oauth/vk');
 let OkSteps = require('../../steps/oauth/ok');
 let FbSteps = require('../../steps/oauth/fb');
 
-
 let loginForm = new LoginForm();
-let vkSteps = new VkSteps();
-let okSteps = new OkSteps();
-let fbSteps = new FbSteps();
 
 let providersStore = require('../../store/authorization/providers');
 
@@ -36,20 +32,20 @@ describe(suite + ': ' + options.name, () => {
 		{
 			name: 'vk.com',
 			btn: 'vk',
-			steps: vkSteps,
+			steps: new VkSteps(),
 			Steps: VkSteps
 		},
 		{
 			name: 'ok.ru',
 			btn: 'ok',
-			steps: okSteps,
+			steps: new OkSteps(),
 			Steps: OkSteps
 
 		},
 		{
 			name: 'fb.com',
 			btn: 'fb',
-			steps: fbSteps,
+			steps: new FbSteps(),
 			Steps: FbSteps
 
 		}

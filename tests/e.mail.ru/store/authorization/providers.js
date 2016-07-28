@@ -220,7 +220,7 @@ module.exports = {
 			name: 'fb.com',
 			types: ['social', 'external', 'oauth'],
 			hosts: [
-				'fb.ru', 'facebook.com'
+				'fb.com', 'facebook.com'
 			],
 			url: 'https://www.facebook.com/login.php'
 		}
