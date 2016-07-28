@@ -96,7 +96,7 @@ npm test -- e.mail.ru --suite=login
 npm test -- e.mail.ru --suite='login,compose'
 ```
 
-#### Зупуск тестов по фильтру:
+#### Запуск тестов по фильтру:
 
 ```
 npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674
