@@ -151,15 +151,6 @@ class LoginFormSteps extends Steps {
 	}
 
 	/**
-	 * Выбрать домен
-	 *
-	 * @param {string} provider
-	 */
-	clickDomain (provider) {
-		this.loginForm.clickDomain(provider);
-	}
-
-	/**
 	 * Отправить форму
 	 *
 	 * @param {Object} data
@@ -185,15 +176,6 @@ class LoginFormSteps extends Steps {
 		assert.equal(actual, 'Авторизуйтесь несколькими почтовыми ' +
 			'ящиками, и вы сможете легко переключаться между ними.',
 			'Не удалось проверить описание формы');
-	}
-
-	/**
-	 * Получить активный домен
-	 *
-	 * @param {string} provider
-	 */
-	clickDomain (provider) {
-		this.loginForm.clickDomain(provider);
 	}
 
 	/**

@@ -15,6 +15,10 @@ class VkSteps extends OAuthSteps {
 		this.vkPage = new VkPage();
 	}
 
+	get provider () {
+		return 'vk.com';
+	}
+
 	/**
 	 * ссылка на текущий page
 	 *

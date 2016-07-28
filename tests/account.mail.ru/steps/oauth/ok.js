@@ -15,6 +15,10 @@ class OkSteps extends OAuthSteps {
 		this.okPage = new OkPage();
 	}
 
+	get provider () {
+		return 'ok.ru';
+	}
+
 	/**
 	 * ссылка на текущий page
 	 *

@@ -15,6 +15,19 @@ class FbSteps extends OAuthSteps {
 		this.fbPage = new FbPage();
 	}
 
+	get provider () {
+		return 'fb.com';
+	}
+
+	/**
+	 *
+	 *
+	 * @returns {string}
+	 */
+	get btnId () {
+		return 'fb';
+	}
+
 	/**
 	 * ссылка на текущий page
 	 *

@@ -29,26 +29,12 @@ let suite = path.basename((module.parent.options ? module.parent : module).filen
 
 describe(suite + ': ' + options.name, () => {
 	[
-		{
-			name: 'vk.com',
-			btn: 'vk',
-			steps: new VkSteps()
-		},
-		{
-			name: 'ok.ru',
-			btn: 'ok',
-			steps: new OkSteps()
-
-		},
-		{
-			name: 'fb.com',
-			btn: 'fb',
-			steps: new FbSteps()
-
-		}
+		new VkSteps(),
+		new OkSteps(),
+		new FbSteps()
 	].forEach(function (item) {
-		it(`авторизация через ${item.name}`, () => {
-			let social = providersStore.get(item.name)[0];
+		it(`авторизация через ${item.provider}`, () => {
+			let social = providersStore.get(item.provider)[0];
 
 			LoginPage.open(options.query);
 
@@ -58,14 +44,33 @@ describe(suite + ': ' + options.name, () => {
 			});
 
 			// кликаем на соцкнопку
-			loginForm.clickSocialBtn(item.btn);
+			loginForm.clickSocialBtn();
 
 			// авторизируемся
-			item.steps.login(social.url, login, password);
+			item.login(social.url, login, password);
 
 			Steps.isActiveUser(username, 4000);
 			Steps.reload();
 		});
 	});
+
+	/*
+	 {
+	 name: 'vk.com',
+	 btn: 'vk',
+	 steps:
+	 },
+	 {
+	 name: 'ok.ru',
+	 btn: 'ok',
+	 steps:
+
+	 },
+	 {
+	 name: 'fb.com',
+	 btn: 'fb',
+	 steps:
+
+	 }*/
 });
 
