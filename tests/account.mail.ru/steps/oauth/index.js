@@ -55,6 +55,32 @@ class OAuthSteps extends Steps {
 	clickNextBtn () {
 		this.outlookPage.clickNextBtn();
 	}
+
+	/**
+	 * Выполняет все стандартные действия по авторизации
+	 * Этот способ например не подойдет гмайлу - там нужно по другому входить
+	 *
+	 * ожидаем загрузки
+	 * вводим сразу логин и пароль
+	 * нажимаем кнопку войти
+	 *
+	 * @param {string} url
+	 * @param {string} login
+	 * @param {string} password
+	 */
+	login (url, login, password) {
+		// ожидаем урл
+		this.waitForUrl(url);
+
+		// ожидаем загрузки страницы
+		this.wait();
+
+		// вводим логин пароль
+		this.setLogin(login);
+		this.setPassword(password);
+
+		this.clickSignInBtn();
+	}
 }
 
 module.exports = OAuthSteps;

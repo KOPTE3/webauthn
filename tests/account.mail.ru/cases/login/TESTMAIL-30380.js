@@ -60,17 +60,8 @@ describe(suite + ': ' + options.name, () => {
 			// кликаем на соцкнопку
 			loginForm.clickSocialBtn(item.btn);
 
-			// ожидаем урл
-			item.steps.waitForUrl(social.url);
-
-			// ожидаем загрузки страницы
-			item.steps.wait();
-
-			// вводим логин пароль
-			item.steps.setLogin(login);
-			item.steps.setPassword(password);
-
-			item.steps.clickSignInBtn();
+			// авторизируемся
+			item.steps.login(social.url, login, password);
 
 			Steps.isActiveUser(username, 4000);
 			Steps.reload();
