@@ -8,7 +8,7 @@ let ComposeControls = require('../../steps/compose/controls');
 let composeControls = new ComposeControls();
 let ComposeFields = require('../../steps/compose/fields');
 let composeFields = new ComposeFields();
-let сomposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
 let MessageToolbarSteps = require('../../steps/message/toolbar');
 let messageToolbarSteps = new MessageToolbarSteps();
@@ -39,7 +39,7 @@ describe('TESTMAIL-32333: НЕ AJAX. Ответ на письмо. Забыто�
 	});
 
 	it('письмо должно быть успешно отправлено', () => {
-		let {fields} = сomposeFieldsStore;
+		let {fields} = composeFieldsStore;
 
 		var mail = new Mail({
 			to: fields.to,

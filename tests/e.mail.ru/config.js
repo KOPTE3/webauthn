@@ -9,6 +9,7 @@ let account = new AccountManager.Hooks();
 let support = new TestTools.Support();
 let project = 'e.mail.ru';
 
+
 /** @namespace browser **/
 exports.config = {
 	/*
@@ -33,7 +34,7 @@ exports.config = {
 	logLevel: 'silent',
 
 	/*
-	 * Максимальное время на выполнение команды.
+	 * Максимальное время на выполнение команд waitFor*.
 	 * Если какая-то из команд фреймворка не получит за это время результат,
 	 * то выполнение тестов будет прервано.
 	 */

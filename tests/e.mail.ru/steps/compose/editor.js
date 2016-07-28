@@ -49,7 +49,7 @@ class ComposeEditorSteps extends ComposeSteps {
 		this.composeEditor.restoreParentFrame();
 	}
 
-	allertAccept () {
+	alertAccept () {
 		this.composeEditor.alertAccept();
 	}
 

@@ -7,8 +7,8 @@ let messagesLettersSteps = new MessagesLettersSteps();
 
 // Message
 let Message = require('../../steps/message');
-let MessagefastreplySteps = require('../../steps/message/fastreply');
-let messagefastreplySteps = new MessagefastreplySteps();
+let MessageFastReplySteps = require('../../steps/message/fastreply');
+let messageFastReplySteps = new MessageFastReplySteps();
 let MessageToolbarSteps = require('../../steps/message/toolbar');
 let messageToolbarSteps = new MessageToolbarSteps();
 
@@ -69,7 +69,7 @@ describe('TESTMAIL-31877: НЕ AJAX. Ответ на письмо. Забыто�
 		messagesLettersSteps.openNewestLetter();
 		Message.wait();
 
-		messagefastreplySteps.clickButton('reply');
+		messageFastReplySteps.clickButton('reply');
 		composeEditor.wait();
 
 		composeEditor.writeMessage('Тест письма');

@@ -57,7 +57,7 @@ describe('TESTMAIL-32284: ' +
 			lettersSteps.openNewestLetter();
 
 			fastreplySteps.clickButton('reply');
-			
+
 			composeEditor.wait();
 
 			// Вписываем текст с сообщением
@@ -72,7 +72,7 @@ describe('TESTMAIL-32284: ' +
 				messageToolbarSteps.clickFastreplyButton('cancel');
 				// так как мы поменяли текст, выскочит алерт после закрытия,
 				// нужно его принять
-				composeEditor.allertAccept();
+				composeEditor.alertAccept();
 				throw new Error(error);
 			}
 

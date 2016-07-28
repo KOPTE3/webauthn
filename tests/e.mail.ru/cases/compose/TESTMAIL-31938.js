@@ -8,8 +8,8 @@ let messagesLettersSteps = new MessagesLettersSteps();
 
 // Message
 let Message = require('../../steps/message');
-let MessagefastreplySteps = require('../../steps/message/fastreply');
-let messagefastreplySteps = new MessagefastreplySteps();
+let MessageFastReplySteps = require('../../steps/message/fastreply');
+let messageFastReplySteps = new MessageFastReplySteps();
 let MessageToolbarSteps = require('../../steps/message/toolbar');
 let messageToolbarSteps = new MessageToolbarSteps();
 
@@ -75,7 +75,7 @@ describe('TESTMAIL-31938 НЕ AJAX. Ответ на письмо. Забытое
 		Message.wait();
 
 
-		messagefastreplySteps.clickButton('reply');
+		messageFastReplySteps.clickButton('reply');
 
 		composeEditor.wait();
 
@@ -98,7 +98,7 @@ describe('TESTMAIL-31938 НЕ AJAX. Ответ на письмо. Забытое
 			} finally {
 				messageToolbarSteps.clickFastreplyButton('cancel');
 				// так как мы поменяли текст, выскочит алерт после закрытия, нужно его принять
-				composeEditor.allertAccept();
+				composeEditor.alertAccept();
 			}
 		}
 	});
