@@ -20,6 +20,7 @@ let {options = {
 
 let user = {};
 let steps = options.mrim ? accessSteps : selectSteps;
+let values = ['', '1'];
 
 describe(name, () => {
 	before(() => {
@@ -34,13 +35,16 @@ describe(name, () => {
 		steps.wait();
 	});
 
-	it(options.name, () => {
-		let captcha = steps.getPhoneCaptchaValue();
+	values.forEach(value => {
+		it(options.name, () => {
+			let captcha = steps.getPhoneCaptchaValue();
 
-		steps.fillPhoneCaptcha(captcha);
-		steps.submitForm();
+			steps.fillPhoneInput(value);
+			steps.fillPhoneCaptcha(captcha);
+			steps.submitForm();
 
-		steps.checkTabError('Вы указали неправильный номер телефона');
-		steps.checkPhoneCaptcha(captcha, false);
+			steps.checkTabError('Пожалуйста, введите недостающие цифры');
+			steps.checkPhoneCaptcha(captcha, false);
+		});
 	});
 });
