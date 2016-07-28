@@ -16,15 +16,6 @@ class OutlookSteps extends OAuthSteps {
 	}
 
 	/**
-	 * Возвращает ссылку на инстанс страницы
-	 *
-	 * @type {Object}
-	 */
-	static get page () {
-		return new OutlookPage();
-	}
-
-	/**
 	 * ссылка на текущий page
 	 *
 	 * @returns {VkPage}

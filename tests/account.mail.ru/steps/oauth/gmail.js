@@ -16,15 +16,6 @@ class GmailSteps extends OAuthSteps {
 	}
 
 	/**
-	 * Возвращает ссылку на инстанс страницы
-	 *
-	 * @type {Object}
-	 */
-	static get page () {
-		return new GmailPage();
-	}
-
-	/**
 	 * ссылка на текущий page
 	 *
 	 * @returns {VkPage}

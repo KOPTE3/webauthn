@@ -23,15 +23,6 @@ class FbSteps extends OAuthSteps {
 	get page () {
 		return this.fbPage;
 	}
-
-	/**
-	 * Возвращает ссылку на инстанс страницы
-	 *
-	 * @type {Object}
-	 */
-	static get page () {
-		return new FbPage();
-	}
 }
 
 module.exports = FbSteps;

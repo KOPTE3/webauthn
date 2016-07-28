@@ -32,21 +32,18 @@ describe(suite + ': ' + options.name, () => {
 		{
 			name: 'vk.com',
 			btn: 'vk',
-			steps: new VkSteps(),
-			Steps: VkSteps
+			steps: new VkSteps()
 		},
 		{
 			name: 'ok.ru',
 			btn: 'ok',
-			steps: new OkSteps(),
-			Steps: OkSteps
+			steps: new OkSteps()
 
 		},
 		{
 			name: 'fb.com',
 			btn: 'fb',
-			steps: new FbSteps(),
-			Steps: FbSteps
+			steps: new FbSteps()
 
 		}
 	].forEach(function (item) {
@@ -67,7 +64,7 @@ describe(suite + ': ' + options.name, () => {
 			item.steps.waitForUrl(social.url);
 
 			// ожидаем загрузки страницы
-			item.Steps.wait();
+			item.steps.wait();
 
 			// вводим логин пароль
 			item.steps.setLogin(login);

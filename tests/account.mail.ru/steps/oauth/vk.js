@@ -16,15 +16,6 @@ class VkSteps extends OAuthSteps {
 	}
 
 	/**
-	 * Возвращает ссылку на инстанс страницы
-	 *
-	 * @type {Object}
-	 */
-	static get page () {
-		return new VkPage();
-	}
-
-	/**
 	 * ссылка на текущий page
 	 *
 	 * @returns {VkPage}

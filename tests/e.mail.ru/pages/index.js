@@ -115,9 +115,24 @@ class PageObject {
 	/**
 	 * Обновить страницу
 	 *
+	 * @param {Object} [query] — параметры запроса
 	 */
-	refresh () {
-		this.open(this.page.getUrl());
+	refresh (query = {}) {
+		let { features } = cache;
+		let url = this.page.getUrl();
+
+		if (features.length) {
+			query.ftrs = features.join(' ');
+		}
+
+		url = URL.format(url, query);
+
+		this.page.url(url);
+	}
+
+	/** Сбросить текущую сессию */
+	reload () {
+		this.page.reload();
 	}
 
 	/**
@@ -257,29 +272,6 @@ class PageObject {
 	/** Подтвердить алерт */
 	alertAccept () {
 		this.page.alertAccept();
-	}
-
-	/**
-	 * Обновить страницу
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 */
-	refresh (query = {}) {
-		let { features } = cache;
-		let url = this.page.getUrl();
-
-		if (features.length) {
-			query.ftrs = features.join(' ');
-		}
-
-		url = URL.format(url, query);
-
-		this.page.url(url);
-	}
-
-	/** Сбросить текущую сессию */
-	reload () {
-		this.page.reload();
 	}
 
 	/**

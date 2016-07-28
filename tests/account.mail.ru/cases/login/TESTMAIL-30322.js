@@ -51,7 +51,7 @@ describe(suite + ': ' + options.name, () => {
 				// кнопка некст
 				gmailSteps.clickNextBtn();
 
-				GmailSteps.wait();
+				gmailSteps.wait();
 
 				// вписываем пароль
 				gmailSteps.setPassword(password);
@@ -81,10 +81,10 @@ describe(suite + ': ' + options.name, () => {
 				loginForm.clickNextButton();
 
 				// ожидаем урл аутлуковский
-				gmailSteps.waitForUrl(hosts.url);
+				outlookSteps.waitForUrl(hosts.url);
 
 				// ожидаем загрузки страницы
-				OutlookSteps.wait();
+				outlookSteps.wait();
 
 				// вписываем пароль
 				outlookSteps.setPassword(password);
