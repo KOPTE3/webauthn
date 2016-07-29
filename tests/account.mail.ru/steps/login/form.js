@@ -17,15 +17,6 @@ class LoginFormSteps extends Steps {
 	}
 
 	/**
-	 * Выбрать домен в списке
-	 *
-	 * @param {string} provider
-	 */
-	clickDomain (provider) {
-		this.loginForm.clickDomain(provider);
-	}
-
-	/**
 	 * Выбрать домен из списка
 	 *
 	 * @param {string} provider

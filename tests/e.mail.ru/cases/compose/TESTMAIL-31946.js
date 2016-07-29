@@ -8,13 +8,13 @@ let messagesLettersSteps = new MessagesLettersSteps();
 
 // Message
 let Message = require('../../steps/message');
-let MessagefastreplySteps = require('../../steps/message/fastreply');
-let messagefastreplySteps = new MessagefastreplySteps();
+let MessageFastReplySteps = require('../../steps/message/fastreply');
+let messageFastReplySteps = new MessageFastReplySteps();
 let MessageToolbarSteps = require('../../steps/message/toolbar');
 let messageToolbarSteps = new MessageToolbarSteps();
 
 // Compose
-let сomposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 let ComposeEditor = require('../../steps/compose/editor');
 let composeEditor = new ComposeEditor();
 
@@ -61,7 +61,7 @@ describe('TESTMAIL-31946 ' +
 				'disable-fastreply-landmark'
 			];
 
-			const { fields } = сomposeFieldsStore;
+			const { fields } = composeFieldsStore;
 
 			Messages.open();
 
@@ -87,7 +87,7 @@ describe('TESTMAIL-31946 ' +
 			Message.wait();
 
 			// Кликаем на быстрый ответ
-			messagefastreplySteps.clickButton('reply');
+			messageFastReplySteps.clickButton('reply');
 
 			// Добавляем в тело письма текст с сообщением об аттаче
 			composeEditor.wait();
@@ -105,7 +105,7 @@ describe('TESTMAIL-31946 ' +
 				messageToolbarSteps.clickFastreplyButton('cancel');
 				// так как мы поменяли текст, выскочит алерт после закрытия,
 				// нужно его принять
-				composeEditor.allertAccept();
+				composeEditor.alertAccept();
 				throw new Error(error);
 			}
 

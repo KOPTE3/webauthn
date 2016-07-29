@@ -384,15 +384,6 @@ class LoginForm extends LoginPage {
 	getLoginValue () {
 
 	}
-
-	/**
-	 * Получить значение из списка доменов
-	 *
-	 * @param {string} provider
-	 */
-	clickDomain (provider) {
-		this.page.click(`[data-provider="${provider}"]`);
-	}
 }
 
 module.exports = LoginForm;

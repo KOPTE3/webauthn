@@ -1,9 +1,9 @@
 'use strict';
 
-let PasswordRestorePage = require('../../../steps/password/restore');
+module.options = {
+	name: 'mrim. Вериф телефон. Ввод скрытых цифр телефона.' +
+	'Проверить отсутствие возможности ввести более двух цифр',
+	mrim: true
+};
 
-describe.skip('TESTMAIL-31526: Восстановление пароля', () => {
-	it('Проверить отсутствие возможности ввести более двух цифр', () => {
-		PasswordRestorePage.open();
-	});
-});
+require('./TESTMAIL-31478');

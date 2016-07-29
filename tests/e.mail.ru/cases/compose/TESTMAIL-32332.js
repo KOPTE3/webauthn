@@ -9,7 +9,7 @@ let fastreplySteps = new FastreplySteps();
 let Compose = require('../../steps/compose');
 let ComposeFields = require('../../steps/compose/fields');
 let composeFields = new ComposeFields();
-let сomposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 let actions = require('../../utils/actions');
 let MessageToolbarSteps = require('../../steps/message/toolbar');
 let messageToolbarSteps = new MessageToolbarSteps();
@@ -31,7 +31,7 @@ describe('TESTMAIL-32332: AJAX. Ответ на письмо. ' +
 	});
 
 	it('письмо должно быть успешно отправлено', () => {
-		let {fields} = сomposeFieldsStore;
+		let {fields} = composeFieldsStore;
 
 		var mail = new Mail({
 			to: fields.to,

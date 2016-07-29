@@ -46,5 +46,19 @@ module.exports = {
 		}, error => {
 			throw new Error(error);
 		});
+	},
+
+	/**
+	 * Verify phone number through internal-api
+	 * @param  {string} email
+	 * @param  {string} phone
+	 * @returns {Promise}
+	 */
+	verifyPhone (email, phone) {
+		return API.verifyPhone(email, phone).then(data => {
+			return data;
+		}, error => {
+			throw new Error(error);
+		});
 	}
 };

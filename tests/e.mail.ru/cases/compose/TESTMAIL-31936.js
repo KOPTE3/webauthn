@@ -10,13 +10,13 @@ let messagesLettersSteps = new MessagesLettersSteps();
 
 // Message
 let Message = require('../../steps/message');
-let MessagefastreplySteps = require('../../steps/message/fastreply');
-let messagefastreplySteps = new MessagefastreplySteps();
+let MessageFastReplySteps = require('../../steps/message/fastreply');
+let messageFastReplySteps = new MessageFastReplySteps();
 let MessageToolbarSteps = require('../../steps/message/toolbar');
 let messageToolbarSteps = new MessageToolbarSteps();
 
 // Compose
-let сomposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 let ComposeEditor = require('../../steps/compose/editor');
 let composeEditor = new ComposeEditor();
 let ComposeFields = require('../../steps/compose/fields');
@@ -59,7 +59,7 @@ describe('TESTMAIL-31936 AJAX. Ответ на письмо. Забытое вл
 			'disable-fastreply-landmark'
 		];
 
-		const { fields } = сomposeFieldsStore;
+		const { fields } = composeFieldsStore;
 
 		Messages.open();
 
@@ -77,7 +77,7 @@ describe('TESTMAIL-31936 AJAX. Ответ на письмо. Забытое вл
 
 		messagesLettersSteps.openNewestLetter();
 
-		messagefastreplySteps.clickButton('forward');
+		messageFastReplySteps.clickButton('forward');
 
 		composeEditor.wait();
 
@@ -93,7 +93,7 @@ describe('TESTMAIL-31936 AJAX. Ответ на письмо. Забытое вл
 			messageToolbarSteps.clickFastreplyButton('cancel');
 			// так как мы поменяли текст, выскочит алерт после закрытия,
 			// нужно его принять
-			composeEditor.allertAccept();
+			composeEditor.alertAccept();
 			throw new Error(error);
 		}
 
@@ -105,7 +105,7 @@ describe('TESTMAIL-31936 AJAX. Ответ на письмо. Забытое вл
 			messageToolbarSteps.clickFastreplyButton('cancel');
 			// так как мы поменяли текст, выскочит алерт после закрытия,
 			// нужно его принять
-			composeEditor.allertAccept();
+			composeEditor.alertAccept();
 			throw new Error(error);
 		}
 	});

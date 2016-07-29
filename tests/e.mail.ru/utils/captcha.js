@@ -66,7 +66,6 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			let url = `${CAPTCHA_CRACKER_URL}/${cid}`;
 
-
 			debug('captcha cracker requst: ', url);
 			http.get(url, result => {
 				let body = '';

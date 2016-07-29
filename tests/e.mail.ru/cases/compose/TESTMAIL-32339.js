@@ -15,7 +15,7 @@ let ComposeControls = require('../../steps/compose/controls');
 let composeControls = new ComposeControls();
 
 let composeEditorStore = require('../../store/compose/editor');
-let сomposeFieldsStore = require('../../store/compose/fields');
+let composeFieldsStore = require('../../store/compose/fields');
 
 let actions = require('../../utils/actions');
 let SentPage = require('../../steps/sent');
@@ -40,7 +40,7 @@ describe('TESTMAIL-32339: ' +
 	});
 
 	it('письмо должно быть успешно отправлено', () => {
-		let {fields} = сomposeFieldsStore;
+		let {fields} = composeFieldsStore;
 
 		var mail = new Mail({
 			to: fields.to,
