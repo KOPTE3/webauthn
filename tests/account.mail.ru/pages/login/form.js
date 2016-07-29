@@ -44,8 +44,8 @@ class LoginForm extends LoginPage {
 			captchaLink: '.b-captcha__code__reload',
 			captchaImage: '.b-captcha__captcha',
 			socialBtns: new Proxy({}, {
-				get (target, name) {
-					return `${container} .b-btn-social__social__link_${name}`;
+				get (target, provider) {
+					return `${container} [data-provider="${provider}"]`;
 				}
 			}),
 			selectedItem (provider) {

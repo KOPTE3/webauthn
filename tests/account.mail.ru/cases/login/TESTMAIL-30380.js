@@ -44,7 +44,7 @@ describe(suite + ': ' + options.name, () => {
 			});
 
 			// кликаем на соцкнопку
-			loginForm.clickSocialBtn(item.btnId);
+			loginForm.clickSocialBtn(item.provider);
 
 			// авторизируемся
 			item.login(social.url, login, password);
