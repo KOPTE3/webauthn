@@ -68,6 +68,7 @@ class SelectViewPage extends PassrestorePage {
 
 			phoneLayer,
 			phoneLayerInfo: `${phoneLayer} .info`,
+			phoneLayerLink: `${phoneLayer} .pseudo-link`,
 			phoneLayerForm: `${phoneLayer} form`,
 			phoneCodeField: '#signupsms_code',
 			phoneCodeSubmitBtn: `${phoneLayer} [type="submit"]`
@@ -199,12 +200,26 @@ class SelectViewPage extends PassrestorePage {
 	}
 
 	/**
-	 * Get indfo message in phoneLayer
+	 * Get info message in phoneLayer
 	 *
 	 * @returns {string} value
 	 */
 	getPhoneLayerInfo () {
 		return this.page.getText(this.locators.phoneLayerInfo);
+	}
+
+	/**
+	 * Get params of phone layer resend link
+	 *
+	 * @returns {Object} params
+	 */
+	getPhoneLayerLink () {
+		let link = this.page.element(this.locators.phoneLayerLink);
+
+		return {
+			text: link.getText(),
+			cursor: link.getCssProperty('cursor').value
+		};
 	}
 
 	/**

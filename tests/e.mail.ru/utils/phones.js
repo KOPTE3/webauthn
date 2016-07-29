@@ -58,8 +58,8 @@ module.exports = {
 	verifyPhone (email, phone) {
 		return API.verifyPhone(email, phone).then(data => {
 			return data;
-		}, err => {
-			throw new Error(err);
+		}, error => {
+			throw new Error(error);
 		});
 	}
 };

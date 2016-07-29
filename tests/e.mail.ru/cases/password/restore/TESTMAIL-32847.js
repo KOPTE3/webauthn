@@ -16,8 +16,8 @@ let name = path.basename((module.parent.options ? module.parent : module).filena
 let {options = {
 	name: 'Восстановление пароля. ' +
 	'Ввод скрытых цифр телефона. ' +
-	'Проверка отображения введеных пользователем цифр ' +
-	'телефона в попапе ввода кода из смс'
+	'Проверка наличия кнопки "Отправить код еще раз"' +
+	'в попапе ввода кода из смс'
 }} = module.parent;
 
 let user = {};
@@ -44,6 +44,6 @@ describe(name, () => {
 		steps.submitForm();
 
 		steps.waitForPhoneLayer();
-		steps.checkPhoneLayerInfo(phone.head, phone.value);
+		steps.checkPhoneLayerLink('Отправить код еще раз');
 	});
 });

@@ -76,12 +76,24 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	 * @param {string} head - '+7 (912) 2'
 	 * @param {string} value - missing numbers '11'
 	 */
-	checkPhoneLayer (head, value) {
+	checkPhoneLayerInfo (head, value) {
 		let result = this.page.getPhoneLayerInfo();
 		let phone = head + value + '-**-**';
 		let message = 'Код подтверждения отправлен на номер ' + phone + '.';
 
 		assert.equal(result, message, 'В номере телефона цифры некорректны');
+	}
+
+	/**
+	 * Test resend link dsplayed in phoneLayer
+	 *
+	 * @param {string} message - text in the link
+	 */
+	checkPhoneLayerLink (message) {
+		let result = this.page.getPhoneLayerLink();
+
+		assert.equal(result.text, message, 'Текст не соответствует');
+		assert.equal(result.cursor, 'pointer', 'Указатель не сменился на поинтер');
 	}
 
 	/**
