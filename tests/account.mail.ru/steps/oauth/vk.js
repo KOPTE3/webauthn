@@ -19,6 +19,10 @@ class VkSteps extends OAuthSteps {
 		return 'vk.com';
 	}
 
+	get btnId () {
+		return 'vk';
+	}
+
 	/**
 	 * ссылка на текущий page
 	 *

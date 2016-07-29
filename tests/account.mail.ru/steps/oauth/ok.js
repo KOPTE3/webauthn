@@ -19,6 +19,10 @@ class OkSteps extends OAuthSteps {
 		return 'ok.ru';
 	}
 
+	get btnId () {
+		return 'ok';
+	}
+
 	/**
 	 * ссылка на текущий page
 	 *
