@@ -1,6 +1,5 @@
 'use strict';
 
-let debug = require('debug')('phones');
 let ajax = require('./ajax');
 let API = require('./internalApi');
 

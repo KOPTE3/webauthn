@@ -312,7 +312,7 @@ class SelectViewPage extends PassrestorePage {
 			return phonesUtils.verifyPhone(email, phone).then(result => {
 				return true;
 			});
-		});
+		}, 15 * 1000, 'Could not verify phone');
 	}
 }
 

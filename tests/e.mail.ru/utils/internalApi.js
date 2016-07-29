@@ -1,6 +1,5 @@
 'use strict';
 
-// const PROXY_PATH = 'http://localhost:8091';
 const PROXY_PATH = 'http://test-proxy.win102.dev.mail.ru';
 const request = require('request');
 const signup = require('./user/signup');

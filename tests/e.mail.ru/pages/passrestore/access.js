@@ -15,11 +15,9 @@ class AccessViewPage extends PassrestoreSelectPage {
 	 * @type {Object}
 	 */
 	get locators () {
-		let selectViewLocators = super.locators;
-
-		selectViewLocators.container = '.js-view-access-type';
-
-		return selectViewLocators;
+		return this.extend(super.locators, {
+			container: '.js-view-access-type'
+		});
 	}
 }
 

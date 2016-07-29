@@ -33,9 +33,9 @@ module.exports = {
 				result.data = this.userPrepare(result.data);
 			}
 
-			console.log('user/add request: ', JSON.stringify(data.requestBody));
-			console.log('user/add response: ', JSON.stringify(result.body));
-			console.log('user/add status: ', result.isOK);
+			debug('user/add request: ', JSON.stringify(data.requestBody));
+			debug('user/add response: ', JSON.stringify(result.body));
+			debug('user/add status: ', result.isOK);
 
 			return result;
 		}, err => {

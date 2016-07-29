@@ -128,7 +128,7 @@ class PageObject {
 
 				return result.isOK;
 			});
-		});
+		}, 15 * 1000, 'Could not add new user');
 
 		return response;
 	}
