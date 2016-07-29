@@ -17,13 +17,6 @@ class Steps {
 	}
 
 	/**
-	 * Обновить страницу
-	 */
-	static refresh () {
-		pages.refresh();
-	}
-
-	/**
 	 * Дождатся загрузки страницы
 	 */
 	static wait () {
@@ -79,14 +72,14 @@ class Steps {
 		pages.refresh(query);
 	}
 
-	/** Подтвердить алерт */
-	static alertAccept () {
-		pages.alertAccept();
-	}
-
 	/** Сбросить текущую сессию */
 	static reload () {
 		pages.reload();
+	}
+
+	/** Подтвердить алерт */
+	static alertAccept () {
+		pages.alertAccept();
 	}
 
 	/**

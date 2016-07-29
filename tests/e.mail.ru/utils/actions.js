@@ -247,12 +247,6 @@ module.exports = {
 		});
 	},
 
-	editFolders (folders) {
-		return this.call('folders/edit', {
-			folders
-		});
-	},
-
 	deleteFolders (ids) {
 		return this.call('folders/remove', {
 			ids
@@ -267,6 +261,19 @@ module.exports = {
 	 */
 	openFolders (folders) {
 		return this.call('folders/open', {
+			folders
+		});
+	},
+
+	/**
+	 * Редактирует папки
+	 *
+	 * @param {*[]} folders - папки
+	 *
+	 * @returns {Promise}
+	 */
+	editFolders (folders) {
+		return this.call('folders/edit', {
 			folders
 		});
 	},
@@ -292,19 +299,6 @@ module.exports = {
 			body: {text},
 			correspondents: {to},
 			'save_as_template': saveAsTemplate
-		});
-	},
-
-	/**
-	 * Редактирует папки
-	 *
-	 * @param {*[]} folders - папки
-	 *
-	 * @returns {Promise}
-	 */
-	editFolders (folders) {
-		return this.call('folders/edit', {
-			folders
 		});
 	},
 

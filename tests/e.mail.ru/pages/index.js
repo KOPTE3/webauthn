@@ -113,14 +113,6 @@ class PageObject {
 	}
 
 	/**
-	 * Обновить страницу
-	 *
-	 */
-	refresh () {
-		this.open(this.page.getUrl());
-	}
-
-	/**
 	 * Расширяет объект
 	 *
 	 * @param {Object} object
