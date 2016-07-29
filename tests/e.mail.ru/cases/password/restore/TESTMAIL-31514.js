@@ -5,17 +5,19 @@ let path = require('path');
 let AccountSteps = require('../../../steps/password/restore/account');
 let AccessSteps = require('../../../steps/password/restore/access');
 let SelectSteps = require('../../../steps/password/restore/select');
+let RecoverySteps = require('../../../steps/password/restore/recovery');
 
 let accountSteps = new AccountSteps();
-let selectSteps = new SelectSteps();
 let accessSteps = new AccessSteps();
+let selectSteps = new SelectSteps();
 
 let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
 
 let {options = {
 	name: 'Восстановление пароля. ' +
 	'Ввод скрытых цифр телефона. ' +
-	'Проверить отсутствие возможности ввести более двух цифр'
+	'Проверка отображения введеных пользователем цифр ' +
+	'телефона в попапе ввода кода из смс'
 }} = module.parent;
 
 let user = {};
@@ -35,7 +37,13 @@ describe(name, () => {
 	});
 
 	it(options.name, () => {
-		steps.fillPhoneInput('123');
-		steps.checkPhoneInput('12');
+		let phone = user.phones[0];
+
+		steps.fillPhoneInput(phone.value);
+		steps.fillPhoneCaptcha();
+		steps.submitForm();
+
+		steps.waitForPhoneLayer();
+		steps.checkPhoneLayerInfo(phone.head, phone.value);
 	});
 });
