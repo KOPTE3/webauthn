@@ -5,10 +5,14 @@ let AccountManager = require('@qa/account-manager'),
 	TestTools = require('@qa/test-tools'),
 	capabilities = require('@qa/wd-capabilities');
 
-let account = new AccountManager.Hooks();
-let support = new TestTools.Support();
 let project = 'e.mail.ru';
 
+let account = new AccountManager.Hooks();
+
+let support = new TestTools.Support({
+	cache: './cache',
+	cases: `tests/${project}/cases`
+});
 
 /** @namespace browser **/
 exports.config = {
@@ -34,7 +38,7 @@ exports.config = {
 	logLevel: 'silent',
 
 	/*
-	 * Максимальное время на выполнение команд waitFor*.
+	 * Максимальное время на выполнение команды.
 	 * Если какая-то из команд фреймворка не получит за это время результат,
 	 * то выполнение тестов будет прервано.
 	 */
@@ -44,7 +48,7 @@ exports.config = {
 	connectionRetryTimeout: 30 * 1000,
 
 	/* Количество инстансов параллельного запуска тестов */
-	maxInstances: 10,
+	maxInstances: 1,
 
 	/** Использовать синхронное API */
 	// sync: true,
@@ -63,6 +67,8 @@ exports.config = {
 
 	mochaOpts: {
 		'ui': 'bdd',
+
+		require: './hooks/mocha.js',
 
 		/* Количество попыток на выполнение теста, который не был пройден */
 		'retries': 1,
@@ -90,9 +96,6 @@ exports.config = {
 		outputDir: `./cache/tests/${project}/reports`
 	},
 
-	/* Директория, куда будут складываться логи */
-	logfile: `./cache/tests/${project}/logs`,
-
 	/* Директория, куда будут складываться скриншоты */
 	screenshotPath: `./cache/tests/${project}/shots`,
 
@@ -108,10 +111,26 @@ exports.config = {
 
 	/**
 	 * Набор тестовых кейсов
-	 *
-	 * { <suite>: [ <files> ] }
+	 * @see support.suites — { <suite>: [ <files> ] }
 	 */
-	suites: support.suites(`tests/${project}/cases`),
+	get suites () {
+		let callback = null;
+
+		// Исключаем запуск фич, которых нет в релизе
+		if (process.CI_DEPLOY_ENVIRONMENT) {
+			let excluded = support.excluded();
+
+			callback = file => {
+				for (let feature of excluded) {
+					if (file.includes(feature)) {
+						return false;
+					}
+				}
+			};
+		}
+
+		return support.suites({}, callback);
+	},
 
 	/*
 	 * Обратие внимание на то, что браузеры запускаются параллельно
@@ -123,7 +142,7 @@ exports.config = {
 	 * @see https://stash.mail.ru/projects/QA/repos/wd-capabilities/browse
 	 */
 	capabilities: [
-		// capabilities.get('phantomjs')
+		// capabilities.get('phantomjs'),
 		capabilities.get('chrome')
 	],
 

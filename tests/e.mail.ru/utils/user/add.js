@@ -38,8 +38,8 @@ module.exports = {
 			debug('user/add status: ', result.isOK);
 
 			return result;
-		}, err => {
-			throw new Error(err);
+		}, error => {
+			throw new Error(error);
 		});
 	}
 };

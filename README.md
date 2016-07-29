@@ -58,6 +58,10 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 
 Обновите [JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
+### Совместимость
+
+Пакет совместим о всеми известными окружениями, однако работа с npm-хуками в Сygwin имеет некоторые ограничения на запуск файлов с правами на исполнение. Также в нем отсутствует команда source. Поэтому будьте бдительны :)
+
 
 ### Конфигурирование
 
@@ -74,6 +78,39 @@ tests/<ваш_проект>/config.local.js
 ```
 
 Дополнительную информацию о формате конфига и его опциях смотрите [здесь](http://webdriver.io/guide/getstarted/configuration.html).
+
+
+### CI
+
+Для запуска тестов с среде непрерывной интеграции у вас должна быть определена переменная `CI_DEPLOY_ENVIRONMENT`. <br />
+Значением переменной является название проекта (репозитория), который должен распологаться в соседней директории.  
+
+По команде npm install запускается хук, который получает информацию об актуальных ветках проекта и исключает возможность запука тестов для фич, которых нет в репозитории:
+
+```js
+{
+	get suites () {
+		let callback = null;
+
+		// Исключаем запуск фич, которых нет в релизе
+		if (process.CI_DEPLOY_ENVIRONMENT) {
+			let excluded = support.excluded();
+
+			callback = file => {
+				for (let feature of excluded) {
+					if (file.includes(feature)) {
+						return false;
+					}
+				}
+			};
+		}
+
+		return support.suites({}, callback);
+	}
+}
+```
+
+Тесты должны должны запускаться для хоста, который передается в параметре `url`
 
 
 ### Использование
