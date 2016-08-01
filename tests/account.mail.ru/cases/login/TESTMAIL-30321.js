@@ -8,7 +8,7 @@ let providers = require('../../store/authorization/providers');
 
 let loginForm = new LoginForm();
 
-describe('TESTMAIL-30321', () => {
+describe(() => {
 	it('Успешная авторизация внешним аккаунтом, работающим по паролю, ' +
 		'при отсутствии авторизованных пользователей', () => {
 		for (let provider of providers.top('external')) {

@@ -20,6 +20,7 @@
 		"node": ">=6.2",
 		"npm": ">=3.8"
 	},
+
 	"scripts": {
 		"grunt": "grunt",
 		"start": "selenium-standalone start",
@@ -55,7 +56,7 @@
 		"time-grunt": "^1.3.0",
 
 		"webdriverio": "^4.2.3",
-		"wdio-mocha-framework": "^0.3.5",
+		"wdio-mocha-framework": "^0.4.0",
 		"wdio-selenium-standalone-service": "^0.0.5",
 		"wdio-json-reporter" : "^0.0.3",
 		"wdio-junit-reporter": "^0.1.0",

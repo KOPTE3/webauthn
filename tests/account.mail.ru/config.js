@@ -68,6 +68,8 @@ exports.config = {
 	mochaOpts: {
 		'ui': 'bdd',
 
+		require: './hooks/mocha.js',
+
 		/* Количество попыток на выполнение теста, который не был пройден */
 		'retries': 1,
 

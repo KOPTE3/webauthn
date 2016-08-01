@@ -2,7 +2,7 @@
 
 let AddressBook = require('../../steps/addressbook');
 
-describe('TESTMAIL-XXXX', () => {
+describe(() => {
 	it('Открытие адресной книги', () => {
 		AddressBook.auth();
 		AddressBook.open();

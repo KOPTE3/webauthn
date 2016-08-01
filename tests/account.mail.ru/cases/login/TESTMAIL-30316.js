@@ -5,7 +5,7 @@ let LoginForm = require('../../steps/login/form');
 
 let loginForm = new LoginForm();
 
-describe('TESTMAIL-30316', () => {
+describe(() => {
 	it('Проверка перехода на страницу регистрации', () => {
 		LoginPage.open();
 		loginForm.clickSignUpLink();

@@ -6,7 +6,7 @@ let authorizationErrors = require('../../store/authorization/errors');
 
 let loginForm = new LoginForm();
 
-describe('TESTMAIL-30265', () => {
+describe(() => {
 	it('Отображение ошибки errno=1', () => {
 		let errno = 1;
 
