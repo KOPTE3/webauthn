@@ -2,7 +2,7 @@
 
 let Message = require('../../steps/message');
 
-describe('TESTMAIL-XXX', () => {
+describe(() => {
 	it('Открытие страницы письма', () => {
 		Message.auth();
 		Message.open();

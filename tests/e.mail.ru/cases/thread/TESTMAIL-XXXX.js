@@ -2,7 +2,7 @@
 
 let Thread = require('../../steps/thread');
 
-describe('TESTMAIL-XXX', () => {
+describe(() => {
 	it('Открытие треда', () => {
 		Thread.auth();
 		Thread.open();

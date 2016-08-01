@@ -2,7 +2,7 @@
 
 let Sent = require('../../steps/sent');
 
-describe('TESTMAIL-XXX', () => {
+describe(() => {
 	it('Открытие страницы отправленного письма', () => {
 		Sent.auth();
 		Sent.open();
