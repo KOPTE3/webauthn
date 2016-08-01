@@ -89,7 +89,7 @@ exports.config = {
 	},
 
 	/* Для реппортера Allure требуется наличие установленного плагина в CI */
-	reporters: ['spec', 'junit'],
+	reporters: ['json', 'spec', 'junit'],
 
 	/* Директории, куда будут складываться отчеты о прогонах */
 	reporterOptions: {
