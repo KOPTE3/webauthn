@@ -2,10 +2,10 @@
 
 let path = require('path');
 
-let AccountSteps = require('../../../steps/password/restore/account');
-let AccessSteps = require('../../../steps/password/restore/access');
-let SelectSteps = require('../../../steps/password/restore/select');
-let RecoverySteps = require('../../../steps/password/restore/recovery');
+let AccountSteps = require('../../../steps/passrestore/account');
+let AccessSteps = require('../../../steps/passrestore/access');
+let SelectSteps = require('../../../steps/passrestore/select');
+let RecoverySteps = require('../../../steps/passrestore/recovery');
 
 let accountSteps = new AccountSteps();
 let selectSteps = new SelectSteps();

@@ -3,9 +3,9 @@
 let assert = require('assert');
 
 let PasswordRestoreSteps = require('../restore');
-let SelectTypePage = require('../../../pages/passrestore/select');
+let SelectTypePage = require('../../pages/passrestore/select');
 
-let phonesUtils = require('../../../utils/phones');
+let phonesUtils = require('../../utils/phones');
 
 
 /** Модуль для работы с формой ввода адреса для восстановления */

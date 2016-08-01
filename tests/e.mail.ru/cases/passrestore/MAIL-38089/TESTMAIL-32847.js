@@ -2,19 +2,20 @@
 
 let path = require('path');
 
-let AccountSteps = require('../../../steps/password/restore/account');
-let AccessSteps = require('../../../steps/password/restore/access');
-let SelectSteps = require('../../../steps/password/restore/select');
-let RecoverySteps = require('../../../steps/password/restore/recovery');
+let AccountSteps = require('../../../steps/passrestore/account');
+let AccessSteps = require('../../../steps/passrestore/access');
+let SelectSteps = require('../../../steps/passrestore/select');
+let RecoverySteps = require('../../../steps/passrestore/recovery');
 
 let accountSteps = new AccountSteps();
 let accessSteps = new AccessSteps();
 let selectSteps = new SelectSteps();
 
 let { options = {
-	name: 'Восстановление пароля. Ввод скрытых цифр телефона. ' +
-	'Проверка отображения введеных пользователем цифр ' +
-	'телефона в попапе ввода кода из смс'
+	name: 'Восстановление пароля. ' +
+	'Ввод скрытых цифр телефона. ' +
+	'Проверка наличия кнопки "Отправить код еще раз"' +
+	'в попапе ввода кода из смс'
 }} = module.parent;
 
 let user = {};
@@ -41,6 +42,6 @@ describe(() => {
 		steps.submitForm();
 
 		steps.waitForPhoneLayer();
-		steps.checkPhoneLayerInfo(phone.head, phone.value);
+		steps.checkPhoneLayerLink('Отправить код еще раз');
 	});
 });

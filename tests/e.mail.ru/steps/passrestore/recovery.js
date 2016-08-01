@@ -3,7 +3,7 @@
 let assert = require('assert');
 
 let PasswordRestoreSteps = require('../restore');
-let RecoveryPage = require('../../../pages/passrestore/recovery');
+let RecoveryPage = require('../../pages/passrestore/recovery');
 
 /** Модуль для работы с формой ввода адреса для восстановления */
 class RecoverySteps extends PasswordRestoreSteps {

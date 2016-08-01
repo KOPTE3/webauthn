@@ -2,8 +2,8 @@
 
 let assert = require('assert');
 
-let PasswordRestoreSteps = require('../restore');
-let AccountPage = require('../../../pages/passrestore/account');
+let PasswordRestoreSteps = require('index');
+let AccountPage = require('../../pages/passrestore/account');
 
 /** Модуль для работы с формой ввода адреса для восстановления */
 class AccountSteps extends PasswordRestoreSteps {

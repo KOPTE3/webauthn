@@ -1,8 +1,8 @@
 'use strict';
 
-let PasswordRestore = require('../../../steps/password/restore');
-let AccountView = require('../../../steps/password/restore/account');
-let SelectTypeView = require('../../../steps/password/restore/select');
+let PasswordRestore = require('../../steps/passrestore/index');
+let AccountView = require('../../steps/passrestore/account');
+let SelectTypeView = require('../../steps/passrestore/select');
 
 let accountView = new AccountView();
 let selectTypeView = new SelectTypeView();

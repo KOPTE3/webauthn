@@ -2,9 +2,9 @@
 
 let assert = require('assert');
 
-let Steps = require('../../../steps');
-let PasswordRestorePage = require('../../../pages/passrestore');
-let phonesUtils = require('../../../utils/phones');
+let Steps = require('../index');
+let PasswordRestorePage = require('../../pages/passrestore/index');
+let phonesUtils = require('../../utils/phones');
 
 /** Модуль для работы с шагами страницы восстановления пароля */
 class PasswordRestoreSteps extends Steps {
