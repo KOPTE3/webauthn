@@ -67,7 +67,7 @@
 		"@qa/eslint-config-mail.ru": "^0.1.0",
 		"eslint": "^3.0.1",
 		"eslint-friendly-formatter": "^2.0.5",
-		"phantomjs-prebuilt": "^2.1.7",
+		"phantomjs-prebuilt": "^2.1.9",
 		"pre-commit": "^1.1.3"
 	}
 }
