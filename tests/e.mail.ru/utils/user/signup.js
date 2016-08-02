@@ -91,6 +91,7 @@ module.exports = {
 	generateSignupData (params) {
 		let {phones, restore, mrim, credentials = {}} = params;
 		let {login, domain, name, birthday, sex} = this;
+
 		let data = {
 			login,
 			domain,

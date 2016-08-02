@@ -7,7 +7,7 @@ let accounts = require('../../store/authorization/accounts');
 
 let loginForm = new LoginForm();
 
-describe('TESTMAIL-31508', () => {
+describe(() => {
 	it('Страница логина. Выбор внешних доменов через меню ' +
 		'при наличии авторизованных ранее аккаунтов', () => {
 		let { username } = accounts.get({ features: ['phone_verified'] });

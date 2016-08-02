@@ -1,8 +1,9 @@
 'use strict';
 
+let request = require('request');
+let signup = require('./user/signup');
+
 const PROXY_PATH = 'http://test-proxy.win102.dev.mail.ru';
-const request = require('request');
-const signup = require('./user/signup');
 
 /**
  * Makes request
@@ -41,7 +42,6 @@ const call = function ({path, method = 'GET', body = {}}) {
 		});
 	});
 };
-
 
 /**
  * Модуль для работы с Internal API

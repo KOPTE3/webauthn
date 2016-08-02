@@ -5,9 +5,14 @@ let AccountManager = require('@qa/account-manager'),
 	TestTools = require('@qa/test-tools'),
 	capabilities = require('@qa/wd-capabilities');
 
-let account = new AccountManager.Hooks();
-let support = new TestTools.Support();
 let project = 'account.mail.ru';
+
+let account = new AccountManager.Hooks();
+
+let support = new TestTools.Support({
+	cache: './cache',
+	cases: `tests/${project}/cases`
+});
 
 /** @namespace browser **/
 exports.config = {
@@ -33,7 +38,7 @@ exports.config = {
 	logLevel: 'silent',
 
 	/*
-	 * Максимальное время на выполнение команд waitFor*.
+	 * Максимальное время на выполнение команды.
 	 * Если какая-то из команд фреймворка не получит за это время результат,
 	 * то выполнение тестов будет прервано.
 	 */
@@ -63,6 +68,8 @@ exports.config = {
 	mochaOpts: {
 		'ui': 'bdd',
 
+		require: './hooks/mocha.js',
+
 		/* Количество попыток на выполнение теста, который не был пройден */
 		'retries': 1,
 
@@ -82,7 +89,7 @@ exports.config = {
 	},
 
 	/* Для реппортера Allure требуется наличие установленного плагина в CI */
-	reporters: ['spec', 'junit'],
+	reporters: ['json', 'spec', 'junit'],
 
 	/* Директории, куда будут складываться отчеты о прогонах */
 	reporterOptions: {
@@ -104,10 +111,26 @@ exports.config = {
 
 	/**
 	 * Набор тестовых кейсов
-	 *
-	 * { <suite>: [ <files> ] }
+	 * @see support.suites — { <suite>: [ <files> ] }
 	 */
-	suites: support.suites(`tests/${project}/cases`),
+	get suites () {
+		let callback = null;
+
+		// Исключаем запуск фич, которых нет в релизе
+		if (process.CI_DEPLOY_ENVIRONMENT) {
+			let excluded = support.excluded();
+
+			callback = file => {
+				for (let feature of excluded) {
+					if (file.includes(feature)) {
+						return false;
+					}
+				}
+			};
+		}
+
+		return support.suites({}, callback);
+	},
 
 	/*
 	 * Обратие внимание на то, что браузеры запускаются параллельно

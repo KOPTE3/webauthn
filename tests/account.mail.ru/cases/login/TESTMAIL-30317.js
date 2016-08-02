@@ -5,7 +5,7 @@ let LoginForm = require('../../steps/login/form');
 
 let loginForm = new LoginForm();
 
-describe('TESTMAIL-30317', () => {
+describe(() => {
 	it('Проверить отсутствие кнопки "Забыли пароль?" для внешних аккаунтов', () => {
 		LoginPage.open({ allow_external: 1 });
 		loginForm.isPassRemindLinkNotExist();
