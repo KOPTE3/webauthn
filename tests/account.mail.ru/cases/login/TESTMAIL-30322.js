@@ -23,9 +23,7 @@ let { options = {
 	}
 }} = module.parent;
 
-let suite = path.basename((module.parent.options ? module.parent : module).filename, '.js');
-
-describe(suite + ': ' + options.name, () => {
+describe(options.name, () => {
 	it('авторизация через gmail.com', () => {
 		for (let { hosts } of providers.get(['gmail.com'])) {
 			for (let host of hosts) {

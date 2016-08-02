@@ -5,6 +5,7 @@ module.exports = {
 
 	'rules': {
 		'array-callback-return': 'off',
+		'array-bracket-spacing': 'off',
 
 		'require-jsdoc': [
 			'error', {

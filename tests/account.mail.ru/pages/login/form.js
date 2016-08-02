@@ -133,8 +133,6 @@ class LoginForm extends LoginPage {
 	}
 
 	/**
-	 *
-	 *
 	 * @param {this.locators.socialBtns} social
 	 */
 	clickSocialBtn (social) {
