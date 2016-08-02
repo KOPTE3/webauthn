@@ -20,7 +20,7 @@ class MessagesPage extends PageObject {
 	/**
 	 * Базовый локатор для писем
 	 *
-	 * @typw {string}
+	 * @type {string}
 	 */
 	get lettersLocator () {
 		return '[data-mnemo="letters"]';
@@ -39,6 +39,7 @@ class MessagesPage extends PageObject {
 			newestLetter: `${letters} .b-datalist__item:first-child`,
 			letters: `${letters} .b-datalist__item`,
 			letterSubject: '.b-datalist__item__subj',
+			letterSnippet: '.b-datalist__item__subj__snippet',
 			buttons: {
 				compose: '.b-toolbar__btn[data-name="compose"]'
 			}
@@ -82,12 +83,17 @@ class MessagesPage extends PageObject {
 	getLetterIdBySubject (subject) {
 		let { value: letters } = this.getLetters();
 		let subjectLocator = this.locators.letterSubject;
+		let snippetLocator = this.locators.letterSnippet;
 		let id;
 
 		letters.some(({ELEMENT: ID}) => {
 			let item = this.page.elementIdElement(ID, subjectLocator);
+			let snippet = this.page.elementIdElement(ID, snippetLocator);
+			let text = item.getText();
 
-			if (item.getText() === subject) {
+			text = text.replace(snippet.getText(), '');
+
+			if (text === subject) {
 				id = this.page.elementIdAttribute(ID, 'data-id').value;
 
 				return true;
