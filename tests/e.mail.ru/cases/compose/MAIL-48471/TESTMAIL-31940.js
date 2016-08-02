@@ -38,7 +38,7 @@ const testText = 'Тестовый текст';
 const withAttach = 'Добрый день!\nВо вложении заявка, ' +
 	' прошу скинуть счет на оплату.';
 
-describe('TESTMAIL-31940 НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
+describe('НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
 	'Проверить появление попапа для пересылки из тулбара с текстом и без аттача',
 	() => {
 		before(() => {
@@ -74,7 +74,7 @@ describe('TESTMAIL-31940 НЕ AJAX. Ответ на письмо. Забытое
 			Compose.features(features);
 			Compose.refresh();
 			Compose.wait();
-			
+
 			composeEditor.wait();
 
 			composeFields.setFieldValue('to', fields.to);

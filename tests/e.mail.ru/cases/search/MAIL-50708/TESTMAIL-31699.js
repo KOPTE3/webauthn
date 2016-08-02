@@ -13,7 +13,7 @@ let advancedSteps = new AdvancedSteps();
 let advancedCalendar = calendarUtils.create('advanced');
 let operandsCalendar = calendarUtils.create('portal-search');
 
-describe('TESTMAIL-31699', () => {
+describe(() => {
 	it('Список писем. Сохранение поисковых запросов. ' +
 		'Проверка редактирования операнда "дата" с точной датой ' +
 		'с использованием выбора временного промежутка', () => {

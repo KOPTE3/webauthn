@@ -7,15 +7,13 @@ let path = require('path');
 let Folders = require('../../../steps/folders');
 let foldersStore = require('../../../store/folders');
 
-let {options = {
+let { options = {
 	name: 'Список писем. Сворачивание папок по времени. ' +
 		'Проверка, что если в подпапку не заходили 1 день, ' +
 		'а в папку заходили, то папка свернется'
 }} = module.parent;
 
-let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
-
-describe(name, () => {
+describe(() => {
 	before(() => {
 		Folders.auth();
 		Folders.enableCollapseFeature(FOLDER_COLLAPSE_TIMEOUT, FOLDER_UPDATE_PERIOD, true);

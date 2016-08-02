@@ -25,10 +25,9 @@ let Mail = require('../../../utils/mail');
 
 const subject = 'TESTMAIL-31947';
 
-describe('TESTMAIL-31947: ' +
-	'AJAX. Ответ на письмо. Забытое вложение. Проверить отсутствие попапа ' +
+describe('AJAX. Ответ на письмо. Забытое вложение. Проверить отсутствие попапа ' +
 	'для пересылки с текстом в цитате, с аттачем (добавление аттача на пересылке)',
-	done => {
+	() => {
 		before(() => {
 			// Авторизуемся
 			Compose.auth();
@@ -56,7 +55,7 @@ describe('TESTMAIL-31947: ' +
 			Compose.features(features);
 			Messages.open();
 			lettersSteps.openNewestLetter();
-			
+
 			// нажимаем на переслать в общем тулбаре
 			messageToolbarSteps.clickButton('forward');
 			Compose.wait();

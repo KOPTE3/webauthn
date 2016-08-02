@@ -14,7 +14,7 @@ let missingAttachLayer = new MissingAttachLayer();
 
 const text = 'Добрый день! Во вложении заявка, прошу скинуть счет на оплату.';
 
-describe('TESTMAIL-31551: НЕ AJAX. Забытое вложение. Проверить закрытие попапа ' +
+describe('НЕ AJAX. Забытое вложение. Проверить закрытие попапа ' +
 	'по крестику', () => {
 	before(() => {
 		Compose.auth();

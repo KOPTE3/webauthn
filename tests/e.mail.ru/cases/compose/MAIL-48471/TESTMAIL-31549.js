@@ -12,7 +12,7 @@ let composeFields = new ComposeFields();
 let composeEditor = new ComposeEditor();
 let composeControls = new ComposeControls();
 
-describe('TESTMAIL-31549: НЕ AJAX. Написание письма. Забытое вложение. ' +
+describe('НЕ AJAX. Написание письма. Забытое вложение. ' +
 'Проверить отсутствие попапа при отправке ' +
 '(тексты для которых не должен появляться попап)', () => {
 	before(() => {

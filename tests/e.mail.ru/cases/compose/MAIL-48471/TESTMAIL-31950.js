@@ -30,6 +30,7 @@ let composeFieldsStore = require('../../../store/compose/fields');
 let Mail = require('../../../utils/mail');
 
 const subject = 'TESTMAIL-31950';
+
 const features = [
 	'check-missing-attach',
 	'disable-ballons',
@@ -37,7 +38,7 @@ const features = [
 	'disable-fastreply-landmark'
 ];
 
-describe('TESTMAIL-31950: НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
+describe('НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
 	'Проверить отсутствие попапа для быстрой пересылки с текстом в цитате, ' +
 	'с аттачем (исходное письмо с аттачем)', () => {
 	before(() => {

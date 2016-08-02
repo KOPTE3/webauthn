@@ -10,7 +10,7 @@ const firstEmail = 'test1@mail.ru';
 const secondEmail = 'test2@mail.ru';
 const text = 'test';
 
-describe('TESTMAIL-32391: Поиск. Новые операнды.', () => {
+describe('Поиск. Новые операнды.', () => {
 	before(() => {
 		Messages.auth();
 		Messages.open();

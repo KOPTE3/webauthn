@@ -26,9 +26,7 @@ let messagesToolbarSteps = new MessagesToolbarSteps();
 
 let composeFieldsStore = require('../../../store/compose/fields');
 
-let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
-
-describe(name, () => {
+describe(() => {
 	before(() => {
 		Compose.auth();
 	});

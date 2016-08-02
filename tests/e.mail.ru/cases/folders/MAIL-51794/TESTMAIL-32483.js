@@ -1,21 +1,19 @@
 'use strict';
 
-const FOLDER_COLLAPSE_TIMEOUT = 10;
-const FOLDER_UPDATE_PERIOD = 10;
-
 let path = require('path');
 let Folders = require('../../../steps/folders');
 let foldersStore = require('../../../store/folders');
 
-let {options = {
+const FOLDER_COLLAPSE_TIMEOUT = 10;
+const FOLDER_UPDATE_PERIOD = 10;
+
+let { options = {
 	name: 'Список писем. Сворачивание папок по времени. ' +
 		'Проверка, что если находимся сутки в подпапке, ' +
 		'то после обновления страницы подпапка видна'
 }} = module.parent;
 
-let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
-
-describe(name, () => {
+describe(() => {
 	before(() => {
 		Folders.auth();
 		Folders.enableCollapseFeature(FOLDER_COLLAPSE_TIMEOUT, FOLDER_UPDATE_PERIOD, true);

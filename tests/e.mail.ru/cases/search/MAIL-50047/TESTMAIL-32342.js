@@ -10,7 +10,7 @@ let advancedStore = require('../../../store/portal-menu/advanced');
 
 const text = 'test';
 
-describe('TESTMAIL-32342: Поиск. Новые операнды. Проверка, что при вводе данных ' +
+describe('Поиск. Новые операнды. Проверка, что при вводе данных ' +
 	'в расширенном поиске они сразу отображаются в быстром поиске.', () => {
 	before(() => {
 		Messages.auth();

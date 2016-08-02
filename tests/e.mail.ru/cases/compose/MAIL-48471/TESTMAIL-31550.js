@@ -24,7 +24,7 @@ let composeAttaches = new ComposeAttaches();
 
 const subject = 'тестовая тема';
 
-describe('TESTMAIL-31550: НЕ AJAX. Написание письма. Забытое вложение. Проверить отсутствие ' +
+describe('НЕ AJAX. Написание письма. Забытое вложение. Проверить отсутствие ' +
 	'попапа при отправке текстов с аттачем (тексты для которых должен появляться попап)', () => {
 	before(() => {
 		Compose.auth();
@@ -33,7 +33,7 @@ describe('TESTMAIL-31550: НЕ AJAX. Написание письма. Забыт
 
 	it('письмо должно быть успешно отправлено', () => {
 		let {fields} = composeFieldsStore;
-		
+
 		Compose.open();
 
 		composeEditor.wait();

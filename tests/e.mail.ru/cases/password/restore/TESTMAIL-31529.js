@@ -11,9 +11,7 @@ let accountSteps = new AccountSteps();
 let selectSteps = new SelectSteps();
 let accessSteps = new AccessSteps();
 
-let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
-
-let {options = {
+let { options = {
 	name: 'Восстановление пароля. ' +
 	'Ввод скрытых цифр телефона. ' +
 	'Проверить ввод кириллицы, латиницы и спецсимволов с клавиатуры'
@@ -23,7 +21,7 @@ let user = {};
 let steps = options.mrim ? accessSteps : selectSteps;
 let {symbols} = passwordStore;
 
-describe(name, () => {
+describe(() => {
 	before(() => {
 		user = AccountSteps.createUser({
 			phones: 1,

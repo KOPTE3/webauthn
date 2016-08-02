@@ -19,10 +19,9 @@ let SentPage = require('../../../steps/sent');
 let ComposeAttaches = require('../../../steps/compose/attaches');
 let composeAttaches = new ComposeAttaches();
 
-
 const subject = 'тестовая тема';
 
-describe('TESTMAIL-31543: Написание письма. Забытое вложение. Проверить отсутствие попапа при' +
+describe('Написание письма. Забытое вложение. Проверить отсутствие попапа при' +
 	' отправке текстов с аттачем (тексты для которых должен появляться попап)', () => {
 	before(() => {
 		Compose.auth();

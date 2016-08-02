@@ -13,7 +13,7 @@ let composeEditor = new ComposeEditor();
 let composeControls = new ComposeControls();
 let missingAttachLayer = new MissingAttachLayer();
 
-describe('TESTMAIL-31547: НЕ AJAX. Написание письма. Забытое вложение.', () => {
+describe('НЕ AJAX. Написание письма. Забытое вложение.', () => {
 	before(() => {
 		Compose.auth();
 	});

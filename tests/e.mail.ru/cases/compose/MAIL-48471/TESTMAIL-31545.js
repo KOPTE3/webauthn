@@ -19,7 +19,7 @@ let messagesToolbarSteps = new MessagesToolbarSteps();
 
 const text = 'Добрый день! Во вложении заявка, прошу скинуть счет на оплату.';
 
-describe('TESTMAIL-31545: AJAX. Написание письма. Забытое вложение. ' +
+describe('AJAX. Написание письма. Забытое вложение. ' +
 'Проверить закрытие попапа по клику на кнопку "Прикрепить файл"', () => {
 	before(() => {
 		Compose.auth();

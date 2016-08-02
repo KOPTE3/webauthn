@@ -5,7 +5,7 @@ let LoginForm = require('../../steps/login/form');
 
 let loginForm = new LoginForm();
 
-describe('TESTMAIL-8679', () => {
+describe(() => {
 	it('Проверка ошибки при авторизации с пустым полем пароль', () => {
 		LoginPage.open();
 

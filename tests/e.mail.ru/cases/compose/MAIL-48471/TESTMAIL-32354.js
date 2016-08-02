@@ -32,64 +32,62 @@ let actions = require('../../../utils/actions');
 const subject = 'TESTMAIL-32354';
 const text = 'Тестовый текст';
 
-describe('TESTMAIL-32354 ' +
-	'Из НЕ AJAX чтения. Ответ на письмо. Забытое вложение. Проверить появление ' +
-	'попапа для пересылки из тулбара с текстом и без аттача',
-	done => {
-		before(() => {
-			Messages.auth();
-		});
+describe('Из НЕ AJAX чтения. Ответ на письмо. Забытое вложение. Проверить появление ' +
+	'попапа для пересылки из тулбара с текстом и без аттача', () => {
 
-		it('Попап должен быть показан', () => {
-			const features = [
-				'check-missing-attach',
-				'disable-ballons',
-				'no-collectors-in-compose',
-				'disable-fastreply-landmark'
-			];
+	before(() => {
+		Messages.auth();
+	});
 
-			const { fields } = composeFieldsStore;
+	it('Попап должен быть показан', () => {
+		const features = [
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose',
+			'disable-fastreply-landmark'
+		];
 
-			Messages.open();
+		const { fields } = composeFieldsStore;
 
-			actions.sendMessage(
-				fields.to,
-				fields.from,
-				subject,
-				composeEditorStore.texts.withAttach
-			);
+		Messages.open();
 
-			Messages.features(features);
-			Messages.open();
-			messagesLettersSteps.openNewestLetter();
+		actions.sendMessage(
+			fields.to,
+			fields.from,
+			subject,
+			composeEditorStore.texts.withAttach
+		);
 
-			Message.features(features);
-			Message.refresh();
-			Message.wait();
+		Messages.features(features);
+		Messages.open();
+		messagesLettersSteps.openNewestLetter();
 
-			messageToolbarSteps.clickButton('forward');
-			composeEditor.wait();
+		Message.features(features);
+		Message.refresh();
+		Message.wait();
 
-			composeFields.setFieldValue('to', fields.to);
-			composeEditor.writeMessage(text);
+		messageToolbarSteps.clickButton('forward');
+		composeEditor.wait();
 
-			composeControls.send();
-			MissingAttachLayer.wait();
+		composeFields.setFieldValue('to', fields.to);
+		composeEditor.writeMessage(text);
+
+		composeControls.send();
+		MissingAttachLayer.wait();
+		try {
+			missingAttachLayer.checkTexts();
+		} catch (error) {
+			throw new Error(error);
+		} finally {
 			try {
-				missingAttachLayer.checkTexts();
+				missingAttachLayer.close();
+				missingAttachLayer.shouldBeClosed();
 			} catch (error) {
 				throw new Error(error);
 			} finally {
-				try {
-					missingAttachLayer.close();
-					missingAttachLayer.shouldBeClosed();
-				} catch (error) {
-					throw new Error(error);
-				} finally {
-					composeEditor.wait();
-					composeControls.cancel();
-				}
+				composeEditor.wait();
+				composeControls.cancel();
 			}
-		});
-	}
-);
+		}
+	});
+});

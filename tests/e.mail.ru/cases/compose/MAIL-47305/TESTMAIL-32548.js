@@ -33,15 +33,14 @@ let messagesToolbarSteps = new MessagesToolbarSteps();
 let composeFieldsStore = require('../../../store/compose/fields');
 let foldersStore = require('../../../store/folders');
 
-let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
-
-describe(name, () => {
+describe(() => {
 	before(() => {
 		Compose.auth();
 	});
 
 	it('Написание письма. Временный адрес. Проверка, что при ответе на письмо ' +
 		'от временного адреса, подпись вырезается', () => {
+
 		let { fields: composeData } = composeFieldsStore;
 		let signature = 'Такая вот необычная подпись!';
 

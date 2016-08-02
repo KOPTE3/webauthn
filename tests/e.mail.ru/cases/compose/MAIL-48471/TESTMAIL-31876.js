@@ -36,7 +36,7 @@ const features = [
 	'disable-fastreply-landmark'
 ];
 
-describe('TESTMAIL-31876: НЕ AJAX. Ответ на письмо. Забытое вложение.' +
+describe('НЕ AJAX. Ответ на письмо. Забытое вложение.' +
 	' Проверить отсутствие попапа для полного ответа с текстом в цитате',() => {
 	before(() => {
 		Compose.auth();

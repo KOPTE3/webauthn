@@ -32,7 +32,7 @@ let actions = require('../../../utils/actions');
 
 const subject = 'Тестовый текст';
 
-describe('TESTMAIL-32350:  НЕ AJAX чтения. Ответ на письмо. Забытое вложение. ' +
+describe('НЕ AJAX чтения. Ответ на письмо. Забытое вложение. ' +
 	'Проверить отсутствие попапа для полного ответа с текстом в цитате', () => {
 	before(() => {
 		SettingsMessages.auth();

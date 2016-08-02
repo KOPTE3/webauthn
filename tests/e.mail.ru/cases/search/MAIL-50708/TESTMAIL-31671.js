@@ -9,7 +9,7 @@ let advancedSteps = new AdvancedSteps();
 
 let advancedStore = require('../../../store/portal-menu/advanced');
 
-describe('TESTMAIL-31671', () => {
+describe(() => {
 	it('Список писем. Сохранение поисковых запросов. ' +
 		'Проверка, что в расширенном поиске при клике в поля адресатов,' +
 		'темы и кому популярные поисковые запросы не появляются', () => {

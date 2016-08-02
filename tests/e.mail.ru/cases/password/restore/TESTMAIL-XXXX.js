@@ -8,7 +8,7 @@ let accountView = new AccountView();
 let selectTypeView = new SelectTypeView();
 
 
-describe.skip('TESTMAIL-XXXX', function () {
+describe.skip(function () {
 	it('Регистрация нового пользователя', () => {
 		let user = AccountView.createUser({
 			phones: 2

@@ -17,9 +17,8 @@ let composeFieldsStore = require('../../../store/compose/fields');
 let MessagesToolbarSteps = require('../../../steps/messages/toolbar');
 let messagesToolbarSteps = new MessagesToolbarSteps();
 
-describe('TESTMAIL-31541: AJAX аписание письма. Забытое вложение. Проверить ' +
-	'отсутствие попапа при отправке ' +
-	'(тексты для которых не должен появляться попап)', () => {
+describe('AJAX аписание письма. Забытое вложение. Проверить отсутствие попапа при ' +
+	'отправке (тексты для которых не должен появляться попап)', () => {
 	before(() => {
 		Messages.auth();
 	});

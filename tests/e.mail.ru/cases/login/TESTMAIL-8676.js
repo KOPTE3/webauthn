@@ -5,7 +5,7 @@ let LoginForm = require('../../steps/login/form');
 
 let loginForm = new LoginForm();
 
-describe('TESTMAIL-8676', () => {
+describe(() => {
 	it('Отсутствие списка доменов при выборе иконки домена "Другие"', () => {
 		LoginPage.open();
 		loginForm.clickDomain('other');

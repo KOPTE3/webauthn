@@ -523,7 +523,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 	selectSuggestByArrowDown (text) {
 		const downKey = constants.UNICODE_CHARACTERS.Down;
 		let counter = 0;
-		let done = false;
+		let actual = false;
 		let currentText;
 		let operandName;
 
@@ -531,7 +531,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 			currentText = this.portalSearch.getSelectedSuggestText();
 
 			if (currentText === text) {
-				done = true;
+				actual = true;
 				break;
 			}
 
@@ -540,7 +540,7 @@ class PortalSearchSteps extends PortalMenuSteps {
 			this.portalSearch.operandKeys(operandName, downKey);
 		}
 
-		assert(done, `Не удалось выбрать пункт ${text} в саджестах`);
+		assert(actual, `Не удалось выбрать пункт ${text} в саджестах`);
 	}
 
 	/**

@@ -8,15 +8,13 @@ let Folders = require('../../../steps/folders');
 let SettingsFolders = require('../../../steps/settings/folders');
 let foldersStore = require('../../../store/folders');
 
-let {options = {
+let { options = {
 	name: 'Список писем. Сворачивание папок по времени. ' +
 		'Проверка, что если к папке с подпапками через настройки добавили еще одну подпапку, ' +
 		'то папка свернется только через 24 часа даже если в нее не заходили до этого'
 }} = module.parent;
 
-let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
-
-describe(name, () => {
+describe(() => {
 	before(() => {
 		Folders.auth();
 		Folders.enableCollapseFeature(FOLDER_COLLAPSE_TIMEOUT, FOLDER_UPDATE_PERIOD, true);

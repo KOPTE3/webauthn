@@ -26,62 +26,59 @@ let Mail = require('../../../utils/mail');
 
 const subject = 'TESTMAIL-32288';
 
-describe('TESTMAIL-32288: ' +
-	'НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
+describe('НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
 	'Проверить отсутствие попапа для полного ответа с текстом в теле ' +
-	'(текст для которого не должен появляться попап)',
-	done => {
-		before(() => {
-			// Авторизуемся
-			Compose.auth();
+	'(текст для которого не должен появляться попап)', () => {
+
+	before(() => {
+		Compose.auth();
+	});
+
+	it('Попап не должен появиться', () => {
+		let {fields} = composeFieldsStore;
+		const features = [
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose',
+			'disable-fastreply-landmark'
+		];
+
+		// Присылаем письмо себе
+		var mail = new Mail({
+			to: fields.to,
+			subject,
+			text: composeEditorStore.texts.withoutAttach
 		});
 
-		it('Попап не должен появиться', () => {
-			let {fields} = composeFieldsStore;
-			const features = [
-				'check-missing-attach',
-				'disable-ballons',
-				'no-collectors-in-compose',
-				'disable-fastreply-landmark'
-			];
+		mail.send();
 
-			// Присылаем письмо себе
-			var mail = new Mail({
-				to: fields.to,
-				subject,
-				text: composeEditorStore.texts.withoutAttach
-			});
+		// Заходим на чтение письма
+		Messages.features(features);
+		Messages.open();
+		lettersSteps.openNewestLetter();
 
-			mail.send();
+		Message.features(features);
+		Message.refresh();
+		Message.wait();
 
-			// Заходим на чтение письма
-			Messages.features(features);
-			Messages.open();
-			lettersSteps.openNewestLetter();
+		fastreplySteps.clickButton('reply');
 
-			Message.features(features);
-			Message.refresh();
-			Message.wait();
+		composeEditor.wait();
 
-			fastreplySteps.clickButton('reply');
+		// Вписываем текст с сообщением
+		composeEditor.writeMessage(composeEditorStore.texts.withoutAttach);
+		messageToolbarSteps.clickFastreplyButton('reply');
 
-			composeEditor.wait();
+		try {
+			// попап не должен появится
+			missingAttachLayer.wait(true);
+		} catch (error) {
+			missingAttachLayer.close();
+			composeControls.cancel();
+			throw new Error(error);
+		}
 
-			// Вписываем текст с сообщением
-			composeEditor.writeMessage(composeEditorStore.texts.withoutAttach);
-			messageToolbarSteps.clickFastreplyButton('reply');
-
-			try {
-				// попап не должен появится
-				missingAttachLayer.wait(true);
-			} catch (error) {
-				missingAttachLayer.close();
-				composeControls.cancel();
-				throw new Error(error);
-			}
-
-			// должно в конце перейти на страницу успешной отправки
-			SentPage.wait();
-		});
-	}
-);
+		// должно в конце перейти на страницу успешной отправки
+		SentPage.wait();
+	});
+});

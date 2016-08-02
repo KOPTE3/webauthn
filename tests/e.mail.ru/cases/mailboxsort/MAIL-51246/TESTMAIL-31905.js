@@ -2,7 +2,7 @@
 
 let all = require('.');
 
-describe('TESTMAIL-31905', () => {
+describe(() => {
 	before(() => {
 		all.login();
 		all.deleteArchive();
@@ -19,7 +19,8 @@ describe('TESTMAIL-31905', () => {
 
 		all.FoldersSteps.open();
 		all.FoldersSteps.isArchiveExists();
-		['social', 'promotions', 'newsletters'].forEach((name) => {
+
+		['social', 'promotions', 'newsletters'].forEach(name => {
 			all.FoldersSteps.isFolderInArchive(all.foldersStore.ids[name]);
 		});
 	});

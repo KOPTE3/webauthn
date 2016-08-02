@@ -32,64 +32,62 @@ let actions = require('../../../utils/actions');
 const subject = 'TESTMAIL-32353';
 const text = 'Тестовый текст';
 
-describe('TESTMAIL-32353 ' +
-	'Из НЕ AJAX чтения. Ответ на письмо. Забытое вложение. Проверить ' +
-	'появление попапа для полного ответа с текстом и без аттача',
-	done => {
-		before(() => {
-			Messages.auth();
-		});
+describe('Из НЕ AJAX чтения. Ответ на письмо. Забытое вложение. Проверить ' +
+	'появление попапа для полного ответа с текстом и без аттача', () => {
 
-		it('Попап должен быть показан', () => {
-			const features = [
-				'check-missing-attach',
-				'disable-ballons',
-				'no-collectors-in-compose',
-				'disable-fastreply-landmark'
-			];
+	before(() => {
+		Messages.auth();
+	});
 
-			const { fields } = composeFieldsStore;
+	it('Попап должен быть показан', () => {
+		const features = [
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose',
+			'disable-fastreply-landmark'
+		];
 
-			Messages.open();
+		const { fields } = composeFieldsStore;
 
-			actions.sendMessage(
-				fields.to,
-				fields.from,
-				subject,
-				text
-			);
+		Messages.open();
 
-			Messages.features(features);
-			Messages.open();
-			messagesLettersSteps.openNewestLetter();
+		actions.sendMessage(
+			fields.to,
+			fields.from,
+			subject,
+			text
+		);
 
-			Message.features(features);
-			Message.refresh();
-			Message.wait();
+		Messages.features(features);
+		Messages.open();
+		messagesLettersSteps.openNewestLetter();
 
-			messageToolbarSteps.clickButton('reply');
-			composeEditor.wait();
+		Message.features(features);
+		Message.refresh();
+		Message.wait();
 
-			composeEditor.writeMessage(composeEditorStore.texts.withAttach);
+		messageToolbarSteps.clickButton('reply');
+		composeEditor.wait();
 
-			composeControls.send();
+		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 
-			missingAttachLayer.wait();
+		composeControls.send();
+
+		missingAttachLayer.wait();
+		try {
+			missingAttachLayer.checkTexts();
+		} catch (error) {
+			throw new Error(error);
+		} finally {
 			try {
-				missingAttachLayer.checkTexts();
+				missingAttachLayer.close();
+				missingAttachLayer.shouldBeClosed();
 			} catch (error) {
 				throw new Error(error);
 			} finally {
-				try {
-					missingAttachLayer.close();
-					missingAttachLayer.shouldBeClosed();
-				} catch (error) {
-					throw new Error(error);
-				} finally {
-					composeEditor.wait();
-					composeControls.cancel();
-				}
+				composeEditor.wait();
+				composeControls.cancel();
 			}
-		});
-	}
-);
+		}
+	});
+});

@@ -19,9 +19,9 @@ let Mail = require('../../../utils/mail');
 
 const subject = 'TESTMAIL-31954';
 
-describe('TESTMAIL-31954: НЕ AJAX. Черновики. Забытое вложение. ' +
+describe('НЕ AJAX. Черновики. Забытое вложение. ' +
 	'Проверить отсутствие попапа при отправке с текстом и аттачем из шаблона ' +
-	'(исходный шаблон с аттачем)', done => {
+	'(исходный шаблон с аттачем)', () => {
 	before(() => {
 		Compose.auth();
 	});
@@ -54,7 +54,7 @@ describe('TESTMAIL-31954: НЕ AJAX. Черновики. Забытое влож
 		composeControls.cancel();
 
 		Compose.open();
-		
+
 		Compose.refresh();
 
 		composeControls.applyTemplate();

@@ -18,7 +18,7 @@ let composeEditor = new ComposeEditor();
 let composeControls = new ComposeControls();
 let missingAttachLayer = new MissingAttachLayer();
 
-describe('TESTMAIL-31540: AJAX. Написание письма. Забытое вложение. ' +
+describe('AJAX. Написание письма. Забытое вложение. ' +
 'Проверить появление попапа при отправке текстов', () => {
 	before(() => {
 		Compose.auth();

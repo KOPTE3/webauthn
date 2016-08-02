@@ -6,7 +6,7 @@ let AdvancedSteps = require('../../../steps/portal-menu/advanced');
 let portalSearchSteps = new PortalSearchSteps();
 let advancedSteps = new AdvancedSteps();
 
-describe('TESTMAIL-32389: Поиск. Новые операнды.', () => {
+describe('Поиск. Новые операнды.', () => {
 	before(() => {
 		Messages.auth();
 		Messages.open();

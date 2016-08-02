@@ -8,7 +8,7 @@ let actions = require('../../../utils/actions');
 
 const email = 'test1@mail.ru';
 
-describe('TESTMAIL-32392: Поиск. Новые операнды.', () => {
+describe('Поиск. Новые операнды.', () => {
 	before(() => {
 		Messages.auth();
 		Messages.open();

@@ -29,7 +29,6 @@ let SentPage = require('../../../steps/sent');
 // utils
 let actions = require('../../../utils/actions');
 
-
 const subject = 'Тестовый текст';
 
 const features = [
@@ -39,8 +38,7 @@ const features = [
 	'disable-fastreply-landmark'
 ];
 
-
-describe('TESTMAIL-32290: НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
+describe('НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
 	'Проверить отсутствие попапа для быстрого ответа с текстом в цитате ' +
 	'(текст для которого попап появляться не должен)', () => {
 	before(() => {

@@ -17,7 +17,7 @@ let actions = require('../../../utils/actions');
 
 const subject = 'TESTMAIL-31883';
 
-describe('TESTMAIL-31883: AJAX. Черновики. Забытое вложение. Проверить ' +
+describe('AJAX. Черновики. Забытое вложение. Проверить ' +
 ' появление попапа при отправке с текстом из шаблона', () => {
 	before(() => {
 		Compose.auth();

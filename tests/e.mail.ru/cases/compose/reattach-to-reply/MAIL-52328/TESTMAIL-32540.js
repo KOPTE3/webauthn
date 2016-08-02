@@ -25,7 +25,7 @@ let composeFieldsStore = require('../../../../store/compose/fields');
 
 let Mail = require('../../../../utils/mail');
 
-describe('TESTMAIL-32540: Новое написание письма. Черновики. Проверка, ' +
+describe('Новое написание письма. Черновики. Проверка, ' +
 	'что отправляется письмо из черновиков после обновления страницы.', () => {
 	before(() => {
 		Compose.auth();

@@ -13,9 +13,7 @@ let { options = {
 		'не заходили 1 день, то она свернется'
 }} = module.parent;
 
-let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
-
-describe(name, () => {
+describe(() => {
 	before(() => {
 		Folders.auth();
 		Folders.enableCollapseFeature(FOLDER_COLLAPSE_TIMEOUT, FOLDER_UPDATE_PERIOD, true);
