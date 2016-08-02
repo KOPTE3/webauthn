@@ -53,24 +53,5 @@ describe(suite + ': ' + options.name, () => {
 			Steps.reload();
 		});
 	});
-
-	/*
-	 {
-	 name: 'vk.com',
-	 btn: 'vk',
-	 steps:
-	 },
-	 {
-	 name: 'ok.ru',
-	 btn: 'ok',
-	 steps:
-
-	 },
-	 {
-	 name: 'fb.com',
-	 btn: 'fb',
-	 steps:
-
-	 }*/
 });
 
