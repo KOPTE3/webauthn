@@ -2,13 +2,13 @@
 
 let assert = require('assert');
 
-let OauthSteps = require('../../steps/oauth');
+let OAuthSteps = require('../../steps/oauth');
 let OutlookPage = require('../../pages/oauth/outlook');
 
-let oauthSteps = new OauthSteps();
+let oauthSteps = new OAuthSteps();
 
 /** Модуль для работы с шагами сервиса outlook.com */
-class OutlookSteps extends OauthSteps {
+class OutlookSteps extends OAuthSteps {
 	constructor () {
 		super();
 
@@ -16,38 +16,12 @@ class OutlookSteps extends OauthSteps {
 	}
 
 	/**
-	 * Возвращает ссылку на инстанс страницы
+	 * ссылка на текущий page
 	 *
-	 * @type {Object}
+	 * @returns {VkPage}
 	 */
-	static get page () {
-		return new OutlookPage();
-	}
-
-	/**
-	 *
-	 * Нажатие на кнопку next
-	 */
-	clickNextBtn () {
-		this.outlookPage.clickNextBtn();
-	}
-
-	/**
-	 * Клик по кнопке авторизации
-	 */
-	clickSignInBtn () {
-		this.outlookPage.clickSignInBtn();
-	}
-
-	/**
-	 * Вводим пароль
-	 * а до этого дожидаемся появления поля инпут
-	 *
-	 * @param {string} password
-	 */
-	setPassword (password) {
-		this.outlookPage.waitPassowrd();
-		this.outlookPage.setPassword(password);
+	get page () {
+		return this.outlookPage;
 	}
 }
 

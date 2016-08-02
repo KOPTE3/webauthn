@@ -142,15 +142,6 @@ class LoginFormSteps extends Steps {
 	}
 
 	/**
-	 * Выбрать домен
-	 *
-	 * @param {string} provider
-	 */
-	clickDomain (provider) {
-		this.loginForm.clickDomain(provider);
-	}
-
-	/**
 	 * Отправить форму
 	 *
 	 * @param {Object} data
@@ -183,6 +174,15 @@ class LoginFormSteps extends Steps {
 	 */
 	clickSignInButton () {
 		this.loginForm.clickSignInButton();
+	}
+
+	/**
+	 * Кликаем по кнопке социальной сети
+	 *
+	 * @param {vk|fb|ok} social
+	 */
+	clickSocialBtn (social) {
+		this.loginForm.clickSocialBtn(social);
 	}
 
 	/**

@@ -17,9 +17,36 @@ class Steps {
 	}
 
 	/**
-	 * Дождатся загрузки страницы
+	 * Обновить страницу
+	 *
+	 * @param {Object} [query] — параметры запроса
+	 */
+	static refresh (query) {
+		pages.refresh(query);
+	}
+
+	/** Подтвердить алерт */
+	static alertAccept () {
+		pages.alertAccept();
+	}
+
+	/** Сбросить текущую сессию */
+	static reload () {
+		pages.reload();
+	}
+
+	/**
+	 * @deprecated
+	 * @see wait
 	 */
 	static wait () {
+		this.page.wait();
+	}
+
+	/**
+	 * Дождатся загрузки страницы
+	 */
+	wait () {
 		this.page.wait();
 	}
 
@@ -75,25 +102,6 @@ class Steps {
 	 */
 	static pause (ms) {
 		pages.pause(ms);
-	}
-
-	/**
-	 * Обновить страницу
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 */
-	static refresh (query) {
-		pages.refresh(query);
-	}
-
-	/** Сбросить текущую сессию */
-	static reload () {
-		pages.reload();
-	}
-
-	/** Подтвердить алерт */
-	static alertAccept () {
-		pages.alertAccept();
 	}
 
 	/**

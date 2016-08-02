@@ -11,11 +11,13 @@ class LoginForm extends LoginPage {
 	/**
 	 * Локаторы
 	 *
-	 * @type {Object}
+	 * @returns {*}
 	 */
 	get locators () {
+		const container = '.b-login';
+
 		return {
-			container: '.b-login',
+			container,
 			selectedDomain  : '.b-email__domain .b-dropdown__ctrl__text',
 			selectControl   : '.b-email__domain .b-dropdown__ctrl',
 			providersBlock  : '.b-email-providers__list',
@@ -41,7 +43,11 @@ class LoginForm extends LoginPage {
 			captchaDescription: '.b-captha__description',
 			captchaLink: '.b-captcha__code__reload',
 			captchaImage: '.b-captcha__captcha',
-
+			socialBtns: new Proxy({}, {
+				get (target, provider) {
+					return `${container} [data-provider="${provider}"]`;
+				}
+			}),
 			selectedItem (provider) {
 				return `.b-email__domain .b-dropdown__list [data-value="${provider}"]`;
 			},
@@ -124,6 +130,13 @@ class LoginForm extends LoginPage {
 	 */
 	clickSignInButton () {
 		this.page.click(this.locators.submit);
+	}
+
+	/**
+	 * @param {this.locators.socialBtns} social
+	 */
+	clickSocialBtn (social) {
+		this.page.click(this.locators.socialBtns[social]);
 	}
 
 	/**
