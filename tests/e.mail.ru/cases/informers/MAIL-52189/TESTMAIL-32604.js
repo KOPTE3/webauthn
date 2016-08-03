@@ -2,7 +2,7 @@
 
 let all = require('.');
 
-describe('TESTMAIL-32604', () => {
+describe(() => {
 	before(() => {
 		all.Steps.auth();
 

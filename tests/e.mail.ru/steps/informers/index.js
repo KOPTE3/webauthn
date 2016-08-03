@@ -4,6 +4,10 @@ let assert = require('assert');
 let Steps = require('../../steps');
 let InformersPage = require('../../pages/informers');
 
+let authorizationStore = require('../../store/authorization');
+
+let Mail = require('../../utils/mail');
+
 /** Модуль для работы с информерами */
 class InformersSteps extends Steps {
 	constructor () {
@@ -29,6 +33,23 @@ class InformersSteps extends Steps {
 
 		assert(actual, 'Информер отписки должен быть скрыт');
 	}
+
+	sendMessage (senderId) {
+		let email = authorizationStore.account.get('email');
+
+		let mail = new Mail({
+			from: email,
+			to: email,
+			headers: {
+				'X-Senderinfo': senderId
+			},
+			subject: 'subject',
+			text: 'text'
+		});
+
+		mail.send();
+	};
+
 }
 
 module.exports = InformersSteps;

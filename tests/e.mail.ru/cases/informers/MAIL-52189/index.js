@@ -6,24 +6,11 @@ let FiltersSteps = require('../../../steps/settings/filters');
 let LettersSteps = require('../../../steps/messages/letters');
 let InformersSteps = require('../../../steps/informers');
 
-let authorizationStore = require('../../../store/authorization');
-
-let Mail = require('../../../utils/mail');
-
 let sendMessage = function (senderId) {
+	let informers = new InformersSteps();
 	let letters = new LettersSteps();
 
-	var mail = new Mail({
-		from: authorizationStore.account.get('email'),
-		to: authorizationStore.account.get('email'),
-		headers: {
-			'X-Senderinfo': senderId
-		},
-		subject: 'subject',
-		text: 'text'
-	});
-
-	mail.send();
+	informers.sendMessage(senderId);
 
 	let stop = false;
 
@@ -44,10 +31,6 @@ module.exports = {
 	FiltersSteps,
 	LettersSteps,
 	InformersSteps,
-
-	authorizationStore,
-
-	Mail,
 
 	sendMessage
 };
