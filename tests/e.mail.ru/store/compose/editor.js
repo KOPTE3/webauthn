@@ -141,14 +141,8 @@ module.exports = {
 
 	signatures: [
 		{sign: 'Подпись 1', text: 'Подпись 1'},
+		{sign: 'Signature 2', text: 'Signature 2'},
 		{sign: '<`~!@#$%^&*()>-_=+[ {]}\n|;:\'",.?', text: 'lt;`~!@#$%^&*()>-_=+[ {]}\n|;:\'",.?'},
 		{sign: 'ÜüÖöÄäß', text: 'ÜüÖöÄäß'}
-	],
-
-	symbolsSignatures: [
-		'Подпись 1',
-		'Signature 2',
-		'<`~!@#$%^&*()>-_=+[ {]}\n|;:\'",.?',
-		'ÜüÖöÄäß'
 	]
 };

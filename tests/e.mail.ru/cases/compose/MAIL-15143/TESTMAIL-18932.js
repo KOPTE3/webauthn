@@ -20,6 +20,7 @@ let MessagesToolbarSteps = require('../../../steps/messages/toolbar');
 let messagesToolbarSteps = new MessagesToolbarSteps();
 
 let composeEditorStore = require('../../../store/compose/editor');
+let signatures = composeEditorStore.signatures.filter((item, index) => index !== 1);
 
 let actions = require('../../../utils/actions');
 
@@ -34,7 +35,7 @@ describe(() => {
 		}
 
 		Messages.open();
-		actions.setSignatures(composeEditorStore.signatures.map(({sign}) => sign));
+		actions.setSignatures(signatures.map(({sign}) => sign));
 
 		if (options.noajax) {
 			Compose.open();
@@ -49,11 +50,9 @@ describe(() => {
 		composeEditorControls.toggleSignature();
 		composeEditorControls.isVisibleSignature();
 
-		composeEditorStore.signatures.forEach(({text}) =>
-			composeEditorControls.hasSignature(text)
-		);
+		signatures.forEach(({text}) => composeEditorControls.hasSignature(text));
 
-		composeEditorControls.isSelectedSignature(composeEditorStore.signatures[0].text);
+		composeEditorControls.isSelectedSignature(signatures[0].text);
 		composeEditorControls.isSignatureHasSettingsLink();
 	});
 });

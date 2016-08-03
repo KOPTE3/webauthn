@@ -35,11 +35,11 @@ describe(() => {
 		}
 	});
 
-	composeEditorStore.symbolsSignatures.forEach((signature) => {
-		Messages.open();
+	composeEditorStore.signatures.forEach(({sign, text}) => {
+		it(options.name + ': ' + sign, () => {
+			Messages.open();
 
-		it(options.name + ': ' + signature, () => {
-			actions.setSignatures([signature]);
+			actions.setSignatures([sign]);
 
 			if (options.noajax) {
 				Compose.open();
@@ -48,10 +48,15 @@ describe(() => {
 				Compose.wait();
 			}
 
-			composeEditor.hasMessage(signature);
+			composeEditor.hasMessage(sign);
+
+			composeEditor.writeMessage('');
+			composeEditorControls.toggleSignature();
+			composeEditorControls.isVisibleSignature();
+			composeEditorControls.hasSignature(text);
 
 			Signature.open();
-			Signature.hasSignature(signature);
+			Signature.hasSignature(sign);
 		});
 	});
 });
