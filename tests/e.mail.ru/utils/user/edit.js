@@ -6,7 +6,7 @@ let API = require('../internalApi');
 
 /**
  * Edit user info
- * http://api.tornado.dev.mail.ru/users/edit
+ * @see http://api.tornado.dev.mail.ru/users/edit
  *
  * @param {Object} params
  *         data for a single user according to api
@@ -32,7 +32,7 @@ module.exports = (params) => {
 		debug('users/edit status: ', data.isOK);
 
 		return result;
-	}, err => {
-		throw new Error(err);
+	}, error => {
+		throw new Error(error);
 	});
 };

@@ -8,7 +8,7 @@ let helpers = require('../helpers');
 module.exports = {
 	/**
 	 * Register new user through internal api
-	 * http://api.tornado.dev.mail.ru/users/add
+	 * @see http://api.tornado.dev.mail.ru/users/add
 	 *
 	 * @param {Object} params
 	 *                 {number|array} phones
@@ -28,6 +28,7 @@ module.exports = {
 
 	/**
 	 * Edit user info
+	 * @see http://api.tornado.dev.mail.ru/users/edit
 	 *
 	 * @param {Object} params
 	 * @returns {number} user id
@@ -47,11 +48,11 @@ module.exports = {
 	 * @returns {number} user id
 	 */
 	mrim (email, value = false) {
-		let user = email.split('@');
+		let [login, domain] = email.split('@');
 
 		return this.edit({
-			login: user[0],
-			domain: user[1],
+			login,
+			domain,
 			flags: {
 				mrim_disabled: value
 			}

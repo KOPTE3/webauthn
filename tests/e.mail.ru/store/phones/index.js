@@ -25,16 +25,16 @@ module.exports = {
 	 * apiPhones are used in users/add
 	 * method maps them to phones from above
 	 *
-	 * @param {Array} apiPhones: [{phone: '79162143406'}, {..}]
+	 * @param {Array} phones: [{phone: '79162143406'}, {..}]
 	 * @returns {Array}
 	 */
-	getPhones (apiPhones = []) {
-		return apiPhones.map(apiPhone => {
-			let result = apiPhone;
+	getPhones (phones = []) {
+		return phones.map(phoneItem => {
+			let result = phoneItem;
 			let phone;
 
 			phone = this.phones.find(item => {
-				return item.phone === apiPhone.phone;
+				return item.phone === phoneItem.phone;
 			});
 
 			if (phone) {

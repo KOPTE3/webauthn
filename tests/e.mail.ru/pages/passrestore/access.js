@@ -13,10 +13,6 @@ class AccessViewPage extends PassrestoreSelectPage {
 		return this.page.waitForVisible(this.locators.form);
 	}
 
-	get loggerUrl () {
-		return 'user/access/support';
-	}
-
 	/**
 	 *
 	 * Локаторы

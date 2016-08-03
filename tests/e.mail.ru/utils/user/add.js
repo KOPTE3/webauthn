@@ -8,7 +8,7 @@ let phonesStore = require('../../store/phones');
 
 /**
  * Signup new user
- * http://api.tornado.dev.mail.ru/users/add
+ * @see http://api.tornado.dev.mail.ru/users/add
  *
  * @param {Object} params
  *         data for a single user according to api
@@ -48,7 +48,7 @@ module.exports = (params) => {
 		debug('users/add status: ', data.isOK);
 
 		return result;
-	}, err => {
-		throw new Error(err);
+	}, error => {
+		throw new Error(error);
 	});
 };
