@@ -10,10 +10,10 @@ let composeFolder = options.compose2 ? 'compose2' : 'compose';
 let Compose = require(`../../../steps/${composeFolder}`);
 let Messages = require('../../../steps/messages');
 
-let ComposeEditor = require('../../../steps/compose/editor');
+let ComposeEditor = require(`../../../steps/${composeFolder}/editor`);
 let composeEditor = new ComposeEditor();
 
-let ComposeEditorControlsSteps = require('../../../steps/compose/editorControls');
+let ComposeEditorControlsSteps = require(`../../../steps/${composeFolder}/editorControls`);
 let composeEditorControls = new ComposeEditorControlsSteps();
 
 let MessagesToolbarSteps = require('../../../steps/messages/toolbar');
@@ -34,8 +34,8 @@ describe(() => {
 			]);
 		}
 
-		Messages.open();
 		actions.setSignatures(signatures.map(({sign}) => sign));
+		Messages.open();
 
 		if (options.noajax) {
 			Compose.open();

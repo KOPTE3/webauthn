@@ -8,6 +8,10 @@ class ComposeEditorControls extends ComposePage {
 		super();
 	}
 
+	get locatorContainer () {
+		return '.compose__editor_toolbar';
+	}
+
 	/**
 	 *
 	 * Локаторы
@@ -15,7 +19,7 @@ class ComposeEditorControls extends ComposePage {
 	 * @type {Object}
 	 */
 	get locators () {
-		let container = '.compose__editor_toolbar';
+		let container = this.locatorContainer;
 
 		return this.extend(super.locators, {
 			container,

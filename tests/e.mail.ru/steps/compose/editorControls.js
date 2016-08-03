@@ -5,7 +5,7 @@ let assert = require('assert');
 let ComposeSteps = require('../compose');
 let ComposeEditorControls = require('../../pages/compose/editorControls');
 
-/** Модуль для работы с шагами контролов страницы написания письма */
+/** Модуль для работы с шагами контролов редактора страницы написания письма */
 class ComposeEditorControlsSteps extends ComposeSteps {
 	constructor () {
 		super();

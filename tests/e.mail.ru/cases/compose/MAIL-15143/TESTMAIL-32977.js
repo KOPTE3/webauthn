@@ -6,4 +6,4 @@ module.options = {
 	compose2: true
 };
 
-require('./TESTMAIL-18935');
+require('./TESTMAIL-18932');
