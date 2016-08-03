@@ -26,9 +26,9 @@ class Mail {
 
 		this.transport = nodemailer.createTransport(scheme);
 
-		this.options = Object.assign(options, {
+		this.options = Object.assign({
 			from: email
-		});
+		}, options);
 	}
 
 	/**
