@@ -309,20 +309,6 @@ class SelectViewPage extends PassrestorePage {
 	waitForPhoneLayer () {
 		this.page.waitForVisible(this.locators.phoneLayer);
 	}
-
-	/**
-	 * Verify phone number
-	 * http://api.tornado.dev.mail.ru/test/user/phones/verify
-	 * @param  {string} email
-	 * @param  {string} phone
-	 */
-	verifyPhone (email, phone) {
-		this.page.waitUntil(function async () {
-			return phonesUtils.verifyPhone(email, phone).then(result => {
-				return true;
-			});
-		}, 15 * 1000, 'Could not verify phone');
-	}
 }
 
 module.exports = SelectViewPage;

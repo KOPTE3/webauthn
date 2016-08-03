@@ -1,8 +1,6 @@
 'use strict';
 
-let request = require('request');
-let signup = require('./user/signup');
-
+const request = require('request');
 const PROXY_PATH = 'http://test-proxy.win102.dev.mail.ru';
 
 

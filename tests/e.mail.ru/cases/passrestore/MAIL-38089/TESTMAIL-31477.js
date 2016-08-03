@@ -1,7 +1,5 @@
 'use strict';
 
-let path = require('path');
-
 let AccountSteps = require('../../../steps/passrestore/account');
 let AccessSteps = require('../../../steps/passrestore/access');
 let SelectSteps = require('../../../steps/passrestore/select');
