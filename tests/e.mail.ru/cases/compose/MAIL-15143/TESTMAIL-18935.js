@@ -1,7 +1,7 @@
 'use strict';
 
 let { options = {
-	name: 'Написание письма. НЕ AJAX. Работа кнопки "Подпись" в письме',
+	name: 'Написание письма. НЕ AJAX. Проверка соответствия подписи с подписью в настройках',
 	noajax: true
 }} = module.parent;
 
@@ -9,6 +9,7 @@ let composeFolder = options.compose2 ? 'compose2' : 'compose';
 
 let Compose = require(`../../../steps/${composeFolder}`);
 let Messages = require('../../../steps/messages');
+let Signature = require('../../../steps/settings/signature');
 
 let ComposeEditor = require('../../../steps/compose/editor');
 let composeEditor = new ComposeEditor();
@@ -32,28 +33,25 @@ describe(() => {
 				'compose2'
 			]);
 		}
-
-		Messages.open();
-		actions.setSignatures(composeEditorStore.signatures.map(({sign}) => sign));
-
-		if (options.noajax) {
-			Compose.open();
-		} else {
-			messagesToolbarSteps.clickButton('compose');
-			Compose.wait();
-		}
 	});
 
-	it(options.name, () => {
-		composeEditor.writeMessage('');
-		composeEditorControls.toggleSignature();
-		composeEditorControls.isVisibleSignature();
+	composeEditorStore.symbolsSignatures.forEach((signature) => {
+		Messages.open();
 
-		composeEditorStore.signatures.forEach(({text}) =>
-			composeEditorControls.hasSignature(text)
-		);
+		it(options.name + ': ' + signature, () => {
+			actions.setSignatures([signature]);
 
-		composeEditorControls.isSelectedSignature(composeEditorStore.signatures[0].text);
-		composeEditorControls.isSignatureHasSettingsLink();
+			if (options.noajax) {
+				Compose.open();
+			} else {
+				messagesToolbarSteps.clickButton('compose');
+				Compose.wait();
+			}
+
+			composeEditor.hasMessage(signature);
+
+			Signature.open();
+			Signature.hasSignature(signature);
+		});
 	});
 });
