@@ -15,6 +15,7 @@ class ComposeFields extends ComposePage {
 	 * @type {Object}
 	 */
 	get locators () {
+		/* eslint-disable max-len */
 		return this.extend(super.locators, {
 			container: '.js-compose-header',
 			fields: {
@@ -29,6 +30,14 @@ class ComposeFields extends ComposePage {
 			},
 			selectField    : '#dropdown-select-fields .dropdown__checkbox',
 			selectFieldItem: '#dropdown-select-fields .dropdown__list_multiselect',
+			selectFieldItems: {
+				priority: '#dropdown-select-fields .dropdown__list_multiselect [data-type="Priority"]',
+				receipt: '#dropdown-select-fields .dropdown__list_multiselect [data-type="Receipt"]',
+				remind: '#dropdown-select-fields .dropdown__list_multiselect [data-type="Notify"]',
+				from: '#dropdown-select-fields .dropdown__list_multiselect [data-type="From"]',
+				cc: '#dropdown-select-fields .dropdown__list_multiselect [data-type="CC"]',
+				bcc: '#dropdown-select-fields .dropdown__list_multiselect [data-type="BCC"]'
+			},
 			dropdowns: {
 				fromEmail: {
 					ctrl: '.js-compose__select_email .js-compose__dropdown_email',
@@ -36,8 +45,15 @@ class ComposeFields extends ComposePage {
 					item: email => '.js-compose__select_email ' +
 						`.js-compose__select_email-item [data-email="${email}"]`
 				}
+			},
+			inputSuggest: {
+				to: '//textarea[@data-original-name="To"]/parent::*/textarea[@class="compose__labels__input_suggest"]',
+				cc: '//textarea[@data-original-name="CC"]/parent::*/textarea[@class="compose__labels__input_suggest"]',
+				bcc: '//textarea[@data-original-name="BCC"]/parent::*/textarea[@class="compose__labels__input_suggest"]'
 			}
 		});
+
+		/* eslint-enable */
 	}
 
 	/**
@@ -133,6 +149,19 @@ class ComposeFields extends ComposePage {
 	}
 
 	/**
+	 * Получить значение серой подсказки в поле адреса
+	 *
+	 * @param {string} name — имя поля
+	 * @return {string}
+	 */
+	getFieldSuggestValue (name) {
+		// Важно получить значение вместе с пробелами, а getValue их обрезает. Поэтому execute
+		return this.page.selectorExecute(this.locators.inputSuggest[name], function (item) {
+			return item[0].value;
+		});
+	}
+
+	/**
 	 * Задать значение дропдауна
 	 *
 	 * @param {string} name — имя дропдауна
@@ -219,7 +248,7 @@ class ComposeFields extends ComposePage {
 	 * @param {string} name - имя поля
 	 */
 	clickSelectFieldItem (name) {
-		this.page.click(`${this.locators.selectFieldItem} [data-type="${name}"]`);
+		this.page.click(this.locators.selectFieldItems[name]);
 	}
 }
 

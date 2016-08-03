@@ -29,5 +29,12 @@ module.exports = {
 	 *
 	 * @type {Array}
 	 */
-	hiddenFields: ['to', 'from', 'cc', 'bcc']
+	hiddenFields: ['to', 'from', 'cc', 'bcc'],
+
+	/**
+	 * Список полей для ввода адреса
+	 *
+	 * @type {[]}
+	 */
+	correspondentsFields: ['to', 'cc', 'bcc']
 };
