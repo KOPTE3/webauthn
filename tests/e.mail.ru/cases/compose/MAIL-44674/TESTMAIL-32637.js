@@ -1,8 +1,14 @@
 'use strict';
 
-let Compose = require('../../../steps/compose');
+let { options = {
+	name: 'Написание письма. Suggests. Выбор получателя после пробела'
+}} = module.parent;
+
+let composeFolder = options.compose2 ? 'compose2' : 'compose';
+
+let Compose = require(`../../../steps/${composeFolder}`);
 let Messages = require('../../../steps/messages');
-let ComposeFields = require('../../../steps/compose/fields');
+let ComposeFields = require(`../../../steps/${composeFolder}/fields`);
 let composeFields = new ComposeFields();
 
 let MessagesToolbarSteps = require('../../../steps/messages/toolbar');
@@ -19,14 +25,26 @@ const email = 'test@mail.ru';
 describe('', () => {
 	before(() => {
 		Compose.auth();
+
+		if (options.compose2) {
+			Messages.features([
+				'compose2'
+			]);
+		}
+
 		Messages.open();
 		actions.addContact(`${name} ${lastname}`, email);
-		messagesToolbarSteps.clickButton('compose');
-		Compose.wait();
+
+		if (options.noajax) {
+			Compose.open();
+		} else {
+			messagesToolbarSteps.clickButton('compose');
+			Compose.wait();
+		}
 	});
 
 	composeFieldsStore.correspondentsFields.forEach(field => {
-		it(`Написание письма. Suggests. Выбор получателя после пробела: ${field}`, () => {
+		it(`${options.name}: ${field}`, () => {
 			composeFields.expandField(field);
 			composeFields.setFieldValue(field, ` ${name}`);
 
@@ -37,6 +55,10 @@ describe('', () => {
 	afterEach(() => {
 		messagesToolbarSteps.clickButton('compose');
 		Compose.alertAccept();
-		Compose.wait();
+		if (options.noajax) {
+			Compose.open();
+		} else {
+			Compose.wait();
+		}
 	});
 });

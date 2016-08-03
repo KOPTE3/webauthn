@@ -30,6 +30,14 @@ class ComposeFields extends ComposePage {
 			},
 			selectField    : '#dropdown-select-fields .dropdown__checkbox',
 			selectFieldItem: '#dropdown-select-fields .dropdown__list_multiselect',
+			selectFieldItems: {
+				priority: '#dropdown-select-fields .dropdown__list_multiselect [data-type="Priority"]',
+				receipt: '#dropdown-select-fields .dropdown__list_multiselect [data-type="Receipt"]',
+				remind: '#dropdown-select-fields .dropdown__list_multiselect [data-type="Notify"]',
+				from: '#dropdown-select-fields .dropdown__list_multiselect [data-type="From"]',
+				cc: '#dropdown-select-fields .dropdown__list_multiselect [data-type="CC"]',
+				bcc: '#dropdown-select-fields .dropdown__list_multiselect [data-type="BCC"]'
+			},
 			dropdowns: {
 				fromEmail: {
 					ctrl: '.js-compose__select_email .js-compose__dropdown_email',
@@ -240,7 +248,7 @@ class ComposeFields extends ComposePage {
 	 * @param {string} name - имя поля
 	 */
 	clickSelectFieldItem (name) {
-		this.page.click(`${this.locators.selectField} [data-type="${name}"]`);
+		this.page.click(this.locators.selectFieldItems[name]);
 	}
 }
 
