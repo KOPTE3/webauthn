@@ -137,5 +137,11 @@ module.exports = {
 			'With kind regards and best wishes, Dinara Kolova, ' +
 			' +7(499)755-88-21 ООО "ТД Максимус"'
 		]
-	}
+	},
+
+	signatures: [
+		'Подпись 1',
+		'Подпись 2',
+		'Подпись 3'
+	]
 };
