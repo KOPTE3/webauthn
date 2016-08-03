@@ -1,7 +1,6 @@
 'use strict';
 
 let Compose = require('../../../steps/compose');
-let Messages = require('../../../steps/messages');
 let ComposeFields = require('../../../steps/compose/fields');
 let composeFields = new ComposeFields();
 
@@ -19,10 +18,8 @@ const email = 'test@mail.ru';
 describe('', () => {
 	before(() => {
 		Compose.auth();
-		Messages.open();
+		Compose.open();
 		actions.addContact(`${name} ${lastname}`, email);
-		messagesToolbarSteps.clickButton('compose');
-		Compose.wait();
 	});
 
 	composeFieldsStore.correspondentsFields.forEach(field => {
@@ -37,6 +34,6 @@ describe('', () => {
 	afterEach(() => {
 		messagesToolbarSteps.clickButton('compose');
 		Compose.alertAccept();
-		Compose.wait();
+		Compose.open();
 	});
 });

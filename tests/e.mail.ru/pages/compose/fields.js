@@ -240,7 +240,7 @@ class ComposeFields extends ComposePage {
 	 * @param {string} name - имя поля
 	 */
 	clickSelectFieldItem (name) {
-		this.page.click(`${this.locators.selectFieldItem} [data-type="${name}"]`);
+		this.page.click(`${this.locators.selectField} [data-type="${name}"]`);
 	}
 }
 
