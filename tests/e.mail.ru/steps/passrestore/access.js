@@ -2,7 +2,7 @@
 
 let assert = require('assert');
 
-let SelectSteps = require('select');
+let SelectSteps = require('./select');
 let AccessPage = require('../../pages/passrestore/access');
 
 let phonesUtils = require('../../utils/phones');

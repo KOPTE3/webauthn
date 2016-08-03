@@ -5,6 +5,7 @@ let path = require('path');
 let AccountSteps = require('../../../steps/passrestore/account');
 let AccessSteps = require('../../../steps/passrestore/access');
 let SelectSteps = require('../../../steps/passrestore/select');
+let userUtils = require('../../../utils/user');
 
 let accountSteps = new AccountSteps();
 let accessSteps = new AccessSteps();
@@ -21,10 +22,8 @@ let phone1, phone2;
 
 describe(() => {
 	before(() => {
-		user = AccountSteps.createUser({
-			phones: 2,
-			mrim: options.mrim
-		});
+		user = userUtils.add({ phones: 2 });
+		userUtils.mrim(user.email, options.mrim);
 
 		phone1 = user.phones[0];
 		phone2 = user.phones[1];

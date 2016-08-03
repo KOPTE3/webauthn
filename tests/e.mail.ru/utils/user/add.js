@@ -3,43 +3,52 @@
 let debug = require('debug')('useradd');
 
 let API = require('../internalApi');
+let userInfo = require('./info');
 let phonesStore = require('../../store/phones');
 
-module.exports = {
-	userPrepare (params) {
-		let {login, domain, password, phones = [], restore = null} = params;
+/**
+ * Signup new user
+ * http://api.tornado.dev.mail.ru/users/add
+ *
+ * @param {Object} params
+ *         data for a single user according to api
+ *
+ * @returns {Promise}
+ *          {Object} result
+ *                   isOK - response status
+ *                   value - extended user data
+ */
+module.exports = (params) => {
+	let user = userInfo.generateUserData(params);
+	let {login, domain, phones = []} = user;
 
-		return {
-			email: `${login}@${domain}`,
-			phones: phonesStore.getPhones(phones),
-			restore,
-			password
+	let userData = Object.assign({}, user, {
+		email: `${login}@${domain}`,
+		phones: phonesStore.getPhones(phones)
+	});
+
+	let request = API.call({
+		path: 'users/add',
+		method: 'POST',
+		body: user
+	});
+
+	return request.then(data => {
+		let result = {
+			isOK: data.isOK === 200 && Array.isArray(data.body),
+			value: null
 		};
-	},
 
-	userAdd (params) {
-		return API.userAdd(params).then(data => {
-			let result = {
-				isOK: true,
-				data: data.requestBody,
-				body: data.body
-			};
+		if (result.isOK) {
+			result.value = userData;
+		}
 
-			if (!data.isOK || !Array.isArray(data.body)) {
-				result.isOK = false;
-			}
+		debug('users/add request: ', data.requestBody);
+		debug('users/add response: ', data.body);
+		debug('users/add status: ', data.isOK);
 
-			if (data.isOK) {
-				result.data = this.userPrepare(result.data);
-			}
-
-			debug('user/add request: ', JSON.stringify(data.requestBody));
-			debug('user/add response: ', JSON.stringify(result.body));
-			debug('user/add status: ', result.isOK);
-
-			return result;
-		}, error => {
-			throw new Error(error);
-		});
-	}
+		return result;
+	}, err => {
+		throw new Error(err);
+	});
 };

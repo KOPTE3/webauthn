@@ -114,49 +114,6 @@ class PageObject {
 	}
 
 	/**
-	 * Обновить страницу
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 */
-	refresh (query = {}) {
-		let { features } = cache;
-		let url = this.page.getUrl();
-
-		if (features.length) {
-			query.ftrs = features.join(' ');
-		}
-
-		url = URL.format(url, query);
-
-		this.page.url(url);
-	}
-
-	/** Сбросить текущую сессию */
-	reload () {
-		this.page.reload();
-	}
-
-	/**
-	 * Регистрация нового пользователя
-	 *
-	 * @param {Object} params - {phones, restore, mrim}
-	 * @returns {Object} response
-	 */
-	createUser (params) {
-		let response;
-
-		this.page.waitUntil(function async () {
-			return user.userAdd(params).then(result => {
-				response = result;
-
-				return result.isOK;
-			});
-		}, 15 * 1000, 'Could not add new user');
-
-		return response;
-	}
-
-	/**
 	 * Расширяет объект
 	 *
 	 * @param {Object} object

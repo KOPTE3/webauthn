@@ -62,20 +62,6 @@ class Steps {
 	}
 
 	/**
-	 * Регистрация нового пользователя
-	 *
-	 * @param {Object} params - {phones, restore, mrim}
-	 * @returns {Object} - данные нового пользователя {phones, email, password}
-	 */
-	static createUser (params) {
-		let response = this.page.createUser(params);
-
-		assert(response.isOK, `Не смогли создать пользователя ${response.body} ${response.data}`);
-
-		return response.data;
-	}
-
-	/**
 	 * Открыть страницу
 	 *
 	 * @param {Object} [query] — параметры запроса

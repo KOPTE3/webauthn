@@ -10,7 +10,6 @@ class SelectViewPage extends PassrestorePage {
 		super();
 	}
 
-
 	/**
 	 * Открытие страницы
 	 * @param {string} email
@@ -30,6 +29,10 @@ class SelectViewPage extends PassrestorePage {
 	 */
 	wait () {
 		return this.page.waitForVisible(this.locators.container);
+	}
+
+	get loggerUrl () {
+		return 'user/password/restore';
 	}
 
 	/**
@@ -97,6 +100,10 @@ class SelectViewPage extends PassrestorePage {
 		return captchaUtils.getCaptchaID(this.locators.phoneCaptchaImg);
 	}
 
+	getLastRegTokenId () {
+		return phonesUtils.getPassRestoreRegTokenId();
+	}
+
 	/**
 	 * Get captcha value by X-Captcha-Id
 	 * @param {string} cid
@@ -156,6 +163,8 @@ class SelectViewPage extends PassrestorePage {
 		if (id !== null) {
 			selector = this.locators.multiplePhone + `[data-index="${id}"]`;
 		}
+
+		this.page.waitForVisible(selector);
 
 		return this.page.element(selector);
 	}

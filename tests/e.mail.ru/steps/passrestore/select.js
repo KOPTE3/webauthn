@@ -2,14 +2,14 @@
 
 let assert = require('assert');
 
-let PasswordRestoreSteps = require('../restore');
+let PassrestoreSteps = require('../passrestore');
 let SelectTypePage = require('../../pages/passrestore/select');
 
 let phonesUtils = require('../../utils/phones');
 
 
 /** Модуль для работы с формой ввода адреса для восстановления */
-class SelectTypeSteps extends PasswordRestoreSteps {
+class SelectTypeSteps extends PassrestoreSteps {
 	constructor () {
 		super();
 		this.page = new SelectTypePage();
@@ -154,7 +154,7 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	 * @param {restoreEmail} restoreEmail
 	 */
 	fillSmsCode (restoreEmail) {
-		let regTokenId = phonesUtils.getLastPassremindRegTokenId();
+		let regTokenId = this.page.getLastRegTokenId();
 		let code = this.page.getSmsCodeValue(restoreEmail, regTokenId);
 
 		this.page.fillSmsCode(code.value);
@@ -218,15 +218,6 @@ class SelectTypeSteps extends PasswordRestoreSteps {
 	 */
 	submitPhoneLayer () {
 		this.page.submitPhoneCodeLayer();
-	}
-
-	/**
-	 * Verify phone number
-	 * @param {string} email
-	 * @param {string} phone '79151420923'
-	 */
-	verifyPhone (email, phone) {
-		this.page.verifyPhone(email, phone);
 	}
 }
 
