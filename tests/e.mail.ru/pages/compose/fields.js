@@ -15,6 +15,7 @@ class ComposeFields extends ComposePage {
 	 * @type {Object}
 	 */
 	get locators () {
+		/* eslint-disable max-len */
 		return this.extend(super.locators, {
 			container: '.js-compose-header',
 			fields: {
@@ -36,8 +37,15 @@ class ComposeFields extends ComposePage {
 					item: email => '.js-compose__select_email ' +
 						`.js-compose__select_email-item [data-email="${email}"]`
 				}
+			},
+			inputSuggest: {
+				to: '//textarea[@data-original-name="To"]/parent::*/textarea[@class="compose__labels__input_suggest"]',
+				cc: '//textarea[@data-original-name="CC"]/parent::*/textarea[@class="compose__labels__input_suggest"]',
+				bcc: '//textarea[@data-original-name="BCC"]/parent::*/textarea[@class="compose__labels__input_suggest"]'
 			}
 		});
+
+		/* eslint-enable */
 	}
 
 	/**
@@ -130,6 +138,19 @@ class ComposeFields extends ComposePage {
 	 */
 	setFieldValue (name, value) {
 		this.getField(name).setValue(value);
+	}
+
+	/**
+	 * Получить значение серой подсказки в поле адреса
+	 *
+	 * @param {string} name — имя поля
+	 * @return {string}
+	 */
+	getFieldSuggestValue (name) {
+		// Важно получить значение вместе с пробелами, а getValue их обрезает. Поэтому execute
+		return this.page.selectorExecute(this.locators.inputSuggest[name], function (item) {
+			return item[0].value;
+		});
 	}
 
 	/**

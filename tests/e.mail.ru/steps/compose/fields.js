@@ -46,6 +46,20 @@ class ComposeFieldsSteps extends ComposeSteps {
 	}
 
 	/**
+	 * Проверить значение серой подсказки в поле ввода
+	 *
+	 * @param {string} name — имя поля
+	 * @param {string} value
+	 */
+	checkFieldSuggestStart (name, value) {
+		let actual = this.composeFields.getFieldSuggestValue(name);
+
+		actual = actual.substring(0, value.length);
+
+		assert.equal(actual, value, `Значение серой подсказки в поле ${name} не равно ${value}`);
+	}
+
+	/**
 	 * Задать значение дропдауна
 	 *
 	 * @param {string} name — имя дропдауна
