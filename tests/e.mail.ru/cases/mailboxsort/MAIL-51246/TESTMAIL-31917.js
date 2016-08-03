@@ -2,7 +2,8 @@
 
 let all = require('.');
 
-describe('TESTMAIL-31917', () => { // Полный клон TESTMAIL-31915
+// Полный клон TESTMAIL-31915
+describe(() => {
 	before(() => {
 		all.login();
 		all.createArchive(all.foldersStore.ids.inbox, 'Папка для архива');
@@ -18,7 +19,8 @@ describe('TESTMAIL-31917', () => { // Полный клон TESTMAIL-31915
 		all.finishCleaner();
 
 		all.FoldersSteps.open();
-		['social', 'promotions', 'newsletters'].forEach((name) => {
+
+		['social', 'promotions', 'newsletters'].forEach(name => {
 			all.FoldersSteps.isFolderExists(all.foldersStore.ids[name]);
 			all.FoldersSteps.isFolderNotInArchive(all.foldersStore.ids[name]);
 		});

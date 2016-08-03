@@ -11,7 +11,7 @@ let store = require('../../../store/search');
 
 let text = 'test';
 
-describe('TESTMAIL-31756', () => {
+describe(() => {
 	before(() => {
 		Messages.auth();
 		Messages.open();

@@ -210,21 +210,21 @@ class AdvancedSteps extends PortalMenuSteps {
 	selectSuggestByKeys (name, suggest) {
 		const downKey = constants.UNICODE_CHARACTERS.Down;
 		let counter = 0;
-		let done = false;
+		let actual = false;
 		let currentText;
 
 		while (counter++ < 10) {
 			currentText = this.advanced.getSelectedSuggestText(name);
 
 			if (currentText === suggest) {
-				done = true;
+				actual = true;
 				break;
 			}
 
 			this.advanced.setFieldKeys(name, downKey);
 		}
 
-		assert(done, `Не удалось выбрать пункт ${suggest} в саджестах`);
+		assert(actual, `Не удалось выбрать пункт ${suggest} в саджестах`);
 	}
 }
 

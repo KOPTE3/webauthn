@@ -2,7 +2,7 @@
 
 let all = require('.');
 
-describe('TESTMAIL-32584', () => {
+describe(() => {
 	before(() => {
 		all.Steps.features([
 			'mailboxsort-allow-parent-edit'
@@ -22,12 +22,13 @@ describe('TESTMAIL-32584', () => {
 		all.finishCleaner();
 
 		all.FoldersSteps.open();
-		['social', 'promotions', 'newsletters'].forEach((name) => {
+		['social', 'promotions', 'newsletters'].forEach(name => {
 			all.FoldersSteps.isFolderInArchive(all.foldersStore.ids[name]);
 
 			all.moveFolder(all.foldersStore.ids[name], all.foldersStore.ids.root);
 
-			all.FoldersSteps.isFolderIn(all.foldersStore.ids[name], all.foldersStore.ids.root);
+			all.FoldersSteps.isFolderIn(all.foldersStore.ids[name],
+				all.foldersStore.ids.root);
 		});
 	});
 });

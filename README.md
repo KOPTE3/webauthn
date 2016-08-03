@@ -151,7 +151,7 @@ npm test -- e.mail.ru --suite=login --grep=TESTMAIL-867[45]
 #### Выполнить тесты на заданном адресе:
 
 ```
-npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --baseUrl=https://e.mail.ru/login
+npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
 ```
 
 Полный список доступных опций test-runner'a смотрите [здесь](https://stash.mail.ru/projects/QA/repos/grunt-test-runner/browse).
@@ -176,10 +176,16 @@ npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --baseUrl=https://e.mai
 ```js
 let Messages = require('../../steps/messages');
 
-describe('TESTMAIL-31873', () => {
-	Messages.open();
+describe(() => {
+	it ('Открытие страницы списка писем', => {
+		Messages.open();
+	});
 });
 ```
+
+Если блок `describe` анонимный, то в качестве описания будет использоваться только название файла (которое соответствует номеру таска в JIRA). 
+
+ЗАПОМНИТЕ: писать номер таска в описании не нужно, он подставляется автоматически. 
 
 Метод auth дополнительно принимает параметры запроса:
 
@@ -196,7 +202,7 @@ Messages.open({
 ```js
 let Messages = require('../../steps/messages');
 
-describe('TESTMAIL-31873', () => {
+describe(() => {
 	beforeEach(() => {
 		Messages.features([
 			'check-missing-attach',
@@ -205,6 +211,10 @@ describe('TESTMAIL-31873', () => {
 		]);
 
 		Messages.open();
+	});
+
+	it ('Открытие страницы списка писем', => {
+		// ...
 	});
 });
 ```
@@ -224,7 +234,7 @@ Messages.features([
 ```js
 let Messages = require('../../steps/messages');
 
-describe('TESTMAIL-31873', () => {
+describe(() => {
 	Messages.auth();
 	Messages.open();
 });
@@ -356,7 +366,7 @@ let assert = require('assert');
 let login = require('../../steps/login');
 let form = require('../../steps/login/form');
 
-describe('TESTMAIL-24935', () => {
+describe(() => {
 	it('Проверка отображения элементов на форме авторизации', () => {
 		login.open();
 
@@ -373,7 +383,7 @@ describe('TESTMAIL-24935', () => {
 
 let Messages = require('../../steps/messages');
 
-describe('TESTMAIL-XXXX', () => {
+describe(() => {
 	it('Проверка перехода на страницу списка писем.', () => {
 		Messages.auth();
 		Messages.open();
@@ -588,7 +598,8 @@ module.exports = {
 ### Требования
 
 * Не обращайтесь в pages к объекту browser напрямую. Вместо этого используйте ссылку `this.page`.
-* Испльзуйте JSDoc аннотацию для документирования функций, которые принимают параметры и возвращают значения.
+* Писать номер таска в блоке `describe` не нужно, он подставляется автоматически.
+* Используйте JSDoc аннотацию для документирования функций, которые принимают параметры и возвращают значения.
 * Все файлы, в которых определены классы должны возвращать ссылки, а не инстанс.
 * Всегда определяйте `location` и `locators.container` в индексном файле вашего предствления (page).
 * Всегда определяйте `page` в индексном файле степов.

@@ -5,7 +5,7 @@ let FoldersSettings = require('../../../steps/settings/folders');
 let foldersStore = require('../../../store/folders');
 let accountUtils = require('../../../utils/account');
 
-describe('TESTMAIL-32572. Папки. Проверить редактирование ' +
+describe('Папки. Проверить редактирование ' +
 	'запароленной папки из настроек папок.', () => {
 	before(() => {
 		Folders.auth();

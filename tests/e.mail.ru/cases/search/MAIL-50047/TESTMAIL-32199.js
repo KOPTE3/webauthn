@@ -10,7 +10,7 @@ let advancedStore = require('../../../store/portal-menu/advanced');
 
 const text = 'test@mail.ru';
 
-describe('TESTMAIL-32199: Поиск. Новые операнды. Проверка, что пропадают данные ' +
+describe('Поиск. Новые операнды. Проверка, что пропадают данные ' +
 	'из строки быстрого поиска  если их удалили из полей в расширенном поиске.', () => {
 	before(() => {
 		Messages.auth();

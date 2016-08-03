@@ -6,7 +6,7 @@ let portalSearchSteps = new PortalSearchSteps();
 
 const email = 'test@mail.ru';
 
-describe('TESTMAIL-32149: Поиск. Новые операнды.', () => {
+describe('Поиск. Новые операнды.', () => {
 	before(() => {
 		Messages.auth();
 		Messages.open();

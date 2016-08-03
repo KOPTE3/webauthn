@@ -4,6 +4,7 @@ let assert = require('assert');
 
 let MessagesLettersPage = require('../../pages/messages/letters');
 let MessagesSteps = require('../messages');
+let MessagesPage = require('../../pages/messages');
 let MessagePage = require('../../pages/message');
 
 let ComposePage = require('../../pages/compose');
@@ -13,6 +14,7 @@ class LettersSteps extends MessagesSteps {
 	constructor () {
 		super();
 		this.lettersPage = new MessagesLettersPage();
+		this.messagesPage = new MessagesPage();
 		this.messagePage = new MessagePage();
 		this.composePage = new ComposePage();
 	}

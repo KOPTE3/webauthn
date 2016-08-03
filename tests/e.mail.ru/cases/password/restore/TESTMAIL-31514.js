@@ -11,11 +11,8 @@ let accountSteps = new AccountSteps();
 let accessSteps = new AccessSteps();
 let selectSteps = new SelectSteps();
 
-let name = path.basename((module.parent.options ? module.parent : module).filename, '.js');
-
-let {options = {
-	name: 'Восстановление пароля. ' +
-	'Ввод скрытых цифр телефона. ' +
+let { options = {
+	name: 'Восстановление пароля. Ввод скрытых цифр телефона. ' +
 	'Проверка отображения введеных пользователем цифр ' +
 	'телефона в попапе ввода кода из смс'
 }} = module.parent;
@@ -23,7 +20,7 @@ let {options = {
 let user = {};
 let steps = options.mrim ? accessSteps : selectSteps;
 
-describe(name, () => {
+describe(() => {
 	before(() => {
 		user = AccountSteps.createUser({
 			phones: 1,

@@ -2,7 +2,7 @@
 
 let all = require('.');
 
-describe('TESTMAIL-31923', () => {
+describe(() => {
 	before(() => {
 		all.login();
 		all.deleteArchive();
@@ -19,11 +19,11 @@ describe('TESTMAIL-31923', () => {
 
 		all.CleanerSteps.isArchiveLabelVisible();
 
-		[1, 3].forEach((number) => {
+		[1, 3].forEach(number => {
 			all.CleanerSteps.isArchiveGraphBranchVisible(number);
 		});
 
-		[2, 4, 5].forEach((number) => {
+		[2, 4, 5].forEach(number => {
 			all.CleanerSteps.isArchiveGraphBranchNotVisible(number);
 		});
 	});

@@ -6,7 +6,7 @@ let providers = require('../../store/login/providers');
 
 let loginForm = new LoginForm();
 
-describe('TESTMAIL-8682', () => {
+describe(() => {
 	it('Выделение соответствующей иконки домена при вводе email с доменом', () => {
 		LoginPage.open();
 
