@@ -22,7 +22,7 @@ const name = 'Имя';
 const lastname = 'Фамилия';
 const email = 'test@mail.ru';
 
-describe('', () => {
+describe(() => {
 	before(() => {
 		Compose.auth();
 
