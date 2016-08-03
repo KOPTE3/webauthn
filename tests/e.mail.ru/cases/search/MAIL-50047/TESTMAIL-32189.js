@@ -4,9 +4,8 @@ let Messages = require('../../../steps/messages');
 let PortalSearchSteps = require('../../../steps/portal-menu/portal-search');
 let portalSearchSteps = new PortalSearchSteps();
 
-describe('TESTMAIL-32189: Поиск. Новые операнды.', () => {
+describe('Поиск. Новые операнды.', () => {
 	before(() => Messages.auth());
-
 	beforeEach(() => Messages.open());
 
 	['Tab', 'Escape'].forEach(key => {

@@ -7,7 +7,7 @@ let accounts = require('../../store/authorization/accounts');
 
 let loginForm = new LoginForm();
 
-describe('TESTMAIL-30326', () => {
+describe(() => {
 	it('Страница логина. Успешная авторизация биз-аккаунтами ' +
 		'(при включенных социальных и отсутствии авторизованных пользователей)', () => {
 		LoginPage.open({

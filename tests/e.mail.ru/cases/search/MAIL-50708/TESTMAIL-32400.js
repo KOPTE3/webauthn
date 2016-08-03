@@ -8,7 +8,7 @@ let portalSearchSteps = new PortalSearchSteps();
 
 let foldersStore = require('../../../store/folders');
 
-describe('TESTMAIL-32400: Список писем. Сохранение поисковых запросов. ' +
+describe('Список писем. Сохранение поисковых запросов. ' +
 	'Проверка, что при поиске через компактные фильтры ' +
 	'в строке поиска появляются операнды', () => {
 	before(() => {

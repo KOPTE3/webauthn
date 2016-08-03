@@ -19,7 +19,7 @@ let missingAttachLayer = new MissingAttachLayer();
 
 const text = 'Добрый день! Во вложении заявка, прошу скинуть счет на оплату.';
 
-describe('TESTMAIL-31554: AJAX. Написание письма. Забытое вложение.' +
+describe('AJAX. Написание письма. Забытое вложение.' +
 ' Проверить закрытие попапа по крестику ', () => {
 	before(() => {
 		Compose.auth();

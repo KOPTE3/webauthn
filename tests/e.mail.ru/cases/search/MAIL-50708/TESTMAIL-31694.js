@@ -8,7 +8,7 @@ let advancedSteps = new AdvancedSteps();
 
 let store = require('../../../store/search');
 
-describe('TESTMAIL-31694', () => {
+describe(() => {
 	before(() => {
 		Messages.auth();
 		Messages.open();

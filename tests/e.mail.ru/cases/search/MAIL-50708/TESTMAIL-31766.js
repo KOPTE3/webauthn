@@ -12,7 +12,7 @@ let portalSearchSteps = new PortalSearchSteps();
 let advancedSteps = new AdvancedSteps();
 let searchLettersSteps = new SearchLettersSteps();
 
-describe('TESTMAIL-31766', () => {
+describe(() => {
 	let messages;
 
 	before(() => {

@@ -2,7 +2,7 @@
 
 let all = require('.');
 
-describe('TESTMAIL-31916', () => {
+describe(() => {
 	before(() => {
 		all.login();
 		all.deleteArchive();

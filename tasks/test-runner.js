@@ -24,7 +24,7 @@ module.exports = grunt => {
 			hooks: {
 				init () {
 					// Удаляем директорию с кешем
-					childProcess.execSync('rm -rf cache');
+					childProcess.execSync('rm -rf cache/tests');
 
 					// Показ логотипа
 					fs.readFile('files/logo.txt', {

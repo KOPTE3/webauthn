@@ -14,7 +14,7 @@ module.exports = {
 	registerLogger (path) {
 		let result = browser.executeAsync(
 			/*eslint-disable */
-			function registerLogger (path, done) {
+			function registerLogger (path, resolve) {
 				patron.ajaxStack = patron.ajaxStack || [];
 				$(document).ajaxComplete(function (event, xhr, settings) {
 					if (settings.url.contains(path)) {
@@ -27,7 +27,7 @@ module.exports = {
 					}
 				});
 
-				done(true);
+				resolve(true);
 			}, path
 			/*eslint-enable */
 		);
@@ -45,12 +45,12 @@ module.exports = {
 	 */
 	getLoggerInfo (path) {
 		let result = browser.executeAsync(
-			function captureAjaxInfo (path, done) {
+			function captureAjaxInfo (path, resolve) {
 				var result = patron.ajaxStack.filter(function (entity) {
 					return entity.path === path;
 				});
 
-				done(result);
+				resolve(result);
 			}, path
 		);
 

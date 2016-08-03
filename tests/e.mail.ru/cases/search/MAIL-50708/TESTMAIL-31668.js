@@ -5,12 +5,11 @@ let PortalSearchSteps = require('../../../steps/portal-menu/portal-search');
 let portalSearchSteps = new PortalSearchSteps();
 
 let store = require('../../../store/search');
-
 let actions = require('../../../utils/actions');
 
 let text = 'test';
 
-describe('TESTMAIL-31668', () => {
+describe(() => {
 	before(() => {
 		Messages.auth();
 		Messages.open();

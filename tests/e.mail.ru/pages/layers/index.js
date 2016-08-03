@@ -53,7 +53,7 @@ class Layers extends PageObject {
 	 * @returns {*|utility}
 	 */
 	wait () {
-		return this.page.waitForVisible(this.locators.container, 3000);
+		return this.page.waitForVisible(this.locators.container, 5000);
 	}
 
 	/**

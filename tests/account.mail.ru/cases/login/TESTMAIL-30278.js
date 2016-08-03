@@ -6,7 +6,7 @@ let authorizationErrors = require('../../store/authorization/errors');
 
 let loginForm = new LoginForm();
 
-describe('TESTMAIL-30278', () => {
+describe(() => {
 	it('Отображение ошибки errno=706', () => {
 		let errno = 706;
 

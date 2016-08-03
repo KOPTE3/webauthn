@@ -11,11 +11,13 @@ class LoginForm extends LoginPage {
 	/**
 	 * Локаторы
 	 *
-	 * @type {Object}
+	 * @returns {*}
 	 */
 	get locators () {
+		const container = '.b-login';
+
 		return {
-			container: '.b-login',
+			container,
 			selectedDomain  : '.b-email__domain .b-dropdown__ctrl__text',
 			selectControl   : '.b-email__domain .b-dropdown__ctrl',
 			providersBlock  : '.b-email-providers__list',
@@ -25,6 +27,7 @@ class LoginForm extends LoginPage {
 			form            : '[data-bem="b-form"]',
 			password        : '[name="Password"]',
 			submit          : '[data-name="submit"]:first-child',
+			submitNext      : '.next[data-name="submit"]',
 			error           : '.b-login__errors',
 			title           : '.b-login__header__title',
 			desc            : '.b-login__header__desc',
@@ -40,7 +43,11 @@ class LoginForm extends LoginPage {
 			captchaDescription: '.b-captha__description',
 			captchaLink: '.b-captcha__code__reload',
 			captchaImage: '.b-captcha__captcha',
-
+			socialBtns: new Proxy({}, {
+				get (target, provider) {
+					return `${container} [data-provider="${provider}"]`;
+				}
+			}),
 			selectedItem (provider) {
 				return `.b-email__domain .b-dropdown__list [data-value="${provider}"]`;
 			},
@@ -123,6 +130,21 @@ class LoginForm extends LoginPage {
 	 */
 	clickSignInButton () {
 		this.page.click(this.locators.submit);
+	}
+
+	/**
+	 * @param {this.locators.socialBtns} social
+	 */
+	clickSocialBtn (social) {
+		this.page.click(this.locators.socialBtns[social]);
+	}
+
+	/**
+	 * Клик по кнопке продолжить появляется вместо кнопки войти
+	 * когда у нас oauth
+	 */
+	clickNextButton () {
+		this.page.click(this.locators.submitNext);
 	}
 
 	/**
@@ -359,15 +381,6 @@ class LoginForm extends LoginPage {
 	 */
 	getLoginValue () {
 
-	}
-
-	/**
-	 * Получить значение из списка доменов
-	 *
-	 * @param {string} provider
-	 */
-	clickDomain (provider) {
-		this.page.click(`[data-provider="${provider}"]`);
 	}
 }
 

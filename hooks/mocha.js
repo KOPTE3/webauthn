@@ -13,12 +13,11 @@ let { describe } = context;
  * @returns {*}
  */
 context.describe = function (name, callback) {
-	if (callback) {
-		return describe(...arguments);
-	} else {
-		callback = name;
-		name = path.basename(file, '.js');
+	let suite = path.basename(file, '.js');
 
-		return describe(name, callback);
+	if (typeof callback === 'function') {
+		return describe(`${suite}: ${name}`, callback);
+	} else {
+		return describe(suite, name);
 	}
 };

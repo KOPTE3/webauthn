@@ -5,7 +5,7 @@ let LoginForm = require('../../steps/login/form');
 
 let loginForm = new LoginForm();
 
-describe('TESTMAIL-24935', () => {
+describe(() => {
 	it('Проверка отображения элементов на форме авторизации', () => {
 		LoginPage.open();
 

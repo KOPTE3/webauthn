@@ -18,9 +18,7 @@ let { options = {
 	}
 }} = module.parent;
 
-let suite = path.basename((module.parent.options ? module.parent : module).filename, '.js');
-
-describe(suite, () => {
+describe(() => {
 	it(options.name, () => {
 		for (let { hosts } of providers.get(['mail.ru'])) {
 			for (let host of hosts) {

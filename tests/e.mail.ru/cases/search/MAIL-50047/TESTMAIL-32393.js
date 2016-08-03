@@ -13,7 +13,7 @@ const advancedStore = require('../../../store/portal-menu/advanced');
 const email = 'test@mail.ru';
 const name = 'Test Test2';
 
-describe('TESTMAIL-32393: Поиск. Новые операнды.', () => {
+describe('Поиск. Новые операнды.', () => {
 	before(() => {
 		Messages.auth();
 		Messages.open();

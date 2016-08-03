@@ -5,7 +5,7 @@ let LoginForm = require('../../steps/login/form');
 
 let loginForm = new LoginForm();
 
-describe('TESTMAIL-30315', () => {
+describe(() => {
 	it('Переход на страницу восстановления пароля', () => {
 		LoginPage.open();
 		loginForm.clickPassRemindLink();

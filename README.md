@@ -58,6 +58,10 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 
 Обновите [JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
+### Совместимость
+
+Пакет совместим о всеми известными окружениями, однако работа с npm-хуками в Сygwin имеет некоторые ограничения на запуск файлов с правами на исполнение. Также в нем отсутствует команда source. Поэтому будьте бдительны :)
+
 
 ### Конфигурирование
 
@@ -76,6 +80,39 @@ tests/<ваш_проект>/config.local.js
 Дополнительную информацию о формате конфига и его опциях смотрите [здесь](http://webdriver.io/guide/getstarted/configuration.html).
 
 
+### CI
+
+Для запуска тестов с среде непрерывной интеграции у вас должна быть определена переменная `CI_DEPLOY_ENVIRONMENT`. <br />
+Значением переменной является название проекта (репозитория), который должен распологаться в соседней директории.  
+
+По команде npm install запускается хук, который получает информацию об актуальных ветках проекта и исключает возможность запука тестов для фич, которых нет в репозитории:
+
+```js
+{
+	get suites () {
+		let callback = null;
+
+		// Исключаем запуск фич, которых нет в релизе
+		if (process.CI_DEPLOY_ENVIRONMENT) {
+			let excluded = support.excluded();
+
+			callback = file => {
+				for (let feature of excluded) {
+					if (file.includes(feature)) {
+						return false;
+					}
+				}
+			};
+		}
+
+		return support.suites({}, callback);
+	}
+}
+```
+
+Тесты должны должны запускаться для хоста, который передается в параметре `url`
+
+
 ### Использование
 
 Запуск сервера (запускается автоматически, скорее всего вам это не понадобится):
@@ -84,7 +121,7 @@ tests/<ваш_проект>/config.local.js
 npm start
 ```
 
-Зупустить тесты конкретного тестового набора:
+#### Зупустить тесты конкретного тестового набора:
 
 ```
 npm test -- e.mail.ru --suite=login
@@ -96,18 +133,25 @@ npm test -- e.mail.ru --suite=login
 npm test -- e.mail.ru --suite='login,compose'
 ```
 
-Зупустить конкретный тест-кейс:
+#### Запуск тестов по фильтру:
 
 ```
 npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674
 ```
 
-*Опция `--grep` принимает часть имени файла*
-
-Выполнить тесты на заданном адресе:
+*Опция `--grep` принимает регулярное выражение*
 
 ```
-npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --baseUrl=https://e.mail.ru/login
+npm test -- e.mail.ru --suite=login --grep=TESTMAIL-867[45]
+```
+
+В этом случае, будут запущены два теста TESTMAIL-8674 и TESTMAIL-8675
+
+
+#### Выполнить тесты на заданном адресе:
+
+```
+npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
 ```
 
 Полный список доступных опций test-runner'a смотрите [здесь](https://stash.mail.ru/projects/QA/repos/grunt-test-runner/browse).
@@ -132,10 +176,16 @@ npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --baseUrl=https://e.mai
 ```js
 let Messages = require('../../steps/messages');
 
-describe('TESTMAIL-31873', () => {
-	Messages.open();
+describe(() => {
+	it ('Открытие страницы списка писем', => {
+		Messages.open();
+	});
 });
 ```
+
+Если блок `describe` анонимный, то в качестве описания будет использоваться только название файла (которое соответствует номеру таска в JIRA). 
+
+ЗАПОМНИТЕ: писать номер таска в описании не нужно, он подставляется автоматически. 
 
 Метод auth дополнительно принимает параметры запроса:
 
@@ -152,7 +202,7 @@ Messages.open({
 ```js
 let Messages = require('../../steps/messages');
 
-describe('TESTMAIL-31873', () => {
+describe(() => {
 	beforeEach(() => {
 		Messages.features([
 			'check-missing-attach',
@@ -161,6 +211,10 @@ describe('TESTMAIL-31873', () => {
 		]);
 
 		Messages.open();
+	});
+
+	it ('Открытие страницы списка писем', => {
+		// ...
 	});
 });
 ```
@@ -180,7 +234,7 @@ Messages.features([
 ```js
 let Messages = require('../../steps/messages');
 
-describe('TESTMAIL-31873', () => {
+describe(() => {
 	Messages.auth();
 	Messages.open();
 });
@@ -312,7 +366,7 @@ let assert = require('assert');
 let login = require('../../steps/login');
 let form = require('../../steps/login/form');
 
-describe('TESTMAIL-24935', () => {
+describe(() => {
 	it('Проверка отображения элементов на форме авторизации', () => {
 		login.open();
 
@@ -329,7 +383,7 @@ describe('TESTMAIL-24935', () => {
 
 let Messages = require('../../steps/messages');
 
-describe('TESTMAIL-XXXX', () => {
+describe(() => {
 	it('Проверка перехода на страницу списка писем.', () => {
 		Messages.auth();
 		Messages.open();
@@ -544,14 +598,15 @@ module.exports = {
 ### Требования
 
 * Не обращайтесь в pages к объекту browser напрямую. Вместо этого используйте ссылку `this.page`.
-* Все без исключения методы должны иметь аннотацию JSDoc.
-* Все файлы в папке page должны возвращать ссылку на класс.
-* Все индесные файлы в папке steps должны возвращать ссылку на класс.
-* Всегда определяйте `location` и `locators.container` в индексоном файле вашего предствления (page).
+* Писать номер таска в блоке `describe` не нужно, он подставляется автоматически.
+* Используйте JSDoc аннотацию для документирования функций, которые принимают параметры и возвращают значения.
+* Все файлы, в которых определены классы должны возвращать ссылки, а не инстанс.
+* Всегда определяйте `location` и `locators.container` в индексном файле вашего предствления (page).
+* Всегда определяйте `page` в индексном файле степов.
 * Не используйте сокращения вида err, dfd, fn, и пр.
 * Для переменной, которая сохраняет состояние используйте название `actual`.
 * Прижерживайтесь существующей структуры и организации кода проекта.
-* Для работы с любыми данными используйте всегда хранилище (`store`).
+* Для работы с любыми данными используйте хранилища (`store`).
 * Если вы работаете с полями формы, то у вас должны быть определены как минимум следующие типы методов:
 
 
@@ -621,4 +676,36 @@ module.exports = {
 getFieldValue (name) {
 	form.getFieldValue(name);
 }
+```
+
+**Универсальные локаторы**
+
+Да, локаторы можно сделать универсальными:
+
+```js
+{
+	get locators () {
+		let container = 'body';
+
+		return {
+			button: new Proxy({}, {
+				get (target, name) {
+					return `${container} .b-btn-social__social__link_${name}`;
+				}
+			})
+		}
+	}
+}
+```
+
+Далее к такому локатору можно обращаться так:
+
+```
+this.locators.button.vk
+```
+
+Так вы получите такой локатор: 
+
+```
+body .b-btn-social__social__link_vk
 ```

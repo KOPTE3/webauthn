@@ -15,5 +15,3 @@ npm outdated --parseable | \
 WARNING: There are outdated packages
 ====================================
 EOF
-
-exit 0;

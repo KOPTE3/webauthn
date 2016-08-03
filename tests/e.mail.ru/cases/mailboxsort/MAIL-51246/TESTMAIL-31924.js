@@ -2,7 +2,7 @@
 
 let all = require('.');
 
-describe('TESTMAIL-31924', () => {
+describe(() => {
 	before(() => {
 		all.login();
 		all.deleteArchive();
@@ -15,13 +15,14 @@ describe('TESTMAIL-31924', () => {
 
 	it('should create archive and subfolders', () => {
 		all.launchCleaner();
-		['social', 'promotions', 'newsletters'].forEach((name) => {
+
+		['social', 'promotions', 'newsletters'].forEach(name => {
 			all.CleanerSteps.removeFolder(all.cleanerStore.categories[name]);
 		});
 
 		all.CleanerSteps.isArchiveLabelNotVisible();
 
-		[1, 2, 3, 4, 5].forEach((number) => {
+		[1, 2, 3, 4, 5].forEach(number => {
 			all.CleanerSteps.isArchiveGraphBranchNotVisible(number);
 		});
 	});

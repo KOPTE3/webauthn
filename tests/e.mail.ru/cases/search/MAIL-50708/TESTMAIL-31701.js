@@ -9,7 +9,7 @@ let advancedStore = require('../../../store/portal-menu/advanced');
 let portalSearchSteps = new PortalSearchSteps();
 let advancedSteps = new AdvancedSteps();
 
-describe('TESTMAIL-31701', () => {
+describe(() => {
 	it('Список писем. Сохранение поисковых запросов. ' +
 		'Проверка невозможности редактирования операндов-флажков', () => {
 		Messages.auth();

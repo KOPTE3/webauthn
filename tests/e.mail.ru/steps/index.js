@@ -18,15 +18,35 @@ class Steps {
 
 	/**
 	 * Обновить страницу
+	 *
+	 * @param {Object} [query] — параметры запроса
 	 */
-	static refresh () {
-		pages.refresh();
+	static refresh (query) {
+		pages.refresh(query);
+	}
+
+	/** Подтвердить алерт */
+	static alertAccept () {
+		pages.alertAccept();
+	}
+
+	/** Сбросить текущую сессию */
+	static reload () {
+		pages.reload();
+	}
+
+	/**
+	 * @deprecated
+	 * @see wait
+	 */
+	static wait () {
+		this.page.wait();
 	}
 
 	/**
 	 * Дождатся загрузки страницы
 	 */
-	static wait () {
+	wait () {
 		this.page.wait();
 	}
 
@@ -39,6 +59,20 @@ class Steps {
 	 */
 	static auth (type, credentials) {
 		return Pages.auth(...arguments);
+	}
+
+	/**
+	 * Регистрация нового пользователя
+	 *
+	 * @param {Object} params - {phones, restore, mrim}
+	 * @returns {Object} - данные нового пользователя {phones, email, password}
+	 */
+	static createUser (params) {
+		let response = this.page.createUser(params);
+
+		assert(response.isOK, `Не смогли создать пользователя ${response.body} ${response.data}`);
+
+		return response.data;
 	}
 
 	/**
@@ -68,20 +102,6 @@ class Steps {
 	 */
 	static pause (ms) {
 		pages.pause(ms);
-	}
-
-	/**
-	 * Обновить страницу
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 */
-	static refresh (query) {
-		pages.refresh(query);
-	}
-
-	/** Сбросить текущую сессию */
-	static reload () {
-		pages.reload();
 	}
 
 	/**

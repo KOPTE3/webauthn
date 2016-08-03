@@ -4,7 +4,7 @@ let all = require('.');
 
 let ids;
 
-describe('TESTMAIL-31908', () => {
+describe(() => {
 	before(() => {
 		all.login();
 		all.deleteArchive();
@@ -18,14 +18,17 @@ describe('TESTMAIL-31908', () => {
 
 	it('should create archive and subfolders', () => {
 		all.launchCleaner();
-		['social', 'promotions', 'newsletters'].forEach((name) => {
+
+		['social', 'promotions', 'newsletters'].forEach(name => {
 			all.CleanerSteps.selectFolder(all.cleanerStore.categories[name], ids.pop());
 		});
+
 		all.finishCleaner();
 
 		all.FoldersSteps.open();
 		all.FoldersSteps.isArchiveNotExists();
-		['social', 'promotions', 'newsletters'].forEach((name) => {
+
+		['social', 'promotions', 'newsletters'].forEach(name => {
 			all.FoldersSteps.isFolderNotExists(all.foldersStore.ids[name]);
 		});
 	});

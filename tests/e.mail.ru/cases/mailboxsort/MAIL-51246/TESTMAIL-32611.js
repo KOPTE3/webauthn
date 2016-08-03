@@ -2,7 +2,7 @@
 
 let all = require('.');
 
-describe('TESTMAIL-32611', () => {
+describe(() => {
 	before(() => {
 		all.Steps.features([
 			'mailboxsort-allow-parent-edit'

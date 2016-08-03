@@ -5,7 +5,7 @@ module.exports = {
 	/**
 	 * Список учетных записей
 	 *
-	 * ВНИМАНИЕ: Данные учетные записи разрешается использтвать только
+	 * ВНИМАНИЕ: Данные учетные записи разрешается использовать только
 	 * в тестах, которые не изменяют состояние аккаунта (например, авторизация)
 	 * Во всех остальных случаях — используейте store/authorization.credentials
 	 *
@@ -78,8 +78,8 @@ module.exports = {
 		{
 			provider: 'gmail.com',
 			features: ['external', 'oauth'],
-			username: 'gml.collector8@gmail.com',
-			password: 'KqFyxBq74oOx'
+			username: 'gml.collector10@gmail.com',
+			password: 'u28D23GtIG'
 		},
 
 		{
@@ -115,6 +115,57 @@ module.exports = {
 			features: ['external', 'oauth'],
 			username: 'out.collector3@outlook.com',
 			password: 'NkIPDXKBHW'
+		},
+
+		{
+			provider: 'msn.com',
+			features: ['external', 'oauth'],
+			username: 'out.collector3@outlook.com',
+			password: 'NkIPDXKBHW'
+		},
+
+		{
+			provider: 'live.com',
+			features: ['external', 'oauth'],
+			username: 'out.collector3@outlook.com',
+			password: 'NkIPDXKBHW'
+		},
+
+		{
+			provider: 'live.ru',
+			features: ['external', 'oauth'],
+			username: 'out.collector3@outlook.com',
+			password: 'NkIPDXKBHW'
+		},
+
+		{
+			provider: 'hotmail.com',
+			features: ['external', 'oauth'],
+			username: 'out.collector3@outlook.com',
+			password: 'NkIPDXKBHW'
+		},
+
+		{
+			provider: 'vk.com',
+			features: ['external', 'social', 'oauth'],
+			username: '376365389@vk',
+			login: '+79162143406',
+			password: 'f23fe23rGsf'
+		},
+
+		{
+			provider: 'ok.ru',
+			features: ['external', 'social', 'oauth'],
+			username: '589496710165@ok',
+			login: '+79162143406',
+			password: 'mjdhJF843JFSjf'
+		},
+		{
+			provider: 'fb.com',
+			features: ['external', 'social', 'oauth'],
+			username: '130452877392632@fb',
+			login: '+79162143406',
+			password: 'fd3FWfn3fd'
 		}
 	],
 

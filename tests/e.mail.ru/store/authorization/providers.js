@@ -53,7 +53,8 @@ module.exports = {
 			types: ['external', 'oauth'],
 			hosts: [
 				'gmail.com'
-			]
+			],
+			url: 'https://accounts.google.com/'
 		},
 
 		{
@@ -193,7 +194,35 @@ module.exports = {
 				'msn.com',
 				'live.com',
 				'live.ru'
-			]
+			],
+			url: 'https://login.live.com/oauth20_authorize.srf'
+		},
+
+		{
+			name: 'vk.com',
+			types: ['social', 'external', 'oauth'],
+			hosts: [
+				'vk.com'
+			],
+			url: 'https://oauth.vk.com/authorize'
+		},
+
+		{
+			name: 'ok.ru',
+			types: ['social', 'external', 'oauth'],
+			hosts: [
+				'ok.ru'
+			],
+			url: 'https://connect.ok.ru/dk'
+		},
+
+		{
+			name: 'fb.com',
+			types: ['social', 'external', 'oauth'],
+			hosts: [
+				'fb.com', 'facebook.com'
+			],
+			url: 'https://www.facebook.com/login.php'
 		}
 	],
 

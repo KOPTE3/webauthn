@@ -7,7 +7,7 @@ let AdvancedSteps = require('../../../steps/portal-menu/advanced');
 let portalSearchSteps = new PortalSearchSteps();
 let advancedSteps = new AdvancedSteps();
 
-describe('TESTMAIL-31697', () => {
+describe(() => {
 	it('Список писем. Сохранение поисковых запросов. ' +
 		'Добавление операнда "отмеченные флажком" из расширенного поиска', () => {
 		Messages.auth();

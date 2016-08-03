@@ -2,12 +2,12 @@
 
 let assert = require('assert');
 
-let PasswordSteps = require('../../password');
+let Steps = require('../../../steps');
 let PasswordRestorePage = require('../../../pages/passrestore');
 let phonesUtils = require('../../../utils/phones');
 
-/** Модуль для работы с шагами страницы поиска */
-class PasswordRestoreSteps extends PasswordSteps {
+/** Модуль для работы с шагами страницы восстановления пароля */
+class PasswordRestoreSteps extends Steps {
 	constructor () {
 		super();
 	}
@@ -27,6 +27,10 @@ class PasswordRestoreSteps extends PasswordSteps {
 	 */
 	initRegTokenIdLog () {
 		return phonesUtils.registerPassrestoreLogger();
+	}
+
+	wait () {
+		PasswordRestoreSteps.page.wait();
 	}
 }
 

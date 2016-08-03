@@ -49,7 +49,7 @@ class ComposeEditorSteps extends ComposeSteps {
 		this.composeEditor.restoreParentFrame();
 	}
 
-	allertAccept () {
+	alertAccept () {
 		this.composeEditor.alertAccept();
 	}
 
@@ -94,6 +94,18 @@ class ComposeEditorSteps extends ComposeSteps {
 		let message = this.getMessage();
 
 		return message.includes(text);
+	}
+
+	/**
+	 * Содержится ли в теле письма текст
+	 *
+	 * @param {string} text - текст который должен находится в теле письма
+	 * @param {string} reverse - реверс
+	 */
+	messageContains (text, reverse = false) {
+		let actual = this.hasMessage(text);
+
+		assert.equal(actual, !reverse, 'Содержимое письма');
 	}
 
 	/**

@@ -17,15 +17,6 @@ class LoginFormSteps extends Steps {
 	}
 
 	/**
-	 * Выбрать домен в списке
-	 *
-	 * @param {string} provider
-	 */
-	clickDomain (provider) {
-		this.loginForm.clickDomain(provider);
-	}
-
-	/**
 	 * Выбрать домен из списка
 	 *
 	 * @param {string} provider
@@ -151,15 +142,6 @@ class LoginFormSteps extends Steps {
 	}
 
 	/**
-	 * Выбрать домен
-	 *
-	 * @param {string} provider
-	 */
-	clickDomain (provider) {
-		this.loginForm.clickDomain(provider);
-	}
-
-	/**
 	 * Отправить форму
 	 *
 	 * @param {Object} data
@@ -188,19 +170,27 @@ class LoginFormSteps extends Steps {
 	}
 
 	/**
-	 * Получить активный домен
-	 *
-	 * @param {string} provider
-	 */
-	clickDomain (provider) {
-		this.loginForm.clickDomain(provider);
-	}
-
-	/**
 	 * Отправить форму по клику
 	 */
 	clickSignInButton () {
 		this.loginForm.clickSignInButton();
+	}
+
+	/**
+	 * Кликаем по кнопке социальной сети
+	 *
+	 * @param {vk|fb|ok} social
+	 */
+	clickSocialBtn (social) {
+		this.loginForm.clickSocialBtn(social);
+	}
+
+	/**
+	 * Кликнуть по кнопке продолжить
+	 * она например появляется при выборе oauth провайдеров
+	 */
+	clickNextButton () {
+		this.loginForm.clickNextButton();
 	}
 
 	/**

@@ -3,6 +3,7 @@
 let helpers = require('../utils/helpers');
 let account = require('../utils/account');
 let URL = require('../utils/url');
+let user = require('../utils/user/add');
 
 let cache = {
 	session : false,
@@ -115,9 +116,44 @@ class PageObject {
 	/**
 	 * Обновить страницу
 	 *
+	 * @param {Object} [query] — параметры запроса
 	 */
-	refresh () {
-		this.open(this.page.getUrl());
+	refresh (query = {}) {
+		let { features } = cache;
+		let url = this.page.getUrl();
+
+		if (features.length) {
+			query.ftrs = features.join(' ');
+		}
+
+		url = URL.format(url, query);
+
+		this.page.url(url);
+	}
+
+	/** Сбросить текущую сессию */
+	reload () {
+		this.page.reload();
+	}
+
+	/**
+	 * Регистрация нового пользователя
+	 *
+	 * @param {Object} params - {phones, restore, mrim}
+	 * @returns {Object} response
+	 */
+	createUser (params) {
+		let response;
+
+		this.page.waitUntil(function async () {
+			return user.userAdd(params).then(result => {
+				response = result;
+
+				return result.isOK;
+			});
+		}, 15 * 1000, 'Could not add new user');
+
+		return response;
 	}
 
 	/**
@@ -254,27 +290,9 @@ class PageObject {
 		this.page.pause(ms);
 	}
 
-	/**
-	 * Обновить страницу
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 */
-	refresh (query = {}) {
-		let { features } = cache;
-		let url = this.page.getUrl();
-
-		if (features.length) {
-			query.ftrs = features.join(' ');
-		}
-
-		url = URL.format(url, query);
-
-		this.page.url(url);
-	}
-
-	/** Сбросить текущую сессию */
-	reload () {
-		this.page.reload();
+	/** Подтвердить алерт */
+	alertAccept () {
+		this.page.alertAccept();
 	}
 
 	/**

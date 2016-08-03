@@ -6,7 +6,7 @@ let store = require('../../store/login/form');
 
 let loginForm = new LoginForm();
 
-describe('TESTMAIL-30326', () => {
+describe(() => {
 	it('Выбор внешних доменов через кнопки при отсутствии авторизованных ранее аккаунтов', () => {
 		LoginPage.open({ 'allow_external': 1 });
 
