@@ -102,6 +102,10 @@ class ComposeEditorControls extends ComposePage {
 	isSignatureHasSettingsLink () {
 		return this.page.isVisible(this.locators.signature.settings);
 	}
+
+	clickSignatureSettings () {
+		this.page.click(this.locators.signature.settings);
+	}
 }
 
 module.exports = ComposeEditorControls;

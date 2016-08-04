@@ -11,10 +11,10 @@ let Compose = require(`../../../steps/${composeFolder}`);
 let Messages = require('../../../steps/messages');
 let Signature = require('../../../steps/settings/signature');
 
-let ComposeEditor = require('../../../steps/compose/editor');
+let ComposeEditor = require(`../../../steps/${composeFolder}/editor`);
 let composeEditor = new ComposeEditor();
 
-let ComposeEditorControlsSteps = require('../../../steps/compose/editorControls');
+let ComposeEditorControlsSteps = require(`../../../steps/${composeFolder}/editorControls`);
 let composeEditorControls = new ComposeEditorControlsSteps();
 
 let MessagesToolbarSteps = require('../../../steps/messages/toolbar');
@@ -37,9 +37,8 @@ describe(() => {
 
 	composeEditorStore.signatures.forEach(({sign, text}) => {
 		it(options.name + ': ' + sign, () => {
-			Messages.open();
-
 			actions.setSignatures([sign]);
+			Messages.open();
 
 			if (options.noajax) {
 				Compose.open();

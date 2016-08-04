@@ -59,6 +59,13 @@ class ComposeEditorControlsSteps extends ComposeSteps {
 
 		assert(actual, 'Дропдаун с подписями не содержит ссылку на настройки');
 	}
+
+	/**
+	 * Кликнуть по ссылке настроек
+	 */
+	clickSignatureSettings () {
+		this.controls.clickSignatureSettings();
+	}
 }
 
 module.exports = ComposeEditorControlsSteps;
