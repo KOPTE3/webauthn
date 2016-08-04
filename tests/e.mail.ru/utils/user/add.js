@@ -8,7 +8,7 @@ let phonesStore = require('../../store/phones');
 
 /**
  * Signup new user
- * http://api.tornado.dev.mail.ru/users/add
+ * @see http://api.tornado.dev.mail.ru/users/add
  *
  * @param {Object} params
  *         data for a single user according to api
@@ -35,20 +35,18 @@ module.exports = (params) => {
 
 	return request.then(data => {
 		let result = {
-			isOK: data.isOK === 200 && Array.isArray(data.body),
-			value: null
+			isOK () {
+				return data.isOK && Array.isArray(data.body);
+			},
+			value: userData
 		};
-
-		if (result.isOK) {
-			result.value = userData;
-		}
 
 		debug('users/add request: ', data.requestBody);
 		debug('users/add response: ', data.body);
 		debug('users/add status: ', data.isOK);
 
 		return result;
-	}, err => {
-		throw new Error(err);
+	}, error => {
+		throw new Error(error);
 	});
 };

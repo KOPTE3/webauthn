@@ -31,10 +31,6 @@ class SelectViewPage extends PassrestorePage {
 		return this.page.waitForVisible(this.locators.container);
 	}
 
-	get loggerUrl () {
-		return 'user/password/restore';
-	}
-
 	/**
 	 *
 	 * Локаторы
