@@ -14,10 +14,7 @@ class Compose2Editor extends ComposeEditor {
 	 * @returns {boolean}
 	 */
 	wait () {
-		// TODO: редактор может быть невидим на новом композе, возможно нужно waitForExist
-		this.page.waitForVisible(this.locators.container);
-
-		return this.page.isVisible(this.locators.container);
+		return this.page.waitForExist(this.locators.container);
 	}
 }
 

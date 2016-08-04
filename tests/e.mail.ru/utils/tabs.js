@@ -7,7 +7,7 @@ module.exports = {
 	switchTab: () => {
 		let tabIds = browser.getTabIds();
 		let currentTabId = browser.getCurrentTabId();
-		let newTabId = tabIds.filter(id => id !== currentTabId)[0];
+		let newTabId = tabIds.find(id => id !== currentTabId);
 
 		browser.switchTab(newTabId);
 	}
