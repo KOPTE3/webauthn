@@ -21,13 +21,20 @@ module.exports = {
 		}
 	],
 
-	getPhones (apiPhones = []) {
-		return apiPhones.map(apiPhone => {
-			let result = apiPhone;
+	/**
+	 * apiPhones are used in users/add
+	 * method maps them to phones from above
+	 *
+	 * @param {Array} phones: [{phone: '79162143406'}, {..}]
+	 * @returns {Array}
+	 */
+	getPhones (phones = []) {
+		return phones.map(phoneItem => {
+			let result = phoneItem;
 			let phone;
 
 			phone = this.phones.find(item => {
-				return item.phone === apiPhone.phone;
+				return item.phone === phoneItem.phone;
 			});
 
 			if (phone) {
@@ -38,6 +45,13 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * Increases first number of the value
+	 * to create incorrect phone value
+	 *
+	 * @param {string} value: '123'
+	 * @returns {string} value '223'
+	 */
 	getIncorrectValue (value) {
 		let result = +value[0] + 1;
 
@@ -45,7 +59,7 @@ module.exports = {
 			result = 0;
 		}
 
-		value = result + value[1];
+		value = result + value.slice(1, value.length);
 
 		return value;
 	}

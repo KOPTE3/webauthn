@@ -1,11 +1,10 @@
 'use strict';
 
-let path = require('path');
-
-let AccountSteps = require('../../../steps/password/restore/account');
-let AccessSteps = require('../../../steps/password/restore/access');
-let SelectSteps = require('../../../steps/password/restore/select');
-let passwordStore = require('../../../store/password/restore');
+let AccountSteps = require('../../../steps/passrestore/account');
+let AccessSteps = require('../../../steps/passrestore/access');
+let SelectSteps = require('../../../steps/passrestore/select');
+let passwordStore = require('../../../store/passrestore');
+let userUtils = require('../../../utils/user');
 
 let accountSteps = new AccountSteps();
 let selectSteps = new SelectSteps();
@@ -23,10 +22,8 @@ let {symbols} = passwordStore;
 
 describe(() => {
 	before(() => {
-		user = AccountSteps.createUser({
-			phones: 1,
-			mrim: options.mrim
-		});
+		user = userUtils.add({ phones: 1 });
+		userUtils.mrim(user.email, options.mrim);
 	});
 
 	beforeEach(() => {

@@ -9,29 +9,51 @@ let API = require('./internalApi');
 module.exports = {
 
 	/**
-	 * Записываем user/password/restore ответы
+	 * Звписываем ajax для получения reg_token.id
+	 * @param {string} url
 	 * @returns {Object}
 	 */
-	registerPassrestoreLogger () {
-		return ajax.registerLogger('user/password/restore');
+	initRegTokenIdLog (url) {
+		return ajax.registerLogger(url);
 	},
 
 	/**
 	 * Получение последнего reg_token ID восстановления пароля
+	 * @param {string} url
 	 * @returns {string|null}
 	 */
-	getLastPassremindRegTokenId () {
-		let result = ajax.getLoggerInfo('user/password/restore');
+	getLastRegTokenId (url) {
+		let result = ajax.getLoggerInfo(url);
 
 		if (result.isOK) {
 			let results = result.value,
 				xhr = results[results.length - 1].xhr,
 				response = JSON.parse(xhr.responseText);
 
-			return response.body.id;
+			return response.body;
 		}
 
 		return null;
+	},
+
+	initPassRestoreRegTokenIdLog () {
+		return this.initRegTokenIdLog('user/password/restore');
+	},
+
+	getPassRestoreRegTokenId () {
+		let result = this.getLastRegTokenId('user/password/restore');
+
+		return result && result.id;
+	},
+
+	initAccessRestoreRegTokenIdLog () {
+		return this.initRegTokenIdLog('user/access/support');
+	},
+
+	getAccessRestoreRegTokenId () {
+		let result = this.getLastRegTokenId('user/access/support');
+
+		return result && result.id_phones;
 	},
 
 	/**
@@ -42,20 +64,6 @@ module.exports = {
 	 */
 	getSmsCodeValue (email, id) {
 		return API.getSmsCode(email, id).then(data => {
-			return data;
-		}, error => {
-			throw new Error(error);
-		});
-	},
-
-	/**
-	 * Verify phone number through internal-api
-	 * @param  {string} email
-	 * @param  {string} phone
-	 * @returns {Promise}
-	 */
-	verifyPhone (email, phone) {
-		return API.verifyPhone(email, phone).then(data => {
 			return data;
 		}, error => {
 			throw new Error(error);
