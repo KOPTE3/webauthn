@@ -27,6 +27,12 @@ class Signature extends Steps {
 	static save () {
 		this.page.clickControl('save');
 	}
+
+	static hasSignature (signature) {
+		let actual = this.page.hasSignature(signature);
+
+		assert(actual, `Не найдена подпись ${signature}`);
+	}
 }
 
 module.exports = Signature;
