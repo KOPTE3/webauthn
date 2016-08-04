@@ -3,6 +3,7 @@
 let assert = require('assert');
 let Pages = require('../pages');
 let account = require('../utils/account');
+let ajax = require('../utils/ajax');
 
 let pages = new Pages();
 
@@ -64,9 +65,9 @@ class Steps {
 	/**
 	 * Открыть страницу
 	 *
-	 * @param {Object} [query] — параметры запроса
+	 * @see Pages.open
 	 */
-	static open (query) {
+	static open (/** path, query */) {
 		try {
 			if (!this.page.locators.container) {
 				throw new Error();
@@ -76,7 +77,7 @@ class Steps {
 				'"locators.container"');
 		}
 
-		let actual = this.page.open(query);
+		let actual = this.page.open(...arguments);
 
 		assert(actual, 'Не удалось авторизоваться');
 	}
@@ -113,6 +114,28 @@ class Steps {
 		let actual = pages.waitForUrl(...arguments);
 
 		assert(actual, `Не найдено соответствие с ожидаемым адресом ${url}`);
+	}
+
+	/**
+	 * Подписывается на чтение запроса
+	 *
+	 * @param {string} request
+	 */
+	static setAccessLog (request) {
+		ajax.registerLogger(request);
+	}
+
+	/**
+	 * Читает лог запроса
+	 *
+	 * @param {string} request
+	 * @param {Function} predicate
+	 */
+	static getAccessLog (request, predicate) {
+		let { value } = ajax.getLoggerInfo(request);
+		let actual = predicate(value);
+
+		assert(actual, `Условие невыполнено`);
 	}
 }
 

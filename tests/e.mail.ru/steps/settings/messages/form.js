@@ -21,7 +21,7 @@ class FormSteps extends SettingsMessagesSteps {
 	 * @param {string} name - имя поля
 	 * @param {state} [state] - в какое состояние переключить (по умолчанию true);
 	 *
-	 * */
+	 */
 	toggleField (name, state = true) {
 		if (!this.formPage.isFieldSelected(name) === state) {
 			this.formPage.clickField(name);
@@ -30,7 +30,7 @@ class FormSteps extends SettingsMessagesSteps {
 
 	/**
 	 * Сохранить значения формы
-	 * */
+	 */
 	save () {
 		this.formPage.save();
 		SettingsPage.wait();

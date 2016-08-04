@@ -21,3 +21,8 @@ context.describe = function (name, callback) {
 		return describe(suite, name);
 	}
 };
+
+// Восстанавливаем методы
+for (let method of ['skip', 'only']) {
+	context.describe[method] = describe[method];
+}
