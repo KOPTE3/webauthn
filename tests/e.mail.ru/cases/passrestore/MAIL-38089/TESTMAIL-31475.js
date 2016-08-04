@@ -1,11 +1,10 @@
 'use strict';
 
-let path = require('path');
-
-let AccountSteps = require('../../../steps/password/restore/account');
-let AccessSteps = require('../../../steps/password/restore/access');
-let SelectSteps = require('../../../steps/password/restore/select');
-let RecoverySteps = require('../../../steps/password/restore/recovery');
+let AccountSteps = require('../../../steps/passrestore/account');
+let AccessSteps = require('../../../steps/passrestore/access');
+let SelectSteps = require('../../../steps/passrestore/select');
+let RecoverySteps = require('../../../steps/passrestore/recovery');
+let userUtils = require('../../../utils/user');
 
 let accountSteps = new AccountSteps();
 let selectSteps = new SelectSteps();
@@ -21,10 +20,8 @@ let steps = options.mrim ? accessSteps : selectSteps;
 
 describe(() => {
 	before(() => {
-		user = AccountSteps.createUser({
-			phones: 1,
-			mrim: options.mrim
-		});
+		user = userUtils.add({ phones: 1 });
+		userUtils.mrim(user.email, options.mrim);
 	});
 
 	beforeEach(() => {

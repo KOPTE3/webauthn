@@ -2,11 +2,11 @@
 
 let assert = require('assert');
 
-let PasswordRestoreSteps = require('../restore');
-let RecoveryPage = require('../../../pages/passrestore/recovery');
+let PassrestoreSteps = require('../passrestore');
+let RecoveryPage = require('../../pages/passrestore/recovery');
 
 /** Модуль для работы с формой ввода адреса для восстановления */
-class RecoverySteps extends PasswordRestoreSteps {
+class RecoverySteps extends PassrestoreSteps {
 	constructor () {
 		super();
 	}

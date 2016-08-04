@@ -137,26 +137,6 @@ class PageObject {
 	}
 
 	/**
-	 * Регистрация нового пользователя
-	 *
-	 * @param {Object} params - {phones, restore, mrim}
-	 * @returns {Object} response
-	 */
-	createUser (params) {
-		let response;
-
-		this.page.waitUntil(function async () {
-			return user.userAdd(params).then(result => {
-				response = result;
-
-				return result.isOK;
-			});
-		}, 15 * 1000, 'Could not add new user');
-
-		return response;
-	}
-
-	/**
 	 * Расширяет объект
 	 *
 	 * @param {Object} object

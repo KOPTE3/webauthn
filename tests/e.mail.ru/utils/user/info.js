@@ -1,11 +1,10 @@
 'use strict';
 
 let faker = require('faker');
-let account = require('../account');
 let providers = require('../../store/authorization/providers');
 let phonesStore = require('../../store/phones').phones;
 
-/** Модуль регистрации пользователя */
+/** Creates fake user reg info */
 module.exports = {
 	get login () {
 		return 'regtest_' + faker.internet.domainWord() + faker.random.number(100);
@@ -88,8 +87,8 @@ module.exports = {
 		return restoreData;
 	},
 
-	generateSignupData (params) {
-		let {phones, restore, mrim, credentials = {}} = params;
+	generateUserData (params) {
+		let {phones, restore, credentials = {}} = params;
 		let {login, domain, name, birthday, sex} = this;
 
 		let data = {
@@ -110,12 +109,6 @@ module.exports = {
 
 		if (restore) {
 			data.restore = this.bindRestore(restore);
-		}
-
-		if (mrim) {
-			data.flags = {
-				mrim_disabled: true
-			};
 		}
 
 		return data;

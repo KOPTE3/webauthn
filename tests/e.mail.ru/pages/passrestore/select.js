@@ -10,7 +10,6 @@ class SelectViewPage extends PassrestorePage {
 		super();
 	}
 
-
 	/**
 	 * Открытие страницы
 	 * @param {string} email
@@ -97,6 +96,10 @@ class SelectViewPage extends PassrestorePage {
 		return captchaUtils.getCaptchaID(this.locators.phoneCaptchaImg);
 	}
 
+	getLastRegTokenId () {
+		return phonesUtils.getPassRestoreRegTokenId();
+	}
+
 	/**
 	 * Get captcha value by X-Captcha-Id
 	 * @param {string} cid
@@ -156,6 +159,8 @@ class SelectViewPage extends PassrestorePage {
 		if (id !== null) {
 			selector = this.locators.multiplePhone + `[data-index="${id}"]`;
 		}
+
+		this.page.waitForVisible(selector);
 
 		return this.page.element(selector);
 	}
@@ -299,20 +304,6 @@ class SelectViewPage extends PassrestorePage {
 	 */
 	waitForPhoneLayer () {
 		this.page.waitForVisible(this.locators.phoneLayer);
-	}
-
-	/**
-	 * Verify phone number
-	 * http://api.tornado.dev.mail.ru/test/user/phones/verify
-	 * @param  {string} email
-	 * @param  {string} phone
-	 */
-	verifyPhone (email, phone) {
-		this.page.waitUntil(function async () {
-			return phonesUtils.verifyPhone(email, phone).then(result => {
-				return true;
-			});
-		}, 15 * 1000, 'Could not verify phone');
 	}
 }
 

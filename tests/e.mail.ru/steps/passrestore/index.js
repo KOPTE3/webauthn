@@ -1,10 +1,8 @@
 'use strict';
 
-let assert = require('assert');
-
-let Steps = require('../../../steps');
-let PasswordRestorePage = require('../../../pages/passrestore');
-let phonesUtils = require('../../../utils/phones');
+let Steps = require('../index');
+let PasswordRestorePage = require('../../pages/passrestore/index');
+let phoneUtils = require('../../utils/phones');
 
 /** Модуль для работы с шагами страницы восстановления пароля */
 class PasswordRestoreSteps extends Steps {
@@ -22,11 +20,12 @@ class PasswordRestoreSteps extends Steps {
 	}
 
 	/**
-	 * Звписываем ajax для получения reg_token.id
-	 * @returns {Object}
+	 * Записываем ajax для получения reg_token.id
+	 * на страницах восстановления пароля и доступа
 	 */
 	initRegTokenIdLog () {
-		return phonesUtils.registerPassrestoreLogger();
+		phoneUtils.initPassRestoreRegTokenIdLog();
+		phoneUtils.initAccessRestoreRegTokenIdLog();
 	}
 
 	wait () {
