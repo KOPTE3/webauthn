@@ -63,7 +63,7 @@ class ComposeControls extends ComposePage {
 
 	/**
 	 * Отменить письмо
-	 * */
+	 */
 	cancel () {
 		this.clickAll(this.locators.cancel);
 

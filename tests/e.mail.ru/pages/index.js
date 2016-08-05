@@ -175,7 +175,7 @@ class PageObject {
 	 * попытки (по умолчанию 500ms)
 	 *
 	 * @returns {boolean}
-	 * */
+	 */
 	clickWithRetry (locator, count = 3, interval = 1000) {
 		let page = this.page;
 
@@ -212,7 +212,7 @@ class PageObject {
 	 * 							  попытки (по умолчанию 500ms)
 	 *
 	 * @returns {boolean}
-	 * */
+	 */
 	refreshUntilCondition (conditionFunc, count = 3, interval = 1000) {
 		let page = this.page;
 		let tryRefresh = () => {

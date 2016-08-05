@@ -1,6 +1,8 @@
 'use strict';
 
 let PageObject = require('../../pages');
+let actions = require('../../utils/actions');
+let store = require('../../store');
 
 /** Модуль для работы с представлением страницы списка писем */
 class MessagesPage extends PageObject {
@@ -47,10 +49,27 @@ class MessagesPage extends PageObject {
 	}
 
 	/**
+	 * Переключить треды
+	 *
+	 * @param {boolean} state
+	 * @param {boolean} refresh
+	 */
+	toggleThreads (state, refresh) {
+		actions.helperUpdate(store.helpers.threads, {
+			state,
+			time: true
+		});
+
+		if (refresh) {
+			this.page.refresh();
+		}
+	}
+
+	/**
 	 * Открыть самое новое письмо
 	 */
 	openNewestLetter () {
-		browser.pause(1000);
+		this.page.pause(1000);
 		this.page.click(this.locators.newestLetter);
 	}
 
@@ -59,7 +78,7 @@ class MessagesPage extends PageObject {
 	 *
 	 * @param {string} name - имя кнопки
 	 * Доступные значения (compose)
-	 * */
+	 */
 	clickButton (name) {
 		this.page.click(this.locators.buttons[name]);
 	}

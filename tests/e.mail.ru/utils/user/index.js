@@ -4,19 +4,23 @@ let userAdd = require('./add');
 let userEdit = require('./edit');
 let helpers = require('../helpers');
 
-/** Модуль для работы с учетными данными пользователя */
+/**
+ * Works with user reg info
+ * @see cases/passrestore/MAIL-38089/TESTMAIL-XXXX.js for example
+*/
 module.exports = {
 	/**
 	 * Register new user through internal api
 	 * @see http://api.tornado.dev.mail.ru/users/add
 	 *
 	 * @param {Object} params
-	 *                 {number|array} phones
+	 *                 {number|array} [phones]
 	 *                 1, 2 - number of unlimited phones (verified)
+	 *                 OR
 	 *                 [...] - array according to api
 	 *
-	 *                 {Object} restore - user restore data
-	 *                 {Object} credentials - any other params from api
+	 *                 {Object} [restore] - user restore data
+	 *                 {Object} [credentials] - any other params from api
 	 * @returns {Object} - user data
 	 */
 	add (params) {
@@ -31,6 +35,10 @@ module.exports = {
 	 * @see http://api.tornado.dev.mail.ru/users/edit
 	 *
 	 * @param {Object} params
+	 *                 {string} login (required)
+	 *                 {string} domain (required)
+	 *                 any other params from api
+	 *
 	 * @returns {number} user id
 	 */
 	edit (params) {

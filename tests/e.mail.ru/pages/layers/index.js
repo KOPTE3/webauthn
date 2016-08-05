@@ -87,14 +87,14 @@ class Layers extends PageObject {
 
 	/**
 	 * Метод нажимает "Принять" в леере
-	 * */
+	 */
 	apply () {
 		this.page.click(this.locators.apply);
 	}
 
 	/**
 	 * Метод нажимает "Отменить" в леере
-	 * */
+	 */
 	cancel () {
 		this.page.click(this.locators.cancel);
 	}

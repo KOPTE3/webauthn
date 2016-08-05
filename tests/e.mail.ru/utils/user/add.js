@@ -35,13 +35,11 @@ module.exports = (params) => {
 
 	return request.then(data => {
 		let result = {
-			isOK: data.isOK === 200 && Array.isArray(data.body),
-			value: null
+			isOK () {
+				return data.isOK && Array.isArray(data.body);
+			},
+			value: userData
 		};
-
-		if (result.isOK) {
-			result.value = userData;
-		}
 
 		debug('users/add request: ', data.requestBody);
 		debug('users/add response: ', data.body);

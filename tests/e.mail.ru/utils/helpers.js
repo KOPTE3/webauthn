@@ -24,8 +24,8 @@ module.exports = {
 	 * @param {Function} request
 	 *         returns Promise
 	 *         result {
-	 *             isOK - result status,
-	 *             value - result
+	 *             {Function} isOK - result status,
+	 *             {*} value - result
 	 *         }
 	 * @param {string} message
 	 *        error message if !isOK
@@ -39,7 +39,7 @@ module.exports = {
 			return request().then(result => {
 				response = result;
 
-				return result.isOK;
+				return result.isOK();
 			});
 		}, ASYNC_TIMEOUT, `${message}: ${JSON.stringify(response)}`);
 

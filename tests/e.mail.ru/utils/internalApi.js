@@ -39,7 +39,8 @@ module.exports = {
 				}
 
 				result.body = httpBody.body;
-				result.isOK = httpBody.status;
+				result.isOK = httpBody.status === 200;
+				result.status = httpBody.status;
 				result.requestBody = body;
 
 				resolve(result);

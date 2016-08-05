@@ -27,7 +27,8 @@ class FoldersPage extends PageObject {
 				container: `${container} .js-signature-container`,
 				controls: {
 					remove: '.js-remove'
-				}
+				},
+				signature: `${container} .js-signature-container textarea`
 			},
 			controls: {
 				new: `${container} .js-add-signature`,
@@ -87,6 +88,27 @@ class FoldersPage extends PageObject {
 
 	clickControl (name) {
 		this.page.click(this.locators.controls[name]);
+	}
+
+	/**
+	 * Среди подписей есть подпись с заданным  текстом
+	 *
+	 * @param {string} signature
+	 * @return {boolean}
+	 */
+	hasSignature (signature) {
+		let { value: signatures } = this.page.elements(this.locators.item.signature);
+		let result = false;
+
+		signatures.some(({ ELEMENT}) => {
+			if (this.page.elementIdText(ELEMENT).value === signature) {
+				result = true;
+
+				return true;
+			}
+		});
+
+		return result;
 	}
 }
 

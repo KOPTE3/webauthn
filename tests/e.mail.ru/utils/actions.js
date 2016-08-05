@@ -342,5 +342,25 @@ module.exports = {
 		return browser.execute(function (name, email) {
 			patron.Utils.addToAddressBook([name ? name + ' <' + email + '>' : email]);
 		}, nick, email);
+	},
+
+	/**
+	 * Поменять подписи у пользователя
+	 *
+	 * @param {string[]} signatures
+	 * @returns {Promise}
+	 */
+	setSignatures (signatures) {
+		let name = `${authStore.account.get('first_name')} ${authStore.account.get('last_name')}`;
+
+		return this.call('user/edit', {
+			signs: signatures.map((sign, index) => {
+				return {
+					name,
+					sign,
+					active: !index
+				};
+			})
+		});
 	}
 };

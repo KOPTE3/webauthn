@@ -151,7 +151,7 @@ class SelectTypeSteps extends PassrestoreSteps {
 
 	/**
 	 * Crack SMS code
-	 * @param {restoreEmail} restoreEmail
+	 * @param {string} restoreEmail
 	 */
 	fillSmsCode (restoreEmail) {
 		let regTokenId = this.page.getLastRegTokenId();

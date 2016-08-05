@@ -24,7 +24,9 @@ module.exports = (params) => {
 		body: params
 	}).then(data => {
 		let result = {
-			isOK: data.isOK === 200 && data.body === ''
+			isOK () {
+				return data.isOK && data.body === '';
+			}
 		};
 
 		debug('users/edit request: ', data.requestBody);

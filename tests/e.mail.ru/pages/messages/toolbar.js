@@ -26,7 +26,7 @@ class MessagesToolbarPage extends MessagesPage {
 	 *
 	 * @param {string} name - имя кнопки
 	 * Доступные значения (compose)
-	 * */
+	 */
 	clickButton (name) {
 		this.clickAll(this.locators.buttons[name]);
 	}

@@ -17,11 +17,10 @@ class MessagesToolbarSteps extends MessagesSteps {
 	 *
 	 * @param {string} name - имя кнопки
 	 * Доступные значения (compose)
-	 * */
+	 */
 	clickButton (name) {
 		this.toolbarPage.clickButton(name);
 	}
-
 }
 
 module.exports = MessagesToolbarSteps;

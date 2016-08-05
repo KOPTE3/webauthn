@@ -101,7 +101,7 @@ class FieldsPage extends PageObject {
 
 	/**
 	 * Сохранить значения формы
-	 * */
+	 */
 	save () {
 		this.page.click(this.locators.save);
 	}

@@ -9,6 +9,8 @@ let MessagesPage = require('../../pages/messages');
 class MessagesSteps extends Steps {
 	constructor () {
 		super();
+
+		this.messages = new MessagesPage();
 	}
 
 	/**
@@ -20,7 +22,14 @@ class MessagesSteps extends Steps {
 		return new MessagesPage();
 	}
 
+	/**
+	 * Переключить треды
+	 *
+	 * @see MessagesPage#toggleThreads
+	 */
+	toggleThreads (/** ... */) {
+		this.messages.toggleThreads(...arguments);
+	}
 }
-
 
 module.exports = MessagesSteps;

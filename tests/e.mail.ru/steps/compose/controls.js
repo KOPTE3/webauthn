@@ -37,7 +37,7 @@ class ComposeControlSteps extends ComposeSteps {
 
 	/*
 	 * Отменить письмо
-	 * */
+	 */
 	cancel () {
 		this.composeControls.cancel();
 	}

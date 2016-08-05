@@ -25,7 +25,7 @@ class SentSteps extends Steps {
 	 * Метод дожидается открытия страницы успешной загрузки
 	 *
 	 * @static
-	 * */
+	 */
 	static wait () {
 		this.page.wait();
 	}
@@ -35,7 +35,7 @@ class SentSteps extends Steps {
 	 * Метод дожидается открытия страницы успешной загрузки
 	 *
 	 * @static
-	 * */
+	 */
 	static isVisible () {
 		assert(this.page.isVisible(), 'Страница успешной отправки не показана');
 	}
