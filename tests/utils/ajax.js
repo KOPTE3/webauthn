@@ -12,25 +12,26 @@ module.exports = {
 	 * @returns {Object}
 	 */
 	registerLogger (path) {
-		let result = browser.executeAsync(
-			/*eslint-disable */
-			function registerLogger (path, resolve) {
-				patron.ajaxStack = patron.ajaxStack || [];
-				$(document).ajaxComplete(function (event, xhr, settings) {
-					if (settings.url.contains(path)) {
-						patron.ajaxStack.push({
-							path: path,
-							xhr: xhr,
-							event: event,
-							settings: settings
-						});
-					}
-				});
+		let result = browser.executeAsync(function (path, resolve) {
+			patron.ajaxStack = patron.ajaxStack || [];
 
-				resolve(true);
-			}, path
-			/*eslint-enable */
-		);
+			$(document).ajaxComplete(function (event, xhr, settings) {
+				patron.ajaxStack.push(settings.url);
+
+				if (settings.url.indexOf(path) !== -1) {
+					/* eslint-disable */
+					patron.ajaxStack.push({
+						path: path,
+						xhr: xhr,
+						event: event,
+						settings: settings
+					});
+					/* eslint-enable */
+				}
+			});
+
+			resolve(true);
+		}, path);
 
 		return {
 			isOK: result.state === 'success',
@@ -44,15 +45,13 @@ module.exports = {
 	 * @returns {Object}
 	 */
 	getLoggerInfo (path) {
-		let result = browser.executeAsync(
-			function captureAjaxInfo (path, resolve) {
-				var result = patron.ajaxStack.filter(function (entity) {
-					return entity.path === path;
-				});
+		let result = browser.executeAsync(function (path, resolve) {
+			var result = patron.ajaxStack.filter(function (request) {
+				return request.path === path;
+			});
 
-				resolve(result);
-			}, path
-		);
+			resolve(result);
+		}, path);
 
 		return {
 			isOK: result.state === 'success' && result.value,

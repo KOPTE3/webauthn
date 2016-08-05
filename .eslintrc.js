@@ -19,7 +19,8 @@ module.exports = {
 		],
 
 		'no-mixed-spaces-and-tabs': 'error',
-		'no-mixed-requires': 1
+		'no-mixed-requires': 1,
+		'max-nested-callbacks': ["error", 5]
 	},
 
 	'env': {
