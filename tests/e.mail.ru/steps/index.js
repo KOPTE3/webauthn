@@ -119,10 +119,10 @@ class Steps {
 	/**
 	 * Подписывается на чтение запроса
 	 *
-	 * @param {string} request
+	 * @see ajax.registerLogger
 	 */
-	static setAjaxLog (request) {
-		ajax.registerLogger(request);
+	static setAjaxLog (/** ... */) {
+		ajax.registerLogger(...arguments);
 	}
 
 	/**
@@ -132,7 +132,7 @@ class Steps {
 	 * @param {Function} predicate
 	 */
 	static getAjaxLog (request, predicate) {
-		let { value } = ajax.getLoggerInfo(request);
+		let value = ajax.getLoggerInfo(request);
 		let actual = predicate(value);
 
 		assert(actual, `Условие невыполнено`);

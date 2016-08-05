@@ -8,40 +8,41 @@ module.exports = {
 	/**
 	 * Добавляет обработчик запроса
 	 *
-	 * @param  {string} path
-	 * @returns {Object}
+	 * @param {string} event — допустимые значения:
+	 *                         complete, send, end, error, start, stop, success
+	 * @param {string} path
+	 * @see http://api.jquery.com/category/ajax/global-ajax-event-handlers
 	 */
-	registerLogger (path) {
-		let result = browser.executeAsync(function (path, resolve) {
+	registerLogger (event, path) {
+		/* eslint-disable */
+		browser.executeAsync(function (event, path, resolve) {
+			event = event.replace(/^[a-z]/, function (letter) {
+				return letter.toUpperCase();
+			});
+
 			patron.ajaxStack = patron.ajaxStack || [];
 
-			$(document).ajaxComplete(function (event, xhr, settings) {
+			$(document).on(`ajax${event}`, function (event, xhr, settings) {
 				patron.ajaxStack.push(settings.url);
 
 				if (settings.url.indexOf(path) !== -1) {
-					/* eslint-disable */
 					patron.ajaxStack.push({
 						path: path,
 						xhr: xhr,
 						event: event,
 						settings: settings
 					});
-					/* eslint-enable */
 				}
 			});
 
 			resolve(true);
-		}, path);
-
-		return {
-			isOK: result.state === 'success',
-			value: result.value
-		};
+		}, event, path);
+		/* eslint-enable */
 	},
 
 	/**
 	 * Получаем все запросы по пути
-	 * @param  {string} path
+	 * @param {string} path
 	 * @returns {Object}
 	 */
 	getLoggerInfo (path) {
@@ -53,9 +54,6 @@ module.exports = {
 			resolve(result);
 		}, path);
 
-		return {
-			isOK: result.state === 'success' && result.value,
-			value: result.value
-		};
+		return result.value;
 	}
 };
