@@ -221,7 +221,7 @@ class PageObject {
 			} else {
 				browser.pause(interval);
 				page.refresh();
-				page.wait();
+				this.wait();
 
 				return false;
 			}

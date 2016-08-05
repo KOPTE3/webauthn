@@ -14,7 +14,7 @@ class BodyPage extends MessagePage {
 	 * @type {Object}
 	 */
 	get locators () {
-		let container = `${super.locators.container} .b-letter__body`;
+		let container = `${super.locators.container} .b-letter__body__wrap`;
 
 		return this.extend(super.locators, {
 			container,
