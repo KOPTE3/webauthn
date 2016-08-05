@@ -121,7 +121,7 @@ class Steps {
 	 *
 	 * @param {string} request
 	 */
-	static setAccessLog (request) {
+	static setAjaxLog (request) {
 		ajax.registerLogger(request);
 	}
 
@@ -131,7 +131,7 @@ class Steps {
 	 * @param {string} request
 	 * @param {Function} predicate
 	 */
-	static getAccessLog (request, predicate) {
+	static getAjaxLog (request, predicate) {
 		let { value } = ajax.getLoggerInfo(request);
 		let actual = predicate(value);
 
