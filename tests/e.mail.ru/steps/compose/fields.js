@@ -25,13 +25,16 @@ class ComposeFieldsSteps extends ComposeSteps {
 	}
 
 	/**
-	 * Получить значение поля по имени
+	 * Проверить значение поля по имени
 	 *
 	 * @see this.composeFields.getField
 	 * @param {string} name — имя поля
+	 * @param {string} value — значение поля
 	 */
-	getFieldValue (name) {
-		this.composeFields.getFieldValue(name);
+	checkFieldValue (name, value) {
+		let actual = this.composeFields.getFieldValue(name);
+
+		assert.equal(actual, value, `Значение поля ${name} не равно ${value}`);
 	}
 
 	/**

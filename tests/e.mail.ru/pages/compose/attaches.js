@@ -21,6 +21,7 @@ class ComposeAttaches extends ComposePage {
 		let attachments = '.js-file';
 		let loaded = '.upload__file_loaded';
 
+		/* eslint-disable max-len */
 		return this.extend(super.locators, {
 			container,
 			attachField: `${container} .compose__uploader__input`,
@@ -31,9 +32,11 @@ class ComposeAttaches extends ComposePage {
 
 			attachments,
 			attachmentName: `${attachments} .upload__file__name`,
-			attachmentByName: filename => `${attachments}[data-title="${filename}"]`,
-			loadedAttachmentByName: filename => `${attachments}${loaded}[data-title="${filename}"]`
+			attachmentByName: filename => `${attachments}[data-title="${filename}"],${attachments}[title="${filename}"]`,
+			loadedAttachmentByName: filename => `${attachments}${loaded}[data-title="${filename}"],${attachments}${loaded}[title="${filename}"]`
 		});
+
+		/* eslint-enable */
 	}
 
 	uploadAttach (filepath) {
@@ -49,23 +52,10 @@ class ComposeAttaches extends ComposePage {
 	}
 
 	isFileAttached (filename) {
-		let selector = this.locators.attachmentName;
-		let names;
-		let file;
+		let selector = this.locators.loadedAttachmentByName(filename);
 
 		try {
-			this.page.waitForExist(selector);
-			names = this.page.getText(selector);
-
-			if (typeof names === 'string') {
-				names = [names];
-			}
-
-			file = names.find(name => {
-				return name === filename;
-			});
-
-			return file;
+			return this.page.waitForExist(selector);
 		} catch (error) {
 			console.log('error', error);
 
@@ -84,10 +74,25 @@ class ComposeAttaches extends ComposePage {
 		return this.page.element(this.locators.slider);
 	}
 
+	/**
+	 * Видимость слайдера
+	 * @return {boolean}
+	 */
+	isVisibleSlider () {
+		return this.slider.isVisible();
+	}
+
 	get attachField () {
 		return this.page.element(this.locators.attachField);
 	}
 
+	/**
+	 * Наличие инпута загрузки файла
+	 * @return {boolean}
+	 */
+	hasAttachField () {
+		return this.attachField.isExisting();
+	}
 }
 
 module.exports = ComposeAttaches;
