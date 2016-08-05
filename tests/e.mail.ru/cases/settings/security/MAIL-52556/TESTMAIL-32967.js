@@ -3,7 +3,8 @@
 let all = require('..');
 
 describe(() => {
-	it('', () => {
+	it('Двухфакторная авторизация. Проверка отображения содержимого ' +
+		'в попапах включения 2-хф авторизации', () => {
 		let user = all.userUtils.add({phones: 1});
 		let {email: username, password} = user;
 
