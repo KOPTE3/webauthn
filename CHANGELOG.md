@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.6.0
+
+* Метод `utils/registerLogger` теперь первым параметром принимает событие логирования. <br />
+Допустимые значения: complete, send, end, error, start, stop, success
+
+* В Steps добавлены проки-методы `setAjaxLog` и `getAjaxLog`, которые могу мониторить сетевые xhr-запросы. <br />
+Пример использования: <br />
+
+```js
+let method = 'messages/status';
+
+FileSearch.setAjaxLog('send', method);
+
+fileSearch.goToFolder('sent');
+
+FileSearch.getAjaxLog(method, stack => {
+	return stack.some(request => {
+		return !request.settings.url.includes('https');
+	});
+});
+```
+В этом примере, проверяется с каким типом протокола отправляется запрос `messages/status`
+
+
 ## 1.5.0
 
 * Все фичи теперь сгруппированы по номеру таска
