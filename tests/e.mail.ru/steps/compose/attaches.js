@@ -34,7 +34,7 @@ class ComposeAttachesSteps extends ComposeSteps {
 
 		this.composeAttaches.removeAttach(filename);
 
-		assert(!this.composeAttaches.isFileAttached(filename), 'Файл не удален');
+		assert(this.composeAttaches.isFileAttached(filename, true), 'Файл не удален');
 	}
 
 	hasAttach (filename) {

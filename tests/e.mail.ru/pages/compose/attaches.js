@@ -52,11 +52,17 @@ class ComposeAttaches extends ComposePage {
 		this.page.setValue(this.locators.attachField, filepath);
 	}
 
-	isFileAttached (filename) {
+	/**
+	 * Проверка прикрепленности файла
+	 * @param {string} filename
+	 * @param {boolean} reverse - проверить, что файла нет
+	 * @return {boolean}
+	 */
+	isFileAttached (filename, reverse = false) {
 		let selector = `${this.locators.attachmentByName(filename)} ${this.locators.loadedIcon}`;
 
 		try {
-			return this.page.waitForVisible(selector);
+			return this.page.waitForVisible(selector, void 0, reverse);
 		} catch (error) {
 			console.log('error', error);
 
