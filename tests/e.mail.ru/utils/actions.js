@@ -16,8 +16,6 @@ module.exports = {
 	 * @returns {Promise}
 	 */
 	call (method, options) {
-		/* eslint max-nested-callbacks: ["error", 4] */
-
 		let email = authStore.account.get('email');
 
 		return browser

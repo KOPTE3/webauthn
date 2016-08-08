@@ -7,14 +7,13 @@ let API = require('./internalApi');
  * Модуль для работы с телефонами Mail.Ru
  */
 module.exports = {
-
 	/**
 	 * Звписываем ajax для получения reg_token.id
 	 * @param {string} url
 	 * @returns {Object}
 	 */
 	initRegTokenIdLog (url) {
-		return ajax.registerLogger(url);
+		return ajax.registerLogger('complete', url);
 	},
 
 	/**
@@ -25,9 +24,8 @@ module.exports = {
 	getLastRegTokenId (url) {
 		let result = ajax.getLoggerInfo(url);
 
-		if (result.isOK) {
-			let results = result.value,
-				xhr = results[results.length - 1].xhr,
+		if (result) {
+			let xhr = result[result.length - 1].xhr,
 				response = JSON.parse(xhr.responseText);
 
 			return response.body;
