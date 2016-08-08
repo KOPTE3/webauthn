@@ -25,7 +25,7 @@ class ComposeAttaches extends ComposePage {
 		return this.extend(super.locators, {
 			container,
 			attachField: `${container} .compose__uploader__input`,
-			cloud: `${container} [data-title="Файлы из Облака и Почты"]`,
+			cloud: `${container} .js-multi-attach`,
 			slider: `${container} .js-attachments`,
 			remove: `${container} .upload__file__ico_del`,
 			progress: `${container} .upload__file__progress`,
@@ -33,7 +33,8 @@ class ComposeAttaches extends ComposePage {
 			attachments,
 			attachmentName: `${attachments} .upload__file__name`,
 			attachmentByName: filename => `${attachments}[data-title="${filename}"],${attachments}[title="${filename}"]`,
-			loadedAttachmentByName: filename => `${attachments}${loaded}[data-title="${filename}"],${attachments}${loaded}[title="${filename}"]`
+			loadedAttachmentByName: filename => `${attachments}${loaded}[data-title="${filename}"],${attachments}${loaded}[title="${filename}"]`,
+			loadedIcon: '.js-ok'
 		});
 
 		/* eslint-enable */
@@ -52,10 +53,10 @@ class ComposeAttaches extends ComposePage {
 	}
 
 	isFileAttached (filename) {
-		let selector = this.locators.loadedAttachmentByName(filename);
+		let selector = `${this.locators.attachmentByName(filename)} ${this.locators.loadedIcon}`;
 
 		try {
-			return this.page.waitForExist(selector);
+			return this.page.waitForVisible(selector);
 		} catch (error) {
 			console.log('error', error);
 
@@ -92,6 +93,10 @@ class ComposeAttaches extends ComposePage {
 	 */
 	hasAttachField () {
 		return this.attachField.isExisting();
+	}
+
+	clickCloud () {
+		this.page.click(this.locators.cloud);
 	}
 }
 

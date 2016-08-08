@@ -3,6 +3,8 @@
 let assert = require('assert');
 
 let ComposeSteps = require('../compose');
+let MultiAttachSteps = require('../layers/multiAttach');
+
 let ComposeAttaches = require('../../pages/compose/attaches');
 
 let SystemStore = require('../../store/system');
@@ -14,6 +16,7 @@ class ComposeAttachesSteps extends ComposeSteps {
 		super();
 
 		this.composeAttaches = new ComposeAttaches();
+		this.multiAttach = new MultiAttachSteps();
 	}
 
 	uploadAttach (filename) {
@@ -38,6 +41,13 @@ class ComposeAttachesSteps extends ComposeSteps {
 		let result = this.composeAttaches.isFileAttached(filename);
 
 		assert(result, `Файл ${filename} не прикреплен`);
+	}
+
+	attachFromCloud (filename) {
+		this.composeAttaches.clickCloud();
+		this.multiAttach.wait();
+		this.multiAttach.toggleCloudFile(filename);
+		this.multiAttach.apply();
 	}
 }
 
