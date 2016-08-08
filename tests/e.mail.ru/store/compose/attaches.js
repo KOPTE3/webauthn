@@ -8,5 +8,21 @@ module.exports = {
 		'F g ! ; % (.jpg',
 		'7z 7z архив с архивом (docx, doc, xlsx, xls, pptx, ppt, jpg, bmp, avi, mp3, psd).7z',
 		'7z.7z'
+	],
+
+	manyAttaches: [
+		'1!file.txt',
+		'1$file.txt',
+		'1%file.txt',
+		'1&file.txt',
+		'1\'file.txt',
+		'1()file.txt',
+		'1+file.txt',
+		'1,file.txt',
+		'1-file.txt',
+		'1.file.txt',
+		'1;file.txt',
+		'1=file.txt',
+		'1@file.txt'
 	]
 };
