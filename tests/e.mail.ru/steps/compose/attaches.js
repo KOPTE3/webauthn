@@ -49,6 +49,14 @@ class ComposeAttachesSteps extends ComposeSteps {
 		this.multiAttach.toggleCloudFile(filename);
 		this.multiAttach.apply();
 	}
+
+	attachFromMail (filename) {
+		this.composeAttaches.clickCloud();
+		this.multiAttach.wait();
+		this.multiAttach.clickMail();
+		this.multiAttach.toggleMailFile(filename);
+		this.multiAttach.apply();
+	}
 }
 
 module.exports = ComposeAttachesSteps;

@@ -24,6 +24,28 @@ class MultiAttachLayerSteps extends LayerSteps {
 	toggleCloudFile (filename) {
 		this.layer.toggleCloudFile(filename);
 	}
+
+	/**
+	 * Кликнуть на файл из почтофайлов. Предполагается, что раздел почтофайлов уже выбран
+	 * @param {string} filename
+	 */
+	toggleMailFile (filename) {
+		this.layer.toggleMailFile(filename);
+	}
+
+	/**
+	 * Выбрать раздел почтофайлов
+	 */
+	clickMail () {
+		this.layer.clickMail();
+	}
+
+	/**
+	 * Выбрать раздел почтофайлов
+	 */
+	clickListView () {
+		this.layer.clickListView();
+	}
 }
 
 module.exports = MultiAttachLayerSteps;
