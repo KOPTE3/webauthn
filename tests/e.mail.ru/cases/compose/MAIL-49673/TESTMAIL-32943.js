@@ -27,11 +27,13 @@ describe(() => {
 	before(() => {
 		Compose.auth();
 
+		let features = ['subject-from-attachments'];
+
 		if (options.compose2) {
-			Messages.features([
-				'compose2'
-			]);
+			features.push('compose2');
 		}
+
+		Messages.features(features);
 
 		if (options.noajax) {
 			Compose.open();

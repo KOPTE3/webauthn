@@ -45,11 +45,13 @@ describe(() => {
 
 		mail.send();
 
+		let features = ['subject-from-attachments'];
+
 		if (options.compose2) {
-			Messages.features([
-				'compose2'
-			]);
+			features.push('compose2');
 		}
+
+		Messages.features(features);
 
 		Messages.open();
 		letters.waitForNewestLetter();
