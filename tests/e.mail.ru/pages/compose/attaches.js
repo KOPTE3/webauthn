@@ -86,8 +86,9 @@ class ComposeAttaches extends ComposePage {
 
 	removeAttach (filename) {
 		let file = this.getAttach(filename);
+		let remove = this.page.elementIdElement(file.value.ELEMENT, this.locators.remove);
 
-		file.click(this.locators.remove);
+		this.page.elementIdClick(remove.value.ELEMENT);
 	}
 
 	get slider () {
