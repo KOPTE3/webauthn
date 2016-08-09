@@ -1,7 +1,7 @@
 'use strict';
 
-let Messages = require('../../steps/messages');
-let FileSearch = require('../../steps/filesearch');
+let Messages = require('../../../steps/messages');
+let FileSearch = require('../../../steps/filesearch');
 
 let messages = new Messages();
 let fileSearch = new FileSearch();
