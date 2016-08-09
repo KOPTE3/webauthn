@@ -682,14 +682,16 @@ module.exports = {
 **<step>**
 
 ```js
-/**
- * Получить значение поля по имени
- *
- * @see form.getField
- * @param {string} name — имя поля
- */
-getFieldValue (name) {
-	form.getFieldValue(name);
+{
+	/**
+	 * Получить значение поля по имени
+	 *
+	 * @see form.getField
+	 * @param {string} name — имя поля
+	 */
+	getFieldValue (name) {
+		form.getFieldValue(name);
+	}
 }
 ```
 
