@@ -29,7 +29,8 @@ class ComposeAttaches extends ComposeAttachesPage {
 			remove: `${container} .ico_compose_remove`,
 			progress: `${container} .compose-attachment__progress-mask`,
 			loaded: '.compose-attachment__thumbnail',
-			name: '.b-thumb__controlbar .b-filename__spacer',
+			name: '.b-thumb__controlbar .b-filename__text',
+			progressname: '.compose-attachment__progress-mask .b-filename__text',
 
 			attachments
 		});
@@ -42,14 +43,28 @@ class ComposeAttaches extends ComposeAttachesPage {
 		files.some(({ ELEMENT }) => {
 			let name = this.page.elementIdElement(ELEMENT, this.locators.name);
 
-			if (name.getHTML(false) === filename) {
-				file.value = { ELEMENT };
+			if (name.value) {
+				// Нужно навести курсор на аттач, чтобы показалось имя
+				name.moveToObject();
 
-				return true;
+				if (!name.getText()) {
+					// возможно, аттач еще не загрузился, тогда имя нужно искать в другом месте:
+					name = this.page.elementIdElement(ELEMENT, this.locators.progressname);
+				}
+
+				if (name.getText().replace('\n', '') === filename) {
+					file.value = { ELEMENT };
+
+					return true;
+				}
 			}
 		});
 
 		return file;
+	}
+
+	clickMail () {
+		this.page.click(this.locators.mail);
 	}
 }
 

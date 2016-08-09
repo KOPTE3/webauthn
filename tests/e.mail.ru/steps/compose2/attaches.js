@@ -18,10 +18,8 @@ class Compose2AttachesSteps extends ComposeAttachesSteps {
 	}
 
 	attachFromMail (filename) {
-		// TODO: открыть сразу почтофайлы
-		this.composeAttaches.clickCloud();
+		this.composeAttaches.clickMail();
 		this.multiAttach.wait();
-		this.multiAttach.clickMail();
 		this.multiAttach.toggleMailFile(filename);
 		this.multiAttach.apply();
 	}
