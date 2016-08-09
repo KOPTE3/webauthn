@@ -24,6 +24,8 @@ let composeFields = new ComposeFieldsSteps();
 let ComposeAttachesSteps = require(`../../../steps/${composeFolder}/attaches`);
 let composeAttaches = new ComposeAttachesSteps();
 
+let composeFieldsStore = require('../../../store/compose/fields');
+
 let Mail = require('../../../utils/mail');
 
 const filename = 'test.txt';
@@ -32,11 +34,13 @@ describe(() => {
 	before(() => {
 		Compose.auth();
 
+		let { fields } = composeFieldsStore;
+
 		// Присылаем письмо себе
 		var mail = new Mail({
 			to: fields.to,
 			subject : '',
-			text: composeEditorStore.texts.withAttach
+			text: ''
 		});
 
 		mail.send();
@@ -56,7 +60,7 @@ describe(() => {
 		}
 
 		// нажимаем на переслать в общем тулбаре
-		messageToolbar.clickButton('forward');
+		messageToolbar.clickButton('reply');
 
 		if (options.noajax) {
 			Compose.refresh();
@@ -66,10 +70,10 @@ describe(() => {
 	});
 
 	it(options.name, () => {
-		composeFields.checkFieldValue('subject', 'Re: ');
+		composeFields.checkFieldValue('subject', 'Re:');
 
 		composeAttaches.uploadAttach(filename);
 		composeAttaches.hasAttach(filename);
-		composeFields.checkFieldValue('subject', 'Re: ');
+		composeFields.checkFieldValue('subject', 'Re:');
 	});
 });

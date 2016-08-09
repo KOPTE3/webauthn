@@ -18,7 +18,7 @@ class ComposeAttaches extends ComposeAttachesPage {
 	 */
 	get locators () {
 		let container = '.compose-attachments';
-		let attachments = '//*[contains(@class, "js-content")]';
+		let attachments = `${container} .js-sliderItem`;
 
 		return this.extend(super.locators, {
 			container,
@@ -28,12 +28,29 @@ class ComposeAttaches extends ComposeAttachesPage {
 			slider: `${container} .compose-attachments__content`,
 			remove: `${container} .ico_compose_remove`,
 			progress: `${container} .compose-attachment__progress-mask`,
+			loaded: '.compose-attachment__thumbnail',
+			name: '.b-thumb__controlbar .b-filename__spacer',
 
-			attachments,
-			attachmentByName: filename => `${attachments}[.//*[text()="${filename}"]]`
+			attachments
 		});
 	}
 
+	getAttach (filename) {
+		let {value: files} = this.page.elements(this.locators.attachments);
+		let file = { value: null };
+
+		files.some(({ ELEMENT }) => {
+			let name = this.page.elementIdElement(ELEMENT, this.locators.name);
+
+			if (name.getHTML(false) === filename) {
+				file.value = { ELEMENT };
+
+				return true;
+			}
+		});
+
+		return file;
+	}
 }
 
 module.exports = ComposeAttaches;
