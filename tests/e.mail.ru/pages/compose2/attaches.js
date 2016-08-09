@@ -32,7 +32,8 @@ class ComposeAttaches extends ComposeAttachesPage {
 			name: '.b-thumb__controlbar .b-filename__text',
 			progressname: '.compose-attachment__progress-mask .b-filename__text',
 
-			attachments
+			attachments,
+			attachmentsInner: '.js-content'
 		});
 	}
 
@@ -53,7 +54,7 @@ class ComposeAttaches extends ComposeAttachesPage {
 				}
 
 				if (name.getText().replace('\n', '') === filename) {
-					file.value = { ELEMENT };
+					file = this.page.elementIdElement(ELEMENT, this.locators.attachmentsInner);
 
 					return true;
 				}

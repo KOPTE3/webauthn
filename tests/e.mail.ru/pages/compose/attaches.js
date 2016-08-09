@@ -70,7 +70,7 @@ class ComposeAttaches extends ComposePage {
 
 		try {
 			if (reverse) {
-				return file.waitForVisible(void 0, reverse);
+				return this.page.waitUntil(() => !file.isVisible());
 			} else {
 				let loaded = this.page.elementIdElement(file.value.ELEMENT, this.locators.loaded);
 
