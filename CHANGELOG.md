@@ -1,5 +1,6 @@
 # Changelog
 
+
 ## 1.8.0
 
 Добавлены методы для работы с паролями:
@@ -7,6 +8,7 @@
 * store/authorization/passwords — позволяет получить предопределенный пароль заданой сложности
 * utils/account.generatePassword — позволяет получить случайный пароль
 * utils/account.passwordStrength — позволяет определить сложность пароля
+
 
 ## 1.7.0
 
