@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "1.7.0",
+	"version": "1.8.0",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
@@ -46,6 +46,7 @@
 		"@qa/wdio-api-mail.ru": "^2.2.3",
 
 		"faker": "^3.1.0",
+		"zxcvbn": "^4.3.0",
 		"grunt": "^1.0.1",
 		"grunt-cli" : "^1.2.0",
 		"jit-grunt" : "^0.10.0",

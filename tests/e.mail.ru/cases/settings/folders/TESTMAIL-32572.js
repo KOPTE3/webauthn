@@ -13,7 +13,7 @@ describe('Папки. Проверить редактирование ' +
 
 	it('Снятие запароленности', () => {
 		let parent = foldersStore.ids.inbox;
-		let password = accountUtils.generatePassword();
+		let password = accountUtils.generatePassword(10, true);
 		let name = 'Запароленная папка';
 
 		let folderId = Folders.createSecretFolder({
