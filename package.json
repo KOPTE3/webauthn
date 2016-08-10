@@ -43,7 +43,7 @@
 		"@qa/grunt-test-runner" : "^0.2.5",
 		"@qa/test-tools": "^2.0.0",
 		"@qa/wd-capabilities": "^0.0.4",
-		"@qa/wdio-api-mail.ru": "^2.2.3",
+		"@qa/wdio-api": "^0.0.1",
 
 		"faker": "^3.1.0",
 		"grunt": "^1.0.1",

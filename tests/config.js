@@ -1,7 +1,7 @@
 'use strict';
 
 let AccountManager = require('@qa/account-manager'),
-	WebDriverAPI = require('@qa/wdio-api-mail.ru'),
+	WebDriverAPI = require('@qa/wdio-api'),
 	TestTools = require('@qa/test-tools'),
 	capabilities = require('@qa/wd-capabilities');
 
