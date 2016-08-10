@@ -5,7 +5,7 @@ let AccountManager = require('@qa/account-manager'),
 	TestTools = require('@qa/test-tools'),
 	capabilities = require('@qa/wd-capabilities');
 
-let project = 'e.mail.ru';
+let project = '{{ project }}';
 
 let account = new AccountManager.Hooks();
 
