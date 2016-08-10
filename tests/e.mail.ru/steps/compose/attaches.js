@@ -38,9 +38,9 @@ class ComposeAttachesSteps extends ComposeSteps {
 	}
 
 	hasAttach (filename) {
-		let result = this.composeAttaches.isFileAttached(filename);
+		let actual = this.composeAttaches.isFileAttached(filename);
 
-		assert(result, `Файл ${filename} не прикреплен`);
+		assert(actual, `Файл ${filename} не прикреплен`);
 	}
 
 	attachFromCloud (filename) {

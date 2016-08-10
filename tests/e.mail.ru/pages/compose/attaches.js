@@ -29,7 +29,7 @@ class ComposeAttaches extends ComposePage {
 			slider: `${container} .js-attachments`,
 			remove: `${container} .upload__file__ico_del`,
 			progress: `${container} .upload__file__progress`,
-			loaded: '.js-ok',
+			loaded: '.upload__file__ico_ok',
 
 			attachments,
 			attachmentName: `${attachments} .upload__file__name`,
@@ -68,19 +68,14 @@ class ComposeAttaches extends ComposePage {
 			return reverse;
 		}
 
-		try {
-			if (reverse) {
-				return this.page.waitUntil(() => !file.isVisible());
-			} else {
-				let loaded = this.page.elementIdElement(file.value.ELEMENT, this.locators.loaded);
+		if (reverse) {
+			return this.page.waitUntil(() => {
+				return !this.getAttach(filename).value;
+			}, 1000, 'Не дождались удаления файла');
+		} else {
+			let loaded = this.page.elementIdElement(file.value.ELEMENT, this.locators.loaded);
 
-				return loaded.waitForVisible();
-			}
-
-		} catch (error) {
-			console.log('error', error);
-
-			return false;
+			return loaded.waitForVisible(10000);
 		}
 	}
 
