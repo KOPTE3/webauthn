@@ -2,12 +2,12 @@
 
 let AccountManager = require('@qa/account-manager'),
 	WebDriverAPI = require('@qa/wdio-api-mail.ru'),
-	MochaHooks = require.resolve('@qa/wdio-mocha-hooks'),
 	TestTools = require('@qa/test-tools'),
 	capabilities = require('@qa/wd-capabilities');
 
-let project = 'account.mail.ru';
+let MochaHooks = require.resolve('@qa/wdio-mocha-hooks');
 
+let project = 'account.mail.ru';
 let account = new AccountManager.Hooks();
 
 let support = new TestTools.Support({
