@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "1.8.1",
+	"version": "1.9.0",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
@@ -44,6 +44,7 @@
 		"@qa/test-tools": "^2.0.0",
 		"@qa/wd-capabilities": "^0.0.4",
 		"@qa/wdio-api-mail.ru": "^2.2.3",
+		"@qa/wdio-mocha-hooks": "^0.0.1",
 
 		"grunt": "^1.0.1",
 		"grunt-cli" : "^1.2.0",

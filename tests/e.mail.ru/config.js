@@ -2,6 +2,7 @@
 
 let AccountManager = require('@qa/account-manager'),
 	WebDriverAPI = require('@qa/wdio-api-mail.ru'),
+	MochaHooks = require.resolve('@qa/wdio-mocha-hooks'),
 	TestTools = require('@qa/test-tools'),
 	capabilities = require('@qa/wd-capabilities');
 
@@ -68,7 +69,7 @@ exports.config = {
 	mochaOpts: {
 		'ui': 'bdd',
 
-		require: './hooks/mocha.js',
+		require: MochaHooks,
 
 		/* Количество попыток на выполнение теста, который не был пройден */
 		'retries': 1,
