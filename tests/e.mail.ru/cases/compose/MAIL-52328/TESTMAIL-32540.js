@@ -1,29 +1,29 @@
 'use strict';
 
-let Messages = require('../../../../steps/messages');
-let Message = require('../../../../steps/message');
-let Compose = require('../../../../steps/compose');
-let SentPage = require('../../../../steps/sent');
+let Messages = require('../../../steps/messages');
+let Message = require('../../../steps/message');
+let Compose = require('../../../steps/compose');
+let SentPage = require('../../../steps/sent');
 
-let LettersSteps = require('../../../../steps/messages/letters');
+let LettersSteps = require('../../../steps/messages/letters');
 let lettersSteps = new LettersSteps();
 
-let MessageToolbarSteps = require('../../../../steps/message/toolbar');
+let MessageToolbarSteps = require('../../../steps/message/toolbar');
 let messageToolbarSteps = new MessageToolbarSteps();
 
-let ComposeControls = require('../../../../steps/compose/controls');
+let ComposeControls = require('../../../steps/compose/controls');
 let composeControls = new ComposeControls();
 
-let composeFields = require('../../../../steps/compose/fields');
+let composeFields = require('../../../steps/compose/fields');
 
-let ComposeEditor = require('../../../../steps/compose/editor');
+let ComposeEditor = require('../../../steps/compose/editor');
 let composeEditor = new ComposeEditor();
 
-let missingAttachLayer = require('../../../../steps/layers/missingAttach');
-let composeEditorStore = require('../../../../store/compose/editor');
-let composeFieldsStore = require('../../../../store/compose/fields');
+let missingAttachLayer = require('../../../steps/layers/missingAttach');
+let composeEditorStore = require('../../../store/compose/editor');
+let composeFieldsStore = require('../../../store/compose/fields');
 
-let Mail = require('../../../../utils/mail');
+let Mail = require('../../../utils/mail');
 
 describe('Новое написание письма. Черновики. Проверка, ' +
 	'что отправляется письмо из черновиков после обновления страницы.', () => {
