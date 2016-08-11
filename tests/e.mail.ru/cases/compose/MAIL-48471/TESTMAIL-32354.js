@@ -22,6 +22,9 @@ let composeFields = new ComposeFields();
 let ComposeControls = require('../../../steps/compose/controls');
 let composeControls = new ComposeControls();
 
+// SentPage
+let SentPage = require('../../../steps/sent');
+
 // layers
 let MissingAttachLayer = require('../../../steps/layers/missingAttach');
 let missingAttachLayer = new MissingAttachLayer();
@@ -73,21 +76,6 @@ describe('Из НЕ AJAX чтения. Ответ на письмо. Забыт�
 		composeEditor.writeMessage(text);
 
 		composeControls.send();
-		MissingAttachLayer.wait();
-		try {
-			missingAttachLayer.checkTexts();
-		} catch (error) {
-			throw new Error(error);
-		} finally {
-			try {
-				missingAttachLayer.close();
-				missingAttachLayer.shouldBeClosed();
-			} catch (error) {
-				throw new Error(error);
-			} finally {
-				composeEditor.wait();
-				composeControls.cancel();
-			}
-		}
+		SentPage.wait();
 	});
 });
