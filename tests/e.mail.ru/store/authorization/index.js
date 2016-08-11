@@ -11,9 +11,9 @@ module.exports = {
 	 *
 	 * @see discard — обязательно вызываейте этот метод для осовобождения
 	 * занимаемого аккаунта!
+	 * @param {number} [timeout] — максимальное время ожидания
 	 * @param {string} type — тип авторизации
 	 * @param {Object} [options] — дополнительные опции
-	 * @param {number} [timeout] — максимальное время ожидания
 	 * @returns {Object}
 	 *
 	 * Данные, которые возвращаются:
@@ -23,7 +23,7 @@ module.exports = {
 	 *    user_agent, sex, last_name
 	 * }
 	 */
-	credentials (type = 'basic', options = { }, timeout) {
+	credentials (timeout, type = 'basic', options = { }) {
 		options = Object.assign({ domain: 'mail.ru', type }, options);
 
 		return browser.waitUntil(function async () {
