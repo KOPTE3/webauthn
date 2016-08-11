@@ -282,6 +282,11 @@ class PageObject {
 	getContainerElement () {
 		return this.page.element(this.locators.container);
 	}
+
+	/** Переключиться на ближайшую вкладку */
+	switchToNextTab () {
+		this.page.switchToNextTab();
+	}
 }
 
 module.exports = PageObject;
