@@ -6,7 +6,6 @@
 	* Вызов `TestTools.support.extend` заменен на модуль `deepmerge`
 	* `store.helpers` -> `store/helpers`
 
-* Хуки для Mocha вынесены в отдельный пакет `@qa/wdio-mocha-hooks`.
 
 ## 1.9.0
 
