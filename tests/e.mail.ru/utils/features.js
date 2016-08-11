@@ -3,7 +3,7 @@
 /** Модуль для работы с фичами */
 module.exports = {
 	/**
-	 * Примениение фичи
+	 * Применение фичи
 	 *
 	 * @param {string} name
 	 * @param {string} value
