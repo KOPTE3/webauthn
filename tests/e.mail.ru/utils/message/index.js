@@ -39,5 +39,19 @@ module.exports = {
 			folder: '/',
 			ids
 		});
+	},
+
+	/**
+	 * Переместить письмо в папку
+	 *
+	 * @param {string} messageId - id письма
+	 * @param {string} folder - id папки
+	 * @return {*}
+	 */
+	moveToFolder (messageId, folder) {
+		return actions.call('messages/move', {
+			folder,
+			ids: [messageId]
+		});
 	}
 };

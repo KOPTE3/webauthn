@@ -2,7 +2,8 @@
 
 let { options = {
 	name: 'Написание письма. Имена файлов в теме письма. Проверка, что после ' +
-	'удаления файла из письма, из темы удаляется имя файла, когда прикреплено несколько файлов.'
+	'удаления и повторного добавления файлов, тема письма меняется ' +
+	'в соответствии с новыми именами файлов.'
 }} = module.parent;
 
 let composeFolder = options.compose2 ? 'compose2' : 'compose';
@@ -49,21 +50,20 @@ describe(() => {
 
 		composeFields.checkFieldValue('subject', '');
 
-		// прикрепить 4 файла
-		for (index; index < 4; index++) {
+		for (index; index < 5; index++) {
 			composeAttaches.uploadAttach(manyAttaches[index]);
 			composeAttaches.hasAttach(manyAttaches[index]);
 		}
 
-		subject = `${manyAttaches[0]}, ${manyAttaches[1]}, ${manyAttaches[2]} и еще 1 файл`;
+		subject = `${manyAttaches[0]}, ${manyAttaches[1]}, ${manyAttaches[2]} и еще 2 файла`;
 		composeFields.checkFieldValue('subject', subject);
 
-		composeAttaches.removeAttach(manyAttaches[0]);
-		subject = `${manyAttaches[1]}, ${manyAttaches[2]}, ${manyAttaches[3]}`;
-		composeFields.checkFieldValue('subject', subject);
+		for (index = 0; index < 5; index++) {
+			composeAttaches.removeAttach(manyAttaches[index]);
+		}
 
-		composeAttaches.removeAttach(manyAttaches[2]);
-		subject = `${manyAttaches[1]}, ${manyAttaches[3]}`;
-		composeFields.checkFieldValue('subject', subject);
+		composeAttaches.uploadAttach(manyAttaches[5]);
+		composeAttaches.hasAttach(manyAttaches[5]);
+		composeFields.checkFieldValue('subject', manyAttaches[5]);
 	});
 });
