@@ -1,9 +1,8 @@
 'use strict';
 
-let helpers = require('../utils/helpers');
+let deepmerge = require('deepmerge');
 let account = require('../utils/account');
 let URL = require('../utils/url');
-let user = require('../utils/user/add');
 
 let cache = {
 	session : false,
@@ -139,11 +138,11 @@ class PageObject {
 	/**
 	 * Расширяет объект
 	 *
-	 * @param {Object} object
+	 * @see deepmerge
 	 * @returns {Object}
 	 */
-	extend (object) {
-		return helpers.extend(...arguments);
+	extend (/** ... */) {
+		return deepmerge(...arguments);
 	}
 
 	/**
