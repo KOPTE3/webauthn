@@ -3,7 +3,6 @@
 let assert = require('assert');
 
 let ComposeAttachesSteps = require('../compose/attaches');
-
 let Compose2Attaches = require('../../pages/compose2/attaches');
 
 let SystemStore = require('../../store/system');
@@ -22,6 +21,12 @@ class Compose2AttachesSteps extends ComposeAttachesSteps {
 		this.multiAttach.wait();
 		this.multiAttach.toggleMailFile(filename);
 		this.multiAttach.apply();
+	}
+
+	attachInline (filename) {
+		const filepath = SystemStore.file(filename);
+
+		this.composeAttaches.attachInline(filepath);
 	}
 }
 

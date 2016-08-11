@@ -37,7 +37,8 @@ class ComposeEditorControls extends ComposePage {
 				itemText: `${container} .mceSignatureMenu .mceSignatureSplitButtonItemWrap`,
 				text: `.mceSignatureSplitButtonItemWrap`,
 				settings: `${container} .mceSignatureMenu .mceSplitButtonItemLinkAway`
-			}
+			},
+			format: {}
 		});
 	}
 
