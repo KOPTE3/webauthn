@@ -68,6 +68,7 @@ describe('Новое написание письма. Черновики. Про
 			'no-collectors-in-compose',
 			'disable-fastreply-landmark'
 		]);
+
 		Compose.refresh();
 
 		composeEditor.wait();
