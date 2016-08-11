@@ -55,9 +55,14 @@ describe(() => {
 			'no-collectors-in-compose',
 			'disable-fastreply-landmark'
 		];
-		let { fields } = composeFieldsStore;
+
+		if (options.compose2) {
+			features.unshift('compose2');
+		}
 
 		Compose.auth();
+
+		let { fields } = composeFieldsStore;
 
 		anotherAccount = authStore.credentials();
 
@@ -82,8 +87,7 @@ describe(() => {
 		composeFields.setFieldValue('cc',
 			`${anotherAccount.login}@${anotherAccount.domain}`);
 
-		composeEditor.writeMessage(
-			composeEditorStore.classifierTest.lettersWithAttach[3]);
+		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 
 		composeControls.send();
 		replyReattachLayer.wait();
