@@ -5,8 +5,9 @@ let AccountManager = require('@qa/account-manager'),
 	TestTools = require('@qa/test-tools'),
 	capabilities = require('@qa/wd-capabilities');
 
-let project = 'account.mail.ru';
+let MochaHooks = require.resolve('@qa/wdio-mocha-hooks');
 
+let project = 'account.mail.ru';
 let account = new AccountManager.Hooks();
 
 let support = new TestTools.Support({
@@ -68,7 +69,7 @@ exports.config = {
 	mochaOpts: {
 		'ui': 'bdd',
 
-		require: './hooks/mocha.js',
+		require: MochaHooks,
 
 		/* Количество попыток на выполнение теста, который не был пройден */
 		'retries': 1,
