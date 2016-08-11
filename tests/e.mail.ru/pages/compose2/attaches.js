@@ -18,8 +18,9 @@ class ComposeAttaches extends ComposeAttachesPage {
 	 */
 	get locators () {
 		let container = '.compose-attachments';
-		let attachments = `${container} .js-sliderItem`;
+		let attachments = `${container} .js-sliderContent .js-sliderItem`;
 
+		/* eslint-disable max-len */
 		return this.extend(super.locators, {
 			container,
 			attachField: `${container} .compose-attachments__input`,
@@ -33,35 +34,10 @@ class ComposeAttaches extends ComposeAttachesPage {
 			progressname: '.compose-attachment__progress-mask .b-filename__text',
 
 			attachments,
-			attachmentsInner: '.js-content'
-		});
-	}
-
-	getAttach (filename) {
-		let {value: files} = this.page.elements(this.locators.attachments);
-		let file = { value: null };
-
-		files.some(({ ELEMENT }) => {
-			let name = this.page.elementIdElement(ELEMENT, this.locators.name);
-
-			if (name.value) {
-				// Нужно навести курсор на аттач, чтобы показалось имя
-				name.moveToObject();
-
-				if (!name.getText()) {
-					// возможно, аттач еще не загрузился, тогда имя нужно искать в другом месте:
-					name = this.page.elementIdElement(ELEMENT, this.locators.progressname);
-				}
-
-				if (name.getText().replace('\n', '') === filename) {
-					file = this.page.elementIdElement(ELEMENT, this.locators.attachmentsInner);
-
-					return true;
-				}
-			}
+			attachmentByName: filename => `//div[@class="b-slider__container js-sliderContainer"]/descendant::*[@class="b-filename__spacer"][text()="${filename}"]/ancestor::div[@class="b-slider__item js-sliderItem"]`
 		});
 
-		return file;
+		/* eslint-enable */
 	}
 
 	clickMail () {

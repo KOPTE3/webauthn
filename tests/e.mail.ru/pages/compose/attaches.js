@@ -65,7 +65,15 @@ class ComposeAttaches extends ComposePage {
 		let file = this.getAttach(filename);
 
 		if (!file.value) {
-			return reverse;
+			if (reverse) {
+				return true;
+			} else {
+				this.page.waitUntil(() => {
+					file = this.getAttach(filename);
+
+					return file.value;
+				}, 5000, 'Не удалось получить файл');
+			}
 		}
 
 		if (reverse) {
