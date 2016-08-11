@@ -17,7 +17,6 @@ let NotifySteps = require('../../../steps/notify');
 
 let composeEditorStore = require('../../../store/compose/editor');
 let composeFieldsStore = require('../../../store/compose/fields');
-let authStore = require('../../../store/authorization');
 
 let composeFields = new ComposeFieldsSteps();
 let composeEditor = new ComposeEditorSteps();
@@ -25,7 +24,6 @@ let composeAttaches = new ComposeAttachesSteps();
 let composeControls = new ComposeControlsSteps();
 let missingAttachLayer = new MissingAttachLayer();
 let notify = new NotifySteps();
-
 
 describe(() => {
 	before(() => {
@@ -50,7 +48,7 @@ describe(() => {
 		composeFields.setFieldValue('subject', fields.subject);
 		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 
-		composeAttaches.uploadAttach(filename);
+		composeAttaches.uploadAttachWithoutCheck(filename);
 		notify.wait('error', `Файл ${filename} заблокирован в целях безопасности.`, 'contains');
 
 		composeControls.send();

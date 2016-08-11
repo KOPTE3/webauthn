@@ -19,6 +19,16 @@ class ComposeAttachesSteps extends ComposeSteps {
 		this.multiAttach = new MultiAttachSteps();
 	}
 
+	/**
+	 * Нужно для загрузки сломанных / опасных файлов
+	 * @param {string} filename
+	 */
+	uploadAttachWithoutCheck (filename) {
+		const filepath = SystemStore.file(filename);
+
+		this.composeAttaches.uploadAttach(filepath);
+	}
+
 	uploadAttach (filename) {
 		const filepath = SystemStore.file(filename);
 
