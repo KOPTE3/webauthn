@@ -52,7 +52,7 @@ class ComposeAttaches extends ComposePage {
 			}, attachField);
 		}
 
-		this.page.setValue(this.locators.attachField, filepath);
+		this.page.setValue(attachField, filepath);
 	}
 
 	/**

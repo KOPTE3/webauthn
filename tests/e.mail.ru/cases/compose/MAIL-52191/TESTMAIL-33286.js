@@ -11,7 +11,9 @@ let composeFolder = options.compose2 ? 'compose2' : 'compose';
 let Message = require('../../../steps/message');
 let Messages = require('../../../steps/messages');
 let MessageToolbarSteps = require('../../../steps/message/toolbar');
+let MessageFastreplySteps = require('../../../steps/message/fastreply');
 let LettersSteps = require('../../../steps/messages/letters');
+
 
 let Compose = require(`../../../steps/${composeFolder}`);
 let ComposeControlsSteps = require(`../../../steps/${composeFolder}/controls`);
@@ -31,6 +33,7 @@ let Mail = require('../../../utils/mail');
 let notify = new NotifySteps();
 let letters = new LettersSteps();
 let messageToolbar = new MessageToolbarSteps();
+let messageFastreply = new MessageFastreplySteps();
 let composeFields = new ComposeFieldsSteps();
 let composeEditor = new ComposeEditorSteps();
 let composeControls = new ComposeControlsSteps();
@@ -42,6 +45,16 @@ let anotherAccount;
 
 describe(() => {
 	before(() => {
+		Messages.auth();
+
+		let features = [
+			'reattach-to-reply',
+			'check-missing-attach',
+			'disable-ballons',
+			'no-collectors-in-compose',
+			'disable-fastreply-landmark'
+		];
+
 		let { fields } = composeFieldsStore;
 		let mail = new Mail({
 			to: fields.to,
@@ -51,19 +64,6 @@ describe(() => {
 
 		mail.send();
 
-		anotherAccount = authStore.credentials();
-	});
-
-	beforeEach(() => {
-		const features = [
-			'reattach-to-reply',
-			'check-missing-attach',
-			'disable-ballons',
-			'no-collectors-in-compose',
-			'disable-fastreply-landmark'
-		];
-
-		Messages.auth();
 		Messages.features(features);
 		Messages.open();
 
@@ -72,28 +72,30 @@ describe(() => {
 
 		if (options.fastReply) {
 			Message.refresh();
-			messageToolbar.clickFastreplyButton('reply');
-			Compose.wait();
+			messageFastreply.clickButton('reply');
+			composeEditor.wait();
 		} else {
 			messageToolbar.clickButton('reply');
 			Compose.wait();
 			Compose.refresh();
 		}
+
+		anotherAccount = authStore.credentials();
 	});
 
 	it(options.name, () => {
 		composeFields.setFieldValue('to',
 			`${anotherAccount.login}@${anotherAccount.domain}`);
-
 		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 		composeAttaches.uploadAttachWithoutCheck(filename);
-
 		notify.wait('error', `Файл ${filename} заблокирован в целях безопасности.`, 'contains');
 
-		composeControls.send();
-		replyReattachLayer.wait();
+		if (options.fastReply) {
+			messageToolbar.clickFastreplyButton('reply');
+		} else {
+			composeControls.send();
+		}
 
-		composeControls.send();
 		missingAttachLayer.wait();
 		missingAttachLayer.checkTexts();
 	});
