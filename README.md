@@ -308,6 +308,21 @@ accounts.get('gmail.com', ['pdd']);
 Здесь содержится набор методов для получения списка провайдеров с учетом различных фильтров, в т.ч. и топа.
 
 
+#### store/authorization/passwords
+
+Позволяет получить предопределенный пароль заданой сложности
+
+
+#### utils/account.generatePassword
+
+Позволяет получить случайный пароль
+
+
+#### utils/account.passwordStrength
+
+Позволяет определить сложность пароля
+
+
 ### Файловая система
 
 Для работы с файлами, которые хранятся на диске используйте системное хранилище:
@@ -667,14 +682,16 @@ module.exports = {
 **<step>**
 
 ```js
-/**
- * Получить значение поля по имени
- *
- * @see form.getField
- * @param {string} name — имя поля
- */
-getFieldValue (name) {
-	form.getFieldValue(name);
+{
+	/**
+	 * Получить значение поля по имени
+	 *
+	 * @see form.getField
+	 * @param {string} name — имя поля
+	 */
+	getFieldValue (name) {
+		form.getFieldValue(name);
+	}
 }
 ```
 

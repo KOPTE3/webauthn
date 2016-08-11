@@ -10,7 +10,7 @@ let accountView = new AccountView();
 let selectView = new SelectView();
 let accessView = new AccessView();
 
-describe(() => {
+describe.skip(() => {
 	it('Регистрация нового пользователя', () => {
 		let user = userUtils.add({phones: 2});
 

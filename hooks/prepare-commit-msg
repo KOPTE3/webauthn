@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# -----------------------------------------
-# Добавляет название текущей ветки в коммит
-# -----------------------------------------
-
 # An example hook script to prepare the commit log message.
 # Called by "git commit" with the name of the file that has the
 # commit message, followed by the description of the commit
@@ -28,8 +24,9 @@
 #
 # .git/COMMIT_EDITMSG
 
-branch_name=`git rev-parse --abbrev-ref HEAD 2>/dev/null`;
+branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null);
+output=$(tr [:lower:] [:upper:] <<< [${branch}]);
 
-if [ -n ${branch_name} ] && [ ${branch_name} != 'master' ];
-	then echo "$(tr [:lower:] [:upper:] <<< [${branch_name}]) $(< $1)" > $1;
+if [ -n ${branch} ] && ! [[ $(< $1) =~ $output ]] && [ ${branch} != 'master' ];
+	then echo "$output $(< $1)" > $1;
 fi

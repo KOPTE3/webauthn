@@ -52,16 +52,17 @@ describe(() => {
 		Messages.open();
 		letters.waitForNewestLetter();
 
-		// новый попап прикрепления из почтофайлов
-		Messages.features([
-			'compose-popup-files'
-		]);
+		// новый попап прикрепления из облака
+		let features = [
+			'compose-popup-files',
+			'subject-from-attachments'
+		];
 
 		if (options.compose2) {
-			Messages.features([
-				'compose2'
-			]);
+			features.push('compose2');
 		}
+
+		Messages.features(features);
 	});
 
 	beforeEach(() => {

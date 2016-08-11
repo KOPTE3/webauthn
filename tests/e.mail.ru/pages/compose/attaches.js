@@ -29,15 +29,18 @@ class ComposeAttaches extends ComposePage {
 			slider: `${container} .js-attachments`,
 			remove: `${container} .upload__file__ico_del`,
 			progress: `${container} .upload__file__progress`,
+			loaded: '.upload__file__ico_ok',
 
 			attachments,
 			attachmentName: `${attachments} .upload__file__name`,
-			attachmentByName: filename => `${attachments}[data-title="${filename}"],${attachments}[title="${filename}"]`,
-			loadedAttachmentByName: filename => `${attachments}${loaded}[data-title="${filename}"],${attachments}${loaded}[title="${filename}"]`,
-			loadedIcon: '.js-ok'
+			attachmentByName: filename => `${attachments}[data-title="${filename}"],${attachments}[title="${filename}"]`
 		});
 
 		/* eslint-enable */
+	}
+
+	getAttach (filename) {
+		return this.page.element(this.locators.attachmentByName(filename));
 	}
 
 	uploadAttach (filepath) {
@@ -59,22 +62,36 @@ class ComposeAttaches extends ComposePage {
 	 * @return {boolean}
 	 */
 	isFileAttached (filename, reverse = false) {
-		let selector = `${this.locators.attachmentByName(filename)} ${this.locators.loadedIcon}`;
+		let file = this.getAttach(filename);
 
-		try {
-			return this.page.waitForVisible(selector, void 0, reverse);
-		} catch (error) {
-			console.log('error', error);
+		if (!file.value) {
+			if (reverse) {
+				return true;
+			} else {
+				this.page.waitUntil(() => {
+					file = this.getAttach(filename);
 
-			return false;
+					return file.value;
+				}, 5000, 'Не удалось получить файл');
+			}
+		}
+
+		if (reverse) {
+			return this.page.waitUntil(() => {
+				return !this.getAttach(filename).value;
+			}, 1000, 'Не дождались удаления файла');
+		} else {
+			let loaded = this.page.elementIdElement(file.value.ELEMENT, this.locators.loaded);
+
+			return loaded.waitForVisible(10000);
 		}
 	}
 
 	removeAttach (filename) {
-		let selector = this.locators.attachmentByName(filename);
-		let file = this.page.element(selector);
+		let file = this.getAttach(filename);
+		let remove = this.page.elementIdElement(file.value.ELEMENT, this.locators.remove);
 
-		file.click(this.locators.remove);
+		this.page.elementIdClick(remove.value.ELEMENT);
 	}
 
 	get slider () {

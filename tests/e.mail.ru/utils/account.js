@@ -1,9 +1,12 @@
 'use strict';
 
+let password = require('zxcvbn');
+
 let TestTools = require('@qa/test-tools');
 let AccountManager = require('@qa/account-manager');
 let authStore = require('../store/authorization');
 let providers = require('../store/authorization/providers');
+let passwords = require('../store/authorization/passwords');
 
 /** Набор методов для аккаунтом пользователя */
 module.exports = {
@@ -127,21 +130,38 @@ module.exports = {
 		}
 	},
 
-	generatePassword (length = 10) {
+	/**
+	 * Позволяет получить пароль с заданными характеристиками
+	 *
+	 * @param {number} length — требуемое количество символов
+	 * @param {boolean} local — использовать предопределенные пароли
+	 * @returns {string}
+	 */
+	generatePassword (length = 10, local) {
+		if (local) {
+			return passwords.get(2);
+		}
+
 		let symbols = '0123456789' +
 			'abcdefghiklmnopqrstuvwxyz' +
 			'ABCDEFGHIJKLMNOPQRSTUVWXTZ' +
 			'!@#$%^&*()-_+=;:,./?\\|`~[]{}';
 
 		let randomItems = (array, length) => {
-			return Array.from(
-				{length},
-				() => {
-					return array[Math.floor(Math.random() * array.length)];
-				}
-			);
+			return Array.from({ length }, () => {
+				return array[Math.floor(Math.random() * array.length)];
+			});
 		};
 
 		return randomItems(symbols, length).join('');
-	}
+	},
+
+	/**
+	 * Позволяет определить сложность пароля
+	 *
+	 * @param {string} password
+	 * @param {Array} credentials — данные, которые следует учитывать при проверке пароля
+	 * @returns {Object}
+	 */
+	passwordStrength: password
 };

@@ -1,8 +1,8 @@
 'use strict';
 
 let { options = {
-	name: 'Написание письма. Имена файлов в теме письма. Проверка, что после удаления ' +
-	'файла из письма, из темы удаляется имя файла, когда прикреплен один файл.'
+	name: 'Написание письма. Имена файлов в теме письма. Проверка, что если ' +
+	'сами очистили тему, то при добавлении файла его имя не добавляется в тему письма'
 }} = module.parent;
 
 let composeFolder = options.compose2 ? 'compose2' : 'compose';
@@ -20,6 +20,7 @@ let ComposeAttachesSteps = require(`../../../steps/${composeFolder}/attaches`);
 let composeAttaches = new ComposeAttachesSteps();
 
 const filename = 'test.txt';
+const filename2 = 'test1.png';
 
 describe(() => {
 	before(() => {
@@ -49,7 +50,10 @@ describe(() => {
 		composeAttaches.hasAttach(filename);
 		composeFields.checkFieldValue('subject', filename);
 
-		composeAttaches.removeAttach(filename);
+		composeFields.setFieldValue('subject', '');
+
+		composeAttaches.uploadAttach(filename2);
+		composeAttaches.hasAttach(filename2);
 		composeFields.checkFieldValue('subject', '');
 	});
 });

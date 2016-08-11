@@ -100,6 +100,10 @@ class MessagesPage extends PageObject {
 	 * @return {string}
 	 */
 	getLetterIdBySubject (subject) {
+		if (subject === '') {
+			subject = '<Без темы>';
+		}
+
 		let { value: letters } = this.getLetters();
 		let subjectLocator = this.locators.letterSubject;
 		let snippetLocator = this.locators.letterSnippet;
