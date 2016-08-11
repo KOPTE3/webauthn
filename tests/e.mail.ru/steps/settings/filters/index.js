@@ -2,13 +2,11 @@
 
 let assert = require('assert');
 
-let FiltersPage = require('../../../pages/settings/filters');
 let SettingsSteps = require('..');
-
+let FiltersPage = require('../../../pages/settings/filters');
 let actions = require('../../../utils/actions');
-
 let cleanerStore = require('../../../store/cleaner');
-let store = require('../../../store');
+let helpers = require('../../../store/helpers');
 
 let page = new FiltersPage();
 
@@ -27,7 +25,7 @@ class FiltersSteps extends SettingsSteps {
 	}
 
 	static enableCleaner () {
-		assert(actions.updateHelper(store.helpers['mailbox-sort'], {
+		assert(actions.updateHelper(helpers['mailbox-sort'], {
 			state: true
 		}), 'Cleaner helper update failed');
 	}

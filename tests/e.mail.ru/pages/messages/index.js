@@ -2,7 +2,7 @@
 
 let PageObject = require('../../pages');
 let actions = require('../../utils/actions');
-let store = require('../../store');
+let helpers = require('../../store/helpers');
 
 /** Модуль для работы с представлением страницы списка писем */
 class MessagesPage extends PageObject {
@@ -55,7 +55,7 @@ class MessagesPage extends PageObject {
 	 * @param {boolean} refresh
 	 */
 	toggleThreads (state, refresh) {
-		actions.helperUpdate(store.helpers.threads, {
+		actions.helperUpdate(helpers.threads, {
 			state,
 			time: true
 		});

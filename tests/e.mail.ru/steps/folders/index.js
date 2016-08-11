@@ -9,7 +9,7 @@ let FoldersPage = require('../../pages/folders');
 let SearchPage = require('../../pages/search');
 let actions = require('../../utils/actions');
 let dateUtils = require('../../utils/date');
-let store = require('../../store');
+let helpers = require('../../store/helpers');
 let folderStore = require('../../store/folders');
 let auth = require('../../store/authorization');
 
@@ -262,7 +262,7 @@ class FoldersSteps extends Steps {
 	}
 
 	static enableThreads () {
-		actions.helperUpdate(store.helpers.threads, {
+		actions.helperUpdate(helpers.threads, {
 			state: true,
 			time: true
 		});
