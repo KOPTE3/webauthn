@@ -166,6 +166,10 @@ class PageObject {
 		}
 	}
 
+	setViewportSize ({width = 1200, height = 600}) {
+		this.page.setViewportSize({ width, height });
+	}
+
 	/**
 	 * Метод пробует кликнуть по элементу несколько раз (осторожно костыль)
 	 *

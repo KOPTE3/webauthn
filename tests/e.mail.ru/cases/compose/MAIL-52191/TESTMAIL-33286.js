@@ -1,12 +1,17 @@
 'use strict';
 
-let { options = {}} = module.parent;
+let { options = {
+	name: 'Забытое вложение. ' +
+	'Проверить появление попапа на написании' +
+	'если в письме был заблокирован аттач'
+}} = module.parent;
 
 let composeFolder = options.compose2 ? 'compose2' : 'compose';
 
 let Message = require('../../../steps/message');
 let Messages = require('../../../steps/messages');
 let MessageToolbarSteps = require('../../../steps/message/toolbar');
+let MessagesToolbarSteps = require('../../../steps/messages/toolbar');
 let MessageFastreplySteps = require('../../../steps/message/fastreply');
 let LettersSteps = require('../../../steps/messages/letters');
 
@@ -21,6 +26,7 @@ let Mail = require('../../../utils/mail');
 
 let letters = new LettersSteps();
 let messageToolbar = new MessageToolbarSteps();
+let messagesToolbar = new MessagesToolbarSteps();
 let messageFastreply = new MessageFastreplySteps();
 let composeEditor = new ComposeEditorSteps();
 let composeControls = new ComposeControlsSteps();
@@ -39,6 +45,7 @@ let brokenAttachMeta = require('./meta/brokenAttach');
 describe(() => {
 	before(() => {
 		Messages.auth();
+		Messages.setViewportSize({ width: 1200 });
 
 		fields = composeFieldsStore.fields;
 		let mail = new Mail({
@@ -51,6 +58,7 @@ describe(() => {
 
 		user = authStore.credentials();
 		email = `${user.login}@${user.domain}`;
+
 	});
 
 	describe('TESTMAIL-33286', () => {
@@ -62,6 +70,7 @@ describe(() => {
 					Messages.open();
 					letters.openBySubject(fields.subject);
 					Message.refresh();
+
 					messageFastreply.clickButton('reply');
 					composeEditor.wait();
 				},
@@ -70,6 +79,7 @@ describe(() => {
 				},
 				cancel () {
 					messageToolbar.clickFastreplyButton('cancel');
+					composeEditor.alertAccept();
 				}
 			});
 		});
@@ -97,8 +107,27 @@ describe(() => {
 		});
 	});
 
-	describe('TESTMAIL-33256', () => {
-		it('Написание', () => {
+	describe('TESTMAIL-33253', () => {
+		it('НЕ AJAX Написание', () => {
+			brokenAttachMeta({
+				email,
+				open () {
+					Messages.features(features);
+					Messages.open();
+					messagesToolbar.clickButton('compose');
+				},
+				send () {
+					composeControls.send();
+				},
+				cancel () {
+					composeControls.cancel();
+				}
+			});
+		});
+	});
+
+	describe('TESTMAIL-33268', () => {
+		it('AJAX Написание', () => {
 			brokenAttachMeta({
 				email,
 				open () {
