@@ -22,6 +22,8 @@ let composeEditor = new ComposeEditorSteps();
 let composeAttaches = new ComposeAttachesSteps();
 let composeControls = new ComposeControlsSteps();
 
+// TODO: Сделать после раскатки перляки инлайн аттачей на 100%
+/*
 describe(() => {
 	before(() => {
 		const features = [
@@ -53,3 +55,4 @@ describe(() => {
 		// SentPage.wait();
 	});
 });
+*/
