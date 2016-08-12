@@ -116,6 +116,10 @@ class Steps {
 		assert(actual, `Не найдено соответствие с ожидаемым адресом ${url}`);
 	}
 
+	static setViewportSize (size) {
+		pages.setViewportSize(size);
+	}
+
 	/**
 	 * Подписывается на чтение запроса
 	 *

@@ -16,7 +16,11 @@ class NotifyPage extends PageObject {
 	}
 
 	getNotify (type) {
-		const locator = `${this.locators.container} ${this.locators[type]}`;
+		let locator = `${this.locators.container}`;
+
+		if (type) {
+			locator += ` ${this.locators[type]}`;
+		}
 
 		this.page.waitForExist(locator);
 

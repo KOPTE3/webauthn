@@ -33,7 +33,6 @@ class Notify extends Steps {
 		assert(element.isVisible(), 'Нотифай не показался');
 
 		elementText = element.getText();
-		console.log(elementText);
 
 		switch (compare) {
 			case 'contains':

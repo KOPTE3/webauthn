@@ -222,10 +222,14 @@ class FoldersPage extends PageObject {
 	}
 
 	getNotify (type) {
-		const notify = this.locators.notify;
-		const locator = `${notify.container} ${notify[type]}`;
+		let notify = this.locators.notify;
+		let locator = `${notify.container}`;
 
-		this.page.waitForExist(locator);
+		if (notify[type]) {
+			locator += ` ${notify[type]}`;
+		}
+
+		this.page.waitForVisible(locator);
 
 		return this.page.element(locator);
 	}
