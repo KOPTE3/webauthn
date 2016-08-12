@@ -61,7 +61,7 @@ describe(() => {
 
 	});
 
-	describe('TESTMAIL-33286', () => {
+	describe('TESTMAIL-33283', () => {
 		it('НЕ AJAX: Быстрый ответ', () => {
 			brokenAttachMeta({
 				email,
@@ -85,7 +85,7 @@ describe(() => {
 		});
 	});
 
-	describe('TESTMAIL-33283', () => {
+	describe('TESTMAIL-33286', () => {
 		it('НЕ AJAX: Полный ответ', () => {
 			brokenAttachMeta({
 				email,
@@ -93,6 +93,31 @@ describe(() => {
 					Messages.features(features);
 					Messages.open();
 					letters.openBySubject(fields.subject);
+					messageToolbar.clickButton('reply');
+					Compose.wait();
+					Compose.refresh();
+				},
+				send () {
+					composeControls.send();
+				},
+				cancel () {
+					composeControls.cancel();
+				}
+			});
+		});
+	});
+
+	describe('TESTMAIL-33282', () => {
+		it('Из НЕ AJAX чтения: Полный ответ', () => {
+			brokenAttachMeta({
+				email,
+				open () {
+					Messages.features(features);
+					Messages.open();
+					letters.openBySubject(fields.subject);
+
+					Message.refresh();
+
 					messageToolbar.clickButton('reply');
 					Compose.wait();
 					Compose.refresh();
