@@ -13,6 +13,7 @@ let ComposeFieldsSteps = require(`../../../steps/${composeFolder}/fields`);
 let ComposeEditorSteps = require(`../../../steps/${composeFolder}/editor`);
 let ComposeControlsSteps = require(`../../../steps/${composeFolder}/controls`);
 let MessageToolbarSteps = require('../../../steps/message/toolbar');
+let MessagesToolbarSteps = require('../../../steps/messages/toolbar');
 let LettersSteps = require('../../../steps/messages/letters');
 let Messages = require('../../../steps/messages');
 let Message = require('../../../steps/message');
@@ -27,6 +28,7 @@ let composeFields = new ComposeFieldsSteps();
 let composeEditor = new ComposeEditorSteps();
 let composeControls = new ComposeControlsSteps();
 let lettersSteps = new LettersSteps();
+let messagesToolbarSteps = new MessagesToolbarSteps();
 let messageToolbarSteps = new MessageToolbarSteps();
 let messageFastReplySteps = new MessageFastReplySteps();
 
@@ -60,6 +62,25 @@ describe(options.name, () => {
 				open () {
 					Compose.features(features);
 					Compose.open();
+					composeEditor.wait();
+				},
+
+				send () {
+					composeControls.send();
+				}
+			});
+		});
+	});
+
+	describe('TESTMAIL-33264', () => {
+
+		it('AJAX. Написание. ' + options.name, () => {
+			signature({
+				open () {
+					Messages.features(features);
+					Messages.open();
+
+					messagesToolbarSteps.clickButton('compose');
 					composeEditor.wait();
 				},
 
