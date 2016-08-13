@@ -1,7 +1,7 @@
 'use strict';
 
-const http = require('http');
-const debug = require('debug')('captcha');
+let http = require('http');
+let debug = require('debug')('captcha');
 
 const CAPTCHA_HEADER_NAME = 'X-Captcha-ID';
 const CAPTCHA_CRACKER_URL = 'http://test-proxy.win102.dev.mail.ru/captcha';
@@ -16,8 +16,9 @@ module.exports = {
 	 * @returns {Object}
 	 */
 	getCaptchaID (locator) {
-		let result = browser.timeoutsAsyncScript(5000).executeAsync(
-			function renewCaptcha (locator, CAPTCHA_HEADER_NAME, resolve) {
+		let result = browser
+			.timeoutsAsyncScript(5000)
+			.executeAsync(function renewCaptcha (locator, CAPTCHA_HEADER_NAME, resolve) {
 				var img = document.querySelector(locator);
 				var url = img.src;
 
@@ -59,6 +60,7 @@ module.exports = {
 
 	/**
 	 * Получить значение каптчи по заголовку
+	 *
 	 * @param {string} cid
 	 * @returns {Promise}
 	 */
@@ -66,20 +68,21 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			let url = `${CAPTCHA_CRACKER_URL}/${cid}`;
 
-			debug('captcha cracker requst: ', url);
-			http.get(url, result => {
+			debug('captcha cracker request: ', url);
+
+			http.get(url, response => {
 				let body = '';
 
-				if (result.statusCode !== 200) {
-					debug('captcha cracker err: ', res.statusCode);
+				if (response.statusCode !== 200) {
+					debug('captcha cracker error: ', response.statusCode);
 					resolve('');
 				}
 
-				result.on('data', chunk => {
+				response.on('data', chunk => {
 					body += chunk;
 				});
 
-				result.on('end', () => {
+				response.on('end', () => {
 					debug('captcha cracker result:', body);
 					resolve(body);
 				});

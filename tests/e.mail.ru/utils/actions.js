@@ -3,7 +3,7 @@
 let authStore = require('../store/authorization');
 let signup = require('./user/info');
 
-const ASYNC_TIMEOUT = 10000; // таймаут завершнеия асинхронного скрипта
+const ASYNC_TIMEOUT = 10000; // таймаут завершнения асинхронного скрипта
 const DELIVERY_TIMEOUT = 1000; // таймаут ожидания фактической доствки письма
 
 /** Модуль для работы с Actions */
@@ -11,8 +11,8 @@ module.exports = {
 	/**
 	 * Выполняет апи вызов
 	 *
-	 * @param {string} method - имя вызываемого метоа
-	 * @param {options} options - параметры передаваемы в вызов
+	 * @param {string} method - имя вызываемого метода
+	 * @param {options} options - параметры передаваемые в вызов
 	 * @returns {Promise}
 	 */
 	call (method, options) {
@@ -94,7 +94,7 @@ module.exports = {
 	/**
 	 * Регистрирует в браузере функцию-обработчик AJAX-ответов.
 	 *
-	 * @param {mixed} urlPattern Шаблон для проверки URL
+	 * @param {*} urlPattern Шаблон для проверки URL
 	 * @param {Function} hook функция-обработчик, принимает 2 парметра (xhr и options),
 	 * в которые можно внести изменения
 	 * @returns {Promise}
