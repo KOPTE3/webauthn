@@ -43,13 +43,14 @@ describe(() => {
 		const { fields } = composeFieldsStore;
 		const filename = 'pic.jpg';
 
+		composeAttaches.registerAddLogger();
+
 		composeFields.setFieldValue('to', fields.to);
 		composeFields.setFieldValue('subject', fields.subject);
 		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
 
-		// todo: wait till inline attaches are on all users
-		// composeAttaches.attachInline(filename);
-		// composeControls.send();
-		// SentPage.wait();
+		composeAttaches.attachInline(filename);
+		composeControls.send();
+		SentPage.wait();
 	});
 });

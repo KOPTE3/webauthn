@@ -248,7 +248,7 @@ class PageObject {
 	clickAll (locator) {
 		let elements = this.page.elements(locator);
 		let clicked = false;
-
+		
 		elements.value.forEach(element => {
 			if (clicked) {
 				return;

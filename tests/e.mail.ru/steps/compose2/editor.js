@@ -12,6 +12,10 @@ class Compose2EditorSteps extends ComposeEditorSteps {
 
 		this.composeEditor = new Compose2Editor();
 	}
+
+	waitForInlineAttach (id) {
+		return this.composeEditor.waitForInlineAttach(id);
+	}
 }
 
 module.exports = Compose2EditorSteps;

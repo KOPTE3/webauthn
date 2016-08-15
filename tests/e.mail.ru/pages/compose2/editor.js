@@ -16,6 +16,16 @@ class Compose2Editor extends ComposeEditor {
 	wait () {
 		return this.page.waitForExist(this.locators.container);
 	}
+
+	waitForInlineAttach (id) {
+		let editor = this.getEditor();
+		let element = editor.element(`//img[contains(@src, '${id}')]`);
+
+		element.waitForVisible();
+		this.restoreParentFrame();
+		
+		return element;
+	}
 }
 
 module.exports = Compose2Editor;

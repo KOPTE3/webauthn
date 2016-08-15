@@ -2,10 +2,12 @@
 
 let assert = require('assert');
 
-let ComposeAttachesPage = require('../compose/attaches');
 let Compose2EditorControlsPage = require('../compose2/editorControls');
+let ComposeAttachesPage = require('../compose/attaches');
 
 let compose2EditorControls = new Compose2EditorControlsPage();
+
+const ATTACH_TIMEOUT = 1000;
 
 /** Модуль для работы с прикреплением файлов написания письма */
 class ComposeAttaches extends ComposeAttachesPage {
@@ -53,6 +55,11 @@ class ComposeAttaches extends ComposeAttachesPage {
 		return this.page.element(this.locators.inlineField);
 	}
 
+	/**
+	 * Прикрепление инлайн аттача через кнопку в панели написания
+	 *
+	 * @param {string} filepath
+	 */
 	attachInline (filepath) {
 		const {inlineField} = this.locators;
 
@@ -63,6 +70,7 @@ class ComposeAttaches extends ComposeAttachesPage {
 		}
 
 		this.page.setValue(inlineField, filepath);
+		this.page.pause(ATTACH_TIMEOUT);
 	}
 }
 
