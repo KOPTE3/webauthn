@@ -33,6 +33,15 @@ class Signature extends Steps {
 
 		assert(actual, `Не найдена подпись ${signature}`);
 	}
+
+	/**
+	 * Есть редактор
+	 */
+	static hasWysiwyg () {
+		let actual = this.page.hasWysiwyg();
+
+		assert(actual, 'Редактор не показался');
+	}
 }
 
 module.exports = Signature;
