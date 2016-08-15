@@ -23,8 +23,18 @@ class Compose2Editor extends ComposeEditor {
 
 		element.waitForVisible();
 		this.restoreParentFrame();
-		
+
 		return element;
+	}
+
+	hasInlineInBlockQuote () {
+		let editor = this.getEditor();
+		let element = editor.element('blockquote img');
+
+		element.waitForVisible();
+		this.restoreParentFrame();
+
+		return true;
 	}
 }
 

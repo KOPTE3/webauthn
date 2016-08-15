@@ -73,7 +73,6 @@ describe(options.name, () => {
 	});
 
 	describe('TESTMAIL-33264', () => {
-
 		it('AJAX. Написание. ' + options.name, () => {
 			signature({
 				open () {
@@ -155,6 +154,4 @@ describe(options.name, () => {
 			});
 		});
 	});
-
-
 });

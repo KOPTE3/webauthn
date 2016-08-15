@@ -1,62 +1,45 @@
 'use strict';
 
 let { options = {
-	name: 'НЕ AJAX. Ответ на письмо. Забытое вложение. ' +
-	'Проверить отсутствие попапа для быстрой пересылки ' +
-	'с текстом в цитате, с аттачем (исходное письмо с аттачем)'
+	name: 'Забытое вложение. ' +
+	'Проверить отсутствие попапа на ответе ' +
+	'в письме с инлайн аттачем (в теле письма и в цитате)'
 }} = module.parent;
 
 let composeFolder = 'compose2';
 
 let Compose = require(`../../../steps/${composeFolder}`);
-let ComposeFieldsSteps = require(`../../../steps/${composeFolder}/fields`);
 let ComposeEditorSteps = require(`../../../steps/${composeFolder}/editor`);
-let ComposeAttachesSteps = require(`../../../steps/${composeFolder}/attaches`);
 let ComposeControlsSteps = require(`../../../steps/${composeFolder}/controls`);
-let SentPage = require('../../../steps/sent');
 
+let Message = require('../../../steps/message');
 let Messages = require('../../../steps/messages');
 let MessageToolbarSteps = require('../../../steps/message/toolbar');
+let MessageFastreplySteps = require('../../../steps/message/fastreply');
+let MessagesToolbarSteps = require('../../../steps/messages/toolbar');
 let LettersSteps = require('../../../steps/messages/letters');
-
 
 let Login = require('../../../steps/login');
 let LoginFormSteps = require('../../../steps/login/form');
 
-let composeEditorStore = require('../../../store/compose/editor');
-
-let Mail = require('../../../utils/mail');
-
-let composeFields = new ComposeFieldsSteps();
 let composeEditor = new ComposeEditorSteps();
-let composeAttaches = new ComposeAttachesSteps();
 let composeControls = new ComposeControlsSteps();
+let messageFastreply = new MessageFastreplySteps();
+let messagesToolbar = new MessagesToolbarSteps();
 
 let messageToolbar = new MessageToolbarSteps();
 let letters = new LettersSteps();
 
 let loginFormSteps = new LoginFormSteps();
 
+let test = require('./meta/inline-blockqoute');
+
 let user = {
 	email: 'ok_nez135@mail.ru',
 	password: 'qwerty@6'
 };
 
-const features = [
-	'reattach-to-reply',
-	'check-missing-attach',
-	'disable-ballons',
-	'no-collectors-in-compose',
-	'disable-fastreply-landmark',
-	'compose2',
-	'compose2-inlinefromeditor'
-];
-
-
-let subject = 'Тест';
-let text = 'Письмо';
-
-describe(() => {
+describe(options.name, () => {
 	before(() => {
 		Login.open();
 		loginFormSteps.send({
@@ -66,30 +49,116 @@ describe(() => {
 		Messages.wait();
 	});
 
-	it(options.name, () => {
-		const filename = '1exp.JPG';
+	describe('TESTMAIL-33255', () => {
+		it('AJAX. Быстрый ответ', () => {
+			test({
+				email: user.email,
+				response: true,
+				open () {
+					messageFastreply.clickButton('reply');
+					composeEditor.wait();
+				},
+				send () {
+					messageToolbar.clickFastreplyButton('reply');
+				}
+			});
+		});
+	});
 
-		Compose.features(features);
-		Compose.open();
+	describe('TESTMAIL-33272', () => {
+		it('НЕ AJAX. Быстрый ответ', () => {
+			test({
+				email: user.email,
+				response: true,
+				open () {
+					Message.refresh();
+					messageFastreply.clickButton('reply');
+					composeEditor.wait();
+				},
+				send () {
+					messageToolbar.clickFastreplyButton('reply');
+				}
+			});
+		});
+	});
 
-		composeFields.setFieldValue('to', user.email);
-		composeFields.setFieldValue('subject', subject);
-		composeAttaches.attachInline(filename);
-		composeControls.send();
-		SentPage.wait();
+	describe('TESTMAIL-33274', () => {
+		it('AJAX. Полный ответ', () => {
+			test({
+				email: user.email,
+				response: true,
+				open () {
+					messageToolbar.clickButton('reply');
+					Compose.wait();
+				},
+				send () {
+					composeControls.send();
+				}
+			});
+		});
+	});
 
-		Messages.features(features);
-		Messages.open();
+	describe('TESTMAIL-33276', () => {
+		it('НЕ AJAX. Полный ответ', () => {
+			test({
+				email: user.email,
+				response: true,
+				open () {
+					messageToolbar.clickButton('reply');
+					Compose.wait();
+					Compose.refresh();
+				},
+				send () {
+					composeControls.send();
+				}
+			});
+		});
+	});
 
-		letters.waitForNewestLetter();
-		letters.openNewestLetter();
-		messageToolbar.clickButton('reply');
-		Compose.wait();
-		Compose.refresh();
+	describe('TESTMAIL-33256', () => {
+		it('Из НЕ AJAX чтения. Полный ответ', () => {
+			test({
+				email: user.email,
+				response: true,
+				open () {
+					Message.refresh();
+					messageToolbar.clickButton('reply');
+					Compose.wait();
+				},
+				send () {
+					composeControls.send();
+				}
+			});
+		});
+	});
 
-		composeEditor.writeMessage(composeEditorStore.texts.withAttach);
-		composeAttaches.attachInline(filename);
-		composeControls.send();
-		SentPage.wait();
+	describe('TESTMAIL-33254', () => {
+		it('AJAX. Написание', () => {
+			test({
+				email: user.email,
+				open () {
+					Compose.open();
+				},
+				send () {
+					composeControls.send();
+				}
+			});
+		});
+	});
+
+	describe('TESTMAIL-33270', () => {
+		it('НЕ AJAX. Написание', () => {
+			test({
+				email: user.email,
+				open () {
+					Messages.open();
+					messagesToolbar.clickButton('compose');
+					Compose.wait();
+				},
+				send () {
+					composeControls.send();
+				}
+			});
+		});
 	});
 });
