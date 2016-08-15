@@ -33,6 +33,7 @@ class Compose2AttachesSteps extends ComposeAttachesSteps {
 		let filepath = SystemStore.file(filename);
 		let data;
 
+		this.registerAddLogger();
 		this.composeAttaches.attachInline(filepath);
 		data = attaches.getLastAddedFileData();
 
