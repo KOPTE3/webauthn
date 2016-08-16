@@ -21,7 +21,11 @@ let actions = require('../../../utils/actions');
 let MessageToolbarSteps = require('../../../steps/message/toolbar');
 let messageToolbarSteps = new MessageToolbarSteps();
 
-const subject = 'Тестовый текст';
+// SentPage
+let SentPage = require('../../../steps/sent');
+
+const testText = 'Тестовый текст';
+const subject = 'TESTMAIL-31903';
 
 describe('AJAX. Ответ на письмо. Забытое вложение. Проверить ' +
 'появление попапа для быстрой пересылки с текстом и без аттача', () => {
@@ -51,13 +55,12 @@ describe('AJAX. Ответ на письмо. Забытое вложение. �
 		fastreplySteps.clickButton('forward');
 
 		composeEditor.wait();
-		composeFields.setFieldValue('subject', subject);
+		composeFields.setFieldValue('subject', testText);
 		composeFields.setFieldValue('to', fields.to);
+		composeEditor.writeMessage(testText);
 
 		messageToolbarSteps.clickFastreplyButton('resend');
-		missingAttachLayer.wait();
 
-		missingAttachLayer.close();
-		messageToolbarSteps.clickFastreplyButton('cancel');
+		SentPage.wait();
 	});
 });

@@ -20,6 +20,9 @@ let composeEditor = new ComposeEditor();
 let ComposeFields = require('../../../steps/compose/fields');
 let composeFields = new ComposeFields();
 
+// SentPage
+let SentPage = require('../../../steps/sent');
+
 // layers
 let MissingAttachLayer = require('../../../steps/layers/missingAttach');
 let missingAttachLayer = new MissingAttachLayer();
@@ -70,9 +73,6 @@ describe('НЕ AJAX. Ответ на письмо. Забытое вложени
 		composeEditor.writeMessage('Тест письма');
 
 		messageToolbarSteps.clickFastreplyButton('resend');
-		missingAttachLayer.wait();
-
-		missingAttachLayer.close();
-		messageToolbarSteps.clickFastreplyButton('cancel');
+		SentPage.wait();
 	});
 });

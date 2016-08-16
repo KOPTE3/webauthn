@@ -18,6 +18,7 @@ module.exports = {
 			cc      : user,
 			bcc     : user,
 			subject : 'test',
+			text    : 'testing test',
 			remind  : 1,
 			receipt : 1,
 			priority: 1

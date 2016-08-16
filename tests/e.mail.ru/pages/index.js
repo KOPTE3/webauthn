@@ -165,6 +165,10 @@ class PageObject {
 		}
 	}
 
+	setViewportSize ({width = 1200, height = 600}) {
+		this.page.setViewportSize({ width, height });
+	}
+
 	/**
 	 * Метод пробует кликнуть по элементу несколько раз (осторожно костыль)
 	 *
@@ -243,7 +247,7 @@ class PageObject {
 	clickAll (locator) {
 		let elements = this.page.elements(locator);
 		let clicked = false;
-
+		
 		elements.value.forEach(element => {
 			if (clicked) {
 				return;

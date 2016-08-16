@@ -17,8 +17,8 @@ class Mail {
 	 */
 	constructor (options) {
 		let { account } = authorization;
-		let email = account.get('email');
-		let password = account.get('password');
+		let email = options.email || account.get('email');
+		let password = options.password || account.get('password');
 
 		let scheme = `smtps://${email}:${password}@smtp.mail.ru`;
 

@@ -121,6 +121,10 @@ class Steps {
 		pages.switchToNextTab();
 	}
 
+	static setViewportSize (size) {
+		pages.setViewportSize(size);
+	}
+
 	/**
 	 * Подписывается на чтение запроса
 	 *

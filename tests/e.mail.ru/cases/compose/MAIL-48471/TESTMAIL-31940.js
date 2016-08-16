@@ -21,6 +21,9 @@ let composeControls = new ComposeControls();
 let ComposeFields = require('../../../steps/compose/fields');
 let composeFields = new ComposeFields();
 
+// SentPage
+let SentPage = require('../../../steps/sent');
+
 // layers
 let MissingAttachLayer = require('../../../steps/layers/missingAttach');
 let missingAttachLayer = new MissingAttachLayer();
@@ -76,31 +79,11 @@ describe('НЕ AJAX. Ответ на письмо. Забытое вложени
 			Compose.wait();
 
 			composeEditor.wait();
-
 			composeFields.setFieldValue('to', fields.to);
-
 			composeEditor.writeMessage(testText);
-			composeEditor.wait();
-
 			composeControls.send();
 
-			missingAttachLayer.wait();
-
-			try {
-				missingAttachLayer.checkTexts();
-			} catch (error) {
-				throw new Error(error);
-			} finally {
-				try {
-					missingAttachLayer.close();
-					missingAttachLayer.shouldBeClosed();
-				} catch (error) {
-					throw new Error(error);
-				} finally {
-					composeEditor.wait();
-					composeControls.cancel();
-				}
-			}
+			SentPage.wait();
 		});
 	}
 );
