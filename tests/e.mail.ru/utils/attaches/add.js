@@ -3,14 +3,14 @@
 let ajax = require('../ajax');
 let helpers = require('../helpers');
 
-const url = 'messages/attaches/add';
+const defaultUrl = 'messages/attaches/add';
 
 module.exports = {
-	registerAddLogger () {
+	registerAddLogger (url = defaultUrl) {
 		return ajax.registerLogger('complete', url);
 	},
 
-	getLastAddedFileData () {
+	getLastAddedFileData (url = defaultUrl) {
 		let result = ajax.getLoggerInfo(url),
 			xhr, response;
 
