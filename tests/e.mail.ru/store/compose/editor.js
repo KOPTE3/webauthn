@@ -20,7 +20,7 @@ module.exports = {
 		/**
 		 * Тестовый текст
 		 */
-		test: 'Тестовы текст'
+		test: 'Тестовый текст'
 	},
 
 	classifierTest: {
