@@ -33,12 +33,18 @@ module.exports = {
 		// Добавляет обязательные поля
 		Object.assign(options, { host, type, service });
 
+		let message = JSON.stringify(options, null, '\t');
+
 		browser.waitUntil(function async () {
 			return account.session(options)
 				.then(result => true);
-		}, 15 * 1000, 'Could not get user session');
+		}, 15 * 1000, `Could not get user session\n\t${message}`);
 
-		this.setCookie();
+		try {
+			this.setCookie();
+		} catch (error) {
+			throw new Error(`Could not found cookie to continue:\n\t${message}`);
+		}
 	},
 
 	/**
@@ -49,17 +55,13 @@ module.exports = {
 
 		browser.url('/login');
 
-		try {
-			let cookie = account.get('cookie');
+		let cookie = account.get('cookie');
 
-			if (!cookie.length) {
-				throw new Error();
-			}
-
-			browser.setCookies(cookie);
-		} catch (error) {
-			throw new Error('Could not found cookie to continue');
+		if (!cookie.length) {
+			throw new Error();
 		}
+
+		browser.setCookies(cookie);
 
 		if (process.NODE_DEBUG) {
 			let email = account.get('email'),

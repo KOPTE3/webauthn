@@ -9,7 +9,8 @@
 
 if [ -z $CI_DEPLOY_ENVIRONMENT ]
 	then
-		. ./hooks/{outdated,config}.sh
+		. ./hooks/config.sh
+		. ./hooks/outdated.sh
 		npm run server install
 	else
 		. ./hooks/branches.sh $CI_DEPLOY_ENVIRONMENT

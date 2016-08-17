@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "1.9.0",
+	"version": "1.9.2",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
@@ -43,25 +43,25 @@
 		"@qa/grunt-test-runner" : "^0.2.5",
 		"@qa/test-tools": "^2.0.0",
 		"@qa/wd-capabilities": "^0.0.4",
-		"@qa/wdio-api-mail.ru": "^2.2.3",
+		"@qa/wdio-api-mail.ru": "^2.3.0",
 		"@qa/wdio-mocha-hooks": "^0.0.1",
 
 		"grunt": "^1.0.1",
-		"grunt-cli" : "^1.2.0",
-		"jit-grunt" : "^0.10.0",
+		"grunt-cli": "^1.2.0",
+		"jit-grunt": "^0.10.0",
 		"load-grunt-config": "^0.19.2",
+		"deepmerge": "^0.2.10",
 		"faker": "^3.1.0",
 		"zxcvbn": "^4.3.0",
-
 		"nodemailer": "2.5.0",
 		"request": "^2.72.0",
 		"time-grunt": "^1.3.0",
 
-		"webdriverio": "^4.2.3",
+		"webdriverio": "^4.2.4",
 		"wdio-mocha-framework": "^0.4.0",
-		"wdio-json-reporter" : "^0.0.3",
+		"wdio-json-reporter": "^0.0.3",
 		"wdio-junit-reporter": "^0.1.0",
-		"wdio-spec-reporter" : "^0.0.2"
+		"wdio-spec-reporter": "^0.0.2"
 	},
 
 	"devDependencies": {

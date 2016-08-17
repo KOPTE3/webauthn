@@ -21,8 +21,6 @@ let composeEditorControls = new ComposeEditorControlsSteps();
 let MessagesToolbarSteps = require('../../../steps/messages/toolbar');
 let messagesToolbarSteps = new MessagesToolbarSteps();
 
-let tabs = require('../../../utils/tabs');
-
 describe(() => {
 	before(() => {
 		Messages.auth();
@@ -50,7 +48,7 @@ describe(() => {
 
 		composeEditorControls.clickSignatureSettings();
 
-		tabs.switchTab();
+		composeEditor.switchToNextTab();
 		Signature.wait();
 	});
 });

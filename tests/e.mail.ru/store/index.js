@@ -42,10 +42,5 @@ module.exports = {
 	 */
 	product (name) {
 		return this.products[name];
-	},
-
-	helpers: {
-		'threads': 63,
-		'mailbox-sort': 33
 	}
 };

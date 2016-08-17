@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.9.2
+
+* Модуль `@qa/wdio-api-mail.ru` переименован в `@qa/wdio-api`. Из-за несовместимости с локальными конфигами пока поддерживается оба варианта.
+* В `utils/tabs.js` перенесен в `browser.switchToNextTab`, который доступен в `@qa/wdio-api.`
+
+## 1.9.1
+
+* В рамках работы над скафолдером:
+	* Вызов `TestTools.support.extend` заменен на модуль `deepmerge`
+	* `store.helpers` -> `store/helpers`
+
 
 ## 1.9.0
 
