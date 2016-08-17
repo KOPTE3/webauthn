@@ -116,6 +116,16 @@ class Steps {
 		assert(actual, `Не найдено соответствие с ожидаемым адресом ${url}`);
 	}
 
+	/**
+	 * Установить размер окна
+	 * @param {Object} size
+	 * @param {number} size.width
+	 * @param {number} size.height
+	 */
+	static setViewportSize (size) {
+		pages.setViewportSize(size);
+	}
+
 	/** Переключиться на ближайшую вкладку */
 	switchToNextTab () {
 		pages.switchToNextTab();

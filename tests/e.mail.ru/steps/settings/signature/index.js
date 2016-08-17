@@ -5,6 +5,9 @@ let assert = require('assert');
 let Steps = require('../../../steps');
 let SettingsSignaturePage = require('../../../pages/settings/signature');
 
+let SignatureEditorControlsSteps = require('../signature/editorControls');
+let signatureEditorControls = new SignatureEditorControlsSteps();
+
 class Signature extends Steps {
 
 	/**
@@ -32,6 +35,19 @@ class Signature extends Steps {
 		let actual = this.page.hasSignature(signature);
 
 		assert(actual, `Не найдена подпись ${signature}`);
+	}
+
+	/**
+	 * Есть редактор
+	 */
+	static hasWysiwyg () {
+		let actual = this.page.hasWysiwyg();
+
+		assert(actual, 'Редактор не показался');
+	}
+
+	static attachInline (filename) {
+		signatureEditorControls.attachInline(filename);
 	}
 }
 

@@ -100,6 +100,24 @@ class LettersSteps extends MessagesSteps {
 			assert(false, 'Нового сообщения нет: ' + error.message);
 		}
 	}
+
+	/**
+	 * У нового письма есть скрепка
+	 */
+	isNewestLetterWithAttaches () {
+		let actual = this.lettersPage.isNewestLetterWithAttaches();
+
+		assert(actual, 'У нового письма нет скрепки');
+	}
+
+	/**
+	 * У нового письма нет скрепки
+	 */
+	isNewestLetterWithoutAttaches () {
+		let actual = !this.lettersPage.isNewestLetterWithAttaches();
+
+		assert(actual, 'У нового письма есть скрепка');
+	}
 }
 
 module.exports = LettersSteps;

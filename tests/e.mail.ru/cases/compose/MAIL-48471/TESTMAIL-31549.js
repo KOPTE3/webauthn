@@ -1,37 +1,56 @@
 'use strict';
 
-let Compose = require('../../../steps/compose');
-let ComposeFields = require('../../../steps/compose/fields');
-let ComposeEditor = require('../../../steps/compose/editor');
-let ComposeControls = require('../../../steps/compose/controls');
-let composeEditorStore = require('../../../store/compose/editor');
+
+let { options = {
+	name: 'НЕ AJAX. Написание письма. Забытое вложение. ' +
+	'Проверить отсутствие попапа при отправке ' +
+	'(тексты для которых не должен появляться попап)'
+}} = module.parent;
+
+let composeFolder = options.compose2 ? 'compose2' : 'compose';
+
+let Compose = require(`../../../steps/${composeFolder}`);
+let ComposeFieldsSteps = require(`../../../steps/${composeFolder}/fields`);
+let ComposeEditorSteps = require(`../../../steps/${composeFolder}/editor`);
+let ComposeControlsSteps = require(`../../../steps/${composeFolder}/controls`);
+
 let SentPage = require('../../../steps/sent');
+
+let composeEditorStore = require('../../../store/compose/editor');
 let composeFieldsStore = require('../../../store/compose/fields');
 
-let composeFields = new ComposeFields();
-let composeEditor = new ComposeEditor();
-let composeControls = new ComposeControls();
+let composeFields = new ComposeFieldsSteps();
+let composeEditor = new ComposeEditorSteps();
+let composeControls = new ComposeControlsSteps();
 
-describe('НЕ AJAX. Написание письма. Забытое вложение. ' +
-'Проверить отсутствие попапа при отправке ' +
-'(тексты для которых не должен появляться попап)', () => {
+let texts = composeEditorStore.classifierTest.lettersWithoutAttach;
+
+
+describe(() => {
 	before(() => {
 		Compose.auth();
 	});
 
-	it('Письмо должно отправится', () => {
-		Compose.features([
-			'check-missing-attach',
-			'disable-ballons',
-			'no-collectors-in-compose'
-		]);
+	texts.forEach(
+		(text) => {
+			it(`${options.name}. ${text.slice(0,20)}...`, () => {
+				Compose.features([
+					'check-missing-attach',
+					'disable-ballons',
+					'no-collectors-in-compose'
+				]);
+				Compose.open();
 
-		Compose.open();
+				composeEditor.wait();
 
-		composeFields.setFieldValue('subject', 'check attach');
-		composeFields.setFieldValue('to', composeFieldsStore.fields.to);
-		composeEditor.writeMessage(composeEditorStore.texts.withoutAttach);
-		composeControls.send();
-		SentPage.isVisible();
-	});
+				composeFields.setFieldValue('subject', 'check attach');
+				composeFields.setFieldValue('to', composeFieldsStore.fields.to);
+				composeEditor.writeMessage(text);
+
+				composeControls.send();
+
+				SentPage.wait();
+			});
+		}
+	);
 });

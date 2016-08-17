@@ -2,7 +2,7 @@
 
 let PageObject = require('../../../pages');
 
-class FoldersPage extends PageObject {
+class SignaturePage extends PageObject {
 	/**
 	 * Базовый адрес страницы
 	 *
@@ -28,7 +28,8 @@ class FoldersPage extends PageObject {
 				controls: {
 					remove: '.js-remove'
 				},
-				signature: `${container} .js-signature-container textarea`
+				signature: `${container} .js-signature-container textarea`,
+				wysiwyg: `${container} .js-signature-container .mceExternalToolbar`
 			},
 			controls: {
 				new: `${container} .js-add-signature`,
@@ -110,6 +111,15 @@ class FoldersPage extends PageObject {
 
 		return result;
 	}
+
+	/**
+	 * Дождаться видимости редактора
+	 *
+	 * @return {boolean}
+	 */
+	hasWysiwyg () {
+		return this.page.waitForVisible(this.locators.item.wysiwyg);
+	}
 }
 
-module.exports = FoldersPage;
+module.exports = SignaturePage;

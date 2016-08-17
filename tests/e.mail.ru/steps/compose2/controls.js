@@ -2,11 +2,11 @@
 
 let assert = require('assert');
 
-let ComposeControlSteps = require('../compose/controls');
+let ComposeControlsSteps = require('../compose/controls');
 let Compose2Controls = require('../../pages/compose2/controls');
 
 /** Модуль для работы с шагами контролов страницы написания письма */
-class Compose2ControlSteps extends ComposeControlSteps {
+class Compose2ControlsSteps extends ComposeControlsSteps {
 	constructor () {
 		super();
 
@@ -14,4 +14,4 @@ class Compose2ControlSteps extends ComposeControlSteps {
 	}
 }
 
-module.exports = Compose2ControlSteps;
+module.exports = Compose2ControlsSteps;
