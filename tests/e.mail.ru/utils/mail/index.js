@@ -17,17 +17,17 @@ class Mail {
 	 */
 	constructor (options) {
 		let { account } = authorization;
-		let email = account.get('email');
-		let password = account.get('password');
-
-		let scheme = `smtps://${email}:${password}@smtp.mail.ru`;
-
-		this.transport = nodemailer.createTransport(scheme);
 
 		this.options = Object.assign({
-			from: email
+			from: account.get('email'),
+			password: account.get('password')
 		}, options);
+
+		let scheme = `smtps://${this.options.from}:${this.options.password}@smtp.mail.ru`;
+
+		this.transport = nodemailer.createTransport(scheme);
 	}
+
 
 	/**
 	 * Прикрепить аттач к письму

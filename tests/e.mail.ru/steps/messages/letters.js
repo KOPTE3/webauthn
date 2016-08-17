@@ -41,6 +41,16 @@ class LettersSteps extends MessagesSteps {
 	}
 
 	/**
+	 * Открыть новое письмо в новой вкладке
+	 */
+	openNewestLetterInTab () {
+		assert(
+			this.lettersPage.openNewestLetter({keys: 'Meta'}),
+			'не удалось кликнуть по новому письму'
+		);
+	}
+
+	/**
 	 * Открыть первый шаблон/черновик
 	 *
 	 */

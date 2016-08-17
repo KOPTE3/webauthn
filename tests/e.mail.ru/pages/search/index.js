@@ -30,7 +30,8 @@ class SearchPage extends MessagesPage {
 		let container = this.lettersLocator;
 
 		return this.extend(super.locators, {
-			container
+			container,
+			letters: `${container} .b-datalist__item`
 		});
 	}
 }
