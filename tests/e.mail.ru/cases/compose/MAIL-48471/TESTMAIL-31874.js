@@ -33,7 +33,9 @@ const subject = 'Тест';
 
 describe('Ответ на письмо. Забытое вложение. Проверить появление ' +
 ' попапа для быстрого ответа с текстом и без аттача', () => {
-	before(Compose.auth);
+	before(() => {
+		Compose.auth();
+	});
 
 	it('Попап появился', () => {
 		let { fields } = composeFieldsStore;

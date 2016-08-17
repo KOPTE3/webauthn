@@ -53,6 +53,7 @@ class FileSearchPage extends PageObject {
 	isEmptyFolder () {
 		return this.page.isVisible(this.locators.empty);
 	}
+
 }
 
 module.exports = FileSearchPage;

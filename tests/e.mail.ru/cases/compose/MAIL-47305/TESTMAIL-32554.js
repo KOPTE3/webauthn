@@ -47,7 +47,7 @@ describe(() => {
 		messagesToolbarSteps.clickButton('compose');
 		Compose.wait();
 
-		composeFields.expandField('From');
+		composeFields.expandField('from');
 		composeFields.setDropdownValue('fromEmail', aliasId);
 		composeFields.setFieldValue('subject', composeData.subject);
 		composeFields.setFieldValue('to', composeData.to);
