@@ -50,7 +50,7 @@ describe(
 			 *
 			 * @param {Object} params
 			 */
-			var sendMail = (params) => {
+			let sendMail = (params) => {
 				let mail = new Mail(params);
 
 				mail.send();
@@ -101,16 +101,21 @@ describe(
 			// ctrl + click на первом письме
 			searchLetters.openNewestLetterInTab();
 
+			// нужно дождатся пока начнет грузится другой url,
+			// так как если быстро проверить search.waitForUrl() то урл останется старым
+			// и ошибки не будет
+			browser.pause(2000);
+
 			// проверяем что открыта все таже страница поиска и не было перехода
-			search.waitForUrl(/\/search\//);
+			search.waitForUrl();
 
 			// переходим на другую вкладку
 			// ВАЖНО в браузере визуально в этом тесте вкладка не переключалась
-			// хотя конекст менялся, а в другом тесте меняется
+			// хотя конекст менялся, а в другом тесте вкладка переключается
 			// и не ясно почему так
 			searchLetters.switchToNextTab();
 
-			search.waitForUrl(/\/thread\//);
+			threadFromsearch.waitForUrl();
 
 			ThreadFromsearch.wait();
 

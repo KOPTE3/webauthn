@@ -31,6 +31,10 @@ class Thread extends PageObject {
 		};
 	}
 
+	waitForUrl () {
+		return super.waitForUrl(new RegExp(this.location));
+	}
+
 	/**
 	 * Получить все письма из треда
 	 *

@@ -34,6 +34,10 @@ class SearchPage extends MessagesPage {
 			letters: `${container} .b-datalist__item`
 		});
 	}
+
+	waitForUrl () {
+		return super.waitForUrl(new RegExp(this.location));
+	}
 }
 
 module.exports = SearchPage;

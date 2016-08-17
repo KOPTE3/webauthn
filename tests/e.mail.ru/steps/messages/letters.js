@@ -44,10 +44,9 @@ class LettersSteps extends MessagesSteps {
 	 * Открыть новое письмо в новой вкладке
 	 */
 	openNewestLetterInTab () {
-		assert(
-			this.lettersPage.openNewestLetter({keys: 'Meta'}),
-			'не удалось кликнуть по новому письму'
-		);
+		let actual = this.lettersPage.openNewestLetter({keys: 'Meta'});
+
+		assert(actual, 'Не удалось кликнуть по новому письму');
 	}
 
 	/**
