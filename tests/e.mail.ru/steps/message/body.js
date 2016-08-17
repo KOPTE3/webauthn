@@ -2,14 +2,14 @@
 
 let assert = require('assert');
 
-let BodyPage = require('../../pages/message/body');
+let LetterBodyPage = require('../../pages/message/body');
 let MessageSteps = require('../message');
 
 /** Модуль для работы с телом письма */
-class BodySteps extends MessageSteps {
+class LetterBodySteps extends MessageSteps {
 	constructor () {
 		super();
-		this.bodyPage = new BodyPage();
+		this.bodyPage = new LetterBodyPage();
 	}
 
 	/**
@@ -20,6 +20,15 @@ class BodySteps extends MessageSteps {
 	clickLink (link) {
 		this.bodyPage.clickLink(link);
 	}
+
+	/**
+	 * Проверить, что в письме есть инлайны
+	 */
+	hasInline () {
+		let actual = this.bodyPage.hasInline();
+
+		assert(actual, 'В письме нет инлайнов');
+	}
 }
 
-module.exports = BodySteps;
+module.exports = LetterBodySteps;
