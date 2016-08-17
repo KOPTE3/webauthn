@@ -24,11 +24,16 @@ let actions = require('../../../utils/actions');
 let MessageToolbarSteps = require('../../../steps/message/toolbar');
 let messageToolbarSteps = new MessageToolbarSteps();
 
+// SentPage
+let SentPage = require('../../../steps/sent');
+
 const subject = 'Тестовый текст';
 
 describe('Ответ на письмо. Забытое вложение. Проверить ' +
 'появление попапа для пересылки из тулбара с текстом и без аттача', () => {
-	before(Compose.auth);
+	before(() => {
+		Compose.auth();
+	});
 
 	it('Попап должен появится', () => {
 		let { fields } = composeFieldsStore;
@@ -58,9 +63,7 @@ describe('Ответ на письмо. Забытое вложение. Про�
 		composeFields.setFieldValue('to', fields.to);
 
 		composeControls.send();
-		missingAttachLayer.wait();
 
-		missingAttachLayer.close();
-		composeControls.cancel();
+		SentPage.wait();
 	});
 });

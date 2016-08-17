@@ -11,6 +11,7 @@ module.exports = {
 	 *
 	 * @see discard — обязательно вызываейте этот метод для осовобождения
 	 * занимаемого аккаунта!
+
 	 * @param {string} type — тип авторизации
 	 * @param {Object} [options] — дополнительные опции
 	 * @param {number} [timeout] — максимальное время ожидания

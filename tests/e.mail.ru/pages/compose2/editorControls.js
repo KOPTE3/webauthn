@@ -11,6 +11,16 @@ class Compose2EditorControls extends ComposeEditorControls {
 	get locatorContainer () {
 		return '.compose__toolbar-external';
 	}
+
+	get locators () {
+		let container = this.locatorContainer;
+
+		return this.extend(super.locators, {
+			format: {
+				inlineField: `${container} input[name="inlinefiles"]`
+			}
+		});
+	}
 }
 
 module.exports = Compose2EditorControls;

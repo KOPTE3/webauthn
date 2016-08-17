@@ -3,27 +3,29 @@
 
 let { options = {
 	name: 'НЕ AJAX. Написание письма. Забытое вложение. ' +
-	'Проверить отсутствие попапа при отправке ' +
-	'(тексты для которых не должен появляться попап)'
+	'Проверить появление попапа при отправке текстов ' +
+	'(все тексты для которых должен появляться попап, проверка классификатора)'
 }} = module.parent;
 
 let composeFolder = options.compose2 ? 'compose2' : 'compose';
 
 let Compose = require(`../../../steps/${composeFolder}`);
-let ComposeFieldsSteps = require(`../../../steps/${composeFolder}/fields`);
-let ComposeEditorSteps = require(`../../../steps/${composeFolder}/editor`);
-let ComposeControlsSteps = require(`../../../steps/${composeFolder}/controls`);
+let ComposeFields = require(`../../../steps/${composeFolder}/fields`);
+let ComposeEditor = require(`../../../steps/${composeFolder}/editor`);
+let ComposeControls = require(`../../../steps/${composeFolder}/controls`);
+let MissingAttachLayer = require('../../../steps/layers/missingAttach');
 
 let SentPage = require('../../../steps/sent');
 
 let composeEditorStore = require('../../../store/compose/editor');
 let composeFieldsStore = require('../../../store/compose/fields');
 
-let composeFields = new ComposeFieldsSteps();
-let composeEditor = new ComposeEditorSteps();
-let composeControls = new ComposeControlsSteps();
+let composeFields = new ComposeFields();
+let composeEditor = new ComposeEditor();
+let composeControls = new ComposeControls();
+let missingAttachLayer = new MissingAttachLayer();
 
-let texts = composeEditorStore.classifierTest.lettersWithoutAttach;
+let texts = composeEditorStore.classifierTest.lettersWithAttach;
 
 
 describe(() => {
@@ -49,7 +51,12 @@ describe(() => {
 
 				composeControls.send();
 
-				SentPage.wait();
+				missingAttachLayer.wait();
+				missingAttachLayer.checkTexts();
+				missingAttachLayer.cancel();
+
+				composeControls.cancel();
+
 			});
 		}
 	);
