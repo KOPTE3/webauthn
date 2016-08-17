@@ -80,7 +80,7 @@ class FilesPage extends FilesearchPage {
 	 */
 	rightClickOnFile (id) {
 		var link = this.locators.getItem(id);
-		
+
 		this.page.rightClick(link);
 	}
 

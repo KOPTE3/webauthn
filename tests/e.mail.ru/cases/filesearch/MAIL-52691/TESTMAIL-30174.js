@@ -19,10 +19,21 @@ let unsafeLayer = new UnsafeLayer();
 
 let Mail = require('../../../utils/mail');
 
+let { options = {
+	desc: `Filesearch. Вид список. Проверить попап потенциально опасных файлов. Проверить
+	 скачивание файла из попапа по клику на самом файле`,
+	type: 'list',
+	action: () => {
+		fileSearchFiles.clickDonwloadLink();
+	}
+} } = module.parent;
+
+let { type } = options;
+
 describe(() => {
 	before(() => {
 		Messages.auth();
-		let {fields} = composeFieldsStore;
+		let { fields } = composeFieldsStore;
 		let subject = 'TEST';
 
 		// отправляем себе письмо с exe файлом
@@ -40,11 +51,11 @@ describe(() => {
 		lettersSteps.openNewestLetter();
 	});
 
-	it(`Filesearch. Вид список. Проверить попап потенциально опасных файлов. Проверить
-	 скачивание файла из попапа по клику на самом файле`, () => {
+	it(options.desc, () => {
 		FileSearch.open();
-		fileSearchToolbar.changeState('list');
-		fileSearchFiles.clickDonwloadLink();
+		fileSearchToolbar.changeState(type);
+
+		options.action();
 
 		unsafeLayer.wait();
 		unsafeLayer.clickAgree();
