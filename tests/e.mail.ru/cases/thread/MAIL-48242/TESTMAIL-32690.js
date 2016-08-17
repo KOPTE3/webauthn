@@ -1,5 +1,8 @@
 'use strict';
 
+// Message
+let Message = require('../../../steps/message');
+
 // Messages
 let Messages = require('../../../steps/messages');
 let Toolbar = require('../../../steps/messages/toolbar');
@@ -7,6 +10,7 @@ let toolbar = new Toolbar();
 let Letters = require('../../../steps/messages/letters');
 let letters = new Letters();
 let Search = require('../../../steps/search');
+let search = new Search();
 let SearchLetters = require('../../../steps/search/letters');
 let searchLetters = new SearchLetters();
 
@@ -24,7 +28,8 @@ let AdvancedSteps = require('../../../steps/portal-menu/advanced');
 let advancedSteps = new AdvancedSteps();
 
 let Mail = require('../../../utils/mail');
-let Thread = require('../../../steps/thread');
+let ThreadFromsearch = require('../../../steps/thread/fromsearch');
+let threadFromsearch = new ThreadFromsearch();
 let authorization = require('../../../store/authorization');
 
 const subject = 'Тест';
@@ -39,22 +44,32 @@ describe(
 		});
 
 		it('Проверить открылось ли письмо', () => {
+
+			/**
+			 * Отправляет письмо
+			 *
+			 * @param {Object} params
+			 */
+			var sendMail = (params) => {
+				let mail = new Mail(params);
+
+				mail.send();
+			};
+
 			// получаем данным учетной записи дополнительной
 			let data = authorization.credentials();
 			let { fields } = composeFieldsStore;
 
-			// отправляем два письма не от себя
-			for (let index of [,,]) {
-				let mail = new Mail({
-					to: fields.to,
-					from: data.email,
-					subject,
-					text,
-					password: data.password
-				});
+			let sendData = {
+				to: fields.to,
+				from: data.email,
+				subject,
+				text,
+				password: data.password
+			};
 
-				mail.send();
-			}
+			// отправляем письмо себе
+			sendMail(sendData);
 
 			// открываем письма
 			Messages.open();
@@ -64,6 +79,9 @@ describe(
 
 			// включаем группировку писем
 			toolbar.toggleThreads(true, true);
+
+			// еще одно письмо
+			sendMail(sendData);
 
 			// TODO после того как выкатят изменения связанные с search
 			// можно будет использовать обычный ввод а не расширенный
@@ -84,40 +102,25 @@ describe(
 			searchLetters.openNewestLetterInTab();
 
 			// проверяем что открыта все таже страница поиска и не было перехода
-			Search.wait();
+			search.waitForUrl(/\/search\//);
 
-			// TODO бага какая-то с переключением никак не возможно
-			// переключиться на следующую вкладку
+			// переходим на другую вкладку
+			// ВАЖНО в браузере визуально в этом тесте вкладка не переключалась
+			// хотя конекст менялся, а в другом тесте меняется
+			// и не ясно почему так
+			searchLetters.switchToNextTab();
 
-			browser.pause(3000);
+			search.waitForUrl(/\/thread\//);
 
-			let tabs = browser.getTabIds();
+			ThreadFromsearch.wait();
 
-			console.log(tabs);
-			let current = browser.getCurrentTabId();
+			// смотрим чтобы было два письма в треде
+			threadFromsearch.checkLettersCount(2);
 
-			console.log(current);
-			let actual = tabs.find(id => id !== current);
-
-			console.log(actual);
-
-			console.log(1, browser.getCurrentTabId());
-
-			browser.window(actual);
-
-			browser.switchTab(actual);
-			console.log(2, browser.getCurrentTabId());
-
-			console.log(browser.getHTML('body'));
-
-			// Thread.wait();
-			browser.pause(3000);
-
-			// проверяем
-			// верхнее письмо будет развернуто
-
-			// нижнее свернуто
-
+			// проверяем что первое письмо в треде раскрыто
+			threadFromsearch.checkExpandedLetter(0, true);
+			// а второе свернуто
+			threadFromsearch.checkExpandedLetter(1, false);
 		});
 	}
 );
