@@ -32,6 +32,13 @@ class ToolbarPage extends FilesearchPage {
 		this.clickWithRetry(this.locators.buttons[name]);
 	}
 
+	/**
+	 * Метод дожидается открытия контекстного меню
+	 */
+	wait () {
+		this.page.waitForVisible(this.locators.container);
+	}
+
 }
 
 module.exports = ToolbarPage;

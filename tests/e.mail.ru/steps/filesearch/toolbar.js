@@ -19,7 +19,7 @@ class FilesearchToolbarSteps extends FilesearchSteps {
 	changeState (type) {
 		this.toolbarPage.changeState(type);
 
-		assert(this.toolbarPage.getActiveState(), name);
+		assert(this.toolbarPage.getActiveState(), type);
 	}
 
 	download () {

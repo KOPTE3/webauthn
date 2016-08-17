@@ -33,6 +33,10 @@ class FilesPage extends FilesearchPage {
 			container,
 			item,
 
+			getItem: (id) => {
+				return getItem(id);
+			},
+
 			getCheckbox: (id) => {
 				return `${getItem(id)} [data-bem="b-checkbox"]`;
 			},
@@ -65,8 +69,19 @@ class FilesPage extends FilesearchPage {
 	 */
 	selectFile (id) {
 		var link = this.locators.getCheckbox(id);
-		
+
 		return this.clickWithRetry(link);
+	}
+
+	/**
+	 * Метод кликает правой кнопкой мышке по файлу их списка
+	 * @param {string} [id] - - идентификатор файла (если не передан, то берется самый новый)
+	 *
+	 */
+	rightClickOnFile (id) {
+		var link = this.locators.getItem(id);
+		
+		this.page.rightClick(link);
 	}
 
 }
