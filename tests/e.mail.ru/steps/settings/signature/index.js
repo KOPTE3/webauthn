@@ -49,6 +49,10 @@ class Signature extends Steps {
 	static attachInline (filename) {
 		signatureEditorControls.attachInline(filename);
 	}
+
+	static attachInvalidInline (filename) {
+		signatureEditorControls.attachInvalidInline(filename);
+	}
 }
 
 module.exports = Signature;

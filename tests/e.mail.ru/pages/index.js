@@ -279,6 +279,15 @@ class PageObject {
 	}
 
 	/**
+	 * Получить текст алерта
+	 *
+	 * @returns {string}
+	 */
+	getAlertText () {
+		return this.page.alertText();
+	}
+
+	/**
 	 * Получить элемент контейнера
 	 *
 	 * @returns {Element}
