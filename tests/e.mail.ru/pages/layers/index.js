@@ -89,6 +89,7 @@ class Layers extends PageObject {
 	 * Метод нажимает "Принять" в леере
 	 */
 	apply () {
+		console.log(this.locators.apply);
 		this.page.click(this.locators.apply);
 	}
 
