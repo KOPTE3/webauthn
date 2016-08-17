@@ -17,6 +17,12 @@ class Compose2EditorSteps extends ComposeEditorSteps {
 		return this.composeEditor.waitForInlineAttach(id);
 	}
 
+	hasInline () {
+		let result = this.composeEditor.hasInline();
+
+		assert(result, 'Инлайна нет');
+	}
+
 	hasInlineInBlockQuote () {
 		let result = this.composeEditor.hasInlineInBlockQuote();
 		

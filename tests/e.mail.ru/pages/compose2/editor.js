@@ -27,6 +27,16 @@ class Compose2Editor extends ComposeEditor {
 		return element;
 	}
 
+	hasInline () {
+		let editor = this.getEditor();
+		let element = editor.element('img');
+
+		element.waitForVisible(3000, 'В письме нет инлайна');
+		this.restoreParentFrame();
+
+		return true;
+	}
+
 	hasInlineInBlockQuote () {
 		let editor = this.getEditor();
 		let element = editor.element('blockquote img');

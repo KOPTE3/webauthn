@@ -3,7 +3,7 @@
 let MessagePage = require('../message');
 
 /** Модуль для работы с телом письма */
-class BodyPage extends MessagePage {
+class LetterBodyPage extends MessagePage {
 	constructor () {
 		super();
 	}
@@ -18,7 +18,8 @@ class BodyPage extends MessagePage {
 
 		return this.extend(super.locators, {
 			container,
-			links: `${container} a`
+			links: `${container} a`,
+			inline: `${container} img`
 		});
 	}
 
@@ -40,6 +41,15 @@ class BodyPage extends MessagePage {
 			}
 		});
 	}
+
+	/**
+	 * Проверить, что в письме есть инлайны
+	 *
+	 * @return {boolean}
+	 */
+	hasInline () {
+		return this.page.isExisting(this.locators.inline);
+	}
 }
 
-module.exports = BodyPage;
+module.exports = LetterBodyPage;

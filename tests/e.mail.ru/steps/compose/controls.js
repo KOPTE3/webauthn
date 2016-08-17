@@ -6,7 +6,7 @@ let ComposeSteps = require('../compose');
 let ComposeControls = require('../../pages/compose/controls');
 
 /** Модуль для работы с шагами контролов страницы написания письма */
-class ComposeControlSteps extends ComposeSteps {
+class ComposeControlsSteps extends ComposeSteps {
 	constructor () {
 		super();
 
@@ -47,4 +47,4 @@ class ComposeControlSteps extends ComposeSteps {
 	}
 }
 
-module.exports = ComposeControlSteps;
+module.exports = ComposeControlsSteps;

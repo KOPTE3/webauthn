@@ -40,6 +40,10 @@ class ComposeEditor extends ComposePage {
 	getEditor () {
 		let frameId = this.page.getAttribute(this.locators.editor, 'id');
 
+		if (Array.isArray(frameId)) {
+			frameId = frameId[0];
+		}
+
 		return this.page.frame(frameId).element(this.locators.body);
 	}
 
