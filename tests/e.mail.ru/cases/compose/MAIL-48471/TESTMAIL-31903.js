@@ -29,7 +29,9 @@ const subject = 'TESTMAIL-31903';
 
 describe('AJAX. Ответ на письмо. Забытое вложение. Проверить ' +
 'появление попапа для быстрой пересылки с текстом и без аттача', () => {
-	before(Compose.auth);
+	before(() => {
+		Compose.auth();
+	});
 
 	it('Попап должен появится', () => {
 		let { fields } = composeFieldsStore;
