@@ -36,17 +36,17 @@ describe(() => {
 		let { fields } = composeFieldsStore;
 		let subject = 'TEST';
 
-		// отправляем себе письмо с exe файлом
-		var mail = new Mail({
+		// Отправляем себе письмо с exe файлом
+		let mail = new Mail({
 			to: fields.to,
 			subject
 		});
 
-		// добавляем потенциально опасные файл
+		// Добавляем потенциально опасные файл
 		mail.addAttach('SmallExe.exe');
 		mail.send();
 
-		// открываем полученное письмо, чтобы оно добавилось в файлы
+		// Открываем полученное письмо, чтобы оно добавилось в файлы
 		Messages.open();
 		lettersSteps.openNewestLetter();
 	});
