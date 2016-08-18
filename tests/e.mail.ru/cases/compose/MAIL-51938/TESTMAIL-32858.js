@@ -22,18 +22,14 @@ let letterAttaches = new LetterAttachesSteps();
 
 let composeFieldsStore = require('../../../store/compose/fields');
 
+let {auth, resetSignatures, cleanInbox} = require('./meta');
+
 const filename = 'jpg.jpg';
 
 describe(() => {
 	before(() => {
-		Signature.auth();
-
-		Signature.features([
-			'wysiwyg-signature',
-			'wysiwyg-signature-inline-images',
-			'compose2-inlinefromeditor',
-			'compose2'
-		]);
+		auth('compose2');
+		resetSignatures();
 
 		Signature.open();
 		Signature.hasWysiwyg();
@@ -63,5 +59,9 @@ describe(() => {
 		letterBody.hasInline();
 		letterHead.noAttaches();
 		letterAttaches.noAttaches();
+	});
+
+	after(() => {
+		cleanInbox();
 	});
 });

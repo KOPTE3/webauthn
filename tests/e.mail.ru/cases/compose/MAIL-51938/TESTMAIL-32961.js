@@ -5,17 +5,14 @@ let Compose2EditorSteps = require('../../../steps/compose2/editor');
 
 let compose2Editor = new Compose2EditorSteps();
 
+let {auth, resetSignatures} = require('./meta');
+
 const filenames = ['jpg.jpg', 'test1.png', 'file30.gif'];
 
 describe(() => {
 	before(() => {
-		Signature.auth();
-
-		Signature.features([
-			'wysiwyg-signature',
-			'wysiwyg-signature-inline-images',
-			'compose2-inlinefromeditor'
-		]);
+		auth();
+		resetSignatures();
 	});
 
 	beforeEach(() => {

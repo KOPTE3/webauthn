@@ -5,17 +5,16 @@ let Compose = require('../../../steps/compose');
 let ComposeEditorSteps = require('../../../steps/compose/editor');
 let composeEditor = new ComposeEditorSteps();
 
-let text = 'Текст подписи';
+let actions = require('../../../utils/actions');
+
+let {auth, resetSignatures} = require('./meta');
+
+const text = 'Текст подписи';
 
 describe(() => {
 	before(() => {
-		Signature.auth();
-
-		Signature.features([
-			'wysiwyg-signature',
-			'wysiwyg-signature-inline-images',
-			'compose2-inlinefromeditor'
-		]);
+		auth();
+		resetSignatures();
 
 		Signature.open();
 		Signature.hasWysiwyg();
