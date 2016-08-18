@@ -35,13 +35,14 @@ class ComposeEditor extends ComposePage {
 	 * Получить редактор сообщения
 	 * После этого вызова обязательно restoreParentFrame!
 	 *
+	 * @param {number} index - если редакторов несколько, взять N-ный
 	 * @returns {Element}
 	 */
-	getEditor () {
+	getEditor (index = 0) {
 		let frameId = this.page.getAttribute(this.locators.editor, 'id');
 
 		if (Array.isArray(frameId)) {
-			frameId = frameId[0];
+			frameId = frameId[index];
 		}
 
 		return this.page.frame(frameId).element(this.locators.body);

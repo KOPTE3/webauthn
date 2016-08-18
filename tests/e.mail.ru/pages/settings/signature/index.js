@@ -1,6 +1,8 @@
 'use strict';
 
 let PageObject = require('../../../pages');
+let ComposeEditor = require('../../../pages/compose/editor');
+let composeEditor = new ComposeEditor();
 
 class SignaturePage extends PageObject {
 	/**
@@ -29,6 +31,7 @@ class SignaturePage extends PageObject {
 					remove: '.js-remove'
 				},
 				signature: `${container} .js-signature-container textarea`,
+				editor: `${container} .js-signature-container .form__editor`,
 				wysiwyg: `${container} .js-signature-container .mceExternalToolbar`
 			},
 			controls: {
@@ -36,6 +39,59 @@ class SignaturePage extends PageObject {
 				save: `${container} [type="submit"]`
 			}
 		};
+	}
+
+	/**
+	 * Проверка что это html подпись
+	 *
+	 * @return {boolean}
+	 */
+	isWysiwygSignature () {
+		return this.page.isExisting(this.locators.item.editor);
+	}
+
+	/**
+	 * Получить значение подписи
+	 *
+	 * @param {number} [index] - (1|2|3), не с 0!
+	 * @return {string}
+	 */
+	getSignatureValue (index = 1) {
+		let value;
+
+		if (this.isWysiwygSignature()) {
+			let editor = composeEditor.getEditor(index - 1);
+
+			value = editor.getText();
+			composeEditor.restoreParentFrame();
+		} else {
+			let locator = `${this.locators.item.container}:nth-of-type(${index})`;
+			let container = this.page.element(locator);
+
+			value = container.element(this.locators.item.signature).getText();
+		}
+
+		return value;
+	}
+
+	/**
+	 * Поставить значение подписи. С учетом того, что может быть включена html-подпись
+	 *
+	 * @param {string} value
+	 * @param {number} [index] - (1|2|3), не с 0!
+	 */
+	setSignatureValue (value, index = 1) {
+		if (this.isWysiwygSignature()) {
+			let editor = composeEditor.getEditor(index - 1);
+
+			editor.setValue(value);
+			composeEditor.restoreParentFrame();
+		} else {
+			let locator = `${this.locators.item.container}:nth-of-type(${index})`;
+			let container = this.page.element(locator);
+
+			container.element(this.locators.item.signature).setValue(value);
+		}
 	}
 
 	createSignature (params) {
@@ -62,7 +118,7 @@ class SignaturePage extends PageObject {
 		}
 
 		if ('body' in params) {
-			element.element('.js-editor-contaner textarea').setValue(params.body);
+			this.setSignatureValue(params.body, currentIndex);
 		}
 
 		if (params.selected) {
@@ -98,11 +154,11 @@ class SignaturePage extends PageObject {
 	 * @return {boolean}
 	 */
 	hasSignature (signature) {
-		let { value: signatures } = this.page.elements(this.locators.item.signature);
+		let { value: signatures } = this.page.elements(this.locators.item.container);
 		let result = false;
 
-		signatures.some(({ ELEMENT}) => {
-			if (this.page.elementIdText(ELEMENT).value === signature) {
+		signatures.some((item, index) => {
+			if (this.getSignatureValue(index + 1) === signature) {
 				result = true;
 
 				return true;

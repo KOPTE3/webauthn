@@ -1,11 +1,11 @@
 'use strict';
 
 let Signature = require('../../../steps/settings/signature');
-let Compose2EditorSteps = require('../../../steps/compose2/editor');
+let Compose = require('../../../steps/compose');
+let ComposeEditorSteps = require('../../../steps/compose/editor');
+let composeEditor = new ComposeEditorSteps();
 
-let compose2Editor = new Compose2EditorSteps();
-
-const filenames = ['test.txt', 'doc.doc', 'pdf.pdf', 'bmp.bmp'];
+let text = 'Текст подписи';
 
 describe(() => {
 	before(() => {
@@ -21,11 +21,11 @@ describe(() => {
 		Signature.hasWysiwyg();
 	});
 
-	filenames.forEach((filename) => {
-		it('Настройки. HTML подпись. Проверка работы кнопки Вставить картинку ' +
-			'(несколько файлов, форматы, которые не вставляются картинками: ' +
-			'txt, doc, pdf, bmp и др.): ' + filename, () => {
-			Signature.attachInvalidInline(filename);
-		});
+	it('Настройки. HTML подпись. Проверка сохранения отредактированной подписи ' +
+		'(подпись одна, без картинки)', () => {
+		Signature.setSignature(text);
+		Signature.save();
+		Compose.open();
+		composeEditor.messageContains(text);
 	});
 });
