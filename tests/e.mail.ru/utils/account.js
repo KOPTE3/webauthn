@@ -1,6 +1,7 @@
 'use strict';
 
 let password = require('zxcvbn');
+let debug = require('debug')('yoda');
 
 let TestTools = require('@qa/test-tools');
 let AccountManager = require('@qa/account-manager');
@@ -63,12 +64,8 @@ module.exports = {
 
 		browser.setCookies(cookie);
 
-		if (process.NODE_DEBUG) {
-			let email = account.get('email'),
-				border = '='.repeat(50);
-
-			console.log(`%s\nUsed ${email} account\n%s`, '='.repeat(50));
-		}
+		debug(`Used account is %s`, account.get('email'));
+		debug(`Used cookie is %j`, cookie);
 	},
 
 	/**
