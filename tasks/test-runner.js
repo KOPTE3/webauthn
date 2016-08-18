@@ -4,11 +4,7 @@ let path = require('path');
 let childProcess = require('child_process');
 let fs = require('fs');
 
-let TestTools = require('@qa/test-tools');
-
 module.exports = grunt => {
-	let { Git, Config } = TestTools;
-
 	return {
 		options: {
 		/*
@@ -40,34 +36,7 @@ module.exports = grunt => {
 		'e.mail.ru': {
 			service: {
 				name: 'wdio',
-				file: Config.path('tests/e.mail.ru/config.js')
-			}
-		},
-
-		'e.mail.ru-omega': {
-			service: {
-				name: 'wdio',
-				file: Config.path('tests/e.mail.ru/config.js'),
-				data: {
-					baseUrl: `https://${Git.branch}.omega.test.mail.ru`
-				}
-			}
-		},
-
-		'account.mail.ru': {
-			service: {
-				name: 'wdio',
-				file: Config.path('tests/account.mail.ru/config.js')
-			}
-		},
-
-		'account.mail.ru-omega': {
-			service: {
-				name: 'wdio',
-				file: Config.path('tests/account.mail.ru/config.js'),
-				data: {
-					baseUrl: `https://${Git.branch}.account.omega.test.mail.ru`
-				}
+				file: 'tests/e.mail.ru/config.js'
 			}
 		}
 	};
