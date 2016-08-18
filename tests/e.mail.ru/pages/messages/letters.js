@@ -44,10 +44,17 @@ class MessagesLettersPage extends MessagesPage {
 	/**
 	 * Открыть самое новое письмо
 	 *
+	 * @param {Object} params
+	 *
 	 * @returns {boolean} - смог ли нажать на новое письмо
 	 */
-	openNewestLetter () {
-		return this.clickWithRetry(this.locators.newestLetter);
+	openNewestLetter (params = {}) {
+		return this.clickWithRetry(
+			this.locators.newestLetter,
+			void 0,
+			void 0,
+			params.keys
+		);
 	}
 
 	/**

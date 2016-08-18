@@ -9,6 +9,8 @@ let SearchPage = require('../../pages/search');
 class SearchSteps extends Steps {
 	constructor () {
 		super();
+
+		this.searchPage = new SearchPage();
 	}
 
 	/**
@@ -18,6 +20,15 @@ class SearchSteps extends Steps {
 	 */
 	static get page () {
 		return new SearchPage();
+	}
+
+	/**
+	 *
+	 */
+	waitForUrl () {
+		let actual = this.searchPage.waitForUrl();
+
+		assert(actual, `Не найдено соответствие с ожидаемым адресом  ${this.searchPage.location}`);
 	}
 }
 
