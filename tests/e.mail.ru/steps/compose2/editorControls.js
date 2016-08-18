@@ -35,6 +35,19 @@ class Compose2EditorControlsSteps extends ComposeEditorControlsSteps {
 
 		compose2EditorSteps.waitForInlineAttach(data.attach.id.replace(/\-.*$/, ''));
 	}
+
+	attachInvalidInline (filename) {
+		let filepath = SystemStore.file(filename);
+		let actual;
+
+		this.controls.attachInline(filepath);
+		actual = this.controls.getAlertText();
+
+		assert(actual, 'Не появился алерт');
+		assert.equal(actual, `Не удалось загрузить файл ${filename}`, `Неправильный текст алерта`);
+
+		this.controls.alertAccept();
+	}
 }
 
 module.exports = Compose2EditorControlsSteps;

@@ -23,6 +23,16 @@ class Signature extends Steps {
 		this.page.createSignature(...arguments);
 	}
 
+	/**
+	 * Задать текст подписи
+	 *
+	 * @param {string} value - текст
+	 * @param {number} [index] - номер подписи (1, 2, 3)
+	 */
+	static setSignature (value, index = 1) {
+		this.page.setSignatureValue(value, index);
+	}
+
 	static removeAllSignatures () {
 		this.page.removeAllSignatures();
 	}
@@ -48,6 +58,10 @@ class Signature extends Steps {
 
 	static attachInline (filename) {
 		signatureEditorControls.attachInline(filename);
+	}
+
+	static attachInvalidInline (filename) {
+		signatureEditorControls.attachInvalidInline(filename);
 	}
 }
 
