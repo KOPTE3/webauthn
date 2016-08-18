@@ -24,6 +24,13 @@ class Signature extends Steps {
 	}
 
 	/**
+	 * Добавить новое поле для имени и подписи
+	 */
+	static addSignature () {
+		this.page.addSignature();
+	}
+
+	/**
 	 * Задать текст подписи
 	 *
 	 * @param {string} value - текст

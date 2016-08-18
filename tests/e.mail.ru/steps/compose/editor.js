@@ -57,10 +57,11 @@ class ComposeEditorSteps extends ComposeSteps {
 	 * Получить текст сообщения
 	 *
 	 * @param {Element} editor - редактор
+	 * @param {number} [index] - индекс редактора (если их несколько)
 	 * @returns {string} result - текст
 	 */
-	getMessage (editor) {
-		let currentEditor = editor || this.composeEditor.getEditor();
+	getMessage (editor, index = 0) {
+		let currentEditor = editor || this.composeEditor.getEditor(index);
 		let result;
 
 		assert(currentEditor, 'Редактор письма не найден');
@@ -76,10 +77,11 @@ class ComposeEditorSteps extends ComposeSteps {
 	/**
 	 * Проверяет пустое ли сообщение
 	 *
+	 * @param {number} [index] - индекс редактора (если их несколько)
 	 * @returns {boolean} если true значит письмо не пустое
 	 */
-	isMessageNotEmpty () {
-		let message = this.getMessage();
+	isMessageNotEmpty (index = 0) {
+		let message = this.getMessage(null, index);
 
 		return !!message;
 	}
@@ -88,10 +90,11 @@ class ComposeEditorSteps extends ComposeSteps {
 	 * Проверить, содержится ли в теле письма текст
 	 *
 	 * @param {string} text текст который должен находится в теле письма
+	 * @param {number} [index] - индекс редактора (если их несколько)
 	 * @returns {boolean}
 	 */
-	hasMessage (text) {
-		let message = this.getMessage();
+	hasMessage (text, index = 0) {
+		let message = this.getMessage(null, index);
 
 		return message.includes(text);
 	}
@@ -100,10 +103,11 @@ class ComposeEditorSteps extends ComposeSteps {
 	 * Содержится ли в теле письма текст
 	 *
 	 * @param {string} text - текст который должен находится в теле письма
-	 * @param {string} reverse - реверс
+	 * @param {boolean} [reverse] - реверс
+	 * @param {number} [index] - индекс редактора (если их несколько)
 	 */
-	messageContains (text, reverse = false) {
-		let actual = this.hasMessage(text);
+	messageContains (text, reverse = false, index = 0) {
+		let actual = this.hasMessage(text, index);
 
 		assert.equal(actual, !reverse, 'Содержимое письма');
 	}
