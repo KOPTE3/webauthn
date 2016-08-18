@@ -7,7 +7,6 @@ let Compose2EditorControls = require('../../pages/compose2/editorControls');
 let Compose2EditorSteps = require('../compose2/editor');
 
 let SystemStore = require('../../store/system');
-let compose2EditorSteps = new Compose2EditorSteps();
 
 let attaches = require('../../utils/attaches/add');
 
@@ -17,6 +16,7 @@ class Compose2EditorControlsSteps extends ComposeEditorControlsSteps {
 		super();
 
 		this.controls = new Compose2EditorControls();
+		this.compose2EditorSteps = new Compose2EditorSteps();
 	}
 
 	registerAddLogger (url = void 0) {
@@ -33,7 +33,7 @@ class Compose2EditorControlsSteps extends ComposeEditorControlsSteps {
 
 		assert(data, 'Данные об аттаче не получены');
 
-		compose2EditorSteps.waitForInlineAttach(data.attach.id.replace(/\-.*$/, ''));
+		this.compose2EditorSteps.waitForInlineAttach(data.attach.id.replace(/\-.*$/, ''));
 	}
 
 	attachInvalidInline (filename) {

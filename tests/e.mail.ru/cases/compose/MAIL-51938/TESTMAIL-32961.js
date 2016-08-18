@@ -1,9 +1,6 @@
 'use strict';
 
 let Signature = require('../../../steps/settings/signature');
-let Compose2EditorSteps = require('../../../steps/compose2/editor');
-
-let compose2Editor = new Compose2EditorSteps();
 
 let {auth, resetSignatures} = require('./meta');
 
@@ -24,7 +21,7 @@ describe(() => {
 		it('Настройки. HTML подпись. Проверка работы кнопки ' +
 			'Вставить картинку (несколько картинок, формат jpg, png, gif): ' + filename, () => {
 			Signature.attachInline(filename);
-			compose2Editor.hasInline();
+			Signature.hasInline();
 		});
 	});
 

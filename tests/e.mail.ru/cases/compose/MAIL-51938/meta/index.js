@@ -24,8 +24,10 @@ module.exports = {
 		Signature.features(features);
 	},
 
-	resetSignatures () {
-		actions.setSignatures(['--\nVladimir Demidov']);
+	resetSignatures (signatures = null) {
+		let data = signatures || ['--\nVladimir Demidov'];
+
+		actions.setSignatures(data);
 	},
 
 	cleanInbox () {

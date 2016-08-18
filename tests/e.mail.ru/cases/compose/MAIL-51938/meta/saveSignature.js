@@ -1,35 +1,57 @@
 'use strict';
 
 let Signature = require('../../../../steps/settings/signature');
-let Compose2EditorSteps = require('../../../../steps/compose2/editor');
-let composeEditor = new Compose2EditorSteps();
 
-module.exports = (signatures) => {
+let {resetSignatures} = require('../meta');
+
+module.exports = (signatures, initSignatures, initImages, checkSignatures) => {
+	if (!checkSignatures) {
+		checkSignatures = signatures;
+	}
+
+	// выставляем начальную подпись
+	resetSignatures(initSignatures);
+
+	if (initImages) {
+		Signature.open();
+		Signature.hasWysiwyg();
+
+		initImages.forEach((filename, index) => {
+			if (filename) {
+				Signature.attachInline(filename, index);
+			}
+		});
+
+		Signature.save();
+	}
+
+	// Открываем страницу
 	Signature.open();
 	Signature.hasWysiwyg();
 
+	// Меняем подписи
 	signatures.forEach(({text, filename}, index) => {
-		if (index) {
-			Signature.addSignature();
+		if (text) {
+			Signature.setSignature(text, index);
 		}
-		Signature.setSignature(text);
 
 		if (filename) {
-			Signature.attachInline(filename);
+			Signature.attachInline(filename, index);
 		}
 	});
 
 	Signature.save();
+
+	// Проверяем сохранение
 	Signature.open();
 
-	signatures.forEach(({text, filename}, index) => {
+	checkSignatures.forEach(({text, filename}, index) => {
 		if (text) {
-			composeEditor.messageContains(text, false, index);
+			Signature.checkSignature(text, index);
 		}
 
 		if (filename) {
-			composeEditor.hasInline(index);
+			Signature.hasInline(index);
 		}
 	});
-
 };

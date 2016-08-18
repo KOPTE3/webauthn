@@ -27,8 +27,8 @@ class Compose2Editor extends ComposeEditor {
 		return element;
 	}
 
-	hasInline (index = 0) {
-		let editor = this.getEditor(index);
+	hasInline () {
+		let editor = this.getEditor();
 		let element = editor.element('img');
 
 		element.waitForVisible(3000, 'В письме нет инлайна');
