@@ -176,10 +176,11 @@ class PageObject {
 	 * @param {number} count - количество попыток (по умолчанию 10)
 	 * @param {number} interval - интервал в ms, через который делать
 	 * попытки (по умолчанию 500ms)
+	 * @param {string|string[]} keys клавиши которые нужно зажать во время клика
 	 *
 	 * @returns {boolean}
 	 */
-	clickWithRetry (locator, count = 3, interval = 1000) {
+	clickWithRetry (locator, count = 3, interval = 1000, keys) {
 		let page = this.page;
 
 		let tryClick = () => {
@@ -187,7 +188,11 @@ class PageObject {
 				page.waitForExist(locator);
 				let links = page.elements(locator);
 
+				if (keys) {
+					page.keys(keys);
+				}
 				page.elementIdClick(links.value[0].ELEMENT);
+				page.keys('NULL');
 
 				return true;
 			} catch (error) {
