@@ -43,7 +43,7 @@ class ThreadSteps extends Steps {
 		let state = this.threadPage.getExpandedStatus(index);
 		let stateName = value ? 'развернуто' : 'свернуто';
 
-		assert(state === value, `У письма не совпадает состояние развернутости. `
+		assert.equal(state, value, `У письма не совпадает состояние развернутости. `
 			+ `Письмо должно быть ${stateName}`);
 	}
 
