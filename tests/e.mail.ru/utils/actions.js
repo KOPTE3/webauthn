@@ -180,6 +180,17 @@ module.exports = {
 	},
 
 	/**
+	 * Почистить папку Входящие
+	 * @return {Promise}
+	 */
+	cleanInbox () {
+		return this.call('messages/move/all', {
+			folder: 500002,
+			folder_from: 0
+		});
+	},
+
+	/**
 	 * Обновляет хелпер
 	 *
 	 * @param {number} index - индекс хелпера
@@ -349,7 +360,9 @@ module.exports = {
 	 * @returns {Promise}
 	 */
 	setSignatures (signatures) {
-		let name = `${authStore.account.get('first_name')} ${authStore.account.get('last_name')}`;
+		let name = authStore.account.get('first_name') ?
+			`${authStore.account.get('first_name')} ${authStore.account.get('last_name')}` :
+			authStore.account.get('email');
 
 		return this.call('user/edit', {
 			signs: signatures.map((sign, index) => {

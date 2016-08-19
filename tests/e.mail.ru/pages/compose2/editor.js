@@ -27,11 +27,17 @@ class Compose2Editor extends ComposeEditor {
 		return element;
 	}
 
-	hasInline () {
+	/**
+	 * Есть инлайн-аттач
+	 *
+	 * @param {boolean} reverse
+	 * @return {boolean}
+	 */
+	hasInline (reverse = false) {
 		let editor = this.getEditor();
 		let element = editor.element('img');
 
-		element.waitForVisible(3000, 'В письме нет инлайна');
+		element.waitForVisible(3000, reverse);
 		this.restoreParentFrame();
 
 		return true;

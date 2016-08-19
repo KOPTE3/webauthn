@@ -1,8 +1,8 @@
 'use strict';
 
 let PageObject = require('../../../pages');
-let ComposeEditor = require('../../../pages/compose/editor');
-let composeEditor = new ComposeEditor();
+let SignatureEditor = require('../../../pages/settings/signature/editor');
+let signatureEditors = [new SignatureEditor(0), new SignatureEditor(1), new SignatureEditor(2)];
 
 class SignaturePage extends PageObject {
 	/**
@@ -28,7 +28,8 @@ class SignaturePage extends PageObject {
 			item: {
 				container: `${container} .js-signature-container`,
 				controls: {
-					remove: '.js-remove'
+					remove: '.js-remove',
+					defaultName: '.js-set-default-name'
 				},
 				signature: `${container} .js-signature-container textarea`,
 				editor: `${container} .js-signature-container .form__editor`,
@@ -36,7 +37,7 @@ class SignaturePage extends PageObject {
 			},
 			controls: {
 				new: `${container} .js-add-signature`,
-				save: `${container} [type="submit"]`
+				save: `${container} [type="submit"],.form__actions_floating [type="submit"]`
 			}
 		};
 	}
@@ -51,22 +52,33 @@ class SignaturePage extends PageObject {
 	}
 
 	/**
+	 * Получить контейнер с именем-подписью
+	 *
+	 * @param {number} index
+	 * @return {Element}
+	 */
+	getSignatureContainer (index = 0) {
+		let locator = `${this.locators.item.container}:nth-of-type(${index + 1})`;
+
+		return this.page.element(locator);
+	}
+
+	/**
 	 * Получить значение подписи
 	 *
-	 * @param {number} [index] - (1|2|3), не с 0!
+	 * @param {number} [index] - (0|1|2)
 	 * @return {string}
 	 */
-	getSignatureValue (index = 1) {
+	getSignatureValue (index = 0) {
 		let value;
 
 		if (this.isWysiwygSignature()) {
-			let editor = composeEditor.getEditor(index - 1);
+			let editor = signatureEditors[index].getEditor();
 
 			value = editor.getText();
-			composeEditor.restoreParentFrame();
+			signatureEditors[index].restoreParentFrame();
 		} else {
-			let locator = `${this.locators.item.container}:nth-of-type(${index})`;
-			let container = this.page.element(locator);
+			let container = this.getSignatureContainer(index);
 
 			value = container.element(this.locators.item.signature).getText();
 		}
@@ -78,39 +90,60 @@ class SignaturePage extends PageObject {
 	 * Поставить значение подписи. С учетом того, что может быть включена html-подпись
 	 *
 	 * @param {string} value
-	 * @param {number} [index] - (1|2|3), не с 0!
+	 * @param {number} [index] - (0|1|2)
 	 */
-	setSignatureValue (value, index = 1) {
+	setSignatureValue (value, index = 0) {
 		if (this.isWysiwygSignature()) {
-			let editor = composeEditor.getEditor(index - 1);
+			let editor = signatureEditors[index].getEditor();
 
 			editor.setValue(value);
-			composeEditor.restoreParentFrame();
+			signatureEditors[index].restoreParentFrame();
 		} else {
-			let locator = `${this.locators.item.container}:nth-of-type(${index})`;
-			let container = this.page.element(locator);
+			let container = this.getSignatureContainer(index);
 
 			container.element(this.locators.item.signature).setValue(value);
 		}
 	}
 
-	createSignature (params) {
-		let { item } = this.locators;
-		let items = this.page.elements(item.container);
-
-		this.clickControl('new');
-
-		let currentIndex = 1;
+	/**
+	 * Индекс последней видимой подписи
+	 *
+	 * @type {number} - (0|1|2)
+	 */
+	get currentIndex () {
+		let items = this.page.elements(this.locators.item.container);
+		let currentIndex = 0;
 
 		items.value.forEach((value, index) => {
 			let actual = this.page.elementIdDisplayed(value.ELEMENT);
 
 			if (actual.value) {
-				currentIndex = index + 1;
+				currentIndex = index;
 			}
 		});
 
-		let locator = `.//*[contains(@class, "js-signature-container")][${currentIndex}]`;
+		return currentIndex;
+	}
+
+	/**
+	 * Нажать "добавить подпись" и поставить там дефолтное имя
+	 */
+	addSignature () {
+		let container;
+
+		this.clickControl('new');
+		container = this.getSignatureContainer(this.currentIndex);
+		container.click(this.locators.item.controls.defaultName);
+	}
+
+	createSignature (params) {
+		let { item } = this.locators;
+
+		this.clickControl('new');
+
+		let currentIndex = this.currentIndex;
+
+		let locator = `.//*[contains(@class, "js-signature-container")][${currentIndex + 1}]`;
 		let element = this.page.element(locator);
 
 		if ('name' in params) {
@@ -158,7 +191,7 @@ class SignaturePage extends PageObject {
 		let result = false;
 
 		signatures.some((item, index) => {
-			if (this.getSignatureValue(index + 1) === signature) {
+			if (this.getSignatureValue(index) === signature) {
 				result = true;
 
 				return true;

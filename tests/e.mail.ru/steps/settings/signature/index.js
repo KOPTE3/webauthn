@@ -6,7 +6,18 @@ let Steps = require('../../../steps');
 let SettingsSignaturePage = require('../../../pages/settings/signature');
 
 let SignatureEditorControlsSteps = require('../signature/editorControls');
-let signatureEditorControls = new SignatureEditorControlsSteps();
+let SignatureEditorSteps = require('../signature/editor');
+
+let signatureEditorControls = [
+	new SignatureEditorControlsSteps(0),
+	new SignatureEditorControlsSteps(1),
+	new SignatureEditorControlsSteps(2)
+];
+let signatureEditors = [
+	new SignatureEditorSteps(0),
+	new SignatureEditorSteps(1),
+	new SignatureEditorSteps(2)
+];
 
 class Signature extends Steps {
 
@@ -24,17 +35,25 @@ class Signature extends Steps {
 	}
 
 	/**
+	 * Добавить новое поле для имени и подписи
+	 */
+	static addSignature () {
+		this.page.addSignature();
+	}
+
+	/**
 	 * Задать текст подписи
 	 *
 	 * @param {string} value - текст
-	 * @param {number} [index] - номер подписи (1, 2, 3)
+	 * @param {number} [index] - номер подписи (0, 1, 2)
 	 */
-	static setSignature (value, index = 1) {
+	static setSignature (value, index = 0) {
 		this.page.setSignatureValue(value, index);
 	}
 
 	static removeAllSignatures () {
 		this.page.removeAllSignatures();
+		this.setSignature('');
 	}
 
 	static save () {
@@ -48,6 +67,16 @@ class Signature extends Steps {
 	}
 
 	/**
+	 * Проверить наличие текста в конкретной подписи
+	 *
+	 * @param {string} signature
+	 * @param {number} [index]
+	 */
+	static checkSignature (signature, index = 0) {
+		signatureEditors[index].messageContains(signature);
+	}
+
+	/**
 	 * Есть редактор
 	 */
 	static hasWysiwyg () {
@@ -56,12 +85,16 @@ class Signature extends Steps {
 		assert(actual, 'Редактор не показался');
 	}
 
-	static attachInline (filename) {
-		signatureEditorControls.attachInline(filename);
+	static attachInline (filename, index = 0) {
+		signatureEditorControls[index].attachInline(filename);
 	}
 
-	static attachInvalidInline (filename) {
-		signatureEditorControls.attachInvalidInline(filename);
+	static attachInvalidInline (filename, index = 0) {
+		signatureEditorControls[index].attachInvalidInline(filename);
+	}
+
+	static hasInline (index = 0) {
+		signatureEditors[index].hasInline();
 	}
 }
 

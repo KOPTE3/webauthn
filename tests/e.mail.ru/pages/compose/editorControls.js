@@ -92,7 +92,6 @@ class ComposeEditorControls extends ComposePage {
 			this.locators.signature.text);
 
 		return textItem.getText();
-
 	}
 
 	/**
@@ -106,6 +105,17 @@ class ComposeEditorControls extends ComposePage {
 
 	clickSignatureSettings () {
 		this.page.click(this.locators.signature.settings);
+	}
+
+	/**
+	 * Кликнуть по подписи
+	 *
+	 * @param {number} index - номер подписи
+	 */
+	clickSignature (index) {
+		let { value: items } = this.page.elements(this.locators.signature.item);
+
+		this.page.elementIdClick(items[index].ELEMENT);
 	}
 }
 

@@ -23,6 +23,12 @@ class Compose2EditorSteps extends ComposeEditorSteps {
 		assert(result, 'Инлайна нет');
 	}
 
+	noInline () {
+		let result = this.composeEditor.hasInline(true);
+
+		assert(result, 'Инлайн есть');
+	}
+
 	hasInlineInBlockQuote () {
 		let result = this.composeEditor.hasInlineInBlockQuote();
 		
