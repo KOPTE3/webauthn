@@ -39,7 +39,7 @@ class BalloonsSteps extends Steps {
 	}
 
 	static waitForNotVisible (id) {
-		this.page.waitForVisible(id, false);
+		this.page.waitForVisible(id, true);
 	}
 }
 
