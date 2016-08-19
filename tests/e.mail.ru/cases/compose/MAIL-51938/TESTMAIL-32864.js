@@ -4,13 +4,12 @@ let Signature = require('../../../steps/settings/signature');
 let PortalMenuSteps = require('../../../steps/portal-menu');
 let portalMenu = new PortalMenuSteps();
 
+let {auth, resetSignatures} = require('./meta');
+
 describe(() => {
 	before(() => {
-		Signature.auth();
-
-		Signature.features([
-			'wysiwyg-signature'
-		]);
+		auth();
+		resetSignatures();
 
 		Signature.open();
 	});

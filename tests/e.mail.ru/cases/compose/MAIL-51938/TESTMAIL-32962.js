@@ -2,17 +2,14 @@
 
 let Signature = require('../../../steps/settings/signature');
 
+let {auth, resetSignatures} = require('./meta');
+
 const filenames = ['test.txt', 'doc.doc', 'pdf.pdf', 'bmp.bmp'];
 
 describe(() => {
 	before(() => {
-		Signature.auth();
-
-		Signature.features([
-			'wysiwyg-signature',
-			'wysiwyg-signature-inline-images',
-			'compose2-inlinefromeditor'
-		]);
+		auth();
+		resetSignatures();
 
 		Signature.open();
 		Signature.hasWysiwyg();

@@ -7,6 +7,7 @@ describe(() => {
 		all.login();
 		all.deleteArchive();
 		all.enableCleaner();
+		all.removeBalloonHelper();
 	});
 
 	beforeEach(() => {

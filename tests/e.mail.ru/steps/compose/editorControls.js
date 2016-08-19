@@ -66,6 +66,14 @@ class ComposeEditorControlsSteps extends ComposeSteps {
 	clickSignatureSettings () {
 		this.controls.clickSignatureSettings();
 	}
+
+	/**
+	 * Кликнуть по подписи
+	 * @param {number} index - номер подписи
+	 */
+	clickSignature (index) {
+		this.controls.clickSignature(index);
+	}
 }
 
 module.exports = ComposeEditorControlsSteps;

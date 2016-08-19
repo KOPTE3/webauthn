@@ -110,17 +110,6 @@ class Compose2Fields extends ComposeFields {
 	}
 
 	/**
-	 * Задать значение поля по имени
-	 *
-	 * @see getField
-	 * @param {string} name — имя поля
-	 * @param {string} value — значение поля
-	 */
-	setFieldValue (name, value) {
-		this.getField(name).setValue(value);
-	}
-
-	/**
 	 * Переключить все доступные поля формы
 	 *
 	 * @param {boolean} state — состояние

@@ -100,7 +100,7 @@ class ComposeEditorSteps extends ComposeSteps {
 	 * Содержится ли в теле письма текст
 	 *
 	 * @param {string} text - текст который должен находится в теле письма
-	 * @param {string} reverse - реверс
+	 * @param {boolean} [reverse] - реверс
 	 */
 	messageContains (text, reverse = false) {
 		let actual = this.hasMessage(text);
