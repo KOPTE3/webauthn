@@ -53,6 +53,7 @@ class Signature extends Steps {
 
 	static removeAllSignatures () {
 		this.page.removeAllSignatures();
+		this.setSignature('');
 	}
 
 	static save () {

@@ -37,7 +37,7 @@ class SignaturePage extends PageObject {
 			},
 			controls: {
 				new: `${container} .js-add-signature`,
-				save: `${container} [type="submit"]`
+				save: `${container} [type="submit"],.form__actions_floating [type="submit"]`
 			}
 		};
 	}
@@ -111,7 +111,7 @@ class SignaturePage extends PageObject {
 	 * @type {number} - (0|1|2)
 	 */
 	get currentIndex () {
-		let items = this.page.elements(item.container);
+		let items = this.page.elements(this.locators.item.container);
 		let currentIndex = 0;
 
 		items.value.forEach((value, index) => {
