@@ -10,8 +10,8 @@ let compose2Editor = new Compose2EditorSteps();
 const text = 'Текст подписи';
 const filename = 'jpg.jpg';
 
-module.exports = (open, close, signatures) => {
-	open();
+module.exports = (options) => {
+	options.open();
 
 	compose2Editor.hasInline();
 
@@ -19,6 +19,13 @@ module.exports = (open, close, signatures) => {
 	composeEditorControls.isVisibleSignature();
 	composeEditorControls.clickSignature(1);
 
-	compose2Editor.noInline();
+	if (options.quoteInline) {
+		compose2Editor.hasInlineInBlockQuote();
+	} else {
+		compose2Editor.noInline();
+	}
+
 	compose2Editor.messageContains(text);
+
+	options.close();
 };
