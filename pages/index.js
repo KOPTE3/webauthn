@@ -104,6 +104,15 @@ class PageObject {
 	}
 
 	/**
+	 * Включение фичи
+	 *
+	 * @param {Array} list — список фич, которые требуется включить
+	 */
+	features (list) {
+		cache.features.push(...list);
+	}
+
+	/**
 	 * Обновить страницу
 	 *
 	 * @param {Object} [query] — параметры запроса
@@ -177,6 +186,10 @@ class PageObject {
 	/** Подтвердить алерт */
 	alertAccept () {
 		this.page.alertAccept();
+	}
+
+	setViewportSize ({width = 1200, height = 600}) {
+		this.page.setViewportSize({ width, height });
 	}
 }
 
