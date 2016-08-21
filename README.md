@@ -262,7 +262,7 @@ Messages.auth('basic', {
 Получение авторизационных сведений текущего аккаунтпа
 
 ```js
-let authorization = require('../../store/authorization');
+let authorization = require('@qa/yoda/store/authorization');
 
 authorization.account;
 ```
@@ -275,7 +275,7 @@ authorization.account;
 Получение авторизационных данные указанного типа
 
 ```js
-let authorization = require('../../store/authorization');
+let authorization = require('@qa/yoda/store/authorization');
 
 authorization.credentials('external');
 
@@ -295,7 +295,7 @@ authorization.credentials('external', {
 ВНИМАНИЕ: Данные учетные записи разрешается использтвать только в тестах, которые не изменяют состояние аккаунта (например, авторизация). Во всех остальных случаях — используейте store/authorization.credentials
 
 ```js
-let accounts = require('../../store/authorization/accounts');
+let accounts = require('@qa/yoda/store/authorization/accounts');
 
 accounts.get('gmail.com', ['pdd']);
 ```
@@ -308,12 +308,27 @@ accounts.get('gmail.com', ['pdd']);
 Здесь содержится набор методов для получения списка провайдеров с учетом различных фильтров, в т.ч. и топа.
 
 
+#### store/authorization/passwords
+
+Позволяет получить предопределенный пароль заданой сложности
+
+
+#### utils/account.generatePassword
+
+Позволяет получить случайный пароль
+
+
+#### utils/account.passwordStrength
+
+Позволяет определить сложность пароля
+
+
 ### Файловая система
 
 Для работы с файлами, которые хранятся на диске используйте системное хранилище:
 
 ```js
-let system = require('./store/system');
+let system = require('@qa/yoda/store/system');
 
 system.file('имя_файла');
 ```
@@ -437,10 +452,10 @@ module.exports = Login;
 'use strict';
 
 let assert = require('assert');
+let providers = require('@qa/yoda/store/authorization/providers');
 
 let Steps = require('../../steps');
 let LoginForm = require('../../pages/login/form');
-let providers = require('../../store/authorization/providers');
 
 class LoginFormSteps extends Steps {
 	constructor () {
@@ -558,7 +573,7 @@ module.exports = {
 ```js
 'use strict';
 
-let authProviders = require('../../store/authorization/providers');
+let authProviders = require('@qa/yoda/store/authorization/providers');
 
 /** Модуль для работы с данными почтовых провайдеров на странице логина */
 module.exports = {
@@ -599,6 +614,7 @@ module.exports = {
 
 * Не обращайтесь в pages к объекту browser напрямую. Вместо этого используйте ссылку `this.page`.
 * Писать номер таска в блоке `describe` не нужно, он подставляется автоматически.
+* Универсальные команды добавляйте в проект [@qa/wdio-api](ssh://git@stash.mail.ru:2222/qa/wdio-api.git)
 * Используйте JSDoc аннотацию для документирования функций, которые принимают параметры и возвращают значения.
 * Все файлы, в которых определены классы должны возвращать ссылки, а не инстанс.
 * Всегда определяйте `location` и `locators.container` в индексном файле вашего предствления (page).
@@ -667,14 +683,16 @@ module.exports = {
 **<step>**
 
 ```js
-/**
- * Получить значение поля по имени
- *
- * @see form.getField
- * @param {string} name — имя поля
- */
-getFieldValue (name) {
-	form.getFieldValue(name);
+{
+	/**
+	 * Получить значение поля по имени
+	 *
+	 * @see form.getField
+	 * @param {string} name — имя поля
+	 */
+	getFieldValue (name) {
+		form.getFieldValue(name);
+	}
 }
 ```
 
