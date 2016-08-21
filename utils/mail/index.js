@@ -5,9 +5,8 @@ let authorization = require('../../store/authorization');
 let system = require('../../store/system');
 let actions = require('../actions');
 
-const ASYNC_TIMEOUT = 10000; // таймаут завершнеия асинхронного скрипта
-const DELIVERY_TIMEOUT = 5000; // таймаут ожидания фактической доствки письма
-
+// Таймаут ожидания фактической доствки письма
+const DELIVERY_TIMEOUT = 5000;
 
 /** Модуль создания и отправки письма */
 class Mail {
