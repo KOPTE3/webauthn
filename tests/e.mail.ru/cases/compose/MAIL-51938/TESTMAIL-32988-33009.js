@@ -51,52 +51,59 @@ let openReply = function (noajax = false) {
 	Compose.wait();
 };
 
-const tests = [
-	{
-		testcase: 'TESTMAIL-32988',
-		name: 'Написание письма. HTML подпись. AJAX. Проверка смены подписи ' +
-		'(две подписи, по умолчанию - отредактирована через панель ' +
-		'редактирования с картинкой, вторая - обычный текст)',
-		open: () => {
-			Messages.open();
-			messagesToolbar.clickButton('compose');
-			Compose.wait();
+let { options = {
+	signatureBeforeText: false,
+	signatures: [
+		{image: true, isDefault: true},
+		{image: false}
+	],
+	tests: [
+		{
+			testcase: 'TESTMAIL-32988',
+			name: 'Написание письма. HTML подпись. AJAX. Проверка смены подписи ' +
+			'(две подписи, по умолчанию - отредактирована через панель ' +
+			'редактирования с картинкой, вторая - обычный текст)',
+			open: () => {
+				Messages.open();
+				messagesToolbar.clickButton('compose');
+				Compose.wait();
+			},
+			close: () => {
+				composeControls.cancel();
+			}
 		},
-		close: () => {
-			composeControls.cancel();
+
+		{
+			testcase: 'TESTMAIL-32995',
+			name: 'Полный ответ на письмо. HTML подпись. AJAX. Проверка смены подписи ' +
+			'(две подписи, по умолчанию - отредактирована через панель редактирования ' +
+			'с картинкой, вторая - обычный текст) и что она не меняется в цитировании',
+			open: () => {
+				openReply();
+			},
+			close: () => {
+				composeControls.cancel();
+				cleanInbox();
+			},
+			quoteInline: true
+		},
+
+		{
+			testcase: 'TESTMAIL-33005',
+			name: 'Полный ответ на письмо. HTML подпись. НЕ AJAX. Проверка смены подписи ' +
+			'(две подписи, по умолчанию - отредактирована через панель редактирования ' +
+			'с картинкой, вторая - обычный текст) и что она не меняется в цитировании',
+			open: () => {
+				openReply(true);
+			},
+			close: () => {
+				composeControls.cancel();
+				cleanInbox();
+			},
+			quoteInline: true
 		}
-	},
-
-	{
-		testcase: 'TESTMAIL-32995',
-		name: 'Полный ответ на письмо. HTML подпись. AJAX. Проверка смены подписи ' +
-		'(две подписи, по умолчанию - отредактирована через панель редактирования ' +
-		'с картинкой, вторая - обычный текст) и что она не меняется в цитировании',
-		open: () => {
-			openReply();
-		},
-		close: () => {
-			composeControls.cancel();
-			cleanInbox();
-		},
-		quoteInline: true
-	},
-
-	{
-		testcase: 'TESTMAIL-33005',
-		name: 'Полный ответ на письмо. HTML подпись. НЕ AJAX. Проверка смены подписи ' +
-		'(две подписи, по умолчанию - отредактирована через панель редактирования ' +
-		'с картинкой, вторая - обычный текст) и что она не меняется в цитировании',
-		open: () => {
-			openReply(true);
-		},
-		close: () => {
-			composeControls.cancel();
-			cleanInbox();
-		},
-		quoteInline: true
-	}
-];
+	]
+}} = module.parent;
 
 describe(() => {
 	before(() => {
@@ -104,10 +111,10 @@ describe(() => {
 		resetSignatures();
 
 		// TODO параметры
-		createSignature();
+		createSignature(options);
 	});
 
-	tests.forEach((options) => {
+	options.tests.forEach((options) => {
 		let { testcase, name } = options;
 
 		describe(testcase, () => {
