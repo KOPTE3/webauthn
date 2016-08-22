@@ -3,7 +3,6 @@
 let assert = require('assert');
 let Pages = require('../pages');
 let account = require('../utils/account');
-let ajax = require('../utils/ajax');
 
 let pages = new Pages();
 
@@ -124,28 +123,6 @@ class Steps {
 	 */
 	static setViewportSize (size) {
 		pages.setViewportSize(size);
-	}
-
-	/**
-	 * Подписывается на чтение запросов
-	 *
-	 * @param {string} request
-	 */
-	static setAjaxLog (request) {
-		ajax.registerLogger(request);
-	}
-
-	/**
-	 * Читает лог запросов
-	 *
-	 * @param {string} request
-	 * @param {Function} predicate
-	 */
-	static getAjaxLog (request, predicate) {
-		let { value } = ajax.getLoggerInfo(request);
-		let actual = predicate(value);
-
-		assert(actual, `Условие невыполнено`);
 	}
 }
 
