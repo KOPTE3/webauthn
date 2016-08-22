@@ -21,9 +21,10 @@ module.exports = ({signatures, signatureBeforeText}) => {
 		}
 
 		if (image) {
+			Signature.setSignature(filename + index, index);
 			Signature.attachInline(filename, index);
 		} else {
-			Signature.setSignature(text, 1);
+			Signature.setSignature(text, index);
 		}
 
 		if (isDefault) {

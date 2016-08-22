@@ -1,5 +1,7 @@
 'use strict';
 
+let deepmerge = require('deepmerge');
+
 let Compose = require('../../../steps/compose');
 let Messages = require('../../../steps/messages');
 let MessagesToolbarSteps = require('../../../steps/messages/toolbar');
@@ -17,9 +19,11 @@ let compose2Editor = new Compose2EditorSteps();
 let composeFields = new ComposeFieldsSteps();
 let composeControls = new ComposeControlsSteps();
 
+let messagesUtils = require('../../../utils/messages');
+
 let { auth, resetSignatures, cleanInbox } = require('./meta');
 let createSignature = require('./meta/createSignature');
-let test = require('./meta/checkChangeSignature');
+let checkChangeSignature = require('./meta/checkChangeSignature');
 
 let composeFieldsStore = require('../../../store/compose/fields');
 
@@ -30,8 +34,6 @@ let openReply = function (noajax = false) {
 	messagesToolbar.clickButton('compose');
 	Compose.wait();
 
-	compose2Editor.hasInline();
-
 	composeFields.setFieldValue('to', fields.to);
 	composeFields.setFieldValue('subject', fields.subject);
 	compose2Editor.writeMessage(fields.text);
@@ -40,15 +42,16 @@ let openReply = function (noajax = false) {
 
 	Messages.open();
 	letters.waitForNewestLetter();
-	letters.openNewestLetter();
-
-	messageToolbar.clickButton('reply');
 
 	if (noajax) {
-		Compose.refresh();
-	}
+		let messageId = messagesUtils.getLetterIdBySubject(fields.subject);
 
-	Compose.wait();
+		Compose.open(`/compose/${messageId}/reply`);
+	} else {
+		letters.openNewestLetter();
+		messageToolbar.clickButton('reply');
+		Compose.wait();
+	}
 };
 
 let options = {
@@ -82,8 +85,8 @@ let options = {
 				openReply();
 			},
 			close: () => {
-				composeControls.cancel();
 				cleanInbox();
+				composeControls.cancel();
 			},
 			quoteInline: true
 		},
@@ -97,22 +100,25 @@ let options = {
 				openReply(true);
 			},
 			close: () => {
-				composeControls.cancel();
 				cleanInbox();
+				composeControls.cancel();
 			},
 			quoteInline: true
 		}
 	]
 };
 
-options = Object.assign(options, module.parent.options);
+if (module.parent && module.parent.options) {
+	options = deepmerge(options, module.parent.options);
+}
 
 if (options.overrideTests) {
 	options.tests = options.tests.filter((test) => {
 		let { testcase } = test;
 
 		if (options.overrideTests[testcase]) {
-			test = Object.assign(test, options.overrideTests[testcase]);
+			test.testcase = options.overrideTests[testcase].testcase;
+			test.name = options.overrideTests[testcase].name;
 
 			return true;
 		} else {
@@ -129,12 +135,12 @@ describe(() => {
 		createSignature(options);
 	});
 
-	options.tests.forEach((options) => {
-		let { testcase, name } = options;
+	options.tests.forEach((test) => {
+		let { testcase, name } = test;
 
 		describe(testcase, () => {
 			it(name, () => {
-				test(options);
+				checkChangeSignature(test, options.signatures);
 			});
 		});
 	});

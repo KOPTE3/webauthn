@@ -231,7 +231,8 @@ class SignaturePage extends PageObject {
 		let container = this.getSignatureContainer(index);
 		let checkbox = container.element(this.locators.item.isDefault);
 
-		checkbox.scroll(0, 150);
+		// Доскроллить до элемента не работает, т.к. он перекрывается плавающими кнопками
+		this.page.scroll('#footer__portal');
 		if (checkbox.isVisible() && !checkbox.isSelected()) {
 			checkbox.click();
 		}
