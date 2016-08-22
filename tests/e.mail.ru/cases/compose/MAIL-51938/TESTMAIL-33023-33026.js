@@ -13,6 +13,8 @@ let LettersSteps = require('../../../steps/messages/letters');
 let LetterBodySteps = require('../../../steps/message/body');
 let LetterHeadSteps = require('../../../steps/message/head');
 let LetterAttachesSteps = require('../../../steps/message/attaches');
+let FastreplySteps = require('../../../steps/message/fastreply');
+let ComposeEditor = require('../../../steps/compose/editor');
 
 let actions = require('../../../utils/actions');
 let composeFieldsStore = require('../../../store/compose/fields');
@@ -28,12 +30,14 @@ let composeControls = new ComposeControlsSteps();
 let letterBody = new LetterBodySteps();
 let letterHead = new LetterHeadSteps();
 let letterAttaches = new LetterAttachesSteps();
-
+let fastreplySteps = new FastreplySteps();
+let composeEditor = new ComposeEditor();
 
 let {auth, resetSignatures, cleanInbox} = require('./meta');
 
 let options = {
 	signatureBeforeText: false,
+	fastAnswer: false,
 	signatures: [
 		{image: true, isDefault: true},
 		{image: false}
@@ -56,8 +60,14 @@ let options = {
 				Messages.open();
 				letters.waitForNewestLetter();
 				letters.openNewestLetter();
-				messageToolbar.clickButton('reply');
-				Compose.wait();
+
+				if (options.fastAnswer) {
+					fastreplySteps.clickButton('reply');
+					composeEditor.wait();
+				} else {
+					messageToolbar.clickButton('reply');
+					Compose.wait();
+				}
 			}
 		},
 		{
@@ -67,14 +77,22 @@ let options = {
 			open: () => {
 				Messages.open();
 				letters.openNewestLetter();
-				messageToolbar.clickButton('reply');
-				Compose.refresh();
+
+				if (options.fastAnswer) {
+					Compose.refresh();
+					fastreplySteps.clickButton('reply');
+					composeEditor.wait();
+				} else {
+					messageToolbar.clickButton('reply');
+					Compose.refresh();
+					Compose.wait();
+				}
 			}
 		}
 	]
 };
 
-options = deepmerge(options, module.parent.options);
+options = deepmerge(options, module.parent.options || {});
 
 describe(() => {
 	before(() => {
@@ -84,7 +102,12 @@ describe(() => {
 		createSignature(options);
 	});
 
-	options.tests.forEach(({ testcase, name, open }) => {
+	options.tests.forEach(({ testcase, name, open, skip }) => {
+
+		if (skip) {
+			return;
+		}
+
 		describe(testcase, () => {
 			it(name, () => {
 				open();
@@ -96,7 +119,13 @@ describe(() => {
 				composeFields.setFieldValue('to', composeStore.to);
 				composeFields.setFieldValue('subject', composeStore.subject);
 				compose2Editor.writeMessage(composeStore.text);
-				composeControls.send();
+
+				if (options.fastAnswer) {
+					messageToolbar.clickFastreplyButton('reply');
+				} else {
+					composeControls.send();
+				}
+
 				SentPage.wait();
 
 				Messages.open();
