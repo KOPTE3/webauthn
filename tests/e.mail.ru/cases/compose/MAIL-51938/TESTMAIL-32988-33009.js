@@ -23,6 +23,34 @@ let test = require('./meta/checkChangeSignature');
 
 let composeFieldsStore = require('../../../store/compose/fields');
 
+let openReply = function (noajax = false) {
+	let { fields } = composeFieldsStore;
+
+	Messages.open();
+	messagesToolbar.clickButton('compose');
+	Compose.wait();
+
+	compose2Editor.hasInline();
+
+	composeFields.setFieldValue('to', fields.to);
+	composeFields.setFieldValue('subject', fields.subject);
+	compose2Editor.writeMessage(fields.text);
+	composeControls.send();
+	SentPage.wait();
+
+	Messages.open();
+	letters.waitForNewestLetter();
+	letters.openNewestLetter();
+
+	messageToolbar.clickButton('reply');
+
+	if (noajax) {
+		Compose.refresh();
+	}
+
+	Compose.wait();
+};
+
 const tests = [
 	{
 		testcase: 'TESTMAIL-32988',
@@ -45,26 +73,22 @@ const tests = [
 		'(две подписи, по умолчанию - отредактирована через панель редактирования ' +
 		'с картинкой, вторая - обычный текст) и что она не меняется в цитировании',
 		open: () => {
-			let { fields } = composeFieldsStore;
+			openReply();
+		},
+		close: () => {
+			composeControls.cancel();
+			cleanInbox();
+		},
+		quoteInline: true
+	},
 
-			Messages.open();
-			messagesToolbar.clickButton('compose');
-			Compose.wait();
-
-			compose2Editor.hasInline();
-
-			composeFields.setFieldValue('to', fields.to);
-			composeFields.setFieldValue('subject', fields.subject);
-			compose2Editor.writeMessage(fields.text);
-			composeControls.send();
-			SentPage.wait();
-
-			Messages.open();
-			letters.waitForNewestLetter();
-			letters.openNewestLetter();
-
-			messageToolbar.clickButton('reply');
-			Compose.wait();
+	{
+		testcase: 'TESTMAIL-33005',
+		name: 'Полный ответ на письмо. HTML подпись. НЕ AJAX. Проверка смены подписи ' +
+		'(две подписи, по умолчанию - отредактирована через панель редактирования ' +
+		'с картинкой, вторая - обычный текст) и что она не меняется в цитировании',
+		open: () => {
+			openReply(true);
 		},
 		close: () => {
 			composeControls.cancel();
