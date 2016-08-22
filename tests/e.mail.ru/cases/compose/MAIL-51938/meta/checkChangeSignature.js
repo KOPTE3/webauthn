@@ -22,7 +22,7 @@ module.exports = (options, signatures) => {
 		compose2Editor.hasInline();
 		compose2Editor.messageContains(filename + initSignIndex);
 	} else {
-		compose2Editor.messageContains(text);
+		compose2Editor.messageContains(text + initSignIndex);
 	}
 
 	composeEditorControls.toggleSignature();
@@ -35,17 +35,19 @@ module.exports = (options, signatures) => {
 			compose2Editor.blockQuoteContains(filename + initSignIndex);
 			compose2Editor.hasInlineInBlockQuote();
 		} else {
-			compose2Editor.blockQuoteContains(text);
+			compose2Editor.blockQuoteContains(text + initSignIndex);
 		}
 	} else {
-		compose2Editor.messageContains(initImage ? filename + initSignIndex : text, true);
+		compose2Editor.messageContains(initImage ?
+										filename + initSignIndex :
+										text + initSignIndex, true);
 	}
 
 	if (nextImage) {
 		compose2Editor.hasInline();
 		compose2Editor.messageContains(filename + nextSignIndex);
 	} else {
-		compose2Editor.messageContains(text);
+		compose2Editor.messageContains(text + nextSignIndex);
 	}
 
 	options.close();

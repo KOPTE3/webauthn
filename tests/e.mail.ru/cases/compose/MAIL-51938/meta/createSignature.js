@@ -24,7 +24,7 @@ module.exports = ({signatures, signatureBeforeText}) => {
 			Signature.setSignature(filename + index, index);
 			Signature.attachInline(filename, index);
 		} else {
-			Signature.setSignature(text, index);
+			Signature.setSignature(text + index, index);
 		}
 
 		if (isDefault) {
