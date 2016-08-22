@@ -51,7 +51,7 @@ let openReply = function (noajax = false) {
 	Compose.wait();
 };
 
-let { options = {
+let options = {
 	signatureBeforeText: false,
 	signatures: [
 		{image: true, isDefault: true},
@@ -103,14 +103,29 @@ let { options = {
 			quoteInline: true
 		}
 	]
-}} = module.parent;
+};
+
+options = Object.assign(options, module.parent.options);
+
+if (options.overrideTests) {
+	options.tests = options.tests.filter((test) => {
+		let { testcase } = test;
+
+		if (options.overrideTests[testcase]) {
+			test = Object.assign(test, options.overrideTests[testcase]);
+
+			return true;
+		} else {
+			return false;
+		}
+	});
+}
 
 describe(() => {
 	before(() => {
 		auth();
 		resetSignatures();
 
-		// TODO параметры
 		createSignature(options);
 	});
 
