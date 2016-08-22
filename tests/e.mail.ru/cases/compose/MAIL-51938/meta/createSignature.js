@@ -10,17 +10,33 @@ const filename = 'jpg.jpg';
  *
  * @param {*[]} signatures
  */
-module.exports = (signatures) => {
+module.exports = ({signatures, signatureBeforeText}) => {
 	Signature.open();
 	Signature.removeAllSignatures();
 	Signature.hasWysiwyg();
 
-	// Первая подпись с картинкой
-	Signature.attachInline(filename);
+	signatures.forEach(({image, isDefault}, index) => {
+		if (index) {
+			Signature.addSignature();
+		}
 
-	// Вторая - текст
-	Signature.addSignature();
-	Signature.setSignature(text, 1);
+		if (image) {
+			Signature.attachInline(filename, index);
+		} else {
+			Signature.setSignature(text, 1);
+		}
+
+		if (isDefault) {
+			Signature.setDefaultSignature(index);
+		}
+	});
+
+	Signature.checkSignatureBeforeQuotation(false);
+
+	if (signatureBeforeText) {
+		Signature.toggleSignatureBeforeQuotation();
+		Signature.checkSignatureBeforeQuotation(true);
+	}
 
 	Signature.save();
 };

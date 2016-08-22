@@ -33,8 +33,10 @@ class SignaturePage extends PageObject {
 				},
 				signature: `${container} .js-signature-container textarea`,
 				editor: `${container} .js-signature-container .form__editor`,
-				wysiwyg: `${container} .js-signature-container .mceExternalToolbar`
+				wysiwyg: `${container} .js-signature-container .mceExternalToolbar`,
+				isDefault: `${container} .js-default`
 			},
+			signatureBeforeQuotation: `${container} [name="Send.Reply.SignatureBeforeQuotation"]`,
 			controls: {
 				new: `${container} .js-add-signature`,
 				save: `${container} [type="submit"],.form__actions_floating [type="submit"]`
@@ -208,6 +210,31 @@ class SignaturePage extends PageObject {
 	 */
 	hasWysiwyg () {
 		return this.page.waitForVisible(this.locators.item.wysiwyg);
+	}
+
+	/**
+	 * Нажать на чекбокс "Подпись перед цитируемым текстом"
+	 */
+	toggleSignatureBeforeQuotation () {
+		let locator = this.locators.signatureBeforeQuotation;
+
+		// Чтобы плавающие кнопки не пеерекрывали чекбокс
+		this.page.scroll(locator, 0, 150);
+		this.page.click(locator);
+	}
+
+	getSignatureBeforeQuotation () {
+		return this.page.isSelected(this.locators.signatureBeforeQuotation);
+	}
+
+	setDefaultSignature (index) {
+		let container = this.getSignatureContainer(index);
+		let checkbox = container.element(this.locators.item.isDefault);
+
+		checkbox.scroll(0, 150);
+		if (checkbox.isVisible() && !checkbox.isSelected()) {
+			checkbox.click();
+		}
 	}
 }
 
