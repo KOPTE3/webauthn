@@ -1,6 +1,6 @@
 'use strict';
 
-let helpers = require('../utils/helpers');
+let merge = require('deepmerge');
 let account = require('../utils/account');
 let URL = require('../utils/url');
 
@@ -138,11 +138,12 @@ class PageObject {
 	/**
 	 * Расширяет объект
 	 *
-	 * @param {Object} object
+	 * @property {Object} x
+	 * @property {Object} y
 	 * @returns {Object}
 	 */
-	extend (object) {
-		return helpers.extend(...arguments);
+	extend (/** x, y */) {
+		return merge(...arguments);
 	}
 
 	/**
