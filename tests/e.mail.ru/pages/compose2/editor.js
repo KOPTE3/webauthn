@@ -28,7 +28,7 @@ class Compose2Editor extends ComposeEditor {
 	}
 
 	/**
-	 * Есть инлайн-аттач
+	 * Есть инлайн-аттач (
 	 *
 	 * @param {boolean} reverse
 	 * @return {boolean}
@@ -36,18 +36,27 @@ class Compose2Editor extends ComposeEditor {
 	hasInline (reverse = false) {
 		let editor = this.getEditor();
 		let element = editor.element('img');
+		let result = true;
 
 		element.waitForVisible(3000, reverse);
+
+		if (!reverse) {
+			let images = editor.elements('img').value;
+			let imagesInsideBlockquote = editor.elements('blockquote img').value;
+
+			result = (images.length !== imagesInsideBlockquote.length);
+		}
+
 		this.restoreParentFrame();
 
-		return true;
+		return result;
 	}
 
-	hasInlineInBlockQuote () {
+	hasInlineInBlockQuote (reverse = false) {
 		let editor = this.getEditor();
 		let element = editor.element('blockquote img');
 
-		element.waitForVisible();
+		element.waitForVisible(3000, reverse);
 		this.restoreParentFrame();
 
 		return true;
