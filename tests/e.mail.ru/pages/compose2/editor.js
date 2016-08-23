@@ -28,7 +28,7 @@ class Compose2Editor extends ComposeEditor {
 	}
 
 	/**
-	 * Есть инлайн-аттач (
+	 * Есть инлайн-аттач
 	 *
 	 * @param {boolean} reverse
 	 * @return {boolean}

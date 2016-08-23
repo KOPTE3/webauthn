@@ -8,6 +8,9 @@ let BalloonsSteps = require('../../../steps/balloons');
 
 let foldersStore = require('../../../store/folders');
 let cleanerStore = require('../../../store/cleaner');
+let helpersStore = require('../../../store/helpers');
+
+let actions = require('../../../utils/actions');
 
 let login = function () {
 	Steps.auth();
@@ -107,6 +110,10 @@ let launchCleanerInternally = function () {
 	CleanerSteps.waitForCleanerMain();
 };
 
+let removeBalloonHelper = function () {
+	actions.removeHelper(helpersStore['balloon-cleaner-archive']);
+};
+
 module.exports = {
 	Steps,
 	FoldersSteps,
@@ -127,5 +134,6 @@ module.exports = {
 	openFiltersSettings,
 	launchCleaner,
 	finishCleaner,
-	launchCleanerInternally
+	launchCleanerInternally,
+	removeBalloonHelper
 };

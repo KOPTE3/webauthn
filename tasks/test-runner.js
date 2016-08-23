@@ -2,7 +2,6 @@
 
 let path = require('path');
 let childProcess = require('child_process');
-let fs = require('fs');
 
 module.exports = grunt => {
 	return {
@@ -21,14 +20,6 @@ module.exports = grunt => {
 				init () {
 					// Удаляем директорию с кешем
 					childProcess.execSync('rm -rf cache/tests');
-
-					// Показ логотипа
-					fs.readFile('files/logo.txt', {
-						encoding: 'utf-8'
-					},
-					(error, logo) => {
-						console.log(logo);
-					});
 				}
 			}
 		},
