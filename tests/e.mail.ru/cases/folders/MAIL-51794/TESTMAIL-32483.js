@@ -1,6 +1,5 @@
 'use strict';
 
-let path = require('path');
 let Folders = require('../../../steps/folders');
 let foldersStore = require('../../../store/folders');
 
