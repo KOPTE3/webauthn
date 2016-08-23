@@ -20,6 +20,7 @@ class MessagefastreplyPage extends MessagePage {
 		return this.extend(super.locators, {
 			buttons: {
 				reply: `${active}[data-compose-act="reply"]`,
+				replyAll: `${active}[data-compose-act="replyAll"]`,
 				forward: `${active}[data-compose-act="forward"]`
 			},
 
