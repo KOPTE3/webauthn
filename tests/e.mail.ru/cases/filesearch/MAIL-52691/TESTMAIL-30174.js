@@ -43,7 +43,7 @@ describe(() => {
 		});
 
 		// Добавляем потенциально опасные файл
-		mail.addAttach('SmallExe.exe');
+		mail.addAttach('exe.exe');
 		mail.send();
 
 		// Открываем полученное письмо, чтобы оно добавилось в файлы
