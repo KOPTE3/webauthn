@@ -41,6 +41,18 @@ class ComposeEditorControlsSteps extends ComposeSteps {
 	}
 
 	/**
+	 * Проверить текст подписи
+	 *
+	 * @param {string} text - текст подписи
+	 * @param {number} index - номер подписи
+	 */
+	checkSignatureText (text, index) {
+		let actual = this.controls.getSignatureText(index);
+
+		assert.equal(actual, text, `Текст подписи не равен ${text}`);
+	}
+
+	/**
 	 * Проверить текст активной подписи
 	 *
 	 * @param {string} text - текст подписи

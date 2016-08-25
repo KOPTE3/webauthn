@@ -95,6 +95,20 @@ class ComposeEditorControls extends ComposePage {
 	}
 
 	/**
+	 * Получить текст подписи по индексу
+	 *
+	 * @param {number} index
+	 * @returns {string}
+	 */
+	getSignatureText (index) {
+		let { value: items } = this.page.elements(this.locators.signature.item);
+		let textItem = this.page.elementIdElement(items[index].ELEMENT,
+			this.locators.signature.text);
+
+		return textItem.getText();
+	}
+
+	/**
 	 * В дропдауне подписей есть ссылка на настройки
 	 *
 	 * @return {boolean}
