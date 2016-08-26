@@ -37,6 +37,25 @@ class FoldersPage extends PageObject {
 		return {
 			container: '.b-folders',
 			item: '.b-folders__item',
+			itemxpath: (params) => {
+				let {id, parent, name} = params;
+				let locator = `//*[contains(@class, "b-folders")]/*` +
+					`[contains(@class, "b-folders__item-col_title")]`;
+
+				if (id !== void 0) {
+					locator += `[@data-id="${id}"]`;
+				}
+
+				if (parent !== void 0) {
+					locator += `[@data-parent="${parent}"]`;
+				}
+
+				if (name !== void 0) {
+					locator += `[text()="${name}"]`;
+				}
+
+				return locator;
+			},
 			icons: {
 				container: '.ico_folder',
 				user: '.ico_folder_user',
@@ -103,56 +122,23 @@ class FoldersPage extends PageObject {
 	}
 
 	waitAddSuccess (params) {
-		let {parent, name} = params;
-		let {container, item} = this.locators;
-		let locator = `${container} ${item} [data-parent="${parent}"]`;
-		let folderId;
+		let locator = this.locators.itemxpath(params);
 
-		this.page.waitUntil(() => {
-			return this.page.elements(locator).value.find(item => {
-				let elementId = item.ELEMENT;
-				let result = this.page.elementIdText(elementId).value === name;
+		this.page.waitForExist(locator);
 
-				if (result) {
-					folderId = this.page.elementIdAttribute(elementId, 'data-id').value;
-				}
-
-				return result;
-			});
-		}, 3000, 'Не дождались появления добавленной папки');
-
-		return folderId;
+		return this.page.getAttribute(locator, 'data-id');
 	}
 
 	waitEditSuccess (params) {
-		let {id, parent, name} = params;
-		let {container, item} = this.locators;
-		let locator = `${container} ${item} [data-id="${id}"]`;
+		let locator = this.locators.itemxpath(params);
 
-		if (parent !== void 0) {
-			locator = `${locator}[data-parent="${parent}"]`;
-		}
-
-		if (name === void 0) {
-			this.page.waitForExist(locator);
-		} else {
-			this.page.waitUntil(() => {
-				return this.page.elements(locator).value.find(item => {
-					let elementId = item.ELEMENT;
-
-					return this.page.elementIdText(elementId).value === name;
-				});
-			}, 3000, 'Не дождались появления отредактированной папки');
-		}
+		this.page.waitForExist(locator);
 	}
 
 	waitRemoveSuccess (folderId) {
-		let {container, item} = this.locators;
-		let locator = `${container} ${item} [data-id="${folderId}"]`;
+		let locator = this.locators.itemxpath({id: folderId});
 
-		this.page.waitUntil(() => {
-			return !this.page.isExisting(locator);
-		}, 3000, 'Не дождались удаления папки');
+		this.page.waitForExist(locator, null, true);
 	}
 
 	newFolderControl () {
