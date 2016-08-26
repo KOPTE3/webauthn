@@ -27,7 +27,9 @@ module.exports = {
 		}
 
 		if (/win/i.test(this.platform)) {
-			return `C:\\Users\\tester\\Dropbox\\feta\\mail\\${name}`;
+			return `C:\\Users\\tester\\Dropbox\\feta\\mail\\${
+				name.replace(/\//g, '\\')
+			}`;
 		}
 
 		return `/var/lib/selenium/Dropbox/feta/mail/${name}`;
