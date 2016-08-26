@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "1.9.7",
+	"version": "1.9.8",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
@@ -40,7 +40,7 @@
 
 	"dependencies": {
 		"@qa/account-manager": "^1.4.0",
-		"@qa/grunt-test-runner" : "^0.3.0",
+		"@qa/grunt-test-runner" : "^0.4.1",
 		"@qa/test-tools": "^3.0.1",
 		"@qa/wd-capabilities": "^0.0.4",
 		"@qa/wdio-api-mail.ru": "^2.3.0",
