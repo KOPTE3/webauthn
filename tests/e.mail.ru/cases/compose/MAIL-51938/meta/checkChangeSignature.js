@@ -10,22 +10,45 @@ let compose2Editor = new Compose2EditorSteps();
 const text = 'Текст подписи';
 const filename = 'jpg.jpg';
 
-module.exports = (options) => {
+module.exports = (options, signatures) => {
+	let initSignIndex = signatures[1].isDefault ? 1 : 0;
+	let nextSignIndex = initSignIndex ? 0 : 1;
+	let initImage = signatures[initSignIndex].image;
+	let nextImage = signatures[nextSignIndex].image;
+
 	options.open();
 
-	compose2Editor.hasInline();
+	if (initImage) {
+		compose2Editor.hasInline();
+		compose2Editor.messageContains(filename + initSignIndex);
+	} else {
+		compose2Editor.messageContains(text + initSignIndex);
+	}
 
 	composeEditorControls.toggleSignature();
 	composeEditorControls.isVisibleSignature();
-	composeEditorControls.clickSignature(1);
+	composeEditorControls.clickSignature(nextSignIndex);
 
 	if (options.quoteInline) {
-		compose2Editor.hasInlineInBlockQuote();
+		// В цитировании должна была остаться старая подпись
+		if (initImage) {
+			compose2Editor.blockQuoteContains(filename + initSignIndex);
+			compose2Editor.hasInlineInBlockQuote();
+		} else {
+			compose2Editor.blockQuoteContains(text + initSignIndex);
+		}
 	} else {
-		compose2Editor.noInline();
+		compose2Editor.messageContains(initImage ?
+										filename + initSignIndex :
+										text + initSignIndex, true);
 	}
 
-	compose2Editor.messageContains(text);
+	if (nextImage) {
+		compose2Editor.hasInline();
+		compose2Editor.messageContains(filename + nextSignIndex);
+	} else {
+		compose2Editor.messageContains(text + nextSignIndex);
+	}
 
 	options.close();
 };

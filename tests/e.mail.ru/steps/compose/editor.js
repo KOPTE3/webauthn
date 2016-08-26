@@ -73,6 +73,18 @@ class ComposeEditorSteps extends ComposeSteps {
 		return result;
 	}
 
+	getBlockQuoteMessage () {
+		let currentEditor = this.composeEditor.getEditor();
+		let result;
+
+		assert(currentEditor, 'Редактор письма не найден');
+		result = currentEditor.getText('blockquote');
+
+		this.composeEditor.restoreParentFrame();
+
+		return result;
+	}
+
 	/**
 	 * Проверяет пустое ли сообщение
 	 *
@@ -106,6 +118,20 @@ class ComposeEditorSteps extends ComposeSteps {
 		let actual = this.hasMessage(text);
 
 		assert.equal(actual, !reverse, 'Содержимое письма');
+	}
+
+	/**
+	 * Содержится ли в цитате текст
+	 *
+	 * @param {string} text - текст который должен находится в теле письма
+	 * @param {boolean} [reverse] - реверс
+	 */
+	blockQuoteContains (text, reverse = false) {
+		let message = this.getBlockQuoteMessage();
+
+		let actual = message.includes(text);
+
+		assert.equal(actual, !reverse, 'Текст цитаты неверный');
 	}
 
 	/**

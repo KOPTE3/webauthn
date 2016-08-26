@@ -371,7 +371,8 @@ module.exports = {
 					sign,
 					active: !index
 				};
-			})
+			}),
+			sign_before: false
 		});
 	}
 };

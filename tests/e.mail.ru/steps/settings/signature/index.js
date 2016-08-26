@@ -96,6 +96,30 @@ class Signature extends Steps {
 	static hasInline (index = 0) {
 		signatureEditors[index].hasInline();
 	}
+
+	static toggleSignatureBeforeQuotation () {
+		this.page.toggleSignatureBeforeQuotation();
+	}
+
+	/**
+	 * Проверить состояние чекбокса "подпись перед цитированием"
+	 *
+	 * @param {boolean} checked
+	 */
+	static checkSignatureBeforeQuotation (checked = true) {
+		let actual = this.page.getSignatureBeforeQuotation();
+
+		assert.equal(actual, checked, `Чекбокс не находится в состоянии ${checked}`);
+	}
+
+	/**
+	 * Проставить у подписи галку "по умолчанию"
+	 *
+	 * @param {number} [index] - номер подписи (0, 1, 2)
+	 */
+	static setDefaultSignature (index = 0) {
+		this.page.setDefaultSignature(index);
+	}
 }
 
 module.exports = Signature;
