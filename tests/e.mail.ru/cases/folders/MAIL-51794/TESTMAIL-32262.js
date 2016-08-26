@@ -3,7 +3,6 @@
 const FOLDER_COLLAPSE_TIMEOUT = 86400;
 const FOLDER_UPDATE_PERIOD = 10;
 
-let path = require('path');
 let Folders = require('../../../steps/folders');
 let SettingsFolders = require('../../../steps/settings/folders');
 let foldersStore = require('../../../store/folders');
@@ -51,9 +50,6 @@ describe(() => {
 
 		Folders.setTimeOffset(FOLDER_COLLAPSE_TIMEOUT - offset);
 		Folders.goToFolder(foldersStore.ids.sent);
-		Folders.isFolderVisible(folderId);
-		Folders.setTimeOffset(offset, true);
-		Folders.goToFolder(foldersStore.ids.trash);
 		Folders.isFolderHidden(folderId);
 	});
 });

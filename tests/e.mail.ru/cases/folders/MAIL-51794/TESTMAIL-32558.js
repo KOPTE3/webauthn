@@ -1,9 +1,8 @@
 'use strict';
 
-let path = require('path');
 let Folders = require('../../../steps/folders');
 let foldersStore = require('../../../store/folders');
-let authStore = require('../../../store/authorization');
+let accountUtils = require('../../../utils/account');
 
 const FOLDER_COLLAPSE_TIMEOUT = 86400;
 const FOLDER_UPDATE_PERIOD = 10;
@@ -25,14 +24,11 @@ describe(() => {
 			folder_update_period: FOLDER_UPDATE_PERIOD
 		};
 
-		let firstFolderId = Folders.createFolder({
+		let firstFolderId = Folders.createSecretFolder({
 			name: 'Тестовая папка',
 			parent: foldersStore.ids.root,
 			secret: {
-				folder_password: '123qweasd',
-				user_password: authStore.account.get('password'),
-				question: 'кто я?',
-				answer: 'никто'
+				password: accountUtils.generatePassword(10, true)
 			}
 		});
 
