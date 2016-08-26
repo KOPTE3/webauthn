@@ -27,7 +27,7 @@ module.exports = {
 		// Ставим куку только на хост, который указан в конфиге
 		let host = browser.options.baseUrl;
 
-		// Добавляет обязательные поля
+		// Добавляем обязательные поля
 		Object.assign(options, { host, type, service });
 
 		browser.waitUntil(function async () {
@@ -59,8 +59,7 @@ module.exports = {
 		}
 
 		if (process.NODE_DEBUG) {
-			let email = account.get('email'),
-				border = '='.repeat(50);
+			let email = account.get('email');
 
 			console.log(`%s\nUsed ${email} account\n%s`, '='.repeat(50));
 		}
