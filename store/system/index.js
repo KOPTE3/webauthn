@@ -14,12 +14,12 @@ module.exports = {
 	 */
 	file (name) {
 		if (/127\.0\.0\.1|localhost/.test(this.host)) {
-			let profile = path.resolve('../test-files/files');
+			let profile = path.resolve('files');
 
 			fs.stat(profile, (error, stat) => {
 				if (error) {
 					throw new Error('It seems you forgot to install test files:\n' +
-						'"git clone ssh://git@stash.mail.ru:2222/qa/test-files.git"');
+						'"git clone ssh://git@stash.mail.ru:2222/qa/files.git"');
 				}
 			});
 
