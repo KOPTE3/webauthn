@@ -189,8 +189,21 @@ class PageObject {
 		this.page.alertAccept();
 	}
 
+	/**
+	 * Установить размер окна
+	 *
+	 * @property {number} width
+	 * @property {number} height
+	 */
 	setViewportSize ({width = 1200, height = 600}) {
 		this.page.setViewportSize({ width, height });
+	}
+
+	/**
+	 * Переключиться на ближайшую вкладку
+	 */
+	switchToNextTab () {
+		this.page.switchToNextTab();
 	}
 }
 

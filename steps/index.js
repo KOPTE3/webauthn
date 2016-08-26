@@ -117,12 +117,20 @@ class Steps {
 
 	/**
 	 * Установить размер окна
+	 *
 	 * @param {Object} size
 	 * @param {number} size.width
 	 * @param {number} size.height
 	 */
 	static setViewportSize (size) {
 		pages.setViewportSize(size);
+	}
+
+	/**
+	 * Переключиться на ближайшую вкладку
+	 */
+	switchToNextTab () {
+		pages.switchToNextTab();
 	}
 }
 
