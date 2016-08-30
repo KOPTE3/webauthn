@@ -58,11 +58,20 @@ module.exports = {
 	},
 
 	/**
-	 * Тестовый урл
+	 * Тестовый хост
 	 *
 	 * @type {string}
 	 */
 	get host () {
 		return browser.options.hostname;
+	},
+
+	/**
+	 * Тестовый хост
+	 *
+	 * @type {string}
+	 */
+	get baseUrl () {
+		return browser.options.baseUrl;
 	}
 };
