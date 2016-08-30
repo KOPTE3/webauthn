@@ -19,7 +19,7 @@ const PROXY_PATH = 'http://test-proxy.win102.dev.mail.ru';
 module.exports = {
 	call ({path, method = 'GET', body = {}}) {
 		let params = {
-			url: `${PROXY_PATH}/${path}`,
+			url: `${PROXY_PATH}/${path}?apihost=farm`,
 			method,
 			body,
 			json: true
