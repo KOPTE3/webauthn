@@ -205,6 +205,15 @@ class PageObject {
 	switchToNextTab () {
 		this.page.switchToNextTab();
 	}
+
+	/**
+	 * удаляем обработчик onbeforeunload
+	 */
+	disableConfirm () {
+		this.page.execute(function () {
+			window.onbeforeunload = null;
+		});
+	}
 }
 
 module.exports = PageObject;
