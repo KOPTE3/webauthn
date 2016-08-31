@@ -209,7 +209,7 @@ class PageObject {
 	/**
 	 * удаляем обработчик onbeforeunload
 	 */
-	offOnbeforeunload () {
+	disableConfirm () {
 		this.page.execute(function () {
 			window.onbeforeunload = null;
 		});

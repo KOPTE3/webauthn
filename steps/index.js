@@ -50,8 +50,8 @@ class Steps {
 	 * и если закрываем окно, то выходит сообщение, иногда оно не нужно т.к.
 	 * webdriver в этом случае не сможет закрыть это сообщение и выдаст ошибку
 	 */
-	static offOnbeforeunload () {
-		this.page.offOnbeforeunload();
+	static disableConfirm () {
+		this.page.disableConfirm();
 	}
 
 	/**
