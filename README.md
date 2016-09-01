@@ -13,16 +13,14 @@
 
 ### Установка
 
+Для работы с этим пакетом используйте [grunt-init-yoda](https://stash.mail.ru/projects/QA/repos/grunt-init-yoda/browse).
+
+Разработчикам:
+
 **git**
 
 ```
 git clone ssh://git@stash.mail.ru:2222/qa/yoda.git
-```
-
-Тестовые файлы следует расположить в соседней директории:
-
-```
-git clone ssh://git@stash.mail.ru:2222/qa/test-files.git
 ```
 
 **npm**
@@ -58,6 +56,7 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 
 Обновите [JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
+
 ### Совместимость
 
 Пакет совместим о всеми известными окружениями, однако работа с npm-хуками в Сygwin имеет некоторые ограничения на запуск файлов с правами на исполнение. Также в нем отсутствует команда source. Поэтому будьте бдительны :)
@@ -68,13 +67,13 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 Основной файл, который отвечает за конфигурирование сервера и запуск тестов распологается в директории:
 
 ```
-tests/<ваш_проект>/config.js
+tests/config.js
 ```
 
 Однако править этот файл не рекомендуется. Вместо этого используйте локальный конфиг:
 
 ```
-tests/<ваш_проект>/config.local.js
+tests/config.local.js
 ```
 
 Дополнительную информацию о формате конфига и его опциях смотрите [здесь](http://webdriver.io/guide/getstarted/configuration.html).
@@ -82,35 +81,7 @@ tests/<ваш_проект>/config.local.js
 
 ### CI
 
-Для запуска тестов с среде непрерывной интеграции у вас должна быть определена переменная `CI_DEPLOY_ENVIRONMENT`. <br />
-Значением переменной является название проекта (репозитория), который должен распологаться в соседней директории.  
-
-По команде npm install запускается хук, который получает информацию об актуальных ветках проекта и исключает возможность запука тестов для фич, которых нет в репозитории:
-
-```js
-{
-	get suites () {
-		let callback = null;
-
-		// Исключаем запуск фич, которых нет в релизе
-		if (process.CI_DEPLOY_ENVIRONMENT) {
-			let excluded = support.excluded();
-
-			callback = file => {
-				for (let feature of excluded) {
-					if (file.includes(feature)) {
-						return false;
-					}
-				}
-			};
-		}
-
-		return support.suites({}, callback);
-	}
-}
-```
-
-Тесты должны должны запускаться для хоста, который передается в параметре `url`
+Пример запуска тестов в среде непрерывной интеграции смотрите [здесь](http://win110.dev.mail.ru:8080/view/Yoda/job/yoda.suites). 
 
 
 ### Использование
@@ -124,25 +95,25 @@ npm start
 #### Зупустить тесты конкретного тестового набора:
 
 ```
-npm test -- e.mail.ru --suite=login
+npm test -- --suite=login
 ```
 
 `--suite` может принимать множество значений:
 
 ```
-npm test -- e.mail.ru --suite='login,compose'
+npm test -- --suite='login,compose'
 ```
 
 #### Запуск тестов по фильтру:
 
 ```
-npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674
+npm test -- --suite=login --grep=TESTMAIL-8674
 ```
 
 *Опция `--grep` принимает регулярное выражение*
 
 ```
-npm test -- e.mail.ru --suite=login --grep=TESTMAIL-867[45]
+npm test -- --suite=login --grep=TESTMAIL-867[45]
 ```
 
 В этом случае, будут запущены два теста TESTMAIL-8674 и TESTMAIL-8675
@@ -151,17 +122,25 @@ npm test -- e.mail.ru --suite=login --grep=TESTMAIL-867[45]
 #### Выполнить тесты на заданном адресе:
 
 ```
-npm test -- e.mail.ru --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
+npm test -- --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
 ```
 
-Полный список доступных опций test-runner'a смотрите [здесь](https://stash.mail.ru/projects/QA/repos/grunt-test-runner/browse).
+Для запуска тестов локально вы можете использовать grunt напрямую:
+
+```
+grunt yoda --suite=compose
+```
+
+Но такой способ запуска не следует использовать в CI (лучше вообще не использовать), поскольку будет использоваться не локальная версия grunt, а глобальная.
+
+Полный список доступных опций test-runner'a смотрите [здесь](https://stash.mail.ru/projects/QA/repos/grunt-yoda/browse).
 
 
 ### Логи и отчеты
 
-**cache/tests/<project>/logs** — логи сервера
-**cache/tests/<project>/shots** — скриншоты с упавшими тестами
-**cache/tests/<project>/reports** — отчеты о прогоне
+**cache/tests/logs** — логи сервера
+**cache/tests/shots** — скриншоты с упавшими тестами
+**cache/tests/reports** — отчеты о прогоне
 
 
 ### API
