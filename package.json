@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
@@ -41,7 +41,7 @@
 		"@qa/test-tools": "^3.2.2",
 		"@qa/wd-capabilities": "^0.0.4",
 		"@qa/wdio-api": "^0.1.0",
-		"@qa/wdio-mocha-hooks": "^0.0.1",
+		"@qa/wdio-mocha-hooks": "^0.0.2",
 
 		"debug": "^2.2.0",
 		"deepmerge" : "^0.2.10",
@@ -54,7 +54,7 @@
 		"wdio-mocha-framework": "^0.4.0",
 		"wdio-json-reporter" : "^0.0.4",
 		"wdio-junit-reporter": "^0.1.0",
-		"wdio-spec-reporter" : "^0.0.2"
+		"wdio-spec-reporter" : "^0.0.3"
 	},
 
 	"devDependencies": {
