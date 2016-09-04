@@ -23,15 +23,15 @@ let authorization = require('@qa/yoda/store/authorization');
 Чтобы перенести эту функциональность нужно время и понимание того как использовать код, который завязанный на клиентские библиотеки и объекты почты. Возможно этот вопрос будет решен в следующем релизе.
 
 * Для разворачивания тестового окружения появился пакет [@qa/grunt-init-yoda](https://stash.mail.ru/projects/QA/repos/grunt-init-yoda/browse)
-* В пакете `@qa/wdio-mocha-hooks` исправлены методы `describe.skip` и `describe.only` 
+* В пакете [@qa/wdio-mocha-hooks](https://stash.mail.ru/projects/QA/repos/wdio-mocha-hooks/browse) исправлены методы `describe.skip` и `describe.only`
 * Пакет `@qa/wdio-api-mail.ru` переименован в [@qa/wdio-api](https://stash.mail.ru/projects/QA/repos/wdio-api/browse)
 * Пакет `@qa/test-files` переименован в [@qa/files](https://stash.mail.ru/projects/QA/repos/files/browse), который теперь устанавливается автоматически из `@qa/grunt-init-yoda`
 * Пакет `@qa/wd-capabilities` переименован в [@qa/wdio-capabilities](https://stash.mail.ru/projects/QA/repos/wdio-capabilities/browse)
 * Пакет `@qa/grunt-test-runner` переименован в [@qa/grunt-yoda](https://stash.mail.ru/projects/QA/repos/grunt-yoda/browse)
 * В пакет `@qa/wdio-api` добавлен метод `inject` для включения JS-файлов на страницу
 * Исправлено создание автоматическое локальных конфигов (теперь конфиг будет создаваться единожды при инициализации тестового окружения и пересоздаваться с ключами --init или --join пакета `@qa/grunt-init-yoda`)
-* В `@qa/account-manager` добавлена кука `qa` 
-* В степы добавлен методы `disableConfirm` и `switchToNextTab` 
+* В `@qa/account-manager` добавлена кука `qa`
+* В степы добавлен методы `disableConfirm` и `switchToNextTab`
 
 * Пример запуска тестов:
 
