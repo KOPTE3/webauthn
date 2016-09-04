@@ -14,7 +14,7 @@
 Пример использования:
 
 ```js
-let authorization = require('@aa/store/authorization');
+let authorization = require('@qa/yoda/store/authorization');
 ```
 
 Что не было вынесено:
