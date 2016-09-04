@@ -17,7 +17,21 @@
 Пример использования:
 
 ```js
+let DefaultPage = require('@qa/yoda/pages');
 let authorization = require('@qa/yoda/store/authorization');
+
+class PageObject extends DefaultPage {
+	/**
+	 * Локаторы
+	 *
+	 * @type {Object}
+	 */
+	get locators () {
+		return {
+			container: '#LEGO'
+		};
+	}
+}
 ```
 
 Что не было вынесено:
