@@ -2,8 +2,36 @@
 
 ## 2.0.0
 
-* В новом релизе осталась только базовая функционость!
-* Для разворачивания тестового окружения теперь используется [grunt-init-yoda](https://stash.mail.ru/projects/QA/repos/grunt-init-yoda/browse)
+* В новом релизе осталась только базовая функционость:
+	* store/authorization
+	* store/authorization/accounts
+	* store/authorization/providers
+	* system
+	* utils/account
+	* utils/date
+	* utils/url
+
+Пример использования:
+
+```js
+let authorization = require('@aa/store/authorization');
+```
+
+Что не было вынесено:
+
+* Методы вызова серверных методов API, логирование запросов, модель работы с экшенами, методы создания пользователей. 
+Чтобы перенести эту функциональность нужно время и понимание того как использовать код, который завязанный на клиентские библиотеки и объекты почты. Возможно этот вопрос будет решен в следующем релизе.
+
+* Для разворачивания тестового окружения появился пакет [@qa/grunt-init-yoda](https://stash.mail.ru/projects/QA/repos/grunt-init-yoda/browse)
+* В пакете `@qa/wdio-mocha-hooks` исправлены методы `describe.skip` и `describe.only` 
+* Пакет `@qa/wdio-api-mail.ru` переименован в `@qa/wdio-api`
+* Пакет `@qa/test-files` переименован в `@qa/files`, который теперь устанавливается автоматически из `@qa/grunt-init-yoda`
+* Пакет `@qa/wd-capabilities` переименован в `@qa/wdio-capabilities` 
+* Пакет `@qa/grunt-test-runner` переименован в `@qa/grunt-yoda`
+* В пакет `@qa/wdio-api` добавлен метод `inject` для включения JS-файлов на страницу
+* Исправлено создание автоматическое локальных конфигов (теперь конфиг будет создаваться единожды при инициализации тестового окружения и пересоздаваться с ключами --init или --join пакета `@qa/grunt-init-yoda`)
+* В `@qa/account-manager` добавлена кука `qa` 
+* В степы добавлен методы `disableConfirm` и `switchToNextTab` 
 
 ## 1.5.0
 
