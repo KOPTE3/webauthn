@@ -3,6 +3,9 @@
 ## 2.0.0
 
 * В новом релизе осталась только базовая функционость:
+	* steps
+	* pages
+	* store
 	* store/authorization
 	* store/authorization/accounts
 	* store/authorization/providers
