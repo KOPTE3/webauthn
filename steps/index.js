@@ -30,6 +30,15 @@ class Steps {
 		pages.alertAccept();
 	}
 
+	/**
+	 * Получить текст алерта
+	 *
+	 * @returns {string}
+	 */
+	static getAlertText () {
+		return pages.alertText();
+	}
+
 	/** Сбросить текущую сессию */
 	static reload () {
 		pages.reload();

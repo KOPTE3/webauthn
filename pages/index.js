@@ -190,12 +190,21 @@ class PageObject {
 	}
 
 	/**
+	 * Получить текст алерта
+	 *
+	 * @returns {string}
+	 */
+	getAlertText () {
+		return this.page.alertText();
+	}
+
+	/**
 	 * Установить размер окна
 	 *
 	 * @property {number} width
 	 * @property {number} height
 	 */
-	setViewportSize ({width = 1200, height = 600}) {
+	setViewportSize ({ width = 1200, height = 600 }) {
 		this.page.setViewportSize({ width, height });
 	}
 
