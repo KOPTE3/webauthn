@@ -17,6 +17,13 @@ class Steps {
 	}
 
 	/**
+	 * Скрипты, выполняемые сразу после page.url
+	 */
+	static inject () {
+		pages.inject(...arguments);
+	}
+
+	/**
 	 * Обновить страницу
 	 *
 	 * @param {Object} [query] — параметры запроса

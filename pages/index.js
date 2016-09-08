@@ -6,6 +6,7 @@ let URL = require('../utils/url');
 
 let cache = {
 	session : false,
+	scripts : [],
 	features: []
 };
 
@@ -85,15 +86,7 @@ class PageObject {
 			path = this.location;
 		}
 
-		let { user, features } = cache;
-
-		if (features.length) {
-			query.ftrs = features.join(' ');
-		}
-
-		let url = URL.format(path, query);
-
-		this.page.url(url);
+		this.url(path, query);
 		this.wait();
 
 		if (cache.session) {
@@ -101,6 +94,11 @@ class PageObject {
 		}
 
 		return true;
+	}
+
+	/** Выполнить скрипт после page.url */
+	inject () {
+		cache.scripts.push(arguments);
 	}
 
 	/**
@@ -118,8 +116,22 @@ class PageObject {
 	 * @param {Object} [query] — параметры запроса
 	 */
 	refresh (query = {}) {
-		let { features } = cache;
-		let url = this.page.getUrl();
+		this.url(this.page.getUrl(), query);
+	}
+
+	/** Сбросить текущую сессию */
+	reload () {
+		this.page.reload();
+	}
+
+	/**
+	 * Перейти по урлу
+	 *
+	 * @param {string} url — url
+	 * @param {Object} [query] — параметры запроса
+	 */
+	url (url, query = {}) {
+		let { features, scripts } = cache;
 
 		if (features.length) {
 			query.ftrs = features.join(' ');
@@ -128,11 +140,10 @@ class PageObject {
 		url = URL.format(url, query);
 
 		this.page.url(url);
-	}
 
-	/** Сбросить текущую сессию */
-	reload () {
-		this.page.reload();
+		scripts.forEach(file => {
+			this.page.execute(...file);
+		});
 	}
 
 	/**
