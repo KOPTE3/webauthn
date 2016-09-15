@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.2
+
+* В [@qa/wdio-api](https://stash.mail.ru/projects/QA/repos/wdio-api/browse) была добавлена команда `getStyleProperty`
+
+
 ## 2.1.0
 
 * Добавлен метод `inject`, который позволяет включать в тело страницы произвольный исполняемый код.
