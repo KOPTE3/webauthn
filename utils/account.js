@@ -17,8 +17,9 @@ module.exports = {
 		let account = new AccountManager.Hooks(),
 			service = 'mail.ru';
 
-		// Пробуем авторизовать указанным адресом
-		if (options.username) {
+		if (/^(pdd|external)$/.test(type)) {
+			type = 'basic';
+		} else if (options.username) {
 			let { name, host } = this.parseEmail(options.username);
 
 			service = providers.find(host);

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.3
+
+* Исправлена авторизация типами `pdd` и `external`
+
 ## 2.1.2
 
 * В [@qa/wdio-api](https://stash.mail.ru/projects/QA/repos/wdio-api/browse) была добавлена команда `getStyleProperty`
