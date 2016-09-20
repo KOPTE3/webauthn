@@ -34,9 +34,9 @@ npm install @qa/yoda
 ```
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | bash
 source ~/.bash{rc,_profile}
-nvm install 6.2
-nvm use 6.2
-nvm alias default 6.2
+nvm install 6
+nvm use 6
+nvm alias default 6
 ```
 
 **java**
@@ -627,6 +627,7 @@ module.exports = {
 ### Требования
 
 * Не обращайтесь в pages к объекту browser напрямую. Вместо этого используйте ссылку `this.page`.
+* Устаревшие тесты, которые подлежат удалению зафиксируйте статусом Archive в JIRA.
 * Писать номер таска в блоке `describe` не нужно, он подставляется автоматически.
 * Универсальные команды добавляйте в проект [@qa/wdio-api](ssh://git@stash.mail.ru:2222/qa/wdio-api.git)
 * Используйте JSDoc аннотацию для документирования функций, которые принимают параметры и возвращают значения.
