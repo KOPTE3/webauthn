@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.4
+
+* Добавлен развернутый комментарий для "Could not found cookie to continue"
+
 ## 2.1.3
 
 * Исправлена авторизация типами `pdd` и `external`
