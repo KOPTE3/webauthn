@@ -145,11 +145,23 @@ class Steps {
 	/**
 	 * Установить размер окна
 	 *
+	 * @deprecated
 	 * @param {Object} size
 	 * @param {number} size.width
 	 * @param {number} size.height
 	 */
 	static setViewportSize (size) {
+		pages.setViewportSize(size);
+	}
+
+	/**
+	 * Установить размер окна
+	 *
+	 * @param {Object} size
+	 * @param {number} size.width
+	 * @param {number} size.height
+	 */
+	setViewportSize (size) {
 		pages.setViewportSize(size);
 	}
 
