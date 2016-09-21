@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.0
+
+* В `steps` добавлен метод `setViewportSize` (статический метод помечен как deprecated) 
+
+## 2.2.0
+
+* В `store/system` добавлено свойство viewport 
+
 ## 2.1.4
 
 * Добавлен развернутый комментарий для "Could not found cookie to continue"
