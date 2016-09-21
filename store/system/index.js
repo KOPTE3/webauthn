@@ -45,6 +45,15 @@ module.exports = {
 	},
 
 	/**
+	 * Размер вьюпорта
+	 *
+	 * @type {Object}
+	 */
+	get viewport () {
+		return browser.getViewportSize();
+	},
+
+	/**
 	 * Название платформы
 	 *
 	 * @type {string}
