@@ -38,6 +38,20 @@ module.exports = {
 
 		this.setCookie();
 	},
+	
+	/**
+	 * Регистрация нового ящика
+	 *
+	 * @param {string} type — тип авторизации
+	 * @param {Object} [options] — авторизационые данные
+	 */
+	register (user) {
+		let account = new AccountManager.Hooks();
+
+		return browser.waitUntil(function async () {
+			return account.register('mail.ru', user);
+		}, 15 * 1000, 'Could not register user');
+	},
 
 	/**
 	 * Выставляет куки

@@ -21,6 +21,10 @@ class PageObject {
 	static auth (type, credentials) {
 		cache.session = account.session(...arguments);
 	}
+	
+	static register (user) {
+		return account.register(user).value;
+	}
 
 	/**
 	 * Локаторы
