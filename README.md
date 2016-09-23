@@ -406,6 +406,7 @@ describe('Темы. Общее соответствие оформления н�
 			let { width, height } = dimension;
 
 			it(`${theme}-${width}x${height}`, () => {
+				messages.setTheme(theme);
 				messages.setViewportSize(dimension);
 				messages.compareDocument();
 			});
@@ -471,6 +472,7 @@ class MessagesPage extends MailMessagesPages {
 			hide: [
 				'#leftcol-banners',
 				'.b-datalist__head',
+				'.pm-menu__center__inner',
 				'#portal-headline',
 				'#SeptimaFeedback',
 				'.footer__theme-widget',
