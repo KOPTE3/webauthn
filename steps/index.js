@@ -171,6 +171,58 @@ class Steps {
 	switchToNextTab () {
 		pages.switchToNextTab();
 	}
+
+	/**
+	 * Регрессионное сравнение документа
+	 *
+	 * @see browser.checkDocument
+	 * @see browser.saveDocumentScreenshot
+	 * @param {Object} options
+	 *
+	 *  Доступные опции:
+	 *     options.hide {string[]}              Скрывает заданные элементы
+	 *     options.remove {string[]}            Удаляет заданные элементы
+	 *     options.widths {number[]}            Задает размер изображениям (desktop)
+	 *     options.orientations {number[]}      Устанавливает ориентацию (mobile)
+	 *     options.misMatchTolerance {number}   Задает границы поиска несоотвествий (от 0 до 100)
+	 *     options.viewportChangePause {number} Устанавливает время ожидания после
+	 *                                          изменения раземеров вьюпорта
+	 */
+	compareDocument (options) {
+		let images = pages.compareDocument(options),
+			actual = images.every(image => image.isExactSameImage);
+
+		assert(actual, 'Не найдено соответствие документа с ожидаемым изображением');
+	}
+
+	/**
+	 * Регрессионное сравнение вьюпорта
+	 *
+	 * @see browser.checkViewport
+	 * @see browser.saveViewportScreenshot
+	 * @param {Object} options
+	 */
+	compareViewport (options) {
+		let images = pages.compareViewport(options),
+			actual = images.every(image => image.isExactSameImage);
+
+		assert(actual, 'Не найдено соответствие вьюпорта с ожидаемым изображением');
+	}
+
+	/**
+	 * Регрессионное сравнение элемента
+	 *
+	 * @see browser.checkElement
+	 * @see browser.saveElementScreenshot
+	 * @param {string} locator
+	 * @param {Object} options
+	 */
+	compareElement (locator, options) {
+		let images = pages.compareElement(locator, options),
+			actual = images.every(image => image.isExactSameImage);
+
+		assert(actual, 'Не найдено соответствие элемента с ожидаемым изображением');
+	}
 }
 
 module.exports = Steps;

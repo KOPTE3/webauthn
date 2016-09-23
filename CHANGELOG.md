@@ -1,5 +1,134 @@
 # Changelog
 
+## 2.4.0
+
+* Добавлены методы для регрессионого тестирования средставами визуального сравнения:
+
+```
+ .compareDocument([options])
+ .compareViewport([options])
+ .compareElement(locator, [options])
+```
+
+Доступные опции:
+
+```
+     options.hide {string[]}              Скрывает заданные элементы
+     options.remove {string[]}            Удаляет заданные элементы
+     options.widths {number[]}            Задает размер изображениям (desktop)
+     options.orientations {number[]}      Устанавливает ориентацию (mobile)
+     options.misMatchTolerance {number}   Задает границы поиска несоотвествий (от 0 до 100)
+     options.viewportChangePause {number} Устанавливает время ожидания после
+                                          изменения раземеров вьюпорта
+```
+
+Пример использования в проекте themes.mail.ru:
+
+**cases/messages/TESTMAIL-34047.js**
+
+```js
+'use strict';
+
+let Messages = require('../../steps/messages');
+let { dimensions, config } = require('../../store');
+
+let TIMEOUT = 30 * (60 * 1000);
+let messages = new Messages();
+
+describe('Темы. Общее соответствие оформления на списке писем', function () {
+	this.timeout(TIMEOUT);
+
+	before(() => {
+		Messages.auth();
+		Messages.open();
+	});
+
+	for (let theme in config) {
+		for (let dimension of dimensions) {
+			let { width, height } = dimension;
+
+			it(`${theme}-${width}x${height}`, () => {
+				messages.setViewportSize(dimension);
+				messages.compareDocument();
+			});
+
+			break;
+		}
+
+		break;
+	}
+});
+```
+
+**cases/messages/index.js**
+
+```js
+'use strict';
+
+let assert = require('assert');
+
+let MailMessagesSteps = require('@qa/yoda-e.mail.ru/steps/messages');
+let MessagesPage = require('../../pages/messages');
+
+let page = new MessagesPage();
+
+/** Модуль для работы с шагами представления */
+class MessagesSteps extends MailMessagesSteps {
+	constructor () {
+		super();
+	}
+
+	/**
+	 * Возвращает ссылку на инстанс страницы
+	 *
+	 * @type {Object}
+	 */
+	static get page () {
+		return page;
+	}
+
+	compareDocument () {
+		let { hide } = page.locators;
+
+		super.compareDocument({ hide });
+	}
+}
+
+module.exports = MessagesSteps;
+```
+
+**pages/messages/index.js**
+
+```js
+'use strict';
+
+let MailMessagesPages = require('@qa/yoda-e.mail.ru/pages/messages');
+
+/** Модуль для работы с представлением */
+class MessagesPage extends MailMessagesPages {
+	/**
+	 * Локаторы
+	 *
+	 * @type {Object}
+	 */
+	get locators () {
+		return this.extend(super.locators, {
+			/** Список интерактивных элементов, которые требуется исключить */
+			hide: [
+				'#leftcol-banners',
+				'.b-datalist__head',
+				'#portal-headline',
+				'#SeptimaFeedback',
+				'.footer__theme-widget',
+				'#footer__portal'
+			]
+		});
+	}
+}
+
+module.exports = MessagesPage;
+```
+
 ## 2.3.0
 
 * В `steps` добавлен метод `setViewportSize` (статический метод помечен как deprecated) 

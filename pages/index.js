@@ -227,12 +227,49 @@ class PageObject {
 	}
 
 	/**
-	 * удаляем обработчик onbeforeunload
+	 * Предотвращает показ модального окна события beforeunload
 	 */
 	disableConfirm () {
 		this.page.execute(function () {
 			window.onbeforeunload = null;
 		});
+	}
+
+	/**
+	 * Регрессионное сравнение документа
+	 *
+	 * @see browser.checkDocument
+	 * @see browser.saveDocumentScreenshot
+	 * @param {Object} options
+	 * @returns {Array}
+	 */
+	compareDocument (options) {
+		return this.page.checkDocument(options);
+	}
+
+	/**
+	 * Регрессионное сравнение вьюпорта
+	 *
+	 * @see browser.checkViewport
+	 * @see browser.saveViewportScreenshot
+	 * @param {Object} options
+	 * @returns {Array}
+	 */
+	compareViewport (options) {
+		return this.page.checkViewport(options);
+	}
+
+	/**
+	 * Регрессионное сравнение элемента
+	 *
+	 * @see browser.checkElement
+	 * @see browser.saveElementScreenshot
+	 * @param {string} locator
+	 * @param {Object} options
+	 * @returns {Array}
+	 */
+	compareElement (locator, options) {
+		return this.page.checkElement(options);
 	}
 }
 
