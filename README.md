@@ -309,6 +309,19 @@ accounts.get('gmail.com', ['pdd']);
 
 ### Методы регрессионого тестирования средставами визуального сравнения
 
+Убедитесь, что в вашем package.json-файле имеются следующие зависимости:
+
+```json
+{
+	"dependencies": {
+		"wdio-screenshot": "^0.2.3",
+		"wdio-visual-regression-service": "^0.4.0"
+	}
+}
+```
+
+#### API
+
 ```
  .compareDocument([options])
  .compareViewport([options])
@@ -318,16 +331,56 @@ accounts.get('gmail.com', ['pdd']);
 Доступные опции:
 
 ```
-     options.hide {string[]}              Скрывает заданные элементы
-     options.remove {string[]}            Удаляет заданные элементы
-     options.widths {number[]}            Задает размер изображениям (desktop)
-     options.orientations {number[]}      Устанавливает ориентацию (mobile)
-     options.misMatchTolerance {number}   Задает границы поиска несоотвествий (от 0 до 100)
-     options.viewportChangePause {number} Устанавливает время ожидания после
-                                          изменения раземеров вьюпорта
+options.hide {string[]}              Скрывает заданные элементы
+options.remove {string[]}            Удаляет заданные элементы
+options.widths {number[]}            Задает размер изображениям (desktop)
+options.orientations {number[]}      Устанавливает ориентацию (mobile)
+options.misMatchTolerance {number}   Задает границы поиска несоотвествий (от 0 до 100)
+options.viewportChangePause {number} Устанавливает время ожидания после
+                                     изменения раземеров вьюпорта
 ```
 
 Пример использования в проекте themes.mail.ru:
+
+**config.js**
+
+```js
+let VisualRegressionCompare = require('wdio-visual-regression-service/compare');
+
+{
+	/** Конфигурация для сервиса visual-regression */
+	visualRegression: {
+		compare: new VisualRegressionCompare.LocalCompare({
+			referenceName : support.screenshot('./store/shots/expected'),
+			screenshotName: support.screenshot('./store/shots/actual'),
+			diffName      : support.screenshot('./store/shots/diff')
+		})
+	},
+
+	/**
+	 * Список сервисов, которые будет использоваться для запуска тестов
+	 *
+	 * selenium-standalone — позволяет автоматически запускать и останавливать
+	 * работу selenium-сервера
+	 */
+	services: [
+		/**
+		 * Позволяет автоматически запускать и останавливать работу selenium-сервера
+		 */
+		'selenium-standalone',
+
+		/**
+		 * Сервис для регрессионого тестирования через сравнение скриншотов
+		 */
+		'visual-regression'
+	],
+
+	plugins: {
+		/** Плагин для работы со скриншотами */
+		'wdio-screenshot': {},
+	}
+}
+```
 
 **cases/messages/TESTMAIL-34047.js**
 
@@ -356,11 +409,7 @@ describe('Темы. Общее соответствие оформления н�
 				messages.setViewportSize(dimension);
 				messages.compareDocument();
 			});
-
-			break;
 		}
-
-		break;
 	}
 });
 ```

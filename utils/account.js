@@ -58,12 +58,12 @@ module.exports = {
 		} catch (error) {
 			let message =
 				'Could not found cookie to continue\n\n' +
-				'If you see this error message:' +
-				'  — There\'s no cookie. Try again with --debug option to explore that.' +
-				'  — The "auth" method is called in the wrong order.' +
-				'  — There\'s unexpected behavior in using Mocha\'s API.' +
-				'  — There\'s hidden exception. ' +
-				'Try again with --debug, --stack and --verbose options to explore that.';
+				'If you see this error message:\n' +
+				'  — There\'s no cookie. Try again with --debug option to explore that.\n' +
+				'  — The "auth" method is called in the wrong order.\n' +
+				'  — There\'s unexpected behavior in using Mocha\'s API.\n' +
+				'  — There\'s hidden exception. \n' +
+				'Try again with --debug, --stack and --verbose options to explore that.\n';
 
 			throw new Error(`${message}\n\n${error.stack}`);
 		}
