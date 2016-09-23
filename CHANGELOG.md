@@ -47,20 +47,10 @@ let VisualRegressionCompare = require('wdio-visual-regression-service/compare');
 	 */
 	services: [
 		/**
-		 * Позволяет автоматически запускать и останавливать работу selenium-сервера
-		 */
-		'selenium-standalone',
-
-		/**
 		 * Сервис для регрессионого тестирования через сравнение скриншотов
 		 */
 		'visual-regression'
-	],
-
-	plugins: {
-		/** Плагин для работы со скриншотами */
-		'wdio-screenshot': {},
-	}
+	]
 }
 ```
 
