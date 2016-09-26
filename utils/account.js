@@ -38,12 +38,11 @@ module.exports = {
 
 		this.setCookie();
 	},
-	
+
 	/**
 	 * Регистрация нового ящика
 	 *
-	 * @param {string} type — тип авторизации
-	 * @param {Object} [options] — авторизационые данные
+	 * @param {Object} [user] — авторизационые данные
 	 */
 	register (user) {
 		let account = new AccountManager.Hooks();

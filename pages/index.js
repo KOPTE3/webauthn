@@ -21,9 +21,14 @@ class PageObject {
 	static auth (type, credentials) {
 		cache.session = account.session(...arguments);
 	}
-	
+
+	/**
+	 * Регистрация нового пользователя
+	 *
+	 * @param {Object} [user] - параметры как в api
+	 */
 	static register (user) {
-		return account.register(user).value;
+		return account.register(user);
 	}
 
 	/**
