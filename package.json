@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "2.4.0",
+	"version": "2.5.0",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
@@ -37,8 +37,8 @@
 	},
 
 	"dependencies": {
-		"@qa/account-manager": "^1.4.1",
-		"@qa/test-tools": "^3.3.0",
+		"@qa/account-manager": "^1.x",
+		"@qa/test-tools": "^3.x",
 
 		"debug": "^2.2.0",
 		"deepmerge" : "^0.2.10",
@@ -52,7 +52,7 @@
 	},
 
 	"devDependencies": {
-		"@qa/eslint-config-mail.ru": "^0.1.0",
+		"@qa/eslint-config-mail.ru": "^0.x",
 		"eslint": "^3.0.1",
 		"eslint-friendly-formatter": "^2.0.5",
 		"phantomjs-prebuilt": "^2.1.9",

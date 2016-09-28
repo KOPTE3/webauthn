@@ -26,6 +26,7 @@ class PageObject {
 	 * Регистрация нового пользователя
 	 *
 	 * @param {Object} [user] - параметры как в api
+	 * @returns {Promise}
 	 */
 	static register (user) {
 		return account.register(user);

@@ -43,6 +43,7 @@ module.exports = {
 	 * Регистрация нового ящика
 	 *
 	 * @param {Object} [user] — авторизационые данные
+	 * @returns {Promise}
 	 */
 	register (user) {
 		let account = new AccountManager.Hooks();
