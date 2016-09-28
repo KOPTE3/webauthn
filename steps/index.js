@@ -89,6 +89,16 @@ class Steps {
 	}
 
 	/**
+	 * Регистрация пользователя
+	 *
+	 * @param {Object} user - объект пользователя
+	 * @returns {Object}
+	 */
+	static register (user) {
+		return Pages.register(user);
+	}
+
+	/**
 	 * Открыть страницу
 	 *
 	 * @see Pages.open

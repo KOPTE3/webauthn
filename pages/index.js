@@ -23,6 +23,15 @@ class PageObject {
 	}
 
 	/**
+	 * Регистрация нового пользователя
+	 *
+	 * @param {Object} [user] - параметры как в api
+	 */
+	static register (user) {
+		return account.register(user);
+	}
+
+	/**
 	 * Локаторы
 	 *
 	 * @type {Object}
