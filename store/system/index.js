@@ -2,6 +2,7 @@
 
 let fs = require('fs');
 let path = require('path');
+let platform = require('platform');
 
 /** Набор методов для работы с данными пользовательского окружения */
 module.exports = {
@@ -56,6 +57,7 @@ module.exports = {
 	/**
 	 * Название платформы
 	 *
+	 * @deprecated — используйте свойство agent
 	 * @type {string}
 	 */
 	get platform () {
@@ -64,6 +66,19 @@ module.exports = {
 		});
 
 		return browser.desiredCapabilities.platform || status.value;
+	},
+
+	/**
+	 * Получение данных о браузере и его окружении из UA
+	 *
+	 * @type {string} — name, version, layout, os, description
+	 */
+	get agent () {
+		let userAgent = browser.execute(function () {
+			return window.navigator.userAgent;
+		});
+
+		return platform.parse(userAgent);
 	},
 
 	/**
