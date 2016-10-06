@@ -233,6 +233,26 @@ class Steps {
 
 		assert(actual, 'Не найдено соответствие элемента с ожидаемым изображением');
 	}
+
+	/**
+	 * Дождаться выполнения какого-либо действия
+	 * Если событие асинхронное, то колбек должен иметь имя async
+	 *
+	 * Пример:
+	 *
+	 * waitUntil(function async () {
+	 *    // ...
+	 * }, 10 * 1000, 'Время на выполнение операции вышло');
+	 *
+	 * @see browser.waitUntil
+	 * @param {Function} callback
+	 * @param {number} [timeout]
+	 * @param {string} message
+	 * @returns {(Promise|Object)}
+	 */
+	waitUntil (callback, timeout, message) {
+		return pages.waitUntil(...arguments);
+	}
 }
 
 module.exports = Steps;
