@@ -86,7 +86,7 @@ module.exports = {
 
 		let email = account.get('email');
 
-		debug(`%s\nUsed ${email} account\n%s`, '='.repeat(50));
+		debug(`Used ${email} account`);
 	},
 
 	/**
