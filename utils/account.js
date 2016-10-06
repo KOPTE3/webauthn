@@ -83,10 +83,6 @@ module.exports = {
 
 			throw new Error(`${message}\n\n${error.stack}`);
 		}
-
-		let email = account.get('email');
-
-		debug(`Used ${email} account`);
 	},
 
 	/**
