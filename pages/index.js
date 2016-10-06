@@ -121,7 +121,7 @@ class PageObject {
 	}
 
 	/**
-	 * Обновить страницу
+	 * Перезагружает текущую страницу
 	 *
 	 * @param {Object} [query] — параметры запроса
 	 */
@@ -154,17 +154,6 @@ class PageObject {
 		scripts.forEach(file => {
 			this.page.execute(...file);
 		});
-	}
-
-	/**
-	 * Расширяет объект
-	 *
-	 * @property {Object} x
-	 * @property {Object} y
-	 * @returns {Object}
-	 */
-	extend (/** x, y */) {
-		return merge(...arguments);
 	}
 
 	/**
@@ -300,6 +289,18 @@ class PageObject {
 	 */
 	waitUntil (callback, timeout, message) {
 		return this.page.waitUntil(...arguments);
+	}
+
+	/**
+	 * Расширяет объект
+	 *
+	 * @deprecated
+	 * @property {Object} x
+	 * @property {Object} y
+	 * @returns {Object}
+	 */
+	extend (/** x, y */) {
+		return merge(...arguments);
 	}
 }
 

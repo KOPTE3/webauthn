@@ -8,76 +8,6 @@ let pages = new Pages();
 
 class Steps {
 	/**
-	 * Локаторы
-	 *
-	 * @param {Array} list — список фич, которые требуется включить
-	 */
-	static features (...list) {
-		pages.features(...list);
-	}
-
-	/**
-	 * Скрипты, выполняемые сразу после page.url
-	 */
-	static inject () {
-		pages.inject(...arguments);
-	}
-
-	/**
-	 * Обновить страницу
-	 *
-	 * @param {Object} [query] — параметры запроса
-	 */
-	static refresh (query) {
-		pages.refresh(query);
-	}
-
-	/** Подтвердить алерт */
-	static alertAccept () {
-		pages.alertAccept();
-	}
-
-	/**
-	 * Получить текст алерта
-	 *
-	 * @returns {string}
-	 */
-	static getAlertText () {
-		return pages.alertText();
-	}
-
-	/** Сбросить текущую сессию */
-	static reload () {
-		pages.reload();
-	}
-
-	/**
-	 * @deprecated
-	 * @see wait
-	 */
-	static wait () {
-		this.page.wait();
-	}
-
-	/**
-	 * Выключает на текущей странице обработчик onbeforeunload
-	 *
-	 * например - в почте пишем письмо в compose
-	 * и если закрываем окно, то выходит сообщение, иногда оно не нужно т.к.
-	 * webdriver в этом случае не сможет закрыть это сообщение и выдаст ошибку
-	 */
-	static disableConfirm () {
-		this.page.disableConfirm();
-	}
-
-	/**
-	 * Дождатся загрузки страницы
-	 */
-	wait () {
-		this.page.wait();
-	}
-
-	/**
 	 * Авторизация
 	 *
 	 * @param {string} type — типа авторизации
@@ -119,21 +49,171 @@ class Steps {
 	}
 
 	/**
-	 * Откладывает выполнение следюущего шага на заданное время
+	 * Локаторы
 	 *
+	 * @param {Array} list — список фич, которые требуется включить
+	 */
+	static features (...list) {
+		pages.features(...list);
+	}
+
+	/**
+	 * Скрипты, выполняемые сразу после page.url
+	 */
+	static inject () {
+		pages.inject(...arguments);
+	}
+
+	/**
+	 * @deprecated
 	 * @param {number} ms
+	 * @see pause
 	 */
 	static pause (ms) {
 		pages.pause(ms);
 	}
 
 	/**
+	 * @deprecated
+	 * @see refresh
+	 * @param {Object} query
+	 */
+	static refresh (query) {
+		pages.refresh(query);
+	}
+
+	/**
+	 * @deprecated
+	 * @see alertAccept
+	 */
+	static alertAccept () {
+		pages.alertAccept();
+	}
+
+	/**
+	 * @deprecated
+	 * @see getAlertText
+	 * @returns {string}
+	 */
+	static getAlertText () {
+		return pages.alertText();
+	}
+
+	/**
+	 * @deprecated
+	 * @see reload
+	 */
+	static reload () {
+		pages.reload();
+	}
+
+	/**
+	 * @deprecated
+	 * @see wait
+	 */
+	static wait () {
+		this.page.wait();
+	}
+
+	/**
+	 * @deprecated
+	 * @see disableConfirm
+	 */
+	static disableConfirm () {
+		this.page.disableConfirm();
+	}
+
+	/**
+	 * @deprecated
+	 * @see setViewportSize
+	 * @param {Object} size
+	 */
+	static setViewportSize (size) {
+		pages.setViewportSize(size);
+	}
+
+	/**
+	 * @deprecated
+	 * @see isActiveUser
+	 * @param {string} email
+	 */
+	static isActiveUser (email) {
+		let actual = account.isActiveUser(...arguments);
+
+		assert(actual, `Пользователь "${email}" не авторизован`);
+	}
+
+	/**
+	 * Перезагружает текущую страницу
+	 *
+	 * @param {Object} [query] — параметры запроса
+	 */
+	refresh (query) {
+		pages.refresh(query);
+	}
+
+	/** Подтвердить алерт */
+	alertAccept () {
+		pages.alertAccept();
+	}
+
+	/**
+	 * Получить текст алерта
+	 *
+	 * @returns {string}
+	 */
+	getAlertText () {
+		return pages.alertText();
+	}
+
+	/** Сбросить текущую сессию */
+	reload () {
+		pages.reload();
+	}
+
+	/**
+	 * Дождатся загрузки страницы
+	 */
+	wait () {
+		this.page.wait();
+	}
+
+	/**
+	 * Выключает на текущей странице обработчик onbeforeunload
+	 *
+	 * например - в почте пишем письмо в compose
+	 * и если закрываем окно, то выходит сообщение, иногда оно не нужно т.к.
+	 * webdriver в этом случае не сможет закрыть это сообщение и выдаст ошибку
+	 */
+	disableConfirm () {
+		this.page.disableConfirm();
+	}
+
+	/**
+	 * Откладывает выполнение следюущего шага на заданное время
+	 *
+	 * @param {number} ms
+	 */
+	pause (ms) {
+		pages.pause(ms);
+	}
+
+	/**
+	 * Перейти по урлу
+	 *
+	 * @param {string} url — url
+	 * @param {Object} [query] — параметры запроса
+	 */
+	url (url, query = {}) {
+		pages.url(...arguments);
+	}
+
+	/**
 	 * Проверяет залогинен ли пользователь
 	 *
 	 * @param {string} [email]
-	 * @param {number} [timeout]
 	 */
-	static isActiveUser (email, timeout) {
+	isActiveUser (email) {
 		let actual = account.isActiveUser(...arguments);
 
 		assert(actual, `Пользователь "${email}" не авторизован`);
@@ -150,18 +230,6 @@ class Steps {
 		let actual = pages.waitForUrl(...arguments);
 
 		assert(actual, `Не найдено соответствие с ожидаемым адресом ${url}`);
-	}
-
-	/**
-	 * Установить размер окна
-	 *
-	 * @deprecated
-	 * @param {Object} size
-	 * @param {number} size.width
-	 * @param {number} size.height
-	 */
-	static setViewportSize (size) {
-		pages.setViewportSize(size);
 	}
 
 	/**

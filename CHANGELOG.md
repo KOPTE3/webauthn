@@ -1,8 +1,15 @@
 # Changelog
 
+## 2.8.0
+
+* В Steps добавлены методы refresh, reload
+* Следующие `статические` методы помечены как deprecated: pause, refresh, reload, wait, alertAccept, getAlertText, disableConfirm, setViewportSize, isActiveUser. 
+
+
 ## 2.7.0
 
 * В Steps добавлен метод waitUntil
+
 
 ## 2.6.2-3
 
