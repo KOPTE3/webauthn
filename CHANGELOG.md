@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.9.0
+
+* В Steps добавлен метод getViewportSize
+
 ## 2.8.0
 
 * В Steps добавлены методы refresh, reload
