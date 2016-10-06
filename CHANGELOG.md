@@ -1,8 +1,14 @@
 # Changelog
 
+## 2.10.0
+
+* В Steps добавлен метод waitForViewport
+
+
 ## 2.9.0
 
 * В Steps добавлен метод getViewportSize
+
 
 ## 2.8.0
 

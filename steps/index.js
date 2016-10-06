@@ -251,6 +251,25 @@ class Steps {
 	}
 
 	/**
+	 * Дожидается заданных размеров вьюпорта
+	 *
+	 * @param {Object} expected {width, height}
+	 * @returns {(Object|Promise)}
+	 */
+	waitForViewport (expected) {
+		let { page } = pages;
+
+		return this.waitUntil(() => {
+			let actual = this.getViewportSize();
+
+			try {
+				return !assert.deepEqual(actual, expected);
+			} catch (error) {}
+		}, page.options.waitforTimeout,
+			'Не удалось дождаться требуемого размера вьюпорта');
+	}
+
+	/**
 	 * Переключиться на ближайшую вкладку
 	 */
 	switchToNextTab () {
