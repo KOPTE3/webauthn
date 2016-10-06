@@ -12,6 +12,7 @@ let debug = require('debug')('@qa');
 ```
 
 Опционально можно добавлять префикс вашего проекта:
+
 ```js
 let debug = require('debug')('@qa:yoda');
 ```
