@@ -233,14 +233,21 @@ class Steps {
 	}
 
 	/**
-	 * Установить размер окна
+	 * Установить размер вьюпорта
 	 *
-	 * @param {Object} size
-	 * @param {number} size.width
-	 * @param {number} size.height
+	 * @param {Object} size {width, height}
 	 */
 	setViewportSize (size) {
 		pages.setViewportSize(size);
+	}
+
+	/**
+	 * Получить размер вьюпорта
+	 *
+	 * @returns {Object} {width, height}
+	 */
+	getViewportSize () {
+		return pages.getViewportSize();
 	}
 
 	/**

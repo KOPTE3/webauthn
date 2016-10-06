@@ -219,6 +219,15 @@ class PageObject {
 	}
 
 	/**
+	 * Получить размер вьюпорта
+	 *
+	 * @returns {Object} {width, height}
+	 */
+	getViewportSize () {
+		return this.page.getViewportSize();
+	}
+
+	/**
 	 * Переключиться на ближайшую вкладку
 	 */
 	switchToNextTab () {
