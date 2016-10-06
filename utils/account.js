@@ -1,11 +1,13 @@
 'use strict';
 
+let debug = require('debug')('@qa:yoda');
 let TestTools = require('@qa/test-tools');
 let AccountManager = require('@qa/account-manager');
 let authStore = require('../store/authorization');
 let providers = require('../store/authorization/providers');
 
 /** Набор методов для аккаунтом пользователя */
+/** @namespace browser */
 module.exports = {
 	/**
 	 * Получение сессии
@@ -82,11 +84,9 @@ module.exports = {
 			throw new Error(`${message}\n\n${error.stack}`);
 		}
 
-		if (process.NODE_DEBUG) {
-			let email = account.get('email');
+		let email = account.get('email');
 
-			console.log(`%s\nUsed ${email} account\n%s`, '='.repeat(50));
-		}
+		debug(`%s\nUsed ${email} account\n%s`, '='.repeat(50));
 	},
 
 	/**
