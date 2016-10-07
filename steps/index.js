@@ -236,9 +236,14 @@ class Steps {
 	 * Установить размер вьюпорта
 	 *
 	 * @param {Object} size {width, height}
+	 * @param {boolean} confirm — дождаться изменений размеров вьюпорта
 	 */
-	setViewportSize (size) {
+	setViewportSize (size, confirm) {
 		pages.setViewportSize(size);
+
+		if (confirm) {
+			this.waitForViewport(size);
+		}
 	}
 
 	/**

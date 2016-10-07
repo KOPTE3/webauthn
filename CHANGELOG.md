@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.11.0
+
+* В Steps#setViewportSize добавлен папаметр для ожидания изменений размеров вьюпорта
+
+
 ## 2.10.0
 
 * В Steps добавлен метод waitForViewport
