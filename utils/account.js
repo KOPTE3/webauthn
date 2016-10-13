@@ -1,7 +1,6 @@
 'use strict';
 
 let debug = require('debug')('@qa:yoda');
-let TestTools = require('@qa/test-tools');
 let AccountManager = require('@qa/account-manager');
 let authStore = require('../store/authorization');
 let providers = require('../store/authorization/providers');
@@ -146,6 +145,12 @@ module.exports = {
 		}
 	},
 
+	/**
+	 * Генерирует случайный пароль заднной длины
+	 *
+	 * @param {number} length
+	 * @returns {string}
+	 */
 	generatePassword (length = 10) {
 		let symbols = '0123456789' +
 			'abcdefghiklmnopqrstuvwxyz' +

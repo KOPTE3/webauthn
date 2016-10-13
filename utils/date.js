@@ -1,6 +1,7 @@
 'use strict';
 
 /** Модуль для работы с Date */
+/** @namespace browser */
 module.exports = {
 	/**
 	 * Смещает текущее время
