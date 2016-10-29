@@ -38,6 +38,7 @@
 
 	"dependencies": {
 		"@qa/account-manager": "^1.x",
+		"@qa/files-service": "^0.x",
 
 		"debug": "^2.2.0",
 		"deepmerge": "^0.2.10",

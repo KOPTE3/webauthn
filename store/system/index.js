@@ -4,6 +4,11 @@ let fs = require('fs');
 let path = require('path');
 let platform = require('platform');
 
+let fileService = require('@qa/files-service')({
+	basepath: 'files'
+});
+
+
 /** Набор методов для работы с данными пользовательского окружения */
 module.exports = {
 	/**
@@ -27,13 +32,7 @@ module.exports = {
 			return path.join(profile, name);
 		}
 
-		if (/win/i.test(this.platform)) {
-			return `C:\\Users\\tester\\Dropbox\\feta\\mail\\${
-				name.replace(/\//g, '\\')
-			}`;
-		}
-
-		return `/var/lib/selenium/Dropbox/feta/mail/${name}`;
+		return fileService(name);
 	},
 
 	/**
