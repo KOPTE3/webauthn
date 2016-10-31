@@ -30,10 +30,7 @@ module.exports = {
 		return browser.waitUntil(function async () {
 			return account.credentials(options)
 				.then(({ body }) => {
-					let border = '='.repeat(50);
-
-					debug('%s\nUsed credentials:\n', border);
-					debug('%s\n%s', JSON.stringify(body, null, '\t'), border);
+					debug('%s\nUsed credentials:\n%O', body);
 
 					return body;
 				})
