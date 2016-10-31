@@ -4,6 +4,11 @@ let fs = require('fs');
 let path = require('path');
 let platform = require('platform');
 
+let fileService = require('@qa/files-service')({
+	basepath: 'files'
+});
+
+
 /** Набор методов для работы с данными пользовательского окружения */
 module.exports = {
 	/**
@@ -14,26 +19,7 @@ module.exports = {
 	 * @returns {string}
 	 */
 	file (name) {
-		if (/127\.0\.0\.1|localhost/.test(this.host)) {
-			let profile = path.resolve('files');
-
-			fs.stat(profile, (error, stat) => {
-				if (error) {
-					throw new Error('It seems you forgot to install test files:\n' +
-						'"git clone ssh://git@stash.mail.ru:2222/qa/files.git"');
-				}
-			});
-
-			return path.join(profile, name);
-		}
-
-		if (/win/i.test(this.platform)) {
-			return `C:\\Users\\tester\\Dropbox\\feta\\mail\\${
-				name.replace(/\//g, '\\')
-			}`;
-		}
-
-		return `/var/lib/selenium/Dropbox/feta/mail/${name}`;
+		return fileService(name);
 	},
 
 	/**
