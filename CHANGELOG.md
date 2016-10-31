@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.12.2
+
+* Добавлен [@qa/file-service](https://stash.mail.ru/projects/QA/repos/file-service/browse)
+
 ## 2.11.2
 
 * Теперь в параметрах командной строки доступен ключ `--exclude`. Также как и `--grep` принимает регулярное выражение.
