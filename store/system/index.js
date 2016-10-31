@@ -4,7 +4,7 @@ let fs = require('fs');
 let path = require('path');
 let platform = require('platform');
 
-let fileService = require('@qa/files-service')({
+let fileService = require('@qa/file-service')({
 	basepath: 'files'
 });
 
