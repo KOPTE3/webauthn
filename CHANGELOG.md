@@ -1,8 +1,14 @@
 # Changelog
 
+## 3.0.0
+
+* Метод `store/authorization/providers.find` теперь возвращает объект полей для заданного провайдера, а не имя провайдера.
+
+
 ## 2.12.2
 
 * Добавлен [@qa/file-service](https://stash.mail.ru/projects/QA/repos/file-service/browse)
+
 
 ## 2.11.2
 

@@ -152,6 +152,11 @@ class Steps {
 		pages.refresh(query);
 	}
 
+	/** Сбросить текущую сессию */
+	reload () {
+		pages.reload();
+	}
+
 	/** Подтвердить алерт */
 	alertAccept () {
 		pages.alertAccept();
@@ -164,11 +169,6 @@ class Steps {
 	 */
 	getAlertText () {
 		return pages.alertText();
-	}
-
-	/** Сбросить текущую сессию */
-	reload () {
-		pages.reload();
 	}
 
 	/**
