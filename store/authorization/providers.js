@@ -369,13 +369,15 @@ module.exports = {
 	 * @returns {Object}
 	 */
 	find (domain) {
-		return this.list.find(provider => {
+		let provider = this.list.find(provider => {
 			for (let alias of provider.hosts) {
 				if (alias === domain) {
 					return true;
 				}
 			}
 		});
+
+		return provider || {};
 	},
 
 	/**
