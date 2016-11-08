@@ -16,8 +16,16 @@ module.exports = {
 				'mail.ua',
 				'inbox.ru',
 				'list.ru',
-				'bk.ru'
-			]
+				'bk.ru',
+				'corp.mail.ru'
+			],
+			protocols: {
+				imap: {
+					host: 'imap.mail.ru',
+					tls: true,
+					port: 993
+				}
+			}
 		},
 
 		{
@@ -32,7 +40,14 @@ module.exports = {
 				'narod.ru',
 				'ya.ru',
 				'ya.com'
-			]
+			],
+			protocols: {
+				imap: {
+					host: 'imap.yandex.ru',
+					tls: true,
+					port: 993
+				}
+			}
 		},
 
 		{
@@ -45,7 +60,14 @@ module.exports = {
 				'autorambler.ru',
 				'ro.ru',
 				'r0.ru'
-			]
+			],
+			protocols: {
+				imap: {
+					host: 'imap.rambler.ru',
+					tls: true,
+					port: 993
+				}
+			}
 		},
 
 		{
@@ -54,7 +76,14 @@ module.exports = {
 			hosts: [
 				'gmail.com'
 			],
-			url: 'https://accounts.google.com/'
+			url: 'https://accounts.google.com/',
+			protocols: {
+				imap: {
+					host: 'imap.gmail.com',
+					tls: true,
+					port: 993
+				}
+			}
 		},
 
 		{
@@ -62,7 +91,14 @@ module.exports = {
 			types: ['external'],
 			hosts: [
 				'aol.com'
-			]
+			],
+			protocols: {
+				imap: {
+					host: 'imap.aol.com',
+					tls: true,
+					port: 993
+				}
+			}
 		},
 
 		{
@@ -150,7 +186,14 @@ module.exports = {
 				'yahoo.co.uk',
 				'yahoo.com',
 				'yahoo.com.vn'
-			]
+			],
+			protocols: {
+				imap: {
+					host: 'imap.mail.yahoo.com',
+					tls: true,
+					port: 993
+				}
+			}
 		},
 
 		{
@@ -195,6 +238,13 @@ module.exports = {
 				'live.com',
 				'live.ru'
 			],
+			protocols: {
+				imap: {
+					host: 'imap-mail.outlook.com',
+					tls: true,
+					port: 993
+				}
+			},
 			url: 'https://login.live.com/oauth20_authorize.srf'
 		},
 
@@ -316,18 +366,16 @@ module.exports = {
 	 * Поиск провайдера по имени домена или email
 	 *
 	 * @param {string} domain
-	 * @returns {string|undefined}
+	 * @returns {Object}
 	 */
 	find (domain) {
-		let provider = this.list.find(provider => {
+		return this.list.find(provider => {
 			for (let alias of provider.hosts) {
 				if (alias === domain) {
 					return true;
 				}
 			}
 		});
-
-		return (provider && provider.name) || domain;
 	},
 
 	/**
