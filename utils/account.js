@@ -23,7 +23,7 @@ module.exports = {
 		} else if (options.username) {
 			let { name, host } = this.parseEmail(options.username);
 
-			service = providers.find(host);
+			service = providers.find(host).name || host;
 		}
 
 		// Ставим куку только на хост, который указан в конфиге
