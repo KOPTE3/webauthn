@@ -163,10 +163,9 @@ class Steps {
 	 *
 	 * @param {string} email
 	 * @param {number} timeout
-	 * @returns {boolean}
 	 */
 	logout (email, timeout) {
-		return pages.logout(...arguments);
+		account.logout(...arguments);
 	}
 
 	/** Подтвердить алерт */

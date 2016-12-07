@@ -311,17 +311,6 @@ class PageObject {
 	extend (/** x, y */) {
 		return merge(...arguments);
 	}
-
-	/**
-	 * Разлогинизация
-	 *
-	 * @param {email} user
-	 * @param {number} timeout
-	 * @returns {boolean}
-	 */
-	logout (user, timeout) {
-		return account.logout(...arguments);
-	}
 }
 
 module.exports = PageObject;
