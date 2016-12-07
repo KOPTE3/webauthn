@@ -85,6 +85,42 @@ module.exports = {
 	},
 
 	/**
+	 * Разлогин
+	 *
+	 * @param {string} email
+	 * @param {number} timeout
+	 */
+	logout (email = '', timeout = 30 * 1000) {
+		if (!email) {
+			let { account } = authStore;
+
+			email = account.get('email');
+		}
+
+		// в почте разлогинизация для активного пользователя
+		// происходит без ajax запроса, открытием url в браузере
+		// а для неактивного - с помощью ajax
+		// повторяем это поведение
+		if (this.isActiveUser(email)) {
+			browser.url('https://auth.mail.ru/cgi-bin/logout');
+		} else {
+			browser.waitUntil(function async () {
+				return browser.executeAsync(function (user, resolve) {
+					if (window.__PH && window.__PH.logoutAccount) {
+						window.__PH.logoutAccount(user, function (result) {
+							if (result.status === 'ok') {
+								resolve(true);
+							} else {
+								resolve(false);
+							}
+						});
+					}
+				}, email);
+			}, timeout, `Could not logout user ${email}`);
+		}
+	},
+
+	/**
 	 * Проверяет залогинен ли пользователь
 	 *
 	 * @param {string} [email]

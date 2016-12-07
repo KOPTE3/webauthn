@@ -157,6 +157,17 @@ class Steps {
 		pages.reload();
 	}
 
+	/**
+	 * Разлогинизация,
+	 * если не передать email то берется текущий аккаунт
+	 *
+	 * @param {string} email
+	 * @param {number} timeout
+	 */
+	logout (email, timeout) {
+		account.logout(...arguments);
+	}
+
 	/** Подтвердить алерт */
 	alertAccept () {
 		pages.alertAccept();
