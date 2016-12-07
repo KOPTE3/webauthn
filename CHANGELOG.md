@@ -1,45 +1,45 @@
 # Changelog
 
+## 3.1.0
+
+* Добавлен метод разлогина `steps/logout`
+
+## 3.0.1
+
+* Добавлен список телефонов `store/phones`
+
 ## 3.0.0
 
 * Метод `store/authorization/providers.find` теперь возвращает объект полей для заданного провайдера, а не имя провайдера.
-
 
 ## 2.12.2
 
 * Добавлен [@qa/file-service](https://stash.mail.ru/projects/QA/repos/file-service/browse)
 
-
 ## 2.11.2
 
 * Теперь в параметрах командной строки доступен ключ `--exclude`. Также как и `--grep` принимает регулярное выражение.
-
 
 ## 2.11.0
 
 * В Steps#setViewportSize добавлен папаметр для ожидания изменений размеров вьюпорта
 
-
 ## 2.10.0
 
 * В Steps добавлен метод waitForViewport
 
-
 ## 2.9.0
 
 * В Steps добавлен метод getViewportSize
-
 
 ## 2.8.0
 
 * В Steps добавлены методы refresh, reload
 * Следующие `статические` методы помечены как deprecated: pause, refresh, reload, wait, alertAccept, getAlertText, disableConfirm, setViewportSize, isActiveUser. 
 
-
 ## 2.7.0
 
 * В Steps добавлен метод waitUntil
-
 
 ## 2.6.2-3
 
