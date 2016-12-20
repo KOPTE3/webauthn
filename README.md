@@ -7,8 +7,8 @@
 
 <br />
 
-**ВНИМАНИЕ**: вышла новая версия пакета — ознакомьтесь с основными [изменениями](./CHANGELOG.md)!<br />
-**ВНИМАНИЕ**: помимо [стандартных](http://webdriver.io/api.html) команд имеются [кастомные](https://stash.mail.ru/projects/QA/repos/wdio-api/browse)
+**ВНИМАНИЕ**: Знакомьтесь с основными [изменениями](./CHANGELOG.md)!<br />
+**ВНИМАНИЕ**: Помимо [стандартных](http://webdriver.io/api.html) команд имеются [кастомные](https://stash.mail.ru/projects/QA/repos/wdio-api/browse)
 
 <br />
 <br />
@@ -300,11 +300,6 @@ accounts.get('gmail.com', ['pdd']);
 #### store/authorization/passwords
 
 Позволяет получить предопределенный пароль заданой сложности
-
-
-#### utils/account.generatePassword
-
-Позволяет получить случайный пароль
 
 
 #### utils/account.passwordStrength
@@ -848,7 +843,7 @@ module.exports = {
 	 * @param {string} name — имя поля.
 	 * Доступные значения (from, to, cc, bcc, subject, priority, receipt, remind)
 	 *
-	 * @returns {Promise}
+	 * @returns {WebDriver}
 	 */
 	getField (name) {
 		return this.page.element(this.locators.fields[name]);

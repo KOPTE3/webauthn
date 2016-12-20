@@ -46,7 +46,7 @@ class PageObject {
 	/**
 	 * Ссылка на объект страницы
 	 *
-	 * @type {Promise}
+	 * @type {browser}
 	 */
 	get page () {
 		return browser;
@@ -294,7 +294,7 @@ class PageObject {
 	 * @param {Function} callback
 	 * @param {number} [timeout]
 	 * @param {string} message
-	 * @returns {(Promise|Object)}
+	 * @returns {*}
 	 */
 	waitUntil (callback, timeout, message) {
 		return this.page.waitUntil(...arguments);

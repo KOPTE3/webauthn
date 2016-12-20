@@ -270,7 +270,7 @@ class Steps {
 	 * Дожидается заданных размеров вьюпорта
 	 *
 	 * @param {Object} expected {width, height}
-	 * @returns {(Object|Promise)}
+	 * @returns {Object}
 	 */
 	waitForViewport (expected) {
 		let { page } = pages;
@@ -358,7 +358,7 @@ class Steps {
 	 * @param {Function} callback
 	 * @param {number} [timeout]
 	 * @param {string} message
-	 * @returns {(Promise|Object)}
+	 * @returns {*}
 	 */
 	waitUntil (callback, timeout, message) {
 		return pages.waitUntil(...arguments);
