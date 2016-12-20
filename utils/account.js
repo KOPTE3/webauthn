@@ -60,6 +60,7 @@ module.exports = {
 	setCookie () {
 		let { account } = authStore;
 
+		browser.timeouts('page load', 15 * 1000);
 		browser.url('/login');
 
 		try {
