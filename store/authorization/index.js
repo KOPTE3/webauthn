@@ -57,15 +57,5 @@ module.exports = {
 	 */
 	get account () {
 		return new AccountManager.Session();
-	},
-
-	/**
-	 * Возвращает ссылку на каптчу
-	 *
-	 * @param {string} type — [1, 2, 3]
-	 * @returns {string}
-	 */
-	captcha (type) {
-		return `https://c.mail.ru/c/${type}`;
 	}
 };
