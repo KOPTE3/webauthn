@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.2
+
+* Асинхронная версия `browser.waitUntil` заменена `browser.waitForPromise`
+* Удален неиспользуемый метод `generatePassword` (см. `account-manager/utils/user`)
+* Удален неиспользуемый метод `store/authorization/captcha` (см. `@qa/wdio-captcha`)
+
 ## 3.1.1
 
 * Ограничено время выставления куки до 15 сек.
