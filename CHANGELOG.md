@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.3
+
+* Испрвлен вывод метода `store/authorization/credentials` 
+
 ## 3.1.2
 
 * Асинхронная версия `browser.waitUntil` заменена `browser.waitForPromise`

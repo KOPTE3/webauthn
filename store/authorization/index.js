@@ -30,7 +30,7 @@ module.exports = {
 		return browser.waitForPromise(() => {
 			return account.credentials(options)
 				.then(({ body }) => {
-					debug('%s\nUsed credentials:\n%O', body);
+					debug('Used credentials:\n%o', body);
 
 					return body;
 				})
