@@ -32,9 +32,8 @@ module.exports = {
 		// Добавляем обязательные поля
 		Object.assign(options, { host, type, service });
 
-		browser.waitUntil(function async () {
-			return account.session(options)
-				.then(result => true);
+		browser.waitForPromise(() => {
+			return account.session(options);
 		}, 15 * 1000, 'Could not get user session');
 
 		this.setCookie();
@@ -49,7 +48,7 @@ module.exports = {
 	register (user) {
 		let account = new AccountManager.Hooks();
 
-		return browser.waitUntil(function async () {
+		return browser.waitForPromise(() => {
 			return account.register('mail.ru', user);
 		}, 15 * 1000, 'Could not register user');
 	},
@@ -104,7 +103,9 @@ module.exports = {
 		if (this.isActiveUser(email)) {
 			browser.url('https://auth.mail.ru/cgi-bin/logout');
 		} else {
-			browser.waitUntil(function async () {
+			browser.timeoutsAsyncScript(timeout);
+
+			try {
 				return browser.executeAsync(function (user, resolve) {
 					if (window.__PH && window.__PH.logoutAccount) {
 						window.__PH.logoutAccount(user, function (result) {
@@ -112,7 +113,9 @@ module.exports = {
 						});
 					}
 				}, email);
-			}, timeout, `Could not logout user ${email}`);
+			} catch (error) {
+				throw new Error(`Could not logout user ${email}`);
+			}
 		}
 	},
 
@@ -124,24 +127,24 @@ module.exports = {
 	 * @returns {boolean}
 	 */
 	isActiveUser (email = '', timeout = 30 * 1000) {
+		if (!email) {
+			let { account } = authStore;
+
+			email = account.get('email');
+		}
+
+		browser.timeoutsAsyncScript(timeout);
+
 		try {
-			if (!email) {
-				let { account } = authStore;
-
-				email = account.get('email');
-			}
-
-			return browser.waitUntil(function async () {
-				return browser.executeAsync(function (user, resolve) {
-					if (window.__PH) {
-						if (window.__PH.activeUser() === user) {
-							resolve(true);
-						}
+			return browser.executeAsync(function (user, resolve) {
+				if (window.__PH) {
+					if (window.__PH.activeUser() === user) {
+						resolve(true);
 					}
-				}, email);
-			}, timeout, `Could not detect user authorization ${email}`);
+				}
+			}, email);
 		} catch (error) {
-			return false;
+			throw new Error(`Could not detect user authorization ${email}`);
 		}
 	},
 

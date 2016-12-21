@@ -286,7 +286,7 @@ class PageObject {
 	 *
 	 * Пример:
 	 *
-	 * waitUntil(function async () {
+	 * waitUntil(() => {
 	 *    // ...
 	 * }, 10 * 1000, 'Время на выполнение операции вышло');
 	 *

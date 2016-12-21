@@ -27,7 +27,7 @@ module.exports = {
 	credentials (type = 'basic', options = { }, timeout) {
 		options = Object.assign({ domain: 'mail.ru', type }, options);
 
-		return browser.waitUntil(function async () {
+		return browser.waitForPromise(() => {
 			return account.credentials(options)
 				.then(({ body }) => {
 					debug('%s\nUsed credentials:\n%O', body);
