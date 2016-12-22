@@ -216,7 +216,22 @@ Messages.features([
 ])
 ```
 
-#### Page#auth(type=basic, { username, password })
+#### Page#register(type=basic, { username, password, ... })
+
+Регистрация нового пользователя
+
+```js
+let Messages = require('../../steps/messages');
+
+describe(() => {
+	let { username, password } = Messages.register('basic');
+
+	Messages.auth('basic', { username, password });
+	Messages.open();
+});
+```
+
+#### Page#auth(type=basic, { username, password, ... })
 
 Авторизация
 
@@ -475,8 +490,64 @@ class MessagesPage extends MailMessagesPages {
 module.exports = MessagesPage;
 ```
 
+### Асинхронные тесты
+
+Пример асинхронного теста:
+
+```js
+let { value } = browser.waitForPromise(() => {
+	return browser.executeAsync(function (name, value, resolve) {
+		require(['features'], function (features) {
+			var actual = features.use(name, value);
+
+			resolve(actual);
+		});
+	}, name, value);
+}, TIMEOUT, `Could not set "${value}" for ${name} feature`);
+```
+
+Обратите внимание, что мы использовали кастомную команду `browser.waitForPromise`, которая на вход получает колбек возвращающий промис, стандратную команду WebDriverIO, либо сам промис.
 
 
+Этот же пример можно переписать следующим образом:
+
+```js
+let { value } = browser.call(() => {
+	return browser.executeAsync(function (name, value, resolve) {
+		require(['features'], function (features) {
+			var actual = features.use(name, value);
+
+			resolve(actual);
+		});
+	}, name, value);
+});
+```
+
+Однако в этом случае, мы не сможем задать сообщение об ошибке и таймаут! 
+`browser.timeouts` и `browser.timeoutsAsyncScript` также не помогут в этом вопросе.
+
+Есть также распространенная практика использовать асинхронный `waitUntil`: 
+
+```js
+browser.waitUntil(function async () {
+	return Promise.resolve(true);
+});
+```
+
+Проблемы такого способа:
+
+* `waitUntil` не вернет результат, поспольку всегда ожидает получить `true`
+* Если забыть указать название функции `async`, то метод будет работать синхронно
+* Опция timeout будет проигнорирована до тех пока не будет вызван хотя бы один раз `reject`!
+* Без [фиктивного](https://github.com/webdriverio/webdriverio/issues/1407) `reject`'a тест зависнет навечно.
+
+Однако, если вам нужно дождаться какого-то состояния интерфейса, то waitUntil отличный помощник:
+ 
+```js
+browser.waitUntil(function async () {
+	return browse.isVisible('body');
+});
+```
 
 ### Файловая система
 
