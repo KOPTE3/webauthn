@@ -495,18 +495,28 @@ module.exports = MessagesPage;
 Пример асинхронного теста:
 
 ```js
-let { value } = browser.waitForPromise(() => {
-	return browser.executeAsync(function (name, value, resolve) {
-		require(['features'], function (features) {
-			var actual = features.use(name, value);
+browser.timeouts('script', TIMEOUT);
 
-			resolve(actual);
-		});
-	}, name, value);
-}, TIMEOUT, `Could not set "${value}" for ${name} feature`);
+let { value } = browser.executeAsync(function (name, value, resolve) {
+	require(['features'], function (features) {
+		var actual = features.use(name, value);
+
+		resolve(actual);
+	});
+}, name, value);
 ```
 
-Обратите внимание, что мы использовали кастомную команду `browser.waitForPromise`, которая на вход получает колбек возвращающий промис, стандратную команду WebDriverIO, либо сам промис.
+А что если нужно вернуть результат объекта Promise?
+
+```js
+let { value } = browser.waitForPromise(() => {
+	return new Promise((resolve, reject) => {
+		resolve(true);
+	});
+}, TIMEOUT, 'Error');
+```
+
+Обратите внимание, что мы использовали кастомную команду `browser.waitForPromise`, которая на вход получает колбек возвращающий промис, либо сам промис.
 
 
 Этот же пример можно переписать следующим образом:
