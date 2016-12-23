@@ -103,9 +103,9 @@ module.exports = {
 		if (this.isActiveUser(email)) {
 			browser.url('https://auth.mail.ru/cgi-bin/logout');
 		} else {
-			browser.timeoutsAsyncScript(timeout);
-
 			try {
+				browser.timeouts('script', timeout);
+
 				return browser.executeAsync(function (user, resolve) {
 					if (window.__PH && window.__PH.logoutAccount) {
 						window.__PH.logoutAccount(user, function (result) {
@@ -133,9 +133,9 @@ module.exports = {
 			email = account.get('email');
 		}
 
-		browser.timeoutsAsyncScript(timeout);
-
 		try {
+			browser.timeouts('script', timeout);
+
 			return browser.executeAsync(function (user, resolve) {
 				if (window.__PH) {
 					if (window.__PH.activeUser() === user) {
