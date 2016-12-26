@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.1.6
+
+Пакеты `@qa/grunt-yoda`, `@qa/test-tools`, `@qa/test-runner` больше нигде не должны использоваться. 
+Вместо них теперь `@qa/grunt-wdio` и `@qa/wdio-utils`.
+
+## 3.1.5
+
+* Зафиксированы все версии пакетов
+
+## 3.1.4
+
+* Устаревший метод `browser.timeoutsAsyncScript` заменен на `browser.timeouts`
+
 ## 3.1.3
 
 * Испрвлен вывод метода `store/authorization/credentials` 
