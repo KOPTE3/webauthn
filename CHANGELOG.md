@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.7
+
+Поднята версия пакета `@qa/wdio-api`, в котором добавился новый метод `browser.hasAlert`.
+
 ## 3.1.6
 
 Пакеты `@qa/grunt-yoda`, `@qa/test-tools`, `@qa/test-runner` больше нигде не должны использоваться. 
