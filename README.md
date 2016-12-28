@@ -509,7 +509,7 @@ let { value } = browser.executeAsync(function (name, value, resolve) {
 А что если нужно вернуть результат объекта Promise?
 
 ```js
-let { value } = browser.waitForPromise(() => {
+let value  = browser.waitForPromise(() => {
 	return new Promise((resolve, reject) => {
 		resolve(true);
 	});
@@ -523,6 +523,7 @@ let { value } = browser.waitForPromise(() => {
 
 ```js
 let { value } = browser.call(() => {
+
 	return browser.executeAsync(function (name, value, resolve) {
 		require(['features'], function (features) {
 			var actual = features.use(name, value);

@@ -106,7 +106,7 @@ module.exports = {
 			try {
 				browser.timeouts('script', timeout);
 
-				return browser.executeAsync(function (user, resolve) {
+				browser.executeAsync(function (user, resolve) {
 					if (window.__PH && window.__PH.logoutAccount) {
 						window.__PH.logoutAccount(user, function (result) {
 							resolve(result.status === 'ok');
