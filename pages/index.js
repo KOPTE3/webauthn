@@ -311,6 +311,17 @@ class PageObject {
 	extend (/** x, y */) {
 		return merge(...arguments);
 	}
+
+	/**
+	 * Ожидаем алерт
+	 *
+	 * @param {number} timeout
+	 * @param {string} message
+	 * @param {boolean} reverse
+	 */
+	waitAlert (timeout, message, reverse) {
+		this.page.waitAlert(...arguments);
+	}
 }
 
 module.exports = PageObject;
