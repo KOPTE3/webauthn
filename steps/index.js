@@ -363,6 +363,17 @@ class Steps {
 	waitUntil (callback, timeout, message) {
 		return pages.waitUntil(...arguments);
 	}
+
+	/**
+	 * Ожидаем алерт
+	 *
+	 * @param {number} timeout
+	 * @param {string} message
+	 * @param {boolean} reverse
+	 */
+	waitAlert (timeout, message, reverse) {
+		pages.waitAlert(...arguments);
+	}
 }
 
 module.exports = Steps;
