@@ -107,7 +107,7 @@ class PageObject {
 		}
 
 		this.url(path, query);
-		this.wait();
+		// this.wait();
 
 		if (cache.session) {
 			return account.isActiveUser();

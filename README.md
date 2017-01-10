@@ -704,7 +704,7 @@ class Login extends PageObject {
 	open () {
 		browser.url('/login');
 
-		return browser.waitForExist(this.locators.container);
+		return this.page.waitForExist(this.locators.container);
 	}
 }
 
