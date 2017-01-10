@@ -36,6 +36,19 @@ class Steps {
 	static open (/** path, query */) {
 		let actual = this.page.open(...arguments);
 
+		// Игнорируем обращения к локаторам если исключение возникает
+		// до вызова степа в самом тесте.
+		try {
+			if (!this.page.locators.container) {
+				throw new Error('container');
+			}
+		} catch (error) {
+			assert.equal(error.name, 'container',
+				'Не определен основной элемент страницы в "pages/<page>/locators.container"');
+		}
+
+		this.page.wait();
+
 		assert(actual, 'Не удалось авторизоваться');
 	}
 

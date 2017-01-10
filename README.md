@@ -700,12 +700,6 @@ class Login extends PageObject {
 			container: '.login-page__external'
 		}
 	}
-
-	open () {
-		browser.url('/login');
-
-		return this.page.waitForExist(this.locators.container);
-	}
 }
 
 module.exports = Login;
