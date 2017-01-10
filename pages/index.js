@@ -72,11 +72,21 @@ class PageObject {
 
 	/**
 	 * Дождаться появления требуемого элемента
-	 *
-	 * @returns {boolean}
 	 */
 	wait () {
-		return this.page.waitForVisible(this.locators.container);
+		let container = null;
+
+		// Игнорируем обращения к локаторам если исключение возникает
+		// до вызова степа в самом тесте
+		try {
+			({ container } = this.locators);
+		} catch (error) {
+			if (error.name !== 'TypeError') {
+				throw error;
+			}
+		}
+
+		this.page.waitForVisible(container);
 	}
 
 	/**
