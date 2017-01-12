@@ -37,7 +37,7 @@
 	},
 
 	"dependencies": {
-		"@qa/account-manager": "^1.6.9",
+		"@qa/account-manager": "^1.6.11",
 		"@qa/file-service": "^0.0.1",
 		"@qa/wdio-api": "^0.9.1",
 
