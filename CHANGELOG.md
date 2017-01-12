@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.0.4
+
+* Увеличено время ожидания загрузки страницы:
+```
+<unknown>: Failed to set the 'cookie' property on 'Document': Cookies are disabled inside 'data:' URLs.
+```
+
 ## 4.0.3
 
 * Обновлена версия пакета `@qa/account-manager`

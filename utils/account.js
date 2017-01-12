@@ -59,28 +59,35 @@ module.exports = {
 	setCookie () {
 		let { account } = authStore;
 
-		browser.timeouts('page load', 15 * 1000);
+		browser.timeouts('page load', 30 * 1000);
 		browser.url('/login');
 
 		try {
 			let cookie = account.get('cookie');
 
 			if (!cookie.length) {
-				throw new Error();
+				throw new Error('COOKIE_NOT_FOUND');
 			}
 
 			browser.setCookies(cookie);
-		} catch (error) {
-			let message =
-				'Could not found cookie to continue\n\n' +
-				'If you see this error message:\n' +
-				'  — There\'s no cookie. Try again with --debug option to explore that.\n' +
-				'  — The "auth" method is called in the wrong order.\n' +
-				'  — There\'s unexpected behavior in using Mocha\'s API.\n' +
-				'  — There\'s hidden exception. \n' +
-				'Try again with --debug, --stack and --verbose options to explore that.\n';
+		} catch ({ stack, message }) {
+			switch (message) {
+				case 'COOKIE_NOT_FOUND':
+					break;
 
-			throw new Error(`${message}\n\n${error.stack}`);
+				default:
+					message =
+						'Could not found cookie to continue\n\n' +
+						'If you see this error message:\n' +
+						'  — There\'s no cookie. Try again with --debug option to explore that.\n' +
+						'  — The "auth" method is called in the wrong order.\n' +
+						'  — There\'s unexpected behavior in using Mocha\'s API.\n' +
+						'  — There\'s hidden exception. \n' +
+						'Try again with --debug, --stack and --verbose options to explore that.\n';
+					break;
+			}
+
+			throw new Error(`${message}\n\n${stack}`);
 		}
 	},
 
