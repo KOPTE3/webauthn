@@ -60,7 +60,7 @@ module.exports = {
 		let { account } = authStore;
 
 		browser.timeouts('page load', 30 * 1000);
-		browser.url('/login');
+		browser.url('/cgi-bin/lstatic');
 
 		try {
 			let cookie = account.get('cookie');
