@@ -135,17 +135,6 @@ npm test -- --suite=login --grep=TESTMAIL-867[45]
 npm test -- --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
 ```
 
-Для запуска тестов локально вы можете использовать grunt напрямую:
-
-```
-grunt yoda --suite=compose
-```
-
-Но такой способ запуска не следует использовать в CI (лучше вообще не использовать), поскольку так будет использоваться глобальная grunt'а.
-
-Полный список доступных опций test-runner'a смотрите [здесь](https://stash.mail.ru/projects/QA/repos/grunt-yoda/browse).
-
-
 ### Логи и отчеты
 
 **cache/tests/logs** — логи сервера
