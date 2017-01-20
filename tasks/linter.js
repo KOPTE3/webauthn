@@ -4,8 +4,16 @@ let { execSync } = require('child_process');
 let { Readable } = require('stream');
 let path = require('path');
 let merge = require('deepmerge');
-let ESLint = require('eslint').CLIEngine;
 let debug = require('debug')('@qa/yoda');
+
+let ESLint;
+
+try {
+	ESLint = require('eslint').CLIEngine;
+}
+catch (error) {
+	debug('started without ESLint');
+}
 
 /**
  * Сервис валидации файлов
@@ -62,4 +70,3 @@ module.exports = (options = {}) => {
 
 	return report.errorCount;
 };
-

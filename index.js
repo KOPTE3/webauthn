@@ -7,9 +7,9 @@ let merge = require('deepmerge');
 let Log = require('tir');
 
 let options = process.argv.slice(2);
-let flags = minimist(options);
+	options = minimist(options);
 
-if (flags.debug) {
+if (options.debug) {
 	process.env.DEBUG = '@qa*';
 }
 
@@ -21,8 +21,7 @@ let { laucher, linter } = require('./tasks');
  * @returns {Promise}
  */
 module.exports = new function () {
-	let { axis, split, lint, config = 'config.js' } = flags;
-
+	let { axis, split, lint, config = 'config.js' } = options;
 	let errors = 0;
 
 	// Запускаем линтер только во время разработки
@@ -34,6 +33,6 @@ module.exports = new function () {
 	if (errors > 0) {
 		return Promise.reject(`ESLint: found errors: "${errors}"`);
 	} else {
-		return laucher({ data: flags, file: config });
+		return laucher({ data: options, file: config });
 	}
 };

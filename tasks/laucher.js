@@ -44,9 +44,6 @@ let details = {
 			}
 
 			switch (flag) {
-				case '_':
-					break;
-
 				// Алиас для baseUrl
 				case 'url':
 					service.data.baseUrl = value;
@@ -96,6 +93,7 @@ let details = {
 		}
 
 		debug('suites:', suites);
+		debug('options:', service.data);
 
 		return service;
 	}
