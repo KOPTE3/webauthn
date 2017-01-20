@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+'use strict';
+
+let minimist = require('minimist');
+let merge = require('deepmerge');
+let Log = require('tir');
+
+let options = process.argv.slice(2);
+let flags = minimist(options);
+
+if (flags.debug) {
+	process.env.DEBUG = '@qa*';
+}
+
+let { laucher, linter } = require('./tasks');
+
+/**
+ * Yoda runner
+ *
+ * @returns {Promise}
+ */
+module.exports = new function () {
+	let { axis, split, lint, config = 'config.js' } = flags;
+
+	let errors = 0;
+
+	// Запускаем линтер только во время разработки
+	// Параметры axis и split специфичны для параллельного запуска тестов через Jenkins
+	if ((lint === true || typeof lint === 'object') && !axis && !split) {
+		errors = linter(lint);
+	}
+
+	if (errors > 0) {
+		return Promise.reject(`ESLint: found errors: "${errors}"`);
+	} else {
+		return laucher({ data: flags, file: config });
+	}
+};
