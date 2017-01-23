@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.9
+
+* Поднята версия `@qa/account-manager`
+* Исправлено исключение `UnhandledRejection Error`.
+
 ## 5.0.8
 
 * Исправлен интерфейс метода `register`
