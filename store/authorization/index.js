@@ -2,13 +2,14 @@
 
 let debug = require('debug')('@qa:yoda');
 let AccountManager = require('@qa/account-manager');
+let { password } = require('@qa/account-manager/utils/user');
 
 let account = new AccountManager();
 
 /** Набор методов для работы с авторизационными данными */
 module.exports = {
 	/** Пароль, который следует использовать */
-	password: 'YTgh763',
+	password,
 
 	/**
 	 * Возвращает авторизационные данные указанного типа
