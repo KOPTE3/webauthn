@@ -21,11 +21,13 @@ class Steps {
 	/**
 	 * Регистрация пользователя
 	 *
-	 * @param {Object} user - объект пользователя
+	 * @param {string} [type] — тип авторизации
+	 * Из-за отсутствия других реализаций пока не используется, но зарезервирован
+	 * @param {Object} [options] — авторизационые данные
 	 * @returns {Object}
 	 */
-	static register (user) {
-		return Pages.register(user);
+	static register (type, options) {
+		return account.register(type, options);
 	}
 
 	/**

@@ -44,7 +44,7 @@ module.exports = {
 	 *
 	 * @param {string} [type] — тип авторизации
 	 * Из-за отсутствия других реализаций пока не используется, но зарезервирован
-	 * @param {Object} [user] — авторизационые данные
+	 * @param {Object} [options] — авторизационые данные
 	 * @returns {Promise}
 	 */
 	register (type, options = {}) {
