@@ -31,9 +31,11 @@ class Steps {
 	/**
 	 * Открыть страницу
 	 *
+	 * @param {string} path
+	 * @param {Object} [query]
 	 * @see Pages.open
 	 */
-	static open (/** path, query */) {
+	static open (path, query) {
 		let actual = this.page.open(...arguments);
 
 		// Игнорируем обращения к локаторам если исключение возникает
@@ -44,7 +46,7 @@ class Steps {
 			}
 		} catch (error) {
 			assert.equal(error.name, 'container',
-				'Не определен основной элемент страницы в "pages/<page>/locators.container"');
+				`"${this.name || ''}" не определен основной элемент страницы в "pages/<page>/locators.container"`);
 		}
 
 		this.page.wait();
