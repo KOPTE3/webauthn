@@ -42,14 +42,16 @@ module.exports = {
 	/**
 	 * Регистрация нового ящика
 	 *
+	 * @param {string} [type] — тип авторизации
+	 * Из-за отсутствия других реализаций пока не используется, но зарезервирован
 	 * @param {Object} [user] — авторизационые данные
 	 * @returns {Promise}
 	 */
-	register (user) {
+	register (type, options = {}) {
 		let account = new AccountManager.Hooks();
 
 		return browser.waitForPromise(() => {
-			return account.register('mail.ru', user);
+			return account.register(options.domain || 'mail.ru', options);
 		}, 15 * 1000, 'Could not register user');
 	},
 

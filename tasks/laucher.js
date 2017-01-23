@@ -118,6 +118,10 @@ module.exports = function (options) {
 
 	return launcher.run()
 		.then(code => {
+			if (code !== 0) {
+				throw new Error(`code is ${code}`);
+			}
+
 			Log.info('All tests were finished up with exit code', code);
 		},
 		error => {
