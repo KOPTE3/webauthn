@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.0.6
+
+* Поднята версия `@qa/account-manager`
+
 ## 5.0.5
 
 * Пароль по умолчанию теперь берется из `@qa/account-manager/utils/user`
