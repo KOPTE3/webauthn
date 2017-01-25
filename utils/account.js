@@ -4,6 +4,7 @@ let debug = require('debug')('@qa:yoda');
 let AccountManager = require('@qa/account-manager');
 let authStore = require('../store/authorization');
 let providers = require('../store/authorization/providers');
+let URL = require('./url');
 
 const TIMEOUT = 30 * 1000;
 
@@ -63,8 +64,7 @@ module.exports = {
 	setCookie () {
 		let { account } = authStore;
 
-		browser.timeouts('page load', TIMEOUT);
-		browser.url('/cgi-bin/lstatic');
+		URL.open('/cgi-bin/lstatic', TIMEOUT);
 
 		try {
 			let cookie = account.get('cookie');

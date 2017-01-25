@@ -3,8 +3,29 @@
 let url = require('url');
 let querystring = require('querystring');
 
+const TIMEOUT = 30 * 1000;
+
 /** Набор методов для работы с URL */
+/** @namespace browser */
 module.exports = {
+	/**
+	 * Открытие страницы
+	 *
+	 * @param {string} url
+	 * @param {number} [timeout]
+	 */
+	open (url, timeout = TIMEOUT) {
+		browser.timeouts('page load', timeout);
+		browser.url(url);
+
+		/**
+		 * Дожидаемся смены адреса страницы
+		 * @see https://bugs.chromium.org/p/chromedriver/issues/detail?id=817
+		 * @see https://bugs.chromium.org/p/chromedriver/issues/detail?id=402
+		 */
+		browser.waitForUrl(url, timeout);
+	},
+
 	/**
 	 * Сериализует параметры запроса
 	 *

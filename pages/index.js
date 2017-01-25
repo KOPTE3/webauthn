@@ -144,8 +144,9 @@ class PageObject {
 	 *
 	 * @param {string} url — url
 	 * @param {Object} [query] — параметры запроса
+	 * @param {number} [timeout] — время ожидания
 	 */
-	url (url, query = {}) {
+	url (url, query = {}, timeout = TIMEOUT) {
 		let { features, scripts } = cache;
 
 		if (features.length) {
@@ -154,8 +155,7 @@ class PageObject {
 
 		url = URL.format(url, query);
 
-		this.page.timeouts('page load', TIMEOUT);
-		this.page.url(url);
+		URL.open(url, TIMEOUT);
 
 		// Выполнить требуемые скрипты
 		scripts.forEach(file => {
