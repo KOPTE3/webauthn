@@ -5,6 +5,8 @@ let AccountManager = require('@qa/account-manager');
 let authStore = require('../store/authorization');
 let providers = require('../store/authorization/providers');
 
+const TIMEOUT = 30 * 1000;
+
 /** Набор методов для аккаунтом пользователя */
 /** @namespace browser */
 module.exports = {
@@ -34,7 +36,7 @@ module.exports = {
 
 		browser.waitForPromise(() => {
 			return account.session(options);
-		}, 15 * 1000, 'Could not get user session');
+		}, TIMEOUT, 'Could not get user session');
 
 		this.setCookie();
 	},
@@ -52,7 +54,7 @@ module.exports = {
 
 		return browser.waitForPromise(() => {
 			return account.register(options.domain || 'mail.ru', options);
-		}, 15 * 1000, 'Could not register user');
+		}, TIMEOUT, 'Could not register user');
 	},
 
 	/**
@@ -61,7 +63,7 @@ module.exports = {
 	setCookie () {
 		let { account } = authStore;
 
-		browser.timeouts('page load', 30 * 1000);
+		browser.timeouts('page load', TIMEOUT);
 		browser.url('/cgi-bin/lstatic');
 
 		try {
@@ -99,7 +101,7 @@ module.exports = {
 	 * @param {string} email
 	 * @param {number} timeout
 	 */
-	logout (email = '', timeout = 30 * 1000) {
+	logout (email = '', timeout = TIMEOUT) {
 		if (!email) {
 			let { account } = authStore;
 
@@ -135,7 +137,7 @@ module.exports = {
 	 * @param {number} [timeout]
 	 * @returns {boolean}
 	 */
-	isActiveUser (email = '', timeout = 30 * 1000) {
+	isActiveUser (email = '', timeout = TIMEOUT) {
 		if (!email) {
 			let { account } = authStore;
 

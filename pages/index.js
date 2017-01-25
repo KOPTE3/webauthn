@@ -1,6 +1,7 @@
 'use strict';
 
 let merge = require('deepmerge');
+let debug = require('debug')('@qa:yoda');
 let account = require('../utils/account');
 let URL = require('../utils/url');
 
@@ -9,6 +10,8 @@ let cache = {
 	scripts : [],
 	features: []
 };
+
+const TIMEOUT = 15 * 1000;
 
 /** @namespace browser */
 class PageObject {
@@ -96,6 +99,8 @@ class PageObject {
 			path = this.location;
 		}
 
+		debug('requested page', path, query);
+
 		this.url(path, query);
 		// this.wait();
 
@@ -149,9 +154,12 @@ class PageObject {
 
 		url = URL.format(url, query);
 
+		this.page.timeouts('page load', TIMEOUT);
 		this.page.url(url);
 
+		// Выполнить требуемые скрипты
 		scripts.forEach(file => {
+			this.page.timeouts('script', TIMEOUT);
 			this.page.execute(...file);
 		});
 	}
