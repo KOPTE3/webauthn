@@ -26,7 +26,13 @@ module.exports = new function () {
 
 	// Запускаем линтер только во время разработки
 	// Параметры axis и split специфичны для параллельного запуска тестов через Jenkins
-	if ((lint === true || typeof lint === 'object') && !axis && !split) {
+	if (lint && !axis && !split) {
+		if (lint === true) {
+			lint = [];
+		} else if (!Array.isArray(lint)) {
+			lint = [lint];
+		}
+
 		errors = linter(lint);
 	}
 

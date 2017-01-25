@@ -3,7 +3,6 @@
 let { execSync } = require('child_process');
 let { Readable } = require('stream');
 let path = require('path');
-let merge = require('deepmerge');
 let debug = require('debug')('@qa/yoda');
 
 let ESLint;
@@ -18,11 +17,11 @@ catch (error) {
 /**
  * Сервис валидации файлов
  *
- * @param {Object} options — список опций CLIEngine
+ * @param {Array} files — список файлов
  * @returns {number} — возвращает количество ошибок
  */
-module.exports = (options = {}) => {
-	options = merge({
+module.exports = files => {
+	let options = {
 		// Использовать кеширование результатов
 		cache: true,
 
@@ -34,25 +33,27 @@ module.exports = (options = {}) => {
 
 		// Список расширений, для которых будет выполняться проверка
 		extensions: ['.js']
-	}, options);
+	};
 
 	let lint = new ESLint(options);
 
-	// Берем файлы только из диффа
-	let files = execSync('git diff --relative --name-only --diff-filter=AM HEAD', {
-		encoding: 'utf8'
-	});
+	// Если список файлов не задан, то берем из диффа
+	if (!files.length) {
+		files = execSync('git diff --relative --name-only --diff-filter=AM HEAD', {
+			encoding: 'utf8'
+		});
 
-	// Преобразуем строку в массив списка файлов
-	files = files.split(/\n/);
+		// Преобразуем строку в массив списка файлов
+		files = files.split(/\n/);
 
-	// Игнорируем пробельные символы и не интересные для нас расширения
-	// См. https://github.com/eslint/eslint/issues/7939
-	files = files.filter(file => {
-		let { ext } = path.parse(file);
+		// Игнорируем пробельные символы и не интересные для нас расширения
+		// См. https://github.com/eslint/eslint/issues/7939
+		files = files.filter(file => {
+			let { ext } = path.parse(file);
 
-		return file.trim() && options.extensions.includes(ext);
-	});
+			return file.trim() && options.extensions.includes(ext);
+		});
+	}
 
 	debug('modified files:', files);
 

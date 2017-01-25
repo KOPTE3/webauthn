@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "5.0.10",
+	"version": "5.0.11",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
@@ -18,7 +18,7 @@
 	},
 
 	"engines": {
-		"node": ">=6.2",
+		"node": ">=7.0",
 		"npm": ">=3.8"
 	},
 

@@ -141,6 +141,39 @@ npm test -- --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
 **cache/tests/shots** — скриншоты с упавшими тестами
 **cache/tests/reports** — отчеты о прогоне
 
+### Линтер
+
+Для валидации кода тестов мы используем ESLint c [нашими правилами](https://stash.mail.ru/projects/QA/repos/eslint-config-mail.ru/browse).<br />
+
+*Проверка запускается только на дифф*
+
+```
+{
+	"scripts": {
+		"test": "yoda --lint"
+	}
+}
+```
+
+*Проверить все файлы*
+
+```
+{
+	"scripts": {
+		"test": "yoda --lint=."
+	}
+}
+```
+
+*Проверить заданный список файлов*
+
+```
+{
+	"scripts": {
+		"test": "yoda --lint=foo.js --lint=bar.js"
+	}
+}
+```
 
 ### API
 
