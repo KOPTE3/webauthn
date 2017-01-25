@@ -9,11 +9,15 @@ const TIMEOUT = 30 * 1000;
 /** @namespace browser */
 module.exports = {
 	/**
-	 * Открытие страницы
+	 * Экранирует сроку для использования в регулярном выражении
 	 *
-	 * @param {string} url
-	 * @param {number} [timeout]
+	 * @param {string} text
+	 * @param {string}
 	 */
+	regexEscape (text) {
+		return text.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1');
+	},
+
 	open (url, timeout = TIMEOUT) {
 		browser.timeouts('page load', timeout);
 		browser.url(url);
@@ -23,7 +27,10 @@ module.exports = {
 		 * @see https://bugs.chromium.org/p/chromedriver/issues/detail?id=817
 		 * @see https://bugs.chromium.org/p/chromedriver/issues/detail?id=402
 		 */
-		browser.waitForUrl(new RegExp(url), timeout);
+		url = this.regexEscape(url);
+		url = new RegExp(url);
+
+		browser.waitForUrl(url, timeout);
 	},
 
 	/**
