@@ -9,7 +9,7 @@
 ```
 {
 	"scripts": {
-		"test": "yoda --lint=."
+		"test": "yoda --lint=pages"
 	}
 }
 ```

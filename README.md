@@ -155,7 +155,7 @@ npm test -- --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
 }
 ```
 
-*Проверить все файлы*
+*Проверить все файлы (нерекомендуется — неоправданно долго)*
 
 ```
 {
@@ -165,12 +165,12 @@ npm test -- --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
 }
 ```
 
-*Проверить заданный список файлов*
+*Проверить заданный список файлов и директорий*
 
 ```
 {
 	"scripts": {
-		"test": "yoda --lint=foo.js --lint=bar.js"
+		"test": "yoda --lint=pages --lint=cases --lint=steps"
 	}
 }
 ```
