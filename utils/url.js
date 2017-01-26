@@ -27,10 +27,7 @@ module.exports = {
 		 * @see https://bugs.chromium.org/p/chromedriver/issues/detail?id=817
 		 * @see https://bugs.chromium.org/p/chromedriver/issues/detail?id=402
 		 */
-		url = this.regexEscape(url);
-		url = new RegExp(url);
-
-		browser.waitForUrl(url, timeout);
+		browser.waitForUrl(/data:/, timeout, true);
 	},
 
 	/**

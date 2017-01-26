@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "5.2.0",
+	"version": "5.2.1",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
@@ -37,7 +37,7 @@
 	"dependencies": {
 		"@qa/account-manager": "^1.7.3",
 		"@qa/file-service": "^0.0.1",
-		"@qa/wdio-api": "^0.9.2",
+		"@qa/wdio-api": "^0.10.0",
 
 		"debug": "^2.2.0",
 		"deepmerge": "0.2.10",
