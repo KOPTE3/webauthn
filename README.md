@@ -37,7 +37,7 @@ npm install @qa/yoda
 Для работы с этим пакетом требуется node версии не ниже 6.2.0! <br />
 Поскольку обновить node и npm на всех машинах до требуемой версии весьма проблематично — используйте [nvm](https://github.com/creationix/nvm):
 
-```
+```bash
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | bash
 source ~/.bash{rc,_profile}
 nvm install 6
@@ -136,6 +136,38 @@ npm test -- --suite=login --grep=TESTMAIL-867[45]
 npm test -- --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
 ```
 
+#### Отладка тестов
+
+Отлаживать тесты можно либо из консоли, либо из дебаггеров IDE, таких как WebStorm, VS Code, etc. Для запуска тестов с возможностью отладки, необходимо использовать опцию `--debug`:
+
+```
+npm test -- --suite=login --grep=TESTMAIL-8674 --debug=6666
+```
+
+Рекомендуется отлаживать тесты по одиночке. При запуске тестов с включенной опцией `debug`, в консоли появится сообщение
+
+```
+Debugger listening on 127.0.0.1:5859
+```
+
+Выполнение теста остановится на инструкции
+
+```javascript
+debugger;
+```
+
+Начать отладку пожно подключившись к процессу по заданному адресу. Для IDE WebStorm нужно выполнить
+
+```
+Run -> Debug... -> Edit Configurations... -> Add New Configuration -> Node.js Remote Debug
+```
+
+Там необходимо выставить свои address и port и подключиться к отладчику.
+
+Для VS Code необходимо следовать инструкциям из [статьи (medium.com)](https://medium.com/@dakshika/remote-debug-node-js-application-using-visual-studio-code-dc0fa0b4dec4#.3zk3yqg7h).
+
+
+
 ### Логи и отчеты
 
 **cache/tests/logs** — логи сервера
@@ -148,7 +180,7 @@ npm test -- --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
 
 *Проверка запускается только на дифф*
 
-```
+```json
 {
 	"scripts": {
 		"test": "yoda --lint"
@@ -158,7 +190,7 @@ npm test -- --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
 
 *Проверить все файлы (нерекомендуется — неоправданно долго)*
 
-```
+```json
 {
 	"scripts": {
 		"test": "yoda --lint=."
@@ -168,7 +200,7 @@ npm test -- --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
 
 *Проверить заданный список файлов и директорий*
 
-```
+```json
 {
 	"scripts": {
 		"test": "yoda --lint=pages --lint=cases --lint=steps"
