@@ -68,8 +68,8 @@ let details = {
 
 						// Исключаем пересечение в названиях опций
 						// Для отладки кода через node-inspector эту опцию следует задавать как
-						// номер порта
-						if (!/\d{4,}/.test(service.data.debug)) {
+						// номер порта c двоеточием (например --debug=:6666)
+						if (!/:\d{4,}/.test(service.data.debug)) {
 							delete service.data.debug;
 						} else {
 							process.debugPort = parseInt(service.data.debug, 10) - 1;
