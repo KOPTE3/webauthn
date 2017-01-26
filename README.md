@@ -7,6 +7,7 @@
 
 <br />
 
+
 **ВНИМАНИЕ**: Знакомьтесь с основными [изменениями](./CHANGELOG.md)!<br />
 **ВНИМАНИЕ**: Помимо [стандартных](http://webdriver.io/api.html) команд имеются [кастомные](https://stash.mail.ru/projects/QA/repos/wdio-api/browse)
 
