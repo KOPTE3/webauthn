@@ -35,7 +35,6 @@ npm-debug.log
 *.stTheme.cache
 *.sublime-workspace
 .idea
-.vscode
 .eslintcache
 .grunt
 .idea_modules/
