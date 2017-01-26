@@ -72,7 +72,7 @@ let details = {
 						if (!/:\d{4,}/.test(service.data.debug)) {
 							delete service.data.debug;
 						} else {
-							process.debugPort = parseInt(service.data.debug, 10) - 1;
+							process.debugPort = parseInt(service.data.debug.slice(1), 10) - 1;
 						}
 					}
 
