@@ -57,6 +57,7 @@ let details = {
 				// Опция debug имеет 3 назначения:
 				// 1. Позволяет увеличить время отладки для browser.debug()
 				// 2. Выводит дополнительную информации о процессе выполнения тестов
+				// 3. Позволяет отлаживать тесты
 				case 'debug':
 					if (value) {
 						merge(service.data, {
@@ -66,9 +67,13 @@ let details = {
 						});
 
 						// Исключаем пересечение в названиях опций
-						// Для отладки кода через node-inspector эту опцию следует задавать в
-						// конфигурационном файле
-						delete service.data.debug;
+						// Для отладки кода через node-inspector эту опцию следует задавать как
+						// номер порта c двоеточием (например --debug=:6666)
+						if (!/:\d{4,}/.test(service.data.debug)) {
+							delete service.data.debug;
+						} else {
+							process.debugPort = parseInt(service.data.debug.slice(1), 10) - 1;
+						}
 					}
 
 					break;
