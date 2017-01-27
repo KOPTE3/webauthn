@@ -99,9 +99,11 @@ class PageObject {
 			path = this.location;
 		}
 
-		debug('requested page', path, query);
+		debug('actual page', this.page.getUrl());
 
 		this.url(path, query);
+
+		debug('requested page', path, query);
 		// this.wait();
 
 		if (cache.session) {
