@@ -71,10 +71,14 @@ let details = {
 						// номер порта c двоеточием (например --debug=:6666)
 						let { debug } = service.data;
 
-						if (!/:\d{4,}/.test(debug)) {
-							delete service.data.debug;
-						} else {
-							process.debugPort = parseInt(debug.slice(1), 10) - 1;
+						try {
+							if (!/:\d{4,}/.test(debug)) {
+								delete service.data.debug;
+							} else {
+								process.debugPort = Number.parseInt(debug.slice(1)) - 1;
+							}
+						} catch (error) {
+							Log.error('Could not debug project', error);
 						}
 					}
 
