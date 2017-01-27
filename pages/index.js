@@ -79,6 +79,8 @@ class PageObject {
 			}
 		}
 
+		debug('wait for the required element', container);
+
 		this.page.waitForVisible(container);
 	}
 
@@ -101,11 +103,7 @@ class PageObject {
 
 		this.url(path, query);
 
-		debug('requested page', path, query);
-		debug('actual page', this.page.getUrl());
-
-		// this.wait();
-
+		// Проверяем авторизацию используя портальное API
 		if (cache.session) {
 			return account.isActiveUser();
 		}
@@ -170,11 +168,11 @@ class PageObject {
 	 * Дожидается требуемного адреса
 	 *
 	 * @param {string|RegExp|Function} value
-	 * @param {string} [query]
-	 * @param {number|string} [options] — timeout, revert
+	 * @param {number} [timeout]
+	 * @param {boolean} [revert]
 	 * @returns {boolean}
 	 */
-	waitForUrl (value, query, ...options) {
+	waitForUrl (value, ...options) {
 		if (typeof value === 'string') {
 			value = URL.format(...arguments);
 		}

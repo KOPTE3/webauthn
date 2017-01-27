@@ -1,6 +1,7 @@
 'use strict';
 
 let url = require('url');
+let debug = require('debug')('@qa:yoda');
 let querystring = require('querystring');
 
 const TIMEOUT = 30 * 1000;
@@ -20,6 +21,8 @@ module.exports = {
 
 	open (url, timeout = TIMEOUT) {
 		browser.timeouts('page load', timeout);
+
+		debug('requested page', url);
 		browser.url(url);
 
 		/**
@@ -28,6 +31,8 @@ module.exports = {
 		 * @see https://bugs.chromium.org/p/chromedriver/issues/detail?id=402
 		 */
 		browser.waitForUrl(/data:/, timeout, true);
+
+		debug('actual page', browser.getUrl());
 	},
 
 	/**

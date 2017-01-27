@@ -66,6 +66,9 @@ module.exports = {
 
 		URL.open('/cgi-bin/lstatic', TIMEOUT);
 
+		// Удостоверямся, что документ доступен
+		browser.waitForExist('body');
+
 		try {
 			let cookie = account.get('cookie');
 
