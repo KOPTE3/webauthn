@@ -6,12 +6,15 @@ let account = require('../utils/account');
 
 let pages = new Pages();
 
+/**
+ * @class Steps
+ */
 class Steps {
 	/**
 	 * Авторизация
 	 *
-	 * @param {string} type — типа авторизации
-	 * @param {string} credentials — авторизационные данные
+	 * @param {string} [type] — типа авторизации
+	 * @param {string} [credentials] — авторизационные данные
 	 * @returns {boolean}
 	 */
 	static auth (type, credentials) {
@@ -59,7 +62,7 @@ class Steps {
 	/**
 	 * Локаторы
 	 *
-	 * @param {Array} list — список фич, которые требуется включить
+	 * @param {string[]} list — список фич, которые требуется включить
 	 */
 	static features (...list) {
 		pages.features(...list);
@@ -143,9 +146,10 @@ class Steps {
 	/**
 	 * @deprecated
 	 * @see isActiveUser
-	 * @param {string} email
+	 * @param {string} [email]
+	 * @param {number} [timeout]
 	 */
-	static isActiveUser (email) {
+	static isActiveUser (email, timeout) {
 		let actual = account.isActiveUser(...arguments);
 
 		assert(actual, `Пользователь "${email}" не авторизован`);
@@ -365,7 +369,7 @@ class Steps {
 	 * @see browser.waitUntil
 	 * @param {Function} callback
 	 * @param {number} [timeout]
-	 * @param {string} message
+	 * @param {string} [message]
 	 * @returns {*}
 	 */
 	waitUntil (callback, timeout, message) {
