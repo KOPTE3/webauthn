@@ -48,39 +48,16 @@ declare namespace WebdriverIO {
 
 declare namespace Yoda {
 
-	class DefaultPage {
-
-		/**
-		 * Авторизация
-		 *
-		 * @param type — тип авторизации
-		 * @param [credentials] — авторизационые данные
-		 */
-		static auth(type, credentials?: Credentials);
-
-		/**
-		 * Открытие страницы
-		 *
-		 * @param [path] - путь, который нужно подставить к location
-		 * @param {Object} [query] — параметры запроса
-		 */
-		open(path?: string, query?: Object): boolean;
-
-		/**
-		 * @deprecated
-		 */
-		static open();
-	}
-
 	interface Credentials {
+		id?: number;
 		username?: string;
 		email?: string;
 		password?: string;
 		domain?: string;
 	}
 
-	interface AuthorizationStore {
-		get(propertyName: string);
+	interface CredentialsGetterOptions {
+		domain: string;
 	}
 
 }
@@ -94,20 +71,3 @@ declare module "@qa/yoda/steps" {
 }
 
 declare module "@qa/yoda/utils/account";
-//
-// declare namespace Login {
-// 	class FormSteps {
-// 		selectDomain (domain: string);
-// 		setCredentials (credentials: Yoda.Credentials, mobile?: boolean);
-// 		clickSignInButton ();
-// 	}
-//
-// 	type FormStepsClass = new () => FormSteps;
-// }
-
-// declare module "login.mail.ru/tests/steps/login";
-// declare module "login.mail.ru/tests/steps/login/form"  {
-// 	var FormSteps: Login.FormStepsClass;
-//
-// 	export = FormSteps;
-// }
