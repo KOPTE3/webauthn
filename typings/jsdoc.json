@@ -5,14 +5,16 @@
   },
   "source": {
 	"include": [
-		"steps/index.js",
-	  	"pages/index.js"
+		"../steps/index.js",
+	  	"../pages/index.js",
+	  	"../store/phones/index.js",
+	  	"../store/authorization/index.js"
 	]
   },
   "plugins": [],
   "opts": {
 	"template": "./node_modules/tsd-jsdoc",
-	"destination": "./typings/",
+	"destination": ".",
 	"recourse": true
   }
 }

@@ -1,5 +1,7 @@
 ///<reference path="./types.d.ts" />
 
+declare type AnyPromise = Promise<any>;
+
 declare namespace WebdriverIO {
 
 	export interface VisualDiff {
@@ -92,24 +94,20 @@ declare module "@qa/yoda/steps" {
 }
 
 declare module "@qa/yoda/utils/account";
+//
+// declare namespace Login {
+// 	class FormSteps {
+// 		selectDomain (domain: string);
+// 		setCredentials (credentials: Yoda.Credentials, mobile?: boolean);
+// 		clickSignInButton ();
+// 	}
+//
+// 	type FormStepsClass = new () => FormSteps;
+// }
 
-declare namespace Login {
-	class FormSteps {
-		selectDomain (domain: string);
-		setCredentials (credentials: Yoda.Credentials, mobile?: boolean);
-		clickSignInButton ();
-	}
-
-	type FormStepsClass = new () => FormSteps;
-}
-
-declare module "@qa/yoda/store/authorization" {
-	export const account: Yoda.AuthorizationStore;
-}
-
-declare module "login.mail.ru/tests/steps/login";
-declare module "login.mail.ru/tests/steps/login/form"  {
-	var FormSteps: Login.FormStepsClass;
-
-	export = FormSteps;
-}
+// declare module "login.mail.ru/tests/steps/login";
+// declare module "login.mail.ru/tests/steps/login/form"  {
+// 	var FormSteps: Login.FormStepsClass;
+//
+// 	export = FormSteps;
+// }
