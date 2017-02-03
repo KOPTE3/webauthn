@@ -19,22 +19,22 @@ declare namespace WebdriverIO {
 		hide?: string[];
 
 		/** Удаляет заданные элементы **/
-		remove: string[];
+		remove?: string[];
 
 		/** Задает размер изображениям (desktop) **/
-		widths: number[];
+		widths?: number[];
 
 		/** Устанавливает ориентацию (mobile) **/
-		orientations: number[];
+		orientations?: number[];
 
 		/** Задает границы поиска несоотвествий (от 0 до 100) **/
-		misMatchTolerance: number;
+		misMatchTolerance?: number;
 
 		/**
 		 * Устанавливает время ожидания после
 		 * изменения раземеров вьюпорта
 		 **/
-		viewportChangePause: number;
+		viewportChangePause?: number;
 	}
 
 	export interface Client<T> {
@@ -50,9 +50,9 @@ declare namespace Yoda {
 
 	interface Credentials {
 		id?: number;
-		username?: string;
+		username: string;
 		email?: string;
-		password?: string;
+		password: string;
 		domain?: string;
 	}
 
@@ -63,6 +63,7 @@ declare namespace Yoda {
 }
 
 declare module "@qa/yoda/pages" {
+
 	export = PageObject;
 }
 
