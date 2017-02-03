@@ -1,4 +1,5 @@
 ///<reference path="./types.d.ts" />
+///<reference path="../../account-manager/index.d.ts" />
 
 declare type AnyPromise = Promise<any>;
 
