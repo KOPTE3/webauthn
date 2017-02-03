@@ -31,14 +31,6 @@
 	"yoda": "index.js"
   },
 
-  "pre-commit": {
-	"silent": true,
-
-	"run": [
-	  "lint"
-	]
-  },
-
   "dependencies": {
 	"@qa/account-manager": "^1.7.3",
 	"@qa/file-service": "^0.0.1",
