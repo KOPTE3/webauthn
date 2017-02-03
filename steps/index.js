@@ -36,7 +36,7 @@ class Steps {
 	/**
 	 * Открыть страницу
 	 *
-	 * @param {string} path
+	 * @param {string} [path]
 	 * @param {Object} [query]
 	 * @see Pages.open
 	 */
