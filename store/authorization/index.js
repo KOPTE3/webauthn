@@ -61,7 +61,7 @@ module.exports = {
 	/**
 	 * Получение авторизационных сведений о текущем аккаунте
 	 *
-	 * @type {Object}
+	 * @type {AccountManager.Session}
 	 */
 	get account () {
 		return new AccountManager.Session();
