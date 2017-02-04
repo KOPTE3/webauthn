@@ -91,6 +91,7 @@ tests/config.local.js
 
 Пример запуска тестов в среде непрерывной интеграции смотрите [здесь](http://win110.dev.mail.ru:8080/view/Yoda/job/yoda.suites). 
 
+О конфигурировании Jenkins смотри в [@qa/jenkins-utils](ssh://git@stash.mail.ru:2222/qa/jenkins-utils.git) 
 
 ### Использование
 
@@ -141,10 +142,12 @@ npm test -- --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
 Отлаживать тесты можно либо из консоли, либо из дебаггеров IDE, таких как WebStorm, VS Code, etc. Для запуска тестов с возможностью отладки, необходимо использовать опцию `--debug`:
 
 ```
-npm test -- --suite=login --grep=TESTMAIL-8674 --debug=:6666
+npm test -- --suite=login --grep=TESTMAIL-8674 --debug
 ```
 
-Рекомендуется отлаживать тесты по одиночке. При запуске тестов с включенной опцией `debug`, в консоли появится сообщение
+По умолчанию используется порт 6666 (можно передать любой).
+
+Рекомендуется отлаживать тесты по одиночке. При запуске тестов с включенной опцией `debug`, в консоли появится сообщение:
 
 ```
 Debugger listening on 127.0.0.1:6666
@@ -152,11 +155,11 @@ Debugger listening on 127.0.0.1:6666
 
 Выполнение теста остановится на инструкции
 
-```javascript
+```js
 debugger;
 ```
 
-Начать отладку пожно подключившись к процессу по заданному адресу. Для IDE WebStorm нужно выполнить
+Начать отладку пожно подключившись к процессу по заданному адресу. Для IDE WebStorm нужно выполнить:
 
 ```
 Run -> Debug... -> Edit Configurations... -> Add New Configuration -> Node.js Remote Debug
@@ -165,7 +168,6 @@ Run -> Debug... -> Edit Configurations... -> Add New Configuration -> Node.js Re
 Там необходимо выставить свои address и port и подключиться к отладчику.
 
 Для VS Code необходимо следовать инструкциям из [статьи (medium.com)](https://medium.com/@dakshika/remote-debug-node-js-application-using-visual-studio-code-dc0fa0b4dec4#.3zk3yqg7h).
-
 
 
 ### Логи и отчеты

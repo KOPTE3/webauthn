@@ -59,19 +59,19 @@ let details = {
 					service.data.logLevel = (value === true) ? 'verbose' : value;
 					break;
 
-
-				// Опция debug
-				// 1. Позволяет отлаживать тесты
-				// 2. Позволяет увеличить время отладки для browser.debug()
+				// Позволяет отлаживать тесты
 				case 'debug':
 					if (!value) {
 						break;
 					}
+
+					// Позволяет увеличить время отладки для browser.debug()
 					merge(service.data, {
 						mochaOpts: {
 							timeout: 15 * (60 * 1000)
 						}
 					});
+
 					// wdio увеличивает значение debugPort на единицу,
 					// поэтому если мы хотим запустить дебаг на порту 6666,
 					// необходимо присваивать debugPort = 6665
