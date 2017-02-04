@@ -7,7 +7,7 @@ let merge = require('deepmerge');
 let Log = require('tir');
 
 let options = process.argv.slice(2);
-options = minimist(options);
+    options = minimist(options);
 
 
 if (options.verbose) {
