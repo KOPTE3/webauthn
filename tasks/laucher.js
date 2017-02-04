@@ -30,7 +30,7 @@ let details = {
 	extend (service) {
 		let wdio = new WebDriverIOUtils();
 
-		let { file, data } = wdio.config({
+		let {file, data} = wdio.config({
 			file: service.file
 		});
 
@@ -47,53 +47,47 @@ let details = {
 				// Алиас для baseUrl
 				case 'url':
 					service.data.baseUrl = value;
-
 					break;
 
-				// Просим сервер включить расширенный вывод логов
+				// Парамерты вывода отладочной информации в модуле debug
 				case 'verbose':
-					service.data.logLevel = 'verbose';
-
-				// Опция debug имеет 3 назначения:
-				// 1. Позволяет увеличить время отладки для browser.debug()
-				// 2. Выводит дополнительную информации о процессе выполнения тестов
-				// 3. Позволяет отлаживать тесты
-				case 'debug':
-					if (value) {
-						merge(service.data, {
-							mochaOpts: {
-								timeout: 15 * (60 * 1000)
-							}
-						});
-
-						// Исключаем пересечение в названиях опций
-						// Для отладки кода через node-inspector эту опцию следует задавать как
-						// номер порта c двоеточием (например --debug=:6666)
-						let { debug } = service.data;
-
-						try {
-							if (!/:\d{4,}/.test(debug)) {
-								delete service.data.debug;
-							} else {
-								process.debugPort = Number.parseInt(debug.slice(1)) - 1;
-							}
-						} catch (error) {
-							Log.error('Could not debug project', error);
-						}
-					}
-
 					break;
+
+
+				// Вывод логов селениума
+				case 'log':
+					service.data.logLevel = (value === true) ? 'verbose' : value;
+					break;
+
+
+				// Опция debug
+				// 1. Позволяет отлаживать тесты
+				// 2. Позволяет увеличить время отладки для browser.debug()
+				case 'debug':
+					if (!value) {
+						break;
+					}
+					merge(service.data, {
+						mochaOpts: {
+							timeout: 15 * (60 * 1000)
+						}
+					});
+					// wdio увеличивает значение debugPort на единицу,
+					// поэтому если мы хотим запустить дебаг на порту 6666,
+					// необходимо присваивать debugPort = 6665
+					process.debugPort = ((value | 0) || 6666) - 1;
+					break;
+
 
 				default:
 					service.data[flag] = value;
-
 					break;
 			}
 		}
 
 		debug('config:', file);
 
-		let { grep } = service.data;
+		let {grep} = service.data;
 
 		if (grep) {
 			debug('filter:', grep);
@@ -129,14 +123,14 @@ module.exports = function (options) {
 
 	return launcher.run()
 		.then(code => {
-			if (code !== 0) {
-				return Log.error('Tests finished with unwanted exit code', code);
-			}
+				if (code !== 0) {
+					return Log.error('Tests finished with unwanted exit code', code);
+				}
 
-			Log.info('All tests were finished up with exit code', code);
-		},
-		error => {
-			Log.error('Something went wrong: \n%s \n%s', error,
-				JSON.stringify(service, null, '\t'));
-		});
+				Log.info('All tests were finished up with exit code', code);
+			},
+			error => {
+				Log.error('Something went wrong: \n%s \n%s', error,
+					JSON.stringify(service, null, '\t'));
+			});
 };
