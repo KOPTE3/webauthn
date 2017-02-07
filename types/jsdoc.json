@@ -6,7 +6,6 @@
 			"closure"
 		]
 	},
-
 	"source": {
 		"include": [
 			"./steps/index.js",
@@ -15,12 +14,10 @@
 			"./store/authorization/index.js"
 		]
 	},
-
 	"plugins": [],
-
 	"opts": {
 		"template": "./node_modules/tsd-jsdoc",
-		"destination": "./typings/",
+		"destination": "./types/",
 		"recourse": true
 	}
 }

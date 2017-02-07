@@ -23,7 +23,7 @@
 	},
 
     "scripts": {
-      "jsdoc2dts": "jsdoc -c ./typings/jsdoc.json .",
+      "jsdoc2dts": "jsdoc -c ./types/jsdoc.json .",
       "prepublish": "npm run jsdoc2dts"
     },
 
