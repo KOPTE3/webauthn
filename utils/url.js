@@ -13,10 +13,10 @@ module.exports = {
 	 * Экранирует сроку для использования в регулярном выражении
 	 *
 	 * @param {string} text
-	 * @param {string}
+	 * @returns {string}
 	 */
 	regexEscape (text) {
-		return text.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1');
+		return text.replace(/([.*+?^=!:${}()|[]\/\])/g, '\\$1');
 	},
 
 	open (url, timeout = TIMEOUT) {

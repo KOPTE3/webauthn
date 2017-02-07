@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 let fs = require('fs');
 let path = require('path');
@@ -111,8 +111,10 @@ let details = {
 /**
  * Сервис запуска тестов
  *
- * @param {Object} options.data — данные, которые будут переданы в конфиг
- * @param {string} options.file — путь к файлу конфига
+ * @param {Object} options
+ *      data — данные, которые будут переданы в конфиг
+ *      file — путь к файлу конфига
+ * @returns {Promise}
  */
 module.exports = function (options) {
 	let service = details.extend(options);
@@ -123,14 +125,14 @@ module.exports = function (options) {
 
 	return launcher.run()
 		.then(code => {
-				if (code !== 0) {
-					return Log.error('Tests finished with unwanted exit code', code);
-				}
+			if (code !== 0) {
+				return Log.error('Tests finished with unwanted exit code', code);
+			}
 
-				Log.info('All tests were finished up with exit code', code);
-			},
-			error => {
-				Log.error('Something went wrong: \n%s \n%s', error,
-					JSON.stringify(service, null, '\t'));
-			});
+			Log.info('All tests were finished up with exit code', code);
+		},
+		error => {
+			Log.error('Something went wrong: \n%s \n%s', error,
+				JSON.stringify(service, null, '\t'));
+		});
 };

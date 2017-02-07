@@ -22,10 +22,19 @@
 		"npm": ">=3.8"
 	},
 
-    "scripts": {
-      "jsdoc2dts": "jsdoc -c ./types/jsdoc.json .",
-      "prepublish": "npm run jsdoc2dts"
-    },
+	"scripts": {
+		"jsdoc2dts": "jsdoc -c ./types/jsdoc.json .",
+		"prepublish": "npm run jsdoc2dts",
+		"lint": "eslint . --cache --format node_modules/eslint-friendly-formatter --ext .js"
+	},
+
+	"pre-commit": {
+		"silent": true,
+
+		"run": [
+			"lint"
+		]
+	},
 
 	"bin": {
 		"yoda": "index.js"

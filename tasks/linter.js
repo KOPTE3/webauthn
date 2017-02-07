@@ -9,8 +9,7 @@ let ESLint;
 
 try {
 	ESLint = require('eslint').CLIEngine;
-}
-catch (error) {
+} catch (error) {
 	debug('started without ESLint');
 }
 

@@ -50,8 +50,12 @@ class Steps {
 				throw new Error('container');
 			}
 		} catch (error) {
-			assert.equal(error.name, 'container',
-				`"${this.name || ''}" не определен основной элемент страницы в "pages/<page>/locators.container"`);
+			let { name = '' } = this;
+
+			let message = `"${name}" не определен основной элемент страницы 
+в "pages/<page>/locators.container"`;
+
+			assert.equal(error.name, 'container', message);
 		}
 
 		this.page.wait();

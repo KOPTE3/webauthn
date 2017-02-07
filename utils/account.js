@@ -103,7 +103,6 @@ module.exports = {
 	 *
 	 * @param {string} email
 	 * @param {number} timeout
-	 * @returns {*}
 	 */
 	logout (email = '', timeout = TIMEOUT) {
 		if (!email) {
