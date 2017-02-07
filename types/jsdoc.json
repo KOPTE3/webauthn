@@ -14,7 +14,7 @@
   "plugins": [],
   "opts": {
 	"template": "./node_modules/tsd-jsdoc",
-	"destination": "./typings/",
+	"destination": "./types/",
 	"recourse": true
   }
 }
