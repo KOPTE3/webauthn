@@ -41,7 +41,7 @@
 	},
 
 	"dependencies": {
-	  	"@qa/account-manager": "git+ssh://git@stash.mail.ru:2222/qa/account-manager.git#ts_compatible",
+	  	"@qa/account-manager": "^1.8.1",
 		"@qa/file-service": "^0.0.1",
 		"@qa/wdio-api": "^0.10.1",
 
