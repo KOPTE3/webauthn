@@ -1,6 +1,10 @@
 'use strict';
 
-/** Безлимитные телефоны */
+/**
+ * Безлимитные телефоны
+ * @global
+ * @module "@qa/yoda/store/phones"
+ */
 module.exports = {
 	phones: [
 		{
@@ -23,7 +27,7 @@ module.exports = {
 
 	/**
 	 * Получение номера телефона
-	 * @param {number} index
+	 * @param {number} [index]
 	 * @returns {string}
 	 */
 	getNumber (index = 0) {

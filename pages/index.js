@@ -13,12 +13,14 @@ let cache = {
 
 const TIMEOUT = 15 * 1000;
 
-/** @namespace browser */
+/**
+ * @class PageObject
+ **/
 class PageObject {
 	/**
 	 * Авторизация
 	 *
-	 * @param {string} type — тип авторизации
+	 * @param {string} [type] — тип авторизации
 	 * @param {Object} [credentials] — авторизационые данные
 	 */
 	static auth (type, credentials) {
@@ -39,7 +41,7 @@ class PageObject {
 	/**
 	 * Ссылка на объект страницы
 	 *
-	 * @type {browser}
+	 * @type {*}
 	 */
 	get page () {
 		return browser;
@@ -119,7 +121,7 @@ class PageObject {
 	/**
 	 * Включение фичи
 	 *
-	 * @param {Array} list — список фич, которые требуется включить
+	 * @param {string[]} list — список фич, которые требуется включить
 	 */
 	features (list) {
 		cache.features.push(...list);
@@ -257,7 +259,7 @@ class PageObject {
 	 * @see browser.checkDocument
 	 * @see browser.saveDocumentScreenshot
 	 * @param {Object} options
-	 * @returns {Array}
+	 * @returns {Object[]}
 	 */
 	compareDocument (options) {
 		return this.page.checkDocument(options);
@@ -269,7 +271,7 @@ class PageObject {
 	 * @see browser.checkViewport
 	 * @see browser.saveViewportScreenshot
 	 * @param {Object} options
-	 * @returns {Array}
+	 * @returns {Object[]}
 	 */
 	compareViewport (options) {
 		return this.page.checkViewport(options);
@@ -282,7 +284,7 @@ class PageObject {
 	 * @see browser.saveElementScreenshot
 	 * @param {string} locator
 	 * @param {Object} options
-	 * @returns {Array}
+	 * @returns {Object[]}
 	 */
 	compareElement (locator, options) {
 		return this.page.checkElement(options);
@@ -301,7 +303,7 @@ class PageObject {
 	 * @see browser.waitUntil
 	 * @param {Function} callback
 	 * @param {number} [timeout]
-	 * @param {string} message
+	 * @param {string} [message]
 	 * @returns {*}
 	 */
 	waitUntil (callback, timeout, message) {

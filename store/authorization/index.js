@@ -6,7 +6,11 @@ let { password } = require('@qa/account-manager/utils/user');
 
 let account = new AccountManager();
 
-/** Набор методов для работы с авторизационными данными */
+/**
+ * Набор методов для работы с авторизационными данными
+ * @global
+ * @module "@qa/yoda/store/authorization"
+ */
 module.exports = {
 	/** Пароль, который следует использовать */
 	password,
@@ -16,10 +20,10 @@ module.exports = {
 	 *
 	 * @see discard — обязательно вызываейте этот метод для осовобождения
 	 * занимаемого аккаунта!
-	 * @param {string} type — тип авторизации
-	 * @param {Object} [options] — дополнительные опции
+	 * @param {"basic" | "external" | "pdd"} type — тип авторизации
+	 * @param {Yoda.CredentialsGetterOptions} [options] — дополнительные опции
 	 * @param {number} [timeout] — максимальное время ожидания
-	 * @returns {Object}
+	 * @returns {Yoda.Credentials}
 	 *
 	 * Данные, которые возвращаются:
 	 *
@@ -48,7 +52,7 @@ module.exports = {
 	 * Освободить и сбросить состояние аккаунта
 	 *
 	 * @param {number} id — идентификатор учетной записи
-	 * @returns {Promise}
+	 * @returns {AnyPromise}
 	 */
 	discard (id) {
 		return account.discard(id);
@@ -57,7 +61,7 @@ module.exports = {
 	/**
 	 * Получение авторизационных сведений о текущем аккаунте
 	 *
-	 * @type {Object}
+	 * @type {AccountManager.Session}
 	 */
 	get account () {
 		return new AccountManager.Session();

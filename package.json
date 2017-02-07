@@ -22,20 +22,17 @@
 		"npm": ">=3.8"
 	},
 
+    "scripts": {
+      "jsdoc2dts": "jsdoc -c ./typings/jsdoc.json .",
+      "prepublish": "npm run jsdoc2dts"
+    },
+
 	"bin": {
 		"yoda": "index.js"
 	},
 
-	"pre-commit": {
-		"silent": true,
-
-		"run": [
-			"lint"
-		]
-	},
-
 	"dependencies": {
-		"@qa/account-manager": "^1.7.3",
+	  	"@qa/account-manager": "git+ssh://git@stash.mail.ru:2222/qa/account-manager.git#ts_compatible",
 		"@qa/file-service": "^0.0.1",
 		"@qa/wdio-api": "^0.10.0",
 
@@ -54,6 +51,8 @@
 		"@qa/eslint-config-mail.ru": "^0.x",
 		"eslint": "^3.0.1",
 		"eslint-friendly-formatter": "^2.0.5",
-		"pre-commit": "^1.1.3"
+        "jsdoc": "^3.4.3",
+        "pre-commit": "^1.1.3",
+        "tsd-jsdoc": "^1.0.1"
 	}
 }
