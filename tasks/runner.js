@@ -61,18 +61,13 @@ let details = {
 
 				// Позволяет отлаживать тесты
 				case 'debug':
-					if (!value) {
-						break;
-					}
-
-					// Позволяет увеличить время отладки для browser.debug()
 					merge(service.data, {
 						mochaOpts: {
 							timeout: 15 * (60 * 1000)
 						}
 					});
 
-					const port = ((value | 0) || 6666) - 1;
+					const port = (value === true ? 6666 : value) - 1;
 
 					// wdio увеличивает значение debugPort на единицу,
 					// поэтому если мы хотим запустить дебаг на порту 6666,
@@ -80,7 +75,6 @@ let details = {
 					service.data.debug = process.debugPort = port;
 
 					break;
-
 
 				default:
 					service.data[flag] = value;
