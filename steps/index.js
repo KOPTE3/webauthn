@@ -14,7 +14,7 @@ class Steps {
 	 * Авторизация
 	 *
 	 * @param {string} [type] — типа авторизации
-	 * @param {string} [credentials] — авторизационные данные
+	 * @param {Yoda.Credentials} [credentials] — авторизационные данные
 	 * @returns {boolean}
 	 */
 	static auth (type, credentials) {

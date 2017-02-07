@@ -1,5 +1,4 @@
 ///<reference path="./types.d.ts" />
-///<reference path="../../account-manager/index.d.ts" />
 
 declare type AnyPromise = Promise<any>;
 
@@ -72,4 +71,6 @@ declare module "@qa/yoda/steps" {
 	export = Steps;
 }
 
-declare module "@qa/yoda/utils/account";
+declare module "@qa/yoda/store/authorization"  {
+	import * as AccountManager from '@qa/account-manager';
+}
