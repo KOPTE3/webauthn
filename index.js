@@ -9,12 +9,11 @@ let Log = require('tir');
 let options = process.argv.slice(2);
     options = minimist(options);
 
-
 if (options.verbose) {
 	process.env.DEBUG = '@qa*';
 }
 
-let { laucher, linter } = require('./tasks');
+let { runner, linter } = require('./tasks');
 
 /**
  * Yoda runner
@@ -40,6 +39,6 @@ module.exports = new function () {
 	if (errors > 0) {
 		return Promise.reject(`ESLint: found errors: "${errors}"`);
 	} else {
-		return laucher({ data: options, file: config });
+		return runner({ data: options, file: config });
 	}
 };

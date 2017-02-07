@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = {
-	laucher: require('./laucher'),
+	runner: require('./runner'),
 	linter : require('./linter')
 };

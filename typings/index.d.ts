@@ -4,7 +4,6 @@
 declare type AnyPromise = Promise<any>;
 
 declare namespace WebdriverIO {
-
 	export interface VisualDiff {
 		isExactSameImage: boolean;
 	}
@@ -43,12 +42,9 @@ declare namespace WebdriverIO {
 		checkViewport(options?: ScreenshotOptions): VisualDiff[];
 		checkElement(locator?: ScreenshotOptions, options?): VisualDiff[];
 	}
-
 }
 
-
 declare namespace Yoda {
-
 	interface Credentials {
 		id?: number;
 		username: string;
@@ -60,16 +56,14 @@ declare namespace Yoda {
 	interface CredentialsGetterOptions {
 		domain: string;
 	}
-
 }
 
-declare module "@qa/yoda/pages" {
-
+declare module '@qa/yoda/pages' {
 	export = PageObject;
 }
 
-declare module "@qa/yoda/steps" {
+declare module '@qa/yoda/steps' {
 	export = Steps;
 }
 
-declare module "@qa/yoda/utils/account";
+declare module '@qa/yoda/utils/account';
