@@ -65,6 +65,6 @@ declare module '@qa/yoda/steps' {
 	export = Steps;
 }
 
-declare module "@qa/yoda/store/authorization"  {
+declare module '@qa/yoda/store/authorization' {
 	import * as AccountManager from '@qa/account-manager';
 }
