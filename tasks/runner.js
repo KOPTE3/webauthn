@@ -122,14 +122,18 @@ module.exports = function (options) {
 
 	return launcher.run()
 		.then(code => {
-			if (code !== 0) {
-				return Log.error('Tests finished with unwanted exit code', code);
+			if (code === 0) {
+				Log.info('All tests were successfully finished');
+			} else {
+				Log.error('Tests finished with unwanted exit code', code);
 			}
 
-			Log.info('All tests were finished up with exit code', code);
+			process.exit(code);
 		},
 		error => {
 			Log.error('Something went wrong: \n%s \n%s', error,
 				JSON.stringify(service, null, '\t'));
+
+			process.exit(-1);
 		});
 };
