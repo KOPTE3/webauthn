@@ -44,9 +44,10 @@
 	  	"@qa/account-manager": "^1.8.1",
 		"@qa/file-service": "^0.0.1",
 		"@qa/wdio-api": "^0.10.1",
-		"@qa/wdio-utils": "^0.6.0",
+		"@qa/wdio-utils": "^0.7.0",
 
 		"debug": "^2.2.0",
+		"deindent": "^0.1.0",
 		"deepmerge": "0.2.10",
 		"platform" : "^1.3.3",
 		"tir": "^0.0.2",
