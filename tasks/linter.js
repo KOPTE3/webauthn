@@ -31,7 +31,7 @@ module.exports = files => {
 		fix: true,
 
 		// Список расширений, для которых будет выполняться проверка
-		extensions: ['.js']
+		extensions: ['.js', '.ts']
 	};
 
 	let lint = new ESLint(options);

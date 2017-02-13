@@ -20,7 +20,7 @@ module.exports = {
 	},
 
 	open (url, timeout = TIMEOUT) {
-		browser.timeouts('page load', timeout);
+		// browser.timeouts('page load', timeout);
 
 		debug('requested page', url);
 		browser.url(url);
