@@ -1,5 +1,14 @@
 # Changelog
 
+## 6.3.1
+
+* В методе open убрано указание таймаута через `browser.timeouts`.<br /> 
+Замена этого способа на `browser.waitForUrl` позволила исключить ошибки следующего вида:
+
+```
+timeout: cannot determine loading status
+```
+
 ## 6.3.0
 
 * Добавлена опция `--ts`, которая позволяет использовать в коде тестов TypeScript

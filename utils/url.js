@@ -20,13 +20,16 @@ module.exports = {
 	},
 
 	open (url, timeout = TIMEOUT) {
-		// browser.timeouts('page load', timeout);
-
 		debug('requested page', url);
 		browser.url(url);
 
 		/**
 		 * Дожидаемся смены адреса страницы
+		 * В идеале, нам было бы достаточно этого указания browser.timeouts,
+		 * однако этот тип таймаутов не поддержитвается ни одном современным драйвером.
+		 * Более того, в Chrome это приводит к ошибкам вида:
+		 *      timeout: cannot determine loading status
+		 *
 		 * @see https://bugs.chromium.org/p/chromedriver/issues/detail?id=817
 		 * @see https://bugs.chromium.org/p/chromedriver/issues/detail?id=402
 		 */
