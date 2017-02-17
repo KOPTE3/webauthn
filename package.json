@@ -23,8 +23,6 @@
 	},
 
 	"scripts": {
-		"jsdoc2dts": "jsdoc -c ./types/jsdoc.json .",
-		"prepublish": "npm run jsdoc2dts",
 		"lint": "eslint . --cache --format node_modules/eslint-friendly-formatter --ext .js"
 	},
 
@@ -41,17 +39,15 @@
 	},
 
 	"dependencies": {
-	  	"@qa/account-manager": "^1.8.1",
+		"@qa/account-manager": "^1.8.3",
 		"@qa/file-service": "^0.0.1",
 		"@qa/wdio-api": "^0.10.1",
 		"@qa/wdio-utils": "^0.7.0",
 
 		"debug": "^2.2.0",
-		"deindent": "^0.1.0",
 		"deepmerge": "0.2.10",
-		"platform" : "^1.3.3",
-		"tir": "^0.0.2",
-		"time-grunt": "^1.3.0"
+		"platform": "^1.3.3",
+		"tir": "^0.0.2"
 	},
 
 	"peerDependencies": {
@@ -60,6 +56,15 @@
 
 	"devDependencies": {
 		"@qa/eslint-config-mail.ru": "^0.x",
+
+		"@types/debug": "^0.0.29",
+		"@types/deepmerge": "^1.3.0",
+		"@types/minimist": "^1.2.0",
+		"@types/node": "^6.0.52",
+		"@types/platform": "^1.0.27",
+		"@types/webdriverio": "^4.5.2",
+		"deprecated-decorator": "^0.1.6",
+
 		"eslint": "^3.0.1",
 		"eslint-friendly-formatter": "^2.0.5",
 		"jsdoc": "^3.4.3",

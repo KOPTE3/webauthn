@@ -1,12 +1,23 @@
 'use strict';
 
+interface Phone {
+	index: number,
+	phone: string,
+	head: string,
+	value: string,
+	masked: string,
+	id: string
+}
+
+type PhoneList = Phone[];
+
 /**
  * Безлимитные телефоны
  * @global
  * @module "@qa/yoda/store/phones"
  */
-module.exports = {
-	phones: [
+export default {
+	phones: <PhoneList>[
 		{
 			index: 0,
 			phone: '79162143406',
@@ -30,7 +41,7 @@ module.exports = {
 	 * @param {number} [index]
 	 * @returns {string}
 	 */
-	getNumber (index = 0) {
+	getNumber (index: number = 0): string {
 		return this.phones[index].phone;
 	}
 };

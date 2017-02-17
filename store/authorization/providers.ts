@@ -1,13 +1,15 @@
 'use strict';
 
+type ProviderList = Yoda.Provider[];
+
 /** Набор методов для работы с данными почтовых провайдеров */
-module.exports = {
+export default {
 	/**
 	 * Список провайдеров
 	 *
 	 * @returns {Array}
 	 */
-	list: [
+	list: <ProviderList>[
 		{
 			name: 'mail.ru',
 			types: ['internal', 'oauth'],
@@ -287,11 +289,11 @@ module.exports = {
 	 * @see http://mail-dashboard.mail.ru/?id=instant-rimap-daily
 	 * @see https://jira.mail.ru/browse/MNT-113559
 	 * @see https://jira.mail.ru/browse/MNT-113560
-	 * @param {string} type — [ external | collectors | pdd ]
+	 * @param {string} type — [ external | pdd ]
 	 * @param {string} [project]
 	 * @returns {Array}
 	 */
-	top (type, project = 'mail.ru') {
+	top (type: AccountManager.Type, project: string = 'mail.ru'): string[] {
 		let providers = {
 			external: {
 				'my.com': [
@@ -350,7 +352,7 @@ module.exports = {
 	 * @param {Array|null} providers — заданный список провайдеров
 	 * @returns {Array}
 	 */
-	get (providers) {
+	get<T> (providers: string[] | void): Array<T> {
 		if (providers) {
 			return this.list.filter(provider => {
 				if (providers.includes(provider.name)) {
@@ -368,7 +370,7 @@ module.exports = {
 	 * @param {string} domain
 	 * @returns {Object}
 	 */
-	find (domain) {
+	find (domain: string): Yoda.Provider {
 		let provider = this.list.find(provider => {
 			for (let alias of provider.hosts) {
 				if (alias === domain) {
@@ -386,7 +388,7 @@ module.exports = {
 	 * @param {Function} predicate
 	 * @returns {Array}
 	 */
-	filter (predicate) {
+	filter<T> (predicate: (provider: string) => boolean): Array<T> {
 		return this.list.filter(provider => {
 			return predicate(provider);
 		});

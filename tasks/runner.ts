@@ -1,20 +1,25 @@
 'use strict';
 
-let fs = require('fs');
-let path = require('path');
-let merge = require('deepmerge');
-let Log = require('tir');
-let debug = require('debug')('@qa:yoda');
-let WebDriverIO = require('webdriverio');
-let WebDriverIOUtils = require('@qa/wdio-utils');
+import * as fs from 'fs';
+import * as path from 'path';
+import * as merge from 'deepmerge';
+import * as Log from 'tir';
+import * as Debug from 'debug';
+import * as WebDriverIO from 'webdriverio';
+import * as WebDriverIOUtils from '@qa/wdio-utils';
+
+let debug = Debug('@qa:yoda');
+
+interface Service {
+	file: string;
+	data: Yoda.Options;
+}
 
 let details = {
 	/**
 	 * Вывод логотипа
-	 *
-	 * @param {Object} grunt
 	 */
-	logo (grunt) {
+	logo () {
 		let file = path.join(__dirname, '../files/logo.txt');
 		let stream = fs.createReadStream(file);
 
@@ -27,17 +32,17 @@ let details = {
 	 * @param {Object} service — { file, data }
 	 * @returns {Object}
 	 */
-	extend (service) {
+	extend (service: Service): Service {
 		let wdio = new WebDriverIOUtils();
 
-		let {file, data} = wdio.config({
+		let { file, data } = wdio.config({
 			file: service.file
 		});
 
 		// Экспортируем путь к конфигурационному файлу
 		service.file = file;
 
-		for (let [flag, value] of Object.entries(service.data)) {
+		for (let [ flag, value ] of Object.entries(service.data)) {
 			// Для дублирующихся ключей берем значение крайнего
 			if (Array.isArray(value)) {
 				value.pop();
@@ -84,7 +89,7 @@ let details = {
 
 		debug('config:', file);
 
-		let {grep} = service.data;
+		let { grep } = service.data;
 
 		if (grep) {
 			debug('filter:', grep);
@@ -113,7 +118,7 @@ let details = {
  *      file — путь к файлу конфига
  * @returns {Promise}
  */
-module.exports = function (options) {
+module.exports = function<T> (options: Service): Promise<T> {
 	let service = details.extend(options);
 
 	details.logo();

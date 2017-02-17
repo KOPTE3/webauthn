@@ -1,24 +1,24 @@
-'use strict';
+import * as Debug from 'debug';
+import AccountManager from '@qa/account-manager';
+import authStore from '../store/authorization';
+import providers from '../store/authorization/providers';
+import URL from './url';
 
-let debug = require('debug')('@qa:yoda');
-let AccountManager = require('@qa/account-manager');
-let authStore = require('../store/authorization');
-let providers = require('../store/authorization/providers');
-let URL = require('./url');
-
-const TIMEOUT = 30 * 1000;
+let debug = Debug('@qa:yoda');
+const TIMEOUT: number = 30 * 1000;
 
 /** Набор методов для аккаунтом пользователя */
 /** @namespace browser */
-module.exports = {
+export default {
 	/**
 	 * Получение сессии
 	 *
 	 * @param {string} type — тип авторизации
 	 * @param {Object} [options] — авторизационые данные
+	 * @returns {boolean}
 	 */
-	session (type = 'basic', options = {}) {
-		let account = new AccountManager.Hooks(),
+	session (type: string = 'basic', options: AccountManager.Credentials = {}): boolean {
+		let account = AccountManager.Hooks(),
 			service = 'mail.ru';
 
 		if (/^(pdd|external)$/.test(type)) {
@@ -40,6 +40,8 @@ module.exports = {
 		}, TIMEOUT, 'Could not get user session');
 
 		this.setCookie();
+
+		return true;
 	},
 
 	/**
@@ -48,10 +50,13 @@ module.exports = {
 	 * @param {string} [type] — тип авторизации
 	 * Из-за отсутствия других реализаций пока не используется, но зарезервирован
 	 * @param {Object} [options] — авторизационые данные
-	 * @returns {Promise}
+	 * @returns {AccountManager.Credentials}
 	 */
-	register (type, options = {}) {
-		let account = new AccountManager.Hooks();
+	register (
+		type?: string,
+		options: AccountManager.RegisterOptions = {}
+	): AccountManager.Credentials {
+		let account = AccountManager.Hooks();
 
 		return browser.waitForPromise(() => {
 			return account.register(options.domain || 'mail.ru', options);
@@ -61,7 +66,7 @@ module.exports = {
 	/**
 	 * Выставляет куки
 	 */
-	setCookie () {
+	setCookie (): void {
 		let { account } = authStore;
 
 		URL.open('/cgi-bin/lstatic', TIMEOUT);
@@ -104,7 +109,7 @@ module.exports = {
 	 * @param {string} email
 	 * @param {number} timeout
 	 */
-	logout (email = '', timeout = TIMEOUT) {
+	logout (email: string = '', timeout: number = TIMEOUT): void {
 		if (!email) {
 			let { account } = authStore;
 
@@ -140,7 +145,7 @@ module.exports = {
 	 * @param {number} [timeout]
 	 * @returns {boolean}
 	 */
-	isActiveUser (email = '', timeout = TIMEOUT) {
+	isActiveUser (email: string = '', timeout: number = TIMEOUT): boolean {
 		if (!email) {
 			let { account } = authStore;
 
@@ -150,13 +155,15 @@ module.exports = {
 		try {
 			browser.timeouts('script', timeout);
 
-			return browser.executeAsync(function (user, resolve) {
+			let { value } = browser.executeAsync(function (user, resolve) {
 				if (window.__PH) {
 					if (window.__PH.activeUser() === user) {
 						resolve(true);
 					}
 				}
 			}, email);
+
+			return value;
 		} catch (error) {
 			throw new Error(`Could not detect user authorization ${email}`);
 		}
@@ -170,8 +177,8 @@ module.exports = {
 	 * Допустимые значения: [internal, external, pdd, oauth]
 	 * @returns {boolean}
 	 */
-	hasAccountType (provider, type) {
-		let result = providers.filter(({ hosts, types }) => {
+	hasAccountType (provider: string, type: string): boolean {
+		let result = providers.list.filter(({ hosts, types }) => {
 			return hosts.includes(provider) && types.includes(type);
 		});
 
@@ -184,7 +191,7 @@ module.exports = {
 	 * @param {string} email
 	 * @returns {Object}
 	 */
-	parseEmail (email) {
+	parseEmail (email: string): { name: string; host: string } {
 		try {
 			let [, name, host] = email.match(/(.*)@(.{4,})$/);
 

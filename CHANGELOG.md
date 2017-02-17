@@ -1,5 +1,15 @@
 # Changelog
 
+## 7.0.0
+
+* Код проекта переписан на TypeScript
+* Добаавлена новая директория types, которая содержит определения типов
+* Таск `linter` вынесен в отдельный сервис [wdio-eslint-service](https://www.npmjs.com/package/wdio-eslint-service)
+* Логика для запуска тестов на TypeScrвipt через ts-node вынесена в опцию конфига `mochaOpts.compilers`  
+* Из `store` удален объект `helpers`
+* Для статических методов в Pages и Steps добавлен декоратор `deprecated`
+* Модуль `utils/date` перемещен в [e.email.ru-yoda/utils/date](https://stash.mail.ru/projects/MAIL/repos/e.mail.ru/browse/tests/).
+
 ## 6.3.1
 
 * В методе open убрано указание таймаута через `browser.timeouts`.<br /> 

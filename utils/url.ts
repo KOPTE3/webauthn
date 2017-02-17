@@ -1,26 +1,28 @@
 'use strict';
 
-let url = require('url');
-let debug = require('debug')('@qa:yoda');
-let querystring = require('querystring');
+import * as url from 'url';
+import * as Debug from 'debug';
+import * as querystring from 'querystring';
 
-const TIMEOUT = 30 * 1000;
+let debug = Debug('@qa:yoda');
+const TIMEOUT: number = 30 * 1000;
 
 /** Набор методов для работы с URL */
 /** @namespace browser */
-module.exports = {
+export default {
 	/**
 	 * Экранирует сроку для использования в регулярном выражении
 	 *
 	 * @param {string} text
 	 * @returns {string}
 	 */
-	regexEscape (text) {
+	regexEscape (text: string): string {
 		return text.replace(/([.*+?^=!:${}()|[]\/\])/g, '\\$1');
 	},
 
-	open (url, timeout = TIMEOUT) {
+	open (url: string, timeout: number = TIMEOUT): void {
 		debug('requested page', url);
+
 		browser.url(url);
 
 		/**
@@ -44,9 +46,7 @@ module.exports = {
 	 * @see querystring.stringify
 	 * @returns {string}
 	 */
-	query () {
-		return querystring.stringify(...arguments);
-	},
+	query: querystring.stringify,
 
 	/**
 	 * Десериализует параметры запроса
@@ -54,9 +54,7 @@ module.exports = {
 	 * @see querystring.parse
 	 * @returns {Object}
 	 */
-	parse () {
-		return querystring.parse(...arguments);
-	},
+	parse: querystring.parse,
 
 	/**
 	 * Формирует URL
@@ -66,7 +64,7 @@ module.exports = {
 	 * @param {Array} [remove] - параметры которые удалить
 	 * @returns {string}
 	 */
-	format (source, add = {}, remove = []) {
+	format (source: string, add = {}, remove: string[] = []) {
 		let data = url.parse(source);
 		let query = this.parse(data.query);
 

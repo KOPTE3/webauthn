@@ -1,13 +1,17 @@
 'use strict';
 
+interface Products {
+	[name: string]: Yoda.Product;
+}
+
 /** Набор методов для работы с данными */
-module.exports = {
+export default {
 	/**
 	 * Список основных продуктов
 	 *
 	 * @type {Object}
 	 */
-	products: {
+	products: <Products>{
 		'mail.ru': {
 			name: 'Mail.Ru',
 			host: 'https://mail.ru'
@@ -40,12 +44,7 @@ module.exports = {
 	 * @param {string} name
 	 * @returns {Object}
 	 */
-	product (name) {
+	product (name: string): Yoda.Product {
 		return this.products[name];
-	},
-
-	helpers: {
-		'threads': 63,
-		'mailbox-sort': 33
 	}
 };

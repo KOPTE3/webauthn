@@ -1,16 +1,14 @@
 'use strict';
 
-let fs = require('fs');
-let path = require('path');
-let platform = require('platform');
+import * as fs from 'fs';
+import * as path from 'path';
+import * as platform from 'platform';
+import * as FileService from '@qa/file-service';
 
-let fileService = require('@qa/file-service')({
-	basepath: 'files'
-});
-
+let fileService = FileService({ basepath: 'files' });
 
 /** Набор методов для работы с данными пользовательского окружения */
-module.exports = {
+export default {
 	/**
 	 * Возвращает полный путь к файлу
 	 *
@@ -18,7 +16,7 @@ module.exports = {
 	 * @param {string} name
 	 * @returns {string}
 	 */
-	file (name) {
+	file (name: string): string {
 		return fileService(name);
 	},
 
@@ -27,7 +25,7 @@ module.exports = {
 	 *
 	 * @type {string}
 	 */
-	get browser () {
+	get browser (): string {
 		return browser.desiredCapabilities.browserName;
 	},
 
@@ -36,7 +34,7 @@ module.exports = {
 	 *
 	 * @type {Object}
 	 */
-	get viewport () {
+	get viewport (): WebdriverIO.Client<WebdriverIO.Size> & WebdriverIO.Size {
 		return browser.getViewportSize();
 	},
 
@@ -46,7 +44,7 @@ module.exports = {
 	 * @deprecated — используйте свойство agent
 	 * @type {string}
 	 */
-	get platform () {
+	get platform (): string {
 		let status = browser.execute(function () {
 			return window.navigator.platform;
 		});
@@ -59,7 +57,7 @@ module.exports = {
 	 *
 	 * @type {string} — name, version, layout, os, description
 	 */
-	get agent () {
+	get agent (): string {
 		let userAgent = browser.execute(function () {
 			return window.navigator.userAgent;
 		});
@@ -72,7 +70,7 @@ module.exports = {
 	 *
 	 * @type {string}
 	 */
-	get host () {
+	get host (): string {
 		return browser.options.hostname;
 	},
 
@@ -81,7 +79,7 @@ module.exports = {
 	 *
 	 * @type {string}
 	 */
-	get baseUrl () {
+	get baseUrl (): string {
 		return browser.options.baseUrl;
 	}
 };

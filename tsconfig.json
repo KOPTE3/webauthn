@@ -1,0 +1,42 @@
+{
+	"compilerOptions": {
+		"typeRoots": [
+			"./node_modules/@types",
+			"./types"
+		],
+
+		"outDir": "cache/",
+
+		"types": [
+			"node"
+		],
+
+		"lib": [
+			"es2017",
+			"dom"
+		],
+
+		"target": "es2017",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"noImplicitAny": false,
+
+		"declaration": false,
+		"allowJs": true,
+
+		"allowSyntheticDefaultImports": false,
+		"strictNullChecks": false,
+
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"sourceMap": true
+	},
+
+	"exclude": [
+		"./node_modules",
+//		"./utils",
+//		"./tasks",
+		"./files",
+		"./cache"
+	]
+}

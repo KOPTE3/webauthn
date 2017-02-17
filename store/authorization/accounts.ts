@@ -1,7 +1,14 @@
-'use strict';
+interface Account {
+	provider?: string;
+	username?: string;
+	password?: string;
+	features?: string[];
+}
+
+type AccountList = Account[];
 
 /** Набор пользовательских данных */
-module.exports = {
+export default {
 	/**
 	 * Список учетных записей
 	 *
@@ -11,7 +18,7 @@ module.exports = {
 	 *
 	 * @returns {Array}
 	 */
-	list: [
+	list: <AccountList>[
 		{
 			provider: 'mail.ru',
 			features: ['internal', 'oauth'],
@@ -176,8 +183,8 @@ module.exports = {
 	 * @property {Array} features
 	 * @returns {Object|undefined}
 	 */
-	get ({ provider, features = [] }) {
-		return this.list.find(account => {
+	get ({ provider, features = [] }: Account): Account {
+		return this.list.find((account: Account) => {
 			let filtered = features.every(feature => {
 				return account.features.includes(feature);
 			});
