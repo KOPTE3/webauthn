@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "7.0.0-rc.1",
+	"version": "7.0.0-rc.2",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
@@ -24,7 +24,7 @@
 
 	"scripts": {
 		"lint": "eslint . --cache --format node_modules/eslint-friendly-formatter --ext .ts",
-		"tsc": "tsc"
+		"prepublish": "tsc"
 	},
 
 	"pre-commit": {

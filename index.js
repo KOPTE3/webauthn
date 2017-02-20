@@ -2,7 +2,7 @@
 "use strict";
 const minimist = require("minimist");
 let options = process.argv.slice(2);
-let flags = minimist();
+let flags = minimist(options);
 if (flags.verbose) {
     process.env.DEBUG = '@qa*';
 }

@@ -6,7 +6,7 @@ import * as minimist from 'minimist';
 
 let options: string[] = process.argv.slice(2);
 
-let flags: Yoda.Options = minimist();
+let flags: Yoda.Options = minimist(options);
 
 if (flags.verbose) {
 	process.env.DEBUG = '@qa*';
