@@ -3,7 +3,7 @@
 import * as assert from 'assert';
 import deprecated from 'deprecated-decorator';
 import URL from '../utils/url';
-import Page from '../pages';
+import Page, { Query } from '../pages';
 import account from '../utils/account';
 
 let page = new Page();

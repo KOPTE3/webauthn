@@ -8,11 +8,9 @@ import URL from '../utils/url';
 let debug = Debug('@qa:yoda');
 const TIMEOUT: number = 15 * 1000;
 
-namespace Url {
-	export interface Query {
-		ftrs?: string;
-		[query: string]: any;
-	}
+export interface Query {
+	ftrs?: string;
+	[query: string]: any;
 }
 
 interface Cache {
@@ -118,7 +116,7 @@ class PageObject {
 	 * @param {Object} [query] — параметры запроса
 	 * @param {number} [timeout] — время ожидания
 	 */
-	url (url: string, query: Url.Query = {}, timeout: number = TIMEOUT): void {
+	url (url: string, query: Query = {}, timeout: number = TIMEOUT): void {
 		let { features, scripts } = cache;
 
 		if (features.length) {
@@ -143,7 +141,7 @@ class PageObject {
 	 * @param {Object} [query] — параметры запроса
 	 * @returns {boolean}
 	 */
-	open (path?: string, query: Url.Query = {}): boolean {
+	open (path?: string, query: Query = {}): boolean {
 		if (typeof path === 'object' && path !== null) {
 			query = path;
 			path = null;
@@ -181,7 +179,7 @@ class PageObject {
 	 *
 	 * @param {Object} [query] — параметры запроса
 	 */
-	refresh (query: Url.Query = {}): void {
+	refresh (query: Query = {}): void {
 		let url = this.page.getUrl();
 
 		this.url(url, query);

@@ -1,6 +1,6 @@
 'use strict';
 
-interface Phone {
+export interface Phone {
 	index: number,
 	phone: string,
 	head: string,

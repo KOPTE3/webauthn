@@ -5,10 +5,9 @@
 			"./types"
 		],
 
-		"outDir": "cache/",
-
 		"types": [
-			"node"
+			"node",
+			"qa"
 		],
 
 		"lib": [
@@ -21,8 +20,7 @@
 		"moduleResolution": "node",
 		"noImplicitAny": false,
 
-		"declaration": false,
-		"allowJs": true,
+		"declaration": true,
 
 		"allowSyntheticDefaultImports": false,
 		"strictNullChecks": false,
@@ -34,8 +32,6 @@
 
 	"exclude": [
 		"./node_modules",
-//		"./utils",
-//		"./tasks",
 		"./files",
 		"./cache"
 	]
