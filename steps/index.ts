@@ -3,8 +3,9 @@
 import * as assert from 'assert';
 import deprecated from 'deprecated-decorator';
 import URL from '../utils/url';
-import Page, { Query } from '../pages';
+import Page, {Query} from '../pages';
 import account from '../utils/account';
+import {AssertionError} from "assert";
 
 let page = new Page();
 
@@ -12,7 +13,7 @@ let page = new Page();
  * @class Steps
  */
 class Steps {
-	static page;
+	static _page;
 
 	/**
 	 * Авторизация
@@ -53,17 +54,17 @@ class Steps {
 	 * @param {Object} [query]
 	 * @see Page.open
 	 */
-	static open (path, query): AssertionError {
-		let actual = this.page.open(...arguments);
+	static open(path, query): AssertionError {
+		let actual = this._page.open(...arguments);
 
 		// Игнорируем обращения к локаторам если исключение возникает
 		// до вызова степа в самом тесте.
 		try {
-			if (!this.page.locators.container) {
+			if (!this._page.locators.container) {
 				throw new Error('container');
 			}
 		} catch (error) {
-			let { name = '' } = this;
+			let {name = ''} = this;
 
 			let message = `"${name}" не определен основной элемент страницы 
 в "pages/<page>/locators.container"`;
@@ -71,7 +72,7 @@ class Steps {
 			assert.equal(error.name, 'container', message);
 		}
 
-		this.page.wait();
+		this._page.wait();
 
 		assert(actual, 'Не удалось авторизоваться');
 	}
@@ -85,7 +86,7 @@ class Steps {
 	 * @param {number} [timeout]
 	 */
 	@deprecated('Use a non-static method instead')
-	static isActiveUser (email, timeout): AssertionError {
+	static isActiveUser(email, timeout): AssertionError {
 		let actual = account.isActiveUser(email, timeout);
 
 		assert(actual, `Пользователь "${email}" не авторизован`);
@@ -103,8 +104,8 @@ class Steps {
 	 * @see wait
 	 */
 	@deprecated('Use a non-static method instead')
-	static wait (): void {
-		this.page.wait();
+	static wait(): void {
+		this._page.wait();
 	}
 
 	/**
@@ -225,10 +226,10 @@ class Steps {
 	 * @param {Object} size {width, height}
 	 * @param {boolean} confirm — дождаться изменений размеров вьюпорта
 	 */
-	setViewportSize (size: WebdriverIO.Size, confirm?: boolean): void {
-		let { width = 1200, height = 600 } = size;
+	setViewportSize(size: WebdriverIO.Size, confirm?: boolean): void {
+		let {width = 1200, height = 600} = size;
 
-		browser.setViewportSize({ width, height });
+		browser.setViewportSize({width, height});
 
 		if (confirm) {
 			this.waitForViewport(size);
@@ -242,11 +243,9 @@ class Steps {
 	 * @param {number} [timeout]
 	 * @param {boolean} [revert]
 	 */
-	waitForUrl (
-		value: ((url: string) => boolean) | string | RegExp,
-		timeout?: number,
-		revert?: boolean
-	): boolean {
+	waitForUrl(value: ((url: string) => boolean) | string | RegExp,
+	           timeout?: number,
+	           revert?: boolean): boolean {
 		if (typeof value === 'string') {
 			value = URL.format(value);
 		}
@@ -307,13 +306,14 @@ class Steps {
 	 * @param {Object} expected { width, height }
 	 * @returns {boolean}
 	 */
-	waitForViewport (expected): boolean {
+	waitForViewport(expected): boolean {
 		return this.waitUntil(() => {
 			let actual = browser.getViewportSize();
 
 			try {
 				return !assert.deepEqual(actual, expected);
-			} catch (error) {}
+			} catch (error) {
+			}
 		}, browser.options.waitforTimeout, 'Не удалось дождаться требуемого размера вьюпорта');
 	}
 
@@ -333,7 +333,7 @@ class Steps {
 	 *     options.viewportChangePause {number} Устанавливает время ожидания после
 	 *                                          изменения раземеров вьюпорта
 	 */
-	compareDocument (options: WebdriverIO.ScreenshotOptions): AssertionError {
+	compareDocument(options: WebdriverIO.ScreenshotOptions): AssertionError {
 		let images = browser.checkDocument(options),
 			actual = images.every(image => image.isExactSameImage);
 
@@ -347,7 +347,7 @@ class Steps {
 	 * @see browser.saveViewportScreenshot
 	 * @param {WebdriverIO.ScreenshotOptions} options
 	 */
-	compareViewport (options: WebdriverIO.ScreenshotOptions): AssertionError {
+	compareViewport(options: WebdriverIO.ScreenshotOptions): AssertionError {
 		let images = browser.checkViewport(options),
 			actual = images.every(image => image.isExactSameImage);
 
@@ -362,7 +362,7 @@ class Steps {
 	 * @param {string} locator
 	 * @param {WebdriverIO.ScreenshotOptions} options
 	 */
-	compareElement (locator, options: WebdriverIO.ScreenshotOptions): AssertionError {
+	compareElement(locator, options: WebdriverIO.ScreenshotOptions): AssertionError {
 		let images = browser.checkElement(options),
 			actual = images.every(image => image.isExactSameImage);
 
