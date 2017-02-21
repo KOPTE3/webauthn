@@ -5,7 +5,7 @@ import deprecated from 'deprecated-decorator';
 import URL from '../utils/url';
 import Page, {Query} from '../pages';
 import account from '../utils/account';
-import {AssertionError} from "assert";
+import {AssertionError} from 'assert';
 
 let page = new Page();
 
