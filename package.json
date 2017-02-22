@@ -35,6 +35,8 @@
 		]
 	},
 
+	"types": "index.d.ts",
+
 	"bin": {
 		"yoda": "index.js"
 	},

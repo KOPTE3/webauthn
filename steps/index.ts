@@ -53,7 +53,7 @@ class Steps {
 	 * @param {Object} [query]
 	 * @see Page.open
 	 */
-	static open (path, query): AssertionError {
+	static open (path?: string, query?: Query): void {
 		let actual = this.page.open(...arguments);
 
 		// Игнорируем обращения к локаторам если исключение возникает
@@ -85,7 +85,7 @@ class Steps {
 	 * @param {number} [timeout]
 	 */
 	@deprecated('Use a non-static method instead')
-	static isActiveUser (email, timeout): AssertionError {
+	static isActiveUser (email: string, timeout?: number): void {
 		let actual = account.isActiveUser(email, timeout);
 
 		assert(actual, `Пользователь "${email}" не авторизован`);
@@ -333,7 +333,7 @@ class Steps {
 	 *     options.viewportChangePause {number} Устанавливает время ожидания после
 	 *                                          изменения раземеров вьюпорта
 	 */
-	compareDocument (options: WebdriverIO.ScreenshotOptions): AssertionError {
+	compareDocument (options: WebdriverIO.ScreenshotOptions): void {
 		let images = browser.checkDocument(options),
 			actual = images.every(image => image.isExactSameImage);
 
@@ -347,7 +347,7 @@ class Steps {
 	 * @see browser.saveViewportScreenshot
 	 * @param {WebdriverIO.ScreenshotOptions} options
 	 */
-	compareViewport (options: WebdriverIO.ScreenshotOptions): AssertionError {
+	compareViewport (options: WebdriverIO.ScreenshotOptions): void {
 		let images = browser.checkViewport(options),
 			actual = images.every(image => image.isExactSameImage);
 
@@ -362,7 +362,7 @@ class Steps {
 	 * @param {string} locator
 	 * @param {WebdriverIO.ScreenshotOptions} options
 	 */
-	compareElement (locator, options: WebdriverIO.ScreenshotOptions): AssertionError {
+	compareElement (locator, options?: WebdriverIO.ScreenshotOptions): void {
 		let images = browser.checkElement(options),
 			actual = images.every(image => image.isExactSameImage);
 
