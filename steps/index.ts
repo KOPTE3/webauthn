@@ -84,7 +84,7 @@ class Steps {
 	 * @param {string} [email]
 	 * @param {number} [timeout]
 	 */
-	@deprecated('Use a non-static method instead')
+	@deprecated('Use a non-static method')
 	static isActiveUser (email: string, timeout?: number): void {
 		let actual = account.isActiveUser(email, timeout);
 
@@ -102,7 +102,7 @@ class Steps {
 	 * @deprecated
 	 * @see wait
 	 */
-	@deprecated('Use a non-static method instead')
+	@deprecated('Use a non-static method')
 	static wait (): void {
 		this.page.wait();
 	}
@@ -131,7 +131,7 @@ class Steps {
 	 * @param {number} ms
 	 * @see pause
 	 */
-	@deprecated('Use a non-static method instead')
+	@deprecated('Use a non-static method')
 	static pause = browser.pause;
 
 	/**
@@ -146,7 +146,7 @@ class Steps {
 	 * @see refresh
 	 * @param {Object} query
 	 */
-	@deprecated('Use a non-static method instead')
+	@deprecated('Use a non-static method')
 	static refresh = page.refresh;
 
 	/**
@@ -162,7 +162,7 @@ class Steps {
 	 * @deprecated
 	 * @see alertAccept
 	 */
-	@deprecated('Use a non-static method instead')
+	@deprecated('Use a non-static method')
 	static alertAccept = browser.alertAccept;
 
 	/** Подтвердить алерт */
@@ -175,7 +175,7 @@ class Steps {
 	 * @see getAlertText
 	 * @returns {string}
 	 */
-	@deprecated('Use a non-static method instead')
+	@deprecated('Use a non-static method')
 	static getAlertText = browser.alertText;
 
 	/**
@@ -191,7 +191,7 @@ class Steps {
 	 * @deprecated
 	 * @see reload
 	 */
-	@deprecated('Use a non-static method instead')
+	@deprecated('Use a non-static method')
 	static reload = browser.reload;
 
 	/** Сбросить текущую сессию */
@@ -201,7 +201,7 @@ class Steps {
 	 * @deprecated
 	 * @see disableConfirm
 	 */
-	@deprecated('Use a non-static method instead')
+	@deprecated('Use a non-static method')
 	static disableConfirm = page.disableConfirm;
 
 	/**
@@ -216,7 +216,7 @@ class Steps {
 	 * @see setViewportSize
 	 * @param {Object} size
 	 */
-	@deprecated('Use a non-static method instead')
+	@deprecated('Use a non-static method')
 	static setViewportSize = browser.setViewportSize;
 
 	/**
