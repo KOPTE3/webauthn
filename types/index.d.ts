@@ -2,8 +2,8 @@ declare namespace Yoda {
 	type Location = string;
 
 	interface Product {
-		name: string,
-		host: string
+		name: string;
+		host: string;
 	}
 
 	interface Locators {
@@ -12,15 +12,15 @@ declare namespace Yoda {
 	}
 
 	interface Provider {
-		url?: string,
-		name: string,
-		types: AccountManager.Type[],
-		hosts: string[],
+		url?: string;
+		name: string;
+		types: AccountManager.Type[];
+		hosts: string[];
 		protocols: {
 			imap?: {
-				host: string
-				tls?: boolean,
-				port: number
+				host: string;
+				tls?: boolean;
+				port: number;
 			}
 		}
 	}
