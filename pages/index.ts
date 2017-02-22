@@ -1,5 +1,3 @@
-'use strict';
-
 import * as merge from 'deepmerge';
 import * as Debug from 'debug';
 import account from '../utils/account';
@@ -65,7 +63,7 @@ class PageObject {
 	 * @type {WebdriverIO.Client<void>}
 	 */
 	get page (): WebdriverIO.Client<void> {
-		return browser;
+		return global.browser;
 	}
 
 	/**
@@ -106,7 +104,13 @@ class PageObject {
 
 		debug('wait for the required element', container);
 
-		this.page.waitForVisible(container);
+		let __page = this.page;
+		if (typeof __page === 'undefined') {
+			console.log(Reflect.getOwnPropertyDescriptor(this, 'page'));
+			__page = global.browser;
+		}
+
+		__page.waitForVisible(container);
 	}
 
 	/**
