@@ -1,5 +1,3 @@
-'use strict';
-
 import * as assert from 'assert';
 import deprecated from 'deprecated-decorator';
 import URL from '../utils/url';

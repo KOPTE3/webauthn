@@ -1,3 +1,7 @@
+/// <reference types="@qa/account-manager" />
+/// <reference types="@types/webdriverio" />
+/// <reference types="@types/qa" />
+
 declare namespace Yoda {
 	type Location = string;
 

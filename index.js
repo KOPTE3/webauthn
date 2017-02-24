@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const minimist = require("minimist");
 let options = process.argv.slice(2);
 let flags = minimist(options);

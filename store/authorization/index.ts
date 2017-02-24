@@ -35,7 +35,7 @@ export default {
 	credentials (
 		type: string = 'basic',
 		options: AccountManager.Credentials = { },
-		timeout: number
+		timeout?: number
 	): AccountManager.Credentials {
 		options = Object.assign({ domain: 'mail.ru', type }, options);
 
