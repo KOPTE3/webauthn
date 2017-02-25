@@ -83,7 +83,7 @@ class PageObject {
 	 * @returns {WebdriverIO.Client<string>}
 	 */
 	getContainerElement (): WebdriverIO.ElementLink {
-		return this.page.element(this.locators.container);
+		return browser.element(this.locators.container);
 	}
 
 	/**
@@ -127,8 +127,8 @@ class PageObject {
 
 		// Выполнить требуемые скрипты
 		scripts.forEach(file => {
-			this.page.timeouts('script', TIMEOUT);
-			this.page.execute(file);
+			browser.timeouts('script', TIMEOUT);
+			browser.execute(file);
 		});
 	}
 
@@ -178,7 +178,7 @@ class PageObject {
 	 * @param {Object} [query] — параметры запроса
 	 */
 	refresh (query: Query = {}): void {
-		let url = this.page.getUrl();
+		let url = browser.getUrl();
 
 		this.url(url, query);
 	}
@@ -198,7 +198,7 @@ class PageObject {
 	 * @returns {boolean}
 	 */
 	isVisible (): boolean {
-		return this.page.isVisible(this.locators.container);
+		return browser.isVisible(this.locators.container);
 	}
 
 	/**

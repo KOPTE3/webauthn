@@ -51,7 +51,7 @@ class Steps {
 	 * @param {Object} [query]
 	 * @see Page.open
 	 */
-	static open (path?: string, query?: Query): void {
+	static open (path?: string | Query, query?: Query): void {
 		let actual = this.page.open(...arguments);
 
 		// Игнорируем обращения к локаторам если исключение возникает
