@@ -89,7 +89,7 @@ class PageObject {
 	/**
 	 * Дождаться появления требуемого элемента
 	 */
-	wait (): void {
+	wait (ms?: number, reverse: boolean = false): void {
 		let container = null;
 
 		// Игнорируем обращения к локаторам если исключение возникает
@@ -104,7 +104,7 @@ class PageObject {
 
 		debug('wait for the required element', container);
 
-		browser.waitForVisible(container);
+		browser.waitForVisible(container, ms, reverse);
 	}
 
 	/**
@@ -135,11 +135,11 @@ class PageObject {
 	/**
 	 * Открытие страницы
 	 *
-	 * @param {string} [path] - путь, который нужно подставить к location
+	 * @param {string|Query} [path] - путь, который нужно подставить к location
 	 * @param {Object} [query] — параметры запроса
 	 * @returns {boolean}
 	 */
-	open (path?: string, query: Query = {}): boolean {
+	open (path?: string | Query, query: Query = {}): boolean {
 		if (typeof path === 'object' && path !== null) {
 			query = path;
 			path = null;
@@ -149,7 +149,7 @@ class PageObject {
 			path = this.location;
 		}
 
-		this.url(path, query);
+		this.url(path as string, query);
 
 		// Проверяем авторизацию используя портальное API
 		if (cache.session) {

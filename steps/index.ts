@@ -10,7 +10,12 @@ let page = new Page();
  * @class Steps
  */
 class Steps {
-	static page;
+	/**
+	 * TODO: нужно проработать концепцию по удалению статических свойств
+	 * и уходу от использования this.page
+	 */
+	static page: Page
+	page: Page;
 
 	/**
 	 * Авторизация
@@ -47,12 +52,12 @@ class Steps {
 	/**
 	 * Открыть страницу
 	 *
-	 * @param {string} [path]
+	 * @param {string|Query} [path]
 	 * @param {Object} [query]
 	 * @see Page.open
 	 */
 	static open (path?: string | Query, query?: Query): void {
-		let actual = this.page.open(...arguments);
+		let actual = this.page.open(path, query);
 
 		// Игнорируем обращения к локаторам если исключение возникает
 		// до вызова степа в самом тесте.
@@ -101,14 +106,16 @@ class Steps {
 	 * @see wait
 	 */
 	@deprecated('Use a non-static method')
-	static wait (): void {
+	static wait (ms?: number, reverse: boolean = false): void {
 		this.page.wait();
 	}
 
 	/**
 	 * Дождатся загрузки страницы
 	 */
-	wait = page.wait;
+	wait (ms?: number, reverse: boolean = false) {
+		this.page.wait(ms, reverse);
+	};
 
 	/**
 	 * Локаторы
@@ -130,7 +137,9 @@ class Steps {
 	 * @see pause
 	 */
 	@deprecated('Use a non-static method')
-	static pause = browser.pause;
+	static pause (ms: number) {
+		browser.pause(ms);
+	};
 
 	/**
 	 * Откладывает выполнение следюущего шага на заданное время
@@ -145,14 +154,18 @@ class Steps {
 	 * @param {Object} query
 	 */
 	@deprecated('Use a non-static method')
-	static refresh = page.refresh;
+	static refresh (query: Query = {}) {
+		page.refresh(query);
+	};
 
 	/**
 	 * Перезагружает текущую страницу
 	 *
 	 * @param {Object} [query] — параметры запроса
 	 */
-	refresh = page.refresh;
+	refresh (query: Query = {}) {
+		page.refresh(query);
+	};
 
 	/**
 	 * Принять alert
@@ -161,7 +174,9 @@ class Steps {
 	 * @see alertAccept
 	 */
 	@deprecated('Use a non-static method')
-	static alertAccept = browser.alertAccept;
+	static alertAccept () {
+		browser.alertAccept();
+	};
 
 	/** Подтвердить алерт */
 	alertAccept = browser.alertAccept;
@@ -174,7 +189,9 @@ class Steps {
 	 * @returns {string}
 	 */
 	@deprecated('Use a non-static method')
-	static getAlertText = browser.alertText;
+	static getAlertText (text?: string) {
+		browser.alertText(text);
+	};
 
 	/**
 	 * Получить текст алерта
@@ -190,7 +207,9 @@ class Steps {
 	 * @see reload
 	 */
 	@deprecated('Use a non-static method')
-	static reload = browser.reload;
+	static reload () {
+		browser.reload()
+	};
 
 	/** Сбросить текущую сессию */
 	reload = browser.reload;
@@ -200,7 +219,9 @@ class Steps {
 	 * @see disableConfirm
 	 */
 	@deprecated('Use a non-static method')
-	static disableConfirm = page.disableConfirm;
+	static disableConfirm () {
+		page.disableConfirm();
+	};
 
 	/**
 	 * Выключает на текущей странице обработчик onbeforeunload
@@ -215,20 +236,24 @@ class Steps {
 	 * @param {Object} size
 	 */
 	@deprecated('Use a non-static method')
-	static setViewportSize = browser.setViewportSize;
+	static setViewportSize (size: WebdriverIO.Size, type: boolean = true) {
+		browser.setViewportSize(size, type);
+	};
 
 	/**
 	 * Установить размер вьюпорта
 	 *
 	 * @param {Object} size {width, height}
-	 * @param {boolean} confirm — дождаться изменений размеров вьюпорта
+	 * @param {boolean} type:
+	 *                      true — изменить размеров вьюпорта
+	 *                      false — изменить размер окна
 	 */
-	setViewportSize (size: WebdriverIO.Size, confirm?: boolean): void {
+	setViewportSize (size: WebdriverIO.Size, type: boolean = true): void {
 		let { width = 1200, height = 600 } = size;
 
 		browser.setViewportSize({ width, height });
 
-		if (confirm) {
+		if (type) {
 			this.waitForViewport(size);
 		}
 	}
@@ -294,10 +319,12 @@ class Steps {
 	/**
 	 * Перейти по урлу
 	 *
-	 * @param {string} url — url
+	 * @param {string|Query} url — url
 	 * @param {Object} [query] — параметры запроса
 	 */
-	url = page.url;
+	url (url: string, query: Query = {}, timeout?: number) {
+		this.page.url(url, query, timeout);
+	}
 
 	/**
 	 * Дожидается заданных размеров вьюпорта
