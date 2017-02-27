@@ -41,3 +41,4 @@ npm-debug.log
 phantomjsdriver.log
 cache
 config.local.js
+!types/*.d.ts
