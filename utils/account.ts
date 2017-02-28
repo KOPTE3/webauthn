@@ -1,5 +1,5 @@
 import * as Debug from 'debug';
-import AccountManager from '@qa/account-manager';
+import AccountManager, { Credentials, RegisterOptions } from '@qa/account-manager';
 import authStore from '../store/authorization';
 import providers from '../store/authorization/providers';
 import URL from './url';
@@ -17,7 +17,7 @@ export default {
 	 * @param {Object} [options] — авторизационые данные
 	 * @returns {boolean}
 	 */
-	session (type: string = 'basic', options: AccountManager.Credentials = {}): boolean {
+	session (type: string = 'basic', options: Credentials = {}): boolean {
 		let account = AccountManager.Hooks(),
 			service = 'mail.ru';
 
@@ -52,10 +52,7 @@ export default {
 	 * @param {Object} [options] — авторизационые данные
 	 * @returns {AccountManager.Credentials}
 	 */
-	register (
-		type?: string,
-		options: AccountManager.RegisterOptions = {}
-	): AccountManager.Credentials {
+	register (type?: string, options: RegisterOptions = {}): Credentials {
 		let account = AccountManager.Hooks();
 
 		return browser.waitForPromise(() => {

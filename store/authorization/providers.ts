@@ -1,5 +1,3 @@
-'use strict';
-
 type ProviderList = Yoda.Provider[];
 
 /** Набор методов для работы с данными почтовых провайдеров */

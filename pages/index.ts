@@ -1,5 +1,6 @@
 import * as merge from 'deepmerge';
 import * as Debug from 'debug';
+import { Credentials } from '@qa/account-manager';
 import account from '../utils/account';
 import URL from '../utils/url';
 
@@ -33,7 +34,7 @@ class PageObject {
 	 * @param {string} [type] — тип авторизации
 	 * @param {Object} [credentials] — авторизационые данные
 	 */
-	static auth (type?: string, credentials?: AccountManager.Credentials): void {
+	static auth (type?: string, credentials?: Credentials): void {
 		cache.session = account.session(type, credentials);
 	}
 

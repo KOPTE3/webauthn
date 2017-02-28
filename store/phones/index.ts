@@ -1,5 +1,3 @@
-'use strict';
-
 export interface Phone {
 	index: number,
 	phone: string,

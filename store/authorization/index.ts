@@ -1,6 +1,5 @@
-
 import * as Debug from 'debug';
-import AccountManager from '@qa/account-manager';
+import AccountManager, { Credentials } from '@qa/account-manager';
 import { password } from '@qa/account-manager/utils/user';
 
 let debug = Debug('@qa:yoda');
@@ -32,11 +31,7 @@ export default {
 	 *    user_agent, sex, last_name
 	 * }
 	 */
-	credentials (
-		type: string = 'basic',
-		options: AccountManager.Credentials = { },
-		timeout?: number
-	): AccountManager.Credentials {
+	credentials (type: string = 'basic', options: Credentials = {}, timeout?: number): Credentials {
 		options = Object.assign({ domain: 'mail.ru', type }, options);
 
 		return browser.waitForPromise(() => {

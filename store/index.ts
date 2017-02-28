@@ -1,5 +1,3 @@
-'use strict';
-
 export interface Products {
 	[name: string]: Yoda.Product;
 }
