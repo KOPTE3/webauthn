@@ -45,8 +45,9 @@ config.local.js
 # --------------------------
 # d.ts
 # --------------------------
+
 *.js
 *.js.map
 *.d.ts
 !/index.d.ts
-!types/*.d.ts
+!/types/*.d.ts
