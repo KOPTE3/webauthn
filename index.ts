@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /// <reference path="./types/index.d.ts" />
 
 import * as minimist from 'minimist';

@@ -6,8 +6,7 @@
 		],
 
 		"types": [
-			"node",
-			"qa"
+			"node"
 		],
 
 		"lib": [
@@ -18,13 +17,11 @@
 		"target": "es2017",
 		"module": "commonjs",
 		"moduleResolution": "node",
-		"noImplicitAny": false,
-
-		"declaration": true,
-
+		"noImplicitAny": true,
+		"noImplicitThis": false,
+		"declaration": false,
 		"allowSyntheticDefaultImports": false,
 		"strictNullChecks": false,
-
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"sourceMap": true

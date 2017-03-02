@@ -122,7 +122,7 @@ export default {
 			try {
 				browser.timeouts('script', timeout);
 
-				browser.executeAsync(function (user, resolve) {
+				let {value} = browser.executeAsync(function (user: string, resolve) {
 					if (window.__PH && window.__PH.logoutAccount) {
 						window.__PH.logoutAccount(user, function (result) {
 							resolve(result.status === 'ok');

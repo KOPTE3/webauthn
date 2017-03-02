@@ -292,7 +292,7 @@ export default {
 	 * @returns {Array}
 	 */
 	top (type: AccountManager.Type, project: string = 'mail.ru'): string[] {
-		let providers = {
+		let providers: any = {
 			external: {
 				'my.com': [
 					'libero.it',
@@ -340,7 +340,7 @@ export default {
 	 *
 	 * @param {...Array} providers — список провайдеров
 	 */
-	set (...providers) {
+	set (...providers: Yoda.Provider[]) {
 		this.list.push(...providers);
 	},
 
@@ -352,7 +352,7 @@ export default {
 	 */
 	get<T> (providers: string[] | void): Array<T> {
 		if (providers) {
-			return this.list.filter(provider => {
+			return this.list.filter((provider: Yoda.Provider) => {
 				if (providers.includes(provider.name)) {
 					return provider;
 				}
@@ -369,7 +369,7 @@ export default {
 	 * @returns {Object}
 	 */
 	find (domain: string): Yoda.Provider {
-		let provider = this.list.find(provider => {
+		let provider = this.list.find((provider: Yoda.Provider) => {
 			for (let alias of provider.hosts) {
 				if (alias === domain) {
 					return true;
@@ -387,7 +387,7 @@ export default {
 	 * @returns {Array}
 	 */
 	filter<T> (predicate: (provider: string) => boolean): Array<T> {
-		return this.list.filter(provider => {
+		return this.list.filter((provider: string) => {
 			return predicate(provider);
 		});
 	}

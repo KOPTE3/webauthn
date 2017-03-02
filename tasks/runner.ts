@@ -13,6 +13,10 @@ interface Service {
 	data: Yoda.Options;
 }
 
+interface Suites {
+	[name: string]: string[];
+}
+
 let details = {
 	/**
 	 * Вывод логотипа
@@ -93,7 +97,7 @@ let details = {
 			debug('filter:', grep);
 		}
 
-		let suites = {};
+		let suites: Suites = {};
 
 		for (let [suite, tests] of Object.entries(data.suites)) {
 			if (tests.length) {

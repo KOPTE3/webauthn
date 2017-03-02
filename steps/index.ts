@@ -332,7 +332,7 @@ class Steps {
 	 * @param {Object} expected { width, height }
 	 * @returns {boolean}
 	 */
-	waitForViewport (expected): boolean {
+	waitForViewport (expected: WebdriverIO.Size): boolean {
 		return this.waitUntil(() => {
 			let actual = browser.getViewportSize();
 
@@ -387,8 +387,8 @@ class Steps {
 	 * @param {string} locator
 	 * @param {WebdriverIO.ScreenshotOptions} options
 	 */
-	compareElement (locator, options?: WebdriverIO.ScreenshotOptions): void {
-		let images = browser.checkElement(options),
+	compareElement (locator: string, options?: WebdriverIO.ScreenshotOptions): void {
+		let images = browser.checkElement(locator, options),
 			actual = images.every(image => image.isExactSameImage);
 
 		assert(actual, 'Не найдено соответствие элемента с ожидаемым изображением');
