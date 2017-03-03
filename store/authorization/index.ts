@@ -1,6 +1,6 @@
 import * as Debug from 'debug';
 import AccountManager, { Credentials } from '@qa/account-manager';
-import { password } from '@qa/account-manager/utils/user';
+import User from '@qa/account-manager/utils/user';
 
 let debug = Debug('@qa:yoda');
 let account = new AccountManager();
@@ -12,7 +12,7 @@ let account = new AccountManager();
  */
 export default {
 	/** Пароль, который следует использовать */
-	password,
+	password: User.password,
 
 	/**
 	 * Возвращает авторизационные данные указанного типа
