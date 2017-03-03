@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "7.0.0-rc.21",
+	"version": "7.0.0-rc.22",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
@@ -27,7 +27,7 @@
 	},
 
 	"pre-commit": {
-		"silent": true,
+		"silent": false,
 
 		"run": [
 			"lint"
