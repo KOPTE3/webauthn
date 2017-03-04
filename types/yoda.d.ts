@@ -10,7 +10,7 @@ declare namespace Yoda {
 	}
 
 	interface Locators {
-		container: string;
+		container: string|((field: any) => string);
 		[key: string]: any;
 	}
 
