@@ -1,5 +1,5 @@
+#!/usr/bin/env node
 /// <reference path="./types/index.d.ts" />
-
 import * as minimist from 'minimist';
 
 let options: string[] = process.argv.slice(2);
