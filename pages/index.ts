@@ -1,6 +1,6 @@
 import * as merge from 'deepmerge';
 import * as Debug from 'debug';
-import { Credentials } from '@qa/account-manager';
+import {Credentials} from '@qa/account-manager';
 import account from '../utils/account';
 import URL from '../utils/url';
 
@@ -89,18 +89,25 @@ class PageObject {
 
 	/**
 	 * Дождаться появления требуемого элемента
+	 * @param {Boolean} [reverse=false]
+	 * @param {String} [containerLocator] - указать необходимый локатор самостоятельно
+	 * @param {Number} [ms]
 	 */
-	wait (ms?: number, reverse: boolean = false): void {
+	wait (reverse: boolean = false, containerLocator?: string, ms?: number): void {
 		let container = null;
 
-		// Игнорируем обращения к локаторам если исключение возникает
-		// до вызова степа в самом тесте
-		try {
-			({ container } = this.locators);
-		} catch (error) {
-			if (error.name !== 'TypeError') {
-				throw error;
+		if (!containerLocator) {
+			// Игнорируем обращения к локаторам если исключение возникает
+			// до вызова степа в самом тесте
+			try {
+				({container} = this.locators);
+			} catch (error) {
+				if (error.name !== 'TypeError') {
+					throw error;
+				}
 			}
+		} else {
+			container = containerLocator;
 		}
 
 		debug('wait for the required element', container);
