@@ -19,7 +19,7 @@
 		"moduleResolution": "node",
 		"noImplicitAny": true,
 		"noImplicitThis": false,
-		"declaration": false,
+		"declaration": true,
 		"allowSyntheticDefaultImports": false,
 		"strictNullChecks": false,
 		"emitDecoratorMetadata": true,
