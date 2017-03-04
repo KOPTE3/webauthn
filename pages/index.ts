@@ -93,7 +93,7 @@ class PageObject {
 	 * @param {String} [containerLocator] - указать необходимый локатор самостоятельно
 	 * @param {Number} [ms]
 	 */
-	wait (reverse: boolean = false, containerLocator?: string, ms?: number): void {
+	wait (reverse: boolean = false, containerLocator: string|null = null, ms?: number): void {
 		let container = null;
 
 		if (!containerLocator) {

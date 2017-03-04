@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import deprecated from 'deprecated-decorator';
 import URL from '../utils/url';
-import Page, { Query } from '../pages';
+import Page, {Query} from '../pages';
 import account from '../utils/account';
 
 let page = new Page();
@@ -114,7 +114,7 @@ class Steps {
 	 * Дождатся загрузки страницы
 	 */
 	wait (ms?: number, reverse: boolean = false) {
-		this.page.wait(ms, reverse);
+		this.page.wait(reverse, null, ms);
 	};
 
 	/**
