@@ -41,4 +41,6 @@ npm-debug.log
 phantomjsdriver.log
 cache
 config.local.js
-!types/*.d.ts
+*.d.ts
+!/index.d.ts
+!/types/*.d.ts
