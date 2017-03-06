@@ -152,15 +152,21 @@ export default {
 		try {
 			browser.timeouts('script', timeout);
 
-			let { value } = browser.executeAsync(function (user, resolve) {
-				if (window.__PH) {
-					if (window.__PH.activeUser() === user) {
-						resolve(true);
+			browser.waitUntil(() => {
+				let { value } = browser.execute(function (user) {
+					if (window.__PH) {
+						if (window.__PH.activeUser() === user) {
+							return true;
+						}
 					}
-				}
-			}, email);
 
-			return value;
+					return false;
+				}, email);
+
+				return value;
+			});
+
+			return true;
 		} catch (error) {
 			throw new Error(`Could not detect user authorization ${email}`);
 		}
