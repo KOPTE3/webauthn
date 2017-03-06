@@ -44,3 +44,4 @@ config.local.js
 *.d.ts
 !/index.d.ts
 !/types/*.d.ts
+!/index.js

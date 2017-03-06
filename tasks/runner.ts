@@ -60,7 +60,6 @@ let details = {
 				case 'verbose':
 					break;
 
-
 				// Вывод логов селениума
 				case 'log':
 					service.data.logLevel = (value === true) ? 'verbose' : value;
