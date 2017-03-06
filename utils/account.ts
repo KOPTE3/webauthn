@@ -75,7 +75,7 @@ export default {
 			let cookie = account.get('cookie');
 
 			if (!cookie.length) {
-				throw new Error('COOKIE_NOT_FOUND');
+				throw new Error('The required cookie could not be found');
 			}
 
 			browser.setCookies(cookie);
@@ -149,19 +149,14 @@ export default {
 			email = account.get('email');
 		}
 
-		function checkInBrowser(user: string) {
-			if (!window.__PH) {
-				return false;
-			}
+		return browser.waitUntil(() => {
+          	let { value } = browser.execute((user: string) => {
+                return window.__PH && window.__PH.activeUser() === user;
+            }, email);
 
-			return window.__PH.activeUser() === user;
-		}
-
-		return browser.waitUntil(
-			() => browser.execute(checkInBrowser, email).value,
-			timeout,
-			`Could not detect user authorization ${email}`
-		);
+          return value;
+        },
+		timeout, `Could not detect user authorization ${email}`);
 	},
 
 	/**
