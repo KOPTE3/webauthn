@@ -74,7 +74,7 @@ class PageObject {
 	 * @property {Object} y
 	 * @returns {Object}
 	 */
-	extend <T>(x: T, y: T, options?: any): T {
+	extend <T>(x: T, y: any, options?: any): T {
 		return merge(x, y, options);
 	}
 
