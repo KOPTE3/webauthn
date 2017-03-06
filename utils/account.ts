@@ -149,27 +149,19 @@ export default {
 			email = account.get('email');
 		}
 
-		try {
-			browser.timeouts('script', timeout);
+		function checkInBrowser(user: string) {
+			if (!window.__PH) {
+				return false;
+			}
 
-			browser.waitUntil(() => {
-				let { value } = browser.execute(function (user) {
-					if (window.__PH) {
-						if (window.__PH.activeUser() === user) {
-							return true;
-						}
-					}
-
-					return false;
-				}, email);
-
-				return value;
-			});
-
-			return true;
-		} catch (error) {
-			throw new Error(`Could not detect user authorization ${email}`);
+			return window.__PH.activeUser() === user;
 		}
+
+		return browser.waitUntil(
+			() => browser.execute(checkInBrowser, email).value,
+			timeout,
+			`Could not detect user authorization ${email}`
+		);
 	},
 
 	/**
