@@ -150,13 +150,13 @@ export default {
 		}
 
 		return browser.waitUntil(() => {
-          	let { value } = browser.execute((user: string) => {
-                return window.__PH && window.__PH.activeUser() === user;
-            }, email);
+				let {value} = browser.execute((user: string) => {
+					return window.__PH && window.__PH.activeUser() === user;
+				}, email);
 
-          return value;
-        },
-		timeout, `Could not detect user authorization ${email}`);
+				return value;
+			},
+			timeout, `Could not detect user authorization ${email}`);
 	},
 
 	/**

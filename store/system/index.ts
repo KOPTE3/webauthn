@@ -56,11 +56,11 @@ export default {
 	 * @type {string} — name, version, layout, os, description
 	 */
 	get agent (): string {
-		let userAgent = browser.execute(function () {
+		let { value } = browser.execute(function () {
 			return window.navigator.userAgent;
 		});
 
-		return platform.parse(userAgent);
+		return platform.parse(value);
 	},
 
 	/**
