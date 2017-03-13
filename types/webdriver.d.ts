@@ -129,7 +129,7 @@ declare namespace WebdriverIO {
 		): void;
 
 		waitForPromise<T>(
-			promise: () => Promise<T> | Promise<T>,
+			promise: () => Promise<any> | WebdriverIO.Client<WebdriverIO.RawResult<any>> | WebdriverIO.RawResult<any>,
 			timeout?: number,
 			message?: string
 		): any;
