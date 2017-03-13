@@ -112,7 +112,7 @@ declare namespace WebdriverIO {
 
 		hasAlert(): boolean;
 
-		waitAlert(
+		waitForAlert(
 			timeout?: number,
 			message?: string,
 			reverse?: boolean
