@@ -296,7 +296,7 @@ class Steps {
 	/**
 	 * Ожидаем алерт
 	 */
-	waitAlert = browser.waitAlert;
+	waitForAlert = browser.waitForAlert;
 
 	/**
 	 * Дождаться выполнения какого-либо действия
