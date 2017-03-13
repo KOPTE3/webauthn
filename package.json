@@ -43,7 +43,6 @@
 	"dependencies": {
 		"@qa/account-manager": "^1.8.6",
 		"@qa/file-service": "^0.0.1",
-		"@qa/wdio-api": "^0.10.2",
 		"@qa/wdio-utils": "^0.7.0",
 
 		"@types/debug": "^0.0.29",
@@ -62,7 +61,8 @@
 	},
 
 	"peerDependencies": {
-		"webdriverio": "^4.x"
+		"webdriverio": "^4.x",
+		"wdio-yoda-api-service": "^0.x"
 	},
 
 	"devDependencies": {
