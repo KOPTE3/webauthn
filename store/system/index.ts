@@ -53,7 +53,7 @@ export default {
 	/**
 	 * Получение данных о браузере и его окружении из UA
 	 *
-	 * @type {string} — name, version, layout, os, description
+	 * @type {Platform} — name, version, layout, os, description
 	 */
 	get agent (): Platform {
 		let { value } = browser.execute(function () {
