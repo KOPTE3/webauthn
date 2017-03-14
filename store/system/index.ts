@@ -55,7 +55,7 @@ export default {
 	 *
 	 * @type {string} — name, version, layout, os, description
 	 */
-	get agent (): string {
+	get agent (): PlatformStatic {
 		let { value } = browser.execute(function () {
 			return window.navigator.userAgent;
 		});
