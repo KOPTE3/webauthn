@@ -34,15 +34,15 @@ npm install @qa/yoda
 
 **nvm**
 
-Для работы с этим пакетом требуется node версии не ниже 6.2.0! <br />
+Для работы с этим пакетом требуется node версии не ниже 7.0.0! <br />
 Поскольку обновить node и npm на всех машинах до требуемой версии весьма проблематично — используйте [nvm](https://github.com/creationix/nvm):
 
 ```bash
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | bash
 source ~/.bash{rc,_profile}
-nvm install 6
-nvm use 6
-nvm alias default 6
+nvm install 7
+nvm use 7
+nvm alias default 7
 ```
 
 **java**
@@ -219,8 +219,8 @@ Run -> Debug... -> Edit Configurations... -> Add New Configuration -> Node.js Re
 
 Открытие требуемого представления
 
-```js
-let Messages = require('../../steps/messages');
+```ts
+import Messages from '../../steps/messages';
 
 describe(() => {
 	it ('Открытие страницы списка писем', => {
@@ -246,7 +246,7 @@ Messages.open({
 Включение фич:
 
 ```js
-let Messages = require('../../steps/messages');
+import Messages from '../../steps/messages';
 
 describe(() => {
 	beforeEach(() => {
@@ -278,7 +278,7 @@ Messages.features([
 Регистрация нового пользователя
 
 ```js
-let Messages = require('../../steps/messages');
+import Messages from '../../steps/messages';
 
 describe(() => {
 	let { username, password } = Messages.register('basic');
@@ -293,7 +293,7 @@ describe(() => {
 Авторизация
 
 ```js
-let Messages = require('../../steps/messages');
+import Messages from '../../steps/messages';
 
 describe(() => {
 	Messages.auth();
@@ -323,7 +323,7 @@ Messages.auth('basic', {
 Получение авторизационных сведений текущего аккаунтпа
 
 ```js
-let authorization = require('@qa/yoda/store/authorization');
+import authorization from '@qa/yoda/store/authorization';
 
 authorization.account;
 ```
@@ -336,7 +336,7 @@ authorization.account;
 Получение авторизационных данные указанного типа
 
 ```js
-let authorization = require('@qa/yoda/store/authorization');
+import authorization from '@qa/yoda/store/authorization';
 
 authorization.credentials('external');
 
@@ -356,7 +356,7 @@ authorization.credentials('external', {
 ВНИМАНИЕ: Данные учетные записи разрешается использтвать только в тестах, которые не изменяют состояние аккаунта (например, авторизация). Во всех остальных случаях — используейте store/authorization.credentials
 
 ```js
-let accounts = require('@qa/yoda/store/authorization/accounts');
+import accounts '@qa/yoda/store/authorization/accounts';
 
 accounts.get('gmail.com', ['pdd']);
 ```
@@ -416,8 +416,8 @@ options.viewportChangePause {number} Устанавливает время ож�
 
 **config.js**
 
-```js
-let VisualRegressionCompare = require('wdio-visual-regression-service/compare');
+```ts
+import * as VisualRegressionCompare from 'wdio-visual-regression-service/compare';
 
 {
 	/** Конфигурация для сервиса visual-regression */
@@ -447,10 +447,8 @@ let VisualRegressionCompare = require('wdio-visual-regression-service/compare');
 **cases/messages/TESTMAIL-34047.js**
 
 ```js
-'use strict';
-
-let Messages = require('../../steps/messages');
-let { dimensions, config } = require('../../store');
+import Messages from '../../steps/messages';
+import { dimensions, config } from '../../store';
 
 let TIMEOUT = 30 * (60 * 1000);
 let messages = new Messages();
@@ -479,13 +477,11 @@ describe('Темы. Общее соответствие оформления н�
 
 **cases/messages/index.js**
 
-```js
-'use strict';
+```ts
+import * as assert from 'assert'
 
-let assert = require('assert');
-
-let MailMessagesSteps = require('@qa/yoda-e.mail.ru/steps/messages');
-let MessagesPage = require('../../pages/messages');
+import MailMessagesSteps from '@qa/yoda-e.mail.ru/steps/messages';
+import MessagesPage from '../../pages/messages';
 
 let page = new MessagesPage();
 
@@ -511,15 +507,13 @@ class MessagesSteps extends MailMessagesSteps {
 	}
 }
 
-module.exports = MessagesSteps;
+export default MessagesSteps;
 ```
 
 **pages/messages/index.js**
 
 ```js
-'use strict';
-
-let MailMessagesPages = require('@qa/yoda-e.mail.ru/pages/messages');
+import MailMessagesPages from '@qa/yoda-e.mail.ru/pages/messages';
 
 /** Модуль для работы с представлением */
 class MessagesPage extends MailMessagesPages {
@@ -544,7 +538,7 @@ class MessagesPage extends MailMessagesPages {
 	}
 }
 
-module.exports = MessagesPage;
+export default MessagesPage;
 ```
 
 ### Асинхронные тесты
@@ -580,7 +574,6 @@ let value  = browser.waitForPromise(() => {
 
 ```js
 let { value } = browser.call(() => {
-
 	return browser.executeAsync(function (name, value, resolve) {
 		require(['features'], function (features) {
 			var actual = features.use(name, value);
@@ -622,7 +615,7 @@ browser.waitUntil(function async () {
 Для работы с файлами, которые хранятся на диске используйте системное хранилище:
 
 ```js
-let system = require('@qa/yoda/store/system');
+import system from '@qa/yoda/store/system';
 
 system.file('имя_файла');
 ```
@@ -698,12 +691,10 @@ utils
 Пример тест-кейса:
 
 ```js
-'use strict';
+import * as assert from 'assert'
 
-let assert = require('assert');
-
-let login = require('../../steps/login');
-let form = require('../../steps/login/form');
+import login from '../../steps/login';
+import form from '../../steps/login/form';
 
 describe(() => {
 	it('Проверка отображения элементов на форме авторизации', () => {
@@ -718,9 +709,7 @@ describe(() => {
 Пример теста с авторизацией:
 
 ```js
-'use strict';
-
-let Messages = require('../../steps/messages');
+import Messages from '../../steps/messages';
 
 describe(() => {
 	it('Проверка перехода на страницу списка писем.', () => {
@@ -738,10 +727,8 @@ describe(() => {
 Пример представления:
 
 ```js
-'use strict';
-
-let assert = require('assert');
-let PageObject = require('../../pages');
+import * as assert from 'assert'
+import PageObject from '../../pages';
 
 class Login extends PageObject {
 	constructor () {
@@ -759,7 +746,7 @@ class Login extends PageObject {
 	}
 }
 
-module.exports = Login;
+export default Login;
 ```
 
 #### steps
@@ -767,13 +754,11 @@ module.exports = Login;
 Пример степов:
 
 ```js
-'use strict';
+import * as assert from 'assert'
+import providers from '@qa/yoda/store/authorization/providers';
 
-let assert = require('assert');
-let providers = require('@qa/yoda/store/authorization/providers');
-
-let Steps = require('../../steps');
-let LoginForm = require('../../pages/login/form');
+import Steps from '../../steps';
+import LoginForm from '../../pages/login/form';
 
 class LoginFormSteps extends Steps {
 	constructor () {
@@ -812,7 +797,7 @@ class LoginFormSteps extends Steps {
 	}
 }
 
-module.exports = LoginFormSteps;
+export default LoginFormSteps;
 ```
 
 #### store
@@ -832,12 +817,10 @@ module.exports = LoginFormSteps;
 **store/authorization/providers.js**
 
 ```js
-'use strict';
-
-let Store = require('../../store');
+import Store from '../../store';
 
 /** Модуль для работы с данными почтовых провайдеров */
-module.exports = {
+export default {
 	/**
 	 * Cписок провайдеров
 	 *
@@ -889,12 +872,10 @@ module.exports = {
 **store/login/providers.js**
 
 ```js
-'use strict';
-
-let authProviders = require('@qa/yoda/store/authorization/providers');
+import authProviders from '@qa/yoda/store/authorization/providers';
 
 /** Модуль для работы с данными почтовых провайдеров на странице логина */
-module.exports = {
+export default {
 	/**
 	 * Получить активный список провайдеров (пиктограммы)
 	 *
@@ -1045,30 +1026,4 @@ this.locators.button.vk
 
 ```
 body .b-btn-social__social__link_vk
-```
-
-
-### TypeScript
-
-Для данного проекта автоматически генерируются d.ts файлы из jsdoc.
-
-#### Использование
-
-Для того чтобы ими воспользоваться необходимо в своем tsconfig.json указать прямую ссылку на d.ts файл:
-
-```json
-{
-   "include": [
-      "node_modules/@qa/yoda/types/index.d.ts"
-   ]
-}
-```
-
-#### Генерация
-
-d.ts генерируется автоматически при публикации проекта. 
-В целях отладки или просто ради любопытства можно сгенерировать их вручную запустив команду
-
-```sh
-npm run jsdoc2dts
 ```
