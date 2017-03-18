@@ -26,7 +26,7 @@ let cache: Cache = {
 
 /**
  * @class PageObject
- **/
+ */
 class PageObject {
 	/**
 	 * Авторизация
