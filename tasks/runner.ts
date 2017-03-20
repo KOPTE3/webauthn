@@ -73,13 +73,6 @@ let details = {
 						}
 					});
 
-					const port = (value === true ? 6666 : value) - 1;
-
-					// wdio увеличивает значение debugPort на единицу,
-					// поэтому если мы хотим запустить дебаг на порту 6666,
-					// необходимо присваивать debugPort = 6665
-					service.data.debug = process.debugPort = port;
-
 					break;
 
 				default:
