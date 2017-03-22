@@ -1,5 +1,6 @@
 import * as assert from 'assert';
 import deprecated from 'deprecated-decorator';
+import { Credentials, RegisterOptions } from '@qa/account-manager';
 import URL from '../utils/url';
 import Page, {Query} from '../pages';
 import account from '../utils/account';
@@ -28,7 +29,9 @@ class Steps {
 	/**
 	 * Получить заголовок страницы
 	 */
-	title = browser.getTitle;
+	title () {
+		return browser.getTitle();
+	}
 
 	/**
 	 * Разлогинизация,
@@ -37,7 +40,9 @@ class Steps {
 	 * @param {string} email
 	 * @param {number} timeout
 	 */
-	logout = account.logout;
+	logout (email?: string, timeout?: number) {
+		return account.logout(email, timeout);
+	}
 
 	/**
 	 * Регистрация пользователя
@@ -47,7 +52,9 @@ class Steps {
 	 * @param {Object} [options] — авторизационые данные
 	 * @returns {AccountManager.Credentials}
 	 */
-	static register = account.register;
+	static register (type?: string, options: RegisterOptions = {}): Credentials {
+		return account.register(type, options);
+	}
 
 	/**
 	 * Открыть страницу
@@ -86,35 +93,37 @@ class Steps {
 	 * @see isActiveUser
 	 * @param {string} [email]
 	 * @param {number} [timeout]
+	 * @returns {boolean}
 	 */
 	@deprecated('Use a non-static method')
-	static isActiveUser (email: string, timeout?: number): void {
-		let actual = account.isActiveUser(email, timeout);
-
-		assert(actual, `Пользователь "${email}" не авторизован`);
+	static isActiveUser (email: string, timeout?: number): boolean {
+		return account.isActiveUser(email, timeout);
 	}
 
 	/**
 	 * Проверяет залогинен ли пользователь
 	 *
 	 * @param {string} [email]
+	 * @param {number} [timeout]
 	 */
-	isActiveUser = Steps.isActiveUser;
+	isActiveUser (email: string, timeout?: number): boolean {
+		return Steps.isActiveUser(email, timeout);
+	}
 
 	/**
 	 * @deprecated
 	 * @see wait
 	 */
 	@deprecated('Use a non-static method')
-	static wait (ms?: number, reverse: boolean = false): void {
-		this.page.wait();
+	static wait (locator?: string, ms?: number, reverse: boolean = false): void {
+		this.page.wait(locator, ms, reverse);
 	}
 
 	/**
 	 * Дождатся загрузки страницы
 	 */
-	wait (ms?: number, reverse: boolean = false) {
-		this.page.wait(reverse, null, ms);
+	wait (locator?: string, ms?: number, reverse: boolean = false) {
+		this.page.wait(locator, ms, reverse);
 	};
 
 	/**
@@ -146,7 +155,9 @@ class Steps {
 	 *
 	 * @param {number} ms
 	 */
-	pause = browser.pause;
+	pause (ms: number) {
+		browser.pause(ms);
+	}
 
 	/**
 	 * @deprecated
@@ -178,8 +189,10 @@ class Steps {
 		browser.alertAccept();
 	};
 
-	/** Подтвердить алерт */
-	alertAccept = browser.alertAccept;
+	/** Принять алерт */
+	alertAccept () {
+		browser.alertAccept();
+	}
 
 	/**
 	 * Получить текст alert'a
@@ -191,14 +204,16 @@ class Steps {
 	@deprecated('Use a non-static method')
 	static getAlertText (text?: string) {
 		browser.alertText(text);
-	};
+	}
 
 	/**
 	 * Получить текст алерта
 	 *
 	 * @returns {string}
 	 */
-	getAlertText = browser.alertText;
+	getAlertText (text?: string) {
+		return browser.alertText(text);
+	}
 
 	/**
 	 * Сбросить текущую сессию
@@ -212,7 +227,9 @@ class Steps {
 	};
 
 	/** Сбросить текущую сессию */
-	reload = browser.reload;
+	reload () {
+		browser.reload();
+	}
 
 	/**
 	 * @deprecated
@@ -226,7 +243,9 @@ class Steps {
 	/**
 	 * Выключает на текущей странице обработчик onbeforeunload
 	 */
-	disableConfirm = page.disableConfirm;
+	disableConfirm () {
+		page.disableConfirm();
+	}
 
 	/**
 	 * Установить размер вьюпорта
@@ -286,17 +305,23 @@ class Steps {
 	 *
 	 * @returns {Object} {width, height}
 	 */
-	getViewportSize = browser.getViewportSize
+	getViewportSize (): WebdriverIO.Size {
+		return browser.getViewportSize();
+	}
 
 	/**
 	 * Переключиться на ближайшую вкладку
 	 */
-	switchToNextTab = browser.switchToNextTab;
+	switchToNextTab () {
+		browser.switchToNextTab();
+	}
 
 	/**
 	 * Ожидаем алерт
 	 */
-	waitForAlert = browser.waitForAlert;
+	waitForAlert (timeout?: number, message?: string, reverse: boolean = false) {
+		browser.waitForAlert(timeout, message, reverse);
+	}
 
 	/**
 	 * Дождаться выполнения какого-либо действия
@@ -314,7 +339,14 @@ class Steps {
 	 * @param {string} [message]
 	 * @returns {*}
 	 */
-	waitUntil = browser.waitUntil;
+	waitUntil (
+		condition: () => boolean | Q.IPromise<boolean> | WebdriverIO.Client<WebdriverIO.RawResult<any>> & WebdriverIO.RawResult<any>,
+		timeout?: number,
+		message?: string,
+		interval?: number
+	) {
+		return browser.waitUntil(condition, timeout, message, interval);
+	}
 
 	/**
 	 * Перейти по урлу

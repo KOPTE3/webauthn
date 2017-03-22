@@ -89,25 +89,25 @@ class PageObject {
 
 	/**
 	 * Дождаться появления требуемого элемента
+	 * @param {String} [locator] - указать необходимый локатор самостоятельно
 	 * @param {Boolean} [reverse=false]
-	 * @param {String} [containerLocator] - указать необходимый локатор самостоятельно
 	 * @param {Number} [ms]
 	 */
-	wait (reverse: boolean = false, containerLocator: string|null = null, ms?: number): void {
+	wait (locator?: string, ms?: number, reverse: boolean = false): void {
 		let container = null;
 
-		if (!containerLocator) {
+		if (!locator) {
 			// Игнорируем обращения к локаторам если исключение возникает
 			// до вызова степа в самом тесте
 			try {
-				({container} = this.locators);
+				({ container } = this.locators);
 			} catch (error) {
 				if (error.name !== 'TypeError') {
 					throw error;
 				}
 			}
 		} else {
-			container = containerLocator;
+			container = locator;
 		}
 
 		debug('wait for the required element', container);

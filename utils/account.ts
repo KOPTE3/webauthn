@@ -1,6 +1,6 @@
 import * as Debug from 'debug';
 import AccountManager, { Credentials, RegisterOptions } from '@qa/account-manager';
-import authStore from '../store/authorization';
+import authorization from '../store/authorization';
 import providers from '../store/authorization/providers';
 import URL from './url';
 
@@ -64,7 +64,7 @@ export default {
 	 * Выставляет куки
 	 */
 	setCookie (): void {
-		let { account } = authStore;
+		let { account } = authorization;
 
 		URL.open('/cgi-bin/lstatic', TIMEOUT);
 
@@ -106,25 +106,23 @@ export default {
 	 * @param {string} email
 	 * @param {number} timeout
 	 */
-	logout (email: string = '', timeout: number = TIMEOUT): void {
+	logout (email?: string, timeout: number = TIMEOUT): void {
 		if (!email) {
-			let { account } = authStore;
-
-			email = account.get('email');
+			email = authorization.account.get('email');
 		}
 
 		// В почте разлогинизация для активного пользователя
 		// происходит без ajax запроса, открытием url в браузере,
-		// а для неактивного с помощью ajax — повторяем это поведение
+		// а для неактивного с помощью ajax
 		if (this.isActiveUser(email)) {
 			browser.url('https://auth.mail.ru/cgi-bin/logout');
 		} else {
 			try {
 				browser.timeouts('script', timeout);
 
-				let {value} = browser.executeAsync(function (user: string, resolve) {
+				let { value } = browser.executeAsync(function (email: string, resolve) {
 					if (window.__PH && window.__PH.logoutAccount) {
-						window.__PH.logoutAccount(user, function (result) {
+						window.__PH.logoutAccount(email, function (result) {
 							resolve(result.status === 'ok');
 						});
 					}
@@ -142,16 +140,16 @@ export default {
 	 * @param {number} [timeout]
 	 * @returns {boolean}
 	 */
-	isActiveUser (email: string = '', timeout: number = TIMEOUT): boolean {
+	isActiveUser (email?: string, timeout: number = TIMEOUT): boolean {
 		if (!email) {
-			let { account } = authStore;
+			let { account } = authorization;
 
 			email = account.get('email');
 		}
 
 		return browser.waitUntil(() => {
-			let { value } = browser.execute((user: string) => {
-				return window.__PH && window.__PH.activeUser() === user;
+			let { value } = browser.execute((email: string) => {
+				return window.__PH && window.__PH.activeUser() === email;
 			}, email);
 
 			return value;

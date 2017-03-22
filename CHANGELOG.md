@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.0.6
+
+* Исправлен контекст для методов: logout, isActiveUser, waitUntil, waitForAlert, switchToNextTab, getViewportSize, disableConfirm, reload, getAlertText, alertAccept, pause, register, title
+
+* Исправлен интерфейс метода wait
+
 ## 7.0.5
 
 * Интерфес Platform заменен на @types/platfrom
