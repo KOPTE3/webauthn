@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.0.4
+
+* Интерфес Platform заменен на @types/platfrom
+
 ## 7.0.3
 
 Управление опцией debug вынесено в отдельный пакет `wdio-debug-service`
