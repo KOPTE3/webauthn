@@ -15,8 +15,8 @@ class Steps {
 	 * TODO: нужно проработать концепцию по удалению статических свойств
 	 * и уходу от использования this.page
 	 */
-	static page: Page
-	page: Page;
+	static page: Page = page
+	page: Page = page;
 
 	/**
 	 * Авторизация

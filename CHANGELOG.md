@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.0.7
+
+* Исправлена ссылка на page
+
 ## 7.0.6
 
 * Исправлен контекст для методов: logout, isActiveUser, waitUntil, waitForAlert, switchToNextTab, getViewportSize, disableConfirm, reload, getAlertText, alertAccept, pause, register, title

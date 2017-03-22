@@ -192,15 +192,6 @@ class PageObject {
 	}
 
 	/**
-	 * Дожидается требуемного адреса
-	 *
-	 * @param {string|RegExp|Function} value
-	 * @param {number} [timeout]
-	 * @param {boolean} [revert]
-	 * @returns {boolean}
-	 */
-
-	/**
 	 * Метод проверяет видимость заданного основного контейнера
 	 *
 	 * @returns {boolean}
