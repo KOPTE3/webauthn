@@ -1,5 +1,4 @@
 /// <reference path="./file-service.d.ts" />
-/// <reference path="./platform.d.ts" />
 /// <reference path="./portal.d.ts" />
 /// <reference path="./process.d.ts" />
 /// <reference path="./tir.d.ts" />

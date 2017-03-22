@@ -56,13 +56,13 @@ let details = {
 					service.data.baseUrl = value;
 					break;
 
-				// Парамерты вывода отладочной информации в модуле debug
+				// Параметры вывода отладочной информации в модуле debug
 				case 'verbose':
 					break;
 
 				// Вывод логов селениума
 				case 'log':
-					service.data.logLevel = (value === true) ? 'verbose' : value;
+					service.data.logLevel = value === true ? 'verbose' : value;
 					break;
 
 				// Позволяет отлаживать тесты
