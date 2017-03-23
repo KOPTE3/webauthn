@@ -112,7 +112,7 @@ class PageObject {
 
 		debug('wait for the required element', container);
 
-		browser.waitForVisible(container, ms, reverse);
+		browser.waitForExist(container, ms, reverse);
 	}
 
 	/**

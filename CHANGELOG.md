@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.0.8
+
+* Метод методе open browser.waitForVisible был заменен на browser.waitForExist
+
 ## 7.0.7
 
 * Исправлена ссылка на page
