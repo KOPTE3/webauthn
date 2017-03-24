@@ -340,7 +340,7 @@ class Steps {
 	 * @returns {*}
 	 */
 	waitUntil (
-		condition: () => boolean | Q.IPromise<boolean> | WebdriverIO.Client<WebdriverIO.RawResult<any>> & WebdriverIO.RawResult<any>,
+		condition: () => boolean | Promise<boolean> | WebdriverIO.Client<WebdriverIO.RawResult<any>> & WebdriverIO.RawResult<any>,
 		timeout?: number,
 		message?: string,
 		interval?: number

@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.0.9
+
+* Удален тип Q
+
 ## 7.0.8
 
 * Метод методе open browser.waitForVisible был заменен на browser.waitForExist
