@@ -1,3 +1,4 @@
+/// <reference path="./globals.d.ts" />
 /// <reference path="./file-service.d.ts" />
 /// <reference path="./portal.d.ts" />
 /// <reference path="./process.d.ts" />
