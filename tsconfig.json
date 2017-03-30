@@ -6,7 +6,8 @@
 		],
 
 		"types": [
-			"node"
+			"node",
+			"wdio-yoda-allure-utils-service"
 		],
 
 		"lib": [

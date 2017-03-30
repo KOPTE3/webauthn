@@ -5,7 +5,7 @@ import * as Log from 'tir';
 import * as Debug from 'debug';
 import * as WebDriverIO from 'webdriverio';
 import * as WebDriverIOUtils from '@qa/wdio-utils';
-import './export-globals';
+import './globals';
 
 let debug = Debug('@qa:yoda');
 
