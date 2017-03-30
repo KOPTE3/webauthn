@@ -1,5 +1,4 @@
 import * as assert from 'assert';
-import deprecated from 'deprecated-decorator';
 import { Credentials, RegisterOptions } from '@qa/account-manager';
 import URL from '../utils/url';
 import Page, {Query} from '../pages';
@@ -29,6 +28,7 @@ class Steps {
 	/**
 	 * Получить заголовок страницы
 	 */
+	@step
 	title () {
 		return browser.getTitle();
 	}
@@ -40,6 +40,7 @@ class Steps {
 	 * @param {string} email
 	 * @param {number} timeout
 	 */
+	@step
 	logout (email?: string, timeout?: number) {
 		return account.logout(email, timeout);
 	}
@@ -52,6 +53,7 @@ class Steps {
 	 * @param {Object} [options] — авторизационые данные
 	 * @returns {AccountManager.Credentials}
 	 */
+	@step
 	static register (type?: string, options: RegisterOptions = {}): Credentials {
 		return account.register(type, options);
 	}
@@ -63,6 +65,7 @@ class Steps {
 	 * @param {Object} [query]
 	 * @see Page.open
 	 */
+	@step
 	static open (path?: string | Query, query?: Query): void {
 		let actual = this.page.open(path, query);
 
@@ -95,6 +98,7 @@ class Steps {
 	 * @param {number} [timeout]
 	 * @returns {boolean}
 	 */
+	@step
 	@deprecated('Use a non-static method')
 	static isActiveUser (email: string, timeout?: number): boolean {
 		return account.isActiveUser(email, timeout);
@@ -106,6 +110,7 @@ class Steps {
 	 * @param {string} [email]
 	 * @param {number} [timeout]
 	 */
+	@step
 	isActiveUser (email: string, timeout?: number): boolean {
 		return Steps.isActiveUser(email, timeout);
 	}
@@ -114,6 +119,7 @@ class Steps {
 	 * @deprecated
 	 * @see wait
 	 */
+	@step
 	@deprecated('Use a non-static method')
 	static wait (locator?: string, ms?: number, reverse: boolean = false): void {
 		this.page.wait(locator, ms, reverse);
@@ -122,6 +128,7 @@ class Steps {
 	/**
 	 * Дождатся загрузки страницы
 	 */
+	@step
 	wait (locator?: string, ms?: number, reverse: boolean = false) {
 		this.page.wait(locator, ms, reverse);
 	};
@@ -164,6 +171,7 @@ class Steps {
 	 * @see refresh
 	 * @param {Object} query
 	 */
+	@step
 	@deprecated('Use a non-static method')
 	static refresh (query: Query = {}) {
 		page.refresh(query);
@@ -174,6 +182,7 @@ class Steps {
 	 *
 	 * @param {Object} [query] — параметры запроса
 	 */
+	@step
 	refresh (query: Query = {}) {
 		page.refresh(query);
 	};
@@ -184,12 +193,14 @@ class Steps {
 	 * @deprecated
 	 * @see alertAccept
 	 */
+	@step
 	@deprecated('Use a non-static method')
 	static alertAccept () {
 		browser.alertAccept();
 	};
 
 	/** Принять алерт */
+	@step
 	alertAccept () {
 		browser.alertAccept();
 	}
@@ -201,6 +212,7 @@ class Steps {
 	 * @see getAlertText
 	 * @returns {string}
 	 */
+	@step
 	@deprecated('Use a non-static method')
 	static getAlertText (text?: string) {
 		browser.alertText(text);
@@ -211,6 +223,7 @@ class Steps {
 	 *
 	 * @returns {string}
 	 */
+	@step
 	getAlertText (text?: string) {
 		return browser.alertText(text);
 	}
@@ -221,12 +234,14 @@ class Steps {
 	 * @deprecated
 	 * @see reload
 	 */
+	@step
 	@deprecated('Use a non-static method')
 	static reload () {
 		browser.reload()
 	};
 
 	/** Сбросить текущую сессию */
+	@step
 	reload () {
 		browser.reload();
 	}
@@ -235,6 +250,7 @@ class Steps {
 	 * @deprecated
 	 * @see disableConfirm
 	 */
+	@step
 	@deprecated('Use a non-static method')
 	static disableConfirm () {
 		page.disableConfirm();
@@ -243,6 +259,7 @@ class Steps {
 	/**
 	 * Выключает на текущей странице обработчик onbeforeunload
 	 */
+	@step
 	disableConfirm () {
 		page.disableConfirm();
 	}
@@ -254,6 +271,7 @@ class Steps {
 	 * @see setViewportSize
 	 * @param {Object} size
 	 */
+	@step
 	@deprecated('Use a non-static method')
 	static setViewportSize (size: WebdriverIO.Size, type: boolean = true) {
 		browser.setViewportSize(size, type);
@@ -267,6 +285,7 @@ class Steps {
 	 *                      true — изменить размеров вьюпорта
 	 *                      false — изменить размер окна
 	 */
+	@step
 	setViewportSize (size: WebdriverIO.Size, type: boolean = true): void {
 		let { width = 1200, height = 600 } = size;
 
@@ -284,6 +303,7 @@ class Steps {
 	 * @param {number} [timeout]
 	 * @param {boolean} [revert]
 	 */
+	@step
 	waitForUrl (
 		value: ((url: string) => boolean) | string | RegExp,
 		timeout?: number,
@@ -305,6 +325,7 @@ class Steps {
 	 *
 	 * @returns {Object} {width, height}
 	 */
+	@step
 	getViewportSize (): WebdriverIO.Size {
 		return browser.getViewportSize();
 	}
@@ -312,6 +333,7 @@ class Steps {
 	/**
 	 * Переключиться на ближайшую вкладку
 	 */
+	@step
 	switchToNextTab () {
 		browser.switchToNextTab();
 	}
@@ -319,6 +341,7 @@ class Steps {
 	/**
 	 * Ожидаем алерт
 	 */
+	@step
 	waitForAlert (timeout?: number, message?: string, reverse: boolean = false) {
 		browser.waitForAlert(timeout, message, reverse);
 	}
@@ -339,6 +362,7 @@ class Steps {
 	 * @param {string} [message]
 	 * @returns {*}
 	 */
+	@step
 	waitUntil (
 		condition: () => boolean | Promise<boolean> | WebdriverIO.Client<WebdriverIO.RawResult<any>> & WebdriverIO.RawResult<any>,
 		timeout?: number,
@@ -354,6 +378,7 @@ class Steps {
 	 * @param {string|Query} url — url
 	 * @param {Object} [query] — параметры запроса
 	 */
+	@step
 	url (url: string, query: Query = {}, timeout?: number) {
 		this.page.url(url, query, timeout);
 	}
@@ -364,6 +389,7 @@ class Steps {
 	 * @param {Object} expected { width, height }
 	 * @returns {boolean}
 	 */
+	@step
 	waitForViewport (expected: WebdriverIO.Size): boolean {
 		return this.waitUntil(() => {
 			let actual = browser.getViewportSize();
@@ -390,6 +416,7 @@ class Steps {
 	 *     options.viewportChangePause {number} Устанавливает время ожидания после
 	 *                                          изменения раземеров вьюпорта
 	 */
+	@step
 	compareDocument (options: WebdriverIO.ScreenshotOptions): void {
 		let images = browser.checkDocument(options),
 			actual = images.every(image => image.isExactSameImage);
@@ -404,6 +431,7 @@ class Steps {
 	 * @see browser.saveViewportScreenshot
 	 * @param {WebdriverIO.ScreenshotOptions} options
 	 */
+	@step
 	compareViewport (options: WebdriverIO.ScreenshotOptions): void {
 		let images = browser.checkViewport(options),
 			actual = images.every(image => image.isExactSameImage);
@@ -419,6 +447,7 @@ class Steps {
 	 * @param {string} locator
 	 * @param {WebdriverIO.ScreenshotOptions} options
 	 */
+	@step
 	compareElement (locator: string, options?: WebdriverIO.ScreenshotOptions): void {
 		let images = browser.checkElement(locator, options),
 			actual = images.every(image => image.isExactSameImage);

@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "7.0.10",
+	"version": "7.0.10-patch.1",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
