@@ -3,10 +3,10 @@ import _deprecated from 'deprecated-decorator';
 function NOOP (): void {
 }
 
-if (!('deprecated' in global)) {
+if (typeof global.deprecated !== 'function') {
 	global.deprecated = _deprecated;
 }
 
-if (!('step' in global)) {
+if (typeof global.step !== 'function') {
 	global.step = NOOP;
 }
