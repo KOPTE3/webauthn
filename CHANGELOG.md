@@ -1,6 +1,6 @@
 # Changelog
 
-## 7.1.3
+## 7.1.4
 
 * Декоратор @deprecated теперь глобальный, т.е. больше не требует подключения модуля deprecated-decorator
 * Все степы размечены декоратором @step
@@ -20,7 +20,6 @@
 ## 7.0.6
 
 * Исправлен контекст для методов: logout, isActiveUser, waitUntil, waitForAlert, switchToNextTab, getViewportSize, disableConfirm, reload, getAlertText, alertAccept, pause, register, title
-
 * Исправлен интерфейс метода wait
 
 ## 7.0.5
