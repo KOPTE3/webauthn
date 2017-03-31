@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.1.5
+
+* Поднята версия @qa/account-manager
+
 ## 7.1.4
 
 * Декоратор @deprecated теперь глобальный, т.е. больше не требует подключения модуля deprecated-decorator
