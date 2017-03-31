@@ -1,6 +1,6 @@
 # Changelog
 
-## 7.1.5
+## 7.1.5-7.1.6
 
 * Поднята версия @qa/account-manager
 
