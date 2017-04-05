@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "7.1.6",
+	"version": "7.1.7",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
@@ -41,7 +41,7 @@
 	},
 
 	"dependencies": {
-		"@qa/account-manager": "^1.9.1",
+		"@qa/account-manager": "^1.9.4",
 		"@qa/file-service": "^0.0.3",
 		"@qa/wdio-utils": "^0.7.0",
 

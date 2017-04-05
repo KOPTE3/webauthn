@@ -53,7 +53,7 @@ export default {
 	 * @param {number} id — идентификатор учетной записи
 	 * @returns {Promise}
 	 */
-	discard<T> (id: number): Promise<T> {
+	discard (id: number): Promise<void> {
 		return account.discard(id);
 	},
 
