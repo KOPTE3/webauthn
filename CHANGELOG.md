@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.1.9
+
+* Поднята версия @qa/account-manager
+
 ## 7.1.8
 
 * Удалены зависимости `deprecated-decorator` и `dts-generator`
