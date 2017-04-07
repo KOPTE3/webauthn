@@ -1,6 +1,6 @@
 # Changelog
 
-## 7.1.9
+## 7.1.9-10
 
 * Поднята версия @qa/account-manager
 
@@ -8,7 +8,7 @@
 
 * Удалены зависимости `deprecated-decorator` и `dts-generator`
 
-## 7.1.5-7.1.7
+## 7.1.5-7
 
 * Поднята версия @qa/account-manager
 
@@ -603,7 +603,7 @@ specs: [ './cases/**/*.js' ],
 specs: support.specs(/** [ ... ] */),
 ```
 
-## 2.0.1-2.0.3
+## 2.0.1-3
 
 * Исправление багов и документации
 
