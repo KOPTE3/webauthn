@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.1.12
+
+* Поднята версия @qa/account-manager
+
 ## 7.1.11
 
 * Удалены файлы .eslintignore и .eslintrc.js
