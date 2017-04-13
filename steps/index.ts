@@ -66,8 +66,7 @@ class Steps {
 	 * @param {Object} [query]
 	 * @see Page.open
 	 */
-	@step
-	@step('Открываем страницу {this}')
+	@step(`Открываем страницу ${page.location}`)
 	static open (path?: string | Query, query?: Query): void {
 		let actual = this.page.open(path, query);
 
@@ -305,7 +304,7 @@ class Steps {
 	 * @param {number} [timeout]
 	 * @param {boolean} [revert]
 	 */
-	@step
+	@step('Проверяем откроется ли урл соовтестсвующий - {url}')
 	waitForUrl (
 		value: ((url: string) => boolean) | string | RegExp,
 		timeout?: number,
