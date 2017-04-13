@@ -23,6 +23,7 @@ class Steps {
 	 * @param {string} [type] — типа авторизации
 	 * @param {AccountManager.Credentials} [credentials] — авторизационные данные
 	 */
+	@step('Авторизуемся в ящике')
 	static auth = Page.auth;
 
 	/**
@@ -66,6 +67,7 @@ class Steps {
 	 * @see Page.open
 	 */
 	@step
+	@step('Открываем страницу {this}')
 	static open (path?: string | Query, query?: Query): void {
 		let actual = this.page.open(path, query);
 
