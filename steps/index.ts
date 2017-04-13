@@ -303,7 +303,7 @@ class Steps {
 	 * @param {number} [timeout]
 	 * @param {boolean} [revert]
 	 */
-	@step('Проверяем откроется ли урл соовтестсвующий - {url}')
+	@step('Проверяем откроется ли урл соответствующий условию - {value}')
 	waitForUrl (
 		value: ((url: string) => boolean) | string | RegExp,
 		timeout?: number,
