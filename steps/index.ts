@@ -23,12 +23,13 @@ class Steps {
 	 * @param {string} [type] — типа авторизации
 	 * @param {AccountManager.Credentials} [credentials] — авторизационные данные
 	 */
+	// @step('Авторизоваться')
 	static auth = Page.auth;
 
 	/**
 	 * Получить заголовок страницы
 	 */
-	@step
+	@step('Получить текущий заголовок страницы')
 	title () {
 		return browser.getTitle();
 	}
@@ -41,6 +42,7 @@ class Steps {
 	 * @param {number} timeout
 	 */
 	@step
+	@step('Разлогиниться')
 	logout (email?: string, timeout?: number) {
 		return account.logout(email, timeout);
 	}
@@ -54,6 +56,7 @@ class Steps {
 	 * @returns {AccountManager.Credentials}
 	 */
 	@step
+	@step('Создать нового пользователя')
 	static register (type?: string, options: RegisterOptions = {}): Credentials {
 		return account.register(type, options);
 	}
@@ -65,7 +68,7 @@ class Steps {
 	 * @param {Object} [query]
 	 * @see Page.open
 	 */
-	@step(`Открываем страницу ${page.location}`)
+	@step(`Открывыть страницу ${page.location}`)
 	static open (path?: string | Query, query?: Query): void {
 		let actual = this.page.open(path, query);
 
@@ -98,8 +101,8 @@ class Steps {
 	 * @param {number} [timeout]
 	 * @returns {boolean}
 	 */
-	@step
 	@deprecated('Use a non-static method')
+	@step('Проверить что пользователь авторизован')
 	static isActiveUser (email: string, timeout?: number): boolean {
 		return account.isActiveUser(email, timeout);
 	}
@@ -110,7 +113,7 @@ class Steps {
 	 * @param {string} [email]
 	 * @param {number} [timeout]
 	 */
-	@step
+	@step('Проверить что пользователь авторизован')
 	isActiveUser (email: string, timeout?: number): boolean {
 		return Steps.isActiveUser(email, timeout);
 	}
@@ -119,8 +122,8 @@ class Steps {
 	 * @deprecated
 	 * @see wait
 	 */
-	@step
 	@deprecated('Use a non-static method')
+	@step(`Дождаться загрузки страницы "${page.location}"`)
 	static wait (locator?: string, ms?: number, reverse: boolean = false): void {
 		this.page.wait(locator, ms, reverse);
 	}
@@ -129,6 +132,7 @@ class Steps {
 	 * Дождатся загрузки страницы
 	 */
 	@step
+	@step(`Дождаться загрузки страницы "${page.location}"`)
 	wait (locator?: string, ms?: number, reverse: boolean = false) {
 		this.page.wait(locator, ms, reverse);
 	};
@@ -153,6 +157,7 @@ class Steps {
 	 * @see pause
 	 */
 	@deprecated('Use a non-static method')
+	@step('Установить паузу "{ms}ms"')
 	static pause (ms: number) {
 		browser.pause(ms);
 	};
@@ -162,6 +167,7 @@ class Steps {
 	 *
 	 * @param {number} ms
 	 */
+	@step('Установить паузу "{ms}ms"')
 	pause (ms: number) {
 		browser.pause(ms);
 	}
@@ -171,8 +177,8 @@ class Steps {
 	 * @see refresh
 	 * @param {Object} query
 	 */
-	@step
 	@deprecated('Use a non-static method')
+	@step(`Обновить текущую страницу ${page.location}`)
 	static refresh (query: Query = {}) {
 		page.refresh(query);
 	};
@@ -182,7 +188,7 @@ class Steps {
 	 *
 	 * @param {Object} [query] — параметры запроса
 	 */
-	@step
+	@step(`Обновить текущую страницу ${page.location}`)
 	refresh (query: Query = {}) {
 		page.refresh(query);
 	};
@@ -193,14 +199,14 @@ class Steps {
 	 * @deprecated
 	 * @see alertAccept
 	 */
-	@step
 	@deprecated('Use a non-static method')
+	@step('Принять алерт')
 	static alertAccept () {
 		browser.alertAccept();
 	};
 
 	/** Принять алерт */
-	@step
+	@step('Принять алерт')
 	alertAccept () {
 		browser.alertAccept();
 	}
@@ -212,8 +218,8 @@ class Steps {
 	 * @see getAlertText
 	 * @returns {string}
 	 */
-	@step
 	@deprecated('Use a non-static method')
+	@step('Получить текст алерта')
 	static getAlertText (text?: string) {
 		browser.alertText(text);
 	}
@@ -223,7 +229,7 @@ class Steps {
 	 *
 	 * @returns {string}
 	 */
-	@step
+	@step('Получить текст алерта')
 	getAlertText (text?: string) {
 		return browser.alertText(text);
 	}
@@ -234,14 +240,14 @@ class Steps {
 	 * @deprecated
 	 * @see reload
 	 */
-	@step
 	@deprecated('Use a non-static method')
+	@step('Сбросить текущую сессию')
 	static reload () {
 		browser.reload()
 	};
 
 	/** Сбросить текущую сессию */
-	@step
+	@step('Сбросить текущую сессию')
 	reload () {
 		browser.reload();
 	}
@@ -250,8 +256,8 @@ class Steps {
 	 * @deprecated
 	 * @see disableConfirm
 	 */
-	@step
 	@deprecated('Use a non-static method')
+	@step('Выключить появление модальных окон')
 	static disableConfirm () {
 		page.disableConfirm();
 	};
@@ -259,41 +265,9 @@ class Steps {
 	/**
 	 * Выключает на текущей странице обработчик onbeforeunload
 	 */
-	@step
+	@step('Выключить появление модальных окон')
 	disableConfirm () {
 		page.disableConfirm();
-	}
-
-	/**
-	 * Установить размер вьюпорта
-	 *
-	 * @deprecated
-	 * @see setViewportSize
-	 * @param {Object} size
-	 */
-	@step
-	@deprecated('Use a non-static method')
-	static setViewportSize (size: WebdriverIO.Size, type: boolean = true) {
-		browser.setViewportSize(size, type);
-	};
-
-	/**
-	 * Установить размер вьюпорта
-	 *
-	 * @param {Object} size {width, height}
-	 * @param {boolean} type:
-	 *                      true — изменить размеров вьюпорта
-	 *                      false — изменить размер окна
-	 */
-	@step
-	setViewportSize (size: WebdriverIO.Size, type: boolean = true): void {
-		let { width = 1200, height = 600 } = size;
-
-		browser.setViewportSize({ width, height });
-
-		if (type) {
-			this.waitForViewport(size);
-		}
 	}
 
 	/**
@@ -303,7 +277,7 @@ class Steps {
 	 * @param {number} [timeout]
 	 * @param {boolean} [revert]
 	 */
-	@step('Проверяем откроется ли урл соответствующий условию - {value}')
+	@step('Дождаться адреса соответствующего заданному условию "{value}"')
 	waitForUrl (
 		value: ((url: string) => boolean) | string | RegExp,
 		timeout?: number,
@@ -320,28 +294,7 @@ class Steps {
 		}
 	}
 
-	/**
-	 * Получить размер вьюпорта
-	 *
-	 * @returns {Object} {width, height}
-	 */
-	@step
-	getViewportSize (): WebdriverIO.Size {
-		return browser.getViewportSize();
-	}
-
-	/**
-	 * Переключиться на ближайшую вкладку
-	 */
-	@step
-	switchToNextTab () {
-		browser.switchToNextTab();
-	}
-
-	/**
-	 * Ожидаем алерт
-	 */
-	@step
+	@step('Дождаться появления алерта')
 	waitForAlert (timeout?: number, message?: string, reverse: boolean = false) {
 		browser.waitForAlert(timeout, message, reverse);
 	}
@@ -362,7 +315,7 @@ class Steps {
 	 * @param {string} [message]
 	 * @returns {*}
 	 */
-	@step
+	@step('Дождаться выполнения действия соответвующего заданному условию')
 	waitUntil (
 		condition: () => boolean | Promise<boolean> | WebdriverIO.Client<WebdriverIO.RawResult<any>> & WebdriverIO.RawResult<any>,
 		timeout?: number,
@@ -373,23 +326,12 @@ class Steps {
 	}
 
 	/**
-	 * Перейти по урлу
-	 *
-	 * @param {string|Query} url — url
-	 * @param {Object} [query] — параметры запроса
-	 */
-	@step
-	url (url: string, query: Query = {}, timeout?: number) {
-		this.page.url(url, query, timeout);
-	}
-
-	/**
 	 * Дожидается заданных размеров вьюпорта
 	 *
 	 * @param {Object} expected { width, height }
 	 * @returns {boolean}
 	 */
-	@step
+	@step('Додается заданных размеров вьюпорта')
 	waitForViewport (expected: WebdriverIO.Size): boolean {
 		return this.waitUntil(() => {
 			let actual = browser.getViewportSize();
@@ -398,6 +340,64 @@ class Steps {
 				return !assert.deepEqual(actual, expected);
 			} catch (error) {}
 		}, browser.options.waitforTimeout, 'Не удалось дождаться требуемого размера вьюпорта');
+	}
+
+	/**
+	 * Установить размер вьюпорта
+	 *
+	 * @deprecated
+	 * @see setViewportSize
+	 * @param {Object} size
+	 */
+	@deprecated('Use a non-static method')
+	@step('Установить размер вьюпорта')
+	static setViewportSize (size: WebdriverIO.Size, type: boolean = true) {
+		browser.setViewportSize(size, type);
+	};
+
+	/**
+	 * Установить размер вьюпорта
+	 *
+	 * @param {Object} size {width, height}
+	 * @param {boolean} type:
+	 *                      true — изменить размеров вьюпорта
+	 *                      false — изменить размер окна
+	 */
+	@step('Установить размер вьюпорта')
+	setViewportSize (size: WebdriverIO.Size, type: boolean = true): void {
+		let { width = 1200, height = 600 } = size;
+
+		browser.setViewportSize({ width, height });
+
+		if (type) {
+			this.waitForViewport(size);
+		}
+	}
+
+	/**
+	 * Получить размер вьюпорта
+	 *
+	 * @returns {Object} {width, height}
+	 */
+	@step('Получить размер вьюпорта')
+	getViewportSize (): WebdriverIO.Size {
+		return browser.getViewportSize();
+	}
+
+	@step('Переключиться на ближайшую вкладку')
+	switchToNextTab () {
+		browser.switchToNextTab();
+	}
+
+	/**
+	 * Перейти по урлу
+	 *
+	 * @param {string|Query} url — url
+	 * @param {Object} [query] — параметры запроса
+	 */
+	@step('Открытие адреса "{url}"')
+	url (url: string, query: Query = {}, timeout?: number) {
+		this.page.url(url, query, timeout);
 	}
 
 	/**
@@ -416,7 +416,7 @@ class Steps {
 	 *     options.viewportChangePause {number} Устанавливает время ожидания после
 	 *                                          изменения раземеров вьюпорта
 	 */
-	@step
+	@step('Регрессионное сравнение документа')
 	compareDocument (options: WebdriverIO.ScreenshotOptions): void {
 		let images = browser.checkDocument(options),
 			actual = images.every(image => image.isExactSameImage);
@@ -431,7 +431,7 @@ class Steps {
 	 * @see browser.saveViewportScreenshot
 	 * @param {WebdriverIO.ScreenshotOptions} options
 	 */
-	@step
+	@step('Регрессионное сравнение вьюпорта')
 	compareViewport (options: WebdriverIO.ScreenshotOptions): void {
 		let images = browser.checkViewport(options),
 			actual = images.every(image => image.isExactSameImage);
@@ -447,7 +447,7 @@ class Steps {
 	 * @param {string} locator
 	 * @param {WebdriverIO.ScreenshotOptions} options
 	 */
-	@step
+	@step('Регрессионное сравнение элемента')
 	compareElement (locator: string, options?: WebdriverIO.ScreenshotOptions): void {
 		let images = browser.checkElement(locator, options),
 			actual = images.every(image => image.isExactSameImage);
