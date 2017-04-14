@@ -41,7 +41,6 @@ class Steps {
 	 * @param {string} email
 	 * @param {number} timeout
 	 */
-	@step
 	@step('Разлогиниться')
 	logout (email?: string, timeout?: number) {
 		return account.logout(email, timeout);
@@ -55,7 +54,6 @@ class Steps {
 	 * @param {Object} [options] — авторизационые данные
 	 * @returns {AccountManager.Credentials}
 	 */
-	@step
 	@step('Создать нового пользователя')
 	static register (type?: string, options: RegisterOptions = {}): Credentials {
 		return account.register(type, options);
@@ -131,7 +129,6 @@ class Steps {
 	/**
 	 * Дождатся загрузки страницы
 	 */
-	@step
 	@step(`Дождаться загрузки страницы "${page.location}"`)
 	wait (locator?: string, ms?: number, reverse: boolean = false) {
 		this.page.wait(locator, ms, reverse);
