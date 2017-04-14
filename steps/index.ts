@@ -66,7 +66,7 @@ class Steps {
 	 * @param {Object} [query]
 	 * @see Page.open
 	 */
-	@step(`Открывыть страницу ${page.location}`)
+	@step('Открыть страницу')
 	static open (path?: string | Query, query?: Query): void {
 		let actual = this.page.open(path, query);
 
