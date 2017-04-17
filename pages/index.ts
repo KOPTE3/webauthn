@@ -1,6 +1,6 @@
 import * as merge from 'deepmerge';
 import * as Debug from 'debug';
-import {Credentials} from '@qa/account-manager';
+import { Credentials } from '@qa/account-manager';
 import account from '../utils/account';
 import URL from '../utils/url';
 
@@ -13,13 +13,13 @@ export interface Query {
 }
 
 interface Cache {
-	session : boolean,
+	session : Credentials,
 	scripts : string[],
 	features: string[]
 }
 
 let cache: Cache = {
-	session : false,
+	session : {},
 	scripts : [],
 	features: []
 };
@@ -34,8 +34,8 @@ class PageObject {
 	 * @param {string} [type] — тип авторизации
 	 * @param {Object} [credentials] — авторизационые данные
 	 */
-	static auth (type?: string, credentials?: Credentials): void {
-		cache.session = account.session(type, credentials);
+	static auth (type?: string, credentials?: Credentials): Credentials {
+		return cache.session = account.session(type, credentials);
 	}
 
 	/**

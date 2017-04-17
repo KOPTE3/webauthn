@@ -142,7 +142,7 @@ npm test -- --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
 Отлаживать тесты можно либо из консоли, либо из дебаггеров IDE, таких как WebStorm, VS Code, etc. Для запуска тестов с возможностью отладки, необходимо использовать опцию `--debug`:
 
 ```
-npm test -- --suite=login --grep=TESTMAIL-8674 --debug
+npm test -- --grep=TESTMAIL-8674 --debug
 ```
 
 По умолчанию используется порт 6666 (можно передать любой).

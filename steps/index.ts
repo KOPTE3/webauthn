@@ -14,7 +14,7 @@ class Steps {
 	 * TODO: нужно проработать концепцию по удалению статических свойств
 	 * и уходу от использования this.page
 	 */
-	static page: Page = page
+	static page: Page = page;
 	page: Page = page;
 
 	/**
@@ -23,8 +23,10 @@ class Steps {
 	 * @param {string} [type] — типа авторизации
 	 * @param {AccountManager.Credentials} [credentials] — авторизационные данные
 	 */
-	// @step('Авторизоваться')
-	static auth = Page.auth;
+	@step('Авторизоваться пользователем')
+	static auth (type?: string, credentials?: Credentials): void {
+		let { email } = Page.auth(type, credentials);
+	}
 
 	/**
 	 * Получить заголовок страницы
@@ -446,6 +448,7 @@ class Steps {
 	 */
 	@step('Регрессионное сравнение элемента')
 	compareElement (locator: string, options?: WebdriverIO.ScreenshotOptions): void {
+
 		let images = browser.checkElement(locator, options),
 			actual = images.every(image => image.isExactSameImage);
 

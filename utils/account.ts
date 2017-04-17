@@ -15,9 +15,9 @@ export default {
 	 *
 	 * @param {string} type — тип авторизации
 	 * @param {Object} [options] — авторизационые данные
-	 * @returns {boolean}
+	 * @returns {Credentials}
 	 */
-	session (type: string = 'basic', options: Credentials = {}): boolean {
+	session (type: string = 'basic', options: Credentials = {}): Credentials {
 		let account = AccountManager.Hooks(),
 			service = 'mail.ru';
 
@@ -32,16 +32,13 @@ export default {
 		// Ставим куку только на хост, который указан в конфиге
 		let host = browser.options.baseUrl;
 
-		// Добавляем обязательные поля
-		Object.assign(options, { host, type, service });
-
-		browser.waitForPromise(() => {
-			return account.session(options);
+		let credentials = browser.waitForPromise<Credentials>(() => {
+			return account.session({ ...options, host, type, service });
 		}, TIMEOUT, 'Could not get user session');
 
 		this.setCookie();
 
-		return true;
+		return credentials;
 	},
 
 	/**
