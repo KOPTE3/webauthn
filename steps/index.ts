@@ -23,9 +23,9 @@ class Steps {
 	 * @param {string} [type] — типа авторизации
 	 * @param {AccountManager.Credentials} [credentials] — авторизационные данные
 	 */
-	@step('Авторизоваться пользователем')
-	static auth (type?: string, credentials?: Credentials): void {
-		let { email } = Page.auth(type, credentials);
+	@step('Авторизация пользователем "{__result__.username}"')
+	static auth (type?: string, credentials?: Credentials): Credentials {
+		return Page.auth(type, credentials);
 	}
 
 	/**
@@ -68,8 +68,8 @@ class Steps {
 	 * @param {Object} [query]
 	 * @see Page.open
 	 */
-	@step('Открыть страницу')
-	static open (path?: string | Query, query?: Query): void {
+	@step('Открыть страницу "{__result__.url}"')
+	static open (path?: string | Query, query?: Query): { state: boolean, url: string } {
 		let actual = this.page.open(path, query);
 
 		// Игнорируем обращения к локаторам если исключение возникает
@@ -89,7 +89,9 @@ class Steps {
 
 		this.page.wait();
 
-		assert(actual, 'Не удалось авторизоваться');
+		assert(actual.state, 'Не удалось авторизоваться');
+
+		return actual;
 	}
 
 	/**

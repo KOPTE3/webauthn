@@ -121,8 +121,9 @@ class PageObject {
 	 * @param {string} url — url
 	 * @param {Object} [query] — параметры запроса
 	 * @param {number} [timeout] — время ожидания
+	 * @return {string} url
 	 */
-	url (url: string, query: Query = {}, timeout: number = TIMEOUT): void {
+	url (url: string, query: Query = {}, timeout: number = TIMEOUT): string {
 		let { features, scripts } = cache;
 
 		if (features.length) {
@@ -138,6 +139,8 @@ class PageObject {
 			browser.timeouts('script', TIMEOUT);
 			browser.execute(file);
 		});
+
+		return url;
 	}
 
 	/**
@@ -147,7 +150,7 @@ class PageObject {
 	 * @param {Object} [query] — параметры запроса
 	 * @returns {boolean}
 	 */
-	open (path?: string | Query, query: Query = {}): boolean {
+	open (path?: string | Query, query: Query = {}): { state: boolean, url: string } {
 		if (typeof path === 'object' && path !== null) {
 			query = path;
 			path = null;
@@ -157,14 +160,15 @@ class PageObject {
 			path = this.location;
 		}
 
-		this.url(path as string, query);
+		let state = true;
+		let url = this.url(path as string, query);
 
 		// Проверяем авторизацию используя портальное API
 		if (cache.session) {
-			return account.isActiveUser();
+			state = account.isActiveUser();
 		}
 
-		return true;
+		return { state, url };
 	}
 
 	/** Включение произвольного скрипта в код страницы */

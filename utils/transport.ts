@@ -1,9 +1,10 @@
 import * as assert from 'assert';
-import authorization from '@qa/yoda/store/authorization';
 import RPC from '@qa/rpc';
 import { MailAPI } from '@qa/api';
-import system from '@qa/yoda/store/system';
 import * as merge from 'deepmerge';
+
+import system from '../store/system';
+import authorization from '../store/authorization';
 
 import {
 	Deliveryd,
@@ -17,25 +18,6 @@ import {
 
 type RequiredInternal<T, K extends keyof T> = { [P in K]: T[P] };
 type Required<T> = T & RequiredInternal<T, keyof T>;
-
-interface ITransportData {
-	subject?: string,
-	content?: string,
-}
-
-export type ISendMessageData = MailAPI.MessagesSend & ITransportData;
-
-export interface IPutMessageData {
-	folder?: number;
-	subject?: string;
-	content?: string | Buffer;
-	attachments?: Array<string>;
-	raw?: IDeliverydBody;
-	type?: string;
-	headers?: {
-		[name: string]: string;
-	}
-}
 
 class Transport {
 	data: ITransportData
@@ -128,6 +110,25 @@ class Transport {
 
 			return response;
 		}, null, 'Could not send message');
+	}
+}
+
+export type ISendMessageData = MailAPI.MessagesSend & ITransportData;
+
+export interface ITransportData {
+	subject?: string,
+	content?: string,
+}
+
+export interface IPutMessageData {
+	folder?: number;
+	subject?: string;
+	content?: string | Buffer;
+	attachments?: Array<string>;
+	raw?: IDeliverydBody;
+	type?: string;
+	headers?: {
+		[name: string]: string;
 	}
 }
 
