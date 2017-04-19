@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.2.2
+
+* Поднятие версии wdio-yoda-allure-utils-service
+
 ## 7.2.1
 
 * Добавлено описание для методов features и inject
