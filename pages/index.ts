@@ -172,16 +172,20 @@ class PageObject {
 	}
 
 	/** Включение произвольного скрипта в код страницы */
-	inject (list: string[]): void {
+	inject (list: string[]): string[] {
 		cache.scripts.push(...list);
+
+		return list;
 	}
 
 	/**
 	 * Включение фичи
 	 * @param {string[]} list — список фич, которые требуется включить
 	 */
-	features (list: string[]): void {
+	features (list: string[]): string[] {
 		cache.features.push(...list);
+
+		return list;
 	}
 
 	/**

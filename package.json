@@ -59,7 +59,7 @@
 		"deepmerge": "0.2.10",
 		"platform": "^1.3.3",
 		"tir": "^0.0.2",
-		"wdio-yoda-allure-utils-service": "^1.5.3"
+		"wdio-yoda-allure-utils-service": "^1.5.11"
 	},
 
 	"peerDependencies": {

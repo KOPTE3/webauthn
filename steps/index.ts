@@ -143,12 +143,18 @@ class Steps {
 	 *
 	 * @param {string[]} list — список фич, которые требуется включить
 	 */
-	static features = page.features;
+	@step('Включение фич {__result__}')
+	static features (list: string[]): string[] {
+		return page.features(list);
+	}
 
 	/**
 	 * Скрипты, выполняемые сразу после page.url
 	 */
-	static inject = page.inject;
+	@step('Включение произвольных скриптов {__result__}')
+	static inject (list: string[]): string[] {
+		return page.inject(list);
+	}
 
 	/**
 	 * Откладывает выполнение следюущего шага на заданное время
