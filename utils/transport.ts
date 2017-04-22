@@ -1,20 +1,11 @@
 import * as assert from 'assert';
 import RPC from '@qa/rpc';
 import { MailAPI } from '@qa/api';
+import { Deliveryd, IDeliverydRequest, IDeliverydResponse, IAPIResponse, API } from '@qa/transport';
 import * as merge from 'deepmerge';
 
 import system from '../store/system';
 import authorization from '../store/authorization';
-
-import {
-	Deliveryd,
-	IDeliverydData,
-	IDeliverydBody,
-	IDeliverydRequest,
-	IDeliverydResponse,
-	IAPIResponse,
-	API
-} from '@qa/transport';
 
 type RequiredInternal<T, K extends keyof T> = { [P in K]: T[P] };
 type Required<T> = T & RequiredInternal<T, keyof T>;
@@ -41,8 +32,8 @@ class Transport {
 	 *   ...
 	 * }
 	 */
-	putMessage (params: IPutMessageData): Promise<IDeliverydResponse> {
-		let { attachments = [] } = params;
+	putMessage (params: IPutMessageData): IDeliverydResponse {
+		let { attachments } = params;
 		let { username, password } = authorization.account.data();
 
 		let transport = new Deliveryd({ username, password });
@@ -50,24 +41,18 @@ class Transport {
 		return browser.waitForPromise(async () => {
 			let { subject, content: body }: Required<IPutMessageData> = { ...this.data, ...params };
 
-			// По умолчанию используем папку "Входящие"
-			let { folder = 0 } = params;
-
-			// Приводим список файлов к формату транспорта
-			let files = attachments.map(value => {
-				return {
-					name: value,
-					path: system.file(value)
-				};
-			});
-
-			let response = await transport.send({
+			let request: IPutMessageData = {
 				subject,
 				body,
-				...{ params, ...files }
-				},
-				{ folder }
-			);
+				...params
+			};
+
+			// Добавляем полный путь к файлам
+			if (attachments) {
+				request.attachments = (<string[]>attachments).map(value => system.file(value));
+			}
+
+			let response = await transport.send(request);
 
 			assert.equal(response.status, RPC.HTTPStatus.OK);
 
@@ -86,15 +71,15 @@ class Transport {
 	 *   ...
 	 * }
 	 */
-	sendMessage (params: ISendMessageData): Promise<IAPIResponse> {
+	sendMessage (params: ISendMessageData): IAPIResponse {
 		let { username, password } = authorization.account.data();
 
 		let request = new API({ username, password });
 
 		return browser.waitForPromise(async () => {
-			let { subject, content }: Required<IPutMessageData> = { ...this.data, ...params };
+			let { subject, content }: Required<ISendMessageData> = { ...this.data, ...params };
 
-			params = merge<ISendMessageData>({
+			params = merge({
 				subject,
 				body: {
 					html: content
@@ -113,24 +98,16 @@ class Transport {
 	}
 }
 
-export type ISendMessageData = MailAPI.MessagesSend & ITransportData;
-
 export interface ITransportData {
 	subject?: string,
 	content?: string,
 }
 
-export interface IPutMessageData {
-	folder?: number;
-	subject?: string;
+export type ISendMessageData = MailAPI.MessagesSend & ITransportData;
+
+export type IPutMessageData = IDeliverydRequest & {
 	content?: string | Buffer;
-	attachments?: Array<string>;
-	raw?: IDeliverydBody;
-	type?: string;
-	headers?: {
-		[name: string]: string;
-	}
 }
 
-export { IDeliverydData, IDeliverydRequest, IDeliverydResponse };
+export { IDeliverydRequest, IDeliverydResponse };
 export default Transport;

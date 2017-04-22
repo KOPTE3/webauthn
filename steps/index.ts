@@ -20,7 +20,7 @@ class Steps {
 	/**
 	 * Авторизация
 	 *
-	 * @param {string} [type] — типа авторизации
+	 * @param {string} [type] — тип авторизации
 	 * @param {AccountManager.Credentials} [credentials] — авторизационные данные
 	 */
 	@step('Авторизация пользователем "{__result__.username}"')
