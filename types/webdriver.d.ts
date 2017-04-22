@@ -105,6 +105,14 @@ declare namespace WebdriverIO {
 
 		getCurrentUrl(): string;
 
+		getText(
+			selector?: string
+		): Client<string> & string;
+
+		getTexts(
+			selector?: string
+		): Client<string[]> & string[];
+
 		getStyleProperty(
 			selector: string,
 			property: string
