@@ -32,7 +32,7 @@ class Transport {
 	 *   ...
 	 * }
 	 */
-	putMessage (params: IPutMessageData): IDeliverydResponse {
+	putMessage (params: IPutMessageData = {}): IDeliverydResponse {
 		let { attachments } = params;
 		let { username, password } = authorization.account.data();
 
@@ -58,6 +58,25 @@ class Transport {
 
 			return response;
 		});
+	}
+
+	/**
+	 * Покладка треда в текущий ящик
+	 *
+	 * @see putMessage
+	 */
+	putThread (params: IPutMessageData = {}): IDeliverydResponse {
+		let { message } = this.putMessage(params);
+
+		let response = this.putMessage({
+			source: {
+				reply: message.messageId
+			}
+		});
+
+		assert.equal(response.status, RPC.HTTPStatus.OK);
+
+		return response;
 	}
 
 	/**
