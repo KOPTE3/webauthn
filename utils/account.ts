@@ -75,6 +75,8 @@ export default {
 				throw new Error('The required cookie could not be found');
 			}
 
+			debug('cookie %j', cookie);
+
 			browser.setCookies(cookie);
 		} catch ({ stack, message }) {
 			switch (message) {
