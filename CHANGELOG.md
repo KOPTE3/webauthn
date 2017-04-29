@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.3.1
+
+* Поднята версия @qa/transport
+
 ## 7.3.0
 
 * Поднята версия @qa/transport
