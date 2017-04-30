@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.3.2
+
+* Добавлены интерфейсы для версия getTagName, getTagNames, getValue, getValues
+
 ## 7.3.1
 
 * Поднята версия @qa/transport
