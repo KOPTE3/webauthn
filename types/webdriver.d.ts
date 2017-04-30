@@ -113,6 +113,22 @@ declare namespace WebdriverIO {
 			selector?: string
 		): Client<string[]> & string[];
 
+		getTagName(
+			selector?: string
+		): Client<string> & string;
+
+		getTagNames(
+			selector?: string
+		): Client<string[]> & string[];
+
+		getValue(
+			selector?: string
+		): Client<string> & string;
+
+		getValues(
+			selector?: string
+		): Client<string[]> & string[];
+
 		getStyleProperty(
 			selector: string,
 			property: string
