@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.3.4
+
+* Поднята версия @qa/transport
+
 ## 7.3.3
 
 * Исправлено поле raw в putMessage
