@@ -1,4 +1,5 @@
 import * as assert from 'assert';
+import * as fs from 'fs';
 import RPC from '@qa/rpc';
 import { MailAPI } from '@qa/api';
 import { Deliveryd, IDeliverydRequest, IDeliverydResponse, IAPIResponse, API } from '@qa/transport';
@@ -52,7 +53,9 @@ class Transport {
 			}
 
 			if (typeof raw === 'string') {
-				request.raw = system.file(raw);
+				let file = system.file(raw);
+
+				request.raw = fs.readFileSync(file, 'utf-8');
 			}
 
 			let response = await transport.send(request);
