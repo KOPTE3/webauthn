@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.3.5
+
+* Поднята версия @qa/transport
+* Улучшена совместимость с typescript@2.3.2
+
 ## 7.3.4
 
 * Поднята версия @qa/transport
