@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.3.3
+
+* Исправлено поле raw в putMessage
+
 ## 7.3.2
 
 * Добавлены интерфейсы для версия getTagName, getTagNames, getValue, getValues

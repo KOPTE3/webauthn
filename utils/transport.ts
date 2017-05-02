@@ -33,7 +33,7 @@ class Transport {
 	 * }
 	 */
 	putMessage (params: IPutMessageData = {}): IDeliverydResponse {
-		let { attachments } = params;
+		let { attachments, raw } = params;
 		let { username, password } = authorization.account.data();
 
 		let transport = new Deliveryd({ username, password });
@@ -47,9 +47,12 @@ class Transport {
 				...params
 			};
 
-			// Добавляем полный путь к файлам
 			if (attachments) {
 				request.attachments = (<string[]>attachments).map(value => system.file(value));
+			}
+
+			if (typeof raw === 'string') {
+				request.raw = system.file(raw);
 			}
 
 			let response = await transport.send(request);
