@@ -112,7 +112,12 @@ class PageObject {
 
 		debug('wait for the required element', container);
 
-		browser.waitForExist(container, ms, reverse);
+		if (container) {
+			browser.waitForExist(container, ms, reverse);
+		}
+		else {
+			throw new Error('It seems you forgot to define the container element');
+		}
 	}
 
 	/**
@@ -153,7 +158,7 @@ class PageObject {
 	open (path?: string | Query, query: Query = {}): { state: boolean, url: string } {
 		if (typeof path === 'object' && path !== null) {
 			query = path;
-			path = null;
+			path = undefined;
 		}
 
 		if (!path) {

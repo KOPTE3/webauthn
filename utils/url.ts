@@ -62,7 +62,7 @@ export default {
 	 * @param {Array} [remove] - параметры которые удалить
 	 * @returns {string}
 	 */
-	format (source: string, add = {}, remove: string[] = []) {
+	format (source: string, add = {}, remove: string[] = []): string {
 		let data = url.parse(source);
 		let query = this.parse(data.query);
 

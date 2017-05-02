@@ -44,7 +44,7 @@
 		"@qa/account-manager": "^2.0.1",
 		"@qa/file-service": "^0.0.3",
 		"@qa/wdio-utils": "^0.7.0",
-		"@qa/transport": "^1.1.4",
+		"@qa/transport": "^1.1.5",
 		"@qa/rpc": "^0.0.4",
 		"@qa/api": "^0.0.2",
 
@@ -68,6 +68,6 @@
 	},
 
 	"devDependencies": {
-		"typescript": "^2.2.2"
+		"typescript": "^2.3.2"
 	}
 }

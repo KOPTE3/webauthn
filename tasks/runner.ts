@@ -113,7 +113,7 @@ let details = {
  *      file — путь к файлу конфига
  * @returns {Promise}
  */
-module.exports = function<T> (options: Service): Promise<T> {
+module.exports = function (options: Service): Promise<void> {
 	let service = details.extend(options);
 
 	details.logo();
