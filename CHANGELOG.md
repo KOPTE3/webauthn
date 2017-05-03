@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.3.7
+
+* Модуль wdio-yoda-api-service перенесен в peerDependencies
+
 ## 7.3.6
 
 * Поднята версия @qa/transport
