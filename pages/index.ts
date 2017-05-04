@@ -13,13 +13,12 @@ export interface Query {
 }
 
 interface Cache {
-	session : Credentials,
-	scripts : string[],
-	features: string[]
+	session?: Credentials;
+	scripts : string[];
+	features: string[];
 }
 
 let cache: Cache = {
-	session : {},
 	scripts : [],
 	features: []
 };
