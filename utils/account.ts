@@ -17,7 +17,7 @@ export default {
 	 * @param {Object} [options] — авторизационые данные
 	 * @returns {Credentials}
 	 */
-	session (type: string = 'basic', options: Credentials = {}): Credentials {
+	async session (type: string = 'basic', options: Credentials = {}): Credentials {
 		let account = AccountManager.Hooks(),
 			service = 'mail.ru';
 
@@ -32,7 +32,7 @@ export default {
 		// Ставим куку только на хост, который указан в конфиге
 		let host = browser.options.baseUrl;
 
-		let credentials = browser.waitForPromise<Credentials>(() => {
+		let credentials = await browser.waitForPromise<Credentials>(() => {
 			return account.session({ ...options, host, type, service });
 		}, TIMEOUT, 'Could not get user session');
 
