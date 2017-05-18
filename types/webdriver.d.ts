@@ -147,6 +147,12 @@ declare namespace WebdriverIO {
 			name: string
 		): boolean;
 
+		waitForClass(
+			selector: string,
+			name: string,
+			reverse?: boolean
+		): boolean;
+
 		setHiddenValue(
 			selector: string,
 			value: string
