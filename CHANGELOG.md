@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.3.10
+
+* Добавлено описание для waitForClass
+
 ## 7.3.9
 
 * Поднята версия @qa/transport
