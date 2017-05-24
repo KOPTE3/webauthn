@@ -125,7 +125,7 @@ class Steps {
 	 * @see wait
 	 */
 	@deprecated('Use a non-static method')
-	@step(`Дождаться загрузки страницы "${page.location}"`)
+	@step(`Дождаться загрузки страницы`)
 	static wait (locator?: string, ms?: number, reverse: boolean = false): void {
 		this.page.wait(locator, ms, reverse);
 	}
@@ -133,7 +133,7 @@ class Steps {
 	/**
 	 * Дождатся загрузки страницы
 	 */
-	@step(`Дождаться загрузки страницы "${page.location}"`)
+	@step(`Дождаться загрузки страницы`)
 	wait (locator?: string, ms?: number, reverse: boolean = false) {
 		this.page.wait(locator, ms, reverse);
 	};
@@ -185,7 +185,7 @@ class Steps {
 	 * @param {Object} query
 	 */
 	@deprecated('Use a non-static method')
-	@step(`Обновить текущую страницу ${page.location}`)
+	@step(`Обновить текущую страницу`)
 	static refresh (query: Query = {}) {
 		page.refresh(query);
 	};
@@ -195,7 +195,7 @@ class Steps {
 	 *
 	 * @param {Object} [query] — параметры запроса
 	 */
-	@step(`Обновить текущую страницу ${page.location}`)
+	@step(`Обновить текущую страницу`)
 	refresh (query: Query = {}) {
 		page.refresh(query);
 	};
