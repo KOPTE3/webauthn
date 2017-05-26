@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.3.13
+
+* Поднята версия @qa/transport
+
 ## 7.3.12
 
 * Поднята версия @qa/wdio-utils
