@@ -91,20 +91,6 @@ declare namespace WebdriverIO {
 	}
 
 	interface Client<T> {
-		addHiddenValue(
-			selector: string,
-			name: string,
-			value: string | number
-		): Client<void> | void;
-
-		fill(
-			selector: string,
-			data: Object | string,
-			submit?: boolean
-		): void;
-
-		getCurrentUrl(): string;
-
 		getText(
 			selector?: string
 		): Client<string> & string;
@@ -152,11 +138,6 @@ declare namespace WebdriverIO {
 			name: string,
 			reverse?: boolean
 		): boolean;
-
-		setHiddenValue(
-			selector: string,
-			value: string
-		): void;
 
 		waitForPromise<T>(
 			promise: () => Promise<any> | WebdriverIO.Client<WebdriverIO.RawResult<any>> | WebdriverIO.RawResult<any>,

@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.3.14
+
+* Модуль tir обновлен, а его декларации типов удалены
+* Удалена заглушка tasks/globals для deprecated
+* В модулях index.ts, tasks/runner.ts и store/authorization/index.ts Promise заменен на async/await
+* Удалена директория hooks
+* Исправлено описание
+* Из модуля wdio-yoda-api-service были перенесены все методы кроме addHiddenValue, setHiddenValue, fill, getCurrentUrl,
+
 ## 7.3.13
 
 * Поднята версия @qa/transport

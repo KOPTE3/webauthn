@@ -32,18 +32,12 @@ export default {
 	 * }
 	 */
 	credentials (type: string = 'basic', options: Credentials = {}, timeout?: number): Credentials {
-		options = Object.assign({ domain: 'mail.ru', type }, options);
+		return browser.waitForPromise(async () => {
+			let { body } = await account.credentials({ domain: 'mail.ru', type, ...options });
 
-		return browser.waitForPromise(() => {
-			return account.credentials(options)
-				.then(({ body }) => {
-					debug('Used credentials:\n%o', body);
+			debug('Used credentials:\n%o', body);
 
-					return body;
-				})
-				.catch(({ message }) => {
-					throw new Error(`Could not get user credentials:\n\t${message}`);
-				});
+			return body;
 		}, timeout, 'Could not get user credentials');
 	},
 

@@ -5,7 +5,6 @@ import * as Log from 'tir';
 import * as Debug from 'debug';
 import * as WebDriverIO from 'webdriverio';
 import * as WebDriverIOUtils from '@qa/wdio-utils';
-import './globals';
 
 let debug = Debug('@qa:yoda');
 
@@ -111,29 +110,29 @@ let details = {
  * @param {Object} options
  *      data — данные, которые будут переданы в конфиг
  *      file — путь к файлу конфига
- * @returns {Promise}
  */
-module.exports = function (options: Service): Promise<void> {
+export default async function (options: Service): Promise<void> {
 	let service = details.extend(options);
 
 	details.logo();
 
 	let launcher = new WebDriverIO.Launcher(service.file, service.data);
 
-	return launcher.run()
-		.then(code => {
-			if (code === 0) {
-				Log.info('All tests were successfully finished');
-			} else {
-				Log.error('Tests finished with unwanted exit code', code);
-			}
+	try {
+		let code = await launcher.run();
 
-			process.exit(code);
-		},
-		error => {
-			Log.error('Something went wrong: \n%s \n%s', error,
-				JSON.stringify(service, null, '\t'));
+		if (code === 0) {
+			Log.info('All tests were successfully finished');
+		} else {
+			Log.error('Tests finished with unwanted exit code', code);
+		}
 
-			process.exit(-1);
-		});
+		process.exit(code);
+	}
+	catch (error) {
+		Log.error('Something went wrong: \n%s \n%s', error,
+			JSON.stringify(service, null, '\t'));
+
+		process.exit(-1);
+	}
 };

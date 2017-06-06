@@ -134,7 +134,7 @@ npm test -- --suite=login --grep=TESTMAIL-867[45]
 #### Выполнить тесты на заданном адресе:
 
 ```
-npm test -- --suite=login --grep=TESTMAIL-8674 --url=https://e.mail.ru/login
+npm test -- --grep=TESTMAIL-8674 --baseUrl=https://e.mail.ru/login
 ```
 
 #### Отладка тестов
@@ -318,18 +318,7 @@ Messages.auth('basic', {
 });
 ```
 
-#### store/authorization.account
-
-Получение авторизационных сведений текущего аккаунтпа
-
-```js
-import authorization from '@qa/yoda/store/authorization';
-
-authorization.account;
-```
-
 Метод .credentials примает те же типы, что Page\#auth
-
 
 #### store/authorization.credentials(type=basic, { id, login, domain, type }, timeout)
 
@@ -337,8 +326,6 @@ authorization.account;
 
 ```js
 import authorization from '@qa/yoda/store/authorization';
-
-authorization.credentials('external');
 
 authorization.credentials('external', {
 	domain: 'gmail.com'

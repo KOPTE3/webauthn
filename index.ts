@@ -10,14 +10,10 @@ if (flags.verbose) {
 	process.env.DEBUG = '@qa*';
 }
 
-let runner = require('./tasks/runner');
+import runner from './tasks/runner';
 
-/**
- * Yoda runner
- *
- * @returns {Promise}
- */
-exports.default = runner({
+/** Yoda runner */
+export default runner({
 	data: flags,
 	file: flags.config || 'config.js'
 });
