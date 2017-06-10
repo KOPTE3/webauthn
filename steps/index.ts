@@ -412,7 +412,7 @@ class Steps {
 	 *
 	 * @see browser.checkDocument
 	 * @see browser.saveDocumentScreenshot
-	 * @param {WebdriverIO.ScreenshotOptions} options
+	 * @param {WebdriverIO.VisualRegressionOptions} options
 	 *
 	 *  Доступные опции:
 	 *     options.hide {string[]}              Скрывает заданные элементы
@@ -424,7 +424,7 @@ class Steps {
 	 *                                          изменения раземеров вьюпорта
 	 */
 	@step('Регрессионное сравнение документа')
-	compareDocument (options: WebdriverIO.ScreenshotOptions): void {
+	compareDocument (options: WebdriverIO.VisualRegressionOptions): void {
 		let images = browser.checkDocument(options),
 			actual = images.every(image => image.isExactSameImage);
 
@@ -436,10 +436,10 @@ class Steps {
 	 *
 	 * @see browser.checkViewport
 	 * @see browser.saveViewportScreenshot
-	 * @param {WebdriverIO.ScreenshotOptions} options
+	 * @param {WebdriverIO.VisualRegressionOptions} options
 	 */
 	@step('Регрессионное сравнение вьюпорта')
-	compareViewport (options: WebdriverIO.ScreenshotOptions): void {
+	compareViewport (options: WebdriverIO.VisualRegressionOptions): void {
 		let images = browser.checkViewport(options),
 			actual = images.every(image => image.isExactSameImage);
 
@@ -452,10 +452,10 @@ class Steps {
 	 * @see browser.checkElement
 	 * @see browser.saveElementScreenshot
 	 * @param {string} locator
-	 * @param {WebdriverIO.ScreenshotOptions} options
+	 * @param {WebdriverIO.VisualRegressionOptions} options
 	 */
 	@step('Регрессионное сравнение элемента')
-	compareElement (locator: string, options?: WebdriverIO.ScreenshotOptions): void {
+	compareElement (locator: string, options?: WebdriverIO.VisualRegressionOptions): void {
 
 		let images = browser.checkElement(locator, options),
 			actual = images.every(image => image.isExactSameImage);
