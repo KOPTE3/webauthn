@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "7.3.15",
+	"version": "7.4.0",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
@@ -23,7 +23,7 @@
 	},
 
 	"scripts": {
-		"prepare": "tsc"
+		"prepublishOnly": "tsc"
 	},
 
 	"pre-commit": {
@@ -63,7 +63,7 @@
 	},
 
 	"peerDependencies": {
-		"wdio-yoda-api-service": "^0.x",
+		"wdio-yoda-api-service": "^1.x",
 		"webdriverio": "^4.x"
 	},
 

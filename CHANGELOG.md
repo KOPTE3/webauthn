@@ -1,8 +1,9 @@
 # Changelog
 
-## 7.3.16
+## 7.4.0
 
 * Модули tir и wdio-yoda-api-service обновлены, а его декларации типов удалены
+* Удален файл с декларациями типов для process.debugPort
 * Удалена заглушка tasks/globals для deprecated
 * В модулях index.ts, tasks/runner.ts и store/authorization/index.ts Promise заменен на async/await
 * Удалена директория hooks
