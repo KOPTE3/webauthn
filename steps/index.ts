@@ -3,7 +3,6 @@ import { Credentials, RegisterOptions } from '@qa/account-manager';
 import URL from '../utils/url';
 import Page, {Query} from '../pages';
 import account from '../utils/account';
-import VisualRegression = WebdriverIO.VisualRegression;
 
 let page = new Page();
 
@@ -427,8 +426,9 @@ class Steps {
 	 *                                          изменения раземеров вьюпорта
 	 * @param {boolean} [compareOnly=false] - не обрабатывать результаты сравнения, а только вернуть
 	 */
-	compareDocument (options: WebdriverIO.VisualRegressionOptions, compareOnly: true): VisualRegression[];
+	compareDocument (options: WebdriverIO.VisualRegressionOptions, compareOnly: true): WebdriverIO.VisualRegression[];
 	compareDocument (options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
+
 	@step('Регрессионное сравнение внешнего вида документа { compareOnly ? "без обработки результатов" : "с обработкой результатов" }')
 	compareDocument (options: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
 		let images = browser.checkDocument(options),
@@ -449,8 +449,9 @@ class Steps {
 	 * @param {WebdriverIO.VisualRegressionOptions} options
 	 * @param {boolean} [compareOnly=false] - не обрабатывать результаты сравнения, а только вернуть
 	 */
-	compareViewport (options: WebdriverIO.VisualRegressionOptions, compareOnly: true): VisualRegression[];
+	compareViewport (options: WebdriverIO.VisualRegressionOptions, compareOnly: true): WebdriverIO.VisualRegression[];
 	compareViewport (options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
+
 	@step('Регрессионное сравнение внешнего вида вьюпорта { compareOnly ? "без обработки результатов" : "с обработкой результатов" }')
 	compareViewport (options: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
 		let images = browser.checkViewport(options),
@@ -472,8 +473,9 @@ class Steps {
 	 * @param {WebdriverIO.VisualRegressionOptions} options
 	 * @param {boolean} [compareOnly=false] - не обрабатывать результаты сравнения, а только вернуть
 	 */
-	compareElement (locator: string, options: WebdriverIO.VisualRegressionOptions, compareOnly: true): VisualRegression[];
+	compareElement (locator: string, options: WebdriverIO.VisualRegressionOptions, compareOnly: true): WebdriverIO.VisualRegression[];
 	compareElement (locator: string, options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
+
 	@step('Регрессионное сравнение внешнего вида элемента { compareOnly ? "без обработки результатов" : "с обработкой результатов" }')
 	compareElement (locator: string, options?: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
 		let images = browser.checkElement(locator, options),
