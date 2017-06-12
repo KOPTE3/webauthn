@@ -68,6 +68,7 @@
 	},
 
 	"devDependencies": {
-		"typescript": "^2.3.4"
+		"typescript": "^2.3.4",
+		"wdio-yoda-api-service": "^1.x"
 	}
 }
