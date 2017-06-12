@@ -428,7 +428,7 @@ class Steps {
 	 */
 	compareDocument (options: WebdriverIO.VisualRegressionOptions, compareOnly: true): any[];
 	compareDocument (options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
-	@step('Регрессионное сравнение документа')
+	@step('Регрессионное сравнение внешнего вида документа { compareOnly ? "без обработки результатов" : "с обработкой результатов" }')
 	compareDocument (options: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
 		let images = browser.checkDocument(options),
 			actual = images.every(image => image.isExactSameImage);
@@ -450,7 +450,7 @@ class Steps {
 	 */
 	compareViewport (options: WebdriverIO.VisualRegressionOptions, compareOnly: true): any[];
 	compareViewport (options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
-	@step('Регрессионное сравнение вьюпорта')
+	@step('Регрессионное сравнение внешнего вида вьюпорта { compareOnly ? "без обработки результатов" : "с обработкой результатов" }')
 	compareViewport (options: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
 		let images = browser.checkViewport(options),
 			actual = images.every(image => image.isExactSameImage);
@@ -473,7 +473,7 @@ class Steps {
 	 */
 	compareElement (locator: string, options: WebdriverIO.VisualRegressionOptions, compareOnly: true): any[];
 	compareElement (locator: string, options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
-	@step('Регрессионное сравнение элемента')
+	@step('Регрессионное сравнение внешнего вида элемента { compareOnly ? "без обработки результатов" : "с обработкой результатов" }')
 	compareElement (locator: string, options?: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
 		let images = browser.checkElement(locator, options),
 			actual = images.every(image => image.isExactSameImage);
