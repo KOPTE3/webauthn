@@ -333,12 +333,12 @@ class Steps {
 	}
 
 	/**
-	 * Дожидается заданных размеров вьюпорта
+	 * Дождаться заданных размеров вьюпорта
 	 *
 	 * @param {Object} expected { width, height }
 	 * @returns {boolean}
 	 */
-	@step('Додается заданных размеров вьюпорта')
+	@step('Дождаться заданных размеров вьюпорта')
 	waitForViewport (expected: WebdriverIO.Size): boolean {
 		return this.waitUntil(() => {
 			let actual = browser.getViewportSize();
