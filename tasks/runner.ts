@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as merge from 'deepmerge';
-import * as Log from 'tir';
+import { Log } from 'tir';
 import * as Debug from 'debug';
 import * as WebDriverIO from 'webdriverio';
 import * as WebDriverIOUtils from '@qa/wdio-utils';

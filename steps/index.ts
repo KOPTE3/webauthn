@@ -338,7 +338,7 @@ class Steps {
 	 * @param {Object} expected { width, height }
 	 * @returns {boolean}
 	 */
-	@step('Дождаться заданных размеров вьюпорта')
+	@step('Дождаться заданных размеров вьюпорта: {expected.width}x{expected.height}')
 	waitForViewport (expected: WebdriverIO.Size): boolean {
 		return this.waitUntil(() => {
 			let actual = browser.getViewportSize();
@@ -371,7 +371,7 @@ class Steps {
 	 *                      true — изменить размеров вьюпорта
 	 *                      false — изменить размер окна
 	 */
-	@step('Установить размер вьюпорта')
+	@step('Установить размер вьюпорта {size.width}x{size.height}{ type ? " и проверить, совпадает ли реальный размер с требуемым" : "" }')
 	setViewportSize (size: WebdriverIO.Size, type: boolean = true): void {
 		let { width = 1200, height = 600 } = size;
 
