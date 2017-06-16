@@ -125,17 +125,39 @@ class Steps {
 	 * @see wait
 	 */
 	@deprecated('Use a non-static method')
-	@step(`Дождаться загрузки страницы`)
+	@step(`Дождаться загрузки страницы {__result__}`)
 	static wait (locator?: string, ms?: number, reverse: boolean = false): void {
 		this.page.wait(locator, ms, reverse);
+		if (!this.page.NAME) {
+			let name;
+			try {
+				name = this.page.constructor.name || 'Page';
+			} catch (_) {
+				name = 'Page';
+			}
+			console.warn(`Для более подробного описания степов в отчёте переопределите публичное readonly свойство NAME у класса ${name}`);
+			return 'Нет названия' as any as void;
+		}
+		return this.page.NAME as any as void;
 	}
 
 	/**
-	 * Дождатся загрузки страницы
+	 * Дождаться загрузки страницы
 	 */
-	@step(`Дождаться загрузки страницы`)
-	wait (locator?: string, ms?: number, reverse: boolean = false) {
+	@step(`Дождаться загрузки страницы {__result__}`)
+	wait (locator?: string, ms?: number, reverse: boolean = false): void {
 		this.page.wait(locator, ms, reverse);
+		if (!this.page.NAME) {
+			let name;
+			try {
+				name = this.page.constructor.name || 'Page';
+			} catch (_) {
+				name = 'Page';
+			}
+			console.warn(`Для более подробного описания степов в отчёте переопределите публичное readonly свойство NAME у класса ${name}`);
+			return 'Нет названия' as any as void;
+		}
+		return this.page.NAME as any as void;
 	};
 
 	/**

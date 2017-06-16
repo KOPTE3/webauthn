@@ -28,6 +28,13 @@ let cache: Cache = {
  */
 class PageObject {
 	/**
+	 * Имя страницы
+	 * @override this
+	 * @type {string}
+	 */
+	public readonly NAME: string = null;
+
+	/**
 	 * Авторизация
 	 *
 	 * @param {string} [type] — тип авторизации
