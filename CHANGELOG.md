@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.4
+
+* Обновлен пакет @qa/wdio-utils
+
 ## 8.0.3
 
 * Обновлен пакет @qa/transport
