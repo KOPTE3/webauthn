@@ -40,7 +40,7 @@ class PageObject {
 	 * @param {string} [type] — тип авторизации
 	 * @param {Object} [credentials] — авторизационые данные
 	 */
-	static auth (type?: string, credentials?: Credentials): Credentials {
+	static auth (type?: 'basic' | 'pdd' | 'external', credentials?: Credentials): Credentials {
 		return cache.session = account.session(type, credentials);
 	}
 

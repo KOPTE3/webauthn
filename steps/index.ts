@@ -24,7 +24,7 @@ class Steps {
 	 * @param {AccountManager.Credentials} [credentials] — авторизационные данные
 	 */
 	@step('Авторизация пользователем "{__result__.username}"')
-	static auth (type?: string, credentials?: Credentials): Credentials {
+	static auth (type?: 'basic' | 'pdd' | 'external', credentials?: Credentials): Credentials {
 		return Page.auth(type, credentials);
 	}
 
