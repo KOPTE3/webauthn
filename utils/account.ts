@@ -17,7 +17,7 @@ export default {
 	 * @param {Object} [options] — авторизационые данные
 	 * @returns {Credentials}
 	 */
-	session (type: 'basic' | 'pdd' | 'external' = 'basic', options: Credentials = {}): Credentials {
+	session (type: string = 'basic', options: Credentials = {}): Credentials {
 		let account = AccountManager.Hooks(),
 			service = 'mail.ru';
 
