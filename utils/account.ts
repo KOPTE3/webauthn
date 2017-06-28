@@ -17,11 +17,11 @@ export default {
 	 * @param {Object} [options] — авторизационые данные
 	 * @returns {Credentials}
 	 */
-	session (type: string = 'basic', options: Credentials = {}): Credentials {
+	session (type: 'basic' | 'pdd' | 'external' = 'basic', options: Credentials = {}): Credentials {
 		let account = AccountManager.Hooks(),
 			service = 'mail.ru';
 
-		if (/^(pdd|external)$/.test(type)) {
+		if (!/^(pdd|external)$/.test(type)) {
 			type = 'basic';
 		} else if (options.username) {
 			let { name, host } = this.parseEmail(options.username);
