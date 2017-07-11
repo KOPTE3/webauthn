@@ -131,7 +131,7 @@ export interface ITransportData {
 export type ISendMessageData = MailAPI.MessagesSend & ITransportData;
 
 export type IPutMessageData = IDeliverydRequest & {
-	content?: string | Buffer;
+	content?: string;
 }
 
 export { IDeliverydRequest, IDeliverydResponse };

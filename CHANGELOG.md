@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.9
+
+* В поле content интерфейса IPutMessageData убран тип Buffer
+
 ## 8.0.8
 
 * Обновлен пакет @qa/transport
