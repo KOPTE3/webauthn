@@ -1,7 +1,7 @@
 import * as merge from 'deepmerge';
 import * as Debug from 'debug';
 import { Credentials } from '@qa/account-manager';
-import account from '../utils/account';
+import account, { UserType } from '../utils/account';
 import URL from '../utils/url';
 
 let debug = Debug('@qa:yoda');
@@ -32,7 +32,7 @@ class PageObject {
 	 * @override this
 	 * @type {string}
 	 */
-	public readonly NAME: string = null;
+	public readonly name: string = null;
 
 	/**
 	 * Авторизация
@@ -40,7 +40,7 @@ class PageObject {
 	 * @param {string} [type] — тип авторизации
 	 * @param {Object} [credentials] — авторизационые данные
 	 */
-	static auth (type?: string, credentials?: Credentials): Credentials {
+	static auth (type?: UserType, credentials?: Credentials): Credentials {
 		return cache.session = account.session(type, credentials);
 	}
 

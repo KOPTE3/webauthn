@@ -2,7 +2,7 @@ import * as assert from 'assert';
 import { Credentials, RegisterOptions } from '@qa/account-manager';
 import URL from '../utils/url';
 import Page, {Query} from '../pages';
-import account from '../utils/account';
+import account, { UserType } from '../utils/account';
 
 let page = new Page();
 
@@ -24,7 +24,7 @@ class Steps {
 	 * @param {AccountManager.Credentials} [credentials] — авторизационные данные
 	 */
 	@step('Авторизация пользователем "{__result__.username}"')
-	static auth (type?: string, credentials?: Credentials): Credentials {
+	static auth (type?: UserType, credentials?: Credentials): Credentials {
 		return Page.auth(type, credentials);
 	}
 
@@ -128,17 +128,22 @@ class Steps {
 	@step(`Дождаться загрузки страницы {__result__}`)
 	static wait (locator?: string, ms?: number, reverse: boolean = false): void {
 		this.page.wait(locator, ms, reverse);
-		if (!this.page.NAME) {
+
+		if (!this.page.name) {
 			let name;
+
 			try {
 				name = this.page.constructor.name || 'Page';
 			} catch (_) {
 				name = 'Page';
 			}
+
 			console.warn(`Для более подробного описания степов в отчёте переопределите публичное readonly свойство NAME у класса ${name}`);
+
 			return 'Нет названия' as any as void;
 		}
-		return this.page.NAME as any as void;
+
+		return this.page.name as any as void;
 	}
 
 	/**
@@ -147,17 +152,22 @@ class Steps {
 	@step(`Дождаться загрузки страницы {__result__}`)
 	wait (locator?: string, ms?: number, reverse: boolean = false): void {
 		this.page.wait(locator, ms, reverse);
-		if (!this.page.NAME) {
+
+		if (!this.page.name) {
 			let name;
+
 			try {
 				name = this.page.constructor.name || 'Page';
 			} catch (_) {
 				name = 'Page';
 			}
+
 			console.warn(`Для более подробного описания степов в отчёте переопределите публичное readonly свойство NAME у класса ${name}`);
+
 			return 'Нет названия' as any as void;
 		}
-		return this.page.NAME as any as void;
+
+		return this.page.name as any as void;
 	};
 
 	/**

@@ -1,5 +1,10 @@
 # Changelog
 
+## 8.0.5
+
+* Исправлен метод auth
+* Переменная NAME в PageObject переименована в name
+
 ## 8.0.4
 
 * Обновлен пакет @qa/wdio-utils
