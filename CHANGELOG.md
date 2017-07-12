@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.10
+
+* Изменение сообщение об ошибке
+
 ## 8.0.9
 
 * В поле content интерфейса IPutMessageData убран тип Buffer
