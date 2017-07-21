@@ -403,7 +403,7 @@ class Steps {
 	 *                      true — изменить размеров вьюпорта
 	 *                      false — изменить размер окна
 	 */
-	@step('Установить размер вьюпорта {size.width}x{size.height}{ type ? " и проверить, совпадает ли реальный размер с требуемым" : "" }')
+	@step('Установить размер вьюпорта { type ? " и проверить, совпадает ли реальный размер с требуемым" : "" }', (size: WebdriverIO.Size) => ({'Ширина': size.width,'Высота': size.height}))
 	setViewportSize (size: WebdriverIO.Size, type: boolean = true): void {
 		let { width = 1200, height = 600 } = size;
 
