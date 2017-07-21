@@ -370,7 +370,7 @@ class Steps {
 	 * @param {Object} expected { width, height }
 	 * @returns {boolean}
 	 */
-	@step('Дождаться заданных размеров вьюпорта: {expected.width}x{expected.height}')
+	@step('Дождаться заданных размеров вьюпорта', (expected: WebdriverIO.Size) => ({'Ширина': expected.width,'Высота': expected.height}))
 	waitForViewport (expected: WebdriverIO.Size): boolean {
 		return this.waitUntil(() => {
 			let actual = browser.getViewportSize();
@@ -393,7 +393,7 @@ class Steps {
 	@step('Установить размер вьюпорта')
 	static setViewportSize (size: WebdriverIO.Size, type: boolean = true) {
 		browser.setViewportSize(size, type);
-	};
+	}
 
 	/**
 	 * Установить размер вьюпорта
@@ -461,7 +461,7 @@ class Steps {
 	compareDocument (options: WebdriverIO.VisualRegressionOptions, compareOnly: true): WebdriverIO.VisualRegression[];
 	compareDocument (options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
 
-	@step('Регрессионное сравнение внешнего вида документа { compareOnly ? "без обработки результатов" : "с обработкой результатов" }')
+	@step('Регрессионное сравнение внешнего вида документа { compareOnly ? "без обработки результатов" : "с обработкой результатов" }', (options: any) => options)
 	compareDocument (options: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
 		let images = browser.checkDocument(options),
 			actual = images.every(image => image.isExactSameImage);
@@ -484,7 +484,7 @@ class Steps {
 	compareViewport (options: WebdriverIO.VisualRegressionOptions, compareOnly: true): WebdriverIO.VisualRegression[];
 	compareViewport (options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
 
-	@step('Регрессионное сравнение внешнего вида вьюпорта { compareOnly ? "без обработки результатов" : "с обработкой результатов" }')
+	@step('Регрессионное сравнение внешнего вида вьюпорта { compareOnly ? "без обработки результатов" : "с обработкой результатов" }', (options: any) => options)
 	compareViewport (options: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
 		let images = browser.checkViewport(options),
 			actual = images.every(image => image.isExactSameImage);
@@ -508,7 +508,7 @@ class Steps {
 	compareElement (locator: string, options: WebdriverIO.VisualRegressionOptions, compareOnly: true): WebdriverIO.VisualRegression[];
 	compareElement (locator: string, options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
 
-	@step('Регрессионное сравнение внешнего вида элемента { compareOnly ? "без обработки результатов" : "с обработкой результатов" }')
+	@step('Регрессионное сравнение внешнего вида элемента { compareOnly ? "без обработки результатов" : "с обработкой результатов" }', (locator: string, options: any) => Object.assign({}, options, {'Локатор элемента': locator}))
 	compareElement (locator: string, options?: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
 		let images = browser.checkElement(locator, options),
 			actual = images.every(image => image.isExactSameImage);
