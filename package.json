@@ -44,9 +44,9 @@
 		"@qa/account-manager": "^2.0.4",
 		"@qa/file-service": "^0.0.3",
 		"@qa/wdio-utils": "1.0.0",
-		"@qa/transport": "^1.4.1",
-		"@qa/rpc": "^0.0.4",
-		"@qa/api": "^0.0.2",
+		"@qa/transport": "^1.4.2",
+		"@qa/rpc": "^0.1.2",
+		"@qa/api": "^0.0.3",
 
 		"@types/debug": "^0.0.29",
 		"@types/deepmerge": "^1.3.0",
