@@ -43,7 +43,7 @@
 	"dependencies": {
 		"@qa/account-manager": "^2.0.5",
 		"@qa/file-service": "^0.0.3",
-		"@qa/wdio-utils": "1.0.0",
+		"@qa/wdio-utils": "1.1.2",
 		"@qa/transport": "^1.4.2",
 		"@qa/rpc": "^0.1.2",
 		"@qa/api": "^0.0.3",
