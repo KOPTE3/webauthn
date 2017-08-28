@@ -3,6 +3,7 @@ import * as Debug from 'debug';
 import { Credentials } from '@qa/account-manager';
 import account, { UserType } from '../utils/account';
 import URL from '../utils/url';
+import config from '../config';
 
 let debug = Debug('@qa:yoda');
 const TIMEOUT: number = 15 * 1000;
@@ -177,6 +178,14 @@ class PageObject {
 		// Проверяем авторизацию используя портальное API
 		if (cache.session) {
 			state = account.isActiveUser();
+		}
+		// Выставляем тестовую куку для страниц, которые не используют авторизацию
+		else {
+			browser.setCookie(<WebdriverIO.Cookie>{
+				path: '/',
+				name: 'qa',
+				value: config.qa
+			});
 		}
 
 		return { state, url };
