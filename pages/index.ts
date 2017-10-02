@@ -189,11 +189,11 @@ class PageObject {
 		}
 
 		// http://canary.win105.dev.mail.ru/
-		browser.setCookie(<WebdriverIO.Cookie>{
-			path: '/',
-			name: 'canary',
-			value: config.canary
-		});
+		//browser.setCookie(<WebdriverIO.Cookie>{
+		//	path: '/',
+		//	name: 'canary',
+		//	value: config.canary
+		//});
 
 		return { state, url };
 	}
