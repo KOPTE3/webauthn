@@ -65,6 +65,18 @@ let details = {
 					service.data.logLevel = value === true ? 'verbose' : value;
 					break;
 
+				// Предотвращаем запуск несуществующего набора тестов
+				// Когда мы писали логику запуска тестов по группам опции suite в wdio не было.
+				// default это название группы, которое используется в Jenkins по умолчанию
+				// axis: – является префиксом, который мы добавли чтобы wdio не падал когда передается
+				// числовое значение
+				case 'suite':
+					if (service.data.suite == 'axis:default') {
+						delete service.data.suite;
+					}
+
+					break;
+
 				// Позволяет отлаживать тесты
 				case 'debug':
 					merge(service.data, {
