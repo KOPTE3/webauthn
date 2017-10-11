@@ -146,7 +146,7 @@ class Steps {
 	/**
 	 * Дождаться загрузки страницы
 	 */
-	@step(`Дождаться загрузки страницы {__result__}`)
+	@step(`{reverse ? "Убедиться что страница не загрузилась" : "Дождаться загрузки страницы" } {__result__}`)
 	wait (locator?: string, ms?: number, reverse: boolean = false): void {
 		this.page.wait(locator, ms, reverse);
 
