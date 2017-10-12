@@ -3,6 +3,10 @@
 declare namespace WebdriverIO {
 	type ElementLink = WebdriverIO.Client<WebdriverIO.RawResult<WebdriverIO.Element>> & WebdriverIO.RawResult<WebdriverIO.Element>;
 
+	interface Options {
+		hostname?: string;
+	}
+
 	interface VisualRegression {
 		isExactSameImage: boolean;
 		misMatchPercentage: number;
