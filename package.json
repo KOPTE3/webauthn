@@ -32,7 +32,7 @@
 		"yoda": "index.js"
 	},
 	"dependencies": {
-		"@qa/account-manager": "^2.0.5",
+		"@qa/account-manager": "^2.0.6",
 		"@qa/file-service": "^0.0.3",
 		"@qa/wdio-utils": "1.1.2",
 		"@qa/transport": "^1.4.2",
