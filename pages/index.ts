@@ -57,7 +57,7 @@ class PageObject {
 	}
 
 	/**
-	 * Локаторы
+	 * Локейшн
 	 *
 	 * @type {string}
 	 */
