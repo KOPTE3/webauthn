@@ -1,5 +1,14 @@
 # Changelog
 
+## 8.0.22
+
+* Удаалена директория commands
+
+## 8.0.21
+
+* В опции добавлено поле  hostname
+* Обновлен @aa/account-manager 
+
 ## 8.0.20
 
 * Исправлено падание для --suite=axis:default
