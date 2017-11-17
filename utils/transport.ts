@@ -34,7 +34,7 @@ class Transport {
 	 * }
 	 */
 	putMessage (params: IPutMessageData = {}): IDeliverydResponse {
-		let { attachments, raw } = params;
+		let { attachments, raw, rawFilename } = params;
 		let { username, password } = authorization.account.data();
 
 		let transport = new Deliveryd({ username, password });
@@ -52,8 +52,8 @@ class Transport {
 				request.attachments = (<string[]>attachments).map(value => system.file(value));
 			}
 
-			if (typeof raw === 'string') {
-				let file = system.file(raw);
+			if (typeof rawFilename === 'string') {
+				let file = system.file(rawFilename);
 
 				request.raw = fs.readFileSync(file, 'utf-8');
 			}
@@ -132,6 +132,7 @@ export type ISendMessageData = MailAPI.MessagesSend & ITransportData;
 
 export type IPutMessageData = IDeliverydRequest & {
 	content?: string;
+	rawFilename?: string;
 }
 
 export { IDeliverydRequest, IDeliverydResponse };
