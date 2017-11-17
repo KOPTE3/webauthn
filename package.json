@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "8.0.21-rc.0",
+	"version": "8.0.23",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
@@ -32,10 +32,10 @@
 		"yoda": "index.js"
 	},
 	"dependencies": {
-		"@qa/account-manager": "^2.0.5",
+		"@qa/account-manager": "^2.0.6",
 		"@qa/file-service": "^0.0.3",
 		"@qa/wdio-utils": "1.1.2",
-		"@qa/transport": "^1.4.2",
+		"@qa/transport": "^1.4.3",
 		"@qa/rpc": "^0.1.2",
 		"@qa/api": "^0.0.3",
 		"@types/debug": "^0.0.29",
