@@ -1,45 +1,36 @@
 {
 	"name": "@qa/yoda",
-	"version": "8.0.20+rawfilename.0",
+	"version": "8.0.21-rc.0",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
-
 	"maintainers": [
 		{
 			"name": "Alexander Abashkin",
 			"email": "<a.abashkin@corp.mail.ru>"
 		}
 	],
-
 	"repository": {
 		"type": "git",
 		"url": "ssh://git@stash.mail.ru:2222/qa/yoda.git"
 	},
-
 	"engines": {
 		"node": ">=7.8",
 		"npm": ">=4.0"
 	},
-
 	"scripts": {
 		"prepublishOnly": "tsc"
 	},
-
 	"pre-commit": {
 		"silent": false,
-
 		"run": [
 			"lint"
 		]
 	},
-
 	"types": "index.d.ts",
-
 	"bin": {
 		"yoda": "index.js"
 	},
-
 	"dependencies": {
 		"@qa/account-manager": "^2.0.5",
 		"@qa/file-service": "^0.0.3",
@@ -47,14 +38,12 @@
 		"@qa/transport": "^1.4.2",
 		"@qa/rpc": "^0.1.2",
 		"@qa/api": "^0.0.3",
-
 		"@types/debug": "^0.0.29",
 		"@types/deepmerge": "^1.3.0",
 		"@types/minimist": "^1.2.0",
 		"@types/node": "^7.0.5",
-		"@types/webdriverio": "^4.6.1",
+		"@types/webdriverio": "^4.8.6",
 		"@types/platform": "^1.3.0",
-
 		"debug": "^2.6.8",
 		"deepmerge": "0.2.10",
 		"platform": "^1.3.4",
@@ -62,12 +51,10 @@
 		"tir": "^1.0.1",
 		"wdio-yoda-allure-utils-service": "^1.9.7"
 	},
-
 	"peerDependencies": {
 		"wdio-yoda-api-service": "^1.x",
 		"webdriverio": "^4.x"
 	},
-
 	"devDependencies": {
 		"typescript": "^2.4.2",
 		"wdio-yoda-api-service": "^1.x"
