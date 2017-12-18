@@ -66,7 +66,7 @@ export default {
 		let { account } = authorization;
 		//Ставим куки для проекта, урл которого указан в конфиге как baseUrl 
 		//на странице, указанной в конфиге как authCookieUrl
-		URL.open(browser.options.authCookieUrl, TIMEOUT);
+		URL.open(browser.options.authCookieUrl || '/cgi-bin/lstatic', TIMEOUT);
 
 		// Удостоверямся, что документ доступен
 		browser.waitForExist('body');
