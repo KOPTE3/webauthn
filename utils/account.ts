@@ -31,13 +31,13 @@ export default {
 			service = providers.find(host).name || host;
 		}
 
-		// Ставим куку только на хост, который указан в конфиге
-		let host = browser.options.baseUrl;
+		// Получаем куки для домена .mail.ru, для этого указываем host как e.mail.ru
+		let { host }= account.options(options);
 
 		let credentials = browser.waitForPromise<Credentials>(() => {
 			return account.session({ ...options, host, type, service });
 		}, TIMEOUT, 'Could not get user session');
-
+		//Ставим куки
 		this.setCookie();
 
 		return credentials;
@@ -64,8 +64,9 @@ export default {
 	 */
 	setCookie (): void {
 		let { account } = authorization;
-
-		URL.open('/cgi-bin/lstatic', TIMEOUT);
+		//Ставим куки для проекта, урл которого указан в конфиге как baseUrl 
+		//на странице, указанной в конфиге как authCookieUrl
+		URL.open(browser.options.authCookieUrl || '/cgi-bin/lstatic', TIMEOUT);
 
 		// Удостоверямся, что документ доступен
 		browser.waitForExist('body');
