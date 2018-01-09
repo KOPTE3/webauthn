@@ -330,7 +330,7 @@ class Steps {
 		}
 	}
 
-	@step('Дождаться появления алерта')
+	@step('{reverse ? "Убедиться что алерт не появился" : "Дождаться появления алерта"}')
 	waitForAlert (timeout?: number, message?: string, reverse: boolean = false) {
 		browser.waitForAlert(timeout, message, reverse);
 	}
