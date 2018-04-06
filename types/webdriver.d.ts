@@ -6,7 +6,13 @@ declare namespace WebdriverIO {
 	interface Options {
 		hostname?: string;
 		authCookieUrl?: string;
-		domainID?: number;
+		biz?: {
+			domainID?: number,
+			apiData?: {
+				userEmail?: string,
+				csrfToken?: string
+			}
+		}
 	}
 
 	interface VisualRegression {
