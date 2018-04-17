@@ -20,7 +20,7 @@
 	},
 	"scripts": {
 		"prepublishOnly": "tsc",
-		"install": "tsc --outDir ."
+		"prepublish": "tsc"
 	},
 	"pre-commit": {
 		"silent": false,
