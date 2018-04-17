@@ -20,7 +20,7 @@
 	},
 	"scripts": {
 		"prepublishOnly": "tsc",
-		"prepublish": "tsc"
+		"preinstall": "tsc"
 	},
 	"pre-commit": {
 		"silent": false,
