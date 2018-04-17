@@ -19,8 +19,7 @@
 		"npm": ">=4.0"
 	},
 	"scripts": {
-		"prepublishOnly": "tsc",
-		"postinstall": "tsc"
+		"prepublishOnly": "tsc"
 	},
 	"pre-commit": {
 		"silent": false,
