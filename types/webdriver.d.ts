@@ -8,7 +8,7 @@ declare namespace WebdriverIO {
 		authCookieUrl?: string;
 		biz?: {
 			domainID?: number,
-			apiData?: {
+			authData?: {
 				userEmail?: string,
 				csrfToken?: string
 			}
