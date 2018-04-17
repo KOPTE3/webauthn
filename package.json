@@ -19,7 +19,8 @@
 		"npm": ">=4.0"
 	},
 	"scripts": {
-		"prepublish": "tsc"
+		"prepublishOnly": "tsc",
+		"postinstall": "tsc"
 	},
 	"pre-commit": {
 		"silent": false,
@@ -29,7 +30,7 @@
 	},
 	"types": "index.d.ts",
 	"bin": {
-		"yoda": "index.js"
+		"yoda": "index.ts"
 	},
 	"dependencies": {
 		"@qa/account-manager": "^2.0.6",
