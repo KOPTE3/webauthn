@@ -12,7 +12,7 @@ declare namespace WebdriverIO {
 				userEmail?: string,
 				csrfToken?: string
 			}
-		}
+		};
 	}
 
 	interface VisualRegression {
