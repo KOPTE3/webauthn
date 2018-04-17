@@ -29,7 +29,7 @@
 	},
 	"types": "index.d.ts",
 	"bin": {
-		"yoda": "index.ts"
+		"yoda": "index.js"
 	},
 	"dependencies": {
 		"@qa/account-manager": "^2.0.6",
