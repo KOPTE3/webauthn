@@ -20,7 +20,7 @@
 	},
 	"scripts": {
 		"prepublishOnly": "tsc",
-		"preinstall": "tsc"
+		"postinstall": "export NODE_PATH=`readlink -e ../` && echo $NODE_PATH && npm run prepack --silly"
 	},
 	"pre-commit": {
 		"silent": false,
