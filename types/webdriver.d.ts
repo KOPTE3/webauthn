@@ -15,6 +15,16 @@ declare namespace WebdriverIO {
 		};
 	}
 
+	interface Cookie {
+		name: string;
+		value: string;
+		path?: string;
+		httpOnly?: boolean;
+		expiry?: number;
+		secure?: boolean;
+		domain?: string;
+	}
+
 	interface VisualRegression {
 		isExactSameImage: boolean;
 		misMatchPercentage: number;
