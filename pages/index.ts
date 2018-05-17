@@ -184,7 +184,8 @@ class PageObject {
 			browser.setCookie(<WebdriverIO.Cookie>{
 				path: '/',
 				name: 'qa',
-				value: config.qa
+				value: config.qa,
+				domain: '.mail.ru'
 			});
 		}
 
