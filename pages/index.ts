@@ -174,19 +174,21 @@ class PageObject {
 
 		let state = true;
 		let url = this.url(path as string, query);
-
+		let qaCookie = browser.getCookie().find(cookie => cookie.name === 'qa');
 		// Проверяем авторизацию используя портальное API
 		if (cache.session) {
 			state = account.isActiveUser();
 		}
-		// Выставляем тестовую куку для страниц, которые не используют авторизацию
-		else {
+		if (!qaCookie) {
+			debug('Выставляем тестовую куку для страниц, которые не используют авторизацию')
 			browser.setCookie(<WebdriverIO.Cookie>{
 				path: '/',
 				name: 'qa',
 				value: config.qa,
 				domain: '.mail.ru'
 			});
+			// на всякий случай рефреш
+			browser.refresh();
 		}
 
 		// http://canary.win105.dev.mail.ru/
