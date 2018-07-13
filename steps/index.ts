@@ -351,7 +351,7 @@ class Steps {
 	 * @param {string} [message]
 	 * @returns {*}
 	 */
-	@step('Дождаться выполнения действия соответвующего заданному условию')
+	@step('Дождаться выполнения действия соответствующего заданному условию')
 	waitUntil (
 		condition: () => boolean | Promise<boolean> | WebdriverIO.Client<WebdriverIO.RawResult<any>> & WebdriverIO.RawResult<any>,
 		timeout?: number,
