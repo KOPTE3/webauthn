@@ -104,8 +104,10 @@ let details = {
 		let suites: Suites = {};
 
 		for (let [suite, tests] of Object.entries(data.suites)) {
-			if (tests.length) {
-				suites[suite] = tests;
+			const _tests_ = tests as string[];
+
+			if (_tests_.length) {
+				suites[suite] = _tests_;
 			}
 		}
 
