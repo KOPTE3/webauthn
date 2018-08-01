@@ -1,7 +1,7 @@
 import * as merge from 'deepmerge';
 import * as Debug from 'debug';
-import { Credentials } from '@qa/account-manager';
-import account, { UserType } from '../utils/account';
+import {Credentials} from '@qa/account-manager';
+import account, {UserType} from '../utils/account';
 import URL from '../utils/url';
 import config from '../config';
 
@@ -244,6 +244,46 @@ class PageObject {
 	disableConfirm (): void {
 		browser.execute(function () {
 			window.onbeforeunload = null;
+		});
+	}
+
+	/**
+	 * Закрыть текущую вкладку и переключаемся на вкладку №focusToTabIndex
+	 */
+	closeTab(focusToTabIndex?: number): void {
+		const tabIds: string[] = this.page.getTabIds();
+
+		this.page.close(focusToTabIndex ? tabIds[focusToTabIndex] : null);
+	}
+
+	/**
+	 * Список идентификаторов вкладок
+	 *
+	 * @returns {WebdriverIO.Client<string[]> & string[]}
+	 */
+	getTabIds(): string[] {
+		return this.page.getTabIds();
+	}
+
+	/**
+	 * Переключить вкладку
+	 *
+	 * @param {string} id порядковый номер вкладки
+	 */
+	switchTab(id: number): void {
+		const tabIds = this.page.getTabIds();
+
+		this.page.switchTab(tabIds[id]);
+	}
+
+	/**
+	 * Дождаться пока количество вкладок будет нужным
+	 *
+	 * @param {number} count
+	 */
+	waitTabsCount(count: number): void {
+		this.page.waitUntil(() => {
+			return this.getTabIds().length === count;
 		});
 	}
 }
