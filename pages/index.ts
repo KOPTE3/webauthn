@@ -246,46 +246,6 @@ class PageObject {
 			window.onbeforeunload = null;
 		});
 	}
-
-	/**
-	 * Закрыть текущую вкладку и переключаемся на вкладку №focusToTabIndex
-	 */
-	closeTab(focusToTabIndex?: number): void {
-		const tabIds: string[] = this.page.getTabIds();
-
-		this.page.close(focusToTabIndex ? tabIds[focusToTabIndex] : null);
-	}
-
-	/**
-	 * Список идентификаторов вкладок
-	 *
-	 * @returns {WebdriverIO.Client<string[]> & string[]}
-	 */
-	getTabIds(): string[] {
-		return this.page.getTabIds();
-	}
-
-	/**
-	 * Переключить вкладку
-	 *
-	 * @param {string} id порядковый номер вкладки
-	 */
-	switchTab(id: number): void {
-		const tabIds = this.page.getTabIds();
-
-		this.page.switchTab(tabIds[id]);
-	}
-
-	/**
-	 * Дождаться пока количество вкладок будет нужным
-	 *
-	 * @param {number} count
-	 */
-	waitTabsCount(count: number): void {
-		this.page.waitUntil(() => {
-			return this.getTabIds().length === count;
-		});
-	}
 }
 
 export default PageObject;
