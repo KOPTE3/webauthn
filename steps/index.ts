@@ -1,8 +1,8 @@
 import * as assert from 'assert';
-import { Credentials, RegisterOptions } from '@qa/account-manager';
+import {Credentials, RegisterOptions} from '@qa/account-manager';
 import URL from '../utils/url';
 import Page, {Query} from '../pages';
-import account, { UserType } from '../utils/account';
+import account, {UserType} from '../utils/account';
 
 let page = new Page();
 
@@ -530,6 +530,38 @@ class Steps {
 		}
 
 		assert(actual, 'Не найдено соответствие элемента с ожидаемым изображением');
+	}
+
+	@step('Проверить что открыто вкладок: "{count}"')
+	checkTabsCount(count: number): void {
+		const tabs: string[] = browser.getTabIds();
+		const actual = tabs.length;
+
+		assert.equal(actual, count, `Открытых вкладок должно быть ${count}, но их ${actual}`);
+	}
+
+	/**
+	 * @param {string} id - номер вкладки ("0", "1", ...) по порядку их открытия, а не по расположению в браузере
+	 */
+	@step('Переключиться во вкладку № "{id}"')
+	switchTab(id: number): void {
+		const tabIds: string[] = browser.getTabIds();
+
+		browser.switchTab(tabIds[id]);
+	}
+
+	@step('Закрыть текущую вкладку и переключиться вкладку №{focusToTabIndex}')
+	closeTab(focusToTabIndex?: number): void {
+		const tabIds: string[] = browser.getTabIds();
+
+		browser.close(focusToTabIndex ? tabIds[focusToTabIndex] : null);
+	}
+
+	@step('Дождаться пока вкладок будет "{count}"')
+	waitTabsCount(count: number): void {
+		browser.waitUntil(() => {
+			return browser.getTabIds().length === count;
+		});
 	}
 }
 

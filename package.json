@@ -1,6 +1,6 @@
 {
 	"name": "@qa/yoda",
-	"version": "9.1.0",
+	"version": "9.2.0",
 	"description": "Testing platform",
 	"author": "Mail.Ru Group Limited",
 	"license": "UNLICENSED",
@@ -56,7 +56,7 @@
 		"webdriverio": "^4.x"
 	},
 	"devDependencies": {
-		"typescript": "^2.4.2",
+		"typescript": "2.6.1",
 		"wdio-yoda-api-service": "^1.x"
 	}
 }
