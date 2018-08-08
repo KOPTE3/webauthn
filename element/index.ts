@@ -3,14 +3,15 @@
  * имеет локатор и название
  * @class Element
  */
-export default class Element extends Object {
+export default class Element {
+	/** локатор элемента (css-селектор) */
 	protected locator: string = 'html';
+	/** название элемента */
 	protected name: string = 'Элемент';
 	protected params: any = null;
 
-	protected constructor () {
-		super();
-	};
+	/** родительский элемент (если есть) */
+	public parent?: Element = null;
 
 	@step('Проверяем видимость элемента {element}. Элемент {__result__ ? "виден на экране" : "скрыт"}')
 	static IsVisible (element: Element): boolean {
@@ -78,16 +79,27 @@ export default class Element extends Object {
 		Element.TypeValue(Class.Create(), text);
 	}
 
-	static Create (): Element;
+	static Create<T extends typeof Element> (this: T): InstanceType<T>;
 
-	static Create (locator: string, name?: string): Element;
+	static Create<T extends typeof Element> (this: T, parent: Element): InstanceType<T>;
 
-	static Create (params: any): Element;
+	static Create<T extends typeof Element> (this: T, locator: string, name?: string): InstanceType<T>;
 
-	static Create (...args: any[]): Element {
+	static Create<T extends typeof Element> (this: T, parent: Element, locator: string, name?: string): InstanceType<T>;
+
+	static Create<T extends typeof Element> (this: T, params: any): InstanceType<T>;
+
+	static Create<T extends typeof Element> (this: T, parent: Element, params: any): InstanceType<T>;
+
+	static Create<T extends typeof Element> (this: T, ...args: any[]): InstanceType<T> {
 		const Class = this || Element;
+		let parent: Element | null = null;
+		if (args[0] instanceof Element) {
+			parent = args.shift();
+		}
+
 		if (args.length === 0) {
-			return new Class();
+			return new Class() as InstanceType<T>;
 		}
 
 		if (typeof args[0] === 'string') {
@@ -99,7 +111,9 @@ export default class Element extends Object {
 				element.name = name;
 			}
 
-			return element;
+			element.parent = parent;
+
+			return element as InstanceType<T>;
 		}
 
 		if (args[0] && typeof args[0] === 'object') {
@@ -107,7 +121,9 @@ export default class Element extends Object {
 			const element = new Class();
 			element.params = params;
 
-			return element;
+			element.parent = parent;
+
+			return element as InstanceType<T>;
 		}
 
 		const ClassName: string = this && this.name || 'Element';
@@ -159,7 +175,12 @@ export default class Element extends Object {
 	}
 
 	public Locator (): string {
-		return this.locator;
+		let locator = this.locator;
+		if (this.parent) {
+			locator = `${this.parent.locator} ${locator}`;
+		}
+
+		return locator;
 	}
 
 	public Name (): string {
