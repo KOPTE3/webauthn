@@ -13,6 +13,46 @@ export default class Element {
 	protected name: string = 'Элемент';
 	protected params: any = null;
 
+	constructor ();
+
+	constructor (parent: Element);
+
+	constructor (locator: string, name?: string);
+
+	constructor (parent: Element, locator: string, name?: string);
+
+	constructor (params: any);
+
+	constructor (parent: Element, params: any);
+
+	constructor (...args: any[]) {
+		if (args[0] instanceof Element) {
+			this.parent = args.shift();
+		}
+
+		if (args.length === 0) {
+			return;
+		}
+
+		if (typeof args[0] === 'string') {
+			this.locator = args[0];
+			if (typeof args[1] === 'string' && args[1]) {
+				this.name = args[1];
+			}
+
+			return;
+		}
+
+		if (args[0] && typeof args[0] === 'object') {
+			this.params = args[0];
+
+			return;
+		}
+
+		const ClassName: string = this.constructor && this.constructor.name || 'Element';
+		throw new Error(`Invalid creation of element ${ClassName}`);
+	}
+
 	@step('Проверяем видимость элемента {element}. Элемент {__result__ ? "виден на экране" : "скрыт"}')
 	static IsVisible (element: Element): boolean {
 		return browser.isVisible(element.Locator());
@@ -20,7 +60,7 @@ export default class Element {
 
 	static isVisible (): boolean {
 		const Class = this || Element;
-		return Element.IsVisible(Class.Create());
+		return Element.IsVisible(new Class);
 	}
 
 	@step('Ждём, пока элемент {element} не станет видимым')
@@ -30,7 +70,7 @@ export default class Element {
 
 	static waitForVisible (): void {
 		const Class = this || Element;
-		Element.WaitForVisible(Class.Create());
+		Element.WaitForVisible(new Class);
 	}
 
 	@step('Ждём, пока элемент {element} не исчезнет')
@@ -40,7 +80,7 @@ export default class Element {
 
 	static waitForNotVisible (): void {
 		const Class = this || Element;
-		Element.WaitForNotVisible(Class.Create());
+		Element.WaitForNotVisible(new Class);
 	}
 
 	@step('Устанавливаем значение элемента {element}', (e: any, t: string) => ({'Значение': t}))
@@ -51,7 +91,7 @@ export default class Element {
 
 	static setValue (text: string): void {
 		const Class = this || Element;
-		Element.SetValue(Class.Create(), text);
+		Element.SetValue(new Class, text);
 	}
 
 	@step('Получаем значение элемента {element}', (e: any, r: string) => ({'Значение равно': r}))
@@ -62,7 +102,7 @@ export default class Element {
 
 	static getValue (): string {
 		const Class = this || Element;
-		return Element.GetValue(Class.Create());
+		return Element.GetValue(new Class);
 	}
 
 	@step('Печатаем в элементе {element} текст', (_: any, text: string) => ({text}))
@@ -76,58 +116,7 @@ export default class Element {
 
 	static typeValue (text: string): void {
 		const Class = this || Element;
-		Element.TypeValue(Class.Create(), text);
-	}
-
-	static Create<T extends typeof Element> (this: T): InstanceType<T>;
-
-	static Create<T extends typeof Element> (this: T, parent: Element): InstanceType<T>;
-
-	static Create<T extends typeof Element> (this: T, locator: string, name?: string): InstanceType<T>;
-
-	static Create<T extends typeof Element> (this: T, parent: Element, locator: string, name?: string): InstanceType<T>;
-
-	static Create<T extends typeof Element> (this: T, params: any): InstanceType<T>;
-
-	static Create<T extends typeof Element> (this: T, parent: Element, params: any): InstanceType<T>;
-
-	static Create<T extends typeof Element> (this: T, ...args: any[]): InstanceType<T> {
-		const Class = this || Element;
-		let parent: Element | null = null;
-		if (args[0] instanceof Element) {
-			parent = args.shift();
-		}
-
-		if (args.length === 0) {
-			return new Class() as InstanceType<T>;
-		}
-
-		if (typeof args[0] === 'string') {
-			const locator: string = args[0];
-			const element = new Class();
-			element.locator = locator;
-			if (typeof args[1] === 'string' && args[1]) {
-				const name: string = args[1];
-				element.name = name;
-			}
-
-			element.parent = parent;
-
-			return element as InstanceType<T>;
-		}
-
-		if (args[0] && typeof args[0] === 'object') {
-			const params: any = args[0];
-			const element = new Class();
-			element.params = params;
-
-			element.parent = parent;
-
-			return element as InstanceType<T>;
-		}
-
-		const ClassName: string = this && this.name || 'Element';
-		throw new Error(`Invalid creation of element ${ClassName}`);
+		Element.TypeValue(new Class, text);
 	}
 
 	@step('Кликаем по элементу {element}')
@@ -139,7 +128,7 @@ export default class Element {
 
 	static clickTo (): void {
 		const Class = this || Element;
-		Element.ClickTo(Class.Create());
+		Element.ClickTo(new Class);
 	}
 
 	static TextContent (element: Element): string {
@@ -151,26 +140,26 @@ export default class Element {
 
 	static textContent (): string {
 		const Class = this || Element;
-		return Element.TextContent(Class.Create());
+		return Element.TextContent(new Class);
 	}
 
 	public TextContent (): string {
 		return Element.TextContent(this);
 	}
 
-	public TypeValue (text: string): void {
+	public typeValue (text: string): void {
 		Element.TypeValue(this, text);
 	}
 
-	public IsVisible (): boolean {
+	public isVisible (): boolean {
 		return Element.IsVisible(this);
 	}
 
-	public WaitForVisible (): void {
+	public waitForVisible (): void {
 		return Element.WaitForVisible(this);
 	}
 
-	public WaitForNotVisible (): void {
+	public waitForNotVisible (): void {
 		return Element.WaitForNotVisible(this);
 	}
 
@@ -191,7 +180,7 @@ export default class Element {
 		return this.Name();
 	}
 
-	public ClickTo (): void {
+	public clickTo (): void {
 		Element.ClickTo(this);
 	}
 
