@@ -4,7 +4,7 @@
  * Unicode characters
  * https://w3c.github.io/webdriver/webdriver-spec.html#character-types
  */
-enum UNICODE_CHARACTERS {
+export enum UNICODE_CHARACTERS {
 	'NULL' = '\uE000',
 	'Cancel' = '\uE001',
 	'Help' = '\uE002',
