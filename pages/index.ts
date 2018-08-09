@@ -1,7 +1,7 @@
 import * as merge from 'deepmerge';
 import * as Debug from 'debug';
-import { Credentials } from '@qa/account-manager';
-import account, { UserType } from '../utils/account';
+import {Credentials} from '@qa/account-manager';
+import account, {UserType} from '../utils/account';
 import URL from '../utils/url';
 import config from '../config';
 
