@@ -11,7 +11,7 @@ export default class Element {
 	protected params: any = null;
 
 	/** родительский элемент (если есть) */
-	public parent?: Element = null;
+	public parent?: Element | null;
 
 	@step('Проверяем видимость элемента {element}. Элемент {__result__ ? "виден на экране" : "скрыт"}')
 	static IsVisible (element: Element): boolean {
