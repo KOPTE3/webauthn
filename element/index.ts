@@ -4,14 +4,14 @@
  * @class Element
  */
 export default class Element {
+	/** родительский элемент (если есть) */
+	public parent?: Element | null;
+
 	/** локатор элемента (css-селектор) */
 	protected locator: string = 'html';
 	/** название элемента */
 	protected name: string = 'Элемент';
 	protected params: any = null;
-
-	/** родительский элемент (если есть) */
-	public parent?: Element | null;
 
 	@step('Проверяем видимость элемента {element}. Элемент {__result__ ? "виден на экране" : "скрыт"}')
 	static IsVisible (element: Element): boolean {
@@ -177,7 +177,7 @@ export default class Element {
 	public Locator (): string {
 		let locator = this.locator;
 		if (this.parent) {
-			locator = `${this.parent.locator} ${locator}`;
+			return this.parent.wrapChildLocator(locator);
 		}
 
 		return locator;
@@ -193,5 +193,9 @@ export default class Element {
 
 	public ClickTo (): void {
 		Element.ClickTo(this);
+	}
+
+	protected wrapChildLocator (childLocator: string): string {
+		return `${this.Locator()} ${childLocator}`;
 	}
 }
