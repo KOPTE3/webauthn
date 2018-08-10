@@ -3,7 +3,7 @@
  * имеет локатор и название
  * @class Element
  */
-export default class Element {
+export class Element {
 	/** родительский элемент (если есть) */
 	public parent?: Element | null;
 
@@ -53,15 +53,20 @@ export default class Element {
 		throw new Error(`Invalid creation of element ${ClassName}`);
 	}
 
+	@gen
 	@step('Проверяем видимость элемента {element}. Элемент {__result__ ? "виден на экране" : "скрыт"}')
 	static IsVisible (element: Element): boolean {
 		return browser.isVisible(element.Locator());
 	}
 
-	static isVisible (): boolean {
-		const Class = this || Element;
-		return Element.IsVisible(new Class);
-	}
+	// static isVisible (): boolean {
+	// 	const Class = this || Element;
+	// 	return Element.IsVisible(new Class);
+	// }
+
+	// public isVisible (): boolean {
+	// 	return Element.IsVisible(this);
+	// }
 
 	@step('Ждём, пока элемент {element} не станет видимым')
 	static WaitForVisible (element: Element): void {
@@ -151,10 +156,6 @@ export default class Element {
 		Element.TypeValue(this, text);
 	}
 
-	public isVisible (): boolean {
-		return Element.IsVisible(this);
-	}
-
 	public waitForVisible (): void {
 		return Element.WaitForVisible(this);
 	}
@@ -188,3 +189,4 @@ export default class Element {
 		return `${this.Locator()} ${childLocator}`;
 	}
 }
+export default Element;
