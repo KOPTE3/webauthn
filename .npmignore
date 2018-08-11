@@ -49,3 +49,6 @@ config.local.js
 !/index.js
 build
 *.gen.js
+
+test.ts
+test2.ts
