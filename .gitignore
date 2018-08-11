@@ -49,7 +49,7 @@ config.local.js
 *.js
 *.js.map
 *.d.ts
-!/index.d.ts
+!/yoda.d.ts
 !/types/*.d.ts
 *.gen.ts
 

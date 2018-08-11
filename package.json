@@ -16,7 +16,7 @@
   },
   "scripts": {
     "prepare": "npm run generate",
-    "prepublishOnly": "tsc",
+    "prepublishOnly": "tsc && npm run generate",
     "generate": "TS_NODE_PROJECT=\"./tsconfig.json\" node $NODE_DEBUG_OPTION --require ts-node/register ./build",
     "debug-gen": "TS_NODE_PROJECT=\"./tsconfig.json\" node $NODE_DEBUG_OPTION --require ts-node/register ./test.ts",
     "debug-run": "TS_NODE_PROJECT=\"./tsconfig.json\" node $NODE_DEBUG_OPTION --require ts-node/register ./test2.ts"
@@ -27,7 +27,7 @@
       "lint"
     ]
   },
-  "types": "index.d.ts",
+  "types": "yoda.d.ts",
   "bin": {
     "yoda": "index.js"
   },
@@ -41,6 +41,7 @@
     "core-js": "^2.5.7",
     "debug": "^3.1.0",
     "deepmerge": "0.2.10",
+    "fs-extra": "^7.0.0",
     "glob": "^7.1.2",
     "minimist": "^1.2.0",
     "platform": "^1.3.4",
@@ -52,6 +53,7 @@
   "devDependencies": {
     "@types/debug": "^0.0.30",
     "@types/deepmerge": "^1.3.2",
+    "@types/fs-extra": "^5.0.4",
     "@types/glob": "^5.0.35",
     "@types/minimist": "^1.2.0",
     "@types/node": "^10.5.7",

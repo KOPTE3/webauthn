@@ -1,7 +1,9 @@
+import * as fse from 'fs-extra';
 import * as path from 'path';
 import Project, {
 	ClassDeclaration,
 	MethodDeclaration,
+	MethodDeclarationStructure,
 	ParameterDeclaration,
 	ParameterDeclarationStructure,
 	TypeParameterDeclaration,
@@ -10,16 +12,24 @@ import Project, {
 import {lcFirst} from '../../utils/utils';
 
 
-export default async function generate (source: string, destination: string, options?: any): Promise<void> {
-	const filename = path.basename(source, '.ts');
-	const moduleSpecifier = `./${filename}`;
+interface Temp {
+	className: string;
+	methods: MethodDeclarationStructure[];
+}
+
+export default async function generate (source: string, options?: any): Promise<void> {
+	const {dir, name} = path.parse(source);
+	const destination = path.join(dir, `${name}.gen.ts`);
+	const dts = path.join(dir, `${name}.d.ts`);
+	const moduleSpecifier = `./${name}`;
 	const project = new Project({
 		addFilesFromTsConfig: false,
 	});
 
 	const sourceFile = project.addExistingSourceFile(source);
+
 	const classDeclarations: ClassDeclaration[] = sourceFile.getClasses();
-	const generateClasses = [];
+	const generateClasses: Array<Temp> = [];
 
 	for (const classDeclaration of classDeclarations) {
 		const staticMethods = classDeclaration.getStaticMethods();
@@ -48,8 +58,55 @@ export default async function generate (source: string, destination: string, opt
 
 		if (generateMethods.length > 0) {
 			generateClasses.push({
-				classDeclaration,
-				generateMethods,
+				className: classDeclaration.getName(),
+				methods: generateMethods.map(function (generateMethod: MethodDeclaration): MethodDeclarationStructure {
+					const method: MethodDeclarationStructure = {
+						name: lcFirst(generateMethod.getName()),
+						returnType: generateMethod.getReturnType().getText(),
+					};
+
+					const typeParameters = generateMethod.getTypeParameters();
+					const params = generateMethod.getParameters();
+
+					const preparedTypeParameters: TypeParameterDeclarationStructure[] = typeParameters
+						.map(function (typeParameter: TypeParameterDeclaration): TypeParameterDeclarationStructure {
+							const declaration: TypeParameterDeclarationStructure = {
+								name: typeParameter.getName(),
+							};
+
+							const typeConstraint = typeParameter.getConstraint();
+							const typeDefault = typeParameter.getDefault();
+
+							if (typeConstraint) {
+								declaration.constraint = typeConstraint.getFullText();
+							}
+
+							if (typeDefault) {
+								declaration.default = typeDefault.getFullText();
+							}
+
+							return declaration;
+						});
+					const preparedParameters: ParameterDeclarationStructure[] = params.slice(1)
+						.map(function (param: ParameterDeclaration): ParameterDeclarationStructure {
+							const p: ParameterDeclarationStructure = {
+								name: param.getName(),
+								type: param.getType().getText(),
+								hasQuestionToken: param.isOptional() && !param.isRestParameter(),
+								isRestParameter: param.isRestParameter(),
+							};
+
+							return p;
+						});
+
+					method.typeParameters = preparedTypeParameters;
+					method.parameters = preparedParameters;
+					method.isAsync = generateMethod.isAsync();
+					method.isAbstract = generateMethod.isAbstract();
+					method.isGenerator = generateMethod.isGenerator();
+
+					return method;
+				}),
 			});
 		}
 	}
@@ -64,6 +121,7 @@ export default async function generate (source: string, destination: string, opt
 		moduleSpecifier,
 	});
 
+
 	const rootNamespace = destinationFile.addNamespace({
 		hasDeclareKeyword: true,
 		hasModuleKeyword: true,
@@ -71,9 +129,8 @@ export default async function generate (source: string, destination: string, opt
 	});
 
 	for (const generateClass of generateClasses) {
-		const {classDeclaration, generateMethods} = generateClass;
+		const {className, methods} = generateClass;
 
-		const className = classDeclaration.getName();
 		const classInterface = rootNamespace.addInterface({
 			name: className,
 		});
@@ -82,61 +139,33 @@ export default async function generate (source: string, destination: string, opt
 			name: className,
 		});
 
-		for (const generateMethod of generateMethods) {
-			const originalMethodName = generateMethod.getName();
-			const methodName = lcFirst(originalMethodName);
-			const typeParameters = generateMethod.getTypeParameters();
-			const params = generateMethod.getParameters();
-			const returnType = generateMethod.getReturnType();
+		for (const method of methods) {
+			classInterface.addMethod(method);
 
-			const returnTypeText = returnType.getText();
-			const preparedTypeParameters: TypeParameterDeclarationStructure[] = typeParameters
-				.map(function (typeParameter: TypeParameterDeclaration): TypeParameterDeclarationStructure {
-					const declaration: TypeParameterDeclarationStructure = {
-						name: typeParameter.getName(),
-					};
-
-					const typeConstraint = typeParameter.getConstraint();
-					const typeDefault = typeParameter.getDefault();
-
-					if (typeConstraint) {
-						declaration.constraint = typeConstraint.getFullText();
-					}
-
-					if (typeDefault) {
-						declaration.default = typeDefault.getFullText();
-					}
-
-					return declaration;
-				});
-			const preparedParameters: ParameterDeclarationStructure[] = params.slice(1)
-				.map(function (param: ParameterDeclaration): ParameterDeclarationStructure {
-					const p: ParameterDeclarationStructure = {
-						name: param.getName(),
-						type: param.getType().getText(),
-						hasQuestionToken: param.isOptional() && !param.isRestParameter(),
-						isRestParameter: param.isRestParameter(),
-					};
-
-					return p;
-				});
-
-			const m = classInterface.addMethod({
-				name: methodName,
-				returnType: returnTypeText,
-				typeParameters: preparedTypeParameters,
-				parameters: preparedParameters,
-			});
-
-			const f = classNamespace.addFunction({
-				name: methodName,
-				returnType: returnTypeText,
-				typeParameters: preparedTypeParameters,
-				parameters: preparedParameters,
-			});
-
+			const f = classNamespace.addFunction(method);
 			f.removeBody();
 		}
+	}
+
+	const dtsFileExists = await fse.pathExists(dts);
+	if (dtsFileExists) {
+		const dtsFile = project.addExistingSourceFile(dts);
+		for (const generateClass of generateClasses) {
+			const {className, methods} = generateClass;
+			const dtsClass: ClassDeclaration = dtsFile.getClass(className);
+
+			for (const method of methods) {
+				console.log('add', method.name);
+
+				dtsClass.addMethod(method);
+				dtsClass.addMethod({
+					...method,
+					isStatic: true,
+				});
+			}
+		}
+
+		await dtsFile.save();
 	}
 
 	await destinationFile.save();

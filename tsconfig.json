@@ -22,7 +22,7 @@
 		"skipLibCheck": true,
 		"noImplicitAny": true,
 		"noImplicitThis": false,
-		"declaration": false,
+		"declaration": true,
 		"strictNullChecks": false,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
