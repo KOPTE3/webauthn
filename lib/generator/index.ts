@@ -155,7 +155,12 @@ export default async function generate (source: string, options?: any): Promise<
 			const dtsClass: ClassDeclaration = dtsFile.getClass(className);
 
 			for (const method of methods) {
-				console.log('add', method.name);
+				while (dtsClass.getStaticMethod(method.name)) {
+					dtsClass.getStaticMethod(method.name).remove();
+				}
+				while (dtsClass.getInstanceMethod(method.name)) {
+					dtsClass.getInstanceMethod(method.name).remove();
+				}
 
 				dtsClass.addMethod(method);
 				dtsClass.addMethod({

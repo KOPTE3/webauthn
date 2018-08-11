@@ -10,6 +10,9 @@ export interface GenOptions {
 }
 
 export default async function (options: GenOptions): Promise<void> {
+	if (!options.root) {
+		throw new Error('Необходимо передать опцию --root');
+	}
 	const files = await glob('**/*.ts', {cwd: options.root, absolute: true, ignore: '*.gen.ts'});
 
 	for (const source of files) {

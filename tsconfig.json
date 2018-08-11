@@ -36,6 +36,7 @@
     "./build",
     "./test.ts",
     "./test2.ts",
-    "**/*.gen.ts"
+    "**/*.gen.ts",
+    "**/*.gen.d.ts"
 	]
 }
