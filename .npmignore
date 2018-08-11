@@ -47,3 +47,5 @@ config.local.js
 !/index.d.ts
 !/types/*.d.ts
 !/index.js
+build
+*.gen.js

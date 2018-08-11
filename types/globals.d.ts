@@ -4,3 +4,6 @@ declare module NodeJS {
 		deprecated: any;
 	}
 }
+
+
+declare var gen: MethodDecorator;

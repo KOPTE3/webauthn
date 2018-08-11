@@ -1,3 +1,4 @@
+/// <reference path="./index.gen.ts" />
 /**
  * Класс, представляющий собой абстракцию над любым элементом страницы
  * имеет локатор и название
@@ -59,57 +60,33 @@ export class Element {
 		return browser.isVisible(element.Locator());
 	}
 
-	// static isVisible (): boolean {
-	// 	const Class = this || Element;
-	// 	return Element.IsVisible(new Class);
-	// }
-
-	// public isVisible (): boolean {
-	// 	return Element.IsVisible(this);
-	// }
-
+	@gen
 	@step('Ждём, пока элемент {element} не станет видимым')
 	static WaitForVisible (element: Element): void {
 		browser.waitForVisible(element.Locator());
 	}
 
-	static waitForVisible (): void {
-		const Class = this || Element;
-		Element.WaitForVisible(new Class);
-	}
-
+	@gen
 	@step('Ждём, пока элемент {element} не исчезнет')
 	static WaitForNotVisible (element: Element): void {
 		browser.waitForVisible(element.Locator(), 2000, true);
 	}
 
-	static waitForNotVisible (): void {
-		const Class = this || Element;
-		Element.WaitForNotVisible(new Class);
-	}
-
+	@gen
 	@step('Устанавливаем значение элемента {element}', (e: any, t: string) => ({'Значение': t}))
 	static SetValue (element: Element, text: string): void {
 		const locator = element.Locator();
 		browser.setValue(locator, text);
 	}
 
-	static setValue (text: string): void {
-		const Class = this || Element;
-		Element.SetValue(new Class, text);
-	}
-
+	@gen
 	@step('Получаем значение элемента {element}', (e: any, r: string) => ({'Значение равно': r}))
 	static GetValue (element: Element): string {
 		const locator = element.Locator();
 		return browser.getValue(locator);
 	}
 
-	static getValue (): string {
-		const Class = this || Element;
-		return Element.GetValue(new Class);
-	}
-
+	@gen
 	@step('Печатаем в элементе {element} текст', (_: any, text: string) => ({text}))
 	static TypeValue (element: Element, text: string): void {
 		const locator = element.Locator();
@@ -119,11 +96,7 @@ export class Element {
 		el.keys(text);
 	}
 
-	static typeValue (text: string): void {
-		const Class = this || Element;
-		Element.TypeValue(new Class, text);
-	}
-
+	@gen
 	@step('Кликаем по элементу {element}')
 	static ClickTo (element: Element): void {
 		const locator = element.Locator();
@@ -131,11 +104,7 @@ export class Element {
 		el.elementIdClick(el.value.ELEMENT);
 	}
 
-	static clickTo (): void {
-		const Class = this || Element;
-		Element.ClickTo(new Class);
-	}
-
+	@gen
 	static TextContent (element: Element): string {
 		const locator = element.Locator();
 		const el = browser.element(locator);
@@ -143,25 +112,12 @@ export class Element {
 		return value;
 	}
 
-	static textContent (): string {
-		const Class = this || Element;
-		return Element.TextContent(new Class);
-	}
-
-	public TextContent (): string {
-		return Element.TextContent(this);
-	}
-
-	public typeValue (text: string): void {
-		Element.TypeValue(this, text);
-	}
-
-	public waitForVisible (): void {
-		return Element.WaitForVisible(this);
-	}
-
-	public waitForNotVisible (): void {
-		return Element.WaitForNotVisible(this);
+	@gen
+	@step('Test')
+	static TestMethod (element: Element, a: number, b: number): number {
+		debugger;
+		console.log(element.toString());
+		return a + b;
 	}
 
 	public Locator (): string {
@@ -181,12 +137,9 @@ export class Element {
 		return this.Name();
 	}
 
-	public clickTo (): void {
-		Element.ClickTo(this);
-	}
-
 	protected wrapChildLocator (childLocator: string): string {
 		return `${this.Locator()} ${childLocator}`;
 	}
 }
+
 export default Element;

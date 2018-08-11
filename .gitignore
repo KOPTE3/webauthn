@@ -52,3 +52,7 @@ config.local.js
 !/index.d.ts
 !/types/*.d.ts
 *.gen.ts
+
+
+test.ts
+test2.ts
