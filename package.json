@@ -15,6 +15,7 @@
     "url": "ssh://git@stash.mail.ru:2222/qa/yoda.git"
   },
   "scripts": {
+    "postinstall": "npm run generate",
     "prepublishOnly": "npm run generate && tsc",
     "generate": "TS_NODE_PROJECT=\"./tsconfig.json\" node $NODE_DEBUG_OPTION --require ts-node/register ./build",
     "debug-gen": "TS_NODE_PROJECT=\"./tsconfig.json\" node $NODE_DEBUG_OPTION --require ts-node/register ./test.ts",
