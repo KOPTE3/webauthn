@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /// <reference path="./types/index.d.ts" />
 import 'core-js';
-import * as minimist from 'minimist';
 import 'reflect-metadata';
+
+import * as minimist from 'minimist';
 import './lib';
 
 

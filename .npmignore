@@ -47,7 +47,6 @@ config.local.js
 build
 *.gen.js
 *.gen.d.js
-*.gen.ts
 *.gen.d.ts
 
 test.ts
