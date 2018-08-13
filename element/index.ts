@@ -98,6 +98,7 @@ export class Element {
 	static TypeValue (element: Element, text: string): void {
 		const locator = element.Locator();
 		const el = browser.element(locator);
+		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
 		el.elementIdClick(el.value.ELEMENT);
 		el.elementIdClear(el.value.ELEMENT);
 		el.keys(text);
@@ -108,6 +109,7 @@ export class Element {
 	static ClickTo (element: Element): void {
 		const locator = element.Locator();
 		const el = browser.element(locator);
+		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
 		el.elementIdClick(el.value.ELEMENT);
 	}
 
@@ -115,6 +117,7 @@ export class Element {
 	static GetTextContent (element: Element): string {
 		const locator = element.Locator();
 		const el = browser.element(locator);
+		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
 		const {value} = el.elementIdText(el.value.ELEMENT);
 		return value;
 	}
