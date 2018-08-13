@@ -1,4 +1,6 @@
 /// <reference path="./index.gen.ts" />
+import * as assert from 'assert';
+
 /**
  * Класс, представляющий собой абстракцию над любым элементом страницы
  * имеет локатор и название
@@ -55,21 +57,26 @@ export class Element {
 	}
 
 	@gen
-	@step('Проверяем видимость элемента {element}. Элемент {__result__ ? "виден на экране" : "скрыт"}')
-	static IsVisible (element: Element): boolean {
+	static GetVisible (element: Element): boolean {
 		return browser.isVisible(element.Locator());
 	}
 
 	@gen
-	@step('Ждём, пока элемент {element} не станет видимым')
-	static WaitForVisible (element: Element): void {
-		browser.waitForVisible(element.Locator());
+	@step('Проверяем, что элемент {element} {expected ? "видим" : "не видим"} на экране')
+	static CheckVisible (element: Element, expected: boolean): void {
+		const actual = Element.GetVisible(element);
+
+		assert.strictEqual(actual, expected, `Видимость элемента ${element.Name()} (${actual}) не совпадает с ожидаемым значением (${expected})`);
 	}
 
 	@gen
-	@step('Ждём, пока элемент {element} не исчезнет')
-	static WaitForNotVisible (element: Element): void {
-		browser.waitForVisible(element.Locator(), 2000, true);
+	@step('Дожидаемся, пока элемент {element} станет {expected ? "видим" : "не видим"} на экране')
+	static WaitForVisible (element: Element, expected: boolean, timeout?: number): void {
+		browser.waitForVisible(
+			element.Locator(),
+			timeout || browser.options.waitforTimeout,
+			expected === false,
+		);
 	}
 
 	@gen
@@ -105,7 +112,7 @@ export class Element {
 	}
 
 	@gen
-	static TextContent (element: Element): string {
+	static GetTextContent (element: Element): string {
 		const locator = element.Locator();
 		const el = browser.element(locator);
 		const {value} = el.elementIdText(el.value.ELEMENT);
@@ -113,11 +120,18 @@ export class Element {
 	}
 
 	@gen
-	@step('Test')
-	static TestMethod (element: Element, a: number, b: number): number {
-		debugger;
-		console.log(element.toString());
-		return a + b;
+	@step('Проверяем, что текст в элементе {element} совпадает с', (e: any, expected: string) => ({expected}))
+	static CheckTextContent (element: Element, expected: string): void {
+		const actual = Element.GetTextContent(element);
+		assert.strictEqual(actual, expected, `Текстовое содержимое элемента ${element.Name()} (${actual}) не совпадает с ожидаемым значением (${expected})`);
+	}
+
+	@gen
+	@step('Дожидаемся, пока текст в элементе {element} станет равен значению', (e: any, expected: string) => ({expected}))
+	static WaitForTextContent (element: Element, expected: string, timeout?: number): void {
+		browser.waitUntil(function () {
+			return Element.GetTextContent(element) === expected;
+		}, timeout || browser.options.waitforTimeout, `Не удалось дождаться пока текстовое содержимое элемента ${element.Name()} не совпадает с ожидаемым значением (${expected})`);
 	}
 
 	public Locator (): string {
