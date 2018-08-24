@@ -234,8 +234,12 @@ class PageObject {
 	 *
 	 * @returns {boolean}
 	 */
-	isVisible (): boolean {
-		return browser.isVisible(this.locators.container);
+	isVisible (reverse: boolean = false): boolean {
+		try {
+			return browser.waitForVisible(this.locators.container, null, reverse);
+		} catch (error) {
+			return false;
+		}
 	}
 
 	/**
