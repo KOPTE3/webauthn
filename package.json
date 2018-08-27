@@ -1,13 +1,24 @@
 {
   "name": "@qa/yoda",
-  "version": "9.2.3-aostapenko",
+  "version": "9.4.0",
   "description": "Testing platform",
   "author": "Mail.Ru Group Limited",
   "license": "UNLICENSED",
   "maintainers": [
     {
-      "name": "Alexander Abashkin",
-      "email": "<a.abashkin@corp.mail.ru>"
+      "name": "Ostapenko Anatoliy",
+      "url": "https://sys.mail.ru/users/a.ostapenko/",
+      "email": "a.ostapenko@corp.mail.ru"
+    },
+    {
+      "name": "Minigalieva Renata",
+      "url": "https://sys.mail.ru/users/r.minigalieva/",
+      "email": "r.minigalieva@corp.mail.ru"
+    },
+    {
+      "name": "Baykov Yuriy",
+      "url": "https://sys.mail.ru/users/y.baykov/",
+      "email": "y.baykov@corp.mail.ru"
     }
   ],
   "repository": {
