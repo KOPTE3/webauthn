@@ -43,7 +43,11 @@ package-lock.json
 phantomjsdriver.log
 cache
 config.local.js
-*.d.ts
-!/index.d.ts
-!/types/*.d.ts
 !/index.js
+build
+*.gen.js
+*.gen.d.js
+*.gen.d.ts
+
+test.ts
+test2.ts

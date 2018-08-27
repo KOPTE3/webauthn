@@ -1,37 +1,42 @@
 {
-	"compilerOptions": {
-		"typeRoots": [
-			"./node_modules/@types",
-			"./types"
-		],
+  "compilerOptions": {
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
+    ],
 
-		"types": [
-			"node",
-			"wdio-yoda-allure-utils-service",
-			"wdio-yoda-api-service"
-		],
+    "types": [
+      "ts-simple-ast",
+      "wdio-yoda-allure-utils-service",
+      "wdio-yoda-api-service"
+    ],
 
-		"lib": [
-			"es2017",
-			"dom"
-		],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
 
-		"target": "es2017",
-		"module": "commonjs",
-		"moduleResolution": "node",
-		"skipLibCheck": true,
-		"noImplicitAny": true,
-		"noImplicitThis": false,
-		"declaration": false,
-		"strictNullChecks": false,
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"sourceMap": false
-	},
+    "target": "es2017",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "noImplicitThis": false,
+    "declaration": true,
+    "strictNullChecks": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": false
+  },
 
-	"exclude": [
-		"./node_modules",
-		"./files",
-		"./cache"
-	]
+  "exclude": [
+    "./node_modules",
+    "./files",
+    "./cache",
+    "./build",
+    "./test.ts",
+    "./test2.ts",
+    "**/*.gen.ts",
+    "**/*.gen.d.ts"
+  ]
 }

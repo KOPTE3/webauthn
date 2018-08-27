@@ -29,6 +29,7 @@ declare namespace Yoda {
 	}
 
 	interface Options extends WebdriverIO.Options {
+		_: string[];
 		grep?: string;
 		config?: string;
 		log?: boolean;

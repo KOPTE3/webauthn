@@ -544,17 +544,17 @@ class Steps {
 	 * @param {string} id - номер вкладки ("0", "1", ...) по порядку их открытия, а не по расположению в браузере
 	 */
 	@step('Переключиться во вкладку № "{id}"')
-	switchTab(id: number): void {
+	switchTab(id: number | string): void {
 		const tabIds: string[] = browser.getTabIds();
 
-		browser.switchTab(tabIds[id]);
+		browser.switchTab(tabIds[+id]);
 	}
 
 	@step('Закрыть текущую вкладку и переключиться вкладку №{focusToTabIndex}')
-	closeTab(focusToTabIndex?: number): void {
+	closeTab(focusToTabIndex?: number | string): void {
 		const tabIds: string[] = browser.getTabIds();
 
-		browser.close(focusToTabIndex ? tabIds[focusToTabIndex] : null);
+		browser.close(focusToTabIndex ? tabIds[+focusToTabIndex] : null);
 	}
 
 	@step('Дождаться пока вкладок будет "{count}"')

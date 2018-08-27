@@ -1,6 +1,11 @@
 #!/usr/bin/env node
 /// <reference path="./types/index.d.ts" />
+import 'core-js';
+import 'reflect-metadata';
+
 import * as minimist from 'minimist';
+import './lib';
+
 
 let options: string[] = process.argv.slice(2);
 
@@ -10,10 +15,26 @@ if (flags.verbose) {
 	process.env.DEBUG = '@qa*';
 }
 
-import runner from './tasks/runner';
+let task: Promise<void> = Promise.resolve();
 
-/** Yoda runner */
-export default runner({
-	data: flags,
-	file: flags.config || 'config.js'
-});
+if (flags._.includes('gen')) {
+	const runner = require('./tasks/gen');
+
+	/** Yoda runner */
+	task = runner.default({
+		root: flags.root,
+	});
+} else {
+	const runner = require('./tasks/runner');
+
+	/** Yoda runner */
+	task = runner.default({
+		data: flags,
+		file: flags.config || 'config.js',
+	});
+}
+
+task
+	.catch(console.error);
+
+export default task;
