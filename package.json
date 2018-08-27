@@ -26,9 +26,7 @@
   "scripts": {
     "prepare": "npm run generate",
     "prepublishOnly": "tsc && npm run generate",
-    "generate": "TS_NODE_PROJECT=\"./tsconfig.json\" node $NODE_DEBUG_OPTION --require ts-node/register ./build",
-    "debug-gen": "TS_NODE_PROJECT=\"./tsconfig.json\" node $NODE_DEBUG_OPTION --require ts-node/register ./test.ts",
-    "debug-run": "TS_NODE_PROJECT=\"./tsconfig.json\" node $NODE_DEBUG_OPTION --require ts-node/register ./test2.ts"
+    "generate": "TS_NODE_PROJECT=\"./tsconfig.json\" node $NODE_DEBUG_OPTION --require ts-node/register ./build"
   },
   "pre-commit": {
     "silent": false,
