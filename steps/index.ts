@@ -563,6 +563,15 @@ class Steps {
 			return browser.getTabIds().length === count;
 		});
 	}
+
+	@step('Проверить {reverse ? "не" : ""}видимость {__result__}')
+	checkVisibility (reverse: boolean = false) {
+		assert.ok(this.page.isVisible(reverse), `"${this.page.name}" ${reverse ? '' : 'не '}видно`);
+
+		// для отчёта
+		return this.page.name;
+	}
+
 }
 
 export default Steps;
