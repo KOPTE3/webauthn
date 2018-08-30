@@ -7,7 +7,7 @@ import {Url} from 'url';
 const debug = Debug('@qa:yoda:internal');
 const PROXY_PATH = 'http://internal.pre.win102.dev.mail.ru/api/v1/test';
 
-export interface RequestResult {
+export interface RequestResult<T = any> {
 	path: string;
 	status?: number;
 	response?: {
@@ -25,7 +25,7 @@ export interface RequestResult {
 		};
 	};
 	error?: Error;
-	body?: object;
+	body?: T;
 }
 
 export default function call (path: string, body: object, method: 'POST' | 'GET' = 'GET'): RequestResult {
