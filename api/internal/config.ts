@@ -2,6 +2,7 @@ import call, {callAsync, RequestResult} from './call';
 
 
 type Options = {name: string} | {names: string[]};
+
 export type ConfigBody = Array<{
 	status: number;
 	name: string;
