@@ -13,7 +13,24 @@ interface MailApiResponse {
 
 let rpc: RPC;
 
-export async function callAsync (
+export default function call(
+	path: string,
+	body: object,
+	method: 'POST' | 'GET' = 'GET',
+	credentials?: IRPCCredentials
+): RequestResult {
+	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method, credentials));
+
+	if (result.error) {
+		const { error, ...fields } = result;
+		Object.assign(error, fields);
+		throw error;
+	}
+
+	return result;
+}
+
+export async function callAsync(
 	path: string,
 	body: object,
 	method: 'POST' | 'GET' = 'GET',
