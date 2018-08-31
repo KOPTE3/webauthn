@@ -566,7 +566,7 @@ class Steps {
 
 	@step('Проверить {reverse ? "не" : ""}видимость {__result__}')
 	checkVisibility (reverse: boolean = false) {
-		assert.ok(this.page.isVisible(reverse), `"${this.page.name}" ${reverse ? '' : 'не '}видно`);
+		assert.strictEqual(this.page.isVisible(), !reverse, `"${this.page.name}" ${reverse ? '' : 'не '}видно`);
 
 		// для отчёта
 		return this.page.name;

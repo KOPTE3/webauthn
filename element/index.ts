@@ -94,6 +94,14 @@ export class Element {
 	}
 
 	@gen
+	@step('Проверяем, что элемент {element} содержит в себе текст {expected}')
+	static CheckValue (element: Element, expected: string): void {
+		const actual = Element.GetValue(element);
+
+		assert.strictEqual(actual, expected, `Текст в элементе ${element.Name()} (${actual}) не совпадает с ожидаемым значением (${expected})`);
+	}
+
+	@gen
 	@step('Печатаем в элементе {element} текст', (_: any, text: string) => ({text}))
 	static TypeValue (element: Element, text: string): void {
 		const locator = element.Locator();
@@ -126,6 +134,7 @@ export class Element {
 	@step('Проверяем, что текст в элементе {element} совпадает с', (e: any, expected: string) => ({expected}))
 	static CheckTextContent (element: Element, expected: string): void {
 		const actual = Element.GetTextContent(element);
+
 		assert.strictEqual(actual, expected, `Текстовое содержимое элемента ${element.Name()} (${actual}) не совпадает с ожидаемым значением (${expected})`);
 	}
 
