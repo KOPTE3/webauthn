@@ -13,9 +13,9 @@ export type ConfigBody = Array<{
  * @see http://api.tornado.dev.mail.ru/test/config
  */
 export default function config (options: Options): RequestResult<ConfigBody> {
-	return call('config', options);
+	return call('test/config', options);
 }
 
 export async function configAsync (options: Options): Promise<RequestResult<ConfigBody>> {
-	return callAsync('config', options);
+	return callAsync('test/config', options);
 }

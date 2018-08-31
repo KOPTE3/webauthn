@@ -5,7 +5,7 @@ import {Url} from 'url';
 
 
 const debug = Debug('@qa:yoda:internal');
-const PROXY_PATH = 'http://internal.pre.win102.dev.mail.ru/api/v1/test';
+const PROXY_PATH = 'http://internal.pre.win102.dev.mail.ru/api/v1';
 
 export interface RequestResult<T = any> {
 	path: string;
@@ -28,8 +28,23 @@ export interface RequestResult<T = any> {
 	body?: T;
 }
 
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type CallError = Error & Omit<RequestResult, 'error'>;
+
+
 export default function call (path: string, body: object, method: 'POST' | 'GET' = 'GET'): RequestResult {
-	return browser.waitForPromise(callAsync(path, body, method));
+	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method));
+	if (result.error) {
+		const {error, ...fields} = result;
+		Object.assign(error, fields);
+		throw error;
+	} else if (result.status < 200 || result.status >= 400) {
+		const error = new Error(`Request failed with body.status is ${result.status}`);
+		Object.assign(error, result);
+		throw error;
+	}
+
+	return result;
 }
 
 export async function callAsync (path: string, body: object, method: 'POST' | 'GET' = 'GET'): Promise<RequestResult> {
@@ -56,7 +71,6 @@ export async function callAsync (path: string, body: object, method: 'POST' | 'G
 
 	const result: RequestResult = {
 		path,
-		error: null,
 	};
 
 	try {
@@ -68,12 +82,14 @@ export async function callAsync (path: string, body: object, method: 'POST' | 'G
 		});
 		result.response = response.toJSON();
 
-		if (response.statusCode !== 404) {
+		if (response.statusCode >= 200 && response.statusCode <= 400) {
 			const {status, body} = response.body;
 			result.status = status;
 			result.body = body;
-		} else {
+		} else if (response.statusCode === 404) {
 			result.error = new Error(`Method "${path}" is not implemented yet`);
+		} else {
+			result.error = new Error(`Method "${path}" returns invalid response code ${response.statusCode}`);
 		}
 	} catch (requestError) {
 		result.error = requestError;
@@ -82,7 +98,7 @@ export async function callAsync (path: string, body: object, method: 'POST' | 'G
 	if (!result.error) {
 		debug('Response code is %d; body is \n%O', result.status, result.body);
 	} else {
-		debug('Request fauled due to \n%O', result.error);
+		debug('Request failed due to \n%O', result.error);
 	}
 
 	return result;

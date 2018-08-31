@@ -11,9 +11,9 @@ interface Options {
  * @see http://api.tornado.dev.mail.ru/test/user/phones/state
  */
 export default function userPhonesState (options: Options): RequestResult<any> {
-	return call('user/phones/state', options);
+	return call('test/user/phones/state', options);
 }
 
 export async function userPhonesStateAsync (options: Options): Promise<RequestResult<any>> {
-	return callAsync('user/phones/state', options);
+	return callAsync('test/user/phones/state', options);
 }
