@@ -25,12 +25,33 @@ export async function callAsync (
 	} else if (credentials) {
 		rpc = new RPC(credentials);
 	}
+	const { host, version, noHttps } = { ...rpc.credentials, ...rpc.options };
 
-	const { status, body: responseBody }: MailApiResponse = await rpc.call(path, body);
+	const response: MailApiResponse = await rpc.call(path, body);
+	const { status, body: responseBody } = response;
 
-	return {
+	const result: RequestResult = {
 		path,
-		status,
-		body: responseBody
-	} as RequestResult;
+		response: {
+			statusCode: status,
+			body: response,
+			headers: {},
+			request: {
+				uri: new URL(`http${noHttps ? '' : 's'}://${host}/api/v${version}/${path}`),
+				method,
+				headers: {}
+			}
+		}
+	};
+
+	if (status >= 200 && status < 400) {
+		result.status = status;
+		result.body = responseBody;
+	} else if (status === 404) {
+		result.error = new Error(`Method "${path}" is not implemented yet`);
+	} else {
+		result.error = new Error(`Method "${path}" returns invalid response code ${status}`);
+	}
+
+	return result;
 }
