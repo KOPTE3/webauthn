@@ -1,7 +1,7 @@
 import RPC, { IRPCCredentials } from '@qa/rpc';
 import { RequestResult } from '../../types/api';
 import authorization from '../../store/authorization';
-
+const { URL } = require('url'); // TODO: why not import?
 
 interface MailApiResponse {
 	status: number;
