@@ -1,5 +1,5 @@
-import RPC, { IRPCCredentials } from '@qa/rpc';
-import { RequestResult } from '../../types/api';
+import RPC from '@qa/rpc';
+import { Credentials, RequestResult } from '../../types/api';
 import authorization from '../../store/authorization';
 const { URL } = require('url'); // TODO: why not import?
 
@@ -11,13 +11,13 @@ interface MailApiResponse {
 	htmlencoded: boolean;
 }
 
-let rpc: RPC;
+let defaultRpc: RPC;
 
 export default function call(
 	path: string,
 	body: object,
 	method: 'POST' | 'GET' = 'GET',
-	credentials?: IRPCCredentials
+	credentials?: Credentials
 ): RequestResult {
 	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method, credentials));
 
@@ -34,14 +34,28 @@ export async function callAsync(
 	path: string,
 	body: object,
 	method: 'POST' | 'GET' = 'GET',
-	credentials?: IRPCCredentials
+	credentials?: Credentials
 ): Promise<RequestResult> {
-	if (!rpc && !credentials) {
-		const { username, password } = authorization.account.data();
-		rpc = new RPC({ username, password });
-	} else if (credentials) {
+	let rpc: RPC;
+
+	// TODO: refactor this creepy shit
+	if (credentials) {
 		rpc = new RPC(credentials);
+	} else  {
+		if (!defaultRpc) {
+			const defaultCredentials: AccountManager.Credentials = authorization.account.data();
+
+			if (!defaultCredentials) {
+				throw new Error('No authorized user found. Please call auth() step before or pass credentials explicitly.');
+			}
+
+			const { username, password } = defaultCredentials;
+			defaultRpc = new RPC({ username, password });
+		}
+
+		rpc = defaultRpc;
 	}
+
 	const { host, version, noHttps } = { ...rpc.credentials, ...rpc.options };
 
 	const response: MailApiResponse = await rpc.call(path, body);

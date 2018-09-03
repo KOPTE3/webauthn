@@ -21,3 +21,7 @@ export declare interface RequestResult<T = any> {
 	body?: T;
 }
 
+export declare interface Credentials {
+	username: string;
+	password: string;
+}
