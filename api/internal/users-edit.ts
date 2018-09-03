@@ -5,7 +5,8 @@ import call, {callAsync, RequestResult} from './call';
  * Интерфейс неполный, его можно и нужно дополнить
  */
 export interface UserEditOptions {
-	id: string;
+	login: string;
+	domain: string;
 	flags?: {
 		testbox?: boolean;
 	};
