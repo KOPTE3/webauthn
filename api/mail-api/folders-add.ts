@@ -6,10 +6,10 @@ import call, {callAsync} from './call';
 /**
  * @see http://api.tornado.dev.mail.ru/folders/add
  */
-export default function usersPhonesAdd (options: MailAPI.FoldersAdd): RequestResult<string[]> {
+export default function foldersAdd (options: MailAPI.FoldersAdd): RequestResult<string[]> {
 	return call('folders/add', options);
 }
 
-export async function usersPhonesAddAsync (options: MailAPI.FoldersAdd): Promise<RequestResult<string[]>> {
+export async function foldersAddAsync (options: MailAPI.FoldersAdd): Promise<RequestResult<string[]>> {
 	return callAsync('folders/add', options);
 }
