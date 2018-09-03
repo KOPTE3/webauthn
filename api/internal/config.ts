@@ -1,4 +1,5 @@
-import call, {callAsync, RequestResult} from './call';
+import { RequestResult } from '../../types/api';
+import call, {callAsync} from './call';
 
 
 type Options = {name: string} | {names: string[]};
