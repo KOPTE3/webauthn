@@ -17,11 +17,9 @@ export interface UserShortResponseBody {
  * @see http://api.tornado.dev.mail.ru/user/short
  */
 export default function userShort (options: MailAPI.UserShort): RequestResult<UserShortResponseBody> {
-	options.force = 1; //  принудительно вернуть список писем, даже если в ящике не было изменений
 	return call('user/short', options);
 }
 
 export async function userShortAsync (options: MailAPI.UserShort): Promise<RequestResult<UserShortResponseBody>> {
-	options.force = 1;
 	return callAsync('user/short', options);
 }
