@@ -13,12 +13,12 @@ export interface HelpersUpdateResponseBody {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/folders/add
+ * @see http://api.tornado.dev.mail.ru/helpers/update
  */
-export default function usersPhonesAdd (options: MailAPI.HelpersUpdate): RequestResult<HelpersUpdateResponseBody> {
+export default function helpersUpdate (options: MailAPI.HelpersUpdate): RequestResult<HelpersUpdateResponseBody> {
 	return call('helpers/update', options);
 }
 
-export async function usersPhonesAddAsync (options: MailAPI.HelpersUpdate): Promise<RequestResult<HelpersUpdateResponseBody>> {
+export async function helpersUpdateAsync (options: MailAPI.HelpersUpdate): Promise<RequestResult<HelpersUpdateResponseBody>> {
 	return callAsync('helpers/update', options);
 }

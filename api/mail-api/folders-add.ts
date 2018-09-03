@@ -1,6 +1,6 @@
 import { MailAPI } from '@qa/api';
 import { RequestResult } from '../../types/api';
-import call, {callAsync} from './call';
+import call, { callAsync } from './call';
 
 
 /**
