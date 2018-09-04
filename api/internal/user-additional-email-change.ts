@@ -1,4 +1,4 @@
-import { RequestResult } from '../../types/api';
+import {RequestResult} from '../../types/api';
 import call, {callAsync} from './call';
 
 
