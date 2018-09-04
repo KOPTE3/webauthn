@@ -54,7 +54,7 @@ export async function callAsync (path: string, body: object, method: 'POST' | 'G
 		const response = await rp({
 			...options,
 			resolveWithFullResponse: true,
-			baseUrl: config.apiBaseUrls.internalApi,
+			baseUrl: config.api.internalApiBaseUrl,
 			json: true,
 		});
 		result.response = response.toJSON();
