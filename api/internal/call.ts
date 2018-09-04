@@ -1,7 +1,7 @@
 import * as Debug from 'debug';
 import * as rp from 'request-promise-native';
 import {Options} from 'request-promise-native';
-import { RequestResult } from '../../types/api';
+import {RequestResult} from '../../types/api';
 
 
 const debug = Debug('@qa:yoda:internal');
