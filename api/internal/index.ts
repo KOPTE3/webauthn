@@ -7,3 +7,4 @@ export {default as tokensInfo, tokensInfoAsync} from './tokens-info';
 export {default as bruteforceCounterReset, bruteforceCounterResetAsync} from './bruteforce-counter-reset';
 export {default as bruteforceCounterEmu, bruteforceCounterEmuAsync} from './bruteforce-counter-emu';
 export {default as usersEdit, usersEditAsync} from './users-edit';
+export {default as messagesAttachesInvalidate, messagesAttachesInvalidateAsync} from './messages-attaches-invalidate';
