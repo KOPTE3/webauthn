@@ -1,12 +1,11 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as merge from 'deepmerge';
-import { Log } from 'tir';
 import * as Debug from 'debug';
 import * as WebDriverIO from 'webdriverio';
 import * as WebDriverIOUtils from '@qa/wdio-utils';
 
-let debug = Debug('@qa:yoda');
+let debug = Debug('@qa:yoda:runner');
 
 interface Service {
 	file: string;
@@ -136,15 +135,15 @@ export default async function (options: Service): Promise<void> {
 		let code = await launcher.run();
 
 		if (code === 0) {
-			Log.info('All tests were successfully finished');
+			console.log('\x1b[32m', 'All tests were successfully finished');
 		} else {
-			Log.error('Tests finished with unwanted exit code', code);
+			console.log('\x1b[31m', 'Tests finished with unwanted exit code', code);
 		}
 
 		process.exit(code);
 	}
 	catch (error) {
-		Log.error('Something went wrong: \n%s \n%s', error,
+		debug('Something went wrong: \n%s \n%s', error,
 			JSON.stringify(service, null, '\t'));
 
 		process.exit(-1);
