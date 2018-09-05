@@ -36,26 +36,18 @@ export async function callAsync(
 	method: 'POST' | 'GET' = 'GET',
 	credentials?: Credentials
 ): Promise<RequestResult> {
-	let rpc: RPC;
+	if (!defaultRpc && !credentials) {
+		const defaultCredentials: AccountManager.Credentials = authorization.account.data();
 
-	// TODO: refactor this creepy shit
-	if (credentials) {
-		rpc = new RPC(credentials);
-	} else  {
-		if (!defaultRpc) {
-			const defaultCredentials: AccountManager.Credentials = authorization.account.data();
-
-			if (!defaultCredentials) {
-				throw new Error('No authorized user found. Please call auth() step before or pass credentials explicitly.');
-			}
-
-			const { username, password } = defaultCredentials;
-			defaultRpc = new RPC({ username, password });
+		if (!defaultCredentials) {
+			throw new Error('No authorized user found. Please call auth() step before or pass credentials explicitly.');
 		}
 
-		rpc = defaultRpc;
+		const { username, password } = defaultCredentials;
+		defaultRpc = new RPC({ username, password });
 	}
 
+	const rpc: RPC = (credentials) ? new RPC(credentials) : defaultRpc;
 	const { host, version, noHttps } = { ...rpc.credentials, ...rpc.options };
 
 	const response: MailApiResponse = await rpc.call(path, body);

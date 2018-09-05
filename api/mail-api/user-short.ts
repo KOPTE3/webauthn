@@ -1,5 +1,5 @@
 import { MailAPI } from '@qa/api';
-import { RequestResult } from '../../types/api';
+import { Credentials, RequestResult } from '../../types/api';
 import call, { callAsync } from './call';
 
 export interface UserShortResponseBody {
@@ -16,10 +16,16 @@ export interface UserShortResponseBody {
 /**
  * @see http://api.tornado.dev.mail.ru/user/short
  */
-export default function userShort (options: MailAPI.UserShort): RequestResult<UserShortResponseBody> {
-	return call('user/short', options);
+export default function userShort(
+	options: MailAPI.UserShort,
+	credentials?: Credentials
+): RequestResult<UserShortResponseBody> {
+	return call('user/short', options, 'GET', credentials);
 }
 
-export async function userShortAsync (options: MailAPI.UserShort): Promise<RequestResult<UserShortResponseBody>> {
-	return callAsync('user/short', options);
+export async function userShortAsync(
+	options: MailAPI.UserShort,
+	credentials?: Credentials
+): Promise<RequestResult<UserShortResponseBody>> {
+	return callAsync('user/short', options, 'GET', credentials);
 }

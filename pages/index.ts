@@ -184,7 +184,7 @@ class PageObject {
 			browser.setCookie(<WebdriverIO.Cookie>{
 				path: '/',
 				name: 'qa',
-				value: config.qa,
+				value: config.cookies.qa,
 				domain: '.mail.ru'
 			});
 			// на всякий случай рефреш
@@ -195,7 +195,7 @@ class PageObject {
 		//browser.setCookie(<WebdriverIO.Cookie>{
 		//	path: '/',
 		//	name: 'canary',
-		//	value: config.canary
+		//	value: config.cookies.canary
 		//});
 
 		return { state, url };
