@@ -76,7 +76,7 @@ export default {
 	},
 
 	getPhone(): Phone {
-		const length = this.phones;
+		const length = this.phones.length;
 		return this.phones[Math.floor(Math.random() * length)];
 	}
 };
