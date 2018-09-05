@@ -1,6 +1,6 @@
 import { MailAPI } from '@qa/api';
-import { Credentials, RequestResult } from '../../types/api';
-import call, { callAsync } from './call';
+import { Credentials, RequestResult } from '../../../types/api';
+import call, { callAsync } from '../call';
 
 /**
  * @see http://api.tornado.dev.mail.ru/folders/open
