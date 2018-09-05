@@ -1,15 +1,13 @@
 import * as Debug from 'debug';
 import * as rp from 'request-promise-native';
 import {Options} from 'request-promise-native';
-import {RequestResult} from '../../types/api';
-
+import { RequestResult } from '../../types/api';
+import config from '../../config';
 
 const debug = Debug('@qa:yoda:internal');
-const PROXY_PATH = 'http://internal.pre.win102.dev.mail.ru/api/v1';
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type CallError = Error & Omit<RequestResult, 'error'>;
-
 
 export default function call (path: string, body: object, method: 'POST' | 'GET' = 'GET'): RequestResult {
 	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method));
@@ -56,7 +54,7 @@ export async function callAsync (path: string, body: object, method: 'POST' | 'G
 		const response = await rp({
 			...options,
 			resolveWithFullResponse: true,
-			baseUrl: PROXY_PATH,
+			baseUrl: config.api.internalApiBaseUrl,
 			json: true,
 		});
 		result.response = response.toJSON();

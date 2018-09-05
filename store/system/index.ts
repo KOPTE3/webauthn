@@ -58,6 +58,7 @@ export default {
 	 *
 	 * @type {Platform} — name, version, layout, os, description
 	 */
+	// @ts-ignore
 	get agent (): Platform {
 		let { value } = browser.execute(function () {
 			return window.navigator.userAgent;

@@ -1,5 +1,5 @@
 import { MailAPI } from '@qa/api';
-import { RequestResult } from '../../types/api';
+import { Credentials, RequestResult } from '../../types/api';
 import call, {callAsync} from './call';
 
 export interface HelpersUpdateResponseBody {
@@ -15,10 +15,16 @@ export interface HelpersUpdateResponseBody {
 /**
  * @see http://api.tornado.dev.mail.ru/helpers/update
  */
-export default function helpersUpdate (options: MailAPI.HelpersUpdate): RequestResult<HelpersUpdateResponseBody> {
-	return call('helpers/update', options);
+export default function helpersUpdate(
+	options: MailAPI.HelpersUpdate,
+	credentials?: Credentials
+): RequestResult<HelpersUpdateResponseBody> {
+	return call('helpers/update', options, 'POST', credentials);
 }
 
-export async function helpersUpdateAsync (options: MailAPI.HelpersUpdate): Promise<RequestResult<HelpersUpdateResponseBody>> {
-	return callAsync('helpers/update', options);
+export async function helpersUpdateAsync(
+	options: MailAPI.HelpersUpdate,
+	credentials?: Credentials
+): Promise<RequestResult<HelpersUpdateResponseBody>> {
+	return callAsync('helpers/update', options, 'POST', credentials);
 }
