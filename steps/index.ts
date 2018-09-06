@@ -1,10 +1,10 @@
 import * as assert from 'assert';
-import {Credentials, RegisterOptions} from '@qa/account-manager';
+import { Credentials, RegisterOptions } from '@qa/account-manager';
 import URL from '../utils/url';
-import Page, {Query} from '../pages';
-import account, {UserType} from '../utils/account';
+import Page, { Query } from '../pages';
+import account, { UserType } from '../utils/account';
 
-let page = new Page();
+const page = new Page();
 
 class Steps {
 	/**
@@ -21,7 +21,7 @@ class Steps {
 	 * @param {AccountManager.Credentials} [credentials] — авторизационные данные
 	 */
 	@step('Авторизация пользователем "{__result__.username}"')
-	static auth (type?: UserType, credentials?: Credentials): Credentials {
+	static auth(type?: UserType, credentials?: Credentials): Credentials {
 		return Page.auth(type, credentials);
 	}
 
@@ -29,7 +29,7 @@ class Steps {
 	 * Получить заголовок страницы
 	 */
 	@step('Получить текущий заголовок страницы')
-	title () {
+	title() {
 		return browser.getTitle();
 	}
 
@@ -41,7 +41,7 @@ class Steps {
 	 * @param {number} timeout
 	 */
 	@step('Разлогиниться')
-	logout (email?: string, timeout?: number) {
+	logout(email?: string, timeout?: number) {
 		return account.logout(email, timeout);
 	}
 
@@ -54,7 +54,7 @@ class Steps {
 	 * @returns {AccountManager.Credentials}
 	 */
 	@step('Создать нового пользователя')
-	static register (type?: string, options: RegisterOptions = {}): Credentials {
+	static register(type?: string, options: RegisterOptions = {}): Credentials {
 		return account.register(type, options);
 	}
 
@@ -66,8 +66,8 @@ class Steps {
 	 * @see Page.open
 	 */
 	@step('Открыть страницу "{__result__.url}"')
-	static open (path?: string | Query, query?: Query): { state: boolean, url: string } {
-		let actual = this.page.open(path, query);
+	static open(path?: string | Query, query?: Query): { state: boolean, url: string } {
+		const actual = this.page.open(path, query);
 
 		// Игнорируем обращения к локаторам если исключение возникает
 		// до вызова степа в самом тесте.
@@ -76,9 +76,9 @@ class Steps {
 				throw new Error('container');
 			}
 		} catch (error) {
-			let { name = '' } = this;
+			const { name = '' } = this;
 
-			let message = `"${name}" не определен основной элемент страницы 
+			const message = `"${name}" не определен основной элемент страницы
 в "pages/<page>/locators.container"`;
 
 			assert.equal(error.name, 'container', message);
@@ -102,7 +102,7 @@ class Steps {
 	 */
 	@deprecated('Use a non-static method')
 	@step('Проверить что пользователь авторизован')
-	static isActiveUser (email: string, timeout?: number): boolean {
+	static isActiveUser(email: string, timeout?: number): boolean {
 		return account.isActiveUser(email, timeout);
 	}
 
@@ -113,7 +113,7 @@ class Steps {
 	 * @param {number} [timeout]
 	 */
 	@step('Проверить что пользователь авторизован')
-	isActiveUser (email: string, timeout?: number): boolean {
+	isActiveUser(email: string, timeout?: number): boolean {
 		return Steps.isActiveUser(email, timeout);
 	}
 
@@ -122,8 +122,8 @@ class Steps {
 	 * @see wait
 	 */
 	@deprecated('Use a non-static method')
-	@step(`Дождаться загрузки страницы {__result__}`)
-	static wait (locator?: string, ms?: number, reverse: boolean = false): void {
+	@step('Дождаться загрузки страницы {__result__}')
+	static wait(locator?: string, ms?: number, reverse: boolean = false): void {
 		this.page.wait(locator, ms, reverse);
 
 		if (!this.page.name) {
@@ -146,8 +146,8 @@ class Steps {
 	/**
 	 * Дождаться загрузки страницы
 	 */
-	@step(`{reverse ? "Убедиться что страница не загрузилась" : "Дождаться загрузки страницы" } {__result__}`)
-	wait (locator?: string, ms?: number, reverse: boolean = false): void {
+	@step('{reverse ? "Убедиться что страница не загрузилась" : "Дождаться загрузки страницы" } {__result__}')
+	wait(locator?: string, ms?: number, reverse: boolean = false): void {
 		this.page.wait(locator, ms, reverse);
 
 		if (!this.page.name) {
@@ -165,7 +165,7 @@ class Steps {
 		}
 
 		return this.page.name as any as void;
-	};
+	}
 
 	/**
 	 * Локаторы
@@ -173,7 +173,7 @@ class Steps {
 	 * @param {string[]} list — список фич, которые требуется включить
 	 */
 	@step('Включение фич {__result__}')
-	static features (list: string[]): string[] {
+	static features(list: string[]): string[] {
 		return page.features(list);
 	}
 
@@ -181,7 +181,7 @@ class Steps {
 	 * Скрипты, выполняемые сразу после page.url
 	 */
 	@step('Включение произвольных скриптов {__result__}')
-	static inject (list: string[]): string[] {
+	static inject(list: string[]): string[] {
 		return page.inject(list);
 	}
 
@@ -194,9 +194,9 @@ class Steps {
 	 */
 	@deprecated('Use a non-static method')
 	@step('Установить паузу "{ms}ms"')
-	static pause (ms: number) {
+	static pause(ms: number) {
 		browser.pause(ms);
-	};
+	}
 
 	/**
 	 * Откладывает выполнение следюущего шага на заданное время
@@ -204,7 +204,7 @@ class Steps {
 	 * @param {number} ms
 	 */
 	@step('Установить паузу "{ms}ms"')
-	pause (ms: number) {
+	pause(ms: number) {
 		browser.pause(ms);
 	}
 
@@ -214,20 +214,20 @@ class Steps {
 	 * @param {Object} query
 	 */
 	@deprecated('Use a non-static method')
-	@step(`Обновить текущую страницу`)
-	static refresh (query: Query = {}) {
+	@step('Обновить текущую страницу')
+	static refresh(query: Query = {}) {
 		page.refresh(query);
-	};
+	}
 
 	/**
 	 * Перезагружает текущую страницу
 	 *
 	 * @param {Object} [query] — параметры запроса
 	 */
-	@step(`Обновить текущую страницу`)
-	refresh (query: Query = {}) {
+	@step('Обновить текущую страницу')
+	refresh(query: Query = {}) {
 		page.refresh(query);
-	};
+	}
 
 	/**
 	 * Принять alert
@@ -237,13 +237,13 @@ class Steps {
 	 */
 	@deprecated('Use a non-static method')
 	@step('Принять алерт')
-	static alertAccept () {
+	static alertAccept() {
 		browser.alertAccept();
-	};
+	}
 
 	/** Принять алерт */
 	@step('Принять алерт')
-	alertAccept () {
+	alertAccept() {
 		browser.alertAccept();
 	}
 
@@ -256,7 +256,7 @@ class Steps {
 	 */
 	@deprecated('Use a non-static method')
 	@step('Получить текст алерта')
-	static getAlertText (text?: string) {
+	static getAlertText(text?: string) {
 		browser.alertText(text);
 	}
 
@@ -266,7 +266,7 @@ class Steps {
 	 * @returns {string}
 	 */
 	@step('Получить текст алерта')
-	getAlertText (text?: string) {
+	getAlertText(text?: string) {
 		return browser.alertText(text);
 	}
 
@@ -278,13 +278,13 @@ class Steps {
 	 */
 	@deprecated('Use a non-static method')
 	@step('Сбросить текущую сессию')
-	static reload () {
-		browser.reload()
-	};
+	static reload() {
+		browser.reload();
+	}
 
 	/** Сбросить текущую сессию */
 	@step('Сбросить текущую сессию')
-	reload () {
+	reload() {
 		browser.reload();
 	}
 
@@ -294,15 +294,15 @@ class Steps {
 	 */
 	@deprecated('Use a non-static method')
 	@step('Выключить появление модальных окон')
-	static disableConfirm () {
+	static disableConfirm() {
 		page.disableConfirm();
-	};
+	}
 
 	/**
 	 * Выключает на текущей странице обработчик onbeforeunload
 	 */
 	@step('Выключить появление модальных окон')
-	disableConfirm () {
+	disableConfirm() {
 		page.disableConfirm();
 	}
 
@@ -314,7 +314,7 @@ class Steps {
 	 * @param {boolean} [revert]
 	 */
 	@step('Дождаться адреса соответствующего заданному условию "{value}"')
-	waitForUrl (
+	waitForUrl(
 		value: ((url: string) => boolean) | string | RegExp,
 		timeout?: number,
 		revert?: boolean
@@ -331,7 +331,7 @@ class Steps {
 	}
 
 	@step('{reverse ? "Убедиться что алерт не появился" : "Дождаться появления алерта"}')
-	waitForAlert (timeout?: number, message?: string, reverse: boolean = false) {
+	waitForAlert(timeout?: number, message?: string, reverse: boolean = false) {
 		browser.waitForAlert(timeout, message, reverse);
 	}
 
@@ -352,7 +352,7 @@ class Steps {
 	 * @returns {*}
 	 */
 	@step('Дождаться выполнения действия соответствующего заданному условию')
-	waitUntil (
+	waitUntil(
 		condition: () => boolean | Promise<boolean> | WebdriverIO.Client<WebdriverIO.RawResult<any>> & WebdriverIO.RawResult<any>,
 		timeout?: number,
 		message?: string,
@@ -371,14 +371,14 @@ class Steps {
 		'Ширина': width,
 		'Высота': height
 	}))
-	waitForViewport (expected: WebdriverIO.Size): boolean {
+	waitForViewport(expected: WebdriverIO.Size): boolean {
 		return this.waitUntil(() => {
-			let actual = browser.getViewportSize();
+			const actual = browser.getViewportSize();
 
 			try {
 				return !assert.deepEqual(actual, expected);
 			} catch (error) {}
-		}, browser.options.waitforTimeout, 'Не удалось дождаться требуемого размера вьюпорта');
+		},                    browser.options.waitforTimeout, 'Не удалось дождаться требуемого размера вьюпорта');
 	}
 
 	/**
@@ -391,7 +391,7 @@ class Steps {
 	 */
 	@deprecated('Use a non-static method')
 	@step('Установить размер вьюпорта')
-	static setViewportSize (size: WebdriverIO.Size, type: boolean = true) {
+	static setViewportSize(size: WebdriverIO.Size, type: boolean = true) {
 		browser.setViewportSize(size, type);
 	}
 
@@ -407,8 +407,8 @@ class Steps {
 		'Ширина': width,
 		'Высота': height
 	}))
-	setViewportSize (size: WebdriverIO.Size, type: boolean = true): void {
-		let { width = 1200, height = 600 } = size;
+	setViewportSize(size: WebdriverIO.Size, type: boolean = true): void {
+		const { width = 1200, height = 600 } = size;
 
 		browser.setViewportSize({ width, height });
 
@@ -423,12 +423,12 @@ class Steps {
 	 * @returns {Object} {width, height}
 	 */
 	@step('Получить размер вьюпорта')
-	getViewportSize (): WebdriverIO.Size {
+	getViewportSize(): WebdriverIO.Size {
 		return browser.getViewportSize();
 	}
 
 	@step('Переключиться на ближайшую вкладку')
-	switchToNextTab () {
+	switchToNextTab() {
 		browser.switchToNextTab();
 	}
 
@@ -440,7 +440,7 @@ class Steps {
 	 * @param {Number} [timeout]
 	 */
 	@step('Открытие адреса "{url}"')
-	url (url: string, query: Query = {}, timeout?: number) {
+	url(url: string, query: Query = {}, timeout?: number) {
 		this.page.url(url, query, timeout);
 	}
 
@@ -461,15 +461,15 @@ class Steps {
 	 *                                          изменения раземеров вьюпорта
 	 * @param {boolean} [compareOnly=false] - не обрабатывать результаты сравнения, а только вернуть
 	 */
-	compareDocument (options: WebdriverIO.VisualRegressionOptions, compareOnly: true): WebdriverIO.VisualRegression[];
-	compareDocument (options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
+	compareDocument(options: WebdriverIO.VisualRegressionOptions, compareOnly: true): WebdriverIO.VisualRegression[];
+	compareDocument(options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
 
 	@step('Регрессионное сравнение внешнего вида документа { ' +
 		'compareOnly ? "без обработки результатов" : "с обработкой результатов" ' +
-	'}', (options: any) => options)
-	compareDocument (options: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
-		let images = browser.checkDocument(options),
-			actual = images.every(image => image.isExactSameImage);
+	'}',  (options: any) => options)
+	compareDocument(options: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
+		const images = browser.checkDocument(options),
+			actual = images.every((image) => image.isExactSameImage);
 
 		if (compareOnly) {
 			return images;
@@ -486,15 +486,15 @@ class Steps {
 	 * @param {WebdriverIO.VisualRegressionOptions} options
 	 * @param {boolean} [compareOnly=false] - не обрабатывать результаты сравнения, а только вернуть
 	 */
-	compareViewport (options: WebdriverIO.VisualRegressionOptions, compareOnly: true): WebdriverIO.VisualRegression[];
-	compareViewport (options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
+	compareViewport(options: WebdriverIO.VisualRegressionOptions, compareOnly: true): WebdriverIO.VisualRegression[];
+	compareViewport(options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
 
 	@step('Регрессионное сравнение внешнего вида вьюпорта {' +
 		'compareOnly ? "без обработки результатов" : "с обработкой результатов"' +
-	'}', (options: any) => options)
-	compareViewport (options: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
-		let images = browser.checkViewport(options),
-			actual = images.every(image => image.isExactSameImage);
+	'}',  (options: any) => options)
+	compareViewport(options: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
+		const images = browser.checkViewport(options),
+			actual = images.every((image) => image.isExactSameImage);
 
 		if (compareOnly) {
 			return images;
@@ -512,18 +512,18 @@ class Steps {
 	 * @param {WebdriverIO.VisualRegressionOptions} options
 	 * @param {boolean} [compareOnly=false] - не обрабатывать результаты сравнения, а только вернуть
 	 */
-	compareElement (locator: string, options: WebdriverIO.VisualRegressionOptions, compareOnly: true): WebdriverIO.VisualRegression[];
-	compareElement (locator: string, options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
+	compareElement(locator: string, options: WebdriverIO.VisualRegressionOptions, compareOnly: true): WebdriverIO.VisualRegression[];
+	compareElement(locator: string, options: WebdriverIO.VisualRegressionOptions, compareOnly: false): void;
 
 	@step('Регрессионное сравнение внешнего вида элемента {' +
 		'compareOnly ? "без обработки результатов" : "с обработкой результатов"' +
-	'}', (locator: string, options: any) => ({
+	'}',  (locator: string, options: any) => ({
 		...options,
 		'Локатор элемента': locator
 	}))
-	compareElement (locator: string, options?: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
-		let images = browser.checkElement(locator, options),
-			actual = images.every(image => image.isExactSameImage);
+	compareElement(locator: string, options?: WebdriverIO.VisualRegressionOptions, compareOnly: boolean = false) {
+		const images = browser.checkElement(locator, options),
+			actual = images.every((image) => image.isExactSameImage);
 
 		if (compareOnly) {
 			return images;
@@ -565,7 +565,7 @@ class Steps {
 	}
 
 	@step('Проверить {reverse ? "не" : ""}видимость {__result__}')
-	checkVisibility (reverse: boolean = false) {
+	checkVisibility(reverse: boolean = false) {
 		assert.strictEqual(this.page.isVisible(), !reverse, `"${this.page.name}" ${reverse ? '' : 'не '}видно`);
 
 		// для отчёта

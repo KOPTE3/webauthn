@@ -1,6 +1,5 @@
-import {RequestResult} from '../../types/api';
-import call, {callAsync} from './call';
-
+import { RequestResult } from '../../types/api';
+import call, { callAsync } from './call';
 
 type Options = {email: string} & ({restore_id: string} | {id: string}) & {update?: Partial<TokensInfo>};
 
@@ -18,10 +17,10 @@ export interface TokensInfo {
 /**
  * @see http://api.tornado.dev.mail.ru/test/tokens/info
  */
-export default function tokensInfo (options: Options): RequestResult<TokensInfo> {
+export default function tokensInfo(options: Options): RequestResult<TokensInfo> {
 	return call('test/tokens/info', options);
 }
 
-export async function tokensInfoAsync (options: Options): Promise<RequestResult<TokensInfo>> {
+export async function tokensInfoAsync(options: Options): Promise<RequestResult<TokensInfo>> {
 	return callAsync('test/tokens/info', options);
 }

@@ -2,13 +2,13 @@ import { RequestResult } from '../../types/api';
 import call, { callAsync } from './call';
 
 interface Options {
-	email: string,
-	message_id?: string,
-	attaches?: Array<string>
+	email: string;
+	message_id?: string;
+	attaches?: string[];
 }
 
 interface MessagesAttachesInvalidateResponseBody {
-	attaches: Array<string>
+	attaches: string[];
 }
 
 /**

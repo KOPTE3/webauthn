@@ -1,11 +1,10 @@
 import Element from '../../element';
-import {lcFirst} from '../../utils/utils';
-
+import { lcFirst } from '../../utils/utils';
 
 const gen: MethodDecorator = function <T> (
 	Class: typeof Element,
 	propetryKey: string,
-	descriptor: TypedPropertyDescriptor<T>,
+	descriptor: TypedPropertyDescriptor<T>
 ): TypedPropertyDescriptor<T> {
 	const localName = lcFirst(propetryKey);
 
@@ -13,27 +12,27 @@ const gen: MethodDecorator = function <T> (
 		enumerable: false,
 		configurable: true,
 		writable: false,
-		value: function () {
+		value() {
 			const instance = Reflect.construct(this, []);
 			return Reflect.apply(
 				(Class as any)[propetryKey],
 				Class,
-				[instance, ...arguments],
+				[instance, ...arguments]
 			);
-		},
+		}
 	});
 
 	Reflect.defineProperty(Class.prototype, localName, {
 		enumerable: false,
 		configurable: true,
 		writable: false,
-		value: function () {
+		value() {
 			return Reflect.apply(
 				(Class as any)[propetryKey],
 				Class,
-				[this, ...arguments],
+				[this, ...arguments]
 			);
-		},
+		}
 	});
 
 	return descriptor;
@@ -43,5 +42,5 @@ Reflect.defineProperty(global, 'gen', {
 	configurable: false,
 	enumerable: false,
 	writable: false,
-	value: gen,
+	value: gen
 });

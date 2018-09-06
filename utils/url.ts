@@ -2,7 +2,7 @@ import * as url from 'url';
 import * as Debug from 'debug';
 import * as querystring from 'querystring';
 
-let debug = Debug('@qa:yoda');
+const debug = Debug('@qa:yoda');
 const TIMEOUT: number = 30 * 1000;
 
 /** Набор методов для работы с URL */
@@ -14,11 +14,11 @@ export default {
 	 * @param {string} text
 	 * @returns {string}
 	 */
-	regexEscape (text: string): string {
+	regexEscape(text: string): string {
 		return text.replace(/([.*+?^=!:${}()|[]\/\])/g, '\\$1');
 	},
 
-	open (url: string, timeout: number = TIMEOUT): void {
+	open(url: string, timeout: number = TIMEOUT): void {
 		debug('requested page', url);
 
 		browser.url(url);
@@ -62,11 +62,11 @@ export default {
 	 * @param {Array} [remove] - параметры которые удалить
 	 * @returns {string}
 	 */
-	format (source: string, add = {}, remove: string[] = []): string {
-		let data = url.parse(source);
-		let query = this.parse(data.query);
+	format(source: string, add = {}, remove: string[] = []): string {
+		const data = url.parse(source);
+		const query = this.parse(data.query);
 
-		remove.forEach(name => {
+		remove.forEach((name) => {
 			delete query[name];
 		});
 

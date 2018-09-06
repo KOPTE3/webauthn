@@ -9,7 +9,7 @@ export default {
 	 *
 	 * @type {Object}
 	 */
-	products: <Products>{
+	products: {
 		'mail.ru': {
 			name: 'Mail.Ru',
 			host: 'https://mail.ru'
@@ -34,7 +34,7 @@ export default {
 			name: 'Почта Mail.Ru',
 			host: 'https://e.mail.ru'
 		}
-	},
+	} as Products,
 
 	/**
 	 * Получить данные о продукте
@@ -42,7 +42,7 @@ export default {
 	 * @param {string} name
 	 * @returns {Object}
 	 */
-	product (name: string): Yoda.Product {
+	product(name: string): Yoda.Product {
 		return this.products[name];
 	}
 };

@@ -18,7 +18,7 @@ export default {
 	 *
 	 * @returns {Array}
 	 */
-	list: <AccountList>[
+	list: [
 		{
 			provider: 'mail.ru',
 			features: ['internal', 'oauth'],
@@ -174,7 +174,7 @@ export default {
 			login: '+79162143406',
 			password: 'fd3FWfn3fd'
 		}
-	],
+	] as AccountList,
 
 	/**
 	 * Получает учетную запись с заданными характеристиками
@@ -183,9 +183,9 @@ export default {
 	 * @property {Array} features
 	 * @returns {Object|undefined}
 	 */
-	get ({ provider, features = [] }: Account): Account {
+	get({ provider, features = [] }: Account): Account {
 		return this.list.find((account: Account) => {
-			let filtered = features.every(feature => {
+			const filtered = features.every((feature) => {
 				return account.features.includes(feature);
 			});
 
