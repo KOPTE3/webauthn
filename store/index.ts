@@ -34,7 +34,7 @@ export default {
 			name: 'Почта Mail.Ru',
 			host: 'https://e.mail.ru'
 		}
-	} as Products,
+	},
 
 	/**
 	 * Получить данные о продукте

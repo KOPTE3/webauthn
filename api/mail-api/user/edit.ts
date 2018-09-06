@@ -9,6 +9,9 @@ export default function userEdit(options: MailAPI.UserEdit, credentials?: Creden
 	return call('user/edit', options, 'POST', credentials);
 }
 
-export async function userEditAsync(options: MailAPI.UserEdit, credentials?: Credentials): Promise<RequestResult<void>> {
+export async function userEditAsync(
+	options: MailAPI.UserEdit,
+	credentials?: Credentials
+): Promise<RequestResult<void>> {
 	return callAsync('user/edit', options, 'POST', credentials);
 }

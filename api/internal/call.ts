@@ -1,6 +1,5 @@
 import * as Debug from 'debug';
 import * as rp from 'request-promise-native';
-import { Options } from 'request-promise-native';
 import { RequestResult } from '../../types/api';
 import config from '../../config';
 
@@ -25,17 +24,17 @@ export default function call(path: string, body: object, method: 'POST' | 'GET' 
 }
 
 export async function callAsync(path: string, body: object, method: 'POST' | 'GET' = 'GET'): Promise<RequestResult> {
-	const options: Options = {
+	const options: rp.Options = {
 		url: path,
 		method
 	};
 
 	switch (method) {
-	case 'GET': {
+		case 'GET': {
 			options.qs = body;
 			break;
 		}
-	case 'POST': {
+		case 'POST': {
 			options.formData = Object.entries(body).reduce((formdata: any, [key, value]) => {
 				formdata[key] = (typeof value === 'string') ? value : JSON.stringify(value);
 				return formdata;

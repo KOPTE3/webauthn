@@ -87,11 +87,15 @@ export default class MailApiSteps {
 	 */
 	@step('Ожидание появления сообщения "{subject}" ("{count}" шт.) в папке "{folder}" в MailboxStatus"')
 	waitForLetterBySubjectInStatus(subject: string, folder: number, count: number = 1, limit?: number) {
-		browser.waitUntil(() => {
-			const { messages } = MailApi.messagesStatus({ folder, limit }).body;
+		browser.waitUntil(
+			() => {
+				const { messages } = MailApi.messagesStatus({ folder, limit }).body;
 
-			return messages.filter((message) => message.subject === subject).length >= count;
-		},                null, `Сообщение с темой письма "${subject}" ("${count}" шт.) для папки "${folder}" отсутствует в статусе`);
+				return messages.filter((message) => message.subject === subject).length >= count;
+			},
+			null,
+			`Сообщение с темой письма "${subject}" ("${count}" шт.) для папки "${folder}" отсутствует в статусе`
+		);
 	}
 
 	getCurrentSignature(returnHtml: boolean = false): string {

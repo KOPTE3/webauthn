@@ -1,11 +1,11 @@
 import Element from '../../element';
 import { lcFirst } from '../../utils/utils';
 
-const gen: MethodDecorator = function <T> (
+const gen: MethodDecorator = <T>(
 	Class: typeof Element,
 	propetryKey: string,
 	descriptor: TypedPropertyDescriptor<T>
-): TypedPropertyDescriptor<T> {
+): TypedPropertyDescriptor<T> => {
 	const localName = lcFirst(propetryKey);
 
 	Reflect.defineProperty(Class, localName, {

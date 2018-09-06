@@ -185,7 +185,7 @@ class PageObject {
 				name: 'qa',
 				value: config.cookies.qa,
 				domain: '.mail.ru'
-			} as WebdriverIO.Cookie);
+			});
 			// на всякий случай рефреш
 			browser.refresh();
 		}
@@ -241,7 +241,7 @@ class PageObject {
 	 * Предотвращает показ модального окна события beforeunload
 	 */
 	disableConfirm(): void {
-		browser.execute(function() {
+		browser.execute(() => {
 			window.onbeforeunload = null;
 		});
 	}

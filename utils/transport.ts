@@ -123,6 +123,8 @@ class Transport {
 	}
 }
 
+// not to break compatibility
+// tslint:disable-next-line
 export interface ITransportData {
 	subject?: string;
 	content?: string;

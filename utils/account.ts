@@ -20,8 +20,8 @@ export default {
 	 * @returns {Credentials}
 	 */
 	session(type: UserType = 'basic', options: Credentials = {}): Credentials {
-		let account = AccountManager.Hooks(),
-			service = 'mail.ru';
+		const account = AccountManager.Hooks();
+		let service = 'mail.ru';
 
 		if (!/^(pdd|external)$/.test(type)) {
 			type = 'basic';
@@ -34,9 +34,11 @@ export default {
 		// Получаем куки для домена .mail.ru, для этого указываем host как e.mail.ru
 		const { host } = account.options(options);
 
-		const credentials = browser.waitForPromise<Credentials>(() => {
-			return account.session({ ...options, host, type, service });
-		},                                                    TIMEOUT, 'Could not get user session');
+		const credentials = browser.waitForPromise<Credentials>(
+			() => account.session({ ...options, host, type, service }),
+			TIMEOUT,
+			'Could not get user session'
+		);
 		// Ставим куки
 		this.setCookie();
 
@@ -83,19 +85,19 @@ export default {
 			browser.setCookies(cookie);
 		} catch ({ stack, message }) {
 			switch (message) {
-			case 'COOKIE_NOT_FOUND':
-				break;
+				case 'COOKIE_NOT_FOUND':
+					break;
 
-			default:
-				message =
-						'Could not found cookie to continue\n\n' +
-						'If you see this error message:\n' +
-						'  — There\'s no cookie. Try again with --debug option to explore that.\n' +
-						'  — The "auth" method is called in the wrong order.\n' +
-						'  — There\'s unexpected behavior in using Mocha\'s API.\n' +
-						'  — There\'s hidden exception. \n' +
-						'Try again with --debug, --stack and --verbose options to explore that.\n';
-				break;
+				default:
+					message =
+							'Could not found cookie to continue\n\n' +
+							'If you see this error message:\n' +
+							'  — There\'s no cookie. Try again with --debug option to explore that.\n' +
+							'  — The "auth" method is called in the wrong order.\n' +
+							'  — There\'s unexpected behavior in using Mocha\'s API.\n' +
+							'  — There\'s hidden exception. \n' +
+							'Try again with --debug, --stack and --verbose options to explore that.\n';
+					break;
 			}
 
 			throw new Error(`${message}\n\n${stack}`);
@@ -122,13 +124,16 @@ export default {
 			try {
 				browser.timeouts('script', timeout);
 
-				const { value } = browser.executeAsync(function(email: string, resolve) {
-					if (window.__PH && window.__PH.logoutAccount) {
-						window.__PH.logoutAccount(email, function(result) {
-							resolve(result.status === 'ok');
-						});
-					}
-				},                                   email);
+				const { value } = browser.executeAsync(
+					(email: string, resolve) => {
+						if (window.__PH && window.__PH.logoutAccount) {
+							window.__PH.logoutAccount(email, (result) => {
+								resolve(result.status === 'ok');
+							});
+						}
+					},
+					email
+				);
 			} catch (error) {
 				throw new Error(`Could not logout user ${email}`);
 			}
@@ -149,14 +154,18 @@ export default {
 			email = account.get('email');
 		}
 
-		return browser.waitUntil(() => {
-			const { value } = browser.execute((email: string) => {
-				return window.__PH && window.__PH.activeUser() === email;
-			},                              email);
+		return browser.waitUntil(
+			() => {
+				const { value } = browser.execute(
+					(email: string) => window.__PH && window.__PH.activeUser() === email,
+					email
+				);
 
-			return value;
-		},
-		                         timeout, `Could not detect user authorization ${email}`);
+				return value;
+			},
+			timeout,
+			`Could not detect user authorization ${email}`
+		);
 	},
 
 	/**

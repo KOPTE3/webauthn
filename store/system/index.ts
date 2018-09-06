@@ -46,7 +46,7 @@ export default {
 	 * @type {string}
 	 */
 	get platform(): string {
-		const status = browser.execute(function() {
+		const status = browser.execute(() => {
 			return window.navigator.platform;
 		});
 
@@ -60,7 +60,7 @@ export default {
 	 */
 	// @ts-ignore
 	get agent(): Platform {
-		const { value } = browser.execute(function() {
+		const { value } = browser.execute(() => {
 			return window.navigator.userAgent;
 		});
 

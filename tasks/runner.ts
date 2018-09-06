@@ -51,44 +51,44 @@ const details = {
 
 			switch (flag) {
 				// Алиас для baseUrl
-			case 'url':
-				service.data.baseUrl = value;
-				break;
+				case 'url':
+					service.data.baseUrl = value;
+					break;
 
-				// Параметры вывода отладочной информации в модуле debug
-			case 'verbose':
-				break;
+					// Параметры вывода отладочной информации в модуле debug
+				case 'verbose':
+					break;
 
-				// Вывод логов селениума
-			case 'log':
-				service.data.logLevel = value === true ? 'verbose' : value;
-				break;
+					// Вывод логов селениума
+				case 'log':
+					service.data.logLevel = value === true ? 'verbose' : value;
+					break;
 
-				// Предотвращаем запуск несуществующего набора тестов
-				// Когда мы писали логику запуска тестов по группам опции suite в wdio не было.
-				// default это название группы, которое используется в Jenkins по умолчанию
-				// axis: – является префиксом, который мы добавли чтобы wdio не падал когда передается
-				// числовое значение
-			case 'suite':
-				if (service.data.suite == 'axis:default') {
+					// Предотвращаем запуск несуществующего набора тестов
+					// Когда мы писали логику запуска тестов по группам опции suite в wdio не было.
+					// default это название группы, которое используется в Jenkins по умолчанию
+					// axis: – является префиксом, который мы добавли чтобы wdio не падал когда передается
+					// числовое значение
+				case 'suite':
+					if (service.data.suite === 'axis:default') {
 						delete service.data.suite;
 					}
 
-				break;
+					break;
 
-				// Позволяет отлаживать тесты
-			case 'debug':
-				merge(service.data, {
+					// Позволяет отлаживать тесты
+				case 'debug':
+					merge(service.data, {
 						mochaOpts: {
 							timeout: 15 * (60 * 1000)
 						}
 					});
 
-				break;
+					break;
 
-			default:
-				service.data[flag] = value;
-				break;
+				default:
+					service.data[flag] = value;
+					break;
 			}
 		}
 
@@ -103,10 +103,10 @@ const details = {
 		const suites: Suites = {};
 
 		for (const [suite, tests] of Object.entries(data.suites)) {
-			const _tests_ = tests as string[];
+			const typedTests = tests as string[]; // just to compile TS
 
-			if (_tests_.length) {
-				suites[suite] = _tests_;
+			if (typedTests.length) {
+				suites[suite] = typedTests;
 			}
 		}
 
@@ -142,8 +142,7 @@ export default async function(options: Service): Promise<void> {
 
 		process.exit(code);
 	} catch (error) {
-		debug('Something went wrong: \n%s \n%s', error,
-			     JSON.stringify(service, null, '\t'));
+		debug('Something went wrong: \n%s \n%s', error, JSON.stringify(service, null, '\t'));
 
 		process.exit(-1);
 	}

@@ -66,7 +66,11 @@ export class Element {
 	static CheckVisible(element: Element, expected: boolean): void {
 		const actual = Element.GetVisible(element);
 
-		assert.strictEqual(actual, expected, `Видимость элемента ${element.Name()} (${actual}) не совпадает с ожидаемым значением (${expected})`);
+		assert.strictEqual(
+			actual,
+			expected,
+			`Видимость элемента ${element.Name()} (${actual}) не совпадает с ожидаемым значением (${expected})`
+		);
 	}
 
 	@gen
@@ -98,7 +102,11 @@ export class Element {
 	static CheckValue(element: Element, expected: string): void {
 		const actual = Element.GetValue(element);
 
-		assert.strictEqual(actual, expected, `Текст в элементе ${element.Name()} (${actual}) не совпадает с ожидаемым значением (${expected})`);
+		assert.strictEqual(
+			actual,
+			expected,
+			`Текст в элементе ${element.Name()} (${actual}) не совпадает с ожидаемым значением (${expected})`
+		);
 	}
 
 	@gen
@@ -135,15 +143,25 @@ export class Element {
 	static CheckTextContent(element: Element, expected: string): void {
 		const actual = Element.GetTextContent(element);
 
-		assert.strictEqual(actual, expected, `Текстовое содержимое элемента ${element.Name()} (${actual}) не совпадает с ожидаемым значением (${expected})`);
+		assert.strictEqual(
+			actual,
+			expected,
+			`Текстовое содержимое элемента ${element.Name()} (${actual}) не совпадает с ожидаемым значением (${expected})`
+		);
 	}
 
 	@gen
-	@step('Дожидаемся, пока текст в элементе {element} станет равен значению', (e: any, expected: string) => ({ expected }))
+	@step(
+		'Дожидаемся, пока текст в элементе {element} станет равен значению',
+		(e: any, expected: string) => ({ expected })
+	)
 	static WaitForTextContent(element: Element, expected: string, timeout?: number): void {
-		browser.waitUntil(function() {
-			return Element.GetTextContent(element) === expected;
-		},                timeout || browser.options.waitforTimeout, `Не удалось дождаться пока текстовое содержимое элемента ${element.Name()} не совпадает с ожидаемым значением (${expected})`);
+		browser.waitUntil(
+			() => Element.GetTextContent(element) === expected,
+			timeout || browser.options.waitforTimeout,
+			`Не удалось дождаться пока текстовое содержимое элемента ${element.Name()}\
+			 не совпадает с ожидаемым значением (${expected})`
+		);
 	}
 
 	public Locator(): string {

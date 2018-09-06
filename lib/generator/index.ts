@@ -58,7 +58,7 @@ export default async function generate(source: string, options?: any): Promise<v
 		if (generateMethods.length > 0) {
 			generateClasses.push({
 				className: classDeclaration.getName(),
-				methods: generateMethods.map(function(generateMethod: MethodDeclaration): MethodDeclarationStructure {
+				methods: generateMethods.map((generateMethod: MethodDeclaration): MethodDeclarationStructure => {
 					const method: MethodDeclarationStructure = {
 						name: lcFirst(generateMethod.getName()),
 						returnType: generateMethod.getReturnType().getText()
@@ -68,7 +68,7 @@ export default async function generate(source: string, options?: any): Promise<v
 					const params = generateMethod.getParameters();
 
 					const preparedTypeParameters: TypeParameterDeclarationStructure[] = typeParameters
-						.map(function(typeParameter: TypeParameterDeclaration): TypeParameterDeclarationStructure {
+						.map((typeParameter: TypeParameterDeclaration): TypeParameterDeclarationStructure => {
 							const declaration: TypeParameterDeclarationStructure = {
 								name: typeParameter.getName()
 							};
@@ -87,7 +87,7 @@ export default async function generate(source: string, options?: any): Promise<v
 							return declaration;
 						});
 					const preparedParameters: ParameterDeclarationStructure[] = params.slice(1)
-						.map(function(param: ParameterDeclaration): ParameterDeclarationStructure {
+						.map((param: ParameterDeclaration): ParameterDeclarationStructure => {
 							const p: ParameterDeclarationStructure = {
 								name: param.getName(),
 								type: param.getType().getText(),

@@ -9,6 +9,9 @@ export default function foldersAdd(options: MailAPI.FoldersAdd, credentials?: Cr
 	return call('folders/add', options, 'POST', credentials);
 }
 
-export async function foldersAddAsync(options: MailAPI.FoldersAdd, credentials?: Credentials): Promise<RequestResult<string[]>> {
+export async function foldersAddAsync(
+	options: MailAPI.FoldersAdd,
+	credentials?: Credentials
+): Promise<RequestResult<string[]>> {
 	return callAsync('folders/add', options, 'POST', credentials);
 }
