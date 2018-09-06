@@ -4,6 +4,11 @@
         "@mail/tslint-2kit-rules/tslint.json"
     ],
     "jsRules": {},
-    "rules": {},
+    "rules": {
+      "trailing-comma": [ true, { "multiline": "never", "singleline": "never" } ],
+      "object-curly-spacing": [ true, "always" ], // from eslint
+      "object-literal-key-quotes": false,
+      "unified-signatures": false
+    },
     "rulesDirectory": []
 }
