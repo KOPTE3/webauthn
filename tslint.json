@@ -1,0 +1,9 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "@mail/tslint-2kit-rules/tslint.json"
+    ],
+    "jsRules": {},
+    "rules": {},
+    "rulesDirectory": []
+}
