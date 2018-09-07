@@ -4,7 +4,7 @@ import authorization from '../store/authorization';
 import providers from '../store/authorization/providers';
 import URL from './url';
 
-let debug = Debug('@qa:yoda');
+const debug = Debug('@qa:yoda');
 const TIMEOUT: number = 30 * 1000;
 
 export type UserType = 'basic' | 'pdd' | 'external';
@@ -19,25 +19,27 @@ export default {
 	 * @param {Object} [options] — авторизационые данные
 	 * @returns {Credentials}
 	 */
-	session (type: UserType = 'basic', options: Credentials = {}): Credentials {
-		let account = AccountManager.Hooks(),
-			service = 'mail.ru';
+	session(type: UserType = 'basic', options: Credentials = {}): Credentials {
+		const account = AccountManager.Hooks();
+		let service = 'mail.ru';
 
 		if (!/^(pdd|external)$/.test(type)) {
 			type = 'basic';
 		} else if (options.username) {
-			let { name, host } = this.parseEmail(options.username);
+			const { name, host } = this.parseEmail(options.username);
 
 			service = providers.find(host).name || host;
 		}
 
 		// Получаем куки для домена .mail.ru, для этого указываем host как e.mail.ru
-		let { host }= account.options(options);
+		const { host } = account.options(options);
 
-		let credentials = browser.waitForPromise<Credentials>(() => {
-			return account.session({ ...options, host, type, service });
-		}, TIMEOUT, 'Could not get user session');
-		//Ставим куки
+		const credentials = browser.waitForPromise<Credentials>(
+			() => account.session({ ...options, host, type, service }),
+			TIMEOUT,
+			'Could not get user session'
+		);
+		// Ставим куки
 		this.setCookie();
 
 		return credentials;
@@ -51,28 +53,28 @@ export default {
 	 * @param {Object} [options] — авторизационые данные
 	 * @returns {AccountManager.Credentials}
 	 */
-	register (type?: string, options: RegisterOptions = {}): Credentials {
-		let account = AccountManager.Hooks();
+	register(type?: string, options: RegisterOptions = {}): Credentials {
+		const account = AccountManager.Hooks();
 
 		return browser.waitForPromise(() => {
 			return account.register(options.domain || 'mail.ru', options);
-		}, TIMEOUT, 'Could not register user');
+		},                            TIMEOUT, 'Could not register user');
 	},
 
 	/**
 	 * Выставляет куки
 	 */
-	setCookie (): void {
-		let { account } = authorization;
-		//Ставим куки для проекта, урл которого указан в конфиге как baseUrl 
-		//на странице, указанной в конфиге как authCookieUrl
+	setCookie(): void {
+		const { account } = authorization;
+		// Ставим куки для проекта, урл которого указан в конфиге как baseUrl
+		// на странице, указанной в конфиге как authCookieUrl
 		URL.open(browser.options.authCookieUrl || '/cgi-bin/lstatic', TIMEOUT);
 
 		// Удостоверямся, что документ доступен
 		browser.waitForExist('body');
 
 		try {
-			let cookie = account.get('cookie');
+			const cookie = account.get('cookie');
 
 			if (!cookie.length) {
 				throw new Error('The required cookie could not be found');
@@ -88,13 +90,13 @@ export default {
 
 				default:
 					message =
-						'Could not found cookie to continue\n\n' +
-						'If you see this error message:\n' +
-						'  — There\'s no cookie. Try again with --debug option to explore that.\n' +
-						'  — The "auth" method is called in the wrong order.\n' +
-						'  — There\'s unexpected behavior in using Mocha\'s API.\n' +
-						'  — There\'s hidden exception. \n' +
-						'Try again with --debug, --stack and --verbose options to explore that.\n';
+							'Could not found cookie to continue\n\n' +
+							'If you see this error message:\n' +
+							'  — There\'s no cookie. Try again with --debug option to explore that.\n' +
+							'  — The "auth" method is called in the wrong order.\n' +
+							'  — There\'s unexpected behavior in using Mocha\'s API.\n' +
+							'  — There\'s hidden exception. \n' +
+							'Try again with --debug, --stack and --verbose options to explore that.\n';
 					break;
 			}
 
@@ -108,7 +110,7 @@ export default {
 	 * @param {string} email
 	 * @param {number} timeout
 	 */
-	logout (email?: string, timeout: number = TIMEOUT): void {
+	logout(email?: string, timeout: number = TIMEOUT): void {
 		if (!email) {
 			email = authorization.account.get('email');
 		}
@@ -122,13 +124,16 @@ export default {
 			try {
 				browser.timeouts('script', timeout);
 
-				let { value } = browser.executeAsync(function (email: string, resolve) {
-					if (window.__PH && window.__PH.logoutAccount) {
-						window.__PH.logoutAccount(email, function (result) {
-							resolve(result.status === 'ok');
-						});
-					}
-				}, email);
+				const { value } = browser.executeAsync(
+					(email: string, resolve) => {
+						if (window.__PH && window.__PH.logoutAccount) {
+							window.__PH.logoutAccount(email, (result) => {
+								resolve(result.status === 'ok');
+							});
+						}
+					},
+					email
+				);
 			} catch (error) {
 				throw new Error(`Could not logout user ${email}`);
 			}
@@ -142,21 +147,25 @@ export default {
 	 * @param {number} [timeout]
 	 * @returns {boolean}
 	 */
-	isActiveUser (email?: string, timeout: number = TIMEOUT): boolean {
+	isActiveUser(email?: string, timeout: number = TIMEOUT): boolean {
 		if (!email) {
-			let { account } = authorization;
+			const { account } = authorization;
 
 			email = account.get('email');
 		}
 
-		return browser.waitUntil(() => {
-			let { value } = browser.execute((email: string) => {
-				return window.__PH && window.__PH.activeUser() === email;
-			}, email);
+		return browser.waitUntil(
+			() => {
+				const { value } = browser.execute(
+					(email: string) => window.__PH && window.__PH.activeUser() === email,
+					email
+				);
 
-			return value;
-		},
-		timeout, `Could not detect user authorization ${email}`);
+				return value;
+			},
+			timeout,
+			`Could not detect user authorization ${email}`
+		);
 	},
 
 	/**
@@ -167,8 +176,8 @@ export default {
 	 * Допустимые значения: [internal, external, pdd, oauth]
 	 * @returns {boolean}
 	 */
-	hasAccountType (provider: string, type: string): boolean {
-		let result = providers.list.filter(({ hosts, types }) => {
+	hasAccountType(provider: string, type: string): boolean {
+		const result = providers.list.filter(({ hosts, types }) => {
 			return hosts.includes(provider) && types.includes(type);
 		});
 
@@ -181,9 +190,9 @@ export default {
 	 * @param {string} email
 	 * @returns {Object}
 	 */
-	parseEmail (email: string): { name: string; host: string } {
+	parseEmail(email: string): { name: string; host: string } {
 		try {
-			let [, name, host] = email.match(/(.*)@(.{4,})$/);
+			const [, name, host] = email.match(/(.*)@(.{4,})$/);
 
 			return { name, host };
 		} catch (error) {

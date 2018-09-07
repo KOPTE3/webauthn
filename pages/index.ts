@@ -1,11 +1,11 @@
 import * as merge from 'deepmerge';
 import * as Debug from 'debug';
-import {Credentials} from '@qa/account-manager';
-import account, {UserType} from '../utils/account';
+import { Credentials } from '@qa/account-manager';
+import account, { UserType } from '../utils/account';
 import URL from '../utils/url';
 import config from '../config';
 
-let debug = Debug('@qa:yoda');
+const debug = Debug('@qa:yoda');
 const TIMEOUT: number = 15 * 1000;
 
 export interface Query {
@@ -15,11 +15,11 @@ export interface Query {
 
 interface Cache {
 	session?: Credentials;
-	scripts : string[];
+	scripts: string[];
 	features: string[];
 }
 
-let cache: Cache = {
+const cache: Cache = {
 	scripts : [],
 	features: []
 };
@@ -41,7 +41,7 @@ class PageObject {
 	 * @param {string} [type] — тип авторизации
 	 * @param {Object} [credentials] — авторизационые данные
 	 */
-	static auth (type?: UserType, credentials?: Credentials): Credentials {
+	static auth(type?: UserType, credentials?: Credentials): Credentials {
 		return cache.session = account.session(type, credentials);
 	}
 
@@ -50,7 +50,7 @@ class PageObject {
 	 *
 	 * @type {Yoda.Locators}
 	 */
-	get locators (): Yoda.Locators {
+	get locators(): Yoda.Locators {
 		return {
 			container: 'body'
 		};
@@ -61,7 +61,7 @@ class PageObject {
 	 *
 	 * @type {string}
 	 */
-	get location (): Yoda.Location {
+	get location(): Yoda.Location {
 		return '/';
 	}
 
@@ -70,7 +70,7 @@ class PageObject {
 	 *
 	 * @type {WebdriverIO.Client<void>}
 	 */
-	get page (): WebdriverIO.Client<void> {
+	get page(): WebdriverIO.Client<void> {
 		return browser;
 	}
 
@@ -90,7 +90,7 @@ class PageObject {
 	 *
 	 * @returns {WebdriverIO.Client<string>}
 	 */
-	getContainerElement (): WebdriverIO.ElementLink {
+	getContainerElement(): WebdriverIO.ElementLink {
 		return browser.element(this.locators.container);
 	}
 
@@ -100,7 +100,7 @@ class PageObject {
 	 * @param {Boolean} [reverse=false]
 	 * @param {Number} [ms]
 	 */
-	wait (locator?: string, ms?: number, reverse: boolean = false): void {
+	wait(locator?: string, ms?: number, reverse: boolean = false): void {
 		let container = null;
 
 		if (!locator) {
@@ -121,8 +121,7 @@ class PageObject {
 
 		if (container) {
 			browser.waitForExist(container, ms, reverse);
-		}
-		else {
+		} else {
 			throw new Error('It seems you forgot to define the container element');
 		}
 	}
@@ -135,8 +134,8 @@ class PageObject {
 	 * @param {number} [timeout] — время ожидания
 	 * @return {string} url
 	 */
-	url (url: string, query: Query = {}, timeout: number = TIMEOUT): string {
-		let { features, scripts } = cache;
+	url(url: string, query: Query = {}, timeout: number = TIMEOUT): string {
+		const { features, scripts } = cache;
 
 		if (features.length) {
 			query.ftrs = features.join(' ');
@@ -147,7 +146,7 @@ class PageObject {
 		URL.open(url, TIMEOUT);
 
 		// Выполнить требуемые скрипты
-		scripts.forEach(file => {
+		scripts.forEach((file) => {
 			browser.timeouts('script', TIMEOUT);
 			browser.execute(file);
 		});
@@ -162,7 +161,7 @@ class PageObject {
 	 * @param {Object} [query] — параметры запроса
 	 * @returns {boolean}
 	 */
-	open (path?: string | Query, query: Query = {}): { state: boolean, url: string } {
+	open(path?: string | Query, query: Query = {}): { state: boolean, url: string } {
 		if (typeof path === 'object' && path !== null) {
 			query = path;
 			path = undefined;
@@ -173,15 +172,15 @@ class PageObject {
 		}
 
 		let state = true;
-		let url = this.url(path as string, query);
-		let qaCookie = browser.getCookie().find(cookie => cookie.name === 'qa');
+		const url = this.url(path as string, query);
+		const qaCookie = browser.getCookie().find((cookie) => cookie.name === 'qa');
 		// Проверяем авторизацию используя портальное API
 		if (cache.session) {
 			state = account.isActiveUser();
 		}
 		if (!qaCookie) {
-			debug('Выставляем тестовую куку для страниц, которые не используют авторизацию')
-			browser.setCookie(<WebdriverIO.Cookie>{
+			debug('Выставляем тестовую куку для страниц, которые не используют авторизацию');
+			browser.setCookie({
 				path: '/',
 				name: 'qa',
 				value: config.cookies.qa,
@@ -192,17 +191,17 @@ class PageObject {
 		}
 
 		// http://canary.win105.dev.mail.ru/
-		//browser.setCookie(<WebdriverIO.Cookie>{
-		//	path: '/',
-		//	name: 'canary',
-		//	value: config.cookies.canary
-		//});
+		// browser.setCookie(<WebdriverIO.Cookie>{
+		// 	path: '/',
+		// 	name: 'canary',
+		// 	value: config.cookies.canary
+		// });
 
 		return { state, url };
 	}
 
 	/** Включение произвольного скрипта в код страницы */
-	inject (list: string[]): string[] {
+	inject(list: string[]): string[] {
 		cache.scripts.push(...list);
 
 		return list;
@@ -212,7 +211,7 @@ class PageObject {
 	 * Включение фичи
 	 * @param {string[]} list — список фич, которые требуется включить
 	 */
-	features (list: string[]): string[] {
+	features(list: string[]): string[] {
 		cache.features.push(...list);
 
 		return list;
@@ -223,8 +222,8 @@ class PageObject {
 	 *
 	 * @param {Object} [query] — параметры запроса
 	 */
-	refresh (query: Query = {}): void {
-		let url = browser.getUrl();
+	refresh(query: Query = {}): void {
+		const url = browser.getUrl();
 
 		this.url(url, query);
 	}
@@ -234,15 +233,15 @@ class PageObject {
 	 *
 	 * @returns {boolean}
 	 */
-	isVisible (): boolean {
+	isVisible(): boolean {
 		return browser.isVisible(this.locators.container);
 	}
 
 	/**
 	 * Предотвращает показ модального окна события beforeunload
 	 */
-	disableConfirm (): void {
-		browser.execute(function () {
+	disableConfirm(): void {
+		browser.execute(() => {
 			window.onbeforeunload = null;
 		});
 	}

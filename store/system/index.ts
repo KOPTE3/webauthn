@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as platform from 'platform';
 import * as FileService from '@qa/file-service';
 
-let fileService = FileService({ basepath: 'files' });
+const fileService = FileService({ basepath: 'files' });
 
 /** Набор методов для работы с данными пользовательского окружения */
 export default {
@@ -17,7 +17,7 @@ export default {
 	 * @param {string} name
 	 * @returns {string}
 	 */
-	file (name: string): string {
+	file(name: string): string {
 		return fileService(name);
 	},
 
@@ -26,7 +26,7 @@ export default {
 	 *
 	 * @type {string}
 	 */
-	get browser (): string {
+	get browser(): string {
 		return browser.desiredCapabilities.browserName;
 	},
 
@@ -35,7 +35,7 @@ export default {
 	 *
 	 * @type {Object}
 	 */
-	get viewport (): WebdriverIO.Client<WebdriverIO.Size> & WebdriverIO.Size {
+	get viewport(): WebdriverIO.Client<WebdriverIO.Size> & WebdriverIO.Size {
 		return browser.getViewportSize();
 	},
 
@@ -45,8 +45,8 @@ export default {
 	 * @deprecated — используйте свойство agent
 	 * @type {string}
 	 */
-	get platform (): string {
-		let status = browser.execute(function () {
+	get platform(): string {
+		const status = browser.execute(() => {
 			return window.navigator.platform;
 		});
 
@@ -59,8 +59,8 @@ export default {
 	 * @type {Platform} — name, version, layout, os, description
 	 */
 	// @ts-ignore
-	get agent (): Platform {
-		let { value } = browser.execute(function () {
+	get agent(): Platform {
+		const { value } = browser.execute(() => {
 			return window.navigator.userAgent;
 		});
 
@@ -72,7 +72,7 @@ export default {
 	 *
 	 * @type {string}
 	 */
-	get host (): string {
+	get host(): string {
 		return browser.options.hostname;
 	},
 
@@ -81,7 +81,7 @@ export default {
 	 *
 	 * @type {string}
 	 */
-	get baseUrl (): string {
+	get baseUrl(): string {
 		return browser.options.baseUrl;
 	}
 };

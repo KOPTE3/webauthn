@@ -1,10 +1,10 @@
 export interface Phone {
-	index: number,
-	phone: string,
-	head: string,
-	value: string,
-	masked: string,
-	id: string
+	index: number;
+	phone: string;
+	head: string;
+	value: string;
+	masked: string;
+	id: string;
 }
 
 type PhoneList = Phone[];
@@ -15,7 +15,7 @@ type PhoneList = Phone[];
  * @module "@qa/yoda/store/phones"
  */
 export default {
-	phones: <PhoneList>[
+	phones: [
 		{
 			index: 0,
 			phone: '79162143406',
@@ -64,14 +64,14 @@ export default {
 			masked: '+7 (926) 529-**-**',
 			id: ''
 		}
-	],
+	] as PhoneList,
 
 	/**
 	 * Получение номера телефона
 	 * @param {number} [index]
 	 * @returns {string}
 	 */
-	getNumber (index: number = 0): string {
+	getNumber(index: number = 0): string {
 		return this.phones[index].phone;
 	},
 

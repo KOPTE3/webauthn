@@ -8,13 +8,13 @@ import call, { callAsync } from './call';
 export default function abContactsAdd(
 	options: MailAPI.AbContactsAdd,
 	credentials?: Credentials
-): RequestResult<Array<string>> {
+): RequestResult<string[]> {
 	return call('ab/contacts/add', options, 'POST', credentials);
 }
 
 export async function abContactsAddAsync(
 	options: MailAPI.AbContactsAdd,
 	credentials?: Credentials
-): Promise<RequestResult<Array<string>>> {
+): Promise<RequestResult<string[]>> {
 	return callAsync('ab/contacts/add', options, 'POST', credentials);
 }

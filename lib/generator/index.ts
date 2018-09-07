@@ -7,29 +7,28 @@ import Project, {
 	ParameterDeclaration,
 	ParameterDeclarationStructure,
 	TypeParameterDeclaration,
-	TypeParameterDeclarationStructure,
+	TypeParameterDeclarationStructure
 } from 'ts-simple-ast';
-import {lcFirst} from '../../utils/utils';
-
+import { lcFirst } from '../../utils/utils';
 
 interface Temp {
 	className: string;
 	methods: MethodDeclarationStructure[];
 }
 
-export default async function generate (source: string, options?: any): Promise<void> {
-	const {dir, name} = path.parse(source);
+export default async function generate(source: string, options?: any): Promise<void> {
+	const { dir, name } = path.parse(source);
 	const destination = path.join(dir, `${name}.gen.ts`);
 	const dts = path.join(dir, `${name}.d.ts`);
 	const moduleSpecifier = `./${name}`;
 	const project = new Project({
-		addFilesFromTsConfig: false,
+		addFilesFromTsConfig: false
 	});
 
 	const sourceFile = project.addExistingSourceFile(source);
 
 	const classDeclarations: ClassDeclaration[] = sourceFile.getClasses();
-	const generateClasses: Array<Temp> = [];
+	const generateClasses: Temp[] = [];
 
 	for (const classDeclaration of classDeclarations) {
 		const staticMethods = classDeclaration.getStaticMethods();
@@ -59,19 +58,19 @@ export default async function generate (source: string, options?: any): Promise<
 		if (generateMethods.length > 0) {
 			generateClasses.push({
 				className: classDeclaration.getName(),
-				methods: generateMethods.map(function (generateMethod: MethodDeclaration): MethodDeclarationStructure {
+				methods: generateMethods.map((generateMethod: MethodDeclaration): MethodDeclarationStructure => {
 					const method: MethodDeclarationStructure = {
 						name: lcFirst(generateMethod.getName()),
-						returnType: generateMethod.getReturnType().getText(),
+						returnType: generateMethod.getReturnType().getText()
 					};
 
 					const typeParameters = generateMethod.getTypeParameters();
 					const params = generateMethod.getParameters();
 
 					const preparedTypeParameters: TypeParameterDeclarationStructure[] = typeParameters
-						.map(function (typeParameter: TypeParameterDeclaration): TypeParameterDeclarationStructure {
+						.map((typeParameter: TypeParameterDeclaration): TypeParameterDeclarationStructure => {
 							const declaration: TypeParameterDeclarationStructure = {
-								name: typeParameter.getName(),
+								name: typeParameter.getName()
 							};
 
 							const typeConstraint = typeParameter.getConstraint();
@@ -88,12 +87,12 @@ export default async function generate (source: string, options?: any): Promise<
 							return declaration;
 						});
 					const preparedParameters: ParameterDeclarationStructure[] = params.slice(1)
-						.map(function (param: ParameterDeclaration): ParameterDeclarationStructure {
+						.map((param: ParameterDeclaration): ParameterDeclarationStructure => {
 							const p: ParameterDeclarationStructure = {
 								name: param.getName(),
 								type: param.getType().getText(),
 								hasQuestionToken: param.isOptional() && !param.isRestParameter(),
-								isRestParameter: param.isRestParameter(),
+								isRestParameter: param.isRestParameter()
 							};
 
 							return p;
@@ -106,7 +105,7 @@ export default async function generate (source: string, options?: any): Promise<
 					method.isGenerator = generateMethod.isGenerator();
 
 					return method;
-				}),
+				})
 			});
 		}
 	}
@@ -115,28 +114,27 @@ export default async function generate (source: string, options?: any): Promise<
 		return;
 	}
 
-	const destinationFile = project.createSourceFile(destination, '', {overwrite: true});
+	const destinationFile = project.createSourceFile(destination, '', { overwrite: true });
 
 	destinationFile.addImportDeclaration({
-		moduleSpecifier,
+		moduleSpecifier
 	});
-
 
 	const rootNamespace = destinationFile.addNamespace({
 		hasDeclareKeyword: true,
 		hasModuleKeyword: true,
-		name: JSON.stringify(moduleSpecifier),
+		name: JSON.stringify(moduleSpecifier)
 	});
 
 	for (const generateClass of generateClasses) {
-		const {className, methods} = generateClass;
+		const { className, methods } = generateClass;
 
 		const classInterface = rootNamespace.addInterface({
-			name: className,
+			name: className
 		});
 
 		const classNamespace = rootNamespace.addNamespace({
-			name: className,
+			name: className
 		});
 
 		for (const method of methods) {
@@ -151,7 +149,7 @@ export default async function generate (source: string, options?: any): Promise<
 	if (dtsFileExists) {
 		const dtsFile = project.addExistingSourceFile(dts);
 		for (const generateClass of generateClasses) {
-			const {className, methods} = generateClass;
+			const { className, methods } = generateClass;
 			const dtsClass: ClassDeclaration = dtsFile.getClass(className);
 
 			for (const method of methods) {
@@ -165,7 +163,7 @@ export default async function generate (source: string, options?: any): Promise<
 				dtsClass.addMethod(method);
 				dtsClass.addMethod({
 					...method,
-					isStatic: true,
+					isStatic: true
 				});
 			}
 		}

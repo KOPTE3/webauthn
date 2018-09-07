@@ -8,7 +8,7 @@ export interface UserShortResponseBody {
 		sign_html: string;
 		name: string;
 		active: boolean;
-	}>
+	}>;
 
 	[key: string]: any;
 }

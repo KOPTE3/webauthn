@@ -5,7 +5,7 @@ import * as Debug from 'debug';
 import * as WebDriverIO from 'webdriverio';
 import * as WebDriverIOUtils from '@qa/wdio-utils';
 
-let debug = Debug('@qa:yoda:runner');
+const debug = Debug('@qa:yoda:runner');
 
 interface Service {
 	file: string;
@@ -16,13 +16,13 @@ interface Suites {
 	[name: string]: string[];
 }
 
-let details = {
+const details = {
 	/**
 	 * Вывод логотипа
 	 */
-	logo () {
-		let file = path.join(__dirname, '../files/logo.txt');
-		let stream = fs.createReadStream(file);
+	logo() {
+		const file = path.join(__dirname, '../files/logo.txt');
+		const stream = fs.createReadStream(file);
 
 		stream.pipe(process.stdout);
 	},
@@ -33,17 +33,17 @@ let details = {
 	 * @param {Object} service — { file, data }
 	 * @returns {Object}
 	 */
-	extend (service: Service): Service {
-		let wdio = new WebDriverIOUtils();
+	extend(service: Service): Service {
+		const wdio = new WebDriverIOUtils();
 
-		let { file, data } = wdio.config({
+		const { file, data } = wdio.config({
 			file: service.file
 		});
 
 		// Экспортируем путь к конфигурационному файлу
 		service.file = file;
 
-		for (let [ flag, value ] of Object.entries(service.data)) {
+		for (const [ flag, value ] of Object.entries(service.data)) {
 			// Для дублирующихся ключей берем значение крайнего
 			if (Array.isArray(value)) {
 				value.pop();
@@ -55,28 +55,28 @@ let details = {
 					service.data.baseUrl = value;
 					break;
 
-				// Параметры вывода отладочной информации в модуле debug
+					// Параметры вывода отладочной информации в модуле debug
 				case 'verbose':
 					break;
 
-				// Вывод логов селениума
+					// Вывод логов селениума
 				case 'log':
 					service.data.logLevel = value === true ? 'verbose' : value;
 					break;
 
-				// Предотвращаем запуск несуществующего набора тестов
-				// Когда мы писали логику запуска тестов по группам опции suite в wdio не было.
-				// default это название группы, которое используется в Jenkins по умолчанию
-				// axis: – является префиксом, который мы добавли чтобы wdio не падал когда передается
-				// числовое значение
+					// Предотвращаем запуск несуществующего набора тестов
+					// Когда мы писали логику запуска тестов по группам опции suite в wdio не было.
+					// default это название группы, которое используется в Jenkins по умолчанию
+					// axis: – является префиксом, который мы добавли чтобы wdio не падал когда передается
+					// числовое значение
 				case 'suite':
-					if (service.data.suite == 'axis:default') {
+					if (service.data.suite === 'axis:default') {
 						delete service.data.suite;
 					}
 
 					break;
 
-				// Позволяет отлаживать тесты
+					// Позволяет отлаживать тесты
 				case 'debug':
 					merge(service.data, {
 						mochaOpts: {
@@ -94,19 +94,19 @@ let details = {
 
 		debug('config:', file);
 
-		let { grep } = service.data;
+		const { grep } = service.data;
 
 		if (grep) {
 			debug('filter:', grep);
 		}
 
-		let suites: Suites = {};
+		const suites: Suites = {};
 
-		for (let [suite, tests] of Object.entries(data.suites)) {
-			const _tests_ = tests as string[];
+		for (const [suite, tests] of Object.entries(data.suites)) {
+			const typedTests = tests as string[]; // just to compile TS
 
-			if (_tests_.length) {
-				suites[suite] = _tests_;
+			if (typedTests.length) {
+				suites[suite] = typedTests;
 			}
 		}
 
@@ -124,15 +124,15 @@ let details = {
  *      data — данные, которые будут переданы в конфиг
  *      file — путь к файлу конфига
  */
-export default async function (options: Service): Promise<void> {
-	let service = details.extend(options);
+export default async function(options: Service): Promise<void> {
+	const service = details.extend(options);
 
 	details.logo();
 
-	let launcher = new WebDriverIO.Launcher(service.file, service.data);
+	const launcher = new WebDriverIO.Launcher(service.file, service.data);
 
 	try {
-		let code = await launcher.run();
+		const code = await launcher.run();
 
 		if (code === 0) {
 			console.log('\x1b[32m', 'All tests were successfully finished');
@@ -141,11 +141,9 @@ export default async function (options: Service): Promise<void> {
 		}
 
 		process.exit(code);
-	}
-	catch (error) {
-		debug('Something went wrong: \n%s \n%s', error,
-			JSON.stringify(service, null, '\t'));
+	} catch (error) {
+		debug('Something went wrong: \n%s \n%s', error, JSON.stringify(service, null, '\t'));
 
 		process.exit(-1);
 	}
-};
+}

@@ -2,7 +2,7 @@ import { MailAPI as MailApiInterfaces } from '@qa/api';
 import helpers from '../../store/helpers';
 import * as MailApi from '../../api/mail-api';
 
-type ArrayElement<ArrayType> = ArrayType extends (infer ElementType)[] ? ElementType : never;
+type ArrayElement<ArrayType> = ArrayType extends Array<infer ElementType> ? ElementType : never;
 const defaultFolderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> = {
 	name: 'Test folder',
 	parent: '-1', // root
@@ -15,7 +15,7 @@ export default class MailApiSteps {
 		'Создать папку с указанными параметрами. В результате созданы папки с id {__result__}',
 		(folderData: any) => folderData
 	)
-	createFolder (folderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']>): number {
+	createFolder(folderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']>): number {
 		return +MailApi.foldersAdd({
 			folders: [{
 				...defaultFolderData,
@@ -28,11 +28,11 @@ export default class MailApiSteps {
 		folders.reduce((foldersObject, folder) => ({
 			...foldersObject,
 			[folder.name]: folder
-		}), {})
+		}),            {})
 	)
-	createFolders (foldersData: MailApiInterfaces.FoldersAdd['folders']): number[] {
+	createFolders(foldersData: MailApiInterfaces.FoldersAdd['folders']): number[] {
 		return MailApi.foldersAdd({
-			folders: foldersData.map(folderData => ({
+			folders: foldersData.map((folderData) => ({
 				...defaultFolderData,
 				...folderData
 			}))
@@ -40,7 +40,7 @@ export default class MailApiSteps {
 	}
 
 	@step('Создать {params ? "кастомную" : ""} папку Архив')
-	createArchive (params?: ArrayElement<MailApiInterfaces.FoldersAdd['folders']>): number {
+	createArchive(params?: ArrayElement<MailApiInterfaces.FoldersAdd['folders']>): number {
 		return +MailApi.foldersAdd({
 			folders: [{
 				...defaultFolderData,
@@ -52,8 +52,8 @@ export default class MailApiSteps {
 	}
 
 	@step('{isEnabled ? "В" : "Вы"}ключить треды{refresh ? " и обновить страницу" : ""}')
-	toggleThreads (isEnabled: boolean, refresh: boolean = false) {
-		MailApi.helpersUpdate({ //helpers.threads, { state: enabled });
+	toggleThreads(isEnabled: boolean, refresh: boolean = false) {
+		MailApi.helpersUpdate({ // helpers.threads, { state: enabled });
 			index: helpers.threads,
 			update: { state: isEnabled }
 		});
@@ -64,7 +64,7 @@ export default class MailApiSteps {
 	}
 
 	@step('Открыть запароленные папки с id: [{__result__}]')
-	openFolders (foldersData: Array<{ id: number, password: string }>): number[] {
+	openFolders(foldersData: Array<{ id: number, password: string }>): number[] {
 		return MailApi.foldersOpen({
 			folders: foldersData.map(({ id, password }) => ({
 				id: `${id}`,
@@ -73,7 +73,7 @@ export default class MailApiSteps {
 		}).body.map((folderId: string) => +folderId);
 	}
 
-	getMessagesCount (folder: number): number {
+	getMessagesCount(folder: number): number {
 		return MailApi.messagesStatus({ folder }).body.messages_total;
 	}
 
@@ -86,26 +86,30 @@ export default class MailApiSteps {
 	 * @param {number} [limit] — ограничение по количеству писем
 	 */
 	@step('Ожидание появления сообщения "{subject}" ("{count}" шт.) в папке "{folder}" в MailboxStatus"')
-	waitForLetterBySubjectInStatus (subject: string, folder: number, count: number = 1, limit?: number) {
-		browser.waitUntil(() => {
-			const { messages } = MailApi.messagesStatus({ folder, limit }).body;
+	waitForLetterBySubjectInStatus(subject: string, folder: number, count: number = 1, limit?: number) {
+		browser.waitUntil(
+			() => {
+				const { messages } = MailApi.messagesStatus({ folder, limit }).body;
 
-			return messages.filter(message => message.subject === subject).length >= count;
-		}, null, `Сообщение с темой письма "${subject}" ("${count}" шт.) для папки "${folder}" отсутствует в статусе`);
+				return messages.filter((message) => message.subject === subject).length >= count;
+			},
+			null,
+			`Сообщение с темой письма "${subject}" ("${count}" шт.) для папки "${folder}" отсутствует в статусе`
+		);
 	}
 
-	getCurrentSignature (returnHtml: boolean = false): string {
-		const currentSignObject = MailApi.userShort({}).body.signs.find(sign => sign.active);
+	getCurrentSignature(returnHtml: boolean = false): string {
+		const currentSignObject = MailApi.userShort({}).body.signs.find((sign) => sign.active);
 
 		return (!currentSignObject) ? null : (returnHtml) ? currentSignObject.sign_html : currentSignObject.sign;
 	}
 
-	getUidlBySubjectInFolder (folderId: number, subject: string): string {
+	getUidlBySubjectInFolder(folderId: number, subject: string): string {
 		return MailApi.messagesStatus({ folder: folderId }).body.messages.find((message) => message.subject === subject).id;
 	}
 
 	@step('Добавить контакт с именем {nick} и email {email} в адресную книгу')
-	addContact (nickName: string, email: string) {
+	addContact(nickName: string, email: string) {
 		MailApi.abContactsAdd({
 			contacts: [{
 				nick: nickName,

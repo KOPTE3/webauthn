@@ -1,6 +1,5 @@
-import {RequestResult} from '../../../types/api';
-import call, {callAsync} from '../call';
-
+import { RequestResult } from '../../../types/api';
+import call, { callAsync } from '../call';
 
 export enum BruteforceType {
 	collectors = 'collectors',
@@ -14,7 +13,7 @@ export enum BruteforceType {
 	smsverificator = 'smsverificator',
 	confirm_filter_email_resend = 'confirm_filter_email_resend',
 	sendmsg = 'sendmsg',
-	brute_short_code = 'brute_short_code',
+	brute_short_code = 'brute_short_code'
 }
 
 interface Options {
@@ -26,10 +25,10 @@ interface Options {
 /**
  * @see http://api.tornado.dev.mail.ru/test/bruteforce-counter/reset
  */
-export default function bruteforceCounterReset (options: Options): RequestResult<null> {
+export default function bruteforceCounterReset(options: Options): RequestResult<null> {
 	return call('test/bruteforce-counter/reset', options);
 }
 
-export async function bruteforceCounterResetAsync (options: Options): Promise<RequestResult<null>> {
+export async function bruteforceCounterResetAsync(options: Options): Promise<RequestResult<null>> {
 	return callAsync('test/bruteforce-counter/reset', options);
 }

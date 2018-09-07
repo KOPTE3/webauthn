@@ -9,7 +9,7 @@ export interface MessagesStatusResponseBody {
 		subject: string;
 
 		[key: string]: any;
-	}>
+	}>;
 	messages_total: number;
 
 	[key: string]: any;

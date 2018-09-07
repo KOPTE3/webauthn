@@ -7,7 +7,7 @@ export default {
 	 *
 	 * @returns {Array}
 	 */
-	list: <ProviderList>[
+	list: [
 		{
 			name: 'mail.ru',
 			types: ['internal', 'oauth'],
@@ -274,7 +274,7 @@ export default {
 			],
 			url: 'https://www.facebook.com/login.php'
 		}
-	],
+	] as ProviderList,
 
 	/**
 	 * Проектный топ провайдеров по типам авторизации
@@ -291,8 +291,8 @@ export default {
 	 * @param {string} [project]
 	 * @returns {Array}
 	 */
-	top (type: AccountManager.Type, project: string = 'mail.ru'): string[] {
-		let providers: any = {
+	top(type: AccountManager.Type, project: string = 'mail.ru'): string[] {
+		const providers: any = {
 			external: {
 				'my.com': [
 					'libero.it',
@@ -340,7 +340,7 @@ export default {
 	 *
 	 * @param {...Array} providers — список провайдеров
 	 */
-	set (...providers: Yoda.Provider[]) {
+	set(...providers: Yoda.Provider[]) {
 		this.list.push(...providers);
 	},
 
@@ -350,7 +350,7 @@ export default {
 	 * @param {Array|null} providers — заданный список провайдеров
 	 * @returns {Array}
 	 */
-	get<T> (providers: string[] | void): Array<T> {
+	get<T>(providers: string[] | void): T[] {
 		if (providers) {
 			return this.list.filter((provider: Yoda.Provider) => {
 				if (providers.includes(provider.name)) {
@@ -368,9 +368,9 @@ export default {
 	 * @param {string} domain
 	 * @returns {Object}
 	 */
-	find (domain: string): Yoda.Provider {
-		let provider = this.list.find((provider: Yoda.Provider) => {
-			for (let alias of provider.hosts) {
+	find(domain: string): Yoda.Provider {
+		const provider = this.list.find((provider: Yoda.Provider) => {
+			for (const alias of provider.hosts) {
 				if (alias === domain) {
 					return true;
 				}
@@ -386,7 +386,7 @@ export default {
 	 * @param {Function} predicate
 	 * @returns {Array}
 	 */
-	filter<T> (predicate: (provider: string) => boolean): Array<T> {
+	filter<T>(predicate: (provider: string) => boolean): T[] {
 		return this.list.filter((provider: string) => {
 			return predicate(provider);
 		});

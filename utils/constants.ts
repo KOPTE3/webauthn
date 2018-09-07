@@ -65,4 +65,3 @@ export enum UNICODE_CHARACTERS {
 }
 
 export default { UNICODE_CHARACTERS };
-

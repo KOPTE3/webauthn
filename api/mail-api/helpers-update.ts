@@ -1,6 +1,6 @@
 import { MailAPI } from '@qa/api';
 import { Credentials, RequestResult } from '../../types/api';
-import call, {callAsync} from './call';
+import call, { callAsync } from './call';
 
 export interface HelpersUpdateResponseBody {
 	index: number;
@@ -9,7 +9,7 @@ export interface HelpersUpdateResponseBody {
 	count: {
 		show: number;
 		close: number;
-	}
+	};
 }
 
 /**

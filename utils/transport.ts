@@ -12,9 +12,9 @@ type RequiredInternal<T, K extends keyof T> = { [P in K]: T[P] };
 type Required<T> = T & RequiredInternal<T, keyof T>;
 
 class Transport {
-	data: ITransportData
+	data: ITransportData;
 
-	constructor (data?: ITransportData) {
+	constructor(data?: ITransportData) {
 		this.data = {
 			subject: 'Test subject',
 			content: 'Test content',
@@ -33,32 +33,32 @@ class Transport {
 	 *   ...
 	 * }
 	 */
-	putMessage (params: IPutMessageData = {}): IDeliverydResponse {
-		let { attachments, raw, rawFilename } = params;
-		let { username, password } = authorization.account.data();
+	putMessage(params: IPutMessageData = {}): IDeliverydResponse {
+		const { attachments, raw, rawFilename } = params;
+		const { username, password } = authorization.account.data();
 
-		let transport = new Deliveryd({ username, password });
+		const transport = new Deliveryd({ username, password });
 
 		return browser.waitForPromise(async () => {
-			let { subject, content: body }: Required<IPutMessageData> = { ...this.data, ...params };
+			const { subject, content: body }: Required<IPutMessageData> = { ...this.data, ...params };
 
-			let request: IPutMessageData = {
+			const request: IPutMessageData = {
 				subject,
 				body,
 				...params
 			};
 
 			if (attachments) {
-				request.attachments = (<string[]>attachments).map(value => system.file(value));
+				request.attachments = (attachments as string[]).map((value) => system.file(value));
 			}
 
 			if (typeof rawFilename === 'string') {
-				let file = system.file(rawFilename);
+				const file = system.file(rawFilename);
 
 				request.raw = fs.readFileSync(file, 'utf-8');
 			}
 
-			let response = await transport.send(request);
+			const response = await transport.send(request);
 
 			assert.equal(response.status, RPC.HTTPStatus.OK);
 
@@ -71,10 +71,10 @@ class Transport {
 	 *
 	 * @see putMessage
 	 */
-	putThread (params: IPutMessageData = {}): IDeliverydResponse {
-		let { message } = this.putMessage(params);
+	putThread(params: IPutMessageData = {}): IDeliverydResponse {
+		const { message } = this.putMessage(params);
 
-		let response = this.putMessage({
+		const response = this.putMessage({
 			source: {
 				reply: message.messageId
 			}
@@ -96,13 +96,13 @@ class Transport {
 	 *   ...
 	 * }
 	 */
-	sendMessage (params: ISendMessageData): IAPIResponse {
-		let { username, password } = authorization.account.data();
+	sendMessage(params: ISendMessageData): IAPIResponse {
+		const { username, password } = authorization.account.data();
 
-		let request = new API({ username, password });
+		const request = new API({ username, password });
 
 		return browser.waitForPromise(async () => {
-			let { subject, content }: Required<ISendMessageData> = { ...this.data, ...params };
+			const { subject, content }: Required<ISendMessageData> = { ...this.data, ...params };
 
 			params = merge({
 				subject,
@@ -112,20 +112,22 @@ class Transport {
 				correspondents: {
 					to: username
 				}
-			}, params);
+			},             params);
 
-			let response = await request.send(params);
+			const response = await request.send(params);
 
 			assert.equal(response.status, RPC.HTTPStatus.OK);
 
 			return response;
-		}, null, 'Could not send message');
+		},                            null, 'Could not send message');
 	}
 }
 
+// not to break compatibility
+// tslint:disable-next-line
 export interface ITransportData {
-	subject?: string,
-	content?: string,
+	subject?: string;
+	content?: string;
 }
 
 export type ISendMessageData = MailAPI.MessagesSend & ITransportData;
@@ -133,7 +135,7 @@ export type ISendMessageData = MailAPI.MessagesSend & ITransportData;
 export type IPutMessageData = IDeliverydRequest & {
 	content?: string;
 	rawFilename?: string;
-}
+};
 
 export { IDeliverydRequest, IDeliverydResponse };
 export default Transport;

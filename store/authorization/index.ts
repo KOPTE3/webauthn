@@ -2,8 +2,8 @@ import * as Debug from 'debug';
 import AccountManager, { Credentials } from '@qa/account-manager';
 import User from '@qa/account-manager/utils/user';
 
-let debug = Debug('@qa:yoda');
-let account = new AccountManager();
+const debug = Debug('@qa:yoda');
+const account = new AccountManager();
 
 /**
  * Набор методов для работы с авторизационными данными
@@ -31,14 +31,14 @@ export default {
 	 *    user_agent, sex, last_name
 	 * }
 	 */
-	credentials (type: string = 'basic', options: Credentials = {}, timeout?: number): Credentials {
+	credentials(type: string = 'basic', options: Credentials = {}, timeout?: number): Credentials {
 		return browser.waitForPromise(async () => {
-			let { body } = await account.credentials({ domain: 'mail.ru', type, ...options });
+			const { body } = await account.credentials({ domain: 'mail.ru', type, ...options });
 
 			debug('Used credentials:\n%o', body);
 
 			return body;
-		}, timeout, 'Could not get user credentials');
+		},                            timeout, 'Could not get user credentials');
 	},
 
 	/**
@@ -47,7 +47,7 @@ export default {
 	 * @param {number} id — идентификатор учетной записи
 	 * @returns {Promise}
 	 */
-	discard (id: number): Promise<void> {
+	discard(id: number): Promise<void> {
 		return account.discard(id);
 	},
 
@@ -56,7 +56,7 @@ export default {
 	 *
 	 * @type {AccountManager.Session}
 	 */
-	get account (): AccountManager.Session {
+	get account(): AccountManager.Session {
 		return AccountManager.Session();
 	}
 };

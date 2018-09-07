@@ -6,10 +6,9 @@ import 'reflect-metadata';
 import * as minimist from 'minimist';
 import './lib';
 
+const options: string[] = process.argv.slice(2);
 
-let options: string[] = process.argv.slice(2);
-
-let flags: Yoda.Options = minimist(options);
+const flags: Yoda.Options = minimist(options);
 
 if (flags.verbose) {
 	process.env.DEBUG = '@qa*';
@@ -22,7 +21,7 @@ if (flags._.includes('gen')) {
 
 	/** Yoda runner */
 	task = runner.default({
-		root: flags.root,
+		root: flags.root
 	});
 } else {
 	const runner = require('./tasks/runner');
@@ -30,7 +29,7 @@ if (flags._.includes('gen')) {
 	/** Yoda runner */
 	task = runner.default({
 		data: flags,
-		file: flags.config || 'config.js',
+		file: flags.config || 'config.js'
 	});
 }
 
