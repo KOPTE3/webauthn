@@ -35,10 +35,13 @@ export async function callAsync(path: string, body: object, method: 'POST' | 'GE
 			break;
 		}
 		case 'POST': {
-			options.formData = Object.entries(body).reduce((formdata: any, [key, value]) => {
-				formdata[key] = (typeof value === 'string') ? value : JSON.stringify(value);
-				return formdata;
-			},                                             {});
+			options.formData = Object.entries(body).reduce(
+				(formdata: any, [key, value]) => {
+					formdata[key] = (typeof value === 'string') ? value : JSON.stringify(value);
+					return formdata;
+				},
+				{}
+			);
 			break;
 		}
 	}
