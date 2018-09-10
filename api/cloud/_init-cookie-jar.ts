@@ -61,7 +61,10 @@ async function getSdcsCookie(cookieJar: request.CookieJar): Promise<void> {
  * @param {Credentials} credentials
  * @return {Promise<request.CookieJar>}
  */
-async function initCookieJar(cookieJar: request.CookieJar, credentials: Credentials): Promise<request.CookieJar> {
+export default async function initCookieJar(
+	cookieJar: request.CookieJar,
+	credentials: Credentials
+): Promise<request.CookieJar> {
 	await getAuthCookies(cookieJar, credentials);
 	await getSdcsCookie(cookieJar);
 
