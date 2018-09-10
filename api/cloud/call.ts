@@ -39,7 +39,7 @@ export default function call(
 	return browser.waitForPromise(callAsync(path, body, method, credentials));
 }
 
-async function callAsync(
+export async function callAsync(
 	path: string,
 	body: object,
 	method: 'POST' | 'GET' = 'GET',
