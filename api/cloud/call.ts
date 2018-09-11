@@ -100,7 +100,7 @@ export async function callAsync(
 	try {
 		const response = await rp(requestOptions)
 			.catch((requestError) => {
-				if (allow404) {
+				if (allow404 && requestError.statusCode === 404) {
 					return {
 						...requestError,
 						error: undefined,
