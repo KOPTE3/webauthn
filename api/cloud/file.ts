@@ -10,7 +10,7 @@ interface FileResponseBody {
 		folders: number,
 		files: number
 	};
-	home: string | { // string if 200, object if 404
+	home: string & { // string if 200, object if 404
 		value: string
 		error: string
 	};
