@@ -19,6 +19,7 @@ const defaultRequestOptions: Partial<rp.Options> = {
 		'User-Agent': config.api.userAgent
 	},
 	json: true,
+	resolveWithFullResponse: true,
 	jar: cookieJar
 };
 
@@ -35,7 +36,7 @@ async function getCsrfToken(credentials: Credentials) {
 	if (response.statusCode >= 200 && response.statusCode < 400) {
 		debug(`Successfully obtained CSRF token: ${response.body.token}`);
 	} else {
-		throw new Error(`${response.url} returned error (status code ${response.statusCode}): \
+		throw new Error(`${response.request.url} returned error (status code ${response.statusCode}): \
 		${JSON.stringify(response.body)}`);
 	}
 
