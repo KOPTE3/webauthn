@@ -108,7 +108,7 @@ export async function callAsync(
 			});
 		result.response = response;
 
-		if (response.statusCode >= 200 && response.statusCode < 400) {
+		if ((response.statusCode >= 200 && response.statusCode < 400) || allow404) {
 			const { status, body } = response.body;
 			result.status = status;
 			result.body = body;
