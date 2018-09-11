@@ -1,6 +1,9 @@
 import { Credentials, RequestResult } from '../../types/api';
 import call, { callAsync } from './call';
 
+/**
+ * @see http://docs.i.munkin.devmail.ru/cloud-api/master/_docs/trashbin.html
+ */
 export default function trashbinEmpty(
 	options: object = {},
 	credentials?: Credentials
