@@ -83,5 +83,12 @@ export default async function initCookieJar(
 	await getAuthCookies(cookieJar, credentials);
 	await getSdcsCookie(cookieJar);
 
+	const cookies: request.Cookie[] = cookieJar.getCookies('https://cloud.mail.ru');
+	if (cookies.length > 0) {
+		debug('Successfully obtained cookies:', cookies);
+	} else {
+		debug('Failed to obtain cookies for cloud api');
+	}
+
 	return cookieJar;
 }
