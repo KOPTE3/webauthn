@@ -2,6 +2,9 @@ import * as request from 'request';
 import * as rp from 'request-promise-native';
 import { Credentials } from '../../types/api';
 import config from '../../config';
+import * as Debug from 'debug';
+
+const debug = Debug('@qa:yoda:cloud-api');
 
 const defaultRequestOptions: Partial<rp.Options> = {
 	resolveWithFullResponse: true,
@@ -22,7 +25,7 @@ async function getAuthCookies(cookieJar: request.CookieJar, credentials: Credent
 	const { username, password } = credentials;
 	const [login, domain]: string[] = username.split('@');
 
-	await rp({
+	const response = await rp({
 		...defaultRequestOptions,
 		url: `${config.api.authBaseUrl}/cgi-bin/auth`,
 		method: 'POST',
@@ -33,6 +36,12 @@ async function getAuthCookies(cookieJar: request.CookieJar, credentials: Credent
 		},
 		jar: cookieJar
 	});
+
+	if (/200|302/.test(response.statusCode)) {
+		debug('Successfully obtained Mpop and ssdc cookies');
+	} else {
+		debug(`${response.request.url} returned error (status code ${response.statusCode}):`, response.body);
+	}
 }
 
 /**
@@ -43,7 +52,7 @@ async function getAuthCookies(cookieJar: request.CookieJar, credentials: Credent
  * @param {request.CookieJar} cookieJar
  */
 async function getSdcsCookie(cookieJar: request.CookieJar): Promise<void> {
-	await rp({
+	const response = await rp({
 		...defaultRequestOptions,
 		url: `${config.api.authBaseUrl}/sdc`,
 		method: 'HEAD',
@@ -52,6 +61,12 @@ async function getSdcsCookie(cookieJar: request.CookieJar): Promise<void> {
 		},
 		jar: cookieJar
 	});
+
+	if (/200|302/.test(response.statusCode)) {
+		debug('Successfully obtained sdcs cookie');
+	} else {
+		debug(`${response.request.url} returned error (status code ${response.statusCode}):`, response.body);
+	}
 }
 
 /**

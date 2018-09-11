@@ -4,6 +4,9 @@ import config from '../../config';
 import initCookieJar from './_init-cookie-jar';
 import * as rp from 'request-promise-native';
 import authorization from '../../store/authorization';
+import * as Debug from 'debug';
+
+const debug = Debug('@qa:yoda:cloud-api');
 
 /**
  * Добавление index signature к интерфейсу rp.Options
@@ -26,6 +29,12 @@ async function getCsrfToken(credentials: Credentials) {
 		method: 'GET',
 		jar: initCookieJar(cookieJar, credentials)
 	});
+
+	if (/200|302/.test(response.statusCode)) {
+		debug(`Successfully obtained CSRF token: ${response.body.token}`);
+	} else {
+		debug(`${response.request.url} returned error (status code ${response.statusCode}):`, response.body);
+	}
 
 	return response.body.token;
 }
