@@ -1,5 +1,5 @@
-import { Credentials, RequestResult } from '../../types/api';
-import call, { callAsync } from './call';
+import { Credentials, RequestResult } from '../../../types/api';
+import call, { callAsync } from '../call';
 import { CloudAPI } from '@qa/api';
 
 /**
