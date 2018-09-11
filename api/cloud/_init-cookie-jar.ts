@@ -85,7 +85,5 @@ export default async function initCookieJar(
 	await getAuthCookies(cookieJar, credentials);
 	await getSdcsCookie(cookieJar);
 
-	debug('Cookies:', cookieJar.getCookies('https://cloud.mail.ru'));
-
 	return cookieJar;
 }
