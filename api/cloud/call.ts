@@ -48,7 +48,19 @@ export default function call(
 	method: 'POST' | 'GET' = 'GET',
 	credentials?: Credentials
 ): RequestResult {
-	return browser.waitForPromise(callAsync(path, body, method, credentials));
+	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method));
+
+	if (result.error) {
+		const { error, ...fields } = result;
+		Object.assign(error, fields);
+		throw error;
+	} else if (result.status < 200 || result.status >= 400) {
+		const error = new Error(`Request failed with body.status is ${result.status}`);
+		Object.assign(error, result);
+		throw error;
+	}
+
+	return result;
 }
 
 export async function callAsync(
@@ -73,6 +85,8 @@ export async function callAsync(
 		...body
 	};
 
+	debug('Request with options \n%O', requestOptions);
+
 	const result: RequestResult = {
 		path
 	};
@@ -90,6 +104,12 @@ export async function callAsync(
 		}
 	} catch (requestError) {
 		result.error = requestError;
+	}
+
+	if (!result.error) {
+		debug('Response code is %d; body is \n%O', result.status, result.body);
+	} else {
+		debug('Request failed due to \n%O', result.error);
 	}
 
 	return result;
