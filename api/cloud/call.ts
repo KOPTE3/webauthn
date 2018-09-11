@@ -19,6 +19,7 @@ const defaultRequestOptions: Partial<rp.Options> = {
 		'User-Agent': config.api.userAgent
 	},
 	json: true,
+	simple: true,
 	resolveWithFullResponse: true,
 	jar: cookieJar
 };
@@ -85,7 +86,10 @@ export async function callAsync(
 		...body
 	};
 
-	debug('Request with options \n%O', requestOptions);
+	debug('Request with options \n%O', {
+		...requestOptions,
+		jar: requestOptions.jar.getCookies('https://cloud.mail.ru')
+	});
 
 	const result: RequestResult = {
 		path
