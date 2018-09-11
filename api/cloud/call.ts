@@ -101,12 +101,12 @@ export async function callAsync(
 		const response = await rp(requestOptions)
 			.catch((requestError) => {
 				if (allow404) {
-					return { ...requestError };
+					return requestError;
 				} else {
 					throw requestError;
 				}
 			});
-		result.response = response.toJSON();
+		result.response = response;
 
 		if (response.statusCode >= 200 && response.statusCode < 400) {
 			const { status, body } = response.body;
