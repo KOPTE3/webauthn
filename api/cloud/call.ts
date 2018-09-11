@@ -56,7 +56,7 @@ export default function call(
 		const { error, ...fields } = result;
 		Object.assign(error, fields);
 		throw error;
-	} else if ((result.status < 200 || result.status >= 400) || (result.status === 404 && !allow404)) {
+	} else if ((result.status < 200) || (result.status >= 400 && !(allow404 && result.status === 404))) {
 		const error = new Error(`Request failed with body.status is ${result.status}`);
 		Object.assign(error, result);
 		throw error;
@@ -104,7 +104,8 @@ export async function callAsync(
 					return {
 						...requestError,
 						error: undefined,
-						body: requestError.error
+						body: requestError.error,
+						statusCode: 200
 					};
 				} else {
 					throw requestError;
@@ -112,7 +113,7 @@ export async function callAsync(
 			});
 		result.response = response;
 
-		if ((response.statusCode >= 200 && response.statusCode < 400) || allow404) {
+		if (response.statusCode >= 200 && response.statusCode < 400) {
 			const { status, body } = response.body;
 			result.status = status;
 			result.body = body;
