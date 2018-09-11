@@ -30,17 +30,16 @@ async function getCsrfToken(credentials: Credentials) {
 		method: 'GET',
 		jar: await initCookieJar(cookieJar, credentials)
 	});
-
-	console.log('tokens/csrf RESPONSE', response);
+	const { body: responseBody } = response;
 
 	if (response.statusCode >= 200 && response.statusCode < 400) {
-		debug(`Successfully obtained CSRF token: ${response.body.token}`);
+		debug(`Successfully obtained CSRF token: ${responseBody.body.token}`);
 	} else {
 		throw new Error(`${response.request.url} returned error (status code ${response.statusCode}): \
-		${JSON.stringify(response.body)}`);
+		${JSON.stringify(responseBody.body)}`);
 	}
 
-	return response.body.token;
+	return responseBody.body.token;
 }
 
 export default function call(

@@ -41,7 +41,7 @@ async function getAuthCookies(cookieJar: request.CookieJar, credentials: Credent
 		debug('Successfully obtained Mpop and ssdc cookies');
 	} else {
 		throw new Error(`${response.request.url} returned error (status code ${response.statusCode}): \
-		${JSON.stringify(response.body)}`);
+		${JSON.stringify(response.body.body)}`);
 	}
 }
 
@@ -67,7 +67,7 @@ async function getSdcsCookie(cookieJar: request.CookieJar): Promise<void> {
 		debug('Successfully obtained sdcs cookie');
 	} else {
 		throw new Error(`${response.request.url} returned error (status code ${response.statusCode}): \
-		${JSON.stringify(response.body)}`);
+		${JSON.stringify(response.body.body)}`);
 	}
 }
 
