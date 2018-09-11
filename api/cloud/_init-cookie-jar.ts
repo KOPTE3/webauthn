@@ -37,10 +37,11 @@ async function getAuthCookies(cookieJar: request.CookieJar, credentials: Credent
 		jar: cookieJar
 	});
 
-	if (/200|302/.test(response.statusCode)) {
+	if (response.statusCode >= 200 && response.statusCode < 400) {
 		debug('Successfully obtained Mpop and ssdc cookies');
 	} else {
-		debug(`${response.request.url} returned error (status code ${response.statusCode}):`, response.body);
+		throw new Error(`${response.request.url} returned error (status code ${response.statusCode}): \
+		${JSON.stringify(response.body)}`);
 	}
 }
 
@@ -62,10 +63,11 @@ async function getSdcsCookie(cookieJar: request.CookieJar): Promise<void> {
 		jar: cookieJar
 	});
 
-	if (/200|302/.test(response.statusCode)) {
+	if (response.statusCode >= 200 && response.statusCode < 400) {
 		debug('Successfully obtained sdcs cookie');
 	} else {
-		debug(`${response.request.url} returned error (status code ${response.statusCode}):`, response.body);
+		throw new Error(`${response.request.url} returned error (status code ${response.statusCode}): \
+		${JSON.stringify(response.body)}`);
 	}
 }
 
@@ -83,12 +85,7 @@ export default async function initCookieJar(
 	await getAuthCookies(cookieJar, credentials);
 	await getSdcsCookie(cookieJar);
 
-	const cookies: request.Cookie[] = cookieJar.getCookies('https://cloud.mail.ru');
-	if (cookies.length > 0) {
-		debug('Successfully obtained cookies:', cookies);
-	} else {
-		debug('Failed to obtain cookies for cloud api');
-	}
+	debug('Successfully obtained cookies:', cookieJar.getCookies('https://cloud.mail.ru'));
 
 	return cookieJar;
 }

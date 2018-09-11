@@ -30,10 +30,13 @@ async function getCsrfToken(credentials: Credentials) {
 		jar: await initCookieJar(cookieJar, credentials)
 	});
 
-	if (/200|302/.test(response.statusCode)) {
+	console.log('tokens/csrf RESPONSE', response);
+
+	if (response.statusCode >= 200 && response.statusCode < 400) {
 		debug(`Successfully obtained CSRF token: ${response.body.token}`);
 	} else {
-		debug(`${response.request.url} returned error (status code ${response.statusCode}):`, response.body);
+		throw new Error(`${response.url} returned error (status code ${response.statusCode}): \
+		${JSON.stringify(response.body)}`);
 	}
 
 	return response.body.token;
