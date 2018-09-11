@@ -101,7 +101,10 @@ export async function callAsync(
 		const response = await rp(requestOptions)
 			.catch((requestError) => {
 				if (allow404) {
-					return requestError;
+					return {
+						...requestError,
+						body: requestError.error
+					};
 				} else {
 					throw requestError;
 				}
