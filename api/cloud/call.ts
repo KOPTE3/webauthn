@@ -98,8 +98,12 @@ export async function callAsync(
 
 	try {
 		const response = await rp(requestOptions)
-			.catch((requestError: any) => {
-				console.log('request ERROR', requestError);
+			.catch((requestError) => {
+				if (allow404) {
+					return requestError;
+				} else {
+					throw requestError;
+				}
 			});
 		result.response = response.toJSON();
 
