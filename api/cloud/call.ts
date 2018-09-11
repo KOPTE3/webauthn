@@ -24,6 +24,13 @@ const defaultRequestOptions: Partial<rp.Options> = {
 	jar: cookieJar
 };
 
+/**
+ * Функция, реализующая получение CSRF-токена
+ * Требует Mpop- и sdcs-кук, так что каждый раз их приходится обновлять
+ * Вызывается при каждом запросе в API cloud.mail.ru
+ *
+ * @param {Credentials} credentials - credentials пользователя
+ */
 async function getCsrfToken(credentials: Credentials) {
 	const response = await rp({
 		...defaultRequestOptions,
@@ -65,6 +72,11 @@ export default function call(
 	return result;
 }
 
+/**
+ * allow404 - флаг, разрешающий считать статус 404 валидным
+ * Нужен, например, для проверки существования файла в Облаке
+ * Если он равен false, при возникновении 404 выбросится ошибка
+ */
 export async function callAsync(
 	path: string,
 	body: object,
