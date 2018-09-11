@@ -27,7 +27,7 @@ async function getCsrfToken(credentials: Credentials) {
 		...defaultRequestOptions,
 		url: `${config.api.cloudApiBaseUrl}/tokens/csrf`,
 		method: 'GET',
-		jar: initCookieJar(cookieJar, credentials)
+		jar: await initCookieJar(cookieJar, credentials)
 	});
 
 	if (/200|302/.test(response.statusCode)) {
