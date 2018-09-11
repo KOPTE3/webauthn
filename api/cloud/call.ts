@@ -68,7 +68,8 @@ export async function callAsync(
 	path: string,
 	body: object,
 	method: 'POST' | 'GET' = 'GET',
-	credentials?: Credentials
+	credentials?: Credentials,
+	allow404: boolean = false
 ): Promise<RequestResult> {
 	const { username, password }: Credentials = credentials || authorization.account.data();
 
@@ -96,7 +97,10 @@ export async function callAsync(
 	};
 
 	try {
-		const response = await rp(requestOptions);
+		const response = await rp(requestOptions)
+			.catch((requestError: any) => {
+				console.log('request ERROR', requestError);
+			});
 		result.response = response.toJSON();
 
 		if (response.statusCode >= 200 && response.statusCode < 400) {
