@@ -47,9 +47,10 @@ export default function call(
 	path: string,
 	body: object,
 	method: 'POST' | 'GET' = 'GET',
-	credentials?: Credentials
+	credentials?: Credentials,
+	allow404: boolean = false
 ): RequestResult {
-	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method));
+	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method, credentials, allow404));
 
 	if (result.error) {
 		const { error, ...fields } = result;

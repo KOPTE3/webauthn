@@ -26,12 +26,12 @@ export default function file(
 	options: Options,
 	credentials?: Credentials
 ): RequestResult<FileResponseBody> {
-	return call('file', options, 'GET', credentials);
+	return call('file', options, 'GET', credentials, true);
 }
 
 export async function fileAsync(
 	options: Options,
 	credentials?: Credentials
 ): Promise<RequestResult<FileResponseBody>> {
-	return callAsync('file', options, 'GET', credentials);
+	return callAsync('file', options, 'GET', credentials, true);
 }
