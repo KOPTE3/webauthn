@@ -2,7 +2,8 @@ import { Credentials, RequestResult } from '../../types/api';
 import call, { callAsync } from './call';
 
 interface Options {
-	home: string;
+	home?: string;
+	weblink?: string;
 }
 
 interface FileResponseBody {
