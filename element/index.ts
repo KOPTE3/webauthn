@@ -11,9 +11,9 @@ export class Element {
 	public parent?: Element | null;
 
 	/** локатор элемента (css-селектор) */
-	protected locator: string = 'html';
+	protected locator: string;
 	/** название элемента */
-	protected name: string = 'Элемент';
+	protected name: string;
 	protected params: any = null;
 
 	constructor();
@@ -29,6 +29,17 @@ export class Element {
 	constructor(parent: Element, params: any);
 
 	constructor(...args: any[]) {
+		const locatorDescriptor = Reflect.getOwnPropertyDescriptor(Reflect.getPrototypeOf(this), 'locator');
+		const nameDescriptor = Reflect.getOwnPropertyDescriptor(Reflect.getPrototypeOf(this), 'name');
+
+		if (!(locatorDescriptor && locatorDescriptor.get)) {
+			this.locator = 'html';
+		}
+
+		if (!(nameDescriptor && nameDescriptor.get)) {
+			this.name = 'Элемент';
+		}
+
 		if (args[0] instanceof Element) {
 			this.parent = args.shift();
 		}
@@ -59,6 +70,20 @@ export class Element {
 	@gen
 	static GetVisible(element: Element): boolean {
 		return browser.isVisible(element.Locator());
+	}
+
+	@gen
+	static SwitchFrame(element: Element): void {
+		const locator = element.Locator();
+		const el = browser.element(locator);
+		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
+
+		browser.frame(el.value);
+	}
+
+	@gen
+	static SwitchParentFrame(element: Element): void {
+		browser.frameParent();
 	}
 
 	@gen
@@ -98,7 +123,7 @@ export class Element {
 	}
 
 	@gen
-	@step('Проверяем, что элемент {element} содержит в себе текст {expected}')
+	@step('Проверяем, что значение элемента {element} равно {expected}')
 	static CheckValue(element: Element, expected: string): void {
 		const actual = Element.GetValue(element);
 
@@ -106,6 +131,16 @@ export class Element {
 			actual,
 			expected,
 			`Текст в элементе ${element.Name()} (${actual}) не совпадает с ожидаемым значением (${expected})`
+		);
+	}
+
+	@gen
+	@step('Дожидаемся, пока значение элемента {element} станет равно значению', (e: any, expected: string) => ({ expected }))
+	static WaitForValue(element: Element, expected: string, timeout?: number): void {
+		browser.waitUntil(
+			() => Element.GetValue(element) === expected,
+			timeout || browser.options.waitforTimeout,
+			`Не удалось дождаться пока значение элемента ${element.Name()} совпадёт с ожидаемым значением (${expected})`
 		);
 	}
 
@@ -151,16 +186,12 @@ export class Element {
 	}
 
 	@gen
-	@step(
-		'Дожидаемся, пока текст в элементе {element} станет равен значению',
-		(e: any, expected: string) => ({ expected })
-	)
+	@step('Дожидаемся, пока текст в элементе {element} станет равен значению', (e: any, expected: string) => ({ expected }))
 	static WaitForTextContent(element: Element, expected: string, timeout?: number): void {
 		browser.waitUntil(
 			() => Element.GetTextContent(element) === expected,
 			timeout || browser.options.waitforTimeout,
-			`Не удалось дождаться пока текстовое содержимое элемента ${element.Name()}\
-			 не совпадает с ожидаемым значением (${expected})`
+			`Не удалось дождаться пока текстовое содержимое элемента ${element.Name()} совпадёт с ожидаемым значением (${expected})`
 		);
 	}
 
