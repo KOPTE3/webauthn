@@ -1,8 +1,19 @@
 import { MailAPI as MailApiInterfaces } from '@qa/api';
 import helpers from '../../store/helpers';
 import * as MailApi from '../../api/mail-api';
+import authorization from '../../store/authorization';
+import * as merge from 'deepmerge';
 
+/** Интерфейс для вывода данных, о созданной запароленной папке */
+interface SecretFolderData {
+	id: number;
+	name: string;
+	folder_password: string;
+	question: string;
+	answer: string;
+}
 type ArrayElement<ArrayType> = ArrayType extends Array<infer ElementType> ? ElementType : never;
+
 const defaultFolderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> = {
 	name: 'Test folder',
 	parent: '-1', // root
@@ -24,11 +35,16 @@ export default class MailApiSteps {
 		}).body[0];
 	}
 
-	@step('Создать папки с указанными параметрами. В результате созданы папки с id: [{__result__}]', (folders: any[]) =>
-		folders.reduce((foldersObject, folder) => ({
-			...foldersObject,
-			[folder.name]: folder
-		}),            {})
+	@step(
+		'Создать папки с указанными параметрами. В результате созданы папки с id: [{__result__}]',
+		(folders: any[]) =>
+			folders.reduce(
+				(foldersObject, folder) => ({
+					...foldersObject,
+					[folder.name]: folder
+				}),
+				{}
+			)
 	)
 	createFolders(foldersData: MailApiInterfaces.FoldersAdd['folders']): number[] {
 		return MailApi.foldersAdd({
