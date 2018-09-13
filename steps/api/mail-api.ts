@@ -134,4 +134,29 @@ export default class MailApiSteps {
 			}]
 		});
 	}
+
+	@step('Создать запароленную папку. В результате создана папка с id "{__result__.id}"')
+	createSecretFolder(params: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> = {}): SecretFolderData {
+		const folderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> = merge(
+			{
+				...defaultFolderData,
+				secret: {
+					folder_password: authorization.password,
+					user_password: authorization.account.get('password'),
+					question: 'кто я?',
+					answer: 'никто'
+				}
+			},
+			params
+		);
+		const { folder_password, question, answer } = folderData.secret;
+
+		return {
+			id: this.createFolder(folderData),
+			name: folderData.name,
+			folder_password,
+			question,
+			answer
+		};
+	}
 }
