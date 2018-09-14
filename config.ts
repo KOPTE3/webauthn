@@ -2,7 +2,7 @@ export default {
 	api: {
 		internalApiBaseUrl: 'http://internal.pre.win102.dev.mail.ru/api/v1',
 		cloudApiBaseUrl: 'https://cloud.mail.ru/api/v2',
-		authUrl: 'https://auth.mail.ru/cgi-bin/auth',
+		authBaseUrl: 'https://auth.mail.ru/',
 		userAgent: 'Yoda'
 	},
 	cookies: {

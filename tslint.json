@@ -22,5 +22,10 @@
       ],
       "no-var-requires": false
     },
-    "rulesDirectory": []
+    "rulesDirectory": [],
+    "linterOptions": {
+      "exclude": [
+        "./element/index.gen.ts"
+      ]
+    }
 }
