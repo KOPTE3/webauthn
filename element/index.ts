@@ -135,7 +135,10 @@ export class Element {
 	}
 
 	@gen
-	@step('Дожидаемся, пока значение элемента {element} станет равно значению', (e: any, expected: string) => ({ expected }))
+	@step(
+		'Дожидаемся, пока значение элемента {element} станет равно значению',
+		(e: any, expected: string) => ({ expected })
+	)
 	static WaitForValue(element: Element, expected: string, timeout?: number): void {
 		browser.waitUntil(
 			() => Element.GetValue(element) === expected,
@@ -186,12 +189,16 @@ export class Element {
 	}
 
 	@gen
-	@step('Дожидаемся, пока текст в элементе {element} станет равен значению', (e: any, expected: string) => ({ expected }))
+	@step(
+		'Дожидаемся, пока текст в элементе {element} станет равен значению',
+		(e: any, expected: string) => ({ expected })
+	)
 	static WaitForTextContent(element: Element, expected: string, timeout?: number): void {
 		browser.waitUntil(
 			() => Element.GetTextContent(element) === expected,
 			timeout || browser.options.waitforTimeout,
-			`Не удалось дождаться пока текстовое содержимое элемента ${element.Name()} совпадёт с ожидаемым значением (${expected})`
+			`Не удалось дождаться пока текстовое содержимое элемента ${element.Name()} \
+			совпадёт с ожидаемым значением (${expected})`
 		);
 	}
 
