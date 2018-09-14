@@ -4,6 +4,7 @@ export interface Phone {
 	head: string;
 	value: string;
 	masked: string;
+	full: string;
 	id: string;
 }
 
@@ -22,6 +23,7 @@ export default {
 			head: '+7 (916) 2',
 			value: '14',
 			masked: '+7 (916) 214-**-**',
+			full: '+7 (916) 214-34-06',
 			id: 'id_KPFVb+EGhXQDWjPNlISdwcXnWMNNZbnW71ZqFCZZx0Q='
 		},
 		{
@@ -30,6 +32,7 @@ export default {
 			head: '+7 (916) 3',
 			value: '87',
 			masked: '+7 (916) 387-**-**',
+			full: '+7 (916) 387-01-93',
 			id: 'id_VIfcT9mStAJvebvZnTVXMaKQw14zkKBzYd7x0Z1ZUto='
 		},
 		{
@@ -38,6 +41,7 @@ export default {
 			head: '+7 (985) 1',
 			value: '01',
 			masked: '+7 (985) 101-**-**',
+			full: '+7 (985) 101-77-20',
 			id: ''
 		},
 		{
@@ -46,6 +50,7 @@ export default {
 			head: '+7 (926) 2',
 			value: '36',
 			masked: '+7 (926) 236-**-**',
+			full: '+7 (926) 236-17-85',
 			id: ''
 		},
 		{
@@ -54,6 +59,7 @@ export default {
 			head: '+7 (926) 2',
 			value: '39',
 			masked: '+7 (926) 239-**-**',
+			full: '+7 (926) 239-90-73',
 			id: ''
 		},
 		{
@@ -62,6 +68,7 @@ export default {
 			head: '+7 (926) 5',
 			value: '29',
 			masked: '+7 (926) 529-**-**',
+			full: '+7 (926) 529-95-51',
 			id: ''
 		}
 	] as PhoneList,
