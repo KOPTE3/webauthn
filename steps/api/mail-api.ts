@@ -124,7 +124,7 @@ export default class MailApiSteps {
 		return MailApi.messagesStatus({ folder: folderId }).body.messages.find((message) => message.subject === subject).id;
 	}
 
-	@step('Добавить контакт с именем {nick} и email {email} в адресную книгу')
+	@step('Добавить контакт с именем {nickName} и email {email} в адресную книгу')
 	addContact(nickName: string, email: string) {
 		MailApi.abContactsAdd({
 			contacts: [{
