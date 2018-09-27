@@ -6,6 +6,14 @@ export interface Phone {
 	masked: string;
 	full: string;
 	id: string;
+	operator: Operators;
+}
+
+export enum Operators {
+	MTS = 'MTS',
+	MEGAFON = 'MEGAFON',
+	BEELINE = 'BEELINE',
+	TELE2 = 'TELE2'
 }
 
 type PhoneList = Phone[];
@@ -24,7 +32,8 @@ export default {
 			value: '14',
 			masked: '+7 (916) 214-**-**',
 			full: '+7 (916) 214-34-06',
-			id: 'id_KPFVb+EGhXQDWjPNlISdwcXnWMNNZbnW71ZqFCZZx0Q='
+			id: 'id_KPFVb+EGhXQDWjPNlISdwcXnWMNNZbnW71ZqFCZZx0Q=',
+			operator: Operators.MTS
 		},
 		{
 			index: 1,
@@ -33,7 +42,8 @@ export default {
 			value: '87',
 			masked: '+7 (916) 387-**-**',
 			full: '+7 (916) 387-01-93',
-			id: 'id_VIfcT9mStAJvebvZnTVXMaKQw14zkKBzYd7x0Z1ZUto='
+			id: 'id_VIfcT9mStAJvebvZnTVXMaKQw14zkKBzYd7x0Z1ZUto=',
+			operator: Operators.MTS
 		},
 		{
 			index: 2,
@@ -42,7 +52,8 @@ export default {
 			value: '01',
 			masked: '+7 (985) 101-**-**',
 			full: '+7 (985) 101-77-20',
-			id: ''
+			id: '',
+			operator: Operators.MTS
 		},
 		{
 			index: 3,
@@ -51,7 +62,8 @@ export default {
 			value: '36',
 			masked: '+7 (926) 236-**-**',
 			full: '+7 (926) 236-17-85',
-			id: ''
+			id: '',
+			operator: Operators.MEGAFON
 		},
 		{
 			index: 4,
@@ -60,7 +72,8 @@ export default {
 			value: '39',
 			masked: '+7 (926) 239-**-**',
 			full: '+7 (926) 239-90-73',
-			id: ''
+			id: '',
+			operator: Operators.MEGAFON
 		},
 		{
 			index: 5,
@@ -69,7 +82,8 @@ export default {
 			value: '29',
 			masked: '+7 (926) 529-**-**',
 			full: '+7 (926) 529-95-51',
-			id: ''
+			id: '',
+			operator: Operators.MEGAFON
 		}
 	] as PhoneList,
 
@@ -82,8 +96,20 @@ export default {
 		return this.phones[index].phone;
 	},
 
-	getPhone(): Phone {
+	getPhone(index?: number): Phone {
+		if (typeof index === 'number') {
+			return this.phones[index];
+		}
 		const length = this.phones.length;
 		return this.phones[Math.floor(Math.random() * length)];
+	},
+
+	getPhoneByOperator(operator: Operators): Phone | null {
+		const variants = this.phones.filter((phone: Phone) => phone.operator === operator);
+		if (variants.length === 0) {
+			return null;
+		}
+
+		return variants[Math.floor(Math.random() * variants.length)];
 	}
 };
