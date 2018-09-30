@@ -34,31 +34,29 @@ export default class Transport {
 	 * }
 	 */
 	putMessage(params: IPutMessageData = {}): IDeliverydResponse {
-		const { attachments, rawFilename } = params;
 		const { username, password } = authorization.account.data();
-
 		const transport = new Deliveryd({ username, password });
 
 		return browser.waitForPromise(async () => {
-			const { subject, content: body }: Required<IPutMessageData> = { ...this.data, ...params };
+			const { subject, content: body, attachments, rawFilename }: Required<IPutMessageData> = { ...this.data, ...params };
 
-			const request: IPutMessageData = {
+			const requestBody: IPutMessageData = {
 				subject,
 				body,
 				...params
 			};
 
 			if (attachments) {
-				request.attachments = (attachments as string[]).map((value) => system.file(value));
+				requestBody.attachments = (attachments as string[]).map((value) => system.file(value));
 			}
 
 			if (typeof rawFilename === 'string') {
 				const file = system.file(rawFilename);
 
-				request.raw = fs.readFileSync(file, 'utf-8');
+				requestBody.raw = fs.readFileSync(file, 'utf-8');
 			}
 
-			const response = await transport.send(request);
+			const response = await transport.send(requestBody);
 
 			assert.strictEqual(response.status, RPC.HTTPStatus.OK);
 
@@ -98,7 +96,6 @@ export default class Transport {
 	 */
 	sendMessage(params: ISendMessageData): IAPIResponse {
 		const { username, password } = authorization.account.data();
-
 		const request = new API({ username, password });
 
 		return browser.waitForPromise(
@@ -132,10 +129,7 @@ export default class Transport {
 
 		return browser.waitForPromise(
 			async () => {
-				const { subject, content, saveAsTemplate }: Required<SaveDraftData> = {
-					...this.data,
-					...params
-				};
+				const { subject, content, saveAsTemplate }: Required<SaveDraftData> = { ...this.data, ...params };
 
 				params = merge(
 					{
@@ -174,9 +168,6 @@ export type IPutMessageData = IDeliverydRequest & {
 };
 
 export interface SaveDraftData extends MailAPI.MessagesDraft {
-	to: string;
-	from: string;
-	subject: string;
 	content: string;
 	saveAsTemplate: boolean;
 }
