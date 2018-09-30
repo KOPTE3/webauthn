@@ -101,25 +101,61 @@ export default class Transport {
 
 		const request = new API({ username, password });
 
-		return browser.waitForPromise(async () => {
-			const { subject, content }: Required<ISendMessageData> = { ...this.data, ...params };
+		return browser.waitForPromise(
+			async () => {
+				const { subject, content }: Required<ISendMessageData> = { ...this.data, ...params };
 
-			params = merge({
-				subject,
-				body: {
-					html: content
-				},
-				correspondents: {
-					to: username
-				}
-			},             params);
+				params = merge(
+					{
+						subject,
+						body: { html: content },
+						correspondents: { to: username }
+					},
+					params
+				);
 
-			const response = await request.send(params);
+				const response = await request.send(params);
 
-			assert.strictEqual(response.status, RPC.HTTPStatus.OK);
+				assert.strictEqual(response.status, RPC.HTTPStatus.OK);
 
-			return response;
-		},                            null, 'Could not send message');
+				return response;
+			},
+			null,
+			'Could not send message'
+		);
+	}
+
+	saveDraft(params: SaveDraftData): IAPIResponse {
+		const { username, password } = authorization.account.data();
+
+		const request = new API({ username, password });
+
+		return browser.waitForPromise(
+			async () => {
+				const { subject, content, saveAsTemplate }: Required<SaveDraftData> = {
+					...this.data,
+					...params
+				};
+
+				params = merge(
+					{
+						subject,
+						body: { html: content },
+						correspondents: { to: username },
+						save_as_template: saveAsTemplate
+					},
+					params
+				);
+
+				const response = await request.send(params);
+
+				assert.strictEqual(response.status, RPC.HTTPStatus.OK);
+
+				return response;
+			},
+			null,
+			'Could not save draft'
+		);
 	}
 }
 
@@ -136,5 +172,13 @@ export type IPutMessageData = IDeliverydRequest & {
 	content?: string;
 	rawFilename?: string;
 };
+
+export interface SaveDraftData extends MailAPI.MessagesDraft {
+	to: string;
+	from: string;
+	subject: string;
+	content: string;
+	saveAsTemplate: boolean;
+}
 
 export { IDeliverydRequest, IDeliverydResponse };
