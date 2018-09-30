@@ -140,7 +140,7 @@ export default class Transport {
 					params
 				);
 
-				const response = await request.send(params);
+				const response = await request.saveDraft(params);
 
 				assert.strictEqual(response.status, RPC.HTTPStatus.OK);
 
