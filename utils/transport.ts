@@ -11,7 +11,7 @@ import authorization from '../store/authorization';
 type RequiredInternal<T, K extends keyof T> = { [P in K]: T[P] };
 type Required<T> = T & RequiredInternal<T, keyof T>;
 
-class Transport {
+export default class Transport {
 	data: ITransportData;
 
 	constructor(data?: ITransportData) {
@@ -34,7 +34,7 @@ class Transport {
 	 * }
 	 */
 	putMessage(params: IPutMessageData = {}): IDeliverydResponse {
-		const { attachments, raw, rawFilename } = params;
+		const { attachments, rawFilename } = params;
 		const { username, password } = authorization.account.data();
 
 		const transport = new Deliveryd({ username, password });
@@ -60,7 +60,7 @@ class Transport {
 
 			const response = await transport.send(request);
 
-			assert.equal(response.status, RPC.HTTPStatus.OK);
+			assert.strictEqual(response.status, RPC.HTTPStatus.OK);
 
 			return response;
 		});
@@ -80,7 +80,7 @@ class Transport {
 			}
 		});
 
-		assert.equal(response.status, RPC.HTTPStatus.OK);
+		assert.strictEqual(response.status, RPC.HTTPStatus.OK);
 
 		return response;
 	}
@@ -116,7 +116,7 @@ class Transport {
 
 			const response = await request.send(params);
 
-			assert.equal(response.status, RPC.HTTPStatus.OK);
+			assert.strictEqual(response.status, RPC.HTTPStatus.OK);
 
 			return response;
 		},                            null, 'Could not send message');
@@ -138,4 +138,3 @@ export type IPutMessageData = IDeliverydRequest & {
 };
 
 export { IDeliverydRequest, IDeliverydResponse };
-export default Transport;
