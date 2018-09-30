@@ -124,7 +124,6 @@ export default class Transport {
 
 	saveDraft(params: SaveDraftData): IAPIResponse {
 		const { username, password } = authorization.account.data();
-
 		const request = new API({ username, password });
 
 		return browser.waitForPromise(
@@ -168,8 +167,8 @@ export type IPutMessageData = IDeliverydRequest & {
 };
 
 export interface SaveDraftData extends MailAPI.MessagesDraft {
-	content: string;
-	saveAsTemplate: boolean;
+	content?: string;
+	saveAsTemplate?: boolean;
 }
 
 export { IDeliverydRequest, IDeliverydResponse };
