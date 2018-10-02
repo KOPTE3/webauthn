@@ -15,7 +15,7 @@ export default class InternalApiSteps {
 	addPhone(storeIndex: number, email: string, type: 'ok' | 'too_young' | 'nonverified') {
 		const phone: string = phonesStore.getNumber(storeIndex);
 
-		const result = InternalApi.usersPhonesAdd({
+		const phoneId = InternalApi.usersPhonesAdd({
 			email,
 			phones: [{
 				phone,
@@ -25,6 +25,6 @@ export default class InternalApiSteps {
 
 		InternalApi.userPhonesState({ email, phone, state: type });
 
-		return result;
+		return phoneId;
 	}
 }
