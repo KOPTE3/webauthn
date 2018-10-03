@@ -13,7 +13,8 @@ export enum Operators {
 	MTS = 'MTS',
 	MEGAFON = 'MEGAFON',
 	BEELINE = 'BEELINE',
-	TELE2 = 'TELE2'
+	TELE2 = 'TELE2',
+	YOTA = 'YOTA'
 }
 
 type PhoneList = Phone[];
@@ -84,6 +85,16 @@ export default {
 			full: '+7 (926) 529-95-51',
 			id: 'id_HE48M+yRv/dtupq3WxUavdV3aOIaLTLJf0QVlz0A3Fk=',
 			operator: Operators.MEGAFON
+		},
+		{
+			index: 6,
+			phone: '79991207157',
+			head: '+7 (999) 1',
+			value: '20',
+			masked: '+7 (999) 120-**-**',
+			full: '+7 (999) 120-71-57',
+			id: 'id_yVGy4wbDeflWgHfNLqU+Ck5JjLxRdxwHXSjmtKlasiE=',
+			operator: Operators.YOTA
 		}
 	] as PhoneList,
 
