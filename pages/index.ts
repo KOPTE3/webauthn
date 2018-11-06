@@ -245,6 +245,157 @@ class PageObject {
 			window.onbeforeunload = null;
 		});
 	}
+
+	/**
+	 * Нажатие одной кнопки кливиатуры с помощью Actions APIs
+	 * https://w3c.github.io/webdriver/#actions
+	 * http://webdriver.io/api/protocol/actions.html
+	 * Метод, работающий в фф, но пока не поддержаный в хроме
+	 */
+	pressKeyAction(key: string) {
+		(browser as any).actions([{
+			type: 'key',
+			id: Date.now().toString(),
+			actions: [
+				{ type: 'keyDown', value: key },
+				{ type: 'pause', duration: 100 },
+				{ type: 'keyUp', value: key }
+			]
+		}]);
+	}
+
+	/**
+	 * ОДНОВРЕМЕНННОЕ нажатие двух кнопок кливиатуры с помощью Actions APIs
+	 * https://w3c.github.io/webdriver/#actions
+	 * http://webdriver.io/api/protocol/actions.html
+	 * Метод, работающий в фф, но пока не поддержаный в хроме
+	 */
+	pressTwoKeysAction(key1: string, key2: string) {
+		(browser as any).actions([{
+			type: 'key',
+			id: Date.now().toString(),
+			actions: [
+				{ type: 'keyDown', value: key1 },
+				{ type: 'keyDown', value: key2 },
+				{ type: 'pause', duration: 100 },
+				{ type: 'keyUp', value: key2 },
+				{ type: 'keyUp', value: key1 }
+			]
+		}]);
+	}
+
+	/**
+	 * ОДНОВРЕМЕНННОЕ нажатие трех кнопок кливиатуры с помощью Actions APIs
+	 * https://w3c.github.io/webdriver/#actions
+	 * http://webdriver.io/api/protocol/actions.html
+	 * Метод, работающий в фф, но пока не поддержаный в хроме
+	 */
+	pressThreeKeysAction(key1: string, key2: string, key3: string) {
+		(browser as any).actions([{
+			type: 'key',
+			id: Date.now().toString(),
+			actions: [
+				{ type: 'keyDown', value: key1 },
+				{ type: 'keyDown', value: key2 },
+				{ type: 'keyDown', value: key3 },
+				{ type: 'pause', duration: 100 },
+				{ type: 'keyUp', value: key3 },
+				{ type: 'keyUp', value: key2 },
+				{ type: 'keyUp', value: key1 }
+			]
+		}]);
+	}
+
+	/**
+	 * Перемещение курсора с помощью Actions APIs
+	 * https://w3c.github.io/webdriver/#actions
+	 * http://webdriver.io/api/protocol/actions.html
+	 * Метод, работающий в фф, но пока не поддержаный в хроме
+	 * В тестах используйте moveToElement (см. ниже)
+	 */
+	moveToObjectAction(locator?: string, xoffset: number = 0, yoffset: number = 0) {
+		const target = { x: xoffset, y: yoffset };
+		const randomActionId = Date.now().toString();
+		if (locator) {
+			const location = this.page.getLocation(locator);
+			target.x += location.x;
+			target.y += location.y;
+		}
+		(browser as any).actions([{
+			type: 'pointer',
+			id: randomActionId,
+			parameters: {
+				pointerType: 'mouse'
+			},
+			actions: [
+				{ type: 'pointerMove', x: Math.round(target.x), y: Math.round(target.y) }
+			]
+		}]);
+	}
+
+	/**
+	 * Клик по кнопкам мыши с помощью Actions APIs
+	 * https://w3c.github.io/webdriver/#actions
+	 * http://webdriver.io/api/protocol/actions.html
+	 * Метод, работающий в фф, но пока не поддержаный в хроме
+	 * В тестах используйте rightClickElement, leftClickElement (см. ниже)
+	 */
+	mouseClickAction(mouseButton: 'right' | 'left', locator: string, xoffset: number = 0, yoffset: number = 0) {
+		const target = { x: xoffset, y: yoffset };
+		const button = mouseButton === 'right' ? 2 : 0;
+		const randomActionId = Date.now().toString();
+		if (locator) {
+			const location = this.page.getLocation(locator);
+			target.x += location.x;
+			target.y += location.y;
+		}
+		(browser as any).actions([{
+			type: 'pointer',
+			id: randomActionId,
+			parameters: {
+				pointerType: 'mouse'
+			},
+			actions: [
+				{ type: 'pointerMove', x: Math.round(target.x), y: Math.round(target.y) },
+				{ type: 'pointerDown', button },
+				{ type: 'pause', duration: 100 },
+				{ type: 'pointerUp', button }
+			]
+		}]);
+	}
+
+	/**
+	 * Перемещение курсора, работюащее и в фф, и в хроме
+	 */
+	moveToElement(locator?: string, xoffset?: number, yoffset?: number) {
+		if (browser.desiredCapabilities.browserName === 'firefox') {
+			this.moveToObjectAction(locator, xoffset, yoffset);
+		} else {
+			this.page.moveToObject(locator, xoffset, yoffset);
+		}
+	}
+
+	/**
+	 * Клик ПКМ, работюащий и в фф, и в хроме
+	 */
+	rightClickElement(locator: string, xoffset?: number, yoffset?: number) {
+		if (browser.desiredCapabilities.browserName === 'firefox') {
+			this.mouseClickAction('right', locator, xoffset, yoffset);
+		} else {
+			this.page.rightClick(locator, xoffset, yoffset);
+		}
+	}
+
+	/**
+	 * Клик ЛКМ, работюащий и в фф, и в хроме
+	 */
+	leftClickElement(locator: string, xoffset?: number, yoffset?: number) {
+		if (browser.desiredCapabilities.browserName === 'firefox') {
+			this.mouseClickAction('left', locator, xoffset, yoffset);
+		} else {
+			this.page.leftClick(locator, xoffset, yoffset);
+		}
+	}
 }
 
 export default PageObject;
