@@ -317,7 +317,7 @@ class PageObject {
 		const target = { x: xoffset, y: yoffset };
 		const randomActionId = Date.now().toString();
 		if (locator) {
-			const location = this.page.getLocation(locator);
+			const location = browser.getLocation(locator);
 			target.x += location.x;
 			target.y += location.y;
 		}
@@ -345,7 +345,7 @@ class PageObject {
 		const button = mouseButton === 'right' ? 2 : 0;
 		const randomActionId = Date.now().toString();
 		if (locator) {
-			const location = this.page.getLocation(locator);
+			const location = browser.getLocation(locator);
 			target.x += location.x;
 			target.y += location.y;
 		}
@@ -371,7 +371,7 @@ class PageObject {
 		if (browser.desiredCapabilities.browserName === 'firefox') {
 			this.moveToObjectAction(locator, xoffset, yoffset);
 		} else {
-			this.page.moveToObject(locator, xoffset, yoffset);
+			browser.moveToObject(locator, xoffset, yoffset);
 		}
 	}
 
@@ -382,7 +382,7 @@ class PageObject {
 		if (browser.desiredCapabilities.browserName === 'firefox') {
 			this.mouseClickAction('right', locator, xoffset, yoffset);
 		} else {
-			this.page.rightClick(locator, xoffset, yoffset);
+			browser.rightClick(locator, xoffset, yoffset);
 		}
 	}
 
@@ -393,7 +393,7 @@ class PageObject {
 		if (browser.desiredCapabilities.browserName === 'firefox') {
 			this.mouseClickAction('left', locator, xoffset, yoffset);
 		} else {
-			this.page.leftClick(locator, xoffset, yoffset);
+			browser.leftClick(locator, xoffset, yoffset);
 		}
 	}
 }
