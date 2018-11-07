@@ -159,4 +159,9 @@ export default class MailApiSteps {
 			answer
 		};
 	}
+
+	@step('Устновить настройку количества писем на странице - {size}')
+	setMessagesPageSize(size: 5 | 10 | 15 | 25 | 50 | 100 | 200) {
+		MailApi.userEdit({ messages: { size } });
+	}
 }
