@@ -57,6 +57,7 @@ export function getCaptchaID(locator: string): string {
 
 	const result = browser.executeAsync(
 		function renewCaptcha(locator: string, CAPTCHA_HEADER_NAME, resolve) {
+			// TODO: воткнуть проверку на img !== null
 			const img = document.querySelector(locator) as HTMLImageElement;
 			const url = img.src;
 
