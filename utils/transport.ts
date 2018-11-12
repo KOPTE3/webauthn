@@ -11,7 +11,7 @@ import authorization from '../store/authorization';
 type RequiredInternal<T, K extends keyof T> = { [P in K]: T[P] };
 type Required<T> = T & RequiredInternal<T, keyof T>;
 
-class Transport {
+export default class Transport {
 	data: ITransportData;
 
 	constructor(data?: ITransportData) {
@@ -34,33 +34,31 @@ class Transport {
 	 * }
 	 */
 	putMessage(params: IPutMessageData = {}): IDeliverydResponse {
-		const { attachments, raw, rawFilename } = params;
 		const { username, password } = authorization.account.data();
-
 		const transport = new Deliveryd({ username, password });
 
 		return browser.waitForPromise(async () => {
-			const { subject, content: body }: Required<IPutMessageData> = { ...this.data, ...params };
+			const { subject, content: body, attachments, rawFilename }: Required<IPutMessageData> = { ...this.data, ...params };
 
-			const request: IPutMessageData = {
+			const requestBody: IPutMessageData = {
 				subject,
 				body,
 				...params
 			};
 
 			if (attachments) {
-				request.attachments = (attachments as string[]).map((value) => system.file(value));
+				requestBody.attachments = (attachments as string[]).map((value) => system.file(value));
 			}
 
 			if (typeof rawFilename === 'string') {
 				const file = system.file(rawFilename);
 
-				request.raw = fs.readFileSync(file, 'utf-8');
+				requestBody.raw = fs.readFileSync(file, 'utf-8');
 			}
 
-			const response = await transport.send(request);
+			const response = await transport.send(requestBody);
 
-			assert.equal(response.status, RPC.HTTPStatus.OK);
+			assert.strictEqual(response.status, RPC.HTTPStatus.OK);
 
 			return response;
 		});
@@ -80,7 +78,7 @@ class Transport {
 			}
 		});
 
-		assert.equal(response.status, RPC.HTTPStatus.OK);
+		assert.strictEqual(response.status, RPC.HTTPStatus.OK);
 
 		return response;
 	}
@@ -98,28 +96,59 @@ class Transport {
 	 */
 	sendMessage(params: ISendMessageData): IAPIResponse {
 		const { username, password } = authorization.account.data();
-
 		const request = new API({ username, password });
 
-		return browser.waitForPromise(async () => {
-			const { subject, content }: Required<ISendMessageData> = { ...this.data, ...params };
+		return browser.waitForPromise(
+			async () => {
+				const { subject, content }: Required<ISendMessageData> = { ...this.data, ...params };
 
-			params = merge({
-				subject,
-				body: {
-					html: content
-				},
-				correspondents: {
-					to: username
-				}
-			},             params);
+				params = merge(
+					{
+						subject,
+						body: { html: content },
+						correspondents: { to: username }
+					},
+					params
+				);
 
-			const response = await request.send(params);
+				const response = await request.send(params);
 
-			assert.equal(response.status, RPC.HTTPStatus.OK);
+				assert.strictEqual(response.status, RPC.HTTPStatus.OK);
 
-			return response;
-		},                            null, 'Could not send message');
+				return response;
+			},
+			null,
+			'Could not send message'
+		);
+	}
+
+	saveDraft(params: SaveDraftData): IAPIResponse {
+		const { username, password } = authorization.account.data();
+		const request = new API({ username, password });
+
+		return browser.waitForPromise(
+			async () => {
+				const { subject, content, saveAsTemplate }: Required<SaveDraftData> = { ...this.data, ...params };
+
+				params = merge(
+					{
+						subject,
+						body: { html: content },
+						correspondents: { to: username },
+						save_as_template: saveAsTemplate
+					},
+					params
+				);
+
+				const response = await request.saveDraft(params);
+
+				assert.strictEqual(response.status, RPC.HTTPStatus.OK);
+
+				return response;
+			},
+			null,
+			'Could not save draft'
+		);
 	}
 }
 
@@ -137,5 +166,9 @@ export type IPutMessageData = IDeliverydRequest & {
 	rawFilename?: string;
 };
 
+export interface SaveDraftData extends MailAPI.MessagesDraft {
+	content?: string;
+	saveAsTemplate?: boolean;
+}
+
 export { IDeliverydRequest, IDeliverydResponse };
-export default Transport;

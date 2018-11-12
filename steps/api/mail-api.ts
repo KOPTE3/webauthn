@@ -69,7 +69,7 @@ export default class MailApiSteps {
 
 	@step('{isEnabled ? "В" : "Вы"}ключить треды{refresh ? " и обновить страницу" : ""}')
 	toggleThreads(isEnabled: boolean, refresh: boolean = false) {
-		MailApi.helpersUpdate({ // helpers.threads, { state: enabled });
+		MailApi.helpersUpdate({
 			index: helpers.threads,
 			update: { state: isEnabled }
 		});
@@ -158,5 +158,23 @@ export default class MailApiSteps {
 			question,
 			answer
 		};
+	}
+
+	@step('Устновить настройку количества писем на странице - {size}')
+	setMessagesPageSize(size: 5 | 10 | 15 | 25 | 50 | 100 | 200) {
+		MailApi.userEdit({ messages: { size } });
+	}
+
+	@step('{isEnabled ? "В" : "Вы"}ключить метреды{refresh ? " и обновить страницу" : ""}')
+	toggleMetathreads(isEnabled: boolean, refresh: boolean = false) {
+		MailApi.userEdit({
+			common_purpose_flags: {
+				metathreads_on: isEnabled
+			}
+		});
+
+		if (refresh) {
+			browser.refresh();
+		}
 	}
 }
