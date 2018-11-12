@@ -69,7 +69,7 @@ export default class MailApiSteps {
 
 	@step('{isEnabled ? "В" : "Вы"}ключить треды{refresh ? " и обновить страницу" : ""}')
 	toggleThreads(isEnabled: boolean, refresh: boolean = false) {
-		MailApi.helpersUpdate({ // helpers.threads, { state: enabled });
+		MailApi.helpersUpdate({
 			index: helpers.threads,
 			update: { state: isEnabled }
 		});
