@@ -13,7 +13,8 @@ export enum Operators {
 	MTS = 'MTS',
 	MEGAFON = 'MEGAFON',
 	BEELINE = 'BEELINE',
-	TELE2 = 'TELE2'
+	TELE2 = 'TELE2',
+	YOTA = 'YOTA'
 }
 
 type PhoneList = Phone[];
@@ -52,7 +53,7 @@ export default {
 			value: '01',
 			masked: '+7 (985) 101-**-**',
 			full: '+7 (985) 101-77-20',
-			id: '',
+			id: 'id_ejzdMW603/dDmpnW7dKf+ZPuhStkdVPSq+OgPl9wNPY=',
 			operator: Operators.MTS
 		},
 		{
@@ -62,7 +63,7 @@ export default {
 			value: '36',
 			masked: '+7 (926) 236-**-**',
 			full: '+7 (926) 236-17-85',
-			id: '',
+			id: 'id_16TLfv1RUmqxc2Q0owULC7vBF952pPI2dj4+G3TY4N0=',
 			operator: Operators.MEGAFON
 		},
 		{
@@ -72,7 +73,7 @@ export default {
 			value: '39',
 			masked: '+7 (926) 239-**-**',
 			full: '+7 (926) 239-90-73',
-			id: '',
+			id: 'id_5v4tDsAhbWIqigK8dmUsGDtIPi8Gs4uyWEBBzTVkln8=',
 			operator: Operators.MEGAFON
 		},
 		{
@@ -82,8 +83,18 @@ export default {
 			value: '29',
 			masked: '+7 (926) 529-**-**',
 			full: '+7 (926) 529-95-51',
-			id: '',
+			id: 'id_HE48M+yRv/dtupq3WxUavdV3aOIaLTLJf0QVlz0A3Fk=',
 			operator: Operators.MEGAFON
+		},
+		{
+			index: 6,
+			phone: '79991207157',
+			head: '+7 (999) 1',
+			value: '20',
+			masked: '+7 (999) 120-**-**',
+			full: '+7 (999) 120-71-57',
+			id: 'id_yVGy4wbDeflWgHfNLqU+Ck5JjLxRdxwHXSjmtKlasiE=',
+			operator: Operators.YOTA
 		}
 	] as PhoneList,
 

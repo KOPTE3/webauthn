@@ -168,6 +168,15 @@ export class Element {
 	}
 
 	@gen
+	@step('Наводим курсор мыши на {element}')
+	static MouseOver(element: Element, xoffset?: number, yoffset?: number): void {
+		const locator = element.Locator();
+		const el = browser.element(locator);
+		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
+		browser.moveTo(el.value.ELEMENT, xoffset, yoffset);
+	}
+
+	@gen
 	static GetTextContent(element: Element): string {
 		const locator = element.Locator();
 		const el = browser.element(locator);
