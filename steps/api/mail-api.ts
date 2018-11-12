@@ -164,4 +164,17 @@ export default class MailApiSteps {
 	setMessagesPageSize(size: 5 | 10 | 15 | 25 | 50 | 100 | 200) {
 		MailApi.userEdit({ messages: { size } });
 	}
+
+	@step('{isEnabled ? "В" : "Вы"}ключить метреды{refresh ? " и обновить страницу" : ""}')
+	toggleMetathreads(isEnabled: boolean, refresh: boolean = false) {
+		MailApi.userEdit({
+			common_purpose_flags: {
+				metathreads_on: isEnabled
+			}
+		});
+
+		if (refresh) {
+			browser.refresh();
+		}
+	}
 }
