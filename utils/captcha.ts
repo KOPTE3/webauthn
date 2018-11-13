@@ -11,7 +11,7 @@ const { CAPTCHA_HEADER_NAME, CAPTCHA_CRACKER_URL, CAPTCHA_URL, CAPTCHA_TIMEOUT }
  * @returns {string}
  */
 export function getCaptchaIdFromUrl(url: string): string {
-	browser.timeouts('script', CAPTCHA_TIMEOUT);
+	browser.timeouts('script', CAPTCHA_TIMEOUT());
 
 	const result = browser.executeAsync(
 		function renewCaptcha(url, CAPTCHA_HEADER_NAME, resolve) {
@@ -53,7 +53,7 @@ export function getCaptchaIdFromUrl(url: string): string {
  * @returns {string}
  */
 export function getCaptchaID(locator: string): string {
-	browser.timeouts('script', CAPTCHA_TIMEOUT);
+	browser.timeouts('script', CAPTCHA_TIMEOUT());
 
 	const result = browser.executeAsync(
 		function renewCaptcha(locator: string, CAPTCHA_HEADER_NAME, resolve) {
@@ -122,7 +122,7 @@ export function getCaptchaValue(cid: any) {
 	});
 }
 
-export function getCaptchaValueByLocator(locator: string, timeout: number = CAPTCHA_TIMEOUT): string {
+export function getCaptchaValueByLocator(locator: string, timeout: number = CAPTCHA_TIMEOUT()): string {
 	const cid = getCaptchaID(locator);
 
 	return browser.waitForPromise(
@@ -132,7 +132,7 @@ export function getCaptchaValueByLocator(locator: string, timeout: number = CAPT
 		timeout, `Не дождались значения капчи по заданному селектору "${locator}"`);
 }
 
-export function getCaptchaValueByUrl(url: string, timeout: number = CAPTCHA_TIMEOUT): string {
+export function getCaptchaValueByUrl(url: string, timeout: number = CAPTCHA_TIMEOUT()): string {
 	const cid = getCaptchaIdFromUrl(url);
 
 	return browser.waitForPromise(
@@ -143,7 +143,7 @@ export function getCaptchaValueByUrl(url: string, timeout: number = CAPTCHA_TIME
 }
 
 /** @param {string} variant — доступные значения от 1 до 7 и rusex */
-export function getCaptchaValueByVariant(variant: string, timeout: number = CAPTCHA_TIMEOUT): string {
+export function getCaptchaValueByVariant(variant: string, timeout: number = CAPTCHA_TIMEOUT()): string {
 	const url = `${CAPTCHA_URL}/${variant}?rnd=${Math.random()}`;
 
 	return getCaptchaValueByUrl(url, timeout);

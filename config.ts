@@ -13,6 +13,6 @@ export default {
 		CAPTCHA_HEADER_NAME: 'X-Captcha-ID',
 		CAPTCHA_CRACKER_URL: 'http://test-proxy.win102.dev.mail.ru/captcha',
 		CAPTCHA_URL: 'https://swa.mail.ru/c',
-		CAPTCHA_TIMEOUT: browser.options.waitforTimeout || 30000
+		CAPTCHA_TIMEOUT: () => browser.options.waitforTimeout || 30000
 	}
 };
