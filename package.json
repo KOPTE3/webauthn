@@ -46,7 +46,7 @@
     "@qa/api": "^0.0.7",
     "@qa/file-service": "^0.0.3",
     "@qa/rpc": "^0.1.4",
-    "@qa/transport": "^2.2.1",
+    "@qa/transport": "2.3.0-octavius-2567.0",
     "@qa/wdio-utils": "^1.1.6",
     "core-js": "^2.5.7",
     "debug": "^3.1.0",
