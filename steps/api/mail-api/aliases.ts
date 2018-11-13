@@ -26,7 +26,7 @@ export default class AliasSteps {
 
 	@step('Удаляем все алиасы из ящика')
 	removeAllAliases() {
-		const { response: { body: aliases = [] } } = MailApi.aliasesGet();
+		const { body: aliases = [] } = MailApi.aliasesGet();
 
 		aliases.map((alias: MailApi.Alias) => {
 			MailApi.aliasRemove(alias);
