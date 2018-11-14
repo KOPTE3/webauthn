@@ -2,18 +2,16 @@ import { MailAPI as MailApiInterfaces } from '@qa/api';
 import { getCaptchaValueByVariant } from '../../../utils/captcha';
 import { getRandomStr } from '../../../utils/utils';
 import * as MailApi from '../../../api/mail-api';
+import * as InternalApi from '../../../api/internal';
 
 export default class AliasSteps {
 	@step('Добавляем алиас {__result__} в почтовый ящик')
 	addAlias(params: MailApiInterfaces.AliasesAdd = {}): string {
-		const code = getCaptchaValueByVariant('1');
-
 		if (!params.alias) {
 			params.alias = `test.box_${getRandomStr(22).toLowerCase()}@mail.ru`;
 		}
 
-		const result = MailApi.aliasAdd({
-			capcha: code,
+		const result = InternalApi.aliasAdd({
 			...params
 		});
 
@@ -28,8 +26,12 @@ export default class AliasSteps {
 	removeAllAliases() {
 		const { body: aliases = [] } = MailApi.aliasesGet();
 
-		aliases.map((alias: MailApi.Alias) => {
-			MailApi.aliasRemove(alias);
+		aliases.forEach((alias: MailApi.Alias) => {
+			const result = MailApi.aliasRemove(alias);
+
+			if (result.status !== 200) {
+				throw new Error(`Удаление алиаса не удалось: ${JSON.stringify(result)}`);
+			}
 		});
 	}
 }

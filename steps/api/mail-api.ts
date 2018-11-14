@@ -3,8 +3,6 @@ import helpers from '../../store/helpers';
 import * as MailApi from '../../api/mail-api';
 import authorization from '../../store/authorization';
 import * as merge from 'deepmerge';
-import AliasSteps from './mail-api/aliases';
-import CollectorSteps from './mail-api/collectors';
 
 /** Интерфейс для вывода данных, о созданной запароленной папке */
 interface SecretFolderData {
@@ -24,9 +22,6 @@ const defaultFolderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> =
 };
 
 export default class MailApiSteps {
-	static Aliases: AliasSteps;
-	static Collectors: CollectorSteps;
-
 	@step(
 		'Создать папку с указанными параметрами. В результате созданы папки с id {__result__}',
 		(folderData: any) => folderData

@@ -3,9 +3,9 @@ import { Credentials, RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
 
 /**
- * @see http://api.tornado.dev.mail.ru/aliases/add
+ * @see http://api.tornado.dev.mail.ru/aliases/remove
  */
-export default function aliasesRemove(options: MailAPI.AliasesRemove, credentials?: Credentials): RequestResult<void> {
+export default function aliasRemove(options: MailAPI.AliasesRemove, credentials?: Credentials): RequestResult<void> {
 	return call('aliases/remove', options, 'POST', credentials);
 }
 
