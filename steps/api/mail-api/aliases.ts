@@ -3,12 +3,18 @@ import { getCaptchaValueByVariant } from '../../../utils/captcha';
 import { getRandomStr } from '../../../utils/utils';
 import * as MailApi from '../../../api/mail-api';
 import * as InternalApi from '../../../api/internal';
+import authorization from '../../../store/authorization';
 
 export default class AliasSteps {
-	@step('Добавляем алиас {__result__} в почтовый ящик')
+	@step('Добавляем алиас "{__result__}" в почтовый ящик "{params.email}"')
 	addAlias(params: MailApiInterfaces.AliasesAdd = {}): string {
 		if (!params.alias) {
 			params.alias = `test.box_${getRandomStr(22).toLowerCase()}@mail.ru`;
+		}
+
+		if (!params.email) {
+			const { email } = authorization.account.data();
+			params.email = email;
 		}
 
 		const result = InternalApi.aliasAdd({
