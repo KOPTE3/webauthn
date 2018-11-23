@@ -2,13 +2,15 @@ import { MailAPI } from '@qa/api';
 import { Credentials, RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
 
+export interface Sign {
+	sign: string;
+	sign_html: string;
+	name: string;
+	active: boolean;
+}
+
 export interface UserShortResponseBody {
-	signs: Array<{
-		sign: string;
-		sign_html: string;
-		name: string;
-		active: boolean;
-	}>;
+	signs: Sign[];
 
 	[key: string]: any;
 }
