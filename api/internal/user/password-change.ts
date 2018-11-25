@@ -3,6 +3,7 @@ import call, { callAsync } from '../call';
 
 interface Options {
 	password: string;
+	email: string;
 	redirect_uri?: string;
 	md5?: boolean;
 }
