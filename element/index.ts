@@ -173,7 +173,7 @@ export class Element {
 		const locator = element.Locator();
 		const el = browser.element(locator);
 		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
-		browser.moveTo(el.value.ELEMENT, xoffset, yoffset);
+		browser.moveTo(el.value.ELEMENT, xoffset!, yoffset!);
 	}
 
 	@gen
