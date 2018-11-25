@@ -154,18 +154,12 @@ export default {
 			email = account.get('email');
 		}
 
-		return browser.waitUntil(
-			() => {
-				const { value } = browser.execute(
-					(email: string) => window.__PH && window.__PH.activeUser() === email,
-					email
-				);
-
-				return value;
-			},
-			timeout,
-			`Could not detect user authorization ${email}`
+		const { value } = browser.execute(
+			(email: string) => window.__PH && window.__PH.activeUser() === email,
+			email
 		);
+
+		return !!value;
 	},
 
 	/**

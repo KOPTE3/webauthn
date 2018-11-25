@@ -165,8 +165,8 @@ export class Element {
 		const locator = element.Locator();
 		const el = browser.element(locator);
 		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
-		el.elementIdClick(el.value.ELEMENT);
 		el.elementIdClear(el.value.ELEMENT);
+		el.elementIdClick(el.value.ELEMENT);
 		el.keys(text);
 	}
 
