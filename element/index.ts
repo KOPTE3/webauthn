@@ -1,6 +1,19 @@
 /// <reference path="./index.gen.ts" />
 import * as assert from 'assert';
 
+function tryToGetGetterDescriptor(obj: object, field: string): PropertyDescriptor | null {
+	while (obj && Reflect.getPrototypeOf(obj) !== Object) {
+		const descriptor = Reflect.getOwnPropertyDescriptor(Reflect.getPrototypeOf(obj), field);
+		if (descriptor.get) {
+			return descriptor;
+		}
+
+		obj = Reflect.getPrototypeOf(obj);
+	}
+
+	return null;
+}
+
 /**
  * Класс, представляющий собой абстракцию над любым элементом страницы
  * имеет локатор и название
@@ -29,8 +42,8 @@ export class Element {
 	constructor(parent: Element, params: any);
 
 	constructor(...args: any[]) {
-		const locatorDescriptor = Reflect.getOwnPropertyDescriptor(Reflect.getPrototypeOf(this), 'locator');
-		const nameDescriptor = Reflect.getOwnPropertyDescriptor(Reflect.getPrototypeOf(this), 'name');
+		const locatorDescriptor = tryToGetGetterDescriptor(this, 'locator');
+		const nameDescriptor = tryToGetGetterDescriptor(this, 'name');
 
 		if (!(locatorDescriptor && locatorDescriptor.get)) {
 			this.locator = 'html';
