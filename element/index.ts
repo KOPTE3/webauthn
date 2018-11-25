@@ -2,12 +2,11 @@
 import * as assert from 'assert';
 
 function tryToGetGetterDescriptor(obj: object, field: string): PropertyDescriptor | null {
-	while (obj && Reflect.getPrototypeOf(obj) !== Object) {
-		const descriptor = Reflect.getOwnPropertyDescriptor(Reflect.getPrototypeOf(obj), field);
-		if (descriptor.get) {
+	while (obj) {
+		const descriptor = Reflect.getOwnPropertyDescriptor(obj, field);
+		if (descriptor && descriptor.get) {
 			return descriptor;
 		}
-
 		obj = Reflect.getPrototypeOf(obj);
 	}
 
