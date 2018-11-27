@@ -114,7 +114,7 @@ class Steps {
 	 */
 	@step('Проверить что пользователь авторизован')
 	isActiveUser(email: string, timeout?: number): boolean {
-		return Steps.isActiveUser(email, timeout);
+		return account.isActiveUser(email, timeout);
 	}
 
 	/**
