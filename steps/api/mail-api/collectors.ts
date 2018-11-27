@@ -6,7 +6,7 @@ import { getCaptchaValueByVariant } from '../../../utils/captcha';
 import { getRandomStr } from '../../../utils/utils';
 
 export default class CollectorSteps {
-	@step('Добавляем коллектор "{params.email}" в почтовый ящик')
+	@step('Добавляем коллектор "{account.email}" в почтовый ящик')
 	addCollector(account: {email: string, password: string}, createFolder: boolean = false) {
 		const mailApiSteps = new MailApiSteps();
 		const params: MailApiInterfaces.CollectorsAdd = {
