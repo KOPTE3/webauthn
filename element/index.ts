@@ -1,6 +1,18 @@
 /// <reference path="./index.gen.ts" />
 import * as assert from 'assert';
 
+function tryToGetGetterDescriptor(obj: object, field: string): PropertyDescriptor | null {
+	while (obj) {
+		const descriptor = Reflect.getOwnPropertyDescriptor(obj, field);
+		if (descriptor && descriptor.get) {
+			return descriptor;
+		}
+		obj = Reflect.getPrototypeOf(obj);
+	}
+
+	return null;
+}
+
 /**
  * Класс, представляющий собой абстракцию над любым элементом страницы
  * имеет локатор и название
@@ -29,8 +41,8 @@ export class Element {
 	constructor(parent: Element, params: any);
 
 	constructor(...args: any[]) {
-		const locatorDescriptor = Reflect.getOwnPropertyDescriptor(Reflect.getPrototypeOf(this), 'locator');
-		const nameDescriptor = Reflect.getOwnPropertyDescriptor(Reflect.getPrototypeOf(this), 'name');
+		const locatorDescriptor = tryToGetGetterDescriptor(this, 'locator');
+		const nameDescriptor = tryToGetGetterDescriptor(this, 'name');
 
 		if (!(locatorDescriptor && locatorDescriptor.get)) {
 			this.locator = 'html';
@@ -153,8 +165,8 @@ export class Element {
 		const locator = element.Locator();
 		const el = browser.element(locator);
 		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
-		el.elementIdClick(el.value.ELEMENT);
 		el.elementIdClear(el.value.ELEMENT);
+		el.elementIdClick(el.value.ELEMENT);
 		el.keys(text);
 	}
 
@@ -173,7 +185,7 @@ export class Element {
 		const locator = element.Locator();
 		const el = browser.element(locator);
 		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
-		browser.moveTo(el.value.ELEMENT, xoffset, yoffset);
+		browser.moveTo(el.value.ELEMENT, xoffset!, yoffset!);
 	}
 
 	@gen
