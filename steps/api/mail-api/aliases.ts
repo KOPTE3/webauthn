@@ -6,8 +6,7 @@ import * as InternalApi from '../../../api/internal';
 import authorization from '../../../store/authorization';
 
 export default class AliasSteps {
-	@step('Добавляем алиас "{__result__}" в {!params.email && "текущий"} ' +
-		'почтовый ящик {params.email ? " " + params.email : ""}')
+	@step('Добавляем алиас "{__result__}" в почтовый ящик {params.email ? params.email : ""}')
 	addAlias(params: MailApiInterfaces.AliasesAdd = {}): string {
 		if (!params.alias) {
 			params.alias = `test.box_${getRandomStr(22).toLowerCase()}@mail.ru`;
