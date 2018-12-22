@@ -381,8 +381,12 @@ class Steps {
 				const actual = browser.getViewportSize();
 
 				try {
-					return !assert.deepStrictEqual(actual, expected);
-				} catch (error) {}
+					assert.deepStrictEqual(actual, expected);
+				} catch {
+					return false;
+				}
+
+				return true;
 			},
 			browser.options.waitforTimeout,
 			'Не удалось дождаться требуемого размера вьюпорта'
