@@ -34,8 +34,6 @@
     "./files",
     "./cache",
     "./build",
-    "./test.ts",
-    "./test2.ts",
     "**/*.gen.ts",
     "**/*.gen.d.ts"
   ]
