@@ -160,12 +160,46 @@ export class Element {
 	}
 
 	@gen
+	@step('Очищаем элемент {element}')
+	static ClearElement(element: Element): void {
+		Element.privateClearElement(element);
+	}
+
+	private static privateClearElement(element: Element): void {
+		const locator = element.Locator();
+		const el = browser.element(locator);
+		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
+		/**
+		 * @see https://github.com/facebook/react/issues/8004
+		 * @see https://github.com/facebook/react/issues/10135
+		 */
+		browser.execute((elementLocator: string) => {
+			const el = document.querySelector(elementLocator);
+			if (!el) {
+				throw new Error(`Не найден элемент "${elementLocator}"`);
+			}
+			const { set: valueSetter } = Object.getOwnPropertyDescriptor(el, 'value') || { set: null };
+			const prototype = Object.getPrototypeOf(el);
+			const { set: prototypeValueSetter } = Object.getOwnPropertyDescriptor(prototype, 'value') || { set: null };
+			if (prototypeValueSetter && valueSetter !== prototypeValueSetter) {
+				prototypeValueSetter.call(el, '');
+			} else if (valueSetter) {
+				valueSetter.call(element, '');
+			} else {
+				throw new Error('The given element does not have a value setter');
+			}
+			el.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+		}, locator);
+		el.elementIdClear(el.value.ELEMENT);
+	}
+
+	@gen
 	@step('Печатаем в элементе {element} текст', (_: any, text: string) => ({ text }))
 	static TypeValue(element: Element, text: string): void {
 		const locator = element.Locator();
 		const el = browser.element(locator);
 		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
-		el.elementIdClear(el.value.ELEMENT);
+		Element.privateClearElement(element);
 		el.elementIdClick(el.value.ELEMENT);
 		el.keys(text);
 	}
@@ -218,8 +252,7 @@ export class Element {
 		browser.waitUntil(
 			() => Element.GetTextContent(element) === expected,
 			timeout || browser.options.waitforTimeout,
-			`Не удалось дождаться пока текстовое содержимое элемента ${element.Name()} \
-			совпадёт с ожидаемым значением (${expected})`
+			`Не удалось дождаться пока текстовое содержимое элемента ${element.Name()} совпадёт с ожидаемым значением (${expected})`
 		);
 	}
 
