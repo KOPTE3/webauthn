@@ -189,7 +189,7 @@ export class Element {
 				throw new Error('The given element does not have a value setter');
 			}
 			el.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
-		}, locator);
+		},              locator);
 		el.elementIdClear(el.value.ELEMENT);
 	}
 
@@ -252,7 +252,8 @@ export class Element {
 		browser.waitUntil(
 			() => Element.GetTextContent(element) === expected,
 			timeout || browser.options.waitforTimeout,
-			`Не удалось дождаться пока текстовое содержимое элемента ${element.Name()} совпадёт с ожидаемым значением (${expected})`
+			`Не удалось дождаться пока текстовое содержимое элемента ${element.Name()}\
+			 совпадёт с ожидаемым значением (${expected})`
 		);
 	}
 

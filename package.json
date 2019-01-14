@@ -1,6 +1,6 @@
 {
   "name": "@qa/yoda",
-  "version": "9.4.26-rc.0",
+  "version": "9.4.26",
   "description": "Testing platform",
   "author": "Mail.Ru Group Limited",
   "license": "UNLICENSED",
@@ -46,7 +46,7 @@
     "@qa/api": "^0.0.7",
     "@qa/file-service": "^0.0.3",
     "@qa/rpc": "^0.1.4",
-    "@qa/transport": "^2.2.1",
+    "@qa/transport": "2.3.0",
     "@qa/wdio-utils": "^1.1.6",
     "core-js": "^2.6.1",
     "debug": "^3.1.0",
