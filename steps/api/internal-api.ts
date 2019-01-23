@@ -41,12 +41,7 @@ export default class InternalApiSteps {
 		}
 
 		if (type === 'twofa') {
-			InternalApi.twoStepEnable({
-				phone_id: phoneId,
-				email,
-				password,
-				redirect_uri: 'https://e.mail.ru/settings/security?twostep=enabled'
-			});
+			InternalApi.twoStepEnable([ { email, phone_id: phoneId } ]);
 		}
 
 		return phoneId;
