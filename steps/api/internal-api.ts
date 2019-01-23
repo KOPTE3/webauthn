@@ -3,6 +3,8 @@ import authorization from '../../store/authorization';
 import phonesStore from '../../store/phones';
 import { PhoneStatus } from '../../api/internal/user/phones-state';
 
+type PhoneStatusStep = PhoneStatus | 'in_remove_queue' | 'twofa';
+
 export default class InternalApiSteps {
 	@step('"Протушить" все аттачи на написании письма')
 	invalidateAllAttachesInCompose(messageId: string) {
@@ -13,7 +15,7 @@ export default class InternalApiSteps {
 	}
 
 	@step('Добавить телефон для пользователя "{email}" с типом "{type}"')
-	addPhone(storeIndex: number, email: string, type: PhoneStatus) {
+	addPhone(storeIndex: number, email: string, type: PhoneStatusStep) {
 		const phone: string = phonesStore.getNumber(storeIndex);
 
 		const phoneId = InternalApi.usersPhonesAdd({

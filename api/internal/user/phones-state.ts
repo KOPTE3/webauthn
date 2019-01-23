@@ -1,7 +1,7 @@
 import { RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
 
-export type PhoneStatus = 'ok' | 'too_young' | 'nonverified' | 'in_remove_queue' | 'twofa';
+export type PhoneStatus = 'ok' | 'too_young' | 'nonverified';
 
 interface Options {
 	email: string;
