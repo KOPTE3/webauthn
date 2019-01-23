@@ -16,9 +16,10 @@ const method = 'users/2-step-auth/enable';
  * @see http://api.tornado.dev.mail.ru/users/2-step-auth/enable
  */
 export default function twoStepEnable(options: Options): RequestResult<any> {
-	return call(method, options);
+	// Работает только с POST
+	return call(method, options, 'POST');
 }
 
 export async function twoStepEnableAsync(options: Options): Promise<RequestResult<any>> {
-	return callAsync(method, options);
+	return callAsync(method, options, 'POST');
 }
