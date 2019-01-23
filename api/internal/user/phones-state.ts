@@ -1,10 +1,12 @@
 import { RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
 
+export type PhoneStatus = 'ok' | 'too_young' | 'nonverified' | 'in_remove_queue' | 'twofa';
+
 interface Options {
 	email: string;
 	phone: string;
-	state: 'ok' | 'too_young' | 'nonverified';
+	state: PhoneStatus;
 }
 
 /**
