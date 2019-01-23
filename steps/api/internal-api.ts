@@ -45,7 +45,7 @@ export default class InternalApiSteps {
 				phone_id: phoneId,
 				email,
 				password,
-				redirect_uri: 'https://e.mail.ru/settings/security?twostep=enabled',
+				redirect_uri: 'https://e.mail.ru/settings/security?twostep=enabled'
 			});
 		}
 
