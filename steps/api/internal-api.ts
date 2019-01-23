@@ -13,7 +13,7 @@ export default class InternalApiSteps {
 	}
 
 	@step('Добавить телефон для пользователя "{email}" с типом "{type}"')
-	addPhone(storeIndex: number, email: string, type: PhoneStatus, password?: string) {
+	addPhone(storeIndex: number, email: string, type: PhoneStatus) {
 		const phone: string = phonesStore.getNumber(storeIndex);
 
 		const phoneId = InternalApi.usersPhonesAdd({
