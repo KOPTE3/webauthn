@@ -3,7 +3,7 @@ import authorization from '../../store/authorization';
 import phonesStore from '../../store/phones';
 import { PhoneStatus } from '../../api/internal/user/phones-state';
 
-type PhoneStatusStep = PhoneStatus | 'in_remove_queue' | 'twofa';
+export type PhoneStatusStep = PhoneStatus | 'in_remove_queue' | 'twofa';
 
 export default class InternalApiSteps {
 	@step('"Протушить" все аттачи на написании письма')
