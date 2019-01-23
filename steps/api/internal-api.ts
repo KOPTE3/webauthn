@@ -41,7 +41,7 @@ export default class InternalApiSteps {
 		}
 
 		if (type === 'twofa') {
-			InternalApi.twoStepEnable([ { email, phone_id: phoneId } ]);
+			InternalApi.twoStepEnable({ users: [ { email, phone_id: phoneId } ] });
 		}
 
 		return phoneId;
