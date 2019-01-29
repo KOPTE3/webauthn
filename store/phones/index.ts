@@ -93,7 +93,7 @@ export default {
 			value: '20',
 			masked: '+7 (999) 868-**-**',
 			full: '+7 (999) 868-91-53',
-			id: 'id_yVGy4wbDeflWgHfNLqU+Ck5JjLxRdxwHXSjmtKlasiE=',
+			id: 'id_NbtbzhB4ZySdx5OcaNT5gOvlDPvLIuP0009Uar4eqrY=',
 			operator: Operators.YOTA
 		}
 	] as PhoneList,
