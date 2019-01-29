@@ -54,5 +54,4 @@ config.local.js
 *.gen.ts
 
 
-test.ts
-test2.ts
+/test*

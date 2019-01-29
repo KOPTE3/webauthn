@@ -49,5 +49,4 @@ build
 *.gen.d.js
 *.gen.d.ts
 
-test.ts
-test2.ts
+/test*
