@@ -27,8 +27,8 @@ export default {
 	auth: {
 		login: 'https://auth.mail.ru/cgi-bin/auth',
 		logout: 'https://auth.mail.ru/cgi-bin/logout',
+		supix: 'https://auth.mail.ru/supix',
 		NaviData: 'https://portal.mail.ru/NaviData',
 		ua: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36',
-
 	}
 };

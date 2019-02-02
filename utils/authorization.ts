@@ -136,35 +136,39 @@ export async function discardCredentialsAsync (id: number): Promise<void> {
 	debug(`Account ${id} has been discarded`);
 }
 
-// export function discardCredentials (id: number, timeout?: number): Credentials {
-// 	return browser.waitForPromise(discardCredentialsAsync(id), timeout, 'Could not discard user credentials');
-// }
-//
-// export async function logoutAccountAsync (credentials?: Credentials): Promise<void> {
-// 	assert(session, 'No current session');
-// 	const Login = credentials && credentials.email || session && session.credentials.email;
-//
-// 	const response = await rp({
-// 		method: 'GET',
-// 		uri: config.auth.logout,
-// 		headers: {
-// 			'User-Agent': config.auth.ua,
-// 		},
-// 		followAllRedirects: false,
-// 		qs: {
-// 			Login: Login,
-// 			autotest: 1,
-// 			mac: 1,
-// 		},
-// 		jar,
-// 		simple: false,
-// 		resolveWithFullResponse: true,
-// 	});
-// }
-//
-// export async function loadCurrentSession (): Promise<Session> {
-//
-// }
+export function discardCredentials (id: number, timeout?: number): void {
+	return browser.waitForPromise(discardCredentialsAsync(id), timeout, 'Could not discard user credentials');
+}
+
+export async function discardAllCredentialsAsync (): Promise<void> {
+	await Promise.all(ids.map(id => discardCredentials(id)));
+}
+
+export function discardAllCredentials (timeout?: number): void {
+	return browser.waitForPromise(discardAllCredentialsAsync(), timeout, 'Could not discard all user credentials');
+}
+
+export async function logoutAccountAsync (credentials?: CommonAccount): Promise<void> {
+	assert(session, 'No current session');
+	const Login = credentials && credentials.email || session && session.credentials.email;
+
+	const response = await rp({
+		method: 'GET',
+		uri: config.auth.logout,
+		headers: {
+			'User-Agent': config.auth.ua,
+		},
+		followAllRedirects: false,
+		qs: {
+			Login: Login,
+			autotest: 1,
+			mac: 1,
+		},
+		jar,
+		simple: false,
+		resolveWithFullResponse: true,
+	});
+}
 
 function parseAccount (email: string, password: string): CommonAccount {
 	const [login, domain] = email.split('@');
@@ -200,7 +204,7 @@ export default class Authorization {
 
 		const session = loginAccount(authCredentials);
 
-		URL.open('https://auth.mail.ru/supix', TIMEOUT);
+		URL.open(config.auth.supix, TIMEOUT);
 
 		// Удостоверямся, что документ доступен
 		browser.waitForExist('body');
