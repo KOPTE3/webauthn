@@ -231,6 +231,7 @@ export default class Authorization {
 	static auth (type?: Type, select?: Partial<CommonAccount>): CommonAccount;
 	static auth (email: string, password: string): CommonAccount;
 	static auth (credentials: AccountCredentials): CommonAccount;
+	@step('Авторизуемся аккаунтом {__result__.username}')
 	static auth (arg0?: any, arg1?: any): CommonAccount {
 		let authCredentials: CommonAccount = null;
 
@@ -294,5 +295,12 @@ export default class Authorization {
 		}
 
 		return loadNaviData(jar);
+	}
+
+	@step('Проверяем, что текущий авторизованный аккаунт это {email}')
+	static checkActiveAccount(email: string): void {
+		const naviData = Authorization.loadNaviData();
+		assert.strictEqual(naviData.status, 'ok');
+		assert.strictEqual(naviData.data.email, email, `Actual account is not ${email}`);
 	}
 }
