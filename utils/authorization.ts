@@ -1,5 +1,6 @@
 import * as Debug from 'debug';
 import * as assert from 'assert';
+import {CookieJar} from 'request';
 import * as rp from 'request-promise-native';
 import {Cookie} from 'tough-cookie';
 import config from '../config';
@@ -170,6 +171,50 @@ export async function logoutAccountAsync (credentials?: CommonAccount): Promise<
 	});
 }
 
+export interface NaviData {
+	status: string;
+	data: {
+		action: string;
+		email: string;
+		mail_cnt: string;
+		my_cnt: string;
+		games_cnt: string;
+		list: string[];
+		ldata: {
+			[email: string]: {
+				first_name: string;
+				last_name: string;
+				mail_cnt: number;
+				verified: boolean;
+			};
+		};
+	};
+}
+
+export async function loadNaviDataAsync (jar: CookieJar): Promise<NaviData> {
+	const response = await rp({
+		method: 'GET',
+		uri: config.auth.NaviData,
+		headers: {
+			'User-Agent': config.auth.ua,
+		},
+		followAllRedirects: true,
+		qs: {
+			Socials: 1,
+			ldata: 1,
+			mac: 1,
+		},
+		jar,
+		json: true,
+	});
+
+	return response;
+}
+
+export function loadNaviData (jar: CookieJar, timeout?: number): NaviData {
+	return browser.waitForPromise(loadNaviDataAsync(jar), timeout, 'Could not load NaviData');
+}
+
 function parseAccount (email: string, password: string): CommonAccount {
 	const [login, domain] = email.split('@');
 
@@ -226,5 +271,28 @@ export default class Authorization {
 		browser.setCookies(cookies);
 
 		return authCredentials;
+	}
+
+	static loadNaviData (): NaviData {
+		browser.newWindow(config.auth.supix, 'supix', '');
+
+		// Удостоверямся, что документ доступен
+		browser.waitForExist('body');
+		const cookies: WebdriverIO.Cookie[] = browser.getCookie();
+
+		browser.close();
+
+		const jar = rp.jar();
+
+		for (const c of cookies) {
+			const cookie = new Cookie({
+				key: c.name,
+				value: c.value,
+				domain: 'portal.mail.ru',
+			});
+			jar.setCookie(cookie, 'https://portal.mail.ru/NaviData');
+		}
+
+		return loadNaviData(jar);
 	}
 }
