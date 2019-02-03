@@ -85,6 +85,16 @@ export class Element {
 	}
 
 	@gen
+	static GetElementRect(element: Element): WebdriverIO.DOMRect {
+		const locator = element.Locator();
+		const el = browser.element(locator);
+		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
+
+		const {value} = browser.elementIdRect(el.value.ELEMENT);
+		return value;
+	}
+
+	@gen
 	static SwitchFrame(element: Element): void {
 		const locator = element.Locator();
 		const el = browser.element(locator);
