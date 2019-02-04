@@ -66,7 +66,7 @@ export async function getCredentialsAsync (type: Type = 'regular', options: Part
 
 	options = options || {};
 
-	const qs = {domain: 'mail.ru', type, ...options};
+	const qs = {...options, type};
 
 	const response: ASAccount = await rp.get(`${config.as.url}/get`, {
 		json: true,
