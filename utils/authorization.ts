@@ -128,7 +128,7 @@ export function loginAccount (credentials: CommonAccount, timeout?: number): Ses
 export async function discardCredentialsAsync (id: number): Promise<void> {
 	debug(`Discard account ${id}`);
 
-	await rp.get(`${config.as.url}/get`, {
+	await rp.get(`${config.as.url}/discasrd`, {
 		json: true,
 		auth: config.as.auth,
 		qs: {id},
