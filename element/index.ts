@@ -90,7 +90,7 @@ export class Element {
 		const el = browser.element(locator);
 		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
 
-		const {value} = browser.elementIdRect(el.value.ELEMENT);
+		const { value } = browser.elementIdRect(el.value.ELEMENT);
 		return value;
 	}
 

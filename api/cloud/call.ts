@@ -1,4 +1,3 @@
-import {CookieJar} from 'request';
 import * as request from 'request';
 import { Credentials, RequestResult } from '../../types/api';
 import config from '../../config';
@@ -103,7 +102,7 @@ export async function callAsync(
 
 	debug('Request with options \n%O', {
 		...requestOptions,
-		jar: (requestOptions.jar as CookieJar).getCookies('https://cloud.mail.ru')
+		jar: (requestOptions.jar as request.CookieJar).getCookies('https://cloud.mail.ru')
 	});
 
 	const result: RequestResult = {
