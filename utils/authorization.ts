@@ -286,6 +286,12 @@ export default class Authorization {
 		browser.waitForExist('body');
 		const cookies: WebdriverIO.Cookie[] = browser.getCookie();
 
+		browser.setCookies([{
+			name: 'qa',
+			value: config.cookies.qa,
+			domain: '.mail.ru'
+		}]);
+
 		browser.close();
 
 		const jar = rp.jar();
@@ -297,7 +303,7 @@ export default class Authorization {
 				domain: 'portal.mail.ru'
 			});
 
-			// не придумал как подрsугому
+			// не придумал как подругому
 			// @ts-ignore
 			jar.setCookie(cookie, 'https://portal.mail.ru/NaviData');
 		}
