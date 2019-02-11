@@ -139,7 +139,7 @@ class PageObject {
 		const { features, scripts } = cache;
 
 		if (features.length) {
-			query.ftrs = features.join(' ') + ' ' + (query.ftrs || '');
+			query.ftrs = features.concat(query.ftrs).join(' ').trim();
 		}
 
 		url = URL.format(url, query);
