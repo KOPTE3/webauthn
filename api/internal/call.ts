@@ -2,13 +2,18 @@ import * as Debug from 'debug';
 import * as rp from 'request-promise-native';
 import { RequestResult } from '../../types/api';
 import config from '../../config';
+import {CookieJar} from 'request';
 
 const debug = Debug('@qa:yoda:internal');
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type CallError = Error & Omit<RequestResult, 'error'>;
 
-export default function call(path: string, body: object, method: 'POST' | 'GET' = 'GET', opts?: object): RequestResult {
+export interface CallOptions {
+	jar: CookieJar;
+}
+
+export default function call(path: string, body: object, method: 'POST' | 'GET' = 'GET', opts?: CallOptions): RequestResult {
 	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method, opts));
 	if (result.error) {
 		const { error, ...fields } = result;
@@ -23,7 +28,7 @@ export default function call(path: string, body: object, method: 'POST' | 'GET' 
 	return result;
 }
 
-export async function callAsync(path: string, body: object, method: 'POST' | 'GET' = 'GET', opts?: object): Promise<RequestResult> {
+export async function callAsync(path: string, body: object, method: 'POST' | 'GET' = 'GET', opts?: CallOptions): Promise<RequestResult> {
 	const options: rp.Options = {
 		url: path,
 		method,
