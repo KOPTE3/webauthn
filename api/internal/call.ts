@@ -50,7 +50,7 @@ export async function callAsync(path: string, body: object, method: 'POST' | 'GE
 	const { jar, ...rest } = options;
 	debug('Request with options \n%O', rest);
 	if (jar) {
-		debug('Request with cookies: \n%O', jar);
+		debug('Request with cookies: \n%O', (jar as any)._jar.toJSON().cookies);
 	}
 
 	const result: RequestResult = {
