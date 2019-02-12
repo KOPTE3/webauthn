@@ -353,7 +353,7 @@ export default class Authorization {
 		},                            {
 			jar: requestJar
 		});
-		assert.strictEqual(response.body, '', 'Failed to set creation_time to session. Check SDCS and  cookie is set.');
+		assert.strictEqual(response.body, '', 'Failed to set creation_time to session. Check SDCS and Mpop cookies are set.');
 		return response.body;
 	}
 }
