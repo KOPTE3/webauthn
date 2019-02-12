@@ -32,5 +32,11 @@ export default {
 		NaviData: 'https://portal.mail.ru/NaviData',
 		ua: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36',
 		sdc: 'https://auth.mail.ru/sdc?from=https%3A%2F%2Fe.mail.ru%2F'
+	},
+	get timeout(): number {
+		if (typeof browser !== 'undefined') {
+			return browser.options.waitforTimeout;
+		}
+		return 30 * 1000;
 	}
 };

@@ -57,7 +57,6 @@ export interface Session {
 const debug = Debug('@qa:yoda:auth');
 const jar = rp.jar();
 const ids: number[] = [];
-const TIMEOUT: number = 30 * 1000;
 
 let session: Session = null;
 
@@ -266,7 +265,7 @@ export default class Authorization {
 
 		const session = loginAccount(authCredentials);
 
-		URL.open(config.auth.supix, TIMEOUT);
+		URL.open(config.auth.supix, config.timeout);
 
 		// Удостоверямся, что документ доступен
 		browser.waitForExist('body');
