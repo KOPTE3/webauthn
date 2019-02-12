@@ -1,18 +1,11 @@
-import * as Debug from 'debug';
 import * as assert from 'assert';
+import * as Debug from 'debug';
 import { CookieJar } from 'request';
 import * as rp from 'request-promise-native';
 import { Cookie } from 'tough-cookie';
+import { creationTime } from '../api/internal/session/index';
 import config from '../config';
 import URL from './url';
-import { creationTime } from '../api/internal/session/index';
-
-const debug = Debug('@qa:yoda');
-const jar = rp.jar();
-const ids: number[] = [];
-const TIMEOUT: number = 30 * 1000;
-
-let session: Session = null;
 
 export type Type = 'regular' | 'external' | 'pdd';
 
@@ -60,6 +53,13 @@ export interface Session {
 	credentials: CommonAccount;
 	cookies: Cookie[];
 }
+
+const debug = Debug('@qa:yoda:auth');
+const jar = rp.jar();
+const ids: number[] = [];
+const TIMEOUT: number = 30 * 1000;
+
+let session: Session = null;
 
 export async function getCredentialsAsync(
 	type: Type = 'regular',
@@ -254,9 +254,7 @@ export default class Authorization {
 		let authCredentials: CommonAccount = null;
 
 		if (typeof arg0 === 'undefined' || ['regular', 'external', 'pdd'].includes(arg0)) {
-			const type: Type = arg0;
-
-			authCredentials = getCredentials(type, arg1);
+			authCredentials = getCredentials(arg0 as Type, arg1);
 		} else {
 			if (typeof arg0 === 'string' && typeof arg1 === 'string') {
 				authCredentials = parseAccount(arg0, arg1);
@@ -273,11 +271,11 @@ export default class Authorization {
 		// Удостоверямся, что документ доступен
 		browser.waitForExist('body');
 
-		const cookies: WebdriverIO.Cookie[] = session.cookies.map((cookie: Cookie): WebdriverIO.Cookie => {
+		const cookies: WebdriverIO.Cookie[] = session.cookies.map(({ key, value, domain }: Cookie): WebdriverIO.Cookie => {
 			return {
-				name: cookie.key,
-				value: cookie.value,
-				domain: `.${cookie.domain}`
+				name: key,
+				value,
+				domain: `.${domain}`
 			};
 		});
 
@@ -309,10 +307,10 @@ export default class Authorization {
 
 		const jar = rp.jar();
 
-		for (const c of cookies) {
+		for (const { name, value } of cookies) {
 			const cookie = new Cookie({
-				key: c.name,
-				value: c.value,
+				key: name,
+				value,
 				domain: 'portal.mail.ru'
 			});
 
@@ -350,7 +348,7 @@ export default class Authorization {
 		const response = creationTime({
 			email: naviData.data.email,
 			time: 1500000000
-		},                            {
+		}, {
 			jar: requestJar
 		});
 		assert.strictEqual(response.body, '', 'Failed to set creation_time to session. Check SDCS and Mpop cookies are set.');
