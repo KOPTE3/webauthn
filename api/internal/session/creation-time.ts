@@ -1,5 +1,5 @@
 import { RequestResult } from '../../../types/api';
-import call, {callAsync, CallOptions} from '../call';
+import call, { callAsync, CallOptions } from '../call';
 import { CookieJar } from 'request';
 
 interface Params {

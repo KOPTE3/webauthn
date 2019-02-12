@@ -2,7 +2,7 @@ import * as Debug from 'debug';
 import * as rp from 'request-promise-native';
 import { RequestResult } from '../../types/api';
 import config from '../../config';
-import {CookieJar} from 'request';
+import { CookieJar } from 'request';
 
 const debug = Debug('@qa:yoda:internal');
 
@@ -13,7 +13,12 @@ export interface CallOptions {
 	jar: CookieJar;
 }
 
-export default function call(path: string, body: object, method: 'POST' | 'GET' = 'GET', opts?: CallOptions): RequestResult {
+export default function call(
+	path: string,
+	body: object,
+	method: 'POST' | 'GET' = 'GET',
+	opts?: CallOptions
+): RequestResult {
 	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method, opts));
 	if (result.error) {
 		const { error, ...fields } = result;
@@ -28,7 +33,12 @@ export default function call(path: string, body: object, method: 'POST' | 'GET' 
 	return result;
 }
 
-export async function callAsync(path: string, body: object, method: 'POST' | 'GET' = 'GET', opts?: CallOptions): Promise<RequestResult> {
+export async function callAsync(
+	path: string,
+	body: object,
+	method: 'POST' | 'GET' = 'GET',
+	opts?: CallOptions
+	): Promise<RequestResult> {
 	const options: rp.Options = {
 		url: path,
 		method,
@@ -36,20 +46,20 @@ export async function callAsync(path: string, body: object, method: 'POST' | 'GE
 	};
 
 	switch (method) {
-	case 'GET': {
-		options.qs = body;
-		break;
-	}
-	case 'POST': {
-		options.formData = Object.entries(body).reduce(
-			(formdata: any, [key, value]) => {
-				formdata[key] = (typeof value === 'string') ? value : JSON.stringify(value);
-				return formdata;
-			},
-			{}
-		);
-		break;
-	}
+		case 'GET': {
+			options.qs = body;
+			break;
+		}
+		case 'POST': {
+			options.formData = Object.entries(body).reduce(
+				(formdata: any, [key, value]) => {
+					formdata[key] = (typeof value === 'string') ? value : JSON.stringify(value);
+					return formdata;
+				},
+				{}
+			);
+			break;
+		}
 	}
 
 	const { jar, ...rest } = options;

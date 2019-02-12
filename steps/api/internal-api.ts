@@ -29,12 +29,12 @@ export default class InternalApiSteps {
 
 		let initialType: PhoneStatus;
 		switch (type) {
-		case 'in_remove_queue':
-		case 'twofa':
-			initialType = 'ok';
-			break;
-		default:
-			initialType = type;
+			case 'in_remove_queue':
+			case 'twofa':
+				initialType = 'ok';
+				break;
+			default:
+				initialType = type;
 		}
 
 		InternalApi.userPhonesState({ email, phone, state: initialType });
