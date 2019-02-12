@@ -8,8 +8,8 @@ const debug = Debug('@qa:yoda:internal');
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type CallError = Error & Omit<RequestResult, 'error'>;
 
-export default function call(path: string, body: object, method: 'POST' | 'GET' = 'GET'): RequestResult {
-	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method));
+export default function call(path: string, body: object, method: 'POST' | 'GET' = 'GET', opts?: object): RequestResult {
+	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method, opts));
 	if (result.error) {
 		const { error, ...fields } = result;
 		Object.assign(error, fields);
@@ -23,30 +23,35 @@ export default function call(path: string, body: object, method: 'POST' | 'GET' 
 	return result;
 }
 
-export async function callAsync(path: string, body: object, method: 'POST' | 'GET' = 'GET'): Promise<RequestResult> {
+export async function callAsync(path: string, body: object, method: 'POST' | 'GET' = 'GET', opts?: object): Promise<RequestResult> {
 	const options: rp.Options = {
 		url: path,
-		method
+		method,
+		...opts
 	};
 
 	switch (method) {
-		case 'GET': {
-			options.qs = body;
-			break;
-		}
-		case 'POST': {
-			options.formData = Object.entries(body).reduce(
-				(formdata: any, [key, value]) => {
-					formdata[key] = (typeof value === 'string') ? value : JSON.stringify(value);
-					return formdata;
-				},
-				{}
-			);
-			break;
-		}
+	case 'GET': {
+		options.qs = body;
+		break;
+	}
+	case 'POST': {
+		options.formData = Object.entries(body).reduce(
+			(formdata: any, [key, value]) => {
+				formdata[key] = (typeof value === 'string') ? value : JSON.stringify(value);
+				return formdata;
+			},
+			{}
+		);
+		break;
+	}
 	}
 
-	debug('Request with options \n%O', options);
+	const { jar, ...rest } = options;
+	debug('Request with options \n%O', rest);
+	if (jar) {
+		debug('Request with cookies: \n%O', jar);
+	}
 
 	const result: RequestResult = {
 		path
