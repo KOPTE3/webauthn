@@ -60,6 +60,12 @@ const ids: number[] = [];
 
 let session: Session = null;
 
+/**
+ * Получает из аккаунт-сервиса учётку, подходящую под определённые фильтры
+ * @param {Type} [type='regular'] - тип аккаунта
+ * @param {CommonAccount} [options]
+ * @return Promise<ASAccount>
+ */
 export async function getCredentialsAsync(
 	type: Type = 'regular',
 	options: Partial<CommonAccount> = null
@@ -91,6 +97,11 @@ export function getCredentials(
 	return browser.waitForPromise(getCredentialsAsync(type, options), timeout, 'Could not get user credentials');
 }
 
+/**
+ * Авторизует переданный аккаунт, возвращает объект с авторизационными куками
+ * @param {CommonAccount} credentials
+ * @return Promise<Session>
+ */
 export async function loginAccountAsync(credentials: CommonAccount): Promise<Session> {
 	const res1 = await rp({
 		method: 'POST',
@@ -142,6 +153,10 @@ export function loginAccount(credentials: CommonAccount, timeout?: number): Sess
 	);
 }
 
+/**
+ * Освобождает аккаунт в аккаунт-сервисе
+ * @param {number} id
+ */
 export async function discardCredentialsAsync(id: number): Promise<void> {
 	debug(`Discard account ${id}`);
 
@@ -208,6 +223,11 @@ export interface NaviData {
 	};
 }
 
+/**
+ * Запрашивает данные NaviData
+ * @param {CookieJar} jar
+ * @return Promise<NaviData>
+ */
 export async function loadNaviDataAsync(jar: CookieJar): Promise<NaviData> {
 	const response = await rp({
 		method: 'GET',
@@ -313,7 +333,7 @@ export default class Authorization {
 				domain: 'portal.mail.ru'
 			});
 
-			// не придумал как подругому
+			// не придумал как по-другому
 			// @ts-ignore
 			jar.setCookie(cookie, 'https://portal.mail.ru/NaviData');
 		}
@@ -329,7 +349,7 @@ export default class Authorization {
 	}
 
 	@step('Сделать сессию старой')
-	static async makeSessionOld(): Promise<string | object> {
+	static async makeSessionOld(timestamp?: number): Promise<string | object> {
 		const naviData = Authorization.loadNaviData();
 
 		// получаем все куки
@@ -338,19 +358,19 @@ export default class Authorization {
 
 		for (const c of cookies) {
 			if (c.key === 'sdcs' || c.key === 'Mpop') {
-				c.domain = 'mail.ru';
 				// @ts-ignore
-				requestJar.setCookie(Cookie.fromJSON(c), config.api.internalApiBaseUrl);
+				requestJar.setCookie(Cookie.fromJSON({...c, domain: 'mail.ru'}), config.api.internalApiBaseUrl);
 			}
 		}
 
 		const response = creationTime({
 			email: naviData.data.email,
-			time: 1500000000
+			time: timestamp || 1500000000
 		}, {
 			jar: requestJar
 		});
 		assert.strictEqual(response.body, '', 'Failed to set creation_time to session. Check SDCS and Mpop cookies are set.');
+
 		return response.body;
 	}
 }
