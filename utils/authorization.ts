@@ -5,6 +5,7 @@ import * as rp from 'request-promise-native';
 import { Cookie } from 'tough-cookie';
 import config from '../config';
 import URL from './url';
+import { creationTime } from '../api/internal/session/index';
 
 const debug = Debug('@qa:yoda');
 const jar = rp.jar();
@@ -92,7 +93,7 @@ export function getCredentials(
 }
 
 export async function loginAccountAsync(credentials: CommonAccount): Promise<Session> {
-	const response = await rp({
+	const res1 = await rp({
 		method: 'POST',
 		uri: config.auth.login,
 		headers: {
@@ -107,6 +108,18 @@ export async function loginAccountAsync(credentials: CommonAccount): Promise<Ses
 			mac: 1,
 			page: 'https://mail.ru'
 		},
+		jar,
+		simple: false,
+		resolveWithFullResponse: true
+	});
+
+	const res2 = await rp({
+		method: 'GET',
+		uri: config.auth.sdc,
+		headers: {
+			'User-Agent': config.auth.ua
+		},
+		followAllRedirects: false,
 		jar,
 		simple: false,
 		resolveWithFullResponse: true
@@ -316,5 +329,31 @@ export default class Authorization {
 		const naviData = Authorization.loadNaviData();
 		assert.strictEqual(naviData.status, 'ok');
 		assert.strictEqual(naviData.data.email, email, `Actual account is not ${email}`);
+	}
+
+	@step('Сделать сессию старой')
+	static async makeSessionOld(): Promise<string | object> {
+		const naviData = Authorization.loadNaviData();
+
+		// получаем все куки
+		const cookies: Cookie[] = (jar as any)._jar.toJSON().cookies;
+		const requestJar = rp.jar();
+
+		for (const c of cookies) {
+			if (c.key === 'sdcs' || c.key === 'Mpop') {
+				c.domain = 'mail.ru';
+				// @ts-ignore
+				requestJar.setCookie(Cookie.fromJSON(c), config.api.internalApiBaseUrl);
+			}
+		}
+
+		const response = creationTime({
+			email: naviData.data.email,
+			time: 1500000000
+		},                            {
+			jar: requestJar
+		});
+		assert.strictEqual(response.body, '', 'Failed to set creation_time to session. Check SDCS and Mpop cookies are set.');
+		return response.body;
 	}
 }
