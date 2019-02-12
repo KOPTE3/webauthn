@@ -12,9 +12,9 @@ interface Options {
  * @see http://api.tornado.dev.mail.ru/user/password/change (смотри секцию serverside)
  */
 export default function userPasswordChange(options: Options): RequestResult<string> {
-	return call('user/password/change', options);
+	return call('user/password/change', options, 'POST');
 }
 
 export async function userPasswordChangeAsync(options: Options): Promise<RequestResult<string>> {
-	return callAsync('user/password/change', options);
+	return callAsync('user/password/change', options, 'POST');
 }
