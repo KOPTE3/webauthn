@@ -305,6 +305,7 @@ export default class Authorization {
 		});
 
 		browser.setCookies(cookies);
+		browser.pause(300);
 
 		return authCredentials;
 	}
