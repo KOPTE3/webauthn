@@ -349,7 +349,7 @@ export default class Authorization {
 	}
 
 	@step('Сделать сессию старой')
-	static async makeSessionOld(timestamp?: number): Promise<string | object> {
+	static makeSessionOld(timestamp?: number): string | object {
 		const naviData = Authorization.loadNaviData();
 
 		// получаем все куки
