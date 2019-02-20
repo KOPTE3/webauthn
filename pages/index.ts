@@ -1,15 +1,16 @@
-import * as merge from 'deepmerge';
-import * as Debug from 'debug';
 import { Credentials } from '@qa/account-manager';
-import account, { UserType } from '../utils/account';
-import URL from '../utils/url';
+import * as Debug from 'debug';
+import * as merge from 'deepmerge';
 import config from '../config';
+import account, { UserType } from '../utils/account';
+import Authorization from '../utils/authorization';
+import URL from '../utils/url';
 
 const debug = Debug('@qa:yoda');
 const TIMEOUT: number = 15 * 1000;
 
 export interface Query {
-	ftrs?: string;
+	ftrs?: string | string[];
 	[query: string]: any;
 }
 
@@ -138,7 +139,7 @@ class PageObject {
 		const { features, scripts } = cache;
 
 		if (features.length) {
-			query.ftrs = features.join(' ');
+			query.ftrs = features.concat(query.ftrs).join(' ').trim();
 		}
 
 		url = URL.format(url, query);
@@ -159,7 +160,7 @@ class PageObject {
 	 *
 	 * @param {string|Query} [path] - путь, который нужно подставить к location
 	 * @param {Object} [query] — параметры запроса
-	 * @returns {boolean}
+	 * @returns {{state: boolean, url: string}}
 	 */
 	open(path?: string | Query, query: Query = {}): { state: boolean, url: string } {
 		if (typeof path === 'object' && path !== null) {
@@ -171,31 +172,10 @@ class PageObject {
 			path = this.location;
 		}
 
-		let state = true;
-		const url = this.url(path as string, query);
-		const qaCookie = browser.getCookie().find((cookie) => cookie.name === 'qa');
-		// Проверяем авторизацию используя портальное API
-		if (cache.session) {
-			state = account.isActiveUser();
-		}
-		if (!qaCookie) {
-			debug('Выставляем тестовую куку для страниц, которые не используют авторизацию');
-			browser.setCookie({
-				path: '/',
-				name: 'qa',
-				value: config.cookies.qa,
-				domain: '.mail.ru'
-			});
-			// на всякий случай рефреш
-			browser.refresh();
-		}
+		const naviData = Authorization.loadNaviData();
+		const state = naviData.status === 'ok';
 
-		// http://canary.win105.dev.mail.ru/
-		// browser.setCookie(<WebdriverIO.Cookie>{
-		// 	path: '/',
-		// 	name: 'canary',
-		// 	value: config.cookies.canary
-		// });
+		const url = this.url(path as string, query);
 
 		return { state, url };
 	}

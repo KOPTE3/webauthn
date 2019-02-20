@@ -2,14 +2,24 @@ import * as Debug from 'debug';
 import * as rp from 'request-promise-native';
 import { RequestResult } from '../../types/api';
 import config from '../../config';
+import { CookieJar } from 'request';
 
 const debug = Debug('@qa:yoda:internal');
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type CallError = Error & Omit<RequestResult, 'error'>;
 
-export default function call(path: string, body: object, method: 'POST' | 'GET' = 'GET'): RequestResult {
-	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method));
+export interface CallOptions {
+	jar: CookieJar;
+}
+
+export default function call(
+	path: string,
+	body: object,
+	method: 'POST' | 'GET' = 'GET',
+	opts?: CallOptions
+): RequestResult {
+	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method, opts));
 	if (result.error) {
 		const { error, ...fields } = result;
 		Object.assign(error, fields);
@@ -23,10 +33,16 @@ export default function call(path: string, body: object, method: 'POST' | 'GET' 
 	return result;
 }
 
-export async function callAsync(path: string, body: object, method: 'POST' | 'GET' = 'GET'): Promise<RequestResult> {
+export async function callAsync(
+	path: string,
+	body: object,
+	method: 'POST' | 'GET' = 'GET',
+	opts?: CallOptions
+	): Promise<RequestResult> {
 	const options: rp.Options = {
 		url: path,
-		method
+		method,
+		...opts
 	};
 
 	switch (method) {
@@ -46,7 +62,11 @@ export async function callAsync(path: string, body: object, method: 'POST' | 'GE
 		}
 	}
 
-	debug('Request with options \n%O', options);
+	const { jar, ...rest } = options;
+	debug('Request with options \n%O', rest);
+	if (jar) {
+		debug('Request with cookies: \n%O', (jar as any)._jar.toJSON().cookies);
+	}
 
 	const result: RequestResult = {
 		path

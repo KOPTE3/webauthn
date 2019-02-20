@@ -2,6 +2,7 @@ import * as InternalApi from '../../api/internal';
 import authorization from '../../store/authorization';
 import phonesStore from '../../store/phones';
 import { PhoneStatus } from '../../api/internal/user/phones-state';
+import userProfileSet from '../../api/internal/user/profile-set';
 
 export type PhoneStatusStep = PhoneStatus | 'in_remove_queue' | 'twofa';
 
@@ -47,5 +48,16 @@ export default class InternalApiSteps {
 		}
 
 		return phoneId;
+	}
+
+	@step('Установить для пользователя "{email}" поле профиля {field}={value}')
+	setProfileField(email: string, field: string, value: string) {
+		const response = userProfileSet({
+			email,
+			field,
+			value
+		});
+
+		return response.body.body;
 	}
 }

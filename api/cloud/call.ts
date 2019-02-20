@@ -102,7 +102,7 @@ export async function callAsync(
 
 	debug('Request with options \n%O', {
 		...requestOptions,
-		jar: requestOptions.jar.getCookies('https://cloud.mail.ru')
+		jar: (requestOptions.jar as request.CookieJar).getCookies('https://cloud.mail.ru')
 	});
 
 	const result: RequestResult = {
