@@ -60,6 +60,10 @@ const ids: number[] = [];
 
 let session: Session = null;
 
+function getSupixUrl() {
+	return `${config.auth.supix}?_=${Math.random()}`;
+}
+
 /**
  * Получает из аккаунт-сервиса учётку, подходящую под определённые фильтры
  * @param {Type} [type='regular'] - тип аккаунта
@@ -285,7 +289,7 @@ export default class Authorization {
 
 		const session = loginAccount(authCredentials);
 
-		URL.open(config.auth.supix, config.timeout);
+		URL.open(getSupixUrl(), config.timeout);
 
 		// Удостоверямся, что документ доступен
 		browser.waitForExist('body');
@@ -311,7 +315,7 @@ export default class Authorization {
 	}
 
 	static loadNaviData(): NaviData {
-		browser.newWindow(config.auth.supix, 'supix', '');
+		browser.newWindow(getSupixUrl(), 'supix', '');
 
 		// Удостоверямся, что документ доступен
 		browser.waitForExist('body');
@@ -360,7 +364,7 @@ export default class Authorization {
 		for (const c of cookies) {
 			if (c.key === 'sdcs' || c.key === 'Mpop') {
 				// @ts-ignore
-				requestJar.setCookie(Cookie.fromJSON({...c, domain: 'mail.ru'}), config.api.internalApiBaseUrl);
+				requestJar.setCookie(Cookie.fromJSON({ ...c, domain: 'mail.ru' }), config.api.internalApiBaseUrl);
 			}
 		}
 
