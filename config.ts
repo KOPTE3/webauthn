@@ -14,8 +14,8 @@ export default {
 		CAPTCHA_HEADER_NAME: 'X-Captcha-ID',
 		CAPTCHA_CRACKER_URL: 'http://test-proxy.win102.dev.mail.ru/captcha',
 		CAPTCHA_URL: 'https://swa.mail.ru/c',
-		get CAPTCHA_TIMEOUT() {
-			return browser.options.waitforTimeout || 30000;
+		get CAPTCHA_TIMEOUT(): number {
+			return browser.options.waitforTimeout as number || 30000;
 		}
 	},
 	as: {
