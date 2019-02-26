@@ -86,7 +86,7 @@ export class Element {
 	}
 
 	@step('Нажимаем на кнопку {__result__}')
-	static KeyPress(button: UNICODE_CHARACTERS): string | void {
+	static keyPress(button: UNICODE_CHARACTERS): string | void {
 		browser.keys(button);
 
 		return Object.keys(UNICODE_CHARACTERS)
