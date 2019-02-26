@@ -90,7 +90,7 @@ export class Element {
 		browser.keys(button);
 
 		return Object.keys(UNICODE_CHARACTERS)
-			.find((key: any) => UNICODE_CHARACTERS[key] === button);
+			.find((key: keyof typeof UNICODE_CHARACTERS) => UNICODE_CHARACTERS[key] === button);
 	}
 
 	@gen
