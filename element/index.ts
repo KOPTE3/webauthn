@@ -268,19 +268,38 @@ export class Element {
 	}
 
 	@gen
-	@step(
-		'Проверям, что атрибут {attr} элемента {element} равен значению {expected}'
-	)
-	static CheckAttr(element: Element, attr: string, expected: any): any {
+	static GetAttr(element: Element, attr: string): string {
 		const locator = element.Locator();
 		const el = browser.element(locator);
 
 		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
 
+		return browser.getAttribute(locator, attr);
+	}
+
+	@gen
+	@step(
+		'Проверям, что атрибут {attr} элемента {element} равен значению {expected}'
+	)
+	static CheckAttr(element: Element, attr: string, expected: any): any {
+		const attribute = Element.GetAttr(element, attr);
+
 		assert.strictEqual(
-			browser.getAttribute(locator, attr),
+			attribute,
 			expected,
 			`Аттрибут ${attr} элемента ${element.Name()} не соответствует ожидаемому значению ${expected}`
+		);
+	}
+
+	@gen
+	@step(
+		'Ждем пока атрибут {attr} элемента {element} равен значению {expected}'
+	)
+	static WaitForAttr(element: Element, attr: string, expected: string, timeout?: number): void {
+		browser.waitUntil(
+			() => Element.GetAttr(element, attr) === expected,
+			timeout || browser.options.waitforTimeout,
+			`Не удалось дождаться пока атрибут {attr} элемента ${element.Name()} совпадёт с ожидаемым значением (${expected})`
 		);
 	}
 
