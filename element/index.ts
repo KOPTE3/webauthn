@@ -267,6 +267,23 @@ export class Element {
 		);
 	}
 
+	@gen
+	@step(
+		'Проверям, что атрибут {attr} элемента {element} равен значению {expected}'
+	)
+	static CheckAttr(element: Element, attr: string, expected: any): any {
+		const locator = element.Locator();
+		const el = browser.element(locator);
+
+		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
+
+		assert.strictEqual(
+			browser.getAttribute(locator, attr),
+			expected,
+			`Аттрибут ${attr} элемента ${element.Name()} не соответствует ожидаемому значению ${expected}`
+		);
+	}
+
 	public Locator(): string {
 		const locator = this.locator;
 		if (this.parent) {
