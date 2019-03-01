@@ -299,7 +299,7 @@ export class Element {
 		browser.waitUntil(
 			() => Element.GetAttribute(element, attr) === expected,
 			timeout || browser.options.waitforTimeout,
-			`Не удалось дождаться пока атрибут {attr} элемента ${element.Name()} совпадёт с ожидаемым значением (${expected})`
+			`Не удалось дождаться пока атрибут ${attr} элемента ${element.Name()} совпадёт с ожидаемым значением (${expected})`
 		);
 	}
 
