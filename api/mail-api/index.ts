@@ -3,6 +3,7 @@ export * from './folders';
 export * from './user';
 export * from './aliases';
 export * from './collectors';
+export * from './filters';
 export { default as abContactsAdd, abContactsAddAsync } from './ab-contacts-add';
 export { default as helpersUpdate, helpersUpdateAsync } from './helpers-update';
 export { default as helpersRemove, helpersRemoveAsync } from './helpers-remove';
