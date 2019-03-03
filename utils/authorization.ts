@@ -340,7 +340,7 @@ export default class Authorization {
 
 			// не придумал как по-другому
 			// @ts-ignore
-			jar.setCookie(cookie, 'https://portal.mail.ru/NaviData');
+			jar.setCookie(cookie.toString(), 'https://portal.mail.ru/NaviData');
 		}
 
 		return loadNaviData(jar);
