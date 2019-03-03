@@ -338,8 +338,6 @@ export default class Authorization {
 				domain: 'portal.mail.ru'
 			});
 
-			// не придумал как по-другому
-			// @ts-ignore
 			jar.setCookie(cookie.toString(), 'https://portal.mail.ru/NaviData');
 		}
 
@@ -363,7 +361,6 @@ export default class Authorization {
 
 		for (const c of cookies) {
 			if (c.key === 'sdcs' || c.key === 'Mpop') {
-				// @ts-ignore
 				requestJar.setCookie(Cookie.fromJSON({ ...c, domain: 'mail.ru' }), config.api.internalApiBaseUrl);
 			}
 		}

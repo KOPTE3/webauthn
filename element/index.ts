@@ -300,38 +300,38 @@ export class Element {
 	}
 
 	@gen
-	static GetAttribute(element: Element, attr: string): string {
+	static GetAttribute(element: Element, name: string): string {
 		const locator = element.Locator();
 		const el = browser.element(locator);
 
 		assert(el && el.value, `Не удалось найти элемент ${element.Name()}`);
 
-		return browser.getAttribute(locator, attr);
+		return browser.getAttribute(locator, name);
 	}
 
 	@gen
 	@step(
-		'Проверям, что атрибут {attr} элемента {element} равен значению {expected}'
+		'Проверям, что атрибут {name} элемента {element} равен значению {expected}'
 	)
-	static CheckAttribute(element: Element, attr: string, expected: any): any {
-		const attribute = Element.GetAttribute(element, attr);
+	static CheckAttribute(element: Element, name: string, expected: any): any {
+		const attribute = Element.GetAttribute(element, name);
 
 		assert.strictEqual(
 			attribute,
 			expected,
-			`Аттрибут ${attr} элемента ${element.Name()} не соответствует ожидаемому значению ${expected}`
+			`Аттрибут ${name} элемента ${element.Name()} не соответствует ожидаемому значению ${expected}`
 		);
 	}
 
 	@gen
 	@step(
-		'Ждем пока атрибут {attr} элемента {element} станет равен значению {expected}'
+		'Ждем пока атрибут {name} элемента {element} станет равен значению {expected}'
 	)
-	static WaitForAttribute(element: Element, attr: string, expected: string, timeout?: number): void {
+	static WaitForAttribute(element: Element, name: string, expected: string, timeout?: number): void {
 		browser.waitUntil(
-			() => Element.GetAttribute(element, attr) === expected,
+			() => Element.GetAttribute(element, name) === expected,
 			timeout || browser.options.waitforTimeout,
-			`Не удалось дождаться пока атрибут ${attr} элемента ${element.Name()} совпадёт с ожидаемым значением (${expected})`
+			`Не удалось дождаться пока атрибут ${name} элемента ${element.Name()} совпадёт с ожидаемым значением (${expected})`
 		);
 	}
 
