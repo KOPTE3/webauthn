@@ -1,5 +1,6 @@
 /// <reference path="./index.gen.ts" />
 import * as assert from 'assert';
+import { UNICODE_CHARACTERS } from '../utils/constants';
 
 function tryToGetGetterDescriptor(obj: object, field: string): PropertyDescriptor | null {
 	while (obj) {
@@ -82,6 +83,37 @@ export class Element {
 	@gen
 	static GetVisible(element: Element): boolean {
 		return browser.isVisible(element.Locator());
+	}
+
+	@step('Нажимаем на кнопку {__result__}')
+	static keyPress(button: UNICODE_CHARACTERS): string | void {
+		browser.keys(button);
+
+		return Object.keys(UNICODE_CHARACTERS)
+			.find((key: keyof typeof UNICODE_CHARACTERS) => UNICODE_CHARACTERS[key] === button);
+	}
+
+	@gen
+	@step('Получаем количество элементов {element}, результат {__result__}')
+	static GetCount(element: Element): number {
+		const locator = element.Locator();
+		const els = browser.elements(locator);
+
+		assert(els && els.value, `Не удалось найти элемент ${element.Name()}`);
+
+		return els.value.length;
+	}
+
+	@gen
+	@step('Проверяем, что количество элементов {element} равно {expected}')
+	static CheckCount(element: Element, expected: number): void {
+		const actual = Element.GetCount(element);
+
+		assert.strictEqual(
+			actual,
+			expected,
+			`Количество элементов ${element.Name()} (${actual}) не совпадает с ожидаемым значением (${expected})`
+		);
 	}
 
 	@gen
