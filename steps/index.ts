@@ -63,10 +63,11 @@ class Steps {
 	 *
 	 * @param {string|Query} [path]
 	 * @param {Object} [query]
+	 * @param {boolean} [skipAuthCheck=false]
 	 * @see Page.open
 	 */
 	@step('Открыть страницу "{__result__.url}"')
-	static open(path?: string | Query, query?: Query): { state: boolean, url: string } {
+	static open(path?: string | Query, query?: Query, skipAuthCheck?: boolean): { state: boolean, url: string } {
 		const actual = this.page.open(path, query);
 
 		// Игнорируем обращения к локаторам если исключение возникает
@@ -86,7 +87,9 @@ class Steps {
 
 		this.page.wait();
 
-		assert(actual.state, 'Не удалось авторизоваться');
+		if (!skipAuthCheck) {
+			assert(actual.state, 'Не удалось авторизоваться');
+		}
 
 		return actual;
 	}
