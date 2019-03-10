@@ -11,6 +11,7 @@ export type CallError = Error & Omit<RequestResult, 'error'>;
 
 export interface CallOptions {
 	jar: CookieJar;
+	validStatusCodes?: number[];
 }
 
 export default function call(
@@ -20,11 +21,16 @@ export default function call(
 	opts?: CallOptions
 ): RequestResult {
 	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method, opts));
+
+	const validStatusCodes: number[] = opts && opts.validStatusCodes || [];
+	const isInvalidStatusCode = result.status && (result.status < 200 || result.status >= 400) && !validStatusCodes.includes(result.status);
 	if (result.error) {
 		const { error, ...fields } = result;
 		Object.assign(error, fields);
 		throw error;
-	} else if (result.status && (result.status < 200 || result.status >= 400)) {
+	}
+
+	if (isInvalidStatusCode) {
 		const error = new Error(`Request failed with body.status is ${result.status}`);
 		Object.assign(error, result);
 		throw error;
@@ -81,7 +87,10 @@ export async function callAsync(
 		});
 		result.response = response.toJSON();
 
-		if (response.statusCode >= 200 && response.statusCode <= 400) {
+		const validStatusCodes: number[] = opts && opts.validStatusCodes || [];
+
+		const isInvalidStatusCode = (response.statusCode >= 200 && response.statusCode <= 400) || validStatusCodes.includes(response.statusCode);
+		if (isInvalidStatusCode) {
 			const { status, body } = response.body;
 			result.status = status;
 			result.body = body;

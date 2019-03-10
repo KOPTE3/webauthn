@@ -1,8 +1,14 @@
-import { MailAPI as MailApiInterfaces } from '@qa/api';
-import helpers from '../../store/helpers';
-import * as MailApi from '../../api/mail-api';
-import authorization from '../../store/authorization';
+import {MailAPI as MailApiInterfaces} from '@qa/api';
 import * as merge from 'deepmerge';
+import {bruteforceCounterReset, BruteforceType} from '../../api/internal';
+import {tokensInfo} from '../../api/internal';
+import * as MailApi from '../../api/mail-api';
+import {user2StepAuthEnable} from '../../api/mail-api';
+import {User2StepAuthEnable} from '../../api/mail-api/user/two-step-auth-enable';
+import authorization from '../../store/authorization';
+import helpers from '../../store/helpers';
+import {Phone} from '../../store/phones/index';
+
 
 /** Интерфейс для вывода данных, о созданной запароленной папке */
 interface SecretFolderData {
@@ -20,6 +26,16 @@ const defaultFolderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> =
 	type: 'user',
 	only_web: false
 };
+
+/** Интерфейс для параметров включения 2fa */
+interface User2StepAuthEnableOptions {
+	username: string;
+	password: string;
+	phone: Phone;
+
+	redirect_uri?: string;
+}
+
 
 export default class MailApiSteps {
 	@step(
@@ -176,5 +192,39 @@ export default class MailApiSteps {
 		if (refresh) {
 			browser.refresh();
 		}
+	}
+
+	@step('Включить у пользователя {options.username} 2fa через sms')
+	enable2StepAuth(options: User2StepAuthEnableOptions): void {
+		bruteforceCounterReset({
+			type: BruteforceType.sms,
+			key: 'user/2-step-auth/enable',
+		});
+
+		bruteforceCounterReset({
+			type: BruteforceType.sms,
+			key: `${options.username}:user/2-step-auth/enable:${options.phone.phone}`,
+		});
+
+		const enableRequest: User2StepAuthEnable = {
+			phone_id: options.phone.id,
+			redirect_uri: options.redirect_uri || 'http://e.mail.ru/settings/security?twostep=enabled',
+			password: options.password,
+		};
+
+		const regTokenResponse = user2StepAuthEnable(enableRequest, options, {validStatusCodes: [449]});
+		const regTokenId = regTokenResponse.body.auth.reg_token.id;
+
+		const regTokenInfo = tokensInfo({
+			email: options.username,
+			id: regTokenId,
+		});
+
+		enableRequest.reg_token = {
+			id: regTokenId,
+			value: regTokenInfo.body.code,
+		};
+
+		user2StepAuthEnable(enableRequest, options);
 	}
 }
