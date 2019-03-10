@@ -23,7 +23,8 @@ export default function call(
 	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method, opts));
 
 	const validStatusCodes: number[] = opts && opts.validStatusCodes || [];
-	const isInvalidStatusCode = result.status && (result.status < 200 || result.status >= 400) && !validStatusCodes.includes(result.status);
+	const isInvalidStatusCode =
+		result.status && (result.status < 200 || result.status >= 400) && !validStatusCodes.includes(result.status);
 	if (result.error) {
 		const { error, ...fields } = result;
 		Object.assign(error, fields);
@@ -89,8 +90,9 @@ export async function callAsync(
 
 		const validStatusCodes: number[] = opts && opts.validStatusCodes || [];
 
-		const isInvalidStatusCode = (response.statusCode >= 200 && response.statusCode <= 400) || validStatusCodes.includes(response.statusCode);
-		if (isInvalidStatusCode) {
+		const isValidStatusCode =
+			(response.statusCode >= 200 && response.statusCode < 400) || validStatusCodes.includes(response.statusCode);
+		if (isValidStatusCode) {
 			const { status, body } = response.body;
 			result.status = status;
 			result.body = body;

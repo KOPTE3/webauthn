@@ -1,14 +1,10 @@
-import {MailAPI as MailApiInterfaces} from '@qa/api';
+import { MailAPI as MailApiInterfaces } from '@qa/api';
 import * as merge from 'deepmerge';
-import {bruteforceCounterReset, BruteforceType} from '../../api/internal';
-import {tokensInfo} from '../../api/internal';
+import { bruteforceCounterReset, BruteforceType, tokensInfo } from '../../api/internal';
 import * as MailApi from '../../api/mail-api';
-import {user2StepAuthEnable} from '../../api/mail-api';
-import {User2StepAuthEnable} from '../../api/mail-api/user/two-step-auth-enable';
 import authorization from '../../store/authorization';
 import helpers from '../../store/helpers';
-import {Phone} from '../../store/phones/index';
-
+import { Phone } from '../../store/phones/index';
 
 /** Интерфейс для вывода данных, о созданной запароленной папке */
 interface SecretFolderData {
@@ -18,6 +14,7 @@ interface SecretFolderData {
 	question: string;
 	answer: string;
 }
+
 type ArrayElement<ArrayType> = ArrayType extends Array<infer ElementType> ? ElementType : never;
 
 const defaultFolderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> = {
@@ -35,7 +32,6 @@ interface User2StepAuthEnableOptions {
 
 	redirect_uri?: string;
 }
-
 
 export default class MailApiSteps {
 	@step(
@@ -96,7 +92,7 @@ export default class MailApiSteps {
 	}
 
 	@step('Открыть запароленные папки с id: [{__result__}]')
-	openFolders(foldersData: Array<{ id: number, password: string }>): number[] {
+	openFolders(foldersData: Array<{id: number, password: string}>): number[] {
 		return MailApi.foldersOpen({
 			folders: foldersData.map(({ id, password }) => ({
 				id: `${id}`,
@@ -198,33 +194,33 @@ export default class MailApiSteps {
 	enable2StepAuth(options: User2StepAuthEnableOptions): void {
 		bruteforceCounterReset({
 			type: BruteforceType.sms,
-			key: 'user/2-step-auth/enable',
+			key: 'user/2-step-auth/enable'
 		});
 
 		bruteforceCounterReset({
 			type: BruteforceType.sms,
-			key: `${options.username}:user/2-step-auth/enable:${options.phone.phone}`,
+			key: `${options.username}:user/2-step-auth/enable:${options.phone.phone}`
 		});
 
-		const enableRequest: User2StepAuthEnable = {
+		const enableRequest: MailApi.User2StepAuthEnable = {
 			phone_id: options.phone.id,
 			redirect_uri: options.redirect_uri || 'http://e.mail.ru/settings/security?twostep=enabled',
-			password: options.password,
+			password: options.password
 		};
 
-		const regTokenResponse = user2StepAuthEnable(enableRequest, options, {validStatusCodes: [449]});
+		const regTokenResponse = MailApi.user2StepAuthEnable(enableRequest, options, { validStatusCodes: [449] });
 		const regTokenId = regTokenResponse.body.auth.reg_token.id;
 
 		const regTokenInfo = tokensInfo({
 			email: options.username,
-			id: regTokenId,
+			id: regTokenId
 		});
 
 		enableRequest.reg_token = {
 			id: regTokenId,
-			value: regTokenInfo.body.code,
+			value: regTokenInfo.body.code
 		};
 
-		user2StepAuthEnable(enableRequest, options);
+		MailApi.user2StepAuthEnable(enableRequest, options);
 	}
 }

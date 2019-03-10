@@ -1,7 +1,6 @@
 import { MailAPI } from '@qa/api';
 import { Credentials, RequestResult } from '../../../types/api';
-import call, {callAsync, CallOptions} from '../call';
-
+import call, { callAsync, CallOptions } from '../call';
 
 export interface User2StepAuthEnableResponseBody {
 	auth?: {
@@ -10,7 +9,7 @@ export interface User2StepAuthEnableResponseBody {
 			[key: string]: any;
 		}
 		[key: string]: any;
-	}
+	};
 
 	[key: string]: any;
 }
@@ -22,7 +21,7 @@ export interface User2StepAuthEnable extends MailAPI.User2StepAuthEnable {
 	reg_token?: {
 		id: string;
 		value: string;
-	}
+	};
 }
 
 /**
