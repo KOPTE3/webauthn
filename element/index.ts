@@ -335,12 +335,11 @@ export class Element {
 		);
 	}
 
-
 	@gen
 	@step(
 		'Доскролить до элемента {element} пока оне не окажется в области видимости'
 	)
-	static scrollTo (element: Element): void {
+	static ScrollTo(element: Element): void {
 		const locator = element.Locator();
 		browser.timeouts('script', browser.options.waitforTimeout);
 
