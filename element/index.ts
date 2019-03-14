@@ -311,7 +311,7 @@ export class Element {
 
 	@gen
 	@step(
-		'Проверям, что атрибут {name} элемента {element} равен значению {expected}'
+		'Проверяем, что атрибут {name} элемента {element} равен значению {expected}'
 	)
 	static CheckAttribute(element: Element, name: string, expected: any): any {
 		const attribute = Element.GetAttribute(element, name);
@@ -325,7 +325,7 @@ export class Element {
 
 	@gen
 	@step(
-		'Ждем пока атрибут {name} элемента {element} станет равен значению {expected}'
+		'Ждём пока атрибут {name} элемента {element} станет равен значению {expected}'
 	)
 	static WaitForAttribute(element: Element, name: string, expected: string, timeout?: number): void {
 		browser.waitUntil(
@@ -333,6 +333,21 @@ export class Element {
 			timeout || browser.options.waitforTimeout,
 			`Не удалось дождаться пока атрибут ${name} элемента ${element.Name()} совпадёт с ожидаемым значением (${expected})`
 		);
+	}
+
+
+	@gen
+	@step(
+		'Доскролить до элемента {element} пока оне не окажется в области видимости'
+	)
+	static scrollTo (element: Element): void {
+		const locator = element.Locator();
+		browser.timeouts('script', browser.options.waitforTimeout);
+
+		browser.executeAsync((currentLocator: string, done: () => void) => {
+			document.querySelector(currentLocator).scrollIntoView();
+			done();
+		}, locator);
 	}
 
 	public Locator(): string {
