@@ -163,6 +163,26 @@ export class Element {
 	}
 
 	@gen
+	@step('Дожидаемся, пока элемент {element} {expected ? "появится в" : "будет удалён из"} DOM')
+	static WaitForExist(element: Element, expected: boolean, timeout?: number): void {
+		browser.waitForExist(
+			element.Locator(),
+			timeout || browser.options.waitforTimeout,
+			expected === false
+		);
+	}
+
+	@gen
+	@step('Дожидаемся, пока элемент {element} станет {expected ? "кликабельным" : "задисейбленым"} на экране')
+	static WaitForEnabled(element: Element, expected: boolean, timeout?: number): void {
+		browser.waitForEnabled(
+			element.Locator(),
+			timeout || browser.options.waitforTimeout,
+			expected === false
+		);
+	}
+
+	@gen
 	@step('Устанавливаем значение элемента {element}', (e: any, t: string) => ({ 'Значение': t }))
 	static SetValue(element: Element, text: string): void {
 		const locator = element.Locator();
