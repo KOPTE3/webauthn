@@ -369,6 +369,15 @@ export class Element {
 		}, locator);
 	}
 
+	@gen
+	static GetNth(element: Element, index: number): Element {
+		const parent = element.parent;
+		const locator = element.locator + `:nth-of-type(${index})`;
+		const name = element.name + ` (№${index})`;
+
+		return new this(parent, locator, name);
+	}
+
 	public Locator(): string {
 		const locator = this.locator;
 		if (this.parent) {
