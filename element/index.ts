@@ -375,7 +375,13 @@ export class Element {
 		const locator = element.locator + `:nth-of-type(${index})`;
 		const name = element.name + ` (№${index})`;
 
-		return new this(parent, locator, name);
+		const el = new this(parent, locator, name);
+		el.locator = locator;
+
+		console.log(el.locator);
+		console.log(el.Locator());
+
+		return el;
 	}
 
 	public Locator(): string {
