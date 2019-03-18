@@ -90,7 +90,7 @@ export default {
 			index: 6,
 			phone: '79998689153',
 			head: '+7 (999) 8',
-			value: '20',
+			value: '68',
 			masked: '+7 (999) 868-**-**',
 			full: '+7 (999) 868-91-53',
 			id: 'id_NbtbzhB4ZySdx5OcaNT5gOvlDPvLIuP0009Uar4eqrY=',
