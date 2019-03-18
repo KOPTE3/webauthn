@@ -330,6 +330,15 @@ export class Element {
 	}
 
 	@gen
+	static GetNth(element: Element, index: number) {
+		const parent = element.parent;
+		const locator = element.locator + `:nth-of-type(${index})`;
+		const name = element.name + ` (№${index})`;
+
+		return element.constructor(parent, locator, name);
+	}
+
+	@gen
 	@step(
 		'Проверяем, что атрибут {name} элемента {element} равен значению {expected}'
 	)
@@ -367,21 +376,6 @@ export class Element {
 			document.querySelector(currentLocator).scrollIntoView();
 			done();
 		}, locator);
-	}
-
-	@gen
-	static GetNth(element: Element, index: number): Element {
-		const parent = element.parent;
-		const locator = element.locator + `:nth-of-type(${index})`;
-		const name = element.name + ` (№${index})`;
-
-		const el = new this(parent, locator, name);
-		el.locator = locator;
-
-		console.log(el.locator);
-		console.log(el.Locator());
-
-		return el;
 	}
 
 	public Locator(): string {
