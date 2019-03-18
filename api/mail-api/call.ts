@@ -13,13 +13,18 @@ interface MailApiResponse {
 
 let defaultRpc: RPC;
 
+export interface CallOptions {
+	validStatusCodes?: number[];
+}
+
 export default function call(
 	path: string,
 	body: object,
 	method: 'POST' | 'GET' = 'GET',
-	credentials?: Credentials
+	credentials?: Credentials,
+	opts?: CallOptions
 ): RequestResult {
-	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method, credentials));
+	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method, credentials, opts));
 
 	if (result.error) {
 		const { error, ...fields } = result;
@@ -34,7 +39,8 @@ export async function callAsync(
 	path: string,
 	body: object,
 	method: 'POST' | 'GET' = 'GET',
-	credentials?: Credentials
+	credentials?: Credentials,
+	opts?: CallOptions
 ): Promise<RequestResult> {
 	if (!defaultRpc && !credentials) {
 		const defaultCredentials: AccountManager.Credentials = authorization.account.data();
@@ -67,7 +73,10 @@ export async function callAsync(
 		}
 	};
 
-	if (status >= 200 && status < 400) {
+	const validStatusCodes: number[] = opts && opts.validStatusCodes || [];
+	const isValidStatusCode = (status >= 200 && status < 400) || validStatusCodes.includes(status);
+
+	if (isValidStatusCode) {
 		result.status = status;
 		result.body = responseBody;
 	} else if (status === 404) {
