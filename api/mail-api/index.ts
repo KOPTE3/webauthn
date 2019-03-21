@@ -8,4 +8,5 @@ export { default as abContactsAdd, abContactsAddAsync } from './ab-contacts-add'
 export { default as helpersUpdate, helpersUpdateAsync } from './helpers-update';
 export { default as helpersRemove, helpersRemoveAsync } from './helpers-remove';
 export { default as messagesStatus, messagesStatusAsync } from './messages-status';
+export { default as messagesMessage, messagesMessageAsync } from './messages-message';
 export { default as tokensSend, tokensSendAsync } from './tokens-send';
