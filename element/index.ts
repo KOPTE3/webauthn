@@ -53,6 +53,10 @@ export class Element {
 			this.name = 'Элемент';
 		}
 
+		if (!this.params) {
+			this.params = {};
+		}
+
 		if (args[0] instanceof Element) {
 			this.parent = args.shift();
 		}
