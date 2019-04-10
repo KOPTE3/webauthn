@@ -13,6 +13,16 @@ export interface UserEditOptions {
 	common_purpose_flags?: {
 		visited_from_mobile_app?: boolean;
 	};
+	name?: {
+		first: string;
+		last: string;
+	};
+	nick?: string;
+	birthday?: {
+		day: number;
+		month: number;
+		year: number;
+	};
 }
 
 /**

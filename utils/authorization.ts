@@ -111,6 +111,7 @@ export async function loginAccountAsync(credentials: CommonAccount): Promise<Ses
 		method: 'POST',
 		uri: config.auth.login,
 		headers: {
+			'Referer': config.auth.referer,
 			'User-Agent': config.auth.ua
 		},
 		followAllRedirects: false,
@@ -131,6 +132,7 @@ export async function loginAccountAsync(credentials: CommonAccount): Promise<Ses
 		method: 'GET',
 		uri: config.auth.sdc,
 		headers: {
+			'Referer': config.auth.referer,
 			'User-Agent': config.auth.ua
 		},
 		followAllRedirects: false,
@@ -193,6 +195,7 @@ export async function logoutAccountAsync(credentials?: CommonAccount): Promise<v
 		method: 'GET',
 		uri: config.auth.logout,
 		headers: {
+			'Referer': config.auth.referer,
 			'User-Agent': config.auth.ua
 		},
 		followAllRedirects: false,
@@ -237,6 +240,7 @@ export async function loadNaviDataAsync(jar: CookieJar): Promise<NaviData> {
 		method: 'GET',
 		uri: config.auth.NaviData,
 		headers: {
+			'Referer': config.auth.referer,
 			'User-Agent': config.auth.ua
 		},
 		followAllRedirects: true,
