@@ -1,6 +1,7 @@
 /// <reference path="./index.gen.ts" />
 import * as assert from 'assert';
 import { UNICODE_CHARACTERS } from '../utils/constants';
+import Browser from './webdriver/steps';
 
 function tryToGetGetterDescriptor(obj: object, field: string): PropertyDescriptor | null {
 	while (obj) {
@@ -371,6 +372,29 @@ export class Element {
 			document.querySelector(currentLocator).scrollIntoView();
 			done();
 		}, locator);
+	}
+
+	@gen
+	@step('Начинаем перетаскивать элемент {element}')
+	static StartDrag(element: Element, dragX: number = 10, dragY: number = 10) {
+		element.mouseOver();
+		Browser.LeftButtonDown();
+		element.mouseOver(dragX, dragY); // Нужно сдвинуть курсор, чтобы активировать dnd
+	}
+
+	@gen
+	@step('Отпустить курсор над элементом {element}')
+	static DropItem(element: Element) {
+		element.mouseOver();
+
+		Browser.LeftButtonUp();
+	}
+
+	@gen
+	@step('Перетащить элемент {element} на элемент {targetElement}')
+	static DragTo(element: Element, targetElement: Element, dragX?: number, dragY?: number) {
+		Element.StartDrag(element, dragX, dragY);
+		Element.DropItem(targetElement);
 	}
 
 	public Locator(): string {
