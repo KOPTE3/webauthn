@@ -362,7 +362,7 @@ export class Element {
 
 	@gen
 	@step(
-		'Доскролить до элемента {element} пока оне не окажется в области видимости'
+		'Скроллить, пока элемент {element} не окажется в области видимости'
 	)
 	static ScrollTo(element: Element): void {
 		const locator = element.Locator();
