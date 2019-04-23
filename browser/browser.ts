@@ -20,6 +20,10 @@ export default class Browser {
 
 	@step('Переключиться в соседнюю вкладку')
 	static SwitchTab() {
-		browser.switchTab();
+		const currentTabId = browser.getCurrentTabId();
+
+		const nextTabId = browser.getTabIds().filter((tabId) => tabId !== currentTabId)[0];
+
+		browser.switchTab(nextTabId);
 	}
 }
