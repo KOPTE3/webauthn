@@ -368,8 +368,6 @@ export class Element {
 		const locator = element.Locator();
 		browser.timeouts('script', browser.options.waitforTimeout);
 
-		browser.scroll()
-
 		browser.executeAsync((currentLocator: string, done: () => void) => {
 			document.querySelector(currentLocator).scrollIntoView();
 			done();
