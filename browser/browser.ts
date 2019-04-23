@@ -12,4 +12,14 @@ export default class Browser {
 		// TODO fix deprecated methods
 		browser.buttonUp(WebdriverIO.Button.left);
 	}
+
+	@step('Обновить страницу')
+	static Refresh() {
+		browser.refresh();
+	}
+
+	@step('Переключиться в соседнюю вкладку')
+	static SwitchTab() {
+		browser.switchTab();
+	}
 }

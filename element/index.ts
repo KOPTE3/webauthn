@@ -281,6 +281,13 @@ export class Element {
 	}
 
 	@gen
+	@step('Кликаем средней кнопкой мыши по элементу {element}')
+	static MiddleClickTo(element: Element): void {
+		const locator = element.Locator();
+		browser.middleClick(locator);
+	}
+
+	@gen
 	@step('Наводим курсор мыши на {element}')
 	static MouseOver(element: Element, xoffset?: number, yoffset?: number): void {
 		const locator = element.Locator();
