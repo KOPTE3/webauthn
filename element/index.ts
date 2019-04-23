@@ -1,7 +1,7 @@
 /// <reference path="./index.gen.ts" />
 import * as assert from 'assert';
+import Browser from '../browser/browser';
 import { UNICODE_CHARACTERS } from '../utils/constants';
-import Browser from './webdriver/steps';
 
 function tryToGetGetterDescriptor(obj: object, field: string): PropertyDescriptor | null {
 	while (obj) {
@@ -367,6 +367,8 @@ export class Element {
 	static ScrollTo(element: Element): void {
 		const locator = element.Locator();
 		browser.timeouts('script', browser.options.waitforTimeout);
+
+		browser.scroll()
 
 		browser.executeAsync((currentLocator: string, done: () => void) => {
 			document.querySelector(currentLocator).scrollIntoView();
