@@ -1,15 +1,19 @@
-import * as WebdriverIO from 'webdriverio';
+const MouseButtons = {
+	left: 0,
+	middle: 1,
+	right: 2
+};
 
 export default class Browser {
 	@step('Зажать левую кнопку мыши')
 	static LeftButtonDown() {
 		// TODO fix deprecated methods
-		browser.buttonDown(WebdriverIO.Button.left);
+		browser.buttonDown(MouseButtons.left);
 	}
 
 	@step('Отпустить левую кнопку мыши')
 	static LeftButtonUp() {
 		// TODO fix deprecated methods
-		browser.buttonUp(WebdriverIO.Button.left);
+		browser.buttonUp(MouseButtons.left);
 	}
 }
