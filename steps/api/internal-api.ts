@@ -84,3 +84,5 @@ export default class InternalApiSteps {
 		return response.body.body;
 	}
 }
+
+export const internalApiSteps = new InternalApiSteps;
