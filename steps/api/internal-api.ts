@@ -1,10 +1,11 @@
 import * as InternalApi from '../../api/internal';
-import authorization from '../../store/authorization';
-import phonesStore from '../../store/phones';
 import { PhoneStatus } from '../../api/internal/user/phones-state';
 import userProfileSet from '../../api/internal/user/profile-set';
+import authorization from '../../store/authorization';
+import phonesStore from '../../store/phones';
 
 export type PhoneStatusStep = PhoneStatus | 'in_remove_queue' | 'twofa';
+export type ExtraEmailStatusStep = 'ok' | 'too_young' | 'in_remove_queue';
 
 export default class InternalApiSteps {
 	@step('"Протушить" все аттачи на написании письма')
@@ -48,6 +49,28 @@ export default class InternalApiSteps {
 		}
 
 		return phoneId;
+	}
+
+	@step('Установить пользователю {username} несколько доп. почт: {extraEmails}')
+	setExtraEmails(username: string, extraEmails: Array<{email: string; status: ExtraEmailStatusStep}>) {
+		const fieldEmails = extraEmails.map(({ email, status }) => {
+			switch (status) {
+				case 'too_young':
+					return { e: email, vt: Math.floor(Date.now() / 1000) };
+				case 'in_remove_queue':
+					// удаление через 3 дня
+					return { e: email, vt: 1, et: Math.floor(Date.now() / 1000) + 3 * 24 * 60 * 60 };
+				case 'ok':
+				default:
+					return { e: email, vt: 1 };
+			}
+		});
+
+		userProfileSet({
+			email: username,
+			field: 'Emails',
+			value: JSON.stringify(fieldEmails)
+		});
 	}
 
 	@step('Установить для пользователя "{email}" поле профиля {field}={value}')
