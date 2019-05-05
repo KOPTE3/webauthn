@@ -51,6 +51,11 @@ export default class InternalApiSteps {
 		return phoneId;
 	}
 
+	@step('Удалить телефон "{phone}" для пользователя "{email}"')
+	removePhone(id: string, email: string, phone: string) {
+		return InternalApi.usersPhonesRemoveImmediately({ email, id }).body;
+	}
+
 	@step('Установить пользователю {username} несколько доп. почт: {extraEmails}')
 	setExtraEmails(username: string, extraEmails: Array<{email: string; status: ExtraEmailStatusStep}>) {
 		const fieldEmails = extraEmails.map(({ email, status }) => {
