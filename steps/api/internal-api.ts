@@ -52,7 +52,7 @@ export default class InternalApiSteps {
 	}
 
 	@step('Удалить телефон "{phone}" для пользователя "{email}"')
-	removePhone(id: string, email: string, phone: string) {
+	removePhoneImmediately(id: string, email: string, phone: string) {
 		return InternalApi.usersPhonesRemoveImmediately({ email, id }).body;
 	}
 
