@@ -1,5 +1,6 @@
 /// <reference path="./index.gen.ts" />
 import * as assert from 'assert';
+import Browser from '../browser/browser';
 import { UNICODE_CHARACTERS } from '../utils/constants';
 
 function tryToGetGetterDescriptor(obj: object, field: string): PropertyDescriptor | null {
@@ -280,6 +281,13 @@ export class Element {
 	}
 
 	@gen
+	@step('Кликаем средней кнопкой мыши по элементу {element}')
+	static MiddleClickTo(element: Element): void {
+		const locator = element.Locator();
+		browser.middleClick(locator);
+	}
+
+	@gen
 	@step('Наводим курсор мыши на {element}')
 	static MouseOver(element: Element, xoffset?: number, yoffset?: number): void {
 		const locator = element.Locator();
@@ -376,7 +384,7 @@ export class Element {
 
 	@gen
 	@step(
-		'Доскролить до элемента {element} пока оне не окажется в области видимости'
+		'Скроллить, пока элемент {element} не окажется в области видимости'
 	)
 	static ScrollTo(element: Element): void {
 		const locator = element.Locator();
@@ -386,6 +394,30 @@ export class Element {
 			document.querySelector(currentLocator).scrollIntoView();
 			done();
 		}, locator);
+	}
+
+	@gen
+	@step('Начинаем перетаскивать элемент {element}')
+	static StartDrag(element: Element, dragX: number = 10, dragY: number = 10) {
+		element.mouseOver();
+		Browser.LeftButtonDown();
+		element.mouseOver(dragX, dragY); // Нужно сдвинуть курсор, чтобы активировать dnd
+	}
+
+	@gen
+	@step('Отпустить курсор над элементом {element}')
+	static DropItem(element: Element) {
+		element.mouseOver();
+
+		Browser.LeftButtonUp();
+	}
+
+	// TODO: пофиксить @gen для методов с двумя элементами
+	@gen
+	@step('Перетащить элемент {element} на элемент {targetElement}')
+	static DragTo(element: Element, targetElement: Element, dragX?: number, dragY?: number) {
+		Element.StartDrag(element, dragX, dragY);
+		Element.DropItem(targetElement);
 	}
 
 	public Locator(): string {
