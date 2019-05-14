@@ -388,10 +388,10 @@ export class Element {
 	)
 	static ScrollTo(element: Element): void {
 		const locator = element.Locator();
-		browser.timeouts('script', browser.options.waitforTimeout);
+		browser.timeouts('script', browser.options.waitforTimeout!);
 
 		browser.executeAsync((currentLocator: string, done: () => void) => {
-			document.querySelector(currentLocator).scrollIntoView();
+			document.querySelector(currentLocator)!.scrollIntoView();
 			done();
 		}, locator);
 	}
