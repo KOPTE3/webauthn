@@ -369,6 +369,21 @@ export class Element {
 
 	@gen
 	@step(
+		'Ждём пока у элемента {element} {expected ? "появится" : "исчезнет"} класс {name}'
+	)
+	static WaitForClass(element: Element, name: string, expected: boolean): void {
+		const locator = element.Locator();
+
+		browser.waitForClass(
+			locator,
+			name,
+			!expected,
+			`Не удалось дождаться пока у элемента ${element.Name()} ${expected ? 'появится' : 'исчезнет'} класс: ${name}`
+		);
+	}
+
+	@gen
+	@step(
 		'Скроллить, пока элемент {element} не окажется в области видимости'
 	)
 	static ScrollTo(element: Element): void {
