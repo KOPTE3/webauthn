@@ -85,4 +85,4 @@ export default class InternalApiSteps {
 	}
 }
 
-export const internalApiSteps = new InternalApiSteps;
+export const internalApiSteps = new InternalApiSteps();
