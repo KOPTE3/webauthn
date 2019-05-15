@@ -2,6 +2,7 @@ export interface Phone {
 	index: number;
 	phone: string;
 	head: string;
+	code?: string;
 	value: string;
 	masked: string;
 	full: string;
@@ -48,16 +49,6 @@ export default {
 		},
 		{
 			index: 2,
-			phone: '79851017720',
-			head: '+7 (985) 1',
-			value: '01',
-			masked: '+7 (985) 101-**-**',
-			full: '+7 (985) 101-77-20',
-			id: 'id_ejzdMW603/dDmpnW7dKf+ZPuhStkdVPSq+OgPl9wNPY=',
-			operator: Operators.MTS
-		},
-		{
-			index: 3,
 			phone: '79262361785',
 			head: '+7 (926) 2',
 			value: '36',
@@ -98,6 +89,21 @@ export default {
 		}
 	] as PhoneList,
 
+	// список телефонов, которые гейт сразу отправляет на callui, и для которых недоступна отправка sms
+	calluiPhones: [
+		{
+			index: 0,
+			phone: '79851017720',
+			code: '491519',
+			head: '+7 (985) 1',
+			value: '01',
+			masked: '+7 (985) 101-**-**',
+			full: '+7 (985) 101-77-20',
+			id: 'id_ejzdMW603/dDmpnW7dKf+ZPuhStkdVPSq+OgPl9wNPY=',
+			operator: Operators.MTS
+		}
+	] as PhoneList,
+
 	/**
 	 * Получение номера телефона
 	 * @param {number} [index]
@@ -113,6 +119,10 @@ export default {
 		}
 		const length = this.phones.length;
 		return this.phones[Math.floor(Math.random() * length)];
+	},
+
+	getCalluiPhone(index: number = 0): Phone {
+		return this.calluiPhones[index].phone;
 	},
 
 	getPhoneByOperator(operator: Operators): Phone | null {
