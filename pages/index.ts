@@ -190,8 +190,13 @@ class PageObject {
 	/**
 	 * Включение фичи
 	 * @param {string[]} list — список фич, которые требуется включить
+	 * @param {boolean} overwrite - перезаписать вместо предыдущего списка фич
 	 */
-	features(list: string[]): string[] {
+	features(list: string[], overwrite: boolean = false): string[] {
+		if (overwrite) {
+			cache.features = [];
+		}
+
 		cache.features.push(...list);
 
 		return list;
