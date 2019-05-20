@@ -131,7 +131,7 @@ export default {
 		return this.phones[Math.floor(Math.random() * length)];
 	},
 
-	getCalluiPhone(index = 0): Phone {
+	getCalluiPhone(index: number = 0): Phone {
 		return this.calluiPhones[index];
 	},
 
