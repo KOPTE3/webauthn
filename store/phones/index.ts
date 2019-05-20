@@ -49,16 +49,6 @@ export default {
 		},
 		{
 			index: 2,
-			phone: '79851017720',
-			head: '+7 (985) 1',
-			value: '01',
-			masked: '+7 (985) 101-**-**',
-			full: '+7 (985) 101-77-20',
-			id: 'id_ejzdMW603/dDmpnW7dKf+ZPuhStkdVPSq+OgPl9wNPY=',
-			operator: Operators.MTS
-		},
-		{
-			index: 3,
 			phone: '79262361785',
 			head: '+7 (926) 2',
 			value: '36',
@@ -68,7 +58,7 @@ export default {
 			operator: Operators.MEGAFON
 		},
 		{
-			index: 4,
+			index: 3,
 			phone: '79262399073',
 			head: '+7 (926) 2',
 			value: '39',
@@ -78,7 +68,7 @@ export default {
 			operator: Operators.MEGAFON
 		},
 		{
-			index: 5,
+			index: 4,
 			phone: '79265299551',
 			head: '+7 (926) 5',
 			value: '29',
@@ -88,7 +78,7 @@ export default {
 			operator: Operators.MEGAFON
 		},
 		{
-			index: 6,
+			index: 5,
 			phone: '79998689153',
 			head: '+7 (999) 8',
 			value: '68',
