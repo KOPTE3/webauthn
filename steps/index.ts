@@ -176,10 +176,11 @@ class Steps {
 	 * Фичи
 	 *
 	 * @param {string[]} list — список фич, которые требуется включить
+	 * @param {boolean} overwrite - перезаписать вместо предыдущего списка фич
 	 */
 	@step('Включение фич {__result__}')
-	static features(list: string[]): string[] {
-		return page.features(list);
+	static features(list: string[], overwrite: boolean = false): string[] {
+		return page.features(list, overwrite);
 	}
 
 	/**
