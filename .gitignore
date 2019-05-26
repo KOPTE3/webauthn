@@ -52,6 +52,6 @@ config.local.js
 !/yoda.d.ts
 !/types/*.d.ts
 *.gen.ts
-
+!wdio/**/*.js
 
 /test*
