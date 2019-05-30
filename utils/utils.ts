@@ -1,3 +1,5 @@
+import { generate } from 'generate-password';
+
 export function lcFirst(input: string): string {
 	return input[0].toLowerCase() + input.slice(1);
 }
@@ -11,4 +13,22 @@ export function getRandomStr(length: number): string {
 	}
 
 	return text;
+}
+
+export function generateStrictPassword(): string {
+	return generate({
+		length: 40,
+		uppercase: true,
+		numbers: true,
+		strict: true
+	});
+}
+
+export function generateWeakPassword(): string {
+	return generate({
+		length: 6,
+		uppercase: false,
+		numbers: false,
+		strict: true
+	});
 }
