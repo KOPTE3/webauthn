@@ -2,7 +2,12 @@ const debug = require('debug')('@qa:yoda');
 
 module.exports = {
 	before() {
-		debug('@qa/yoda/wdio/mocha-hooks/service called');
+		const wdioMochaFrameworkPath = require.resolve('wdio-mocha-framework');
+		const wdioMochaFrameworkMochaPath = require.resolve('mocha', {paths: require.cache[wdioMochaFrameworkPath].paths});
+
+		debug('@qa/yoda/wdio/mocha-hooks/service patches ' + wdioMochaFrameworkMochaPath);
+
+		const OriginalMochaConstructor = require(wdioMochaFrameworkMochaPath);
 
 		OriginalMochaConstructor.prototype.loadFiles = function(fn) {
 			const self = this;
