@@ -2,8 +2,11 @@ const debug = require('debug')('@qa:yoda');
 
 module.exports = {
 	before() {
+		// Monkey patching функции в mocha, которая используется пакетом wdio-mocha-framework
+		// Так сложно из-за того, что у нас в node_modules есть несколько копий пакета mocha
 		const wdioMochaFrameworkPath = require.resolve('wdio-mocha-framework');
-		const wdioMochaFrameworkMochaPath = require.resolve('mocha', {paths: require.cache[wdioMochaFrameworkPath].paths});
+		const paths = require.cache[wdioMochaFrameworkPath];
+		const wdioMochaFrameworkMochaPath = require.resolve('mocha', {paths});
 
 		debug('@qa/yoda/wdio/mocha-hooks/service patches ' + wdioMochaFrameworkMochaPath);
 
@@ -14,7 +17,7 @@ module.exports = {
 			const suite = this.suite;
 
 			this.files.forEach(function(file) {
-				file = require.resolve(file, {paths: require.cache[wdioMochaFrameworkMochaPath].paths});
+				file = require.resolve(file, {paths});
 				suite.emit('pre-require', global, file, self);
 				let requiredValue = null;
 				try {
