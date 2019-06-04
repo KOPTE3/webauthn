@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.8.6
+
+* Добавили сервис @qa/yoda/wdio/mocha-hooks, который служит заменой пакета @qa/wdio-mocha-hooks
+
 ## 9.5.0
 
 * Новые методы для работы с авторизацией в [utils/authorization.ts](utils/authorization.ts)
