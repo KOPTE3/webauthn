@@ -86,10 +86,30 @@ export default {
 			full: '+7 (999) 868-91-53',
 			id: 'id_NbtbzhB4ZySdx5OcaNT5gOvlDPvLIuP0009Uar4eqrY=',
 			operator: Operators.YOTA
+		},
+		{
+			index: 6,
+			phone: '79261181836',
+			head: '+7 (926) 1',
+			value: '18',
+			masked: '+7 (926) 118-**-**',
+			full: '+7 (926) 118-18-36',
+			id: 'id_xDb1I6Kbg2hFI6vS7TRLMeeV380DOFXWlW9DxllZScU=',
+			operator: Operators.MEGAFON
+		},
+		{
+			index: 7,
+			phone: '79857867763',
+			head: '+7 (985) 7',
+			value: '86',
+			masked: '+7 (985) 786-**-**',
+			full: '+7 (985) 786-77-63',
+			id: 'id_4JUy+Z+8p1gkSbuZGhEzQ1G2A01kaPbbBfV2wKqbN88=',
+			operator: Operators.MTS
 		}
 	] as PhoneList,
 
-	// список телефонов, которые гейт сразу отправляет на callui, и для которых недоступна отправка sms
+	// список телефонов, в которых доступен callui с фиксированным кодом
 	calluiPhones: [
 		{
 			index: 0,
@@ -103,6 +123,21 @@ export default {
 			operator: Operators.MTS
 		}
 	] as PhoneList,
+
+	// список телефонов, которые гейт сразу отправляет на callui, и для которых недоступна отправка sms
+	onlyCalluiPhones: [
+		{
+			index: 0,
+			phone: '79035374092',
+			code: '371397',
+			head: '+7 (903) 5',
+			value: '37',
+			masked: '+7 (903) 537-**-**',
+			full: '+7 (903) 537-40-92',
+			id: 'id_3ZdNruzwUDpCBvDzVF4sAhiOAIR1YfYgiEq9H0NiyqY=',
+			operator: Operators.BEELINE
+		}
+	],
 
 	/**
 	 * Получение номера телефона
@@ -123,6 +158,10 @@ export default {
 
 	getCalluiPhone(index: number = 0): Phone {
 		return this.calluiPhones[index];
+	},
+
+	getOnlyCalluiPhone(index: number = 0): Phone {
+		return this.onlyCalluiPhones[index];
 	},
 
 	getPhoneByOperator(operator: Operators): Phone | null {
