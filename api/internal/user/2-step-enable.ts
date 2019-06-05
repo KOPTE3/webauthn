@@ -6,7 +6,7 @@ interface Option {
 	phone_id: string;
 }
 
-interface Options {
+export interface Options {
 	users: Option[];
 }
 
