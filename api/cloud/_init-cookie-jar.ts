@@ -35,7 +35,7 @@ async function getAuthCookies(cookieJar: request.CookieJar, credentials: Credent
 			Password: password
 		},
 		jar: cookieJar
-	});
+	} as rp.OptionsWithUrl);
 
 	if (response.statusCode >= 200 && response.statusCode < 400) {
 		debug('Successfully obtained Mpop and ssdc cookies');
@@ -61,7 +61,7 @@ async function getSdcsCookie(cookieJar: request.CookieJar): Promise<void> {
 			from: 'https://cloud.mail.ru/home/'
 		},
 		jar: cookieJar
-	});
+	} as rp.OptionsWithUrl);
 
 	if (response.statusCode >= 200 && response.statusCode < 400) {
 		debug('Successfully obtained sdcs cookie');

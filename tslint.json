@@ -5,6 +5,7 @@
     ],
     "jsRules": {},
     "rules": {
+      "no-object-literal-type-assertion": false,
       "trailing-comma": [ true, { "multiline": "never", "singleline": "never" } ],
       "object-curly-spacing": [ true, "always" ], // from eslint
       "object-literal-key-quotes": false,

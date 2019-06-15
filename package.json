@@ -1,6 +1,6 @@
 {
   "name": "@qa/yoda",
-  "version": "9.8.10",
+  "version": "9.8.11",
   "description": "Testing platform",
   "author": "Mail.Ru Group Limited",
   "license": "UNLICENSED",
@@ -29,7 +29,8 @@
     "prepare": "npm run generate",
     "prepublishOnly": "tsc && npm run generate",
     "generate": "TS_NODE_PROJECT=\"./tsconfig.json\" node $NODE_DEBUG_OPTION --require ts-node/register ./build",
-    "lint": "tslint --project ./tsconfig.json  --exclude 'node_modules/**/*'"
+    "build-tsc": "tsc",
+    "lint": "npm run build-tsc && tslint --project ./tsconfig.json  --exclude 'node_modules/**/*'"
   },
   "pre-commit": {
     "silent": false,

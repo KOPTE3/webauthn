@@ -8,11 +8,6 @@ import * as Debug from 'debug';
 
 const debug = Debug('@qa:yoda:cloud-api');
 
-/**
- * Добавление index signature к интерфейсу rp.Options
- */
-type RequestOptions = rp.Options & { [key: string]: any };
-
 const cookieJar: request.CookieJar = rp.jar();
 const defaultRequestOptions: Partial<rp.Options> = {
 	headers: {
@@ -37,7 +32,7 @@ async function getCsrfToken(credentials: Credentials) {
 		url: `${config.api.cloudApiBaseUrl}/tokens/csrf`,
 		method: 'GET',
 		jar: await initCookieJar(cookieJar, credentials)
-	});
+	} as rp.OptionsWithUrl);
 	const { body: responseBody } = response;
 
 	if (response.statusCode >= 200 && response.statusCode < 400) {
@@ -86,13 +81,13 @@ export async function callAsync(
 ): Promise<RequestResult> {
 	const { username, password }: Credentials = credentials || authorization.account.data();
 
-	const requestOptions: RequestOptions = {
+	const requestOptions: rp.OptionsWithUrl = {
 		...defaultRequestOptions,
 		url: `${config.api.cloudApiBaseUrl}/${path}`,
 		method
 	};
 
-	const requestBodyKey: string = (method === 'GET') ? 'qs' : 'form';
+	const requestBodyKey: keyof rp.Options = (method === 'GET') ? 'qs' : 'form';
 	requestOptions[requestBodyKey] = {
 		email: username,
 		'x-email': username,
