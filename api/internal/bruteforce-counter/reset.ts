@@ -16,7 +16,7 @@ export enum BruteforceType {
 	brute_short_code = 'brute_short_code'
 }
 
-interface Options {
+export interface Options {
 	type: BruteforceType;
 	key: string;
 	rid?: string;

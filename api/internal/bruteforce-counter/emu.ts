@@ -1,7 +1,7 @@
 import { RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
 
-interface Options {
+export interface Options {
 	phone: string;
 	set_rid?: string;
 }

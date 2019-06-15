@@ -3,7 +3,7 @@ import call, { callAsync } from '../call';
 
 export type PhoneStatus = 'ok' | 'too_young' | 'nonverified';
 
-interface Options {
+export interface Options {
 	email: string;
 	phone: string;
 	state: PhoneStatus;
