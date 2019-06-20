@@ -30,4 +30,9 @@ export default class Browser {
 
 		browser.switchTab(nextTabId);
 	}
+
+	@step('Подождать {timeout}ms')
+	static Pause(timeout: number) {
+		browser.pause(timeout);
+	}
 }
