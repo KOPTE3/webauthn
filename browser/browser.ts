@@ -1,3 +1,7 @@
+import * as Debug from 'debug';
+
+const debug = Debug('@qa:yoda:browser');
+
 const MouseButtons = {
 	left: 0,
 	middle: 1,
@@ -29,5 +33,16 @@ export default class Browser {
 		const nextTabId = browser.getTabIds().filter((tabId) => tabId !== currentTabId)[0];
 
 		browser.switchTab(nextTabId);
+	}
+
+	// Если есть возможность использовать неявные ожидания в виде waitUntil/waitForVisible функций, то этот метод
+	// тебе не нужен. Так как явные ожидания(паузы) - это очень плохой паттерн, который сильно увеличивает время
+	// исполнения тестов.
+	@step('Подождать {timeout}ms')
+	static Pause(timeout: number) {
+		debug('Если есть возможность использовать неявные ожидания в виде waitUntil/waitForVisible функций, ' +
+			'то этот метод тебе не нужен. Так как явные ожидания(паузы) - это очень плохой паттерн, который сильно ' +
+			'увеличивает время исполнения тестов');
+		browser.pause(timeout);
 	}
 }
