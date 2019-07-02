@@ -31,6 +31,8 @@ export default class Browser {
 		browser.switchTab(nextTabId);
 	}
 
+    // Если есть возможность использовать неявные ожидания в виде waitUntil/waitForVisible функций, то этот метод тебе не нужен.
+    // Так как явные ожидания(паузы) это очень плохой паттерн, который сильно увеличивает время исполнения тестов.
 	@step('Подождать {timeout}ms')
 	static Pause(timeout: number) {
 		browser.pause(timeout);
