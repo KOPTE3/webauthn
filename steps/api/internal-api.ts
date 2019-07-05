@@ -1,4 +1,5 @@
 import * as InternalApi from '../../api/internal';
+import { UserEditOptions } from '../../api/internal/users/edit';
 import { PhoneStatus } from '../../api/internal/user/phones-state';
 import userProfileSet from '../../api/internal/user/profile-set';
 import authorization from '../../store/authorization';
@@ -82,6 +83,67 @@ export default class InternalApiSteps {
 		});
 
 		return response.body.body;
+	}
+
+	@step('Задать пользователю дату рождения {__result__}')
+	setUserBirthday(login: string, domain: string, date: UserEditOptions['birthday']): string {
+		const userToEdit = {
+			login,
+			domain,
+			birthday: {
+				day: date!.day,
+				month: date!.month,
+				year: date!.year
+			}
+		};
+
+		InternalApi.usersEdit({
+			users: [userToEdit]
+		});
+
+		return `${date!.day}.${date!.month}.${date!.year}`;
+	}
+
+	@step('Задать пользователю таймзону c id {timezoneId},{autodetect ? "" : " не"} определять автоматически')
+	setUserTimezone(login: string, domain: string, timezoneId: number, autodetect: boolean = false) {
+		const userToEdit = {
+			login,
+			domain,
+			timezone_autodetect: autodetect,
+			timezone_id: timezoneId
+		};
+
+		InternalApi.usersEdit({
+			users: [userToEdit]
+		});
+	}
+
+	@step('Задать пользователю {sex === "male" ? "мужской" : "женский"} пол')
+	setUserGender(login: string, domain: string, sex: 'male' | 'female') {
+		const userToEdit = {
+			login,
+			domain,
+			sex
+		};
+
+		InternalApi.usersEdit({
+			users: [userToEdit]
+		});
+	}
+
+	@step('Задать данные имя, фамилию, псевдоним и дату рождения')
+	setUserNamesAndBirthday(login: string, domain: string, data: Partial<UserEditOptions>) {
+		const userToEdit = {
+			login,
+			domain,
+			birthday: data.birthday,
+			name: data.name,
+			nick: data.nick
+		};
+
+		InternalApi.usersEdit({
+			users: [userToEdit]
+		});
 	}
 }
 
