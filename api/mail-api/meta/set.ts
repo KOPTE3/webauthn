@@ -8,12 +8,12 @@ import call, { callAsync } from '../call';
 export default function metaSet(
 	options: MailAPI.TestMessageSetMsgProps, credentials?: Credentials
 ): RequestResult<string[]> {
-	return call('/test/message/set_msg_props', options, 'POST', credentials);
+	return call('test/message/set_msg_props', options, 'POST', credentials);
 }
 
 export async function metaSetAsync(
 	options: MailAPI.TestMessageSetMsgProps,
 	credentials?: Credentials
 ): Promise<RequestResult<string[]>> {
-	return callAsync('/test/message/set_msg_props', options, 'POST', credentials);
+	return callAsync('test/message/set_msg_props', options, 'POST', credentials);
 }
