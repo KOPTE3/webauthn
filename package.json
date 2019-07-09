@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@qa/account-manager": "^2.1.1",
-    "@qa/api": "^0.0.7",
+    "@qa/api": "git+ssh://git@bitbucket.mail.ru:2222/qa/api.git#mailapi-5224",
     "@qa/file-service": "^0.0.3",
     "@qa/rpc": "^0.1.4",
     "@qa/transport": "2.3.0",
@@ -54,6 +54,7 @@
     "debug": "^4.1.1",
     "deepmerge": "0.2.10",
     "fs-extra": "^8.0.1",
+    "generate-password": "^1.4.1",
     "glob": "^7.1.4",
     "minimist": "^1.2.0",
     "platform": "^1.3.5",
@@ -62,8 +63,7 @@
     "request-promise-native": "^1.0.7",
     "tough-cookie": "~2.4.3",
     "ts-simple-ast": "^13.0.0",
-    "wdio-yoda-allure-utils-service": "^1.10.0",
-    "generate-password": "^1.4.1"
+    "wdio-yoda-allure-utils-service": "^1.10.0"
   },
   "devDependencies": {
     "@mail/tslint-2kit-rules": "^3.1.4",
