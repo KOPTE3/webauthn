@@ -1,6 +1,6 @@
 {
   "name": "@qa/yoda",
-  "version": "9.8.13-rc.3",
+  "version": "9.8.13-rc.7",
   "description": "Testing platform",
   "author": "Mail.Ru Group Limited",
   "license": "UNLICENSED",
@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@qa/account-manager": "^2.1.1",
-    "@qa/api": "git+ssh://git@bitbucket.mail.ru:2222/qa/api.git#mailapi-5224",
+    "@qa/api": "^0.0.7",
     "@qa/file-service": "^0.0.3",
     "@qa/rpc": "^0.1.4",
     "@qa/transport": "2.3.0",
