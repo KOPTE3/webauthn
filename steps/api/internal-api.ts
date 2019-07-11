@@ -86,14 +86,14 @@ export default class InternalApiSteps {
 	}
 
 	@step('Задать пользователю дату рождения {__result__}')
-	setUserBirthday(login: string, domain: string, date: UserEditOptions['birthday']): string {
+	setUserBirthday(login: string, domain: string, date: Required<UserEditOptions['birthday']>): string {
 		const userToEdit = {
 			login,
 			domain,
 			birthday: {
-				day: date!.day,
-				month: date!.month,
-				year: date!.year
+				day: date.day,
+				month: date.month,
+				year: date.year
 			}
 		};
 
@@ -101,7 +101,7 @@ export default class InternalApiSteps {
 			users: [userToEdit]
 		});
 
-		return `${date!.day}.${date!.month}.${date!.year}`;
+		return `${date.day}.${date.month}.${date.year}`;
 	}
 
 	@step('Задать пользователю таймзону c id {timezoneId},{autodetect ? "" : " не"} определять автоматически')
