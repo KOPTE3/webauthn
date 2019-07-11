@@ -6,6 +6,8 @@
     ],
 
     "types": [
+      "request",
+      "request-promise-native",
       "ts-simple-ast",
       "wdio-yoda-allure-utils-service",
       "wdio-yoda-api-service"
@@ -19,11 +21,11 @@
     "target": "es2017",
     "module": "commonjs",
     "moduleResolution": "node",
+    "strict": true,
+    "strictPropertyInitialization": false,
     "skipLibCheck": true,
-    "noImplicitAny": true,
-    "noImplicitThis": false,
+    "skipDefaultLibCheck": true,
     "declaration": true,
-    "strictNullChecks": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": false

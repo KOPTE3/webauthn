@@ -25,7 +25,7 @@ declare namespace Yoda {
 				tls?: boolean;
 				port: number;
 			}
-		}
+		};
 	}
 
 	interface Options extends WebdriverIO.Options {

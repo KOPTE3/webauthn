@@ -1,5 +1,3 @@
-import * as fs from 'fs';
-import * as path from 'path';
 import * as platform from 'platform';
 import * as FileService from '@qa/file-service';
 
@@ -27,7 +25,7 @@ export default {
 	 * @type {string}
 	 */
 	get browser(): string {
-		return browser.desiredCapabilities.browserName;
+		return browser.desiredCapabilities.browserName!;
 	},
 
 	/**
@@ -73,7 +71,7 @@ export default {
 	 * @type {string}
 	 */
 	get host(): string {
-		return browser.options.hostname;
+		return browser.options.hostname!;
 	},
 
 	/**
@@ -82,6 +80,6 @@ export default {
 	 * @type {string}
 	 */
 	get baseUrl(): string {
-		return browser.options.baseUrl;
+		return browser.options.baseUrl!;
 	}
 };

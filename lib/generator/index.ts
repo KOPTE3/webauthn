@@ -57,7 +57,7 @@ export default async function generate(source: string, options?: any): Promise<v
 
 		if (generateMethods.length > 0) {
 			generateClasses.push({
-				className: classDeclaration.getName(),
+				className: classDeclaration.getName()!,
 				methods: generateMethods.map((generateMethod: MethodDeclaration): MethodDeclarationStructure => {
 					const method: MethodDeclarationStructure = {
 						name: lcFirst(generateMethod.getName()),
@@ -89,7 +89,7 @@ export default async function generate(source: string, options?: any): Promise<v
 					const preparedParameters: ParameterDeclarationStructure[] = params.slice(1)
 						.map((param: ParameterDeclaration): ParameterDeclarationStructure => {
 							const p: ParameterDeclarationStructure = {
-								name: param.getName(),
+								name: param.getName()!,
 								type: param.getType().getText(),
 								hasQuestionToken: param.isOptional() && !param.isRestParameter(),
 								isRestParameter: param.isRestParameter()
@@ -150,14 +150,14 @@ export default async function generate(source: string, options?: any): Promise<v
 		const dtsFile = project.addExistingSourceFile(dts);
 		for (const generateClass of generateClasses) {
 			const { className, methods } = generateClass;
-			const dtsClass: ClassDeclaration = dtsFile.getClass(className);
+			const dtsClass: ClassDeclaration = dtsFile.getClass(className)!;
 
 			for (const method of methods) {
 				while (dtsClass.getStaticMethod(method.name)) {
-					dtsClass.getStaticMethod(method.name).remove();
+					dtsClass.getStaticMethod(method.name)!.remove();
 				}
 				while (dtsClass.getInstanceMethod(method.name)) {
-					dtsClass.getInstanceMethod(method.name).remove();
+					dtsClass.getInstanceMethod(method.name)!.remove();
 				}
 
 				dtsClass.addMethod(method);

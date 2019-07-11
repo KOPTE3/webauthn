@@ -26,9 +26,10 @@ export default {
 		if (!/^(pdd|external)$/.test(type)) {
 			type = 'basic';
 		} else if (options.username) {
-			const { name, host } = this.parseEmail(options.username);
+			const { host } = this.parseEmail(options.username);
+			const provider = providers.find(host);
 
-			service = providers.find(host).name || host;
+			service = Object.keys(provider).length && (provider as Yoda.Provider).name || host;
 		}
 
 		// Получаем куки для домена .mail.ru, для этого указываем host как e.mail.ru
@@ -199,7 +200,7 @@ export default {
 	 */
 	parseEmail(email: string): { name: string; host: string } {
 		try {
-			const [, name, host] = email.match(/(.*)@(.{4,})$/);
+			const [, name, host] = email.match(/(.*)@(.{4,})$/)!;
 
 			return { name, host };
 		} catch (error) {

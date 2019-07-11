@@ -26,7 +26,7 @@ export default class InternalApiSteps {
 				phone,
 				mobile: true
 			}]
-		}).body[0];
+		}).body![0];
 
 		let initialType: PhoneStatus;
 		switch (type) {
@@ -81,7 +81,7 @@ export default class InternalApiSteps {
 			value
 		});
 
-		return response.body.body;
+		return response.body!.body;
 	}
 }
 

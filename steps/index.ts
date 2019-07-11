@@ -574,7 +574,7 @@ class Steps {
 	closeTab(focusToTabIndex?: number | string): void {
 		const tabIds: string[] = browser.getTabIds();
 
-		browser.close(focusToTabIndex ? tabIds[+focusToTabIndex] : null);
+		browser.close(focusToTabIndex ? tabIds[+focusToTabIndex] : undefined);
 	}
 
 	@step('Дождаться пока вкладок будет "{count}"')

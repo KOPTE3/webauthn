@@ -9,7 +9,7 @@ export default class CloudApiSteps {
 	 */
 	@step('Очистить Облако от файлов')
 	clearCloud() {
-		const rootFolderFiles: string[] = CloudApi.folder({ home: '/' }).body.list.map(({ home }) => home);
+		const rootFolderFiles: string[] = CloudApi.folder({ home: '/' }).body!.list.map(({ home }) => home);
 
 		rootFolderFiles.forEach((filePath: string) => CloudApi.fileRemove({ home: filePath }));
 

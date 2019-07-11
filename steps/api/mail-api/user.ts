@@ -25,7 +25,7 @@ export default class CollectorSteps {
 				}
 			]);
 
-			params.collect[0].folder = folders[0];
+			params.collect![0].folder = folders[0];
 		}
 
 		const result = MailApi.collectorsAdd(params);
@@ -42,7 +42,7 @@ export default class CollectorSteps {
 		const { body: collectors } = MailApi.collectorsGet();
 
 		const result = MailApi.collectorsRemove({
-			collect: collectors.map((item) => ({ id: item.id }))
+			collect: collectors!.map((item) => ({ id: item.id }))
 		});
 
 		if (result.status !== 200) {
@@ -58,7 +58,7 @@ export default class CollectorSteps {
 			throw new Error(`Не удалось получить текущего пользователя: ${JSON.stringify(userResponse)}`);
 		}
 
-		const { domain, login } = userResponse.body;
+		const { domain, login } = userResponse.body!;
 
 		const editResponse = MailApi.userEdit({ domain, login, signs: signatures });
 

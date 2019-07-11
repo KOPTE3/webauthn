@@ -183,10 +183,10 @@ export default {
 	 * @property {Array} features
 	 * @returns {Object|undefined}
 	 */
-	get({ provider, features = [] }: Account): Account {
+	get({ provider, features = [] }: Account): Account | undefined {
 		return this.list.find((account: Account) => {
 			const filtered = features.every((feature) => {
-				return account.features.includes(feature);
+				return account.features!.includes(feature);
 			});
 
 			if (provider) {

@@ -1,7 +1,6 @@
 import { Credentials } from '@qa/account-manager';
 import * as Debug from 'debug';
 import * as merge from 'deepmerge';
-import config from '../config';
 import account, { UserType } from '../utils/account';
 import Authorization from '../utils/authorization';
 import URL from '../utils/url';
@@ -34,7 +33,7 @@ class PageObject {
 	 * @override this
 	 * @type {string}
 	 */
-	public readonly name: string = null;
+	public readonly name: string | null;
 
 	/**
 	 * Авторизация
@@ -139,7 +138,7 @@ class PageObject {
 		const { features, scripts } = cache;
 
 		if (features.length) {
-			query.ftrs = features.concat(query.ftrs).join(' ').trim();
+			query.ftrs = features.concat(query.ftrs!).join(' ').trim();
 		}
 
 		url = URL.format(url, query);
@@ -352,7 +351,7 @@ class PageObject {
 	/**
 	 * Перемещение курсора, работюащее и в фф, и в хроме
 	 */
-	moveToElement(locator?: string, xoffset?: number, yoffset?: number) {
+	moveToElement(locator: string = 'body', xoffset?: number, yoffset?: number) {
 		if (browser.desiredCapabilities.browserName === 'firefox') {
 			this.moveToObjectAction(locator, xoffset, yoffset);
 		} else {
