@@ -1,6 +1,6 @@
 {
   "name": "@qa/yoda",
-  "version": "9.8.12",
+  "version": "9.8.13-fmail-2784.0",
   "description": "Testing platform",
   "author": "Mail.Ru Group Limited",
   "license": "UNLICENSED",
@@ -28,7 +28,7 @@
   "scripts": {
     "prepare": "npm run generate",
     "prepublishOnly": "tsc && npm run generate",
-    "generate": "TS_NODE_PROJECT=\"./tsconfig.json\" node $NODE_DEBUG_OPTION --require ts-node/register ./build",
+    "generate": "TS_NODE_PROJECT=\"./tsconfig.json\" node --require ts-node/register ./build/index.ts",
     "build-tsc": "tsc",
     "lint": "npm run build-tsc && tslint --project ./tsconfig.json  --exclude 'node_modules/**/*'"
   },
