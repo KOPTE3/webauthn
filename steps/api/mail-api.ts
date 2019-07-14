@@ -36,7 +36,7 @@ interface User2StepAuthEnableOptions {
 }
 
 interface SharedFolders {
-	root: {
+	root?: {
 		id: number;
 		name: string;
 	};
@@ -196,10 +196,10 @@ export default class MailApiSteps {
 		const list = shared.filter(({parent}) => parent != -1).map(({id, name}) => ({id: +id, name}));
 
 		return {
-			root: {
-				id: +root.id,
+			root: root && {
+				id: root.id,
 				name: root.name,
-			},
+			} || null,
 			list,
 		};
 	}
