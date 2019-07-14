@@ -188,16 +188,16 @@ export default class MailApiSteps {
 
 	@step('Загрузить список папок пользователя {credentials.username}, расшаренных другим пользователем {owner}')
 	findSharedFolders(owner: string, credentials: Credentials): SharedFolders {
-		const mailboxStatus = threadsStatusSmart({}, credentials);
+		const mailboxStatus = threadsStatusSmart({folder: 0}, credentials);
 		const shared = mailboxStatus.body.folders.filter((folder) => {
 			return folder.owner && folder.owner.email === owner;
 		});
-		const root = shared.find(({parent}) => parent === -1);
-		const list = shared.filter(({parent}) => parent !== -1).map(({id, name}) => ({id, name}));
+		const root = shared.find(({parent}) => parent == -1);
+		const list = shared.filter(({parent}) => parent != -1).map(({id, name}) => ({id: +id, name}));
 
 		return {
 			root: {
-				id: root.id,
+				id: +root.id,
 				name: root.name,
 			},
 			list,
