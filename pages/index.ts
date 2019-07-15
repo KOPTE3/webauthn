@@ -139,9 +139,7 @@ class PageObject {
 		const { features, scripts } = cache;
 
 		if (features.length) {
-			const ftrs = assertDefinedValue(query.ftrs);
-
-			query.ftrs = features.concat(ftrs).join(' ').trim();
+			query.ftrs = features.concat(query.ftrs || []).join(' ').trim();
 		}
 
 		url = URL.format(url, query);

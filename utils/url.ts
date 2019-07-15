@@ -1,7 +1,7 @@
 import * as url from 'url';
 import * as Debug from 'debug';
 import * as querystring from 'querystring';
-import {assertDefinedValue} from './assert-defined';
+import { assertDefinedValue } from './assert-defined';
 
 const debug = Debug('@qa:yoda');
 const TIMEOUT: number = 30 * 1000;
