@@ -2,6 +2,7 @@ import * as MailApi from '../../../api/mail-api';
 import { MailAPI as MailApiInterfaces } from '@qa/api/index';
 import MailApiSteps from '../mail-api';
 import foldersStore from '../../../store/folders';
+import { assertDefinedValue } from '../../../utils/assert-defined';
 
 export default class CollectorSteps {
 	@step('Добавляем коллектор "{account.email}" в почтовый ящик')
@@ -24,7 +25,8 @@ export default class CollectorSteps {
 				}
 			]);
 
-			params.collect![0].folder = folders[0];
+			params.collect = assertDefinedValue(params.collect);
+			params.collect[0].folder = folders[0];
 		}
 
 		const result = MailApi.collectorsAdd(params);
@@ -38,10 +40,11 @@ export default class CollectorSteps {
 
 	@step('Удаляем все коллекторы из ящика')
 	removeAllCollectors(): void {
-		const { body: collectors } = MailApi.collectorsGet();
+		let { body: collectors } = MailApi.collectorsGet();
+		collectors = assertDefinedValue(collectors);
 
 		const result = MailApi.collectorsRemove({
-			collect: collectors!.map((item) => ({ id: item.id }))
+			collect: collectors.map((item) => ({ id: item.id }))
 		});
 
 		if (result.status !== 200) {

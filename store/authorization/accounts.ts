@@ -1,3 +1,5 @@
+import { assertDefinedValue } from '../../utils/assert-defined';
+
 export interface Account {
 	provider?: string;
 	username?: string;
@@ -183,10 +185,12 @@ export default {
 	 * @property {Array} features
 	 * @returns {Object|undefined}
 	 */
-	get({ provider, features = [] }: Account): Account | undefined {
-		return this.list.find((account: Account) => {
+	get({ provider, features = [] }: Account): Account | null {
+		const account =  this.list.find((account: Account) => {
+			const features = assertDefinedValue(account.features);
+
 			const filtered = features.every((feature) => {
-				return account.features!.includes(feature);
+				return features.includes(feature);
 			});
 
 			if (provider) {
@@ -197,5 +201,7 @@ export default {
 				return account;
 			}
 		});
+
+		return account || null;
 	}
 };

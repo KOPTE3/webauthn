@@ -6,6 +6,7 @@ import { Cookie } from 'tough-cookie';
 import { creationTime } from '../api/internal/session/index';
 import config from '../config';
 import URL from './url';
+import { assertDefinedValue } from '../utils/assert-defined';
 
 export type Type = 'regular' | 'external' | 'pdd';
 
@@ -373,8 +374,8 @@ export default class Authorization {
 		}, {
 			jar: requestJar
 		});
-		assert.strictEqual(response.body, '', 'Failed to set creation_time to session. Check SDCS and Mpop cookies are set.');
 
-		return response.body!;
+		return assertDefinedValue(response.body,
+			'Failed to set creation_time to session. Check SDCS and Mpop cookies are set.');
 	}
 }
