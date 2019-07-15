@@ -5,6 +5,7 @@ import * as MailApi from '../../api/mail-api';
 import authorization from '../../store/authorization';
 import helpers from '../../store/helpers';
 import { Phone } from '../../store/phones/index';
+import { assertDefinedValue } from '../../utils/assert-defined';
 
 /** Интерфейс для вывода данных, о созданной запароленной папке */
 interface SecretFolderData {
@@ -39,12 +40,14 @@ export default class MailApiSteps {
 		(folderData: any) => folderData
 	)
 	createFolder(folderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']>): number {
-		return +MailApi.foldersAdd({
+		const body = MailApi.foldersAdd({
 			folders: [{
 				...defaultFolderData,
 				...folderData
 			}]
-		}).body![0];
+		}).body;
+
+		return +assertDefinedValue(body)[0];
 	}
 
 	@step(
@@ -59,24 +62,29 @@ export default class MailApiSteps {
 			)
 	)
 	createFolders(foldersData: MailApiInterfaces.FoldersAdd['folders']): number[] {
-		return MailApi.foldersAdd({
-			folders: foldersData!.map((folderData) => ({
+		const body = MailApi.foldersAdd({
+			folders: assertDefinedValue(foldersData)
+				.map((folderData) => ({
 				...defaultFolderData,
 				...folderData
 			}))
-		}).body!.map((folderId: string) => +folderId);
+		}).body;
+
+		return assertDefinedValue(body).map((folderId: string) => +folderId);
 	}
 
 	@step('Создать {params ? "кастомную" : ""} папку Архив')
 	createArchive(params?: ArrayElement<MailApiInterfaces.FoldersAdd['folders']>): number {
-		return +MailApi.foldersAdd({
+		const body = MailApi.foldersAdd({
 			folders: [{
 				...defaultFolderData,
 				name: 'Архив',
 				type: 'archive',
 				...params
 			}]
-		}).body![0];
+		}).body;
+
+		return +assertDefinedValue(body)[0];
 	}
 
 	@step('{isEnabled ? "В" : "Вы"}ключить треды{refresh ? " и обновить страницу" : ""}')
@@ -93,16 +101,20 @@ export default class MailApiSteps {
 
 	@step('Открыть запароленные папки с id: [{__result__}]')
 	openFolders(foldersData: Array<{id: number, password: string}>): number[] {
-		return MailApi.foldersOpen({
+		const body = MailApi.foldersOpen({
 			folders: foldersData.map(({ id, password }) => ({
 				id: `${id}`,
 				secret: { folder_password: password }
 			}))
-		}).body!.map((folderId: string) => +folderId);
+		}).body;
+
+		return assertDefinedValue(body).map((folderId: string) => +folderId);
 	}
 
 	getMessagesCount(folder: number): number {
-		return MailApi.messagesStatus({ folder }).body!.messages_total;
+		const status = MailApi.messagesStatus({ folder }).body;
+
+		return assertDefinedValue(status).messages_total;
 	}
 
 	/**
@@ -117,23 +129,27 @@ export default class MailApiSteps {
 	waitForLetterBySubjectInStatus(subject: string, folder: number, count: number = 1, limit?: number) {
 		browser.waitUntil(
 			() => {
-				const { messages } = MailApi.messagesStatus({ folder, limit }).body!;
+				const { messages } = assertDefinedValue(MailApi.messagesStatus({ folder, limit }).body);
 
 				return messages.filter((message) => message.subject === subject).length >= count;
 			},
-			undefined,
+			void 0,
 			`Сообщение с темой письма "${subject}" ("${count}" шт.) для папки "${folder}" отсутствует в статусе`
 		);
 	}
 
 	getCurrentSignature(returnHtml: boolean = false): string | null {
-		const currentSignObject = MailApi.userShort({}).body!.signs.find((sign) => sign.active);
+		const currentSignObject = assertDefinedValue(MailApi.userShort({}).body)
+			.signs.find((sign) => sign.active);
 
 		return (!currentSignObject) ? null : (returnHtml) ? currentSignObject.sign_html : currentSignObject.sign;
 	}
 
 	getUidlBySubjectInFolder(folderId: number, subject: string): string {
-		return MailApi.messagesStatus({ folder: folderId }).body!.messages.find((message) => message.subject === subject)!.id;
+		const status = MailApi.messagesStatus({ folder: folderId }).body;
+		const message = assertDefinedValue(status).messages.find((message) => message.subject === subject);
+
+		return assertDefinedValue(message).id;
 	}
 
 	@step('Добавить контакт с именем {nickName} и email {email} в адресную книгу')
@@ -169,7 +185,7 @@ export default class MailApiSteps {
 
 		return {
 			id: this.createFolder(folderData),
-			name: folderData.name!,
+			name: assertDefinedValue(folderData.name),
 			folder_password,
 			question,
 			answer
@@ -213,7 +229,7 @@ export default class MailApiSteps {
 		};
 
 		const regTokenResponse = MailApi.user2StepAuthEnable(enableRequest, options, { validStatusCodes: [449] });
-		const regTokenId = regTokenResponse.body!.auth.reg_token.id;
+		const regTokenId = assertDefinedValue(regTokenResponse.body).auth.reg_token.id;
 
 		const regTokenInfo = tokensInfo({
 			email: options.username,
@@ -222,7 +238,7 @@ export default class MailApiSteps {
 
 		enableRequest.reg_token = {
 			id: regTokenId,
-			value: regTokenInfo.body!.code
+			value: assertDefinedValue(regTokenInfo.body).code
 		};
 
 		MailApi.user2StepAuthEnable(enableRequest, options);

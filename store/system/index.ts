@@ -1,5 +1,6 @@
 import * as platform from 'platform';
 import * as FileService from '@qa/file-service';
+import { assertDefinedValue } from '../../utils/assert-defined';
 
 const fileService = FileService({ basepath: 'files' });
 
@@ -25,7 +26,7 @@ export default {
 	 * @type {string}
 	 */
 	get browser(): string {
-		return browser.desiredCapabilities.browserName!;
+		return assertDefinedValue(browser.desiredCapabilities.browserName);
 	},
 
 	/**
@@ -71,7 +72,7 @@ export default {
 	 * @type {string}
 	 */
 	get host(): string {
-		return browser.options.hostname!;
+		return assertDefinedValue(browser.options.hostname);
 	},
 
 	/**
@@ -80,6 +81,6 @@ export default {
 	 * @type {string}
 	 */
 	get baseUrl(): string {
-		return browser.options.baseUrl!;
+		return assertDefinedValue(browser.options.baseUrl);
 	}
 };

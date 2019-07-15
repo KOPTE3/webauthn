@@ -117,7 +117,7 @@ export default class Transport {
 
 				return response;
 			},
-			undefined,
+			void 0,
 			'Could not send message'
 		);
 	}
@@ -146,7 +146,7 @@ export default class Transport {
 
 				return response;
 			},
-			undefined,
+			void 0,
 			'Could not save draft'
 		);
 	}
