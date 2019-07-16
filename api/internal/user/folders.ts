@@ -6,7 +6,8 @@ type Options = {email: string} | {id: string};
 export type FoldersBody = Array<{
 	id: number;
 	system: boolean;
-	type: 'inbox' | 'sent' | 'drafts' | 'templates' | 'spam' | 'trash' | 'archive' | 'user' | 'social' | 'promotions' | 'newsletters';
+	type: 'inbox' | 'sent' | 'drafts' | 'templates' | 'spam' | 'trash' | 'archive' | 'user' | 'social' | 'promotions'
+		| 'newsletters';
 	name: string;
 	child: boolean;
 	children: boolean;

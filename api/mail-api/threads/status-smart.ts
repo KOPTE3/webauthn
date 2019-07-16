@@ -12,7 +12,7 @@ interface ThreadsStatusSmartBody {
 		};
 		type: string;
 		name: string;
-		parent: number;
+		parent: string;
 	}>;
 	threads: any[];
 	collectors: any[];
@@ -23,7 +23,10 @@ interface ThreadsStatusSmartBody {
 /**
  * @see http://api.tornado.dev.mail.ru/threads/status/smart
  */
-export default function threadsStatusSmart(options: MailAPI.ThreadsStatusSmart, credentials?: Credentials): RequestResult<ThreadsStatusSmartBody> {
+export default function threadsStatusSmart(
+	options: MailAPI.ThreadsStatusSmart,
+	credentials?: Credentials
+): RequestResult<ThreadsStatusSmartBody> {
 	return call('threads/status/smart', options, 'GET', credentials);
 }
 

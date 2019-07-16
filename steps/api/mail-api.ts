@@ -2,12 +2,12 @@ import { MailAPI as MailApiInterfaces } from '@qa/api';
 import * as merge from 'deepmerge';
 import { bruteforceCounterReset, BruteforceType, tokensInfo } from '../../api/internal';
 import * as MailApi from '../../api/mail-api';
-import {threadsStatusSmart} from '../../api/mail-api/threads';
+import { threadsStatusSmart } from '../../api/mail-api/threads';
 import authorization from '../../store/authorization';
 import helpers from '../../store/helpers';
 import { Phone } from '../../store/phones/index';
 import { assertDefinedValue } from '../../utils/assert-defined';
-import {Credentials} from '../../types/api';
+import { Credentials } from '../../types/api';
 
 /** Интерфейс для вывода данных, о созданной запароленной папке */
 interface SecretFolderData {
@@ -177,10 +177,13 @@ export default class MailApiSteps {
 	}
 
 	@step('Создать запароленную папку. В результате создана папка с id "{__result__.id}"')
-	createSecretFolder(params: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> = {}, credentials?: Credentials): SecretFolderData {
+	createSecretFolder(
+		params: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> = {},
+		credentials?: Credentials
+	): SecretFolderData {
 		const account = credentials || authorization;
 		const folderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> = merge(
-		{
+			{
 				...defaultFolderData,
 				secret: {
 					folder_password: account.password,
@@ -208,19 +211,21 @@ export default class MailApiSteps {
 
 	@step('Загрузить список папок пользователя {credentials.username}, расшаренных другим пользователем {owner}')
 	findSharedFolders(owner: string, credentials: Credentials): SharedFolders {
-		const mailboxStatus = threadsStatusSmart({folder: 0}, credentials);
+		const mailboxStatus = threadsStatusSmart({ folder: 0 }, credentials);
 		const shared = assertDefinedValue(mailboxStatus.body).folders.filter((folder) => {
 			return folder.owner && folder.owner.email === owner;
 		});
-		const root = shared.find(({parent}) => parent == -1);
-		const list = shared.filter(({parent}) => parent != -1).map(({id, name}) => ({id: +id, name}));
+		const root = shared.find(({ parent }) => parseInt(parent, 10) === -1);
+		const list = shared
+			.filter(({ parent }) => parseInt(parent, 10) !== -1)
+			.map(({ id, name }) => ({ id: +id, name }));
 
 		return {
 			root: root && {
 				id: root.id,
-				name: root.name,
+				name: root.name
 			},
-			list,
+			list
 		};
 	}
 
