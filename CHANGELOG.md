@@ -1,5 +1,13 @@
 # Changelog
 
+## 9.9.0
+
+* Строгие проверки типов
+* Lock-файл
+* Починили баг в генерилке элементов, из-за которого в d.ts появлялось: `import("/Users/anatolijostapenko/repos/yoda/element/index").Element`
+* Новые методы у элементов: `Element.RightClickTo`
+* Новые internal и mailapi методы
+
 ## 9.8.6
 
 * Добавили сервис @qa/yoda/wdio/mocha-hooks, который служит заменой пакета @qa/wdio-mocha-hooks

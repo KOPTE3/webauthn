@@ -1,6 +1,6 @@
 interface PHAccount {
 	active: boolean;
-	counters: Object;
+	counters: object;
 	email: string;
 	firstName: string;
 	lastName: string;
@@ -11,12 +11,12 @@ interface PHAccount {
 interface PHAccounts {
 	accounts: PHAccount[];
 	activeEmailByResponse: string;
-	status: string | 'ok'
+	status: string | 'ok';
 }
 
 declare interface Window {
 	__PH: {
 		logoutAccount(email: string, calback: (result: PHAccounts) => void): void
 		activeUser(): string | undefined
-	}
+	};
 }

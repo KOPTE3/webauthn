@@ -3,6 +3,7 @@ import { MailAPI as MailApiInterfaces } from '@qa/api/index';
 import MailApiSteps from '../mail-api';
 import foldersStore from '../../../store/folders';
 import { Sign } from '../../../api/mail-api/user/short';
+import { assertDefinedValue } from '../../../utils/assert-defined';
 
 export default class CollectorSteps {
 	@step('Добавляем коллектор "{params.email}" в почтовый ящик')
@@ -25,6 +26,7 @@ export default class CollectorSteps {
 				}
 			]);
 
+			params.collect = assertDefinedValue(params.collect);
 			params.collect[0].folder = folders[0];
 		}
 
@@ -39,7 +41,8 @@ export default class CollectorSteps {
 
 	@step('Удаляем все коллекторы из ящика')
 	removeAllCollectors(): void {
-		const { body: collectors } = MailApi.collectorsGet();
+		let { body: collectors } = MailApi.collectorsGet();
+		collectors = assertDefinedValue(collectors);
 
 		const result = MailApi.collectorsRemove({
 			collect: collectors.map((item) => ({ id: item.id }))
@@ -58,7 +61,7 @@ export default class CollectorSteps {
 			throw new Error(`Не удалось получить текущего пользователя: ${JSON.stringify(userResponse)}`);
 		}
 
-		const { domain, login } = userResponse.body;
+		const { domain, login } = userResponse.body!;
 
 		const editResponse = MailApi.userEdit({ domain, login, signs: signatures });
 

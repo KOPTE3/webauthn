@@ -3,8 +3,8 @@ import { Credentials, RequestResult } from '../../../types/api';
 import call, { callAsync, CallOptions } from '../call';
 
 export interface User2StepAuthEnableResponseBody {
-	auth?: {
-		reg_token?: {
+	auth: {
+		reg_token: {
 			id: string;
 			[key: string]: any;
 		}
