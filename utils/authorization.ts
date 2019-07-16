@@ -9,6 +9,10 @@ import URL from './url';
 
 export type Type = 'regular' | 'external' | 'pdd';
 
+export interface EmailType {
+	emailType: string | 'test_login';
+}
+
 export interface AccountCredentials {
 	email: string;
 	password: string;
@@ -18,7 +22,6 @@ export interface CommonAccount extends AccountCredentials {
 	login: string;
 	domain: string;
 	username: string;
-	emailType?: string;
 }
 
 export interface ASAccount extends CommonAccount {
@@ -73,7 +76,7 @@ function getSupixUrl() {
  */
 export async function getCredentialsAsync(
 	type: Type = 'regular',
-	options: Partial<CommonAccount> = null
+	options: Partial<CommonAccount & EmailType> = null
 ): Promise<ASAccount> {
 	debug(`Запрашиваем аккаунт с типом ${type}`, (options ? options : ''));
 
@@ -101,7 +104,7 @@ export async function getCredentialsAsync(
 
 export function getCredentials(
 	type: Type = 'regular',
-	options: Partial<CommonAccount> = null, timeout?: number
+	options: Partial<CommonAccount & EmailType> = null, timeout?: number
 ): ASAccount {
 	return browser.waitForPromise(getCredentialsAsync(type, options), timeout, 'Could not get user credentials');
 }
@@ -278,7 +281,7 @@ function parseAccount(email: string, password: string): CommonAccount {
 }
 
 export default class Authorization {
-	static auth(type?: Type, select?: Partial<CommonAccount>): CommonAccount;
+	static auth(type?: Type, select?: Partial<CommonAccount & EmailType>): CommonAccount;
 	static auth(email: string, password: string): CommonAccount;
 	static auth(credentials: AccountCredentials): CommonAccount;
 	@step('Авторизуемся аккаунтом {__result__.username}')
