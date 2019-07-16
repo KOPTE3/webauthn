@@ -10,26 +10,17 @@
 
 **ВНИМАНИЕ**: Знакомьтесь с основными [изменениями](./CHANGELOG.md)!<br />
 **ВНИМАНИЕ**: Помимо [стандартных](http://webdriver.io/api.html) команд имеются [кастомные](https://stash.mail.ru/projects/QA/repos/wdio-api/browse)
-
-<br />
 <br />
 
 ### Установка
 
 Для работы с этим пакетом используйте [grunt-init-yoda](https://stash.mail.ru/projects/QA/repos/grunt-init-yoda/browse).
 
-Разработчикам:
 
 **git**
 
 ```
 git clone ssh://git@stash.mail.ru:2222/qa/yoda.git
-```
-
-**npm**
-
-```
-npm install @qa/yoda
 ```
 
 **nvm**
@@ -43,6 +34,12 @@ source ~/.bash{rc,_profile}
 nvm install 7
 nvm use 7
 nvm alias default 7
+```
+
+**npm**
+
+```
+npm install
 ```
 
 **java**
@@ -59,6 +56,20 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 
 Обновите [JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
+### Как держать версии в актуальном состоянии:
+1. ставим глобально npm-check-updates
+	```bash
+	npm i -g npm-check-updates
+	```
+
+2. В конфиге `.ncurc.json` указаны версии которые жестко зафиксированы и  мы никогда не захотим их поднимать.
+
+3. Интерактивно обновляем версии
+	```bash
+	ncu -i -u
+	```
+4. Делаем `npm install`
+
 
 ### Совместимость
 
@@ -67,7 +78,7 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 
 ### Документация
 
-Основная [документация](https://confluence.mail.ru/pages/viewpage.action?pageId=97748321) по этому проекту находится здесь. Однако для получение актуальной информации о всех изменения следите за файлом [CHANGELOG.md](./CHANGELOG.md).
+Основная документация по этому проекту находится [здесь](http://yoda-doc.mail.cloud.devmail.ru) + есть старая [дока](https://confluence.mail.ru/pages/viewpage.action?pageId=97748321) Саши Абашкина. Однако для получение актуальной информации о всех изменения следите за файлом [CHANGELOG.md](./CHANGELOG.md).
 
 
 ### Конфигурирование
@@ -78,7 +89,7 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/openqa/gr
 tests/config.js
 ```
 
-Однако править этот файл не рекомендуется. Вместо этого используйте локальный конфиг:
+Править этот файл не рекомендуется. Он нужен для запуска тестов удаленно. Для локального запуска тестов используйте конфиг:
 
 ```
 tests/config.local.js
@@ -95,7 +106,7 @@ tests/config.local.js
 
 ### Использование
 
-Запуск сервера:
+Запуск selenium-standalone:
 
 ```
 npm start
@@ -178,7 +189,7 @@ Run -> Debug... -> Edit Configurations... -> Add New Configuration -> Node.js Re
 
 ### Линтер
 
-Для валидации кода тестов мы используем ESLint c [нашими правилами](https://stash.mail.ru/projects/QA/repos/eslint-config-mail.ru/browse).<br />
+Для валидации кода тестов мы используем tslint </br>
 
 *Проверка запускается только на дифф*
 

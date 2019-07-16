@@ -350,8 +350,8 @@ export default {
 	 * @param {Array|null} providers — заданный список провайдеров
 	 * @returns {Array}
 	 */
-	get<T>(providers: string[] | void): T[] {
-		if (providers) {
+	get(providers: string[] | void): Yoda.Provider[] {
+		if (providers && providers.length) {
 			return this.list.filter((provider: Yoda.Provider) => {
 				if (providers.includes(provider.name)) {
 					return provider;
@@ -368,7 +368,7 @@ export default {
 	 * @param {string} domain
 	 * @returns {Object}
 	 */
-	find(domain: string): Yoda.Provider {
+	find(domain: string): Yoda.Provider | null {
 		const provider = this.list.find((provider: Yoda.Provider) => {
 			for (const alias of provider.hosts) {
 				if (alias === domain) {
@@ -377,7 +377,7 @@ export default {
 			}
 		});
 
-		return provider || {};
+		return provider || null;
 	},
 
 	/**
@@ -387,6 +387,7 @@ export default {
 	 * @returns {Array}
 	 */
 	filter<T>(predicate: (provider: string) => boolean): T[] {
+		// @ts-ignore
 		return this.list.filter((provider: string) => {
 			return predicate(provider);
 		});

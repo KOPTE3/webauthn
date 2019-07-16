@@ -11,7 +11,6 @@ export interface Sign {
 
 export interface UserShortResponseBody {
 	signs: Sign[];
-
 	[key: string]: any;
 }
 

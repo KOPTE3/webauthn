@@ -43,7 +43,7 @@ export async function callAsync(
 	opts?: CallOptions
 ): Promise<RequestResult> {
 	if (!defaultRpc && !credentials) {
-		const defaultCredentials: AccountManager.Credentials = authorization.account.data();
+		const defaultCredentials: AccountManager.Credentials & Credentials = authorization.account.data();
 
 		if (!defaultCredentials) {
 			throw new Error('No authorized user found. Please call auth() step before or pass credentials explicitly.');

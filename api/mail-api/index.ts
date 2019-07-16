@@ -4,6 +4,7 @@ export * from './user';
 export * from './aliases';
 export * from './collectors';
 export * from './filters';
+export * from './threads';
 export * from './addressbook/labels';
 export { default as abContactsAdd, abContactsAddAsync } from './ab-contacts-add';
 export { default as helpersUpdate, helpersUpdateAsync } from './helpers-update';

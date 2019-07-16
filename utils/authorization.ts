@@ -6,6 +6,7 @@ import { Cookie } from 'tough-cookie';
 import { creationTime } from '../api/internal/session/index';
 import config from '../config';
 import URL from './url';
+import { assertDefinedValue } from '../utils/assert-defined';
 
 export type Type = 'regular' | 'external' | 'pdd';
 
@@ -62,7 +63,7 @@ const debug = Debug('@qa:yoda:auth');
 const jar = rp.jar();
 const ids: number[] = [];
 
-let session: Session = null;
+let session: Session;
 
 function getSupixUrl() {
 	return `${config.auth.supix}?_=${Math.random()}`;
@@ -76,11 +77,9 @@ function getSupixUrl() {
  */
 export async function getCredentialsAsync(
 	type: Type = 'regular',
-	options: Partial<CommonAccount & EmailType> = null
+	options: Partial<CommonAccount & EmailType> = {}
 ): Promise<ASAccount> {
 	debug(`Запрашиваем аккаунт с типом ${type}`, (options ? options : ''));
-
-	options = options || {};
 
 	const qs = { ...options, type };
 
@@ -104,7 +103,7 @@ export async function getCredentialsAsync(
 
 export function getCredentials(
 	type: Type = 'regular',
-	options: Partial<CommonAccount & EmailType> = null, timeout?: number
+	options: Partial<CommonAccount & EmailType> = {}, timeout?: number
 ): ASAccount {
 	return browser.waitForPromise(getCredentialsAsync(type, options), timeout, 'Could not get user credentials');
 }
@@ -286,7 +285,7 @@ export default class Authorization {
 	static auth(credentials: AccountCredentials): CommonAccount;
 	@step('Авторизуемся аккаунтом {__result__.username}')
 	static auth(arg0?: any, arg1?: any): CommonAccount {
-		let authCredentials: CommonAccount = null;
+		let authCredentials;
 
 		if (typeof arg0 === 'undefined' || ['regular', 'external', 'pdd'].includes(arg0)) {
 			authCredentials = getCredentials(arg0 as Type, arg1);
@@ -299,7 +298,7 @@ export default class Authorization {
 			}
 		}
 
-		const session = loginAccount(authCredentials);
+		const session = loginAccount(authCredentials as CommonAccount);
 
 		URL.open(getSupixUrl(), config.timeout);
 
@@ -323,7 +322,7 @@ export default class Authorization {
 		browser.setCookies(cookies);
 		browser.pause(300);
 
-		return authCredentials;
+		return authCredentials as CommonAccount;
 	}
 
 	static loadNaviData(): NaviData {
@@ -373,7 +372,7 @@ export default class Authorization {
 
 		for (const c of cookies) {
 			if (c.key === 'sdcs' || c.key === 'Mpop') {
-				requestJar.setCookie(Cookie.fromJSON({ ...c, domain: 'mail.ru' }), config.api.internalApiBaseUrl);
+				requestJar.setCookie(Cookie.fromJSON({ ...c, domain: 'mail.ru' }) || '', config.api.internalApiBaseUrl);
 			}
 		}
 
@@ -383,8 +382,8 @@ export default class Authorization {
 		}, {
 			jar: requestJar
 		});
-		assert.strictEqual(response.body, '', 'Failed to set creation_time to session. Check SDCS and Mpop cookies are set.');
 
-		return response.body;
+		return assertDefinedValue(response.body,
+			'Failed to set creation_time to session. Check SDCS and Mpop cookies are set.');
 	}
 }

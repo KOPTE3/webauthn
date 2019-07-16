@@ -2,9 +2,12 @@ import { MailAPI as MailApiInterfaces } from '@qa/api';
 import * as merge from 'deepmerge';
 import { bruteforceCounterReset, BruteforceType, tokensInfo } from '../../api/internal';
 import * as MailApi from '../../api/mail-api';
+import { threadsStatusSmart } from '../../api/mail-api/threads';
 import authorization from '../../store/authorization';
 import helpers from '../../store/helpers';
 import { Phone } from '../../store/phones/index';
+import { assertDefinedValue } from '../../utils/assert-defined';
+import { Credentials } from '../../types/api';
 
 /** Интерфейс для вывода данных, о созданной запароленной папке */
 interface SecretFolderData {
@@ -33,18 +36,31 @@ interface User2StepAuthEnableOptions {
 	redirect_uri?: string;
 }
 
+interface SharedFolders {
+	root?: {
+		id: number;
+		name: string;
+	};
+	list: Array<{
+		id: number;
+		name: string;
+	}>;
+}
+
 export default class MailApiSteps {
 	@step(
 		'Создать папку с указанными параметрами. В результате созданы папки с id {__result__}',
 		(folderData: any) => folderData
 	)
-	createFolder(folderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']>): number {
-		return +MailApi.foldersAdd({
+	createFolder(folderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']>, credentials?: Credentials): number {
+		const body = MailApi.foldersAdd({
 			folders: [{
 				...defaultFolderData,
 				...folderData
 			}]
-		}).body[0];
+		}, credentials).body;
+
+		return +assertDefinedValue(body)[0];
 	}
 
 	@step(
@@ -59,24 +75,29 @@ export default class MailApiSteps {
 			)
 	)
 	createFolders(foldersData: MailApiInterfaces.FoldersAdd['folders']): number[] {
-		return MailApi.foldersAdd({
-			folders: foldersData.map((folderData) => ({
+		const body = MailApi.foldersAdd({
+			folders: assertDefinedValue(foldersData)
+				.map((folderData) => ({
 				...defaultFolderData,
 				...folderData
 			}))
-		}).body.map((folderId: string) => +folderId);
+		}).body;
+
+		return assertDefinedValue(body).map((folderId: string) => +folderId);
 	}
 
 	@step('Создать {params ? "кастомную" : ""} папку Архив')
 	createArchive(params?: ArrayElement<MailApiInterfaces.FoldersAdd['folders']>): number {
-		return +MailApi.foldersAdd({
+		const body = MailApi.foldersAdd({
 			folders: [{
 				...defaultFolderData,
 				name: 'Архив',
 				type: 'archive',
 				...params
 			}]
-		}).body[0];
+		}).body;
+
+		return +assertDefinedValue(body)[0];
 	}
 
 	@step('{isEnabled ? "В" : "Вы"}ключить треды{refresh ? " и обновить страницу" : ""}')
@@ -93,16 +114,20 @@ export default class MailApiSteps {
 
 	@step('Открыть запароленные папки с id: [{__result__}]')
 	openFolders(foldersData: Array<{id: number, password: string}>): number[] {
-		return MailApi.foldersOpen({
+		const body = MailApi.foldersOpen({
 			folders: foldersData.map(({ id, password }) => ({
 				id: `${id}`,
 				secret: { folder_password: password }
 			}))
-		}).body.map((folderId: string) => +folderId);
+		}).body;
+
+		return assertDefinedValue(body).map((folderId: string) => +folderId);
 	}
 
 	getMessagesCount(folder: number): number {
-		return MailApi.messagesStatus({ folder }).body.messages_total;
+		const status = MailApi.messagesStatus({ folder }).body;
+
+		return assertDefinedValue(status).messages_total;
 	}
 
 	/**
@@ -117,23 +142,27 @@ export default class MailApiSteps {
 	waitForLetterBySubjectInStatus(subject: string, folder: number, count: number = 1, limit?: number) {
 		browser.waitUntil(
 			() => {
-				const { messages } = MailApi.messagesStatus({ folder, limit }).body;
+				const { messages } = assertDefinedValue(MailApi.messagesStatus({ folder, limit }).body);
 
 				return messages.filter((message) => message.subject === subject).length >= count;
 			},
-			null,
+			void 0,
 			`Сообщение с темой письма "${subject}" ("${count}" шт.) для папки "${folder}" отсутствует в статусе`
 		);
 	}
 
-	getCurrentSignature(returnHtml: boolean = false): string {
-		const currentSignObject = MailApi.userShort({}).body.signs.find((sign) => sign.active);
+	getCurrentSignature(returnHtml: boolean = false): string | null {
+		const currentSignObject = assertDefinedValue(MailApi.userShort({}).body)
+			.signs.find((sign) => sign.active);
 
 		return (!currentSignObject) ? null : (returnHtml) ? currentSignObject.sign_html : currentSignObject.sign;
 	}
 
 	getUidlBySubjectInFolder(folderId: number, subject: string): string {
-		return MailApi.messagesStatus({ folder: folderId }).body.messages.find((message) => message.subject === subject).id;
+		const status = MailApi.messagesStatus({ folder: folderId }).body;
+		const message = assertDefinedValue(status).messages.find((message) => message.subject === subject);
+
+		return assertDefinedValue(message).id;
 	}
 
 	@step('Добавить контакт с именем {nickName} и email {email} в адресную книгу')
@@ -148,27 +177,55 @@ export default class MailApiSteps {
 	}
 
 	@step('Создать запароленную папку. В результате создана папка с id "{__result__.id}"')
-	createSecretFolder(params: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> = {}): SecretFolderData {
+	createSecretFolder(
+		params: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> = {},
+		credentials?: Credentials
+	): SecretFolderData {
+		const account = credentials || authorization;
 		const folderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> = merge(
 			{
 				...defaultFolderData,
 				secret: {
-					folder_password: authorization.password,
-					user_password: authorization.account.get('password'),
+					folder_password: account.password,
+					user_password: credentials ? credentials.password : authorization.account.get('password'),
 					question: 'кто я?',
 					answer: 'никто'
 				}
 			},
 			params
 		);
-		const { folder_password, question, answer } = folderData.secret;
-
-		return {
-			id: this.createFolder(folderData),
-			name: folderData.name,
+		const {
 			folder_password,
 			question,
 			answer
+		} = folderData.secret as Required<{folder_password: string, question: string, answer: string}>;
+
+		return {
+			id: this.createFolder(folderData, credentials),
+			name: assertDefinedValue(folderData.name),
+			folder_password,
+			question,
+			answer
+		};
+	}
+
+	@step('Загрузить список папок пользователя {credentials.username}, расшаренных другим пользователем {owner}')
+	findSharedFolders(owner: string, credentials: Credentials): SharedFolders {
+		const mailboxStatus = threadsStatusSmart({ folder: 0 }, credentials);
+		const shared = assertDefinedValue(mailboxStatus.body).folders.filter((folder) => {
+			return folder.owner && folder.owner.email === owner;
+		});
+		const root = shared.find(({ parent }) => parseInt(parent, 10) === -1);
+		const list = shared
+			.filter(({ parent }) => parseInt(parent, 10) !== -1)
+			.map(({ id, name }) => ({ id: +id, name }));
+
+		return {
+			root: root && {
+				id: root.id,
+				name: root.name
+			},
+			list
 		};
 	}
 
@@ -209,7 +266,7 @@ export default class MailApiSteps {
 		};
 
 		const regTokenResponse = MailApi.user2StepAuthEnable(enableRequest, options, { validStatusCodes: [449] });
-		const regTokenId = regTokenResponse.body.auth.reg_token.id;
+		const regTokenId = assertDefinedValue(regTokenResponse.body).auth.reg_token.id;
 
 		const regTokenInfo = tokensInfo({
 			email: options.username,
@@ -218,9 +275,11 @@ export default class MailApiSteps {
 
 		enableRequest.reg_token = {
 			id: regTokenId,
-			value: regTokenInfo.body.code
+			value: assertDefinedValue(regTokenInfo.body).code
 		};
 
 		MailApi.user2StepAuthEnable(enableRequest, options);
 	}
 }
+
+export const mailApiSteps = new MailApiSteps();
