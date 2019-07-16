@@ -18,6 +18,7 @@ export interface CommonAccount extends AccountCredentials {
 	login: string;
 	domain: string;
 	username: string;
+	emailType?: string;
 }
 
 export interface ASAccount extends CommonAccount {
@@ -80,7 +81,11 @@ export async function getCredentialsAsync(
 
 	const qs = { ...options, type };
 
-	const response: ASAccount = await rp.get(`${config.as.url}/get`, {
+	const accountUrl = options.emailType === 'test_login' ?
+		config.as.testLoginUrl :
+		config.as.url;
+
+	const response: ASAccount = await rp.get(`${accountUrl}/get`, {
 		json: true,
 		auth: config.as.auth,
 		qs

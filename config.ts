@@ -23,6 +23,7 @@ export default {
 	},
 	as: {
 		url: 'http://as.tornado.dev.mail.ru/accounts',
+		testLoginUrl: 'http://ci2.dev.mail.ru:9997/accounts',
 		auth: {
 			user: 'feta-accounts',
 			password: 'g}94VGAfgizZ'
