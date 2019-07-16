@@ -88,7 +88,7 @@ export default class InternalApiSteps {
 	}
 
 	@step('Задать пользователю дату рождения {__result__}')
-	setUserBirthday(login: string, domain: string, date: Required<UserEditOptions['birthday']>): string {
+	setUserBirthday(login: string, domain: string, date: Required<UserEditOptions>['birthday']): string {
 		const userToEdit = {
 			login,
 			domain,
