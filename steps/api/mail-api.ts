@@ -2,10 +2,12 @@ import { MailAPI as MailApiInterfaces } from '@qa/api';
 import * as merge from 'deepmerge';
 import { bruteforceCounterReset, BruteforceType, tokensInfo } from '../../api/internal';
 import * as MailApi from '../../api/mail-api';
+import {threadsStatusSmart} from '../../api/mail-api/threads';
 import authorization from '../../store/authorization';
 import helpers from '../../store/helpers';
 import { Phone } from '../../store/phones/index';
 import { assertDefinedValue } from '../../utils/assert-defined';
+import {Credentials} from '../../types/api';
 
 /** Интерфейс для вывода данных, о созданной запароленной папке */
 interface SecretFolderData {
@@ -34,18 +36,29 @@ interface User2StepAuthEnableOptions {
 	redirect_uri?: string;
 }
 
+interface SharedFolders {
+	root?: {
+		id: number;
+		name: string;
+	};
+	list: Array<{
+		id: number;
+		name: string;
+	}>;
+}
+
 export default class MailApiSteps {
 	@step(
 		'Создать папку с указанными параметрами. В результате созданы папки с id {__result__}',
 		(folderData: any) => folderData
 	)
-	createFolder(folderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']>): number {
+	createFolder(folderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']>, credentials?: Credentials): number {
 		const body = MailApi.foldersAdd({
 			folders: [{
 				...defaultFolderData,
 				...folderData
 			}]
-		}).body;
+		}, credentials).body;
 
 		return +assertDefinedValue(body)[0];
 	}
@@ -164,13 +177,14 @@ export default class MailApiSteps {
 	}
 
 	@step('Создать запароленную папку. В результате создана папка с id "{__result__.id}"')
-	createSecretFolder(params: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> = {}): SecretFolderData {
+	createSecretFolder(params: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> = {}, credentials?: Credentials): SecretFolderData {
+		const account = credentials || authorization;
 		const folderData: ArrayElement<MailApiInterfaces.FoldersAdd['folders']> = merge(
-			{
+		{
 				...defaultFolderData,
 				secret: {
-					folder_password: authorization.password,
-					user_password: authorization.account.get('password'),
+					folder_password: account.password,
+					user_password: credentials ? credentials.password : authorization.account.get('password'),
 					question: 'кто я?',
 					answer: 'никто'
 				}
@@ -184,11 +198,29 @@ export default class MailApiSteps {
 		} = folderData.secret as Required<{folder_password: string, question: string, answer: string}>;
 
 		return {
-			id: this.createFolder(folderData),
+			id: this.createFolder(folderData, credentials),
 			name: assertDefinedValue(folderData.name),
 			folder_password,
 			question,
 			answer
+		};
+	}
+
+	@step('Загрузить список папок пользователя {credentials.username}, расшаренных другим пользователем {owner}')
+	findSharedFolders(owner: string, credentials: Credentials): SharedFolders {
+		const mailboxStatus = threadsStatusSmart({folder: 0}, credentials);
+		const shared = assertDefinedValue(mailboxStatus.body).folders.filter((folder) => {
+			return folder.owner && folder.owner.email === owner;
+		});
+		const root = shared.find(({parent}) => parent == -1);
+		const list = shared.filter(({parent}) => parent != -1).map(({id, name}) => ({id: +id, name}));
+
+		return {
+			root: root && {
+				id: root.id,
+				name: root.name,
+			},
+			list,
 		};
 	}
 
@@ -244,3 +276,5 @@ export default class MailApiSteps {
 		MailApi.user2StepAuthEnable(enableRequest, options);
 	}
 }
+
+export const mailApiSteps = new MailApiSteps();

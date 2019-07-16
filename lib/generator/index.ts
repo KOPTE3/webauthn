@@ -89,12 +89,17 @@ export default async function generate(source: string, options?: any): Promise<v
 						});
 					const preparedParameters: ParameterDeclarationStructure[] = params.slice(1)
 						.map((param: ParameterDeclaration): ParameterDeclarationStructure => {
+							const type = param.getType();
 							const p: ParameterDeclarationStructure = {
 								name: assertDefinedValue(param.getName()),
-								type: param.getType().getText(),
+								type: type.getText(),
 								hasQuestionToken: param.isOptional() && !param.isRestParameter(),
 								isRestParameter: param.isRestParameter()
 							};
+
+							if (type.isClassOrInterface()) {
+								p.type = type.getSymbolOrThrow().getName();
+							}
 
 							return p;
 						});

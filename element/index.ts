@@ -288,6 +288,13 @@ export class Element {
 	}
 
 	@gen
+	@step('Кликаем правой кнопкой мыши по элементу {element}')
+	static RightClickTo(element: Element): void {
+		const locator = element.Locator();
+		browser.rightClick(locator);
+	}
+
+	@gen
 	@step('Наводим курсор мыши на {element}')
 	static MouseOver(element: Element, xoffset?: number, yoffset?: number): void {
 		const locator = element.Locator();
