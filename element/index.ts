@@ -95,7 +95,7 @@ export class Element {
 		browser.keys(button);
 
 		return Object.keys(UNICODE_CHARACTERS)
-			.find((key: keyof typeof UNICODE_CHARACTERS) => UNICODE_CHARACTERS[key] === button);
+			.find((key: string) => UNICODE_CHARACTERS[key as keyof typeof UNICODE_CHARACTERS] === button);
 	}
 
 	@gen

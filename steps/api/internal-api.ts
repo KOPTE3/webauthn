@@ -3,6 +3,7 @@ import { PhoneStatus } from '../../api/internal/user/phones-state';
 import userProfileSet from '../../api/internal/user/profile-set';
 import authorization from '../../store/authorization';
 import phonesStore from '../../store/phones';
+import { assertDefinedValue } from '../../utils/assert-defined';
 
 export type PhoneStatusStep = PhoneStatus | 'in_remove_queue' | 'twofa';
 export type ExtraEmailStatusStep = 'ok' | 'too_young' | 'in_remove_queue';
@@ -19,14 +20,15 @@ export default class InternalApiSteps {
 	@step('Добавить телефон для пользователя "{email}" с типом "{type}"')
 	addPhone(storeIndex: number, email: string, type: PhoneStatusStep) {
 		const phone: string = phonesStore.getNumber(storeIndex);
-
-		const phoneId = InternalApi.usersPhonesAdd({
+		const body = InternalApi.usersPhonesAdd({
 			email,
 			phones: [{
 				phone,
 				mobile: true
 			}]
-		}).body[0];
+		}).body;
+
+		const phoneId = assertDefinedValue(body)[0];
 
 		let initialType: PhoneStatus;
 		switch (type) {
@@ -81,7 +83,7 @@ export default class InternalApiSteps {
 			value
 		});
 
-		return response.body.body;
+		return assertDefinedValue(response.body).body;
 	}
 }
 

@@ -1,0 +1,10 @@
+{
+  "reject": [
+    "webdriverio",
+    "@types/webdriverio",
+    "chromedriver",
+    "deepmerge",
+    "@types/debug",
+    "@types/deepmerge"
+  ]
+}

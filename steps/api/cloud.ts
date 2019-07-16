@@ -1,5 +1,6 @@
 import * as assert from 'assert';
 import * as CloudApi from '../../api/cloud';
+import { assertDefinedValue } from '../../utils/assert-defined';
 
 export default class CloudApiSteps {
 	/**
@@ -9,7 +10,8 @@ export default class CloudApiSteps {
 	 */
 	@step('Очистить Облако от файлов')
 	clearCloud() {
-		const rootFolderFiles: string[] = CloudApi.folder({ home: '/' }).body.list.map(({ home }) => home);
+		const rootFolderFiles: string[] = assertDefinedValue(CloudApi.folder({ home: '/' }).body)
+			.list.map(({ home }) => home);
 
 		rootFolderFiles.forEach((filePath: string) => CloudApi.fileRemove({ home: filePath }));
 

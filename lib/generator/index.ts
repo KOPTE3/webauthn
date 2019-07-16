@@ -10,6 +10,7 @@ import Project, {
 	TypeParameterDeclarationStructure
 } from 'ts-simple-ast';
 import { lcFirst } from '../../utils/utils';
+import { assertDefinedValue } from '../../utils/assert-defined';
 
 interface Temp {
 	className: string;
@@ -57,7 +58,7 @@ export default async function generate(source: string, options?: any): Promise<v
 
 		if (generateMethods.length > 0) {
 			generateClasses.push({
-				className: classDeclaration.getName(),
+				className: assertDefinedValue(classDeclaration.getName()),
 				methods: generateMethods.map((generateMethod: MethodDeclaration): MethodDeclarationStructure => {
 					const method: MethodDeclarationStructure = {
 						name: lcFirst(generateMethod.getName()),
@@ -89,7 +90,7 @@ export default async function generate(source: string, options?: any): Promise<v
 					const preparedParameters: ParameterDeclarationStructure[] = params.slice(1)
 						.map((param: ParameterDeclaration): ParameterDeclarationStructure => {
 							const p: ParameterDeclarationStructure = {
-								name: param.getName(),
+								name: assertDefinedValue(param.getName()),
 								type: param.getType().getText(),
 								hasQuestionToken: param.isOptional() && !param.isRestParameter(),
 								isRestParameter: param.isRestParameter()
@@ -150,14 +151,17 @@ export default async function generate(source: string, options?: any): Promise<v
 		const dtsFile = project.addExistingSourceFile(dts);
 		for (const generateClass of generateClasses) {
 			const { className, methods } = generateClass;
-			const dtsClass: ClassDeclaration = dtsFile.getClass(className);
+			const dtsClass: ClassDeclaration = assertDefinedValue(dtsFile.getClass(className));
 
 			for (const method of methods) {
-				while (dtsClass.getStaticMethod(method.name)) {
-					dtsClass.getStaticMethod(method.name).remove();
+				const staticMethod = dtsClass.getStaticMethod(method.name);
+				const instanceMethod = dtsClass.getInstanceMethod(method.name);
+
+				while (staticMethod) {
+					staticMethod.remove();
 				}
-				while (dtsClass.getInstanceMethod(method.name)) {
-					dtsClass.getInstanceMethod(method.name).remove();
+				while (instanceMethod) {
+					instanceMethod.remove();
 				}
 
 				dtsClass.addMethod(method);

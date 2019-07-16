@@ -1,7 +1,9 @@
 import Element from '../../element';
 import { lcFirst } from '../../utils/utils';
 
-const gen: MethodDecorator = <T>(
+type ElementConstructor = new (...rest: any[]) => Element;
+
+const gen = <T>(
 	Class: typeof Element,
 	propetryKey: string,
 	descriptor: TypedPropertyDescriptor<T>
@@ -12,7 +14,7 @@ const gen: MethodDecorator = <T>(
 		enumerable: false,
 		configurable: true,
 		writable: false,
-		value() {
+		value(this: ElementConstructor) {
 			const instance = Reflect.construct(this, []);
 			return Reflect.apply(
 				(Class as any)[propetryKey],
