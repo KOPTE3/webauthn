@@ -450,5 +450,3 @@ export class Element<Params extends object = any> {
 }
 
 export default Element;
-
-const kek = new Element<{ a: number }>(new Element(), 'wrg', 'wrgvwr');
