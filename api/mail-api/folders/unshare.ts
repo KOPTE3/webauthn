@@ -1,6 +1,5 @@
-import {Credentials, RequestResult} from '../../../types/api';
-import call, {callAsync} from '../call';
-
+import { Credentials, RequestResult } from '../../../types/api';
+import call, { callAsync } from '../call';
 
 export interface FoldersUnshareOptions {
 	unshared_email: string;
@@ -10,13 +9,13 @@ export interface FoldersUnshareOptions {
 /**
  * @see http://api.tornado.dev.mail.ru/folders/unshare
  */
-export default function foldersUnshare (options: FoldersUnshareOptions, credentials?: Credentials): RequestResult<null> {
+export default function foldersUnshare(options: FoldersUnshareOptions, credentials?: Credentials): RequestResult<null> {
 	return call('folders/unshare', options, 'POST', credentials);
 }
 
-export async function foldersUnshareAsync (
+export async function foldersUnshareAsync(
 	options: FoldersUnshareOptions,
-	credentials?: Credentials,
+	credentials?: Credentials
 ): Promise<RequestResult<null>> {
 	return callAsync('folders/unshare', options, 'POST', credentials);
 }

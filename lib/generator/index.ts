@@ -164,12 +164,12 @@ export default async function generate(source: string, options?: any): Promise<v
 
 				while (staticMethod) {
 					staticMethod.remove();
-					staticMethod = dtsClass.getStaticMethod(method.name)
+					staticMethod = dtsClass.getStaticMethod(method.name);
 				}
 
 				while (instanceMethod) {
 					instanceMethod.remove();
-					instanceMethod = dtsClass.getInstanceMethod(method.name)
+					instanceMethod = dtsClass.getInstanceMethod(method.name);
 				}
 
 				dtsClass.addMethod(method);
