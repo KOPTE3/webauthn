@@ -1,5 +1,17 @@
 # Changelog
 
+## 9.9.1
+* Починили баг в методе `open`
+
+```
+null is undefined
+[chrome #0-0] TypeError: null is undefined
+[chrome #0-0]     at Object.assertDefinedValue
+...
+```
+* Добалены mail-api методы для шаринга ящика (Glasha)
+
+
 ## 9.9.0
 
 * Строгие проверки типов
