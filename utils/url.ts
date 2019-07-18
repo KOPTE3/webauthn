@@ -1,7 +1,6 @@
 import * as url from 'url';
 import * as Debug from 'debug';
 import * as querystring from 'querystring';
-import { assertDefinedValue } from './assert-defined';
 
 const debug = Debug('@qa:yoda');
 const TIMEOUT: number = 30 * 1000;
@@ -65,7 +64,11 @@ export default {
 	 */
 	format(source: string, add = {}, remove: string[] = []): string {
 		const data = url.parse(source);
-		const query = this.parse(assertDefinedValue(data.query));
+		let query: querystring.ParsedUrlQuery = {};
+
+		if (data.query) {
+			query = this.parse(data.query);
+		}
 
 		remove.forEach((name) => {
 			delete query[name];
