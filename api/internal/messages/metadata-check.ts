@@ -1,4 +1,3 @@
-import { MailAPI } from '@qa/api';
 import { RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
 
@@ -6,23 +5,23 @@ import call, { callAsync } from '../call';
  * http://api.tornado.dev.mail.ru/messages/metadata/check
  */
 
-interface Options {
+export interface IMetadataCheckOptions {
 	uidl: string;
 	email?: string;
 }
 
-interface Result {
+export interface IMetadataCheckOptionsResult {
 	metadata: {json_ld: Array<{[k: string]: any}>};
 }
 
-export default function metaGet(
-	opt: Options
-): RequestResult<Result> {
+export default function metadataCheck(
+	opt: IMetadataCheckOptions
+): RequestResult<IMetadataCheckOptionsResult> {
 	return call('golang/messages/metadata/check', opt, 'POST');
 }
 
-export async function metaGetAsync(
-	opt: Options
-): Promise<RequestResult<Result>> {
+export async function metadataCheckAsync(
+	opt: IMetadataCheckOptions
+): Promise<RequestResult<IMetadataCheckOptionsResult>> {
 	return callAsync('golang/messages/metadata/check', opt, 'POST');
 }
