@@ -20,7 +20,7 @@ function tryToGetGetterDescriptor(obj: object, field: string): PropertyDescripto
  * имеет локатор и название
  * @class Element
  */
-export class Element {
+export class Element<Params extends object = any> {
 	/** родительский элемент (если есть) */
 	public parent?: Element | null;
 
@@ -28,7 +28,7 @@ export class Element {
 	protected locator: string;
 	/** название элемента */
 	protected name: string;
-	protected params: any = null;
+	protected params: Params;
 
 	constructor();
 
@@ -38,9 +38,9 @@ export class Element {
 
 	constructor(parent: Element, locator: string, name?: string);
 
-	constructor(params: any);
+	constructor(params: Params);
 
-	constructor(parent: Element, params: any);
+	constructor(parent: Element, params: Params);
 
 	constructor(...args: any[]) {
 		const locatorDescriptor = tryToGetGetterDescriptor(this, 'locator');
@@ -55,7 +55,7 @@ export class Element {
 		}
 
 		if (!this.params) {
-			this.params = {};
+			this.params = {} as Params;
 		}
 
 		if (args[0] instanceof Element) {
@@ -450,3 +450,5 @@ export class Element {
 }
 
 export default Element;
+
+const kek = new Element<{ a: number }>(new Element(), 'wrg', 'wrgvwr');
