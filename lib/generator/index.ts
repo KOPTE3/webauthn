@@ -159,14 +159,17 @@ export default async function generate(source: string, options?: any): Promise<v
 			const dtsClass: ClassDeclaration = assertDefinedValue(dtsFile.getClass(className));
 
 			for (const method of methods) {
-				const staticMethod = dtsClass.getStaticMethod(method.name);
-				const instanceMethod = dtsClass.getInstanceMethod(method.name);
+				let staticMethod = dtsClass.getStaticMethod(method.name);
+				let instanceMethod = dtsClass.getInstanceMethod(method.name);
 
 				while (staticMethod) {
 					staticMethod.remove();
+					staticMethod = dtsClass.getStaticMethod(method.name);
 				}
+
 				while (instanceMethod) {
 					instanceMethod.remove();
+					instanceMethod = dtsClass.getInstanceMethod(method.name);
 				}
 
 				dtsClass.addMethod(method);
