@@ -14,7 +14,14 @@ interface ThreadsStatusSmartBody {
 		name: string;
 		parent: string;
 	}>;
-	threads: any[];
+	threads: Array<{
+		id: string;
+		length: number;
+		length_unread: number;
+		length_flagged: number;
+		subject: string;
+		folder: string;
+	}>;
 	collectors: any[];
 	messages_total: number;
 	threads_total: number;
