@@ -60,8 +60,18 @@ export default class Transport {
 
 			assert.strictEqual(response.status, RPC.HTTPStatus.OK);
 
+			if (Array.isArray(response.message.attachments)) {
+				response.message.attachments = response.message.attachments.map(function (attach) {
+					if (attach.content instanceof Buffer) {
+						// Оставляем кусок исходного файла для экономии памяти
+						attach.content = attach.content.slice(0, 1000);
+					}
+					return attach;
+				});
+			}
+
 			return response;
-		});
+		}, params.timeout);
 	}
 
 	/**
@@ -164,6 +174,7 @@ export type ISendMessageData = MailAPI.MessagesSend & ITransportData;
 export type IPutMessageData = IDeliverydRequest & {
 	content?: string;
 	rawFilename?: string;
+	timeout?: number;
 };
 
 export interface SaveDraftData extends MailAPI.MessagesDraft {
