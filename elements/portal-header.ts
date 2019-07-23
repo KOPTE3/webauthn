@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import Element from '../element/index';
+import Element from '../element';
 
 class UserEmail extends Element {
 	protected locator: string = '#PH_user-email';
