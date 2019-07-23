@@ -21,6 +21,17 @@ class SignUpLink extends Element {
 	protected name: string = 'Ссылка "Регистрация"';
 }
 
+class AuthMenuDropdown extends Element {
+	protected locator: string = '.x-ph__menu__dropdown_auth';
+	protected name: string = 'Выпадушка порталки со списокм авторизованных аккаунтов';
+}
+
+class SignInAnotherLink extends Element {
+	public parent: Element = new AuthMenuDropdown();
+	protected locator: string = '#PH_loginAnotherLink';
+	protected name: string = 'Кнопка "Добавить почтовый ящик" в выпадушке';
+}
+
 export default class PortalHeader extends Element {
 	protected locator: string = '#portal-headline';
 	protected name: string = 'Порталка';
@@ -29,6 +40,8 @@ export default class PortalHeader extends Element {
 	static LogoutLink = LogoutLink;
 	static SignInLink = SignInLink;
 	static SignUpLink = SignUpLink;
+	static AuthMenuDropdown = AuthMenuDropdown;
+	static SignInAnotherLink = SignInAnotherLink;
 
 	@step('Проверяем, что порталка содержит следующий email: {expected}')
 	static CheckEmail(expected: string): void {
