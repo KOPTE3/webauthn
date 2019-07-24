@@ -10,6 +10,10 @@ import { assertDefinedValue } from '../utils/assert-defined';
 
 export type Type = 'regular' | 'external' | 'pdd';
 
+export interface EmailType {
+	emailType: string | 'test_login';
+}
+
 export interface AccountCredentials {
 	email: string;
 	password: string;
@@ -73,13 +77,17 @@ function getSupixUrl() {
  */
 export async function getCredentialsAsync(
 	type: Type = 'regular',
-	options: Partial<CommonAccount> = {}
+	options: Partial<CommonAccount & EmailType> = {}
 ): Promise<ASAccount> {
 	debug(`Запрашиваем аккаунт с типом ${type}`, (options ? options : ''));
 
 	const qs = { ...options, type };
 
-	const response: ASAccount = await rp.get(`${config.as.url}/get`, {
+	const accountUrl = options.emailType === 'test_login' ?
+		config.as.testLoginUrl :
+		config.as.url;
+
+	const response: ASAccount = await rp.get(`${accountUrl}/get`, {
 		json: true,
 		auth: config.as.auth,
 		qs
@@ -95,7 +103,7 @@ export async function getCredentialsAsync(
 
 export function getCredentials(
 	type: Type = 'regular',
-	options: Partial<CommonAccount> = {}, timeout?: number
+	options: Partial<CommonAccount & EmailType> = {}, timeout?: number
 ): ASAccount {
 	return browser.waitForPromise(getCredentialsAsync(type, options), timeout, 'Could not get user credentials');
 }
@@ -272,7 +280,7 @@ function parseAccount(email: string, password: string): CommonAccount {
 }
 
 export default class Authorization {
-	static auth(type?: Type, select?: Partial<CommonAccount>): CommonAccount;
+	static auth(type?: Type, select?: Partial<CommonAccount & EmailType>): CommonAccount;
 	static auth(email: string, password: string): CommonAccount;
 	static auth(credentials: AccountCredentials): CommonAccount;
 	@step('Авторизуемся аккаунтом {__result__.username}')
