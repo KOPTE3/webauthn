@@ -61,7 +61,7 @@ export default class Transport {
 			assert.strictEqual(response.status, RPC.HTTPStatus.OK);
 
 			if (Array.isArray(response.message.attachments)) {
-				response.message.attachments = response.message.attachments.map(function (attach) {
+				response.message.attachments = response.message.attachments.map((attach) => {
 					if (attach.content instanceof Buffer) {
 						// Оставляем кусок исходного файла для экономии памяти
 						attach.content = attach.content.slice(0, 1000);
