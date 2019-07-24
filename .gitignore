@@ -55,3 +55,4 @@ config.local.js
 !wdio/**/*.js
 
 /test*
+*.tgz

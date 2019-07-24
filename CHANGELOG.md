@@ -1,5 +1,25 @@
 # Changelog
 
+## 9.9.1
+* Починили баг в методе `open`
+
+```
+null is undefined
+[chrome #0-0] TypeError: null is undefined
+[chrome #0-0]     at Object.assertDefinedValue
+...
+```
+* Добалены mail-api методы для шаринга ящика (Glasha)
+
+
+## 9.9.0
+
+* Строгие проверки типов
+* Lock-файл
+* Починили баг в генерилке элементов, из-за которого в d.ts появлялось: `import("/Users/anatolijostapenko/repos/yoda/element/index").Element`
+* Новые методы у элементов: `Element.RightClickTo`
+* Новые internal и mailapi методы
+
 ## 9.8.6
 
 * Добавили сервис @qa/yoda/wdio/mocha-hooks, который служит заменой пакета @qa/wdio-mocha-hooks

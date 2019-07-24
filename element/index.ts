@@ -95,7 +95,7 @@ export class Element {
 		browser.keys(button);
 
 		return Object.keys(UNICODE_CHARACTERS)
-			.find((key: keyof typeof UNICODE_CHARACTERS) => UNICODE_CHARACTERS[key] === button);
+			.find((key: string) => UNICODE_CHARACTERS[key as keyof typeof UNICODE_CHARACTERS] === button);
 	}
 
 	@gen
@@ -285,6 +285,13 @@ export class Element {
 	static MiddleClickTo(element: Element): void {
 		const locator = element.Locator();
 		browser.middleClick(locator);
+	}
+
+	@gen
+	@step('Кликаем правой кнопкой мыши по элементу {element}')
+	static RightClickTo(element: Element): void {
+		const locator = element.Locator();
+		browser.rightClick(locator);
 	}
 
 	@gen

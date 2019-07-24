@@ -64,7 +64,11 @@ export default {
 	 */
 	format(source: string, add = {}, remove: string[] = []): string {
 		const data = url.parse(source);
-		const query = this.parse(data.query);
+		let query: querystring.ParsedUrlQuery = {};
+
+		if (data.query) {
+			query = this.parse(data.query);
+		}
 
 		remove.forEach((name) => {
 			delete query[name];
@@ -78,6 +82,6 @@ export default {
 			result += `?${this.query(query)}`;
 		}
 
-		return result;
+		return result as string;
 	}
 };
