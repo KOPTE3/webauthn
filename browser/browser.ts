@@ -45,4 +45,11 @@ export default class Browser {
 			'увеличивает время исполнения тестов');
 		browser.pause(timeout);
 	}
+
+	@step('Увеличить размер экрана браузера')
+	static FullScreen() {
+		browser.windowHandleMaximize();
+		// таймаут на изменение размера окна
+		browser.pause(2000);
+	}
 }
