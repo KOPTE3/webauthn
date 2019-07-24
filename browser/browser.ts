@@ -45,4 +45,11 @@ export default class Browser {
 			'увеличивает время исполнения тестов');
 		browser.pause(timeout);
 	}
+
+	// таймаут на изменение размера окна необходим, к сожалению
+	@step('Увеличить размер экрана браузера')
+	static FullScreen(resizeTimeout: number = 2000) {
+		browser.windowHandleMaximize();
+		Browser.Pause(resizeTimeout);
+	}
 }
