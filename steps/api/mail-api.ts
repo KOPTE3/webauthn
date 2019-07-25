@@ -280,6 +280,17 @@ export default class MailApiSteps {
 
 		MailApi.user2StepAuthEnable(enableRequest, options);
 	}
+
+	@step('Установить письму {uidl} статус оплаты {status}')
+	setPaymentStatus(uidl: string, status: 'awaiting' | 'error' | 'success', metaIndex: number = 0) {
+		MailApi.paymentMessagesStatusUpdate({
+			uidl,
+			payment_id: 'q1w2e3r4',
+			meta_type: 'MailRuBill',
+			meta_index: metaIndex,
+			status
+		});
+	}
 }
 
 export const mailApiSteps = new MailApiSteps();

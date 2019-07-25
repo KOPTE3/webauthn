@@ -12,3 +12,7 @@ export { default as helpersRemove, helpersRemoveAsync } from './helpers-remove';
 export { default as messagesStatus, messagesStatusAsync } from './messages-status';
 export { default as messagesMessage, messagesMessageAsync } from './messages-message';
 export { default as tokensSend, tokensSendAsync } from './tokens-send';
+export {
+	default as paymentMessagesStatusUpdate,
+	paymentMessagesStatusUpdateAsync
+} from './payment-messages-status-update';
