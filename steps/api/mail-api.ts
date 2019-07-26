@@ -142,9 +142,18 @@ export default class MailApiSteps {
 	waitForLetterBySubjectInStatus(subject: string, folder: number, count: number = 1, limit?: number) {
 		browser.waitUntil(
 			() => {
-				const { messages } = assertDefinedValue(MailApi.messagesStatus({ folder, limit }).body);
+				const { threads } = assertDefinedValue(MailApi.threadsStatusSmart({ folder, limit }).body);
 
-				return messages.filter((message) => message.subject === subject).length >= count;
+				const matchedMessagesCount = threads
+					.filter(({folder: f}) => +f === folder)
+					.reduce((sum, thread) => {
+						if (thread.subject === subject) {
+							return sum + thread.length;
+						}
+						return sum;
+					}, 0);
+
+				return matchedMessagesCount >= count;
 			},
 			void 0,
 			`Сообщение с темой письма "${subject}" ("${count}" шт.) для папки "${folder}" отсутствует в статусе`
