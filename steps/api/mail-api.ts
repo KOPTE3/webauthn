@@ -163,7 +163,8 @@ export default class MailApiSteps {
 				return matchedMessagesCount >= count;
 			},
 			void 0,
-			`Сообщение с темой письма "${subject}" ("${count}" шт.) для папки "${folder}" отсутствует в статусе`
+			`Сообщение с темой письма "${subject}" ("${count}" шт.) для папки "${folder}" отсутствует в статусе`,
+			2000
 		);
 	}
 
