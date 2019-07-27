@@ -1,6 +1,6 @@
 {
   "name": "@qa/yoda",
-  "version": "9.9.3-wait-patch.1",
+  "version": "9.9.3-wait-patch.2",
   "description": "Testing platform",
   "author": "Mail.Ru Group Limited",
   "license": "UNLICENSED",
@@ -47,7 +47,7 @@
     "@qa/api": "^0.0.7",
     "@qa/file-service": "^0.0.3",
     "@qa/rpc": "^0.1.4",
-    "@qa/transport": "2.3.1",
+    "@qa/transport": "2.3.2-rc.0",
     "@qa/wdio-utils": "^1.1.7",
     "chromedriver": "^2.46.0",
     "core-js": "^3.1.4",
