@@ -102,6 +102,8 @@ export default class MailApiSteps {
 
 	@step('{isEnabled ? "В" : "Вы"}ключить треды{refresh ? " и обновить страницу" : ""}')
 	toggleThreads(isEnabled: boolean, refresh: boolean = false) {
+		// Если правите этот метод,
+		// перепрогоните https://testrail.corp.mail.ru/index.php?/cases/view/491324
 		MailApi.helpersUpdate({
 			index: helpers.threads,
 			update: { state: !isEnabled }
