@@ -152,7 +152,7 @@ export default class MailApiSteps {
 				const { threads } = assertDefinedValue(MailApi.threadsStatusSmart({ folder, limit }).body);
 
 				const matchedMessagesCount = threads
-					.filter(({folder: f}) => +f === folder)
+					.filter(({ folder: f }) => +f === folder)
 					.reduce((sum, thread) => {
 						if (thread.subject === subject) {
 							return sum + thread.length;
