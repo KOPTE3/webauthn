@@ -104,6 +104,11 @@ export default class MailApiSteps {
 	toggleThreads(isEnabled: boolean, refresh: boolean = false) {
 		MailApi.helpersUpdate({
 			index: helpers.threads,
+			update: { state: !isEnabled }
+		});
+
+		MailApi.helpersUpdate({
+			index: helpers.threads,
 			update: { state: isEnabled }
 		});
 
