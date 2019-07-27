@@ -34,6 +34,7 @@ export default function threadsStatusSmart(
 	options: MailAPI.ThreadsStatusSmart,
 	credentials?: Credentials
 ): RequestResult<ThreadsStatusSmartBody> {
+	options.force = 1; // принудительно вернуть список писем, даже если в ящике не было изменений
 	return call('threads/status/smart', options, 'GET', credentials);
 }
 
@@ -41,5 +42,6 @@ export async function threadsStatusSmartAsync(
 	options: MailAPI.ThreadsStatusSmart,
 	credentials?: Credentials
 ): Promise<RequestResult<ThreadsStatusSmartBody>> {
+	options.force = 1; // принудительно вернуть список писем, даже если в ящике не было изменений
 	return callAsync('threads/status/smart', options, 'GET', credentials);
 }
