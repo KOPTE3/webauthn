@@ -1,7 +1,10 @@
 /// <reference path="./index.gen.ts" />
 import * as assert from 'assert';
+import * as Debug from 'debug';
 import Browser from '../browser/browser';
 import { UNICODE_CHARACTERS } from '../utils/constants';
+
+const debug = Debug('@qa:yoda');
 
 function tryToGetGetterDescriptor(obj: object, field: string): PropertyDescriptor | null {
 	while (obj) {
@@ -92,6 +95,7 @@ export class Element<Params extends object = any> {
 
 	@step('Нажимаем на кнопку {__result__}')
 	static keyPress(button: UNICODE_CHARACTERS): string | void {
+		debug('Метод Element.keyPress устарел. Используйте вместо него Browser.keyPress');
 		browser.keys(button);
 
 		return Object.keys(UNICODE_CHARACTERS)
@@ -142,6 +146,7 @@ export class Element<Params extends object = any> {
 
 	@gen
 	static SwitchParentFrame(element: Element): void {
+		debug('Метод Element.SwitchParentFrame устарел. Используйте вместо него Browser.SwitchParentFrame');
 		browser.frameParent();
 	}
 
