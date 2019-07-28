@@ -1,5 +1,5 @@
 import * as Debug from 'debug';
-import {UNICODE_CHARACTERS} from '../utils/constants';
+import {isValidButtonCode, UNICODE_CHARACTERS} from '../utils/constants';
 
 const debug = Debug('@qa:yoda:browser');
 
@@ -58,16 +58,11 @@ export default class Browser {
 		browser.frameParent();
 	}
 
-	@step('Нажимаем на кнопку {__result__}')
-	static KeyPress(button: UNICODE_CHARACTERS): string | void {
-		browser.keys(button);
-
-		return Object.keys(UNICODE_CHARACTERS)
-			.find((key: string) => UNICODE_CHARACTERS[key as keyof typeof UNICODE_CHARACTERS] === button);
-	}
-
 	@step('Нажимаем на хот-кей {buttons}')
 	static KeysPress(buttons: UNICODE_CHARACTERS[]): void {
+		if (!buttons.every(isValidButtonCode)) {
+			throw new Error(`Не валидная комбинация кнопок ${buttons.join(' + ')}`);
+		}
 		browser.keys(buttons);
 	}
 }
