@@ -60,7 +60,7 @@ export default class Browser {
 
 	@step('Нажимаем на хот-кей {buttons}')
 	static KeysPress(buttons: UNICODE_CHARACTERS[]): void {
-		if (!buttons.every(isValidButtonCode)) {
+		if (!buttons.every(button => (typeof button === 'string') && (button.length === 1))) {
 			throw new Error(`Не валидная комбинация кнопок ${buttons.join(' + ')}`);
 		}
 		browser.keys(buttons);
