@@ -90,9 +90,11 @@ export default async function generate(source: string, options?: any): Promise<v
 					const preparedParameters: ParameterDeclarationStructure[] = params.slice(1)
 						.map((param: ParameterDeclaration): ParameterDeclarationStructure => {
 							const type = param.getType();
+							const symbol = type.getSymbol();
+
 							const p: ParameterDeclarationStructure = {
 								name: assertDefinedValue(param.getName()),
-								type: type.getText(),
+								type: symbol ? symbol.getName() : type.getText(),
 								hasQuestionToken: param.isOptional() && !param.isRestParameter(),
 								isRestParameter: param.isRestParameter()
 							};
