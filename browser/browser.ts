@@ -1,4 +1,5 @@
 import * as Debug from 'debug';
+import { isValidButtonCode, UNICODE_CHARACTERS } from '../utils/constants';
 
 const debug = Debug('@qa:yoda:browser');
 
@@ -36,12 +37,12 @@ export default class Browser {
 	}
 
 	// Если есть возможность использовать неявные ожидания в виде waitUntil/waitForVisible функций, то этот метод
-	// тебе не нужен. Так как явные ожидания(паузы) - это очень плохой паттерн, который сильно увеличивает время
-	// исполнения тестов.
+	// тебе не нужен. Явные ожидания (паузы) - это очень плохой паттерн, который сильно увеличивает время
+	// исполнения тестов
 	@step('Подождать {timeout}ms')
 	static Pause(timeout: number) {
 		debug('Если есть возможность использовать неявные ожидания в виде waitUntil/waitForVisible функций, ' +
-			'то этот метод тебе не нужен. Так как явные ожидания(паузы) - это очень плохой паттерн, который сильно ' +
+			'то этот метод тебе не нужен. Явные ожидания (паузы) - это очень плохой паттерн, который сильно ' +
 			'увеличивает время исполнения тестов');
 		browser.pause(timeout);
 	}
@@ -51,5 +52,17 @@ export default class Browser {
 	static FullScreen(resizeTimeout: number = 2000) {
 		browser.windowHandleMaximize();
 		Browser.Pause(resizeTimeout);
+	}
+
+	static SwitchParentFrame(): void {
+		browser.frameParent();
+	}
+
+	@step('Нажимаем на хот-кей {buttons}')
+	static KeysPress(buttons: Array<(UNICODE_CHARACTERS | string)>): void {
+		if (!buttons.every((button) => (typeof button === 'string') && (button.length === 1))) {
+			throw new Error(`Не валидная комбинация кнопок ${buttons.join(' + ')}`);
+		}
+		browser.keys(buttons);
 	}
 }
