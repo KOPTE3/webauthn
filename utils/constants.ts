@@ -65,3 +65,8 @@ export enum UNICODE_CHARACTERS {
 }
 
 export default { UNICODE_CHARACTERS };
+
+export function isValidButtonCode(code: string): code is UNICODE_CHARACTERS {
+	return Object.keys(UNICODE_CHARACTERS)
+		.some((key: string) => UNICODE_CHARACTERS[key as keyof typeof UNICODE_CHARACTERS] === code);
+}
