@@ -1,5 +1,5 @@
 import * as Debug from 'debug';
-import { isValidButtonCode, UNICODE_CHARACTERS } from '../utils/constants';
+import { UNICODE_CHARACTERS } from '../utils/constants';
 
 const debug = Debug('@qa:yoda:browser');
 
