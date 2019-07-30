@@ -1,5 +1,19 @@
 # Changelog
 
+## 9.9.4
+* Исправлен баг в lib/generator
+* Добавлены методы SwitchParentFrame и KeysPress в классе Browser
+* @deprecated Метод Element.keyPress
+* @qa/transport": "2.3.2
+* Доработки степов toggleThreads и waitForLetterBySubjectInStatus
+* Доработка utils/assert-defined
+
+## 9.9.2
+* Добавлена возможностьавторизовываться в тестах аккаунтами типа test_login
+* Немного доработок по методам для шаринга ящика (Glasha)
+* Первые общие элементы и методы - элементы порталки.
+* Element теперь дженерик
+
 ## 9.9.1
 * Починили баг в методе `open`
 
