@@ -251,7 +251,7 @@ export default class MailApiSteps {
 		MailApi.userEdit({ messages: { size } });
 	}
 
-	@step('{isEnabled ? "В" : "Вы"}ключить метреды{refresh ? " и обновить страницу" : ""}')
+	@step('{isEnabled ? "В" : "Вы"}ключить метатреды{refresh ? " и обновить страницу" : ""}')
 	toggleMetathreads(isEnabled: boolean, refresh: boolean = false) {
 		MailApi.userEdit({
 			common_purpose_flags: {
