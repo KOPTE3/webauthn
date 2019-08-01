@@ -69,14 +69,12 @@ export default class Browser {
 
 	@step('Получить текущий урл. Результат: {__result__}')
 	static GetUrl(noQueryParams: boolean = false): string {
-		let result: string = browser.getUrl();
-
 		if (noQueryParams) {
-			const { protocol, host, pathname = '' } = url.parse(result);
+			const { protocol, host, pathname = '' } = url.parse(browser.getUrl());
 
-			result = `${protocol}//${host}${pathname}`;
+			return `${protocol}//${host}${pathname}`;
 		}
 
-		return result;
+		return browser.getUrl();
 	}
 }
