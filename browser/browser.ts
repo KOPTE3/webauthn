@@ -1,5 +1,6 @@
 import * as Debug from 'debug';
 import { UNICODE_CHARACTERS } from '../utils/constants';
+import { parseUrl } from 'query-string';
 
 const debug = Debug('@qa:yoda:browser');
 
@@ -67,7 +68,9 @@ export default class Browser {
 	}
 
 	@step('Получить текущий урл. Результат: {__result__}')
-	static GetUrl(): string {
-		return browser.getUrl();
+	static GetUrl(noQueryParams: boolean = false): string {
+		const url = browser.getUrl();
+
+		return noQueryParams ? parseUrl(url).url : url;
 	}
 }
