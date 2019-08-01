@@ -65,4 +65,9 @@ export default class Browser {
 		}
 		browser.keys(buttons);
 	}
+
+	@step('Получить текущий урл. Результат: {__result__}')
+	static GetUrl(): string {
+		return browser.getUrl();
+	}
 }

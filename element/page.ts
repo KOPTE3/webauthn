@@ -1,7 +1,8 @@
+import * as assert from 'assert';
+import { parseUrl } from 'query-string';
 import DefaultPage, { Query } from '../pages/index';
 import DefaultSteps from '../steps/index';
 import Authorization, { AccountCredentials, CommonAccount, Type } from '../utils/authorization';
-import * as assert from 'assert';
 import Element from './index';
 
 /**
@@ -38,27 +39,30 @@ export class Page extends Element {
 	}
 
 	@step('Проверить, что текущий урл содержит следующие GET-параметры', (p: any) => p)
-	static CheckQueryParams(expectedParams: { [ name: string ]: string }): void {
-		const url: string = decodeURIComponent(browser.getUrl());
-
-		const actualParams: { [ name: string ]: string } = {};
-
-		url
-			.slice(url.indexOf('?') + 1)
-			.split('&')
-			.map((stringPair) => stringPair.split('='))
-			.forEach(([ key, value ]) => {
-				actualParams[ key ] = value;
-			})
-		;
+	static CheckQueryParams(params: { [ name: string ]: string }): void {
+		const url = decodeURIComponent(browser.getUrl());
+		const { query } = parseUrl(url);
 
 		Object
-			.entries(expectedParams)
+			.entries(params)
 			.forEach(([ key, expectedValue ]) => {
-				assert(!!actualParams[ key ]);
-				assert(actualParams[ key ].includes(expectedValue));
+				assert(
+					Boolean(query[ key ]) && query[ key ]!.includes(expectedValue),
+					`Текущий урл не содержит параметр ${key}=${expectedValue}`);
 			})
 		;
+	}
+
+	@step('Проверить, что текущий урл не содержит следующие GET-параметры', (p: any) => p)
+	static HasNoQueryParams(params: string[]): void {
+		const url = decodeURIComponent(browser.getUrl());
+		const { query } = parseUrl(url);
+
+		params.forEach((parameter) => {
+			assert(
+				!Boolean(query[ parameter ]),
+				`Текущий урл содержит параметр ${parameter}, и его зачение: ${query[ parameter ]}`);
+		});
 	}
 
 	static WaitForUrl(value: ((url: string) => boolean) | string | RegExp): void {
