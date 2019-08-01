@@ -53,7 +53,7 @@ export class Page extends Element {
 		;
 	}
 
-	@step('Проверить, что текущий урл не содержит следующие GET-параметры', (p: any) => p)
+	@step('Проверить, что текущий урл не содержит GET-параметры: {params}', (p: any) => p)
 	static HasNoQueryParams(params: string[]): void {
 		const url = decodeURIComponent(browser.getUrl());
 		const { query } = parseUrl(url);
