@@ -84,7 +84,7 @@ export default class PhonesUtils {
 	static EmulateBruteforce(opts: {email: string; phone: string}): void {
 		const id = PhonesUtils.GetRegTokenId();
 
-		browser.waitUntil(async function() {
+		browser.waitUntil(async () =>  {
 			const result = await tokensSendAsync({
 				email: opts.email,
 				reg_token: {
