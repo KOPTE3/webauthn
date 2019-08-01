@@ -45,9 +45,9 @@ export class Page extends Element {
 
 		Object
 			.entries(params)
-			.forEach(([ key, expectedValue ]) => {
+			.forEach(([key, expectedValue]) => {
 				assert(
-					Boolean(query[ key ]) && query[ key ]!.includes(expectedValue),
+					Boolean(query[key]) && query[key]!.includes(expectedValue),
 					`Текущий урл не содержит параметр ${key}=${expectedValue}`);
 			})
 		;
