@@ -1,4 +1,5 @@
 import * as Debug from 'debug';
+import * as url from 'url';
 import { UNICODE_CHARACTERS } from '../utils/constants';
 
 const debug = Debug('@qa:yoda:browser');
@@ -64,5 +65,16 @@ export default class Browser {
 			throw new Error(`Не валидная комбинация кнопок ${buttons.join(' + ')}`);
 		}
 		browser.keys(buttons);
+	}
+
+	@step('Получить текущий урл. Результат: {__result__}')
+	static GetUrl(noQueryParams: boolean = false): string {
+		if (noQueryParams) {
+			const { protocol, host, pathname = '' } = url.parse(browser.getUrl());
+
+			return `${protocol}//${host}${pathname}`;
+		}
+
+		return browser.getUrl();
 	}
 }
