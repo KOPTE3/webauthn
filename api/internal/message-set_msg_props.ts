@@ -2,7 +2,7 @@ import { MailAPI } from '@qa/api';
 import { RequestResult } from '../../types/api';
 import call, { callAsync } from './call';
 
-type TestMessageSetMsgPropsFixed = MailAPI.TestMessageSetMsgProps & { message_id: string };
+type TestMessageSetMsgPropsFixed = Omit<MailAPI.TestMessageSetMsgProps, 'message_id'> & { message_id: string };
 
 /**
  * http://api.tornado.dev.mail.ru/test/message/set_msg_props
