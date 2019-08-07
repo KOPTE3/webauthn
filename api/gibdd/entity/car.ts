@@ -1,6 +1,5 @@
 import { Credentials, RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
-import {EntityDriver} from "./driver";
 
 export interface EntityCar {
 	type_str: 'car';
