@@ -1,7 +1,7 @@
 import * as request from 'request';
 import * as rp from 'request-promise-native';
-import { Credentials } from '../../types/api';
-import config from '../../config';
+import { Credentials } from '../types/api';
+import config from '../config';
 import * as Debug from 'debug';
 
 const debug = Debug('@qa:yoda:cloud-api');
@@ -51,14 +51,15 @@ async function getAuthCookies(cookieJar: request.CookieJar, credentials: Credent
  * @see getAuthCookies
  *
  * @param {request.CookieJar} cookieJar
+ * @param {string} from
  */
-async function getSdcsCookie(cookieJar: request.CookieJar): Promise<void> {
+async function getSdcsCookie(cookieJar: request.CookieJar, from: string): Promise<void> {
 	const response = await rp({
 		...defaultRequestOptions,
 		url: `${config.api.authBaseUrl}/sdc`,
 		method: 'HEAD',
 		qs: {
-			from: 'https://cloud.mail.ru/home/'
+			from
 		},
 		jar: cookieJar
 	} as rp.OptionsWithUrl);
@@ -76,14 +77,16 @@ async function getSdcsCookie(cookieJar: request.CookieJar): Promise<void> {
  *
  * @param {request.CookieJar} cookieJar
  * @param {Credentials} credentials
+ * @param {string} from
  * @return {Promise<request.CookieJar>}
  */
 export default async function initCookieJar(
 	cookieJar: request.CookieJar,
-	credentials: Credentials
+	credentials: Credentials,
+	from: string
 ): Promise<request.CookieJar> {
 	await getAuthCookies(cookieJar, credentials);
-	await getSdcsCookie(cookieJar);
+	await getSdcsCookie(cookieJar, from);
 
 	return cookieJar;
 }

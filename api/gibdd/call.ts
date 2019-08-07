@@ -1,7 +1,7 @@
 import * as request from 'request';
 import { Credentials, RequestResult } from '../../types/api';
 import config from '../../config';
-import initCookieJar from '../cloud/_init-cookie-jar';
+import initCookieJar from '../init-cookie-jar';
 import * as rp from 'request-promise-native';
 import authorization from '../../store/authorization';
 import * as Debug from 'debug';
@@ -11,7 +11,8 @@ const debug = Debug('@qa:yoda:gibdd-api');
 const cookieJar: request.CookieJar = rp.jar();
 const defaultRequestOptions: Partial<rp.Options> = {
 	headers: {
-		'User-Agent': config.api.userAgent
+		'User-Agent': config.api.userAgent,
+		'Origin': 'https://e.mail.ru'
 	},
 	json: true,
 	simple: true,
@@ -21,8 +22,8 @@ const defaultRequestOptions: Partial<rp.Options> = {
 
 export default function call(
 	path: string,
-	body: object,
-	method: 'POST' | 'GET' = 'GET',
+	body?: object,
+	method: 'DELETE' | 'POST' | 'GET' = 'GET',
 	credentials?: Credentials
 ): RequestResult {
 	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method, credentials));
@@ -43,17 +44,22 @@ export default function call(
 
 export async function callAsync(
 	path: string,
-	body: object,
-	method: 'POST' | 'GET' = 'GET',
+	body?: object,
+	method: 'DELETE' | 'POST' | 'GET' = 'GET',
 	credentials?: Credentials
 ): Promise<RequestResult> {
 	const { username, password }: Credentials = credentials || authorization.account.data();
-	const jar = await initCookieJar(cookieJar, { username, password });
+	const jar = await initCookieJar(cookieJar, { username, password }, 'https://api.gibdd.mail.ru');
 	const requestOptions: rp.OptionsWithUrl = {
 		...defaultRequestOptions,
 		jar,
 		url: `${config.api.gibddApiBaseUrl}/${path}`,
 		method
+	};
+
+	const requestBodyKey: keyof rp.Options = (method === 'GET') ? 'qs' : 'form';
+	requestOptions[requestBodyKey] = {
+		...body
 	};
 
 	debug('Request with options \n%O', requestOptions);
