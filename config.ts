@@ -1,6 +1,7 @@
 // tslint:disable:max-line-length
 export default {
 	api: {
+		gibddApiBaseUrl: 'https://api.gibdd.mail.ru',
 		internalApiBaseUrl: 'http://internal.pre.win102.dev.mail.ru/api/v1',
 		cloudApiBaseUrl: 'https://cloud.mail.ru/api/v2',
 		authBaseUrl: 'https://auth.mail.ru/',
