@@ -43,7 +43,7 @@
     "yoda": "index.js"
   },
   "dependencies": {
-    "@qa/account-manager": "^2.1.2",
+    "@qa/account-manager": "^2.1.3",
     "@qa/api": "^0.0.7",
     "@qa/file-service": "^0.0.3",
     "@qa/rpc": "^0.1.4",
