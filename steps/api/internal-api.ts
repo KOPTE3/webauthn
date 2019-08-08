@@ -5,6 +5,7 @@ import userProfileSet from '../../api/internal/user/profile-set';
 import authorization from '../../store/authorization';
 import phonesStore from '../../store/phones';
 import { assertDefinedValue } from '../../utils/assert-defined';
+import { JsonArray, JsonObject } from 'type-fest';
 
 export type PhoneStatusStep = PhoneStatus | 'in_remove_queue' | 'twofa';
 export type ExtraEmailStatusStep = 'ok' | 'too_young' | 'in_remove_queue';
@@ -145,6 +146,38 @@ export default class InternalApiSteps {
 
 		InternalApi.usersEdit({
 			users: [userToEdit]
+		});
+	}
+
+	/**
+	 * Обновляет мету письма по указанному индексу
+	 * @param {string} uidl - идентификатор письма
+	 * @param {string} email - email пользователя, в ящике котрого лежит письмо
+	 * @param {object} metaUpdate - объект с новыми значениями полей меты
+	 * @param {number = 0} metaIndex - индекс нукжной нам меты среди прочих мет письма
+	 */
+	updateLetterMeta(uidl: string, email: string, metaUpdate: JsonObject, metaIndex: number = 0): void {
+		// достаём из письма нужную нам мету
+		const { metadata: { json_ld: jsonLd } } = assertDefinedValue(InternalApi.metadataCheck({ uidl, email }).body);
+		const meta: JsonObject = jsonLd[metaIndex];
+
+		// собираем новую мету
+		const newMeta: JsonObject = {
+			...meta,
+			...metaUpdate
+		};
+
+		// собираем новый jsonld
+		const newJsonLd: JsonArray = [...jsonLd];
+		newJsonLd[metaIndex] = newMeta;
+
+		// обновляем jsonld в письме
+		InternalApi.messageSetMsgProps({
+			email,
+			message_id: uidl,
+			props: {
+				metadata: JSON.stringify({ json_ld: newJsonLd })
+			}
 		});
 	}
 }
