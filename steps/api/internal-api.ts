@@ -156,6 +156,7 @@ export default class InternalApiSteps {
 	 * @param {object} metaUpdate - объект с новыми значениями полей меты
 	 * @param {number = 0} metaIndex - индекс нукжной нам меты среди прочих мет письма
 	 */
+	@step('Обновляем мету письма с uidl {uidl}:', (...args: any[]) => args[2])
 	updateLetterMeta(uidl: string, email: string, metaUpdate: JsonObject, metaIndex: number = 0): void {
 		// достаём из письма нужную нам мету
 		const { metadata: { json_ld: jsonLd } } = assertDefinedValue(InternalApi.metadataCheck({ uidl, email }).body);
