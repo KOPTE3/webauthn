@@ -1,8 +1,10 @@
 import { MailAPI } from '@qa/api';
 import { RequestResult } from '../../types/api';
 import call, { callAsync } from './call';
+import { Merge } from 'type-fest';
 
-type TestMessageSetMsgPropsFixed = Omit<MailAPI.TestMessageSetMsgProps, 'message_id'> & { message_id: string };
+// ошибка в апидоке - message_id должен быть строкой
+type TestMessageSetMsgPropsFixed = Merge<MailAPI.TestMessageSetMsgProps, { message_id: string }>;
 
 /**
  * http://api.tornado.dev.mail.ru/test/message/set_msg_props
