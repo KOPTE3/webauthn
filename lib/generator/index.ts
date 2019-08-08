@@ -89,19 +89,17 @@ export default async function generate(source: string, options?: any): Promise<v
 						});
 					const preparedParameters: ParameterDeclarationStructure[] = params.slice(1)
 						.map((param: ParameterDeclaration): ParameterDeclarationStructure => {
-							const type = param.getType();
-							const symbol = type.getSymbol();
-
+							// получаем строку типа "targetElement: Element" / "dragX: number = 10"
+							const paramText = param.getFullText();
+							// и вырезаем из неё имя типа параметра, чтобы не писать кучу условий его получения,
+							// в зависимости от того, к какому типу данных относится параметр
+							const type = assertDefinedValue(paramText.match(/: ([_a-zA-Z]+)/))[1];
 							const p: ParameterDeclarationStructure = {
 								name: assertDefinedValue(param.getName()),
-								type: symbol ? symbol.getName() : type.getText(),
+								type,
 								hasQuestionToken: param.isOptional() && !param.isRestParameter(),
 								isRestParameter: param.isRestParameter()
 							};
-
-							if (type.isClassOrInterface()) {
-								p.type = type.getSymbolOrThrow().getName();
-							}
 
 							return p;
 						});
