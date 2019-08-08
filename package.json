@@ -74,6 +74,7 @@
     "request-promise-native": "^1.0.7",
     "tough-cookie": "~2.4.3",
     "ts-simple-ast": "^13.0.0",
+    "type-fest": "^0.7.1",
     "wdio-yoda-allure-utils-service": "^1.10.0"
   },
   "devDependencies": {
