@@ -2,10 +2,9 @@ import { MailAPI as MailApiInterfaces } from '@qa/api';
 import * as merge from 'deepmerge';
 import { bruteforceCounterReset, BruteforceType, tokensInfo } from '../../api/internal';
 import * as MailApi from '../../api/mail-api';
-import { threadsStatusSmart } from '../../api/mail-api/threads';
 import authorization from '../../store/authorization';
 import helpers from '../../store/helpers';
-import { Phone } from '../../store/phones/index';
+import { Phone } from '../../store/phones';
 import { assertDefinedValue } from '../../utils/assert-defined';
 import { Credentials } from '../../types/api';
 
@@ -228,7 +227,7 @@ export default class MailApiSteps {
 
 	@step('Загрузить список папок пользователя {credentials.username}, расшаренных другим пользователем {owner}')
 	findSharedFolders(owner: string, credentials: Credentials): SharedFolders {
-		const mailboxStatus = threadsStatusSmart({ folder: 0 }, credentials);
+		const mailboxStatus = MailApi.threadsStatusSmart({ folder: 0 }, credentials);
 		const shared = assertDefinedValue(mailboxStatus.body).folders.filter((folder) => {
 			return folder.owner && folder.owner.email === owner;
 		});
