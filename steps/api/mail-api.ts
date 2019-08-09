@@ -7,6 +7,7 @@ import helpers from '../../store/helpers';
 import { Phone } from '../../store/phones';
 import { assertDefinedValue } from '../../utils/assert-defined';
 import { Credentials } from '../../types/api';
+import { Categories } from '../../api/mail-api/messages/services-category-change';
 
 /** Интерфейс для вывода данных, о созданной запароленной папке */
 interface SecretFolderData {
@@ -305,6 +306,14 @@ export default class MailApiSteps {
 			meta_type: 'MailRuBill',
 			meta_index: metaIndex,
 			status
+		});
+	}
+
+	@step('Назначить письму {uidl} категорию {category}')
+	setLetterCategory(uidls: string[], category: Categories): void {
+		MailApi.messagesServicesCategoryChange({
+			ids: uidls,
+			category
 		});
 	}
 }
