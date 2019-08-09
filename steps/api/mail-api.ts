@@ -309,7 +309,7 @@ export default class MailApiSteps {
 		});
 	}
 
-	@step('Назначить письму {uidl} категорию {category}')
+	@step('Назначить письмам {uidls} категорию {category}')
 	setLetterCategory(uidls: string[], category: Categories): void {
 		MailApi.messagesServicesCategoryChange({
 			ids: uidls,
