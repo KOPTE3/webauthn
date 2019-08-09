@@ -8,7 +8,14 @@ import { Merge } from 'type-fest';
  */
 
 // уточняем возможные значения поля category
-type Categories = 'travel' | 'event' | 'finance' | 'registration' | 'order' | 'fees';
+export enum Categories {
+	Travel = 'travel',
+	Event = 'event',
+	Finance = 'finance',
+	Registration = 'registration',
+	Order = 'order',
+	Fees = 'fees'
+}
 type MessagesServicesCategoryChange = Merge<MailAPI.MessagesServicesCategoryChange, { category: Categories }>;
 
 export default function messagesServicesCategoryChange(
