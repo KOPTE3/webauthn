@@ -441,7 +441,6 @@ export class Element<Params extends object = any> {
 		Browser.LeftButtonUp();
 	}
 
-	// TODO: пофиксить @gen для методов с двумя элементами
 	@gen
 	@step('Перетащить элемент {element} на элемент {targetElement}')
 	static DragTo(element: Element, targetElement: Element, dragX?: number, dragY?: number) {

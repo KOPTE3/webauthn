@@ -1,8 +1,9 @@
+import * as assert from 'assert';
 import DefaultPage, { Query } from '../pages/index';
 import DefaultSteps from '../steps/index';
 import Authorization, { AccountCredentials, CommonAccount, Type } from '../utils/authorization';
-import * as assert from 'assert';
 import Element from './index';
+import { URL } from 'url';
 
 /**
  * Класс, представляющий собой абстракцию над определённой страницей
@@ -38,27 +39,34 @@ export class Page extends Element {
 	}
 
 	@step('Проверить, что текущий урл содержит следующие GET-параметры', (p: any) => p)
-	static CheckQueryParams(expectedParams: { [ name: string ]: string }): void {
-		const url: string = decodeURIComponent(browser.getUrl());
-
-		const actualParams: { [ name: string ]: string } = {};
-
-		url
-			.slice(url.indexOf('?') + 1)
-			.split('&')
-			.map((stringPair) => stringPair.split('='))
-			.forEach(([ key, value ]) => {
-				actualParams[ key ] = value;
-			})
-		;
+	static CheckQueryParams(params: { [ name: string ]: string | RegExp }): void {
+		const url = new URL(browser.getUrl());
 
 		Object
-			.entries(expectedParams)
-			.forEach(([ key, expectedValue ]) => {
-				assert(!!actualParams[ key ]);
-				assert(actualParams[ key ].includes(expectedValue));
+			.entries(params)
+			.forEach(([key, expectedValue]) => {
+				if (expectedValue instanceof RegExp) {
+					assert(
+						url.searchParams.getAll(key).some((item) => !!item.match(expectedValue)),
+						`Текущий урл не содержит параметр ${key} ~ ${expectedValue}`);
+					return;
+				}
+				assert(
+					url.searchParams.getAll(key).includes(expectedValue),
+					`Текущий урл не содержит параметр ${key}=${expectedValue}`);
 			})
 		;
+	}
+
+	@step('Проверить, что текущий урл не содержит GET-параметры: {params}', (p: any) => p)
+	static HasNoQueryParams(params: string[]): void {
+		const url = new URL(browser.getUrl());
+
+		params.forEach((parameter) => {
+			assert(
+				!url.searchParams.has(parameter),
+				`Текущий урл содержит параметр ${parameter}, и его зачение: ${url.searchParams.get(parameter)}`);
+		});
 	}
 
 	static WaitForUrl(value: ((url: string) => boolean) | string | RegExp): void {
