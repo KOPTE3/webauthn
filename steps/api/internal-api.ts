@@ -150,6 +150,22 @@ export default class InternalApiSteps {
 	}
 
 	/**
+	 * Дожидаемся появляения jsonLd в мете письма
+	 */
+	waitForJsonLd(uidl: string, email: string): JsonObject[] {
+		let jsonLd: JsonObject[] = [];
+
+		browser.waitUntil(() => {
+			const body = assertDefinedValue(InternalApi.metadataCheck({ uidl, email }).body);
+			jsonLd = body.metadata && body.metadata.json_ld;
+
+			return !!(jsonLd && jsonLd.length);
+		}, undefined, `Не дождались меты у письма ${uidl}`);
+
+		return jsonLd;
+	}
+
+	/**
 	 * Обновляет мету письма по указанному индексу
 	 * @param {string} uidl - идентификатор письма
 	 * @param {string} email - email пользователя, в ящике котрого лежит письмо
@@ -164,8 +180,7 @@ export default class InternalApiSteps {
 		}), {});
 	})
 	updateLetterMeta(uidl: string, email: string, metaUpdate: JsonObject, metaIndex: number = 0): void {
-		// достаём из письма нужную нам мету
-		const { metadata: { json_ld: jsonLd } } = assertDefinedValue(InternalApi.metadataCheck({ uidl, email }).body);
+		const jsonLd: JsonObject[] = this.waitForJsonLd(uidl, email);
 		const meta: JsonObject = jsonLd[metaIndex];
 
 		// собираем новую мету
