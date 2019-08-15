@@ -12,7 +12,7 @@ const cookieJar: request.CookieJar = rp.jar();
 const defaultRequestOptions: Partial<rp.Options> = {
 	headers: {
 		'User-Agent': config.api.userAgent,
-		'Origin': 'https://e.mail.ru'
+		'Origin': config.origin
 	},
 	json: true,
 	simple: true,
@@ -49,7 +49,7 @@ export async function callAsync(
 	credentials?: Credentials
 ): Promise<RequestResult> {
 	const { username, password }: Credentials = credentials || authorization.account.data();
-	const jar = await initCookieJar(cookieJar, { username, password }, 'https://api.gibdd.mail.ru');
+	const jar = await initCookieJar(cookieJar, { username, password }, config.api.gibddApiBaseUrl);
 	const requestOptions: rp.OptionsWithUrl = {
 		...defaultRequestOptions,
 		jar,
