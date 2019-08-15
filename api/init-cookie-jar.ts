@@ -53,7 +53,7 @@ async function getAuthCookies(cookieJar: request.CookieJar, credentials: Credent
  * @param {request.CookieJar} cookieJar
  * @param {string} from
  */
-async function getSdcsCookie(cookieJar: request.CookieJar, from: string): Promise<void> {
+async function getSdcsCookie(cookieJar: request.CookieJar, from: string = ''): Promise<void> {
 	const response = await rp({
 		...defaultRequestOptions,
 		url: `${config.api.authBaseUrl}/sdc`,
@@ -83,7 +83,7 @@ async function getSdcsCookie(cookieJar: request.CookieJar, from: string): Promis
 export default async function initCookieJar(
 	cookieJar: request.CookieJar,
 	credentials: Credentials,
-	from: string
+	from?: string
 ): Promise<request.CookieJar> {
 	await getAuthCookies(cookieJar, credentials);
 	await getSdcsCookie(cookieJar, from);

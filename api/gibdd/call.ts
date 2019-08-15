@@ -49,7 +49,7 @@ export async function callAsync(
 	credentials?: Credentials
 ): Promise<RequestResult> {
 	const { username, password }: Credentials = credentials || authorization.account.data();
-	const jar = await initCookieJar(cookieJar, { username, password }, config.api.gibddApiBaseUrl);
+	const jar = await initCookieJar(cookieJar, { username, password });
 	const requestOptions: rp.OptionsWithUrl = {
 		...defaultRequestOptions,
 		jar,
