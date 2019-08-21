@@ -12,7 +12,7 @@ const cookieJar: request.CookieJar = rp.jar();
 const defaultRequestOptions: Partial<rp.Options> = {
 	headers: {
 		'User-Agent': config.api.userAgent,
-		'Origin': config.origin
+		'Origin': config.api.mailBaseUrl
 	},
 	json: true,
 	simple: true,

@@ -31,7 +31,7 @@ async function getCsrfToken(credentials: Credentials) {
 		...defaultRequestOptions,
 		url: `${config.api.cloudApiBaseUrl}/tokens/csrf`,
 		method: 'GET',
-		jar: await initCookieJar(cookieJar, credentials, `${config.host.cloud}/home/`)
+		jar: await initCookieJar(cookieJar, credentials, `${config.api.cloudBaseUrl}/home/`)
 	} as rp.OptionsWithUrl);
 	const { body: responseBody } = response;
 
