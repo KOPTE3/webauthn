@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.10.0
+* Новые методы для работы с gibdd api
+* Доработки в Mail API и Cloud API
+
 ## 9.9.4
 * Исправлен баг в lib/generator
 * Добавлены методы SwitchParentFrame и KeysPress в классе Browser
