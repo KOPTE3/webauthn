@@ -74,6 +74,12 @@ export default class InternalApiSteps {
 			field: 'Emails',
 			value: JSON.stringify(fieldEmails)
 		});
+
+		userProfileSet({
+			email: username,
+			field: 'Email',
+			value: extraEmails[0].email
+		});
 	}
 
 	@step('Установить для пользователя "{email}" поле профиля {field}={value}')
