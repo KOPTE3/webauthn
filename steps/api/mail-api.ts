@@ -2,12 +2,12 @@ import { MailAPI as MailApiInterfaces } from '@qa/api';
 import * as merge from 'deepmerge';
 import { bruteforceCounterReset, BruteforceType, tokensInfo } from '../../api/internal';
 import * as MailApi from '../../api/mail-api';
-import { threadsStatusSmart } from '../../api/mail-api/threads';
 import authorization from '../../store/authorization';
 import helpers from '../../store/helpers';
-import { Phone } from '../../store/phones/index';
+import { Phone } from '../../store/phones';
 import { assertDefinedValue } from '../../utils/assert-defined';
 import { Credentials } from '../../types/api';
+import { Categories } from '../../api/mail-api/messages/services-category-change';
 
 /** Интерфейс для вывода данных, о созданной запароленной папке */
 interface SecretFolderData {
@@ -228,7 +228,7 @@ export default class MailApiSteps {
 
 	@step('Загрузить список папок пользователя {credentials.username}, расшаренных другим пользователем {owner}')
 	findSharedFolders(owner: string, credentials: Credentials): SharedFolders {
-		const mailboxStatus = threadsStatusSmart({ folder: 0 }, credentials);
+		const mailboxStatus = MailApi.threadsStatusSmart({ folder: 0 }, credentials);
 		const shared = assertDefinedValue(mailboxStatus.body).folders.filter((folder) => {
 			return folder.owner && folder.owner.email === owner;
 		});
@@ -296,6 +296,25 @@ export default class MailApiSteps {
 		};
 
 		MailApi.user2StepAuthEnable(enableRequest, options);
+	}
+
+	@step('Установить письму {uidl} статус оплаты {status}')
+	setPaymentStatus(uidl: string, status: 'awaiting' | 'error' | 'success', metaIndex: number = 0) {
+		MailApi.paymentMessagesStatusUpdate({
+			uidl,
+			payment_id: 'q1w2e3r4',
+			meta_type: 'MailRuBill',
+			meta_index: metaIndex,
+			status
+		});
+	}
+
+	@step('Назначить письмам {uidls} категорию {category}')
+	setLetterCategory(uidls: string[], category: Categories): void {
+		MailApi.messagesServicesCategoryChange({
+			ids: uidls,
+			category
+		});
 	}
 }
 

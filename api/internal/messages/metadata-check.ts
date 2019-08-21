@@ -1,27 +1,30 @@
 import { RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
+import { JsonObject } from 'type-fest';
 
 /**
  * http://api.tornado.dev.mail.ru/messages/metadata/check
  */
 
-export interface IMetadataCheckOptions {
+export interface IMessagesMetadataCheckOptions {
 	uidl: string;
 	email?: string;
 }
 
-export interface IMetadataCheckOptionsResult {
-	metadata: {json_ld: Array<{[k: string]: any}>};
+export interface IMessagesMetadataCheckResult {
+	metadata: {
+		json_ld: JsonObject[]
+	};
 }
 
 export default function metadataCheck(
-	opt: IMetadataCheckOptions
-): RequestResult<IMetadataCheckOptionsResult> {
+	opt: IMessagesMetadataCheckOptions
+): RequestResult<IMessagesMetadataCheckResult> {
 	return call('golang/messages/metadata/check', opt, 'POST');
 }
 
 export async function metadataCheckAsync(
-	opt: IMetadataCheckOptions
-): Promise<RequestResult<IMetadataCheckOptionsResult>> {
+	opt: IMessagesMetadataCheckOptions
+): Promise<RequestResult<IMessagesMetadataCheckResult>> {
 	return callAsync('golang/messages/metadata/check', opt, 'POST');
 }
