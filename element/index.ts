@@ -336,6 +336,17 @@ export class Element<Params extends object = any> {
 	}
 
 	@gen
+	@step('Проверяем, что текст в элементе {element} соджержит текст {subString}')
+	static CheckTextContentIncludes(element: Element, subString: string): void {
+		const textContent: string = Element.GetTextContent(element);
+
+		assert(
+			textContent.includes(subString),
+			`Текстовое содержимое элемента ${element.Name()} (${textContent}) не содержит текст "${subString}"`
+		);
+	}
+
+	@gen
 	@step(
 		'Дожидаемся, пока текст в элементе {element} станет равен значению',
 		(e: any, expected: string) => ({ expected })

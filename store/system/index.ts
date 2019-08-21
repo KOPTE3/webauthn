@@ -1,8 +1,12 @@
 import * as platform from 'platform';
 import * as FileService from '@qa/file-service';
 import { assertDefinedValue } from '../../utils/assert-defined';
+import config from '../../config';
 
-const fileService = FileService({ basepath: 'files' });
+const fileService = FileService({
+	basepath: 'files',
+	baseUrl: config.files.baseUrl
+});
 
 /** Набор методов для работы с данными пользовательского окружения */
 export default {

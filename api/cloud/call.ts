@@ -1,7 +1,7 @@
 import * as request from 'request';
 import { Credentials, RequestResult } from '../../types/api';
 import config from '../../config';
-import initCookieJar from './_init-cookie-jar';
+import initCookieJar from '../init-cookie-jar';
 import * as rp from 'request-promise-native';
 import authorization from '../../store/authorization';
 import * as Debug from 'debug';
@@ -31,7 +31,7 @@ async function getCsrfToken(credentials: Credentials) {
 		...defaultRequestOptions,
 		url: `${config.api.cloudApiBaseUrl}/tokens/csrf`,
 		method: 'GET',
-		jar: await initCookieJar(cookieJar, credentials)
+		jar: await initCookieJar(cookieJar, credentials, `${config.api.cloudBaseUrl}/home/`)
 	} as rp.OptionsWithUrl);
 	const { body: responseBody } = response;
 

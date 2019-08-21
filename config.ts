@@ -1,9 +1,12 @@
 // tslint:disable:max-line-length
 export default {
 	api: {
+		gibddApiBaseUrl: 'https://api.gibdd.mail.ru',
 		internalApiBaseUrl: 'http://internal.pre.win102.dev.mail.ru/api/v1',
 		cloudApiBaseUrl: 'https://cloud.mail.ru/api/v2',
-		authBaseUrl: 'https://auth.mail.ru/',
+		authBaseUrl: 'https://auth.mail.ru',
+		cloudBaseUrl: 'https://cloud.mail.ru',
+		mailBaseUrl: 'https://e.mail.ru',
 		userAgent: 'Yoda'
 	},
 	cookies: {
@@ -37,6 +40,9 @@ export default {
 		referer: 'https://account.mail.ru/login',
 		ua: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36',
 		sdc: 'https://auth.mail.ru/sdc?from=https%3A%2F%2Fe.mail.ru%2F'
+	},
+	files: {
+		baseUrl: 'http://files.win102.mail.cloud.devmail.ru/'
 	},
 	get timeout(): number {
 		if (typeof browser !== 'undefined') {

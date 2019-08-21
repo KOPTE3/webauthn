@@ -5,6 +5,7 @@ import userProfileSet from '../../api/internal/user/profile-set';
 import authorization from '../../store/authorization';
 import phonesStore from '../../store/phones';
 import { assertDefinedValue } from '../../utils/assert-defined';
+import { JsonArray, JsonObject } from 'type-fest';
 
 export type PhoneStatusStep = PhoneStatus | 'in_remove_queue' | 'twofa';
 export type ExtraEmailStatusStep = 'ok' | 'too_young' | 'in_remove_queue';
@@ -69,11 +70,32 @@ export default class InternalApiSteps {
 			}
 		});
 
+		/**
+		 * Александр Алешин (21.08.2019 13:36):
+		 * в коде апишки так - первая из почт из списка в Emails в статусе ok или too_young дублируется в поле Email
+		 *
+		 * Александр Алешин (21.08.2019 13:37):
+		 * но при этом, например, при отправке уведомлений на текущий момент вообще не имеет значение поле Emails,
+		 * берем сразу из Email, поскольку там легаси код...
+		 * ну собственно для такого легаси кода и было сделано дублирование
+		 */
+
+		const firstOkOrTooYoung = extraEmails
+			.find((extraEmail) => extraEmail.status === 'ok' || extraEmail.status === 'too_young');
+
 		userProfileSet({
 			email: username,
 			field: 'Emails',
 			value: JSON.stringify(fieldEmails)
 		});
+
+		if (firstOkOrTooYoung) {
+			userProfileSet({
+				email: username,
+				field: 'Email',
+				value: firstOkOrTooYoung.email
+			});
+		}
 	}
 
 	@step('Установить для пользователя "{email}" поле профиля {field}={value}')
@@ -145,6 +167,60 @@ export default class InternalApiSteps {
 
 		InternalApi.usersEdit({
 			users: [userToEdit]
+		});
+	}
+
+	/**
+	 * Дожидаемся появляения jsonLd в мете письма
+	 */
+	waitForJsonLd(uidl: string, email: string): JsonObject[] {
+		let jsonLd: JsonObject[] = [];
+
+		browser.waitUntil(() => {
+			const body = assertDefinedValue(InternalApi.metadataCheck({ uidl, email }).body);
+			jsonLd = body.metadata && body.metadata.json_ld;
+
+			return !!(jsonLd && jsonLd.length);
+		}, undefined, `Не дождались меты у письма ${uidl}`);
+
+		return jsonLd;
+	}
+
+	/**
+	 * Обновляет мету письма по указанному индексу
+	 * @param {string} uidl - идентификатор письма
+	 * @param {string} email - email пользователя, в ящике котрого лежит письмо
+	 * @param {object} metaUpdate - объект с новыми значениями полей меты
+	 * @param {number = 0} metaIndex - индекс нукжной нам меты среди прочих мет письма
+	 */
+	@step('Обновляем мету письма с uidl {uidl}:', (...args: any[]) => {
+		const metaUpdate: JsonObject = args[2];
+		return Object.entries(metaUpdate).reduce((result: JsonObject, [key, value]) => ({
+			...result,
+			[key]: (typeof value === 'undefined') ? '<удалено>' : value
+		}), {});
+	})
+	updateLetterMeta(uidl: string, email: string, metaUpdate: JsonObject, metaIndex: number = 0): void {
+		const jsonLd: JsonObject[] = this.waitForJsonLd(uidl, email);
+		const meta: JsonObject = jsonLd[metaIndex];
+
+		// собираем новую мету
+		const newMeta: JsonObject = {
+			...meta,
+			...metaUpdate
+		};
+
+		// собираем новый jsonld
+		const newJsonLd: JsonArray = [...jsonLd];
+		newJsonLd[metaIndex] = newMeta;
+
+		// обновляем jsonld в письме
+		InternalApi.messageSetMsgProps({
+			email,
+			message_id: uidl,
+			props: {
+				metadata: JSON.stringify({ json_ld: newJsonLd })
+			}
 		});
 	}
 }
