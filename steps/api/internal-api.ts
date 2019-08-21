@@ -70,11 +70,32 @@ export default class InternalApiSteps {
 			}
 		});
 
+		/**
+		 * Александр Алешин (21.08.2019 13:36):
+		 * в коде апишки так - первая из почт из списка в Emails в статусе ok или too_young дублируется в поле Email
+		 *
+		 * Александр Алешин (21.08.2019 13:37):
+		 * но при этом, например, при отправке уведомлений на текущий момент вообще не имеет значение поле Emails,
+		 * берем сразу из Email, поскольку там легаси код...
+		 * ну собственно для такого легаси кода и было сделано дублирование
+		 */
+
+		const firstOkOrTooYoung = extraEmails
+			.find((extraEmail) => extraEmail.status === 'ok' || extraEmail.status === 'too_young');
+
 		userProfileSet({
 			email: username,
 			field: 'Emails',
 			value: JSON.stringify(fieldEmails)
 		});
+
+		if (firstOkOrTooYoung) {
+			userProfileSet({
+				email: username,
+				field: 'Email',
+				value: firstOkOrTooYoung.email
+			});
+		}
 	}
 
 	@step('Установить для пользователя "{email}" поле профиля {field}={value}')
