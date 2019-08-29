@@ -173,8 +173,8 @@ export default class InternalApiSteps {
 	/**
 	 * Дожидаемся появляения jsonLd в мете письма
 	 */
-	waitForJsonLd(uidl: string, email: string): JsonObject[] {
-		let jsonLd: JsonObject[] = [];
+	waitForJsonLd(uidl: string, email: string): Array<{ [key: string]: any }> {
+		let jsonLd: Array<{ [key: string]: any }> = [];
 
 		browser.waitUntil(() => {
 			const body = assertDefinedValue(InternalApi.metadataCheck({ uidl, email }).body);
