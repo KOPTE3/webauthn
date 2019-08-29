@@ -1,6 +1,5 @@
 import { RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
-import { JsonObject } from 'type-fest';
 
 /**
  * http://api.tornado.dev.mail.ru/messages/metadata/check
@@ -13,7 +12,7 @@ export interface IMessagesMetadataCheckOptions {
 
 export interface IMessagesMetadataCheckResult {
 	metadata: {
-		json_ld: JsonObject[]
+		json_ld: Array<{ [key: string]: any }>
 	};
 }
 
