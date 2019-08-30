@@ -129,6 +129,15 @@ export class Element<Params extends object = any> {
 	}
 
 	@gen
+	@step('Дожидаемся, пока количество элементов {element} равно {expected}')
+	static WaitFoCount(element: Element, expected: number, timeout: number): void {
+		browser.waitUntil(
+			() => element.getCount() === expected,
+			timeout,
+			`Не удалось дождаться пока количество элементов ${element.Name()} совпадёт с ожидаемым значением (${expected})`);
+	}
+
+	@gen
 	static GetElementRect(element: Element): any {
 		const locator = element.Locator();
 		const el = browser.element(locator);
