@@ -130,7 +130,7 @@ export class Element<Params extends object = any> {
 
 	@gen
 	@step('Дожидаемся, пока количество элементов {element} равно {expected}')
-	static WaitFoCount(element: Element, expected: number, timeout: number): void {
+	static WaitForCount(element: Element, expected: number, timeout?: number): void {
 		browser.waitUntil(
 			() => element.getCount() === expected,
 			timeout,
