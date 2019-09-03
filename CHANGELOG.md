@@ -1,5 +1,8 @@
 # Changelog
 
+## 9.10.2
+* В зависимости добавлены chromedriver и webdriverio
+
 ## 9.10.0
 * Новые методы для работы с gibdd api
 * Доработки в Mail API и Cloud API
