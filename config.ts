@@ -26,7 +26,7 @@ export default {
 	},
 	as: {
 		url: 'http://as-tarantool.mailautotest.cloud.devmail.ru/accounts',
-		testLoginUrl: 'http://ci2.dev.mail.ru:9997/accounts',
+		testLoginUrl: 'http://ci1.devmail.ru:9997/accounts',
 		auth: {
 			user: 'feta-accounts',
 			password: 'g}94VGAfgizZ'
