@@ -4,6 +4,7 @@ declare module NodeJS {
 		deprecated: any;
 	}
 }
+type TemporaryAny = any;
 
 declare interface Window {
 	require: {
@@ -11,6 +12,19 @@ declare interface Window {
 		defined: {
 			[moduleName: string]: any;
 		}
+	};
+	__PH: {
+		logoutAccount(email: string, calback: (result: PHAccounts) => void): void
+		activeUser(): string | undefined
+	};
+	credentialsCreateArgs?: TemporaryAny;
+	credentialsGetArgs?: TemporaryAny;
+}
+
+declare interface Navigator {
+	credentials: {
+		create: (options: TemporaryAny) => any;
+		get: (options: TemporaryAny) => any;
 	};
 }
 
