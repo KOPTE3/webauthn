@@ -18,7 +18,9 @@ declare interface Window {
 		activeUser(): string | undefined
 	};
 	credentialsCreateArgs?: TemporaryAny;
+	credentialsCreateResponse: (value: TemporaryAny) => Promise<TemporaryAny>;
 	credentialsGetArgs?: TemporaryAny;
+	credentialsGetResponse?: (value: TemporaryAny) => Promise<TemporaryAny>;
 }
 
 declare interface Navigator {

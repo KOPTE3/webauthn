@@ -4,10 +4,9 @@ export default class WebAuthnMock {
 			navigator.credentials.create = (options: TemporaryAny) => {
 				window.credentialsCreateArgs = options;
 
-				const magicResult = options;
-				// todo magic
-
-				return success ? Promise.resolve(magicResult) : Promise.reject(magicResult);
+				return new Promise((resolve: TemporaryAny, reject: TemporaryAny) => {
+					window.credentialsCreateResponse = success ? resolve : reject;
+				});
 			};
 		}, success);
 	}
@@ -17,10 +16,9 @@ export default class WebAuthnMock {
 			navigator.credentials.get = (options: TemporaryAny) => {
 				window.credentialsGetArgs = options;
 
-				const magicResult = options;
-				// todo magic
-
-				return success ? Promise.resolve(magicResult) : Promise.reject(magicResult);
+				return new Promise((resolve: TemporaryAny, reject: TemporaryAny) => {
+					window.credentialsGetResponse = success ? resolve : reject;
+				});
 			};
 		}, success);
 	}
