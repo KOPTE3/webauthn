@@ -1,5 +1,9 @@
+// todo: реализовать реальный метод
+const magic = (options: any) => options;
+
 export default class WebAuthnMock {
-	static mockCredentialsCreate(success: boolean) {
+	@step('Подменяем браузерный credentials.create чтобы получить параметры, с которыми он будет вызван')
+	static credentialsCreateMock(success: boolean) {
 		browser.execute((success: boolean) => {
 			navigator.credentials.create = (options: TemporaryAny) => {
 				window.credentialsCreateArgs = options;
@@ -11,7 +15,8 @@ export default class WebAuthnMock {
 		}, success);
 	}
 
-	static mockCredentialsGet(success: boolean) {
+	@step('Подменяем браузерный credentials.get чтобы получить параметры, с которыми он будет вызван')
+	static credentialsGetMock(success: boolean) {
 		browser.execute((success: boolean) => {
 			navigator.credentials.get = (options: TemporaryAny) => {
 				window.credentialsGetArgs = options;
@@ -21,5 +26,35 @@ export default class WebAuthnMock {
 				});
 			};
 		}, success);
+	}
+
+	static settleCredentialsCreate(response: TemporaryAny) {
+		browser.execute((response: TemporaryAny) => {
+			window.credentialsCreateResponse(response);
+		}, response);
+	}
+
+	static settleCredentialsGet(response: TemporaryAny) {
+		browser.execute((response: TemporaryAny) => {
+			window.credentialsGetResponse(response);
+		}, response);
+	}
+
+	@step('Подменяем ответ браузерного credentials.create')
+	static replaceCredentialsCreateResponse() {
+		const options = browser.execute(() => {
+			return window.credentialsCreateArgs;
+		});
+
+		WebAuthnMock.settleCredentialsCreate(magic(options));
+	}
+
+	@step('Подменяем ответ браузерного credentials.get')
+	static replaceCredentialsGetResponse() {
+		const options = browser.execute(() => {
+			return window.credentialsGetArgs;
+		});
+
+		WebAuthnMock.settleCredentialsGet(magic(options));
 	}
 }

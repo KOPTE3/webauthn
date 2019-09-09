@@ -17,10 +17,10 @@ declare interface Window {
 		logoutAccount(email: string, calback: (result: PHAccounts) => void): void
 		activeUser(): string | undefined
 	};
-	credentialsCreateArgs?: TemporaryAny;
+	credentialsCreateArgs: TemporaryAny;
 	credentialsCreateResponse: (value: TemporaryAny) => Promise<TemporaryAny>;
-	credentialsGetArgs?: TemporaryAny;
-	credentialsGetResponse?: (value: TemporaryAny) => Promise<TemporaryAny>;
+	credentialsGetArgs: TemporaryAny;
+	credentialsGetResponse: (value: TemporaryAny) => Promise<TemporaryAny>;
 }
 
 declare interface Navigator {
