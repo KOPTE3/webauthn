@@ -42,16 +42,26 @@ export default class WebAuthnMock {
 
 	@step('Подменяем ответ браузерного credentials.create')
 	static replaceCredentialsCreateResponse() {
-		const options = browser.execute(() => {
+		const initalArgumetns = browser.execute(() => {
 			return window.credentialsCreateArgs;
 		});
 
-		WebAuthnMock.settleCredentialsCreate(magic(options));
+		const { publicKey } = initalArgumetns.value;
+
+		publicKey.challenge = Buffer.from(publicKey.challenge, 'base64')
+			.toString('base64');
+		publicKey.user.id = Buffer.from(publicKey.user.id, 'base64')
+			.toString('base64');
+
+		initalArgumetns.value.publicKey = publicKey;
+		// todo доделать и вынести в отдельную функцию
+
+		// WebAuthnMock.settleCredentialsCreate(magic(options));
 	}
 
 	@step('Подменяем ответ браузерного credentials.get')
 	static replaceCredentialsGetResponse() {
-		const options = browser.execute(() => {
+		const options: any = browser.execute(() => {
 			return window.credentialsGetArgs;
 		});
 
