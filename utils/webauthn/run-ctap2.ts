@@ -1,14 +1,24 @@
 process.env.DEBUG = '@qa*';
 
 import '../../lib';
-import {KeyObject} from "crypto";
+import { assertDefinedValue } from '../assert-defined';
+import { KeyObject } from 'crypto';
 import * as rp from 'request-promise-native';
-import {Cookie} from 'tough-cookie';
+import { Cookie } from 'tough-cookie';
 import config from '../../config';
-import {ASAccount, CommonAccount, EmailType, Session, Type} from '../authorization';
+import {
+	ASAccount,
+	CommonAccount,
+	EmailType,
+	Session,
+	Type,
+	loginAccountAsync,
+	getToken
+} from '../authorization';
+// tslint:disable-next-line:no-duplicate-imports
 import * as crypto from 'crypto';
 import * as cbor from 'cbor';
-
+import { credentialsCreateAsync } from '../../api/mail-api/webauthn/create';
 
 // https://www.w3.org/TR/webauthn/#aaguid
 const AAGUID: Buffer = crypto.randomBytes(16);
@@ -34,100 +44,31 @@ async function getCredentialsAsync(
 
 const jar = rp.jar();
 
-async function loginAccountAsync(credentials: CommonAccount): Promise<Session> {
-	await rp({
-		method: 'POST',
-		uri: config.auth.login,
-		headers: {
-			'Referer': config.auth.referer,
-			'User-Agent': config.auth.ua
-		},
-		followAllRedirects: false,
-		qs: {
-			Domain: credentials.domain,
-			Login: credentials.login,
-			Password: credentials.password,
-			autotest: 1,
-			mac: 1,
-			page: 'https://account.test.mail.ru/login'
-		},
-		jar,
-		simple: false,
-		resolveWithFullResponse: true
-	});
-
-	await rp({
-		method: 'GET',
-		uri: 'https://auth.mail.ru/sdc?from=https%3A%2F%2Faccount.test.mail.ru%2Flogin',
-		headers: {
-			'Referer': config.auth.referer,
-			'User-Agent': config.auth.ua
-		},
-		followAllRedirects: true,
-		jar,
-		simple: false,
-		resolveWithFullResponse: true
-	});
-
-	const cookies: Cookie[] = jar.getCookies('https://account.test.mail.ru') as any;
-
-	return {
-		credentials: { ...credentials },
-		cookies: cookies.map((cookie) => cookie.clone()) as any
-	};
-}
-
-
 async function run() {
 	const account = await getCredentialsAsync();
-	const sess = await loginAccountAsync(account);
+	const sess = await loginAccountAsync(account, 'https://account.test.mail.ru');
 
 	console.log(sess);
 
-	const {body: {body: token}} = await rp({
-		method: 'POST',
-		uri: 'https://account.test.mail.ru/api/v1/tokens',
-		headers: {
-			'Referer': config.auth.referer,
-			'User-Agent': config.auth.ua
-		},
-		qs: {
-			email: account.email,
-		},
-		jar,
-		simple: true,
-		json: true
-	});
+	const credentialsCreateResponse = await credentialsCreateAsync({
+		platform_type: 'cross-platform'
+	}, account);
 
-	const credentialsCreateResponse: any = await rp({
-		method: 'POST',
-		uri: 'https://account.test.mail.ru/api/v1/webauthn/credentials/create',
-		headers: {
-			'Referer': config.auth.referer,
-			'User-Agent': config.auth.ua
-		},
-		jar,
-		simple: true,
-		json: {
-			platform_type: 'cross-platform',
-			email: account.email,
-			token,
-		},
-		resolveWithFullResponse: false
-	});
+	console.log('credentialsCreateResponse', JSON.stringify(credentialsCreateResponse));
 
 	// console.log(credentialsCreateResponse.toJSON());
-	const {session_id, options} = credentialsCreateResponse.body;
+	const { session_id, options } = assertDefinedValue(credentialsCreateResponse.body);
 
 	const relayingPatry: {
-		id: string; // mail.ru
- 		name: string; // Mail.ru Group
+		id: string;	// mail.ru
+		// tslint:disable-next-line:indent
+ 	name: string; 	// Mail.ru Group
 	} = options.publicKey.rp;
 
 	const user = {
 		displayName: options.publicKey.user.displayName as string,
 		name: options.publicKey.user.name as string,
-		id: Buffer.from(options.publicKey.user.id as string, 'base64' as BufferEncoding),
+		id: Buffer.from(options.publicKey.user.id as string, 'base64' as BufferEncoding)
 	};
 
 	const challenge = Buffer.from(options.publicKey.challenge as string, 'base64' as BufferEncoding);
@@ -138,7 +79,7 @@ async function run() {
 
 	// #### Регистрируем пользователя (создаём открытый/закрытый ключи) ####
 	// see https://www.w3.org/TR/webauthn/#op-make-cred step 7
-	const {publicKey, privateKey} = crypto.generateKeyPairSync(
+	const { publicKey, privateKey } = crypto.generateKeyPairSync(
 		'ec',
 		{
 			namedCurve: 'prime256v1' // same that P-256 curve
@@ -157,7 +98,6 @@ async function run() {
 	const userHandle: Buffer = user.id;
 
 	const credentialId: Buffer = crypto.randomBytes(16);
-
 
 	const attestedCredentialData: Buffer = await CreateAttestedCredentialData(credentialId, publicKey);
 	const authData: Buffer = await CreateAuthenticatorData(attestedCredentialData, counter);
@@ -197,11 +137,11 @@ async function run() {
 	await AuthThrowWebAuthn({
 		email: account.email,
 		privateKey,
-		credentialId,
+		credentialId
 	});
 }
 
-async function AuthThrowWebAuthn({email, privateKey, credentialId}: any) {
+async function AuthThrowWebAuthn({ email, privateKey, credentialId }: any) {
 	const clearJar = rp.jar();
 
 	const credentialsGetResponse: any = await rp({
@@ -213,16 +153,15 @@ async function AuthThrowWebAuthn({email, privateKey, credentialId}: any) {
 		},
 		jar: clearJar,
 		simple: true,
-		qs: {email},
-		json: true,
+		qs: { email },
+		json: true
 	});
 
 	// console.log(credentialsGetResponse.toJSON());
 
-
 	// #### Авторизуем пользователя (используя ранее созданные открытый/закрытый ключи) ####
 	// see https://www.w3.org/TR/webauthn/#GetAssn-DetermineRpId step 18
-	const {session_id, options: {publicKey: publicKeyOptions}} = credentialsGetResponse.body;
+	const { session_id, options: { publicKey: publicKeyOptions } } = credentialsGetResponse.body;
 
 	console.log('session_id is', session_id);
 	console.log(publicKeyOptions);
@@ -250,7 +189,7 @@ async function AuthThrowWebAuthn({email, privateKey, credentialId}: any) {
 			response: {
 				authenticatorData: authData.toString('base64'),
 				signature: assertionSignature.toString('base64'),
-				clientDataJSON: Buffer.from(CollectedClientData, 'utf8').toString('base64'),
+				clientDataJSON: Buffer.from(CollectedClientData, 'utf8').toString('base64')
 			}
 		}
 	};
@@ -274,6 +213,7 @@ async function AuthThrowWebAuthn({email, privateKey, credentialId}: any) {
 
 }
 
+// tslint:disable-next-line:max-line-length
 async function GenerateAnAssertionSignature(authData: Buffer, clientDataHash: Buffer, privateKey: KeyObject): Promise<Buffer> {
 	return crypto.createSign('SHA256')
 		.update(Buffer.concat([authData, clientDataHash]))
@@ -283,6 +223,7 @@ async function GenerateAnAssertionSignature(authData: Buffer, clientDataHash: Bu
 type CollectedClientDataType = string;
 
 // https://www.w3.org/TR/webauthn/#sec-client-data
+// tslint:disable-next-line:max-line-length
 async function CreateCollectedClientData(challenge: Buffer, origin: string, type: 'webauthn.create' | 'webauthn.get'): Promise<CollectedClientDataType> {
 	return JSON.stringify({
 		type,
@@ -291,7 +232,7 @@ async function CreateCollectedClientData(challenge: Buffer, origin: string, type
 			.replace(/\+/g, '-')
 			.replace(/\//g, '_')
 			.replace(/=+$/g, ''),
-		origin,
+		origin
 	});
 }
 
@@ -356,19 +297,17 @@ async function GeneratingAnAttestationObject(authData: Buffer, hash: Buffer, pri
 	const sig = sign.sign(privateKey);
 	const attStmt = {
 		alg: -7,
-		sig,
+		sig
 	};
 
 	const fmt = 'packed';
 
-
 	return cbor.encode({
 		fmt,
 		attStmt,
-		authData,
-	})
+		authData
+	});
 }
-
 
 run()
 	.then(() => console.log('Finish'), console.error);

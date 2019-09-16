@@ -1,28 +1,16 @@
-import RPC from '@qa/rpc';
-import { Credentials, RequestResult } from '../../types/api';
+import { URL } from 'url';
+import RPC, { IRPCResponse, IRPCOptions } from '../rpc';
 import authorization from '../../store/authorization';
-const { URL } = require('url'); // TODO: why not import?
-
-interface MailApiResponse {
-	status: number;
-	email: string;
-	last_modified?: number;
-	body: any;
-	htmlencoded: boolean;
-}
+import { Credentials, RequestResult } from '../../types/api';
 
 let defaultRpc: RPC;
-
-export interface CallOptions {
-	validStatusCodes?: number[];
-}
 
 export default function call(
 	path: string,
 	body: object,
 	method: 'POST' | 'GET' = 'GET',
 	credentials?: Credentials,
-	opts?: CallOptions
+	opts?: IRPCOptions
 ): RequestResult {
 	const result: RequestResult = browser.waitForPromise(callAsync(path, body, method, credentials, opts));
 
@@ -40,7 +28,7 @@ export async function callAsync(
 	body: object,
 	method: 'POST' | 'GET' = 'GET',
 	credentials?: Credentials,
-	opts?: CallOptions
+	opts?: IRPCOptions
 ): Promise<RequestResult> {
 	const defaultCredentials: AccountManager.Credentials & Credentials = authorization.account.data();
 	if (!(defaultRpc && defaultRpc.credentials.username === defaultCredentials.username) && !credentials) {
@@ -48,14 +36,13 @@ export async function callAsync(
 			throw new Error('No authorized user found. Please call auth() step before or pass credentials explicitly.');
 		}
 
-		const { username, password } = defaultCredentials;
-		defaultRpc = new RPC({ username, password });
+		defaultRpc = new RPC(defaultCredentials, opts);
 	}
 
-	const rpc: RPC = (credentials) ? new RPC(credentials) : defaultRpc;
+	const rpc: RPC = (credentials) ? new RPC(credentials, opts) : defaultRpc;
 	const { host, version, noHttps } = { ...rpc.credentials, ...rpc.options };
 
-	const response: MailApiResponse = await rpc.call(path, body);
+	const response: IRPCResponse = await rpc.call(path, body);
 	const { status, body: responseBody } = response;
 
 	const result: RequestResult = {
