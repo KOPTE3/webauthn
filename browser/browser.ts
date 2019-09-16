@@ -11,20 +11,12 @@ const MouseButtons = {
 };
 
 export default class Browser {
-	/**
-	 * @deprecated
-	 * @see Browser.LeftClick
-	 */
 	@step('Зажать левую кнопку мыши')
 	static LeftButtonDown() {
 		// TODO fix deprecated methods
 		browser.buttonDown(MouseButtons.left);
 	}
 
-	/**
-	 * @deprecated
-	 * @see Browser.LeftClick
-	 */
 	@step('Отпустить левую кнопку мыши')
 	static LeftButtonUp() {
 		// TODO fix deprecated methods
