@@ -12,12 +12,14 @@ interface ReqParams {
 	[k: string]: any;
 }
 
-interface CreatedCredentials {
+export interface RelayingParty {
+	id: string;
+	name: string;
+}
+
+export interface CreatedCredentials {
 	challenge: string;
-	rp: {
-		id: string;
-		name: string;
-	};
+	rp: RelayingParty;
 	user: {
 		id: string;
 		name: string;
@@ -32,7 +34,7 @@ interface CreatedCredentials {
 	timeout: number;
 }
 
-interface CredentialsCreateBody {
+export interface CredentialsCreateBody {
 	session_id: string;
 	options: {
 		publicKey: CreatedCredentials;

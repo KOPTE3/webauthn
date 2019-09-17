@@ -17,10 +17,9 @@ declare interface Window {
 		logoutAccount(email: string, calback: (result: PHAccounts) => void): void
 		activeUser(): string | undefined
 	};
-	credentialsCreateArgs: TemporaryAny;
-	credentialsCreateResponse: (value: TemporaryAny) => Promise<TemporaryAny>;
-	credentialsGetArgs: TemporaryAny;
-	credentialsGetResponse: (value: TemporaryAny) => Promise<TemporaryAny>;
+	credentialsCreateSuccess: (value: TemporaryAny) => Promise<TemporaryAny>;
+	credentialsCreateFail: (value: TemporaryAny) => Promise<TemporaryAny>;
+	[key: string]: any;
 }
 
 declare interface Navigator {
