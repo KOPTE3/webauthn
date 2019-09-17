@@ -18,7 +18,7 @@ declare interface Window {
 		activeUser(): string | undefined
 	};
 	credentialsCreateSuccess: (value: TemporaryAny) => Promise<TemporaryAny>;
-	credentialsCreateFail: (value: TemporaryAny) => Promise<TemporaryAny>;
+	credentialsCreateFail: () => Promise<void>;
 	[key: string]: any;
 }
 

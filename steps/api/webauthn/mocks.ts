@@ -34,8 +34,14 @@ export default class WebAuthnMocks {
 	// tslint:disable-next-line:max-line-length
 	@step('Создаем фейковый ответ {success ? "SUCCESS" : "FAIL"} navigator.credentials.create c помощью полученных параметров')
 	static createCredentialsCreateResponse() {
-		const initialArguments: any = browser.execute(() => {
-			return window.credentialsCreateArgs;
+		let initialArguments: any;
+
+		browser.waitUntil(() => {
+			initialArguments = browser.execute(() => {
+				return window.credentialsCreateArgs;
+			});
+
+			return Boolean(initialArguments.value);
 		});
 
 		return browser.waitForPromise(
@@ -46,16 +52,15 @@ export default class WebAuthnMocks {
 	@step('Завершить вызов navigator.credentials.create с созданным ответом')
 	static settleCredentialsCreate(response: CreateCredentialsResponse, success: boolean) {
 		browser.execute((response: CreateCredentialsResponse, success: boolean) => {
-
-			// переводим строки в ArrayBuffer
-			response.rawId = window.base64ToArrayBuffer(response.rawId);
-			response.response.attestationObject = window.base64ToArrayBuffer(response.response.attestationObject);
-			response.response.clientDataJSON = window.base64ToArrayBuffer(response.response.clientDataJSON);
-
 			if (success) {
+				// переводим строки в ArrayBuffer
+				response.rawId = window.base64ToArrayBuffer(response.rawId);
+				response.response.attestationObject = window.base64ToArrayBuffer(response.response.attestationObject);
+				response.response.clientDataJSON = window.base64ToArrayBuffer(response.response.clientDataJSON);
+
 				window.credentialsCreateSuccess(response);
 			} else {
-				window.credentialsCreateFail(response);
+				window.credentialsCreateFail();
 			}
 		}, response, success);
 	}
