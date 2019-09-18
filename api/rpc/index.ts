@@ -31,6 +31,7 @@ class RPC {
 			host: 'https://e.mail.ru',
 			version: 1,
 			json: true,
+			clearJar: false,
 			...options
 		};
 	}
@@ -74,7 +75,7 @@ class RPC {
 	 */
 	async call(name: string, params: IRPCRequest = {}, data?: IRPCBody): Promise<IRPCResponse> {
 		const { email } = this.credentials;
-		const { version, host, noAuth, json } = this.options;
+		const { version, host, noAuth, json, clearJar } = this.options;
 		const { token, jar } = await this.token();
 
 		const qs = noAuth ? {} : {
@@ -85,24 +86,26 @@ class RPC {
 		// Исторически сложилось, что нужно кодировать все параметры 2-го уровня
 		encodeParams<IRPCRequest>(params);
 
+		const rpcOpts = {
+			method: 'POST',
+			uri:  `${host}/api/v${version}/${name}`,
+			headers: {
+				'Referer': host,
+				'User-Agent': config.auth.ua
+			},
+			qs: {
+				htmlencoded: false,
+				...qs,
+				...params
+			},
+			jar: clearJar ? rp.jar() : jar,
+			simple: true,
+			json,
+			resolveWithFullResponse: false
+		};
+
 		try {
-			const response = await rp({
-				method: 'POST',
-				uri:  `${host}/api/v${version}/${name}`,
-				headers: {
-					'Referer': host,
-					'User-Agent': config.auth.ua
-				},
-				qs: {
-					htmlencoded: false,
-					...qs,
-					...params
-				},
-				jar,
-				simple: true,
-				json,
-				resolveWithFullResponse: false
-			});
+			const response = await rp(rpcOpts);
 
 			try {
 				return JSON.parse(response);
@@ -170,6 +173,7 @@ export interface IRPCOptions extends Request.CoreOptions {
 	noAuth?: boolean;
 	noHttps?: boolean;
 	json?: boolean | any;
+	clearJar?: boolean;
 }
 
 export type IRPCBody = string | Buffer | ReadableStream;

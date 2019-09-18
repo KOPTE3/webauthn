@@ -1,52 +1,23 @@
 import { Credentials, RequestResult } from '../../../types/api';
+import { CredentialsCreateResponseOptions, PlatformType } from '../../../types/webauthn';
 import call, { callAsync } from '../call';
 
 /**
- * @see https://apidoc.devmail.ru/auth.mail.ru/webauthn/credentials/create/
+ * @see https://apidoc.devmail.ru/auth.mail.ru/webauthn/credentials/create/confirm/
  */
 
-type AttestationType = 'none' | 'direct' | 'indirect';
-
 interface ReqParams {
-	platform_type: string;
+	platform_type: PlatformType;
 	[k: string]: any;
-}
-
-export interface RelayingParty {
-	id: string;
-	name: string;
-}
-
-export interface CreatedCredentials {
-	challenge: string;
-	rp: RelayingParty;
-	user: {
-		id: string;
-		name: string;
-		displayName: string;
-	};
-	attestation: AttestationType;
-	authenticatorSelection: {
-		authenticatorAttachment: string;
-		requireResidentKey: boolean;
-	};
-	pubKeyCredParams: TemporaryAny[];
-	timeout: number;
 }
 
 export interface CredentialsCreateBody {
 	session_id: string;
-	options: {
-		publicKey: CreatedCredentials;
-	};
+	options: CredentialsCreateResponseOptions;
 }
 
-const defaultParams = {
-	platform_type: 'cross-platform'
-};
-
 export default function credentialsCreate(
-	params: ReqParams = defaultParams,
+	params: ReqParams,
 	credentials?: Credentials
 ): RequestResult<CredentialsCreateBody> {
 	return call('webauthn/credentials/create', params, 'POST', credentials, {
@@ -55,7 +26,7 @@ export default function credentialsCreate(
 }
 
 export async function credentialsCreateAsync(
-	params: ReqParams = defaultParams,
+	params: ReqParams,
 	credentials?: Credentials
 ): Promise<RequestResult<CredentialsCreateBody>> {
 	return callAsync('webauthn/credentials/create', params, 'POST', credentials, {
