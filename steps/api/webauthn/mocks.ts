@@ -54,7 +54,7 @@ export default class WebAuthnMocks {
 			}) as CredentialsCreateArgs;
 
 			return Boolean(initialArguments.value);
-		});
+		}, 10000, 'Не дождались аргументов navigator.credentials.create');
 
 		const { attestation } = browser.waitForPromise(
 			CreateAttestationForCredentialsCreateConfirm(initialArguments.value)
@@ -116,10 +116,9 @@ export default class WebAuthnMocks {
 			}) as CredentialsGetArgs;
 
 			return Boolean(initialArguments.value);
-		});
+		}, 10000, 'Не дождались аргументов navigator.credentials.get');
 
 		const { value: { publicKey } } = initialArguments;
-		console.log('initialArguments', initialArguments);
 
 		const assertionObject = browser.waitForPromise(
 			CreateAssertionForCredentialsGetConfirm(publicKey, privateKey, credentialIdString)

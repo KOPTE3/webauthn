@@ -1,5 +1,6 @@
 import * as rp from 'request-promise-native';
 import * as Request from 'request';
+import * as Debug from 'debug';
 import {
 	CommonAccount,
 	loginAccountAsync,
@@ -9,6 +10,8 @@ import {
 } from '../../utils/authorization';
 import { assertDefinedValue } from '../../utils/assert-defined';
 import config from '../../config';
+
+const debug = Debug('@qa:yoda:rpc');
 
 interface IEncode {
 	[name: string]: string;
@@ -104,6 +107,7 @@ class RPC {
 			resolveWithFullResponse: false
 		};
 
+		debug('rpc call options:', rpcOpts);
 		try {
 			const response = await rp(rpcOpts);
 

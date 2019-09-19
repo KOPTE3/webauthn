@@ -2,6 +2,9 @@ import { URL } from 'url';
 import RPC, { IRPCResponse, IRPCOptions } from '../rpc';
 import authorization from '../../store/authorization';
 import { Credentials, RequestResult } from '../../types/api';
+import * as Debug from 'debug';
+
+const debug = Debug('@qa:yoda:mail-api:call');
 
 let defaultRpc: RPC;
 
@@ -58,6 +61,8 @@ export async function callAsync(
 			}
 		}
 	};
+
+	debug('response:', result);
 
 	const validStatusCodes: number[] = opts && opts.validStatusCodes || [];
 	const isValidStatusCode = (status >= 200 && status < 400) || validStatusCodes.includes(status);

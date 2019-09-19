@@ -25,12 +25,10 @@ export default class WebAuthnSteps {
 			name
 		};
 
-		const confirmResponse = MailApi.credentialsCreateConfirm(
+		MailApi.credentialsCreateConfirm(
 			confirmParams,
 			credentials
 		);
-
-		console.log(confirmResponse);
 
 		return {
 			privateKey,
