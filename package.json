@@ -1,6 +1,6 @@
 {
   "name": "@qa/yoda",
-  "version": "9.10.2-wau.11",
+  "version": "9.10.2-wauthn.1",
   "description": "Testing platform",
   "author": "Mail.Ru Group Limited",
   "license": "UNLICENSED",
@@ -30,7 +30,6 @@
     "prepublishOnly": "tsc && npm run generate",
     "generate": "TS_NODE_PROJECT=\"./tsconfig.json\" node --require ts-node/register ./build/index.ts",
     "build-tsc": "tsc",
-    "run-ctap": "TS_NODE_PROJECT=\"./tsconfig.json\" node --require ts-node/register ./utils/webauthn/run-ctap2.ts",
     "lint": "npm run build-tsc -- --noEmit && tslint --project ./tsconfig.json  --exclude 'node_modules/**/*'"
   },
   "pre-commit": {

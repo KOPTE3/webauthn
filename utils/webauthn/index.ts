@@ -74,8 +74,8 @@ export async function CreateAttestationForCredentialsCreateConfirm(
 
 export async function CreateAssertionForCredentialsGetConfirm(
 	publicKeyOptions: GottenCredentials,
-	credentialIdString: string,
-	privateKey: string
+	privateKey: string,
+	credentialIdString: string
 ): Promise<AssertionForCredentialsGetConfirm> {
 	const challenge = Buffer.from(publicKeyOptions.challenge as string, 'base64' as BufferEncoding);
 	const authData: Buffer = await CreateAuthenticatorData(null, counter);

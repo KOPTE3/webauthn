@@ -44,7 +44,7 @@ export default class WebAuthnMocks {
 	}
 
 	// tslint:disable-next-line:max-line-length
-	@step('Создаем фейковый ответ {success ? "SUCCESS" : "FAIL"} navigator.credentials.create c помощью полученных параметров')
+	@step('Создаем фейковый ответ navigator.credentials.create c помощью полученных параметров')
 	static createCredentialsCreateResponse() {
 		let initialArguments: any;
 
@@ -63,7 +63,7 @@ export default class WebAuthnMocks {
 		return attestation as AttestationForCredentialsCreateConfirm;
 	}
 
-	@step('Завершить вызов navigator.credentials.create с созданным ответом')
+	@step('Завершить вызов navigator.credentials.create с созданным ответом {success ? "SUCCESS" : "FAIL"}')
 	static settleCredentialsCreate(response: AttestationForCredentialsCreateConfirm, success: boolean) {
 		browser.execute((response: AttestationForCredentialsCreateConfirm, success: boolean) => {
 			if (success) {
@@ -106,8 +106,8 @@ export default class WebAuthnMocks {
 	}
 
 	// tslint:disable-next-line:max-line-length
-	@step('Создаем фейковый ответ {success ? "SUCCESS" : "FAIL"} navigator.credentials.get c помощью полученных параметров')
-	static createCredentialsGetResponse(email: string, credentialIdString: string) {
+	@step('Создаем фейковый ответ navigator.credentials.get c помощью полученных параметров')
+	static createCredentialsGetResponse(privateKey: string, credentialIdString: string) {
 		let initialArguments: any;
 
 		browser.waitUntil(() => {
@@ -122,15 +122,15 @@ export default class WebAuthnMocks {
 		console.log('initialArguments', initialArguments);
 
 		const assertionObject = browser.waitForPromise(
-			CreateAssertionForCredentialsGetConfirm(publicKey, credentialIdString, email)
+			CreateAssertionForCredentialsGetConfirm(publicKey, privateKey, credentialIdString)
 		);
 
 		return assertionObject as AssertionForCredentialsGetConfirm;
 	}
 
 	@step('Подменяем ответ navigator.credentials.get')
-	static replaceCredentialsGetResponse(success: boolean, email: string, credentialIdString: string) {
-		const fakeResponse = WebAuthnMocks.createCredentialsGetResponse(email, credentialIdString);
+	static replaceCredentialsGetResponse(success: boolean, privateKey: string, credentialIdString: string) {
+		const fakeResponse = WebAuthnMocks.createCredentialsGetResponse(privateKey, credentialIdString);
 
 		WebAuthnMocks.settleCredentialsGet(fakeResponse, success);
 	}

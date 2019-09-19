@@ -33,7 +33,8 @@ export default class WebAuthnSteps {
 		console.log(confirmResponse);
 
 		return {
-			privateKey
+			privateKey,
+			credentialIdString: attestation.id
 		};
 	}
 }
