@@ -108,13 +108,35 @@ export function getCredentials(
 	return browser.waitForPromise(getCredentialsAsync(type, options), timeout, 'Could not get user credentials');
 }
 
+export async function getSdcsCookie(host?: string) {
+	const uri = host ? 'https://auth.mail.ru/sdc?from=' + encodeURIComponent(host) : config.auth.sdc;
+
+	await rp({
+		method: 'GET',
+		uri,
+		headers: {
+			'Referer': host || config.auth.referer,
+			'User-Agent': config.auth.ua
+		},
+		followAllRedirects: false,
+		jar,
+		simple: false,
+		resolveWithFullResponse: true
+	});
+}
+
+export function checkSdcsCookie(cookies: Cookie[]): boolean {
+	return cookies.map((cookie) => cookie.toJSON())
+		.some((cookie) => cookie.key === 'sdcs');
+}
+
 /**
  * Авторизует переданный аккаунт, возвращает объект с авторизационными куками
  * @param {CommonAccount} credentials
  * @return Promise<Session>
  */
 export async function loginAccountAsync(credentials: CommonAccount): Promise<Session> {
-	const res1 = await rp({
+	await rp({
 		method: 'POST',
 		uri: config.auth.login,
 		headers: {
@@ -135,18 +157,7 @@ export async function loginAccountAsync(credentials: CommonAccount): Promise<Ses
 		resolveWithFullResponse: true
 	});
 
-	const res2 = await rp({
-		method: 'GET',
-		uri: config.auth.sdc,
-		headers: {
-			'Referer': config.auth.referer,
-			'User-Agent': config.auth.ua
-		},
-		followAllRedirects: false,
-		jar,
-		simple: false,
-		resolveWithFullResponse: true
-	});
+	await getSdcsCookie();
 
 	const cookies: Cookie[] = jar.getCookies(config.auth.login) as any;
 
@@ -164,6 +175,30 @@ export function loginAccount(credentials: CommonAccount, timeout?: number): Sess
 		timeout,
 		`Could not login with credentials {${credentials.username},${credentials.password}}`
 	);
+}
+
+export async function getToken(email: string, host: string) {
+	const options = {
+		method: 'POST',
+		uri: `${host}/api/v1/tokens`,
+		headers: {
+			'Referer': host || config.auth.referer,
+			'User-Agent': config.auth.ua
+		},
+		qs: {
+			email
+		},
+		jar,
+		simple: true,
+		json: true
+	};
+
+	const { body } = await rp(options);
+
+	return {
+		token: body.token,
+		jar
+	};
 }
 
 /**

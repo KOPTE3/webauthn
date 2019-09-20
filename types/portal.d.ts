@@ -13,10 +13,3 @@ interface PHAccounts {
 	activeEmailByResponse: string;
 	status: string | 'ok';
 }
-
-declare interface Window {
-	__PH: {
-		logoutAccount(email: string, calback: (result: PHAccounts) => void): void
-		activeUser(): string | undefined
-	};
-}
