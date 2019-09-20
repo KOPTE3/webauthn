@@ -19,7 +19,7 @@ interface IEncode {
 
 const encodeParams = <T> (params: IEncode = {}): Partial<IEncode> => {
 	for (const [ key, value ] of Object.entries(params)) {
-		if (value !== null) {
+		if (value !== null &&  typeof value === 'object') {
 			params[key] = JSON.stringify(value);
 		}
 	}
