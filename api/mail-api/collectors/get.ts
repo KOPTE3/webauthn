@@ -3,7 +3,7 @@ import { Credentials, RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
 
 /**
- * @see http://api.tornado.dev.mail.ru/collectors
+ * @see https://apidoc.devmail.ru/e.mail.ru/collectors
  */
 export default function collectorsGet(
 	options: MailAPI.Collectors = {},

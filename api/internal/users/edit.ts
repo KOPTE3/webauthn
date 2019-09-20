@@ -26,7 +26,7 @@ export interface UserEditOptions {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/users/edit
+ * @see https://apidoc.devmail.ru/e.mail.ru/users/edit
  */
 export default function usersEdit(options: {users: UserEditOptions[]}): RequestResult<null> {
 	return call('users/edit', options, 'POST');

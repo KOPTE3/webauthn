@@ -12,7 +12,7 @@ interface MessagesAttachesInvalidateResponseBody {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/test/messages/attaches/invalidate
+ * @see https://apidoc.devmail.ru/e.mail.ru/test/messages/attaches/invalidate
  */
 export default function messagesAttachesInvalidate(
 	options: Options

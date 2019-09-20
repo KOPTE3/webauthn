@@ -12,7 +12,7 @@ export interface ProfileSetBody {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/user/profile/set
+ * @see https://apidoc.devmail.ru/e.mail.ru/user/profile/set
  */
 export default function userProfileSet(options: Options): RequestResult<ProfileSetBody> {
 	return call('user/profile/set', options);

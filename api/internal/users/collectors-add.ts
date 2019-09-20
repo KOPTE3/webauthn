@@ -34,7 +34,7 @@ export interface Options {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/users/collectors/add
+ * @see https://apidoc.devmail.ru/e.mail.ru/users/collectors/add
  */
 export default function usersCollectorsAdd(options: Options): RequestResult<string[]> {
 	return call('users/collectors/add', options, 'POST');

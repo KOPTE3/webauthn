@@ -2,11 +2,13 @@ import { MailAPI as MailApiInterfaces } from '@qa/api';
 import * as merge from 'deepmerge';
 import { bruteforceCounterReset, BruteforceType, tokensInfo } from '../../api/internal';
 import * as MailApi from '../../api/mail-api';
+import config from '../../config';
 import authorization from '../../store/authorization';
 import helpers from '../../store/helpers';
 import { Phone } from '../../store/phones';
 import { assertDefinedValue } from '../../utils/assert-defined';
 import { Credentials } from '../../types/api';
+import { CommonAccount} from '../../utils/authorization';
 
 /** Интерфейс для вывода данных, о созданной запароленной папке */
 interface SecretFolderData {
@@ -314,6 +316,21 @@ export default class MailApiSteps {
 			ids: uidls,
 			category
 		});
+	}
+
+	@step('Привязать к аккаунту приложение для отправки туда пушей')
+	enableTestPushNotifications(credentials: CommonAccount): void {
+		MailApi.messagesPushnotificationsSettingsEdit(
+			{
+				subscriptions: [
+					{
+						account: credentials.email,
+						...config.testPushNotificationsSubscription,
+					}
+				]
+			},
+			credentials,
+		);
 	}
 }
 

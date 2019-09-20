@@ -3,7 +3,7 @@ import { Credentials, RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
 
 /**
- * @see http://api.tornado.dev.mail.ru/filters/remove/
+ * @see https://apidoc.devmail.ru/e.mail.ru/filters/remove/
  */
 export default function filtersRemove(
 	options: MailAPI.FiltersRemove, credentials?: Credentials

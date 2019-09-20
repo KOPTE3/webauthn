@@ -44,6 +44,22 @@ export default {
 	files: {
 		baseUrl: 'http://files.win102.mail.cloud.devmail.ru/'
 	},
+	testPushNotificationsSubscription: {
+		token: '65126618325:14838322906489354350985028373919997344018607575698298209519830904748015705070522591352296981588061962446733941893726089992087917749836223325',
+		settings: {
+			capabilities: {
+				Filter: {},
+				is_active: true,
+				chrome_mode: 1
+			},
+			webpush_keys: {
+				p256dh: '123',
+				auth: '123'
+			}
+		},
+		platform: 'webpush',
+		application: 'mail_e',
+	},
 	get timeout(): number {
 		if (typeof browser !== 'undefined') {
 			return browser.options.waitforTimeout || 30000;

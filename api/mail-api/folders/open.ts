@@ -3,7 +3,7 @@ import { Credentials, RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
 
 /**
- * @see http://api.tornado.dev.mail.ru/folders/open
+ * @see https://apidoc.devmail.ru/e.mail.ru/folders/open
  */
 export default function foldersOpen(options: MailAPI.FoldersOpen, credentials?: Credentials): RequestResult<string[]> {
 	return call('folders/open', options, 'POST', credentials);

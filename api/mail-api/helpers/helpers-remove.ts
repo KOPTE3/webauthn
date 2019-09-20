@@ -3,7 +3,7 @@ import { Credentials, RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
 
 /**
- * @see http://api.tornado.dev.mail.ru/helpers/remove
+ * @see https://apidoc.devmail.ru/e.mail.ru/helpers/remove
  */
 export default function helpersRemove(
 	options: MailAPI.HelpersRemove,

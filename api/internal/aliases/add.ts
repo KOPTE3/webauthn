@@ -3,7 +3,7 @@ import { RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
 
 /**
- * @see http://api.tornado.dev.mail.ru/aliases/add
+ * @see https://apidoc.devmail.ru/e.mail.ru/aliases/add
  */
 export default function aliasAdd(options: MailAPI.AliasesAdd): RequestResult<void> {
 	return call('aliases/add', options, 'POST');
