@@ -12,7 +12,7 @@ export interface CreationTimeBody {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/test/session/creation_time
+ * @see https://apidoc.devmail.ru/e.mail.ru/test/session/creation_time
  */
 export default function creationTime(params: Params, opts: CallOptions): RequestResult<CreationTimeBody> {
 	return call('test/session/creation_time', params, 'POST', opts);

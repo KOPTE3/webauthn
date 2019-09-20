@@ -28,7 +28,7 @@ interface ThreadsStatusSmartBody {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/threads/status/smart
+ * @see https://apidoc.devmail.ru/e.mail.ru/threads/status/smart
  */
 export default function threadsStatusSmart(
 	options: MailAPI.ThreadsStatusSmart,

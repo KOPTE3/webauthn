@@ -14,7 +14,7 @@ export interface SmsVerificatorResponse {
 /**
  * Используется только для тестирования работы абф в smsverificator
  * Для эмуляции абф в других концах нужно ручками дёргать запросы
- * @see http://api.tornado.dev.mail.ru/test/bruteforce-counter/emu
+ * @see https://apidoc.devmail.ru/e.mail.ru/test/bruteforce-counter/emu
  */
 export default function bruteforceCounterEmu(options: Options): RequestResult<SmsVerificatorResponse> {
 	return call('test/bruteforce-counter/emu', options);

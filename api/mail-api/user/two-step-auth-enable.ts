@@ -26,7 +26,7 @@ export interface User2StepAuthEnable extends MailAPI.User2StepAuthEnable {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/user/2-step-auth/enable
+ * @see https://apidoc.devmail.ru/e.mail.ru/user/2-step-auth/enable
  */
 export default function user2StepAuthEnable(
 	options: User2StepAuthEnable,

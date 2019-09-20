@@ -13,7 +13,7 @@ export interface Options {
 const method = 'users/2-step-auth/enable';
 
 /**
- * @see http://api.tornado.dev.mail.ru/users/2-step-auth/enable
+ * @see https://apidoc.devmail.ru/e.mail.ru/users/2-step-auth/enable
  */
 export default function twoStepEnable(options: Options): RequestResult<any> {
 	// Работает только с POST

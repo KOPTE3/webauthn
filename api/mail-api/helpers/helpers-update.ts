@@ -13,7 +13,7 @@ export interface HelpersUpdateResponseBody {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/helpers/update
+ * @see https://apidoc.devmail.ru/e.mail.ru/helpers/update
  */
 export default function helpersUpdate(
 	options: MailAPI.HelpersUpdate,

@@ -14,7 +14,7 @@ export type FoldersBody = Array<{
 }>;
 
 /**
- * @see http://api.tornado.dev.mail.ru/user/folders
+ * @see https://apidoc.devmail.ru/e.mail.ru/user/folders
  */
 export default function userFolders(options: Options): RequestResult<FoldersBody> {
 	return call('user/folders', options);

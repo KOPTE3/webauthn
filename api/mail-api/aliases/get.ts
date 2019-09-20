@@ -3,7 +3,7 @@ import { Credentials, RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
 
 /**
- * @see http://api.tornado.dev.mail.ru/aliases
+ * @see https://apidoc.devmail.ru/e.mail.ru/aliases
  */
 export default function aliasesGet(options: MailAPI.Aliases = {}, credentials?: Credentials): RequestResult<Alias[]> {
 	return call('aliases', options, 'GET', credentials);

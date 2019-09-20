@@ -10,7 +10,7 @@ export interface Options {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/test/user/phones/state
+ * @see https://apidoc.devmail.ru/e.mail.ru/test/user/phones/state
  */
 export default function userPhonesState(options: Options): RequestResult<any> {
 	return call('test/user/phones/state', options);

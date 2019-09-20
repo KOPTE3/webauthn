@@ -10,7 +10,7 @@ export type ConfigBody = Array<{
 }>;
 
 /**
- * @see http://api.tornado.dev.mail.ru/test/config
+ * @see https://apidoc.devmail.ru/e.mail.ru/test/config
  */
 export default function config(options: Options): RequestResult<ConfigBody> {
 	return call('test/config', options);

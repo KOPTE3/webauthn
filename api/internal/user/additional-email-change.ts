@@ -7,7 +7,7 @@ export interface Options {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/test/user/additional-email/change
+ * @see https://apidoc.devmail.ru/e.mail.ru/test/user/additional-email/change
  */
 export default function userAdditionalEmailChange(options: Options): RequestResult<void> {
 	return call('test/user/additional-email/change', options);

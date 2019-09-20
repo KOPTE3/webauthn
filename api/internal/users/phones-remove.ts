@@ -7,7 +7,7 @@ export interface Options {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/users/phones/remove
+ * @see https://apidoc.devmail.ru/e.mail.ru/users/phones/remove
  */
 export default function usersPhonesRemove(options: Options): RequestResult<string[]> {
 	return call('users/phones/remove', options, 'POST');
