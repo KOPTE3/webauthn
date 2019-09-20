@@ -9,6 +9,7 @@ export * from './addressbook/labels';
 export * from './messages';
 export * from './helpers';
 export * from './webauthn';
+export * from './pushauth';
 export { default as abContactsAdd, abContactsAddAsync } from './ab-contacts-add';
 export { default as tokensSend, tokensSendAsync } from './tokens-send';
 export {
