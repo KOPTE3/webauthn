@@ -3,7 +3,7 @@ import { Credentials, RequestResult } from '../../types/api';
 import call, { callAsync } from './call';
 
 /**
- * @see http://api.tornado.dev.mail.ru/payment/messages/status/update
+ * @see https://apidoc.devmail.ru/e.mail.ru/payment/messages/status/update
  */
 export default function paymentMessagesStatusUpdate(
 	options: MailAPI.PaymentMessagesStatusUpdate,

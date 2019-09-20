@@ -10,7 +10,7 @@ export type ProfileBody = Array<{
 }>;
 
 /**
- * @see http://api.tornado.dev.mail.ru/user/profile
+ * @see https://apidoc.devmail.ru/e.mail.ru/user/profile
  */
 export default function userProfile(options: Options): RequestResult<ProfileBody> {
 	return call('user/profile', options);

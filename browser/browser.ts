@@ -23,6 +23,19 @@ export default class Browser {
 		browser.buttonUp(MouseButtons.left);
 	}
 
+	@step('Кликнуть левой кнопкой мыши в {__result__}',
+		((params: any[]) => {
+			if (!params || !params.length || params.length <= 2) {
+				return 'текущую точку';
+			}
+
+			return `координату (${params[0]}, ${params[1]})`;
+		})
+	)
+	static LeftClick(xoffset?: number, yoffset?: number) {
+		browser.leftClick('body', xoffset, yoffset);
+	}
+
 	@step('Обновить страницу')
 	static Refresh() {
 		browser.refresh();
@@ -61,7 +74,7 @@ export default class Browser {
 
 	@step('Нажимаем на хот-кей {buttons}')
 	static KeysPress(buttons: Array<(UNICODE_CHARACTERS | string)>): void {
-		if (!buttons.every((button) => (typeof button === 'string') && (button.length === 1))) {
+		if (!buttons.every((button) => (typeof button === 'string'))) {
 			throw new Error(`Не валидная комбинация кнопок ${buttons.join(' + ')}`);
 		}
 		browser.keys(buttons);

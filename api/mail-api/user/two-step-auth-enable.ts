@@ -1,6 +1,7 @@
 import { MailAPI } from '@qa/api';
 import { Credentials, RequestResult } from '../../../types/api';
-import call, { callAsync, CallOptions } from '../call';
+import call, { callAsync } from '../call';
+import { IRPCOptions } from '../../rpc/index';
 
 export interface User2StepAuthEnableResponseBody {
 	auth: {
@@ -25,12 +26,12 @@ export interface User2StepAuthEnable extends MailAPI.User2StepAuthEnable {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/user/2-step-auth/enable
+ * @see https://apidoc.devmail.ru/e.mail.ru/user/2-step-auth/enable
  */
 export default function user2StepAuthEnable(
 	options: User2StepAuthEnable,
 	credentials?: Credentials,
-	opts?: CallOptions
+	opts?: IRPCOptions
 ): RequestResult<User2StepAuthEnableResponseBody> {
 	return call('user/2-step-auth/enable', options, 'POST', credentials, opts);
 }
@@ -38,7 +39,7 @@ export default function user2StepAuthEnable(
 export async function user2StepAuthEnableAsync(
 	options: User2StepAuthEnable,
 	credentials?: Credentials,
-	opts?: CallOptions
+	opts?: IRPCOptions
 ): Promise<RequestResult<User2StepAuthEnableResponseBody>> {
 	return callAsync('user/2-step-auth/enable', options, 'POST', credentials, opts);
 }

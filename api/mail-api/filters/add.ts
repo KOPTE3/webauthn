@@ -3,7 +3,7 @@ import { Credentials, RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
 
 /**
- * @see http://api.tornado.dev.mail.ru/filters/add/
+ * @see https://apidoc.devmail.ru/e.mail.ru/filters/add/
  */
 export default function filtersAdd(options: MailAPI.FiltersAdd, credentials?: Credentials): RequestResult<string[]> {
 	return call('filters/add', options, 'POST', credentials);

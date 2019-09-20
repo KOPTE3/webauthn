@@ -12,7 +12,7 @@ export interface Options {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/users/phones/add
+ * @see https://apidoc.devmail.ru/e.mail.ru/users/phones/add
  */
 export default function usersPhonesAdd(options: Options): RequestResult<string[]> {
 	return call('users/phones/add', options, 'POST');

@@ -14,7 +14,7 @@ export interface FoldersShareInfo {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/folders/share/info
+ * @see https://apidoc.devmail.ru/e.mail.ru/folders/share/info
  */
 export default function foldersShareInfo(options: {}, credentials?: Credentials): RequestResult<FoldersShareInfo> {
 	return call('folders/share/info', options, 'POST', credentials);
