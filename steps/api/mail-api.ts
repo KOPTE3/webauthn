@@ -8,7 +8,7 @@ import helpers from '../../store/helpers';
 import { Phone } from '../../store/phones';
 import { assertDefinedValue } from '../../utils/assert-defined';
 import { Credentials } from '../../types/api';
-import { CommonAccount} from '../../utils/authorization';
+import { CommonAccount } from '../../utils/authorization';
 
 /** Интерфейс для вывода данных, о созданной запароленной папке */
 interface SecretFolderData {
@@ -325,11 +325,11 @@ export default class MailApiSteps {
 				subscriptions: [
 					{
 						account: credentials.email,
-						...config.testPushNotificationsSubscription,
+						...config.testPushNotificationsSubscription
 					}
 				]
 			},
-			credentials,
+			credentials
 		);
 	}
 }

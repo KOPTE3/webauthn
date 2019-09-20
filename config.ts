@@ -58,7 +58,7 @@ export default {
 			}
 		},
 		platform: 'webpush',
-		application: 'mail_e',
+		application: 'mail_e'
 	},
 	get timeout(): number {
 		if (typeof browser !== 'undefined') {
