@@ -7,7 +7,7 @@ export interface FoldersUnshareOptions {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/folders/unshare
+ * @see https://apidoc.devmail.ru/e.mail.ru/folders/unshare
  */
 export default function foldersUnshare(options: FoldersUnshareOptions, credentials?: Credentials): RequestResult<null> {
 	return call('folders/unshare', options, 'POST', credentials);

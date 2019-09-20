@@ -3,7 +3,7 @@ import { Credentials, RequestResult } from '../../../../types/api';
 import call, { callAsync } from '../../call';
 
 /**
- * @see http://api.tornado.dev.mail.ru/ab/labels/edit/
+ * @see https://apidoc.devmail.ru/e.mail.ru/ab/labels/edit/
  */
 export default function labelsEdit(
 	options: MailAPI.AbLabelsEdit,

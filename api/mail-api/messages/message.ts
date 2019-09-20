@@ -28,7 +28,7 @@ export interface MessagesMessageResponseBody {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/messages/message
+ * @see https://apidoc.devmail.ru/e.mail.ru/messages/message
  */
 export default function messagesMessage(
 	options: MailAPI.MessagesMessage,

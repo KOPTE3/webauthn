@@ -15,7 +15,7 @@ export interface TokensInfo {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/test/tokens/info
+ * @see https://apidoc.devmail.ru/e.mail.ru/test/tokens/info
  */
 export default function tokensInfo(options: Options): RequestResult<TokensInfo> {
 	return call('test/tokens/info', options);

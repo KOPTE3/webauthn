@@ -15,7 +15,7 @@ export interface UserShortResponseBody {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/user/short
+ * @see https://apidoc.devmail.ru/e.mail.ru/user/short
  */
 export default function userShort(
 	options: MailAPI.UserShort,

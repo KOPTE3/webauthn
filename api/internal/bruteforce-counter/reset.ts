@@ -23,7 +23,7 @@ export interface Options {
 }
 
 /**
- * @see http://api.tornado.dev.mail.ru/test/bruteforce-counter/reset
+ * @see https://apidoc.devmail.ru/e.mail.ru/test/bruteforce-counter/reset
  */
 export default function bruteforceCounterReset(options: Options): RequestResult<null> {
 	return call('test/bruteforce-counter/reset', options);

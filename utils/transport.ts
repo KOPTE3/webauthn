@@ -96,7 +96,7 @@ export default class Transport {
 	/**
 	 * Отправка письма на сторонний текущий ящик
 	 *
-	 * @see http://api.tornado.dev.mail.ru/messages/send
+	 * @see https://apidoc.devmail.ru/e.mail.ru/messages/send
 	 *
 	 * {
 	 *   subject,

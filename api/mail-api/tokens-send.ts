@@ -3,7 +3,7 @@ import { RequestResult } from '../../types/api';
 import call, { callAsync } from './call';
 
 /**
- * @see http://api.tornado.dev.mail.ru/tokens/send
+ * @see https://apidoc.devmail.ru/e.mail.ru/tokens/send
  */
 export default function tokensSend(options: MailAPI.TokensSend): RequestResult<string> {
 	return call('tokens/send', options);

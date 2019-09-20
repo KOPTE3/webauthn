@@ -3,7 +3,7 @@ import { Credentials, RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
 
 /**
- * @see http://api.tornado.dev.mail.ru/user/edit
+ * @see https://apidoc.devmail.ru/e.mail.ru/user/edit
  */
 export default function userEdit(options: MailAPI.UserEdit, credentials?: Credentials): RequestResult<void> {
 	return call('user/edit', options, 'POST', credentials);

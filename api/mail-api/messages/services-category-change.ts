@@ -4,7 +4,7 @@ import call, { callAsync } from '../call';
 import { Merge } from 'type-fest';
 
 /**
- * @see http://api.tornado.dev.mail.ru/messages/services/category/change
+ * @see https://apidoc.devmail.ru/e.mail.ru/messages/services/category/change
  */
 
 // уточняем возможные значения поля category

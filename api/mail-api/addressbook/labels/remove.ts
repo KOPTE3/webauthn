@@ -3,7 +3,7 @@ import { Credentials, RequestResult } from '../../../../types/api';
 import call, { callAsync } from '../../call';
 
 /**
- * @see http://api.tornado.dev.mail.ru/ab/labels/remove/
+ * @see https://apidoc.devmail.ru/e.mail.ru/ab/labels/remove/
  */
 export default function labelsRemove(
 	options: MailAPI.AbLabelsRemove,
