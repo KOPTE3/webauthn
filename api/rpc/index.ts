@@ -55,7 +55,7 @@ class RPC {
 		const { email } = this.credentials;
 
 		// получаем авторизационные куки
-		const session = await loginAccountAsync(this.credentials, host);
+		const session = await loginAccountAsync(this.credentials);
 		const hasSdcsCookie = checkSdcsCookie(session.cookies);
 
 		// если не смогли получить sdcs куку первый раз, пробуем еще раз
@@ -111,7 +111,7 @@ class RPC {
 		try {
 			const response = await rp(rpcOpts);
 
-			debug('rpc request result:', response);
+			debug('request result:', response.toJSON());
 
 			try {
 				return JSON.parse(response);

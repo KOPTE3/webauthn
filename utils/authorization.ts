@@ -135,12 +135,12 @@ export function checkSdcsCookie(cookies: Cookie[]): boolean {
  * @param {CommonAccount} credentials
  * @return Promise<Session>
  */
-export async function loginAccountAsync(credentials: CommonAccount, host?: string): Promise<Session> {
+export async function loginAccountAsync(credentials: CommonAccount): Promise<Session> {
 	await rp({
 		method: 'POST',
 		uri: config.auth.login,
 		headers: {
-			'Referer': host || config.auth.referer,
+			'Referer': config.auth.referer,
 			'User-Agent': config.auth.ua
 		},
 		followAllRedirects: false,
@@ -150,16 +150,16 @@ export async function loginAccountAsync(credentials: CommonAccount, host?: strin
 			Password: credentials.password,
 			autotest: 1,
 			mac: 1,
-			page: host || 'https://mail.ru'
+			page: 'https://mail.ru'
 		},
 		jar,
 		simple: false,
 		resolveWithFullResponse: true
 	});
 
-	await getSdcsCookie(host);
+	await getSdcsCookie();
 
-	const cookies: Cookie[] = jar.getCookies(host || config.auth.login) as any;
+	const cookies: Cookie[] = jar.getCookies(config.auth.login) as any;
 
 	session = {
 		credentials: { ...credentials },

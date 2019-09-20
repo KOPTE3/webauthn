@@ -63,8 +63,6 @@ export async function callAsync(
 		}
 	};
 
-	debug('response:', result);
-
 	const validStatusCodes: number[] = opts && opts.validStatusCodes || [];
 	const isValidStatusCode = (status >= 200 && status < 400) || validStatusCodes.includes(status);
 
