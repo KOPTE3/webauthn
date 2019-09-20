@@ -6,22 +6,22 @@ import config from '../../../config';
  * @see https://apidoc.devmail.ru/auth.mail.ru/webauthn/credentials/create/confirm/
  */
 
-export default function credentialsCreateConfirm(
+export default function webauthnCredentialsCreateConfirm(
 	params: any,
 	credentials?: Credentials
 ): RequestResult<any> {
 	return call('webauthn/credentials/create/confirm', {}, 'POST', credentials, {
-		host: config.api.webAuthmUrl,
+		host: config.api.accountBaseUrl,
 		json: params
 	});
 }
 
-export async function credentialsCreateConfirmAsync(
+export async function webauthnCredentialsCreateConfirmAsync(
 	params: any,
 	credentials?: Credentials
 ): Promise<RequestResult<any>> {
 	return callAsync('webauthn/credentials/create/confirm', {}, 'POST', credentials, {
-		host: config.api.webAuthmUrl,
+		host: config.api.accountBaseUrl,
 		json: params
 	});
 }

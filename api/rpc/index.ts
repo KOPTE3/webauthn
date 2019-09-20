@@ -19,7 +19,7 @@ interface IEncode {
 
 const encodeParams = <T> (params: IEncode = {}): Partial<IEncode> => {
 	for (const [ key, value ] of Object.entries(params)) {
-		if (typeof value === 'object') {
+		if (value && typeof value === 'object') {
 			params[key] = JSON.stringify(value);
 		}
 	}
@@ -104,12 +104,14 @@ class RPC {
 			jar: clearJar ? rp.jar() : jar,
 			simple: true,
 			json,
-			resolveWithFullResponse: false
+			resolveWithFullResponse: true
 		};
 
-		debug('rpc call options:', rpcOpts);
+		debug('rpc request options:', rpcOpts);
 		try {
 			const response = await rp(rpcOpts);
+
+			debug('rpc request result:', response);
 
 			try {
 				return JSON.parse(response);

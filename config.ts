@@ -7,7 +7,7 @@ export default {
 		authBaseUrl: 'https://auth.mail.ru',
 		cloudBaseUrl: 'https://cloud.mail.ru',
 		mailBaseUrl: 'https://e.mail.ru',
-		webAuthmUrl: 'https://account.mail.ru',
+		accountBaseUrl: 'https://account.mail.ru',
 		userAgent: 'Yoda'
 	},
 	cookies: {

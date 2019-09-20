@@ -46,7 +46,8 @@ export async function callAsync(
 	const { host, version, noHttps } = { ...rpc.credentials, ...rpc.options };
 
 	const response: IRPCResponse = await rpc.call(path, body);
-	const { status, body: responseBody } = response;
+
+	const { body: { status, body: responseBody } } = response;
 
 	const result: RequestResult = {
 		path,

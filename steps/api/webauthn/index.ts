@@ -9,7 +9,7 @@ export default class WebAuthnSteps {
 	// tslint:disable-next-line:max-line-length
 	@step('Добавить ящику {credentials.email} ключ {name} типа {platformType === "platform" ? "Отпечаток" : "Внешнее устройство"}')
 	addWebauthnKey(name: string, platformType: PlatformType, credentials: CommonAccount) {
-		const { body } = MailApi.credentialsCreate({
+		const { body } = MailApi.webauthnCredentialsCreate({
 			platform_type: platformType
 		}, credentials);
 
@@ -25,7 +25,7 @@ export default class WebAuthnSteps {
 			name
 		};
 
-		MailApi.credentialsCreateConfirm(
+		MailApi.webauthnCredentialsCreateConfirm(
 			confirmParams,
 			credentials
 		);

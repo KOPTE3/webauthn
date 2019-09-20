@@ -17,20 +17,20 @@ export interface CredentialsCreateBody {
 	options: CredentialsCreateResponseOptions;
 }
 
-export default function credentialsCreate(
+export default function webauthnCredentialsCreate(
 	params: ReqParams,
 	credentials?: Credentials
 ): RequestResult<CredentialsCreateBody> {
 	return call('webauthn/credentials/create', params, 'POST', credentials, {
-		host: config.api.webAuthmUrl
+		host: config.api.accountBaseUrl
 	});
 }
 
-export async function credentialsCreateAsync(
+export async function webauthnCredentialsCreateAsync(
 	params: ReqParams,
 	credentials?: Credentials
 ): Promise<RequestResult<CredentialsCreateBody>> {
 	return callAsync('webauthn/credentials/create', params, 'POST', credentials, {
-		host: config.api.webAuthmUrl
+		host: config.api.accountBaseUrl
 	});
 }

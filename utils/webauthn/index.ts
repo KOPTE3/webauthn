@@ -40,7 +40,7 @@ export async function CreateAttestationForCredentialsCreateConfirm(
 
 	const CollectedClientData: CollectedClientDataType = await CreateCollectedClientData(
 		challenge,
-		config.api.webAuthmUrl,
+		config.api.accountBaseUrl,
 		'webauthn.create'
 	);
 	const CollectedClientDataHash: Buffer = await GetHashOfCollectedClientData(CollectedClientData);
@@ -84,7 +84,7 @@ export async function CreateAssertionForCredentialsGetConfirm(
 
 	const CollectedClientData: CollectedClientDataType = await CreateCollectedClientData(
 		challenge,
-		config.api.webAuthmUrl,
+		config.api.accountBaseUrl,
 		'webauthn.get'
 	);
 	const CollectedClientDataHash: Buffer = await GetHashOfCollectedClientData(CollectedClientData);
