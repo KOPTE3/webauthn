@@ -1,5 +1,5 @@
 import { assertDefinedValue } from '../../../utils/assert-defined';
-import { PlatformType } from '../../../types/webauthn';
+import { PlatformType, KeyFullInfo } from '../../../types/webauthn';
 import * as MailApi from '../../../api/mail-api';
 import { CreateAttestationForCredentialsCreateConfirm } from '../../../utils/webauthn';
 import WebAuthnMocks from './mocks';
@@ -8,7 +8,7 @@ import { CommonAccount } from '../../../utils/authorization';
 export default class WebAuthnSteps {
 	// tslint:disable-next-line:max-line-length
 	@step('Добавить ящику {credentials.email} ключ {name} типа {platformType === "platform" ? "Отпечаток" : "Внешнее устройство"}')
-	addWebauthnKey(name: string, platformType: PlatformType, credentials: CommonAccount) {
+	static AddWebauthnKey(name: string, platformType: PlatformType, credentials: CommonAccount) {
 		const { body } = MailApi.webauthnCredentialsCreate({
 			platform_type: platformType
 		}, credentials);
@@ -34,6 +34,26 @@ export default class WebAuthnSteps {
 			privateKey,
 			credentialIdString: attestation.id
 		};
+	}
+
+	@step('Удлить все ключи у ящика {credentials.email}, если есть')
+	static RevokeAllKeys(credentials: CommonAccount) {
+		const { email, password } = credentials;
+		const { body: { list } } = MailApi.webauthnCredentialsList({
+			email
+		}, credentials);
+
+		if (!list) {
+			return;
+		}
+
+		list.forEach((key: KeyFullInfo) => {
+			MailApi.webauthnCredentialsRevoke({
+				id: key.id,
+				email,
+				password
+			}, credentials);
+		});
 	}
 }
 

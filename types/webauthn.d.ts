@@ -74,3 +74,11 @@ export interface AssertionForCredentialsGetConfirm {
 	};
 	type: string;
 }
+
+export interface KeyFullInfo {
+	name: string;
+	platform_type: string;
+	id: string;
+	ip: string;
+	[k: string]: any;
+}
