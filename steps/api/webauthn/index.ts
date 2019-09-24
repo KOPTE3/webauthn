@@ -36,7 +36,7 @@ export default class WebAuthnSteps {
 		};
 	}
 
-	@step('Удлить все ключи у ящика {credentials.email}, если есть')
+	@step('Удалить все ключи у ящика {credentials.email}, если есть')
 	static RevokeAllKeys(credentials: CommonAccount) {
 		const { email, password } = credentials;
 		const { body: { list } } = MailApi.webauthnCredentialsList({
