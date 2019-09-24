@@ -4,28 +4,30 @@ import config from '../../../config';
 
 interface ReqParams {
 	email: string;
+	password: string;
+	id: string;
 }
 
 /**
- * @see https://apidoc.devmail.ru/auth.mail.ru/webauthn/credentials/get/
+ * @see https://apidoc.devmail.ru/auth.mail.ru/webauthn/credentials/revoke/
  */
 
-export default function webauthnCredentialsGet(
+export default function webauthnCredentialsRevoke(
 	params: ReqParams,
 	credentials?: Credentials
 ): RequestResult<any> {
-	return call('webauthn/credentials/get', params, 'POST', credentials, {
+	return call('webauthn/credentials/revoke', {}, 'POST', credentials, {
 		host: config.api.accountBaseUrl,
-		clearJar: true
+		json: params
 	});
 }
 
-export async function webauthnCredentialsGetAsync(
+export async function webauthnCredentialsRevokeAsync(
 	params: ReqParams,
 	credentials?: Credentials
 ): Promise<RequestResult<any>> {
-	return callAsync('webauthn/credentials/get', params, 'POST', credentials, {
+	return callAsync('webauthn/credentials/revoke', {}, 'POST', credentials, {
 		host: config.api.accountBaseUrl,
-		clearJar: true
+		json: params
 	});
 }

@@ -11,7 +11,7 @@ import {
 
 export default class WebAuthnMocks {
 	@step('Подменяем navigator.credentials.create чтобы получить параметры, с которыми он будет вызван')
-	static credentialsCreateMock() {
+	static CredentialsCreateMock() {
 		browser.execute(() => {
 			navigator.credentials.create = (options) => {
 				window.credentialsCreateArgs = options;
@@ -37,15 +37,15 @@ export default class WebAuthnMocks {
 	}
 
 	@step('Подменяем ответ navigator.credentials.create')
-	static replaceCredentialsCreateResponse(success: boolean) {
-		const fakeResponse = WebAuthnMocks.createCredentialsCreateResponse();
+	static ReplaceCredentialsCreateResponse(success: boolean) {
+		const fakeResponse = WebAuthnMocks.CreateCredentialsCreateResponse();
 
-		WebAuthnMocks.settleCredentialsCreate(fakeResponse, success);
+		WebAuthnMocks.SettleCredentialsCreate(fakeResponse, success);
 	}
 
 	// tslint:disable-next-line:max-line-length
 	@step('Создаем фейковый ответ navigator.credentials.create c помощью полученных параметров')
-	static createCredentialsCreateResponse() {
+	static CreateCredentialsCreateResponse() {
 		let initialArguments: any;
 
 		browser.waitUntil(() => {
@@ -54,7 +54,7 @@ export default class WebAuthnMocks {
 			}) as CredentialsCreateArgs;
 
 			return Boolean(initialArguments.value);
-		}, 10000, 'Не дождались аргументов navigator.credentials.create');
+		}, void 0, 'Не дождались аргументов navigator.credentials.create');
 
 		const { attestation } = browser.waitForPromise(
 			CreateAttestationForCredentialsCreateConfirm(initialArguments.value)
@@ -64,7 +64,7 @@ export default class WebAuthnMocks {
 	}
 
 	@step('Завершить вызов navigator.credentials.create с созданным ответом {success ? "SUCCESS" : "FAIL"}')
-	static settleCredentialsCreate(response: AttestationForCredentialsCreateConfirm, success: boolean) {
+	static SettleCredentialsCreate(response: AttestationForCredentialsCreateConfirm, success: boolean) {
 		browser.execute((response: AttestationForCredentialsCreateConfirm, success: boolean) => {
 			if (success) {
 				// переводим строки в ArrayBuffer
@@ -80,7 +80,7 @@ export default class WebAuthnMocks {
 	}
 
 	@step('Подменяем navigator.credentials.get чтобы получить параметры, с которыми он будет вызван')
-	static credentialsGetMock() {
+	static CredentialsGetMock() {
 		browser.execute(() => {
 			navigator.credentials.get = (options) => {
 				window.credentialsGetArgs = options;
@@ -107,7 +107,7 @@ export default class WebAuthnMocks {
 
 	// tslint:disable-next-line:max-line-length
 	@step('Создаем фейковый ответ navigator.credentials.get c помощью полученных параметров')
-	static createCredentialsGetResponse(privateKey: string, credentialIdString: string) {
+	static CreateCredentialsGetResponse(privateKey: string, credentialIdString: string) {
 		let initialArguments: any;
 
 		browser.waitUntil(() => {
@@ -116,7 +116,7 @@ export default class WebAuthnMocks {
 			}) as CredentialsGetArgs;
 
 			return Boolean(initialArguments.value);
-		}, 10000, 'Не дождались аргументов navigator.credentials.get');
+		}, void 0, 'Не дождались аргументов navigator.credentials.get');
 
 		const { value: { publicKey } } = initialArguments;
 
@@ -129,13 +129,13 @@ export default class WebAuthnMocks {
 
 	@step('Подменяем ответ navigator.credentials.get')
 	static replaceCredentialsGetResponse(success: boolean, privateKey: string, credentialIdString: string) {
-		const fakeResponse = WebAuthnMocks.createCredentialsGetResponse(privateKey, credentialIdString);
+		const fakeResponse = WebAuthnMocks.CreateCredentialsGetResponse(privateKey, credentialIdString);
 
-		WebAuthnMocks.settleCredentialsGet(fakeResponse, success);
+		WebAuthnMocks.SettleCredentialsGet(fakeResponse, success);
 	}
 
 	@step('Завершить вызов navigator.credentials.get с созданным ответом')
-	static settleCredentialsGet(response: AssertionForCredentialsGetConfirm, success: boolean) {
+	static SettleCredentialsGet(response: AssertionForCredentialsGetConfirm, success: boolean) {
 		browser.execute((response: AssertionForCredentialsGetConfirm, success: boolean) => {
 			if (success) {
 				// переводим строки в ArrayBuffer
