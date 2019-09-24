@@ -1,5 +1,6 @@
 import * as Debug from 'debug';
 import * as url from 'url';
+import * as assert from 'assert';
 import { UNICODE_CHARACTERS } from '../utils/constants';
 
 const debug = Debug('@qa:yoda:browser');
@@ -89,5 +90,44 @@ export default class Browser {
 		}
 
 		return browser.getUrl();
+	}
+
+	@step(
+		'Установить размер вьюпорта { type ? " и проверить, совпадает ли реальный размер с требуемым" : "" }',
+		({ width, height }: WebdriverIO.Size) => ({
+			'Ширина': width,
+			'Высота': height
+		})
+	)
+	static SetViewportSize(size: WebdriverIO.Size, type: boolean = true): void {
+		const { width = 1200, height = 600 } = size;
+
+		browser.setViewportSize({ width, height });
+
+		if (type) {
+			Browser.WaitForViewport(size);
+		}
+	}
+
+	@step('Дождаться заданных размеров вьюпорта', ({ width, height }: WebdriverIO.Size) => ({
+		'Ширина': width,
+		'Высота': height
+	}))
+	private static WaitForViewport(expected: WebdriverIO.Size): boolean {
+		return browser.waitUntil(
+			() => {
+				const actual = browser.getViewportSize();
+
+				try {
+					assert.deepStrictEqual(actual, expected);
+				} catch {
+					return false;
+				}
+
+				return true;
+			},
+			browser.options.waitforTimeout,
+			'Не удалось дождаться требуемого размера вьюпорта'
+		);
 	}
 }
