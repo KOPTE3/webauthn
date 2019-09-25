@@ -6,8 +6,7 @@ import WebAuthnMocks from './mocks';
 import { CommonAccount } from '../../../utils/authorization';
 
 export default class WebAuthnSteps {
-	// tslint:disable-next-line:max-line-length
-	@step('Добавить ящику {credentials.email} ключ {name} типа {platformType === "platform" ? "Отпечаток" : "Внешнее устройство"}')
+	@step('Добавить ящику {credentials.email} ключ {name} типа {__result__.keyType}')
 	static AddWebauthnKey(name: string, platformType: PlatformType, credentials: CommonAccount) {
 		const { body } = MailApi.webauthnCredentialsCreate({
 			platform_type: platformType
@@ -30,9 +29,12 @@ export default class WebAuthnSteps {
 			credentials
 		);
 
+		const keyType = platformType === 'platform' ? 'Отпечаток' : 'Внешнее устройство';
+
 		return {
 			privateKey,
-			credentialIdString: attestation.id
+			credentialIdString: attestation.id,
+			keyType
 		};
 	}
 

@@ -55,16 +55,17 @@ class RPC {
 		const { email } = this.credentials;
 
 		// получаем авторизационные куки
-		const session = await loginAccountAsync(this.credentials);
+		const jarVal = rp.jar();
+		const session = await loginAccountAsync(this.credentials, jarVal);
 		const hasSdcsCookie = checkSdcsCookie(session.cookies);
 
 		// если не смогли получить sdcs куку первый раз, пробуем еще раз
 		if (!hasSdcsCookie) {
-			await getSdcsCookie(host);
+			await getSdcsCookie({ host, jarVal });
 		}
 
 		// делаем запрос за токеном
-		const response = await getToken(email, assertDefinedValue(host));
+		const response = await getToken(email, assertDefinedValue(host), jarVal);
 
 		return response;
 	}

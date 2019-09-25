@@ -108,7 +108,7 @@ export function getCredentials(
 	return browser.waitForPromise(getCredentialsAsync(type, options), timeout, 'Could not get user credentials');
 }
 
-export async function getSdcsCookie(host?: string) {
+export async function getSdcsCookie({ host, jarVal = jar }: {host?: string, jarVal?: CookieJar} = {}) {
 	const uri = host ? 'https://auth.mail.ru/sdc?from=' + encodeURIComponent(host) : config.auth.sdc;
 
 	await rp({
@@ -119,7 +119,7 @@ export async function getSdcsCookie(host?: string) {
 			'User-Agent': config.auth.ua
 		},
 		followAllRedirects: false,
-		jar,
+		jar: jarVal,
 		simple: false,
 		resolveWithFullResponse: true
 	});
@@ -133,9 +133,10 @@ export function checkSdcsCookie(cookies: Cookie[]): boolean {
 /**
  * Авторизует переданный аккаунт, возвращает объект с авторизационными куками
  * @param {CommonAccount} credentials
+ * @param {CookieJar} jarVal
  * @return Promise<Session>
  */
-export async function loginAccountAsync(credentials: CommonAccount): Promise<Session> {
+export async function loginAccountAsync(credentials: CommonAccount, jarVal = jar): Promise<Session> {
 	await rp({
 		method: 'POST',
 		uri: config.auth.login,
@@ -152,14 +153,14 @@ export async function loginAccountAsync(credentials: CommonAccount): Promise<Ses
 			mac: 1,
 			page: 'https://mail.ru'
 		},
-		jar,
+		jar: jarVal,
 		simple: false,
 		resolveWithFullResponse: true
 	});
 
-	await getSdcsCookie();
+	await getSdcsCookie({ jarVal });
 
-	const cookies: Cookie[] = jar.getCookies(config.auth.login) as any;
+	const cookies: Cookie[] = jarVal.getCookies(config.auth.login) as any;
 
 	session = {
 		credentials: { ...credentials },
@@ -177,7 +178,7 @@ export function loginAccount(credentials: CommonAccount, timeout?: number): Sess
 	);
 }
 
-export async function getToken(email: string, host: string) {
+export async function getToken(email: string, host: string, jarVal = jar) {
 	const options = {
 		method: 'POST',
 		uri: `${host}/api/v1/tokens`,
@@ -188,7 +189,7 @@ export async function getToken(email: string, host: string) {
 		qs: {
 			email
 		},
-		jar,
+		jar: jarVal,
 		simple: true,
 		json: true
 	};
@@ -197,7 +198,7 @@ export async function getToken(email: string, host: string) {
 
 	return {
 		token: body.token,
-		jar
+		jar: jarVal
 	};
 }
 
