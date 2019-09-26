@@ -303,7 +303,7 @@ export function loadNaviData(jar: CookieJar, timeout?: number): NaviData {
 	return browser.waitForPromise(loadNaviDataAsync(jar), timeout, 'Could not load NaviData');
 }
 
-function parseAccount(email: string, password: string): CommonAccount {
+export function parseAccount(email: string, password: string): CommonAccount {
 	const [login, domain] = email.split('@');
 
 	return {

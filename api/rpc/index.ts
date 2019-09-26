@@ -6,9 +6,11 @@ import {
 	loginAccountAsync,
 	getSdcsCookie,
 	checkSdcsCookie,
-	getToken
+	getToken,
+	parseAccount
 } from '../../utils/authorization';
 import { assertDefinedValue } from '../../utils/assert-defined';
+import { Credentials } from '../../types/api';
 import config from '../../config';
 
 const debug = Debug('@qa:yoda:rpc');
@@ -28,8 +30,8 @@ const encodeParams = <T> (params: IEncode = {}): Partial<IEncode> => {
 };
 
 class RPC {
-	constructor(credentials: TemporaryAny, options: IRPCOptions = {}) {
-		this.credentials = credentials;
+	constructor({ username: email, password }: Credentials, options: IRPCOptions = {}) {
+		this.credentials = parseAccount(email, password);
 		this.options = {
 			host: 'https://e.mail.ru',
 			version: 1,
