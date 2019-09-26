@@ -57,8 +57,8 @@ export async function CreateAttestationForCredentialsCreateConfirm(
 	const AttestationObject: Buffer = await GeneratingAnAttestationObject(authData, CollectedClientDataHash, privateKey);
 
 	const attestation: AttestationForCredentialsCreateConfirm = {
-		id: urlSafeBase64Encode(credentialId),
-		rawId: urlSafeBase64Encode(credentialId),
+		id: credentialId.toString('base64'),
+		rawId: credentialId.toString('base64'),
 		response: {
 			clientDataJSON: Buffer.from(CollectedClientData, 'utf8').toString('base64'),
 			attestationObject: AttestationObject.toString('base64')
