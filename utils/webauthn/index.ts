@@ -57,8 +57,8 @@ export async function CreateAttestationForCredentialsCreateConfirm(
 	const AttestationObject: Buffer = await GeneratingAnAttestationObject(authData, CollectedClientDataHash, privateKey);
 
 	const attestation: AttestationForCredentialsCreateConfirm = {
-		id: credentialId.toString('base64'),
-		rawId: credentialId.toString('base64'),
+		id: urlSafeBase64Encode(credentialId),
+		rawId: urlSafeBase64Encode(credentialId),
 		response: {
 			clientDataJSON: Buffer.from(CollectedClientData, 'utf8').toString('base64'),
 			attestationObject: AttestationObject.toString('base64')
@@ -103,6 +103,13 @@ export async function CreateAssertionForCredentialsGetConfirm(
 	};
 }
 
+function urlSafeBase64Encode(buffer: Buffer): string {
+	return buffer.toString('base64')
+		.replace(/\+/g, '-')
+		.replace(/\//g, '_')
+		.replace(/=+$/g, '');
+}
+
 // https://www.w3.org/TR/webauthn/#sec-client-data
 // tslint:disable-next-line:max-line-length
 async function CreateCollectedClientData(
@@ -112,11 +119,7 @@ async function CreateCollectedClientData(
 ): Promise<CollectedClientDataType> {
 	return JSON.stringify({
 		type,
-		// url safe base64 encoding
-		challenge: challenge.toString('base64')
-			.replace(/\+/g, '-')
-			.replace(/\//g, '_')
-			.replace(/=+$/g, ''),
+		challenge: urlSafeBase64Encode(challenge),
 		origin
 	});
 }
