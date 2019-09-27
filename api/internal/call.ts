@@ -3,6 +3,7 @@ import * as rp from 'request-promise-native';
 import { RequestResult } from '../../types/api';
 import config from '../../config';
 import { CookieJar } from 'request';
+import {URL} from 'url';
 
 const debug = Debug('@qa:yoda:internal');
 
@@ -79,11 +80,17 @@ export async function callAsync(
 		path
 	};
 
+	const proxy = new URL(config.internal.proxyUrl);
+	proxy.username = config.internal.proxyUsername;
+	proxy.password = config.internal.proxyPassword;
+
 	try {
 		const response = await rp({
 			...options,
 			resolveWithFullResponse: true,
-			baseUrl: config.api.internalApiBaseUrl,
+			baseUrl: config.internal.baseUrl,
+			proxy,
+			strictSSL: false,
 			json: true
 		});
 		result.response = response.toJSON();

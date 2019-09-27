@@ -1,8 +1,13 @@
 // tslint:disable:max-line-length
 export default {
+	internal: {
+		baseUrl: 'https://internal.pre.test.mail.ru/api/v1',
+		proxyUrl: 'http://ci1.devmail.ru:8001',
+		proxyUsername: 'api_test',
+		proxyPassword: 'proxy-kruto69',
+	},
 	api: {
 		gibddApiBaseUrl: 'https://api.gibdd.mail.ru',
-		internalApiBaseUrl: 'http://internal.pre.win102.dev.mail.ru/api/v1',
 		cloudApiBaseUrl: 'https://cloud.mail.ru/api/v2',
 		authBaseUrl: 'https://auth.mail.ru',
 		cloudBaseUrl: 'https://cloud.mail.ru',

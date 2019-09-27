@@ -408,7 +408,9 @@ export default class Authorization {
 
 		for (const c of cookies) {
 			if (c.key === 'sdcs' || c.key === 'Mpop') {
-				requestJar.setCookie(Cookie.fromJSON({ ...c, domain: 'mail.ru' }) || '', config.api.internalApiBaseUrl);
+				requestJar.setCookie(
+					Cookie.fromJSON({ ...c, domain: 'mail.ru' }) || '', config.internal.baseUrl
+				);
 			}
 		}
 
