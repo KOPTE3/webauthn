@@ -25,4 +25,14 @@ export default class GibddApiSteps {
 			);
 		}
 	}
+
+	@step('Добавляем автомобиль')
+	addCar(carNumber: string, carRegistrationNumber: string) {
+		entityCar({ carNumber, carRegistrationNumber }, 'POST');
+	}
+
+	@step('Добавляем водительское удостоверение')
+	addDriver(driverLicenseNumber: string) {
+		entityDriver({ driverLicenseNumber }, 'POST');
+	}
 }
