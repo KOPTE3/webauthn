@@ -28,11 +28,11 @@ export default class GibddApiSteps {
 
 	@step('Добавляем автомобиль')
 	addCar(carNumber: string, carRegistrationNumber: string) {
-		entityCar({ carNumber, carRegistrationNumber }, 'POST');
+		entityCar({ car_number: carNumber, car_registration_number: carRegistrationNumber });
 	}
 
 	@step('Добавляем водительское удостоверение')
 	addDriver(driverLicenseNumber: string) {
-		entityDriver({ driverLicenseNumber }, 'POST');
+		entityDriver({ driver_license_number: driverLicenseNumber });
 	}
 }

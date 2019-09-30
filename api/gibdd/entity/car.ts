@@ -4,12 +4,12 @@ import call, { callAsync } from '../call';
 export interface EntityCar {
 	type_str: 'car';
 	icon?: number;
-	carNumber?: string;
+	car_number?: string;
 	carType?: string;
 	name?: string;
 	id?: number;
 	type?: number;
-	carRegistrationNumber?: string;
+	car_registration_number?: string;
 	createTime?: string;
 }
 
