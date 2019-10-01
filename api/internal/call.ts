@@ -89,7 +89,7 @@ export async function callAsync(
 			...options,
 			resolveWithFullResponse: true,
 			baseUrl: config.internal.baseUrl,
-			proxy,
+			proxy: proxy.toString(),
 			strictSSL: false,
 			json: true
 		});
