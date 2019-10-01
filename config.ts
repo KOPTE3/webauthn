@@ -2,9 +2,7 @@
 export default {
 	internal: {
 		baseUrl: 'https://internal.pre.test.mail.ru/api/v1',
-		proxyUrl: 'http://ci1.devmail.ru:8001',
-		proxyUsername: 'api_test',
-		proxyPassword: 'proxy-kruto69',
+		proxyUrl: 'http://api_test:proxy-kruto69@ci1.devmail.ru:8001'
 	},
 	api: {
 		gibddApiBaseUrl: 'https://api.gibdd.mail.ru',
