@@ -22,13 +22,6 @@ declare interface Window {
 	[key: string]: any;
 }
 
-declare interface Navigator {
-	credentials: {
-		create: (options: TemporaryAny) => any;
-		get: (options: TemporaryAny) => any;
-	};
-}
-
 declare namespace Mocha {
 	interface ITestDefinition {
 		step(description: string, args?: any): void;
