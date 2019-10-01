@@ -7,7 +7,7 @@ export interface EntityDriver {
 	name?: string;
 	id?: number;
 	type?: number;
-	driverLicenseNumber?: string;
+	driver_license_number?: string;
 	createTime?: string;
 }
 
