@@ -1,0 +1,47 @@
+stages:
+	- test
+	- release
+
+before_script:
+	- git config user.email $GITLAB_USER_EMAIL
+	- git config user.name $GITLAB_USER_NAME
+	- git remote set-url origin git@gitlab.corp.mail.ru:qa/yoda.git
+	- git checkout -B master
+	- npm install
+
+cache:
+	paths:
+		- node_modules/
+
+test:
+	stage: test
+	script:
+		- npm run lint
+		- npm test
+
+release_patch:
+	stage: release
+	when: manual
+	only:
+		- master
+	script:
+		- npm version patch
+		- npm publish
+
+release_minor:
+	stage: release
+	when: manual
+	only:
+		- master
+	script:
+		- npm version minor
+		- npm publish
+
+release_major:
+	stage: release
+	when: manual
+	only:
+		- master
+	script:
+		- npm version major
+		- npm publish
