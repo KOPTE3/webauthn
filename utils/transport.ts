@@ -7,6 +7,8 @@ import * as merge from 'deepmerge';
 
 import system from '../store/system';
 import authorization from '../store/authorization';
+import Authorization, {CommonAccount} from './authorization';
+import { Credentials } from '../types/api';
 
 type RequiredInternal<T, K extends keyof T> = { [P in K]: T[P] };
 type Required<T> = T & RequiredInternal<T, keyof T>;
@@ -34,7 +36,16 @@ export default class Transport {
 	 * }
 	 */
 	putMessage(params: IPutMessageData = {}): IDeliverydResponse {
-		const { username, password } = authorization.account.data();
+		const legacyAccountCredentials = authorization.account.data();
+		const currentAccountCredentials = Authorization.CurrentAccount();
+
+		const useAccountCredentials = params.credentials || legacyAccountCredentials || currentAccountCredentials;
+
+		if (!useAccountCredentials) {
+			throw new Error('No authorized user found. Please use Auth() step before or pass credentials explicitly');
+		}
+
+		const { username, password } = useAccountCredentials;
 		const transport = new Deliveryd({ username, password });
 
 		return browser.waitForPromise(async () => {
@@ -105,7 +116,16 @@ export default class Transport {
 	 * }
 	 */
 	sendMessage(params: ISendMessageData): IAPIResponse {
-		const { username, password } = authorization.account.data();
+		const legacyAccountCredentials = authorization.account.data();
+		const currentAccountCredentials = Authorization.CurrentAccount();
+
+		const useAccountCredentials = params.credentials || legacyAccountCredentials || currentAccountCredentials;
+
+		if (!useAccountCredentials) {
+			throw new Error('No authorized user found. Please use Auth() step before or pass credentials explicitly');
+		}
+
+		const { username, password } = useAccountCredentials;
 		const request = new API({ username, password });
 
 		return browser.waitForPromise(
@@ -133,7 +153,16 @@ export default class Transport {
 	}
 
 	saveDraft(params: SaveDraftData): IAPIResponse {
-		const { username, password } = authorization.account.data();
+		const legacyAccountCredentials = authorization.account.data();
+		const currentAccountCredentials = Authorization.CurrentAccount();
+
+		const useAccountCredentials = params.credentials || legacyAccountCredentials || currentAccountCredentials;
+
+		if (!useAccountCredentials) {
+			throw new Error('No authorized user found. Please use Auth() step before or pass credentials explicitly');
+		}
+
+		const { username, password } = useAccountCredentials;
 		const request = new API({ username, password });
 
 		return browser.waitForPromise(
@@ -175,6 +204,10 @@ export type IPutMessageData = IDeliverydRequest & {
 	content?: string;
 	rawFilename?: string;
 	timeout?: number;
+	credentials?: {
+		username: string;
+		password: string;
+	};
 };
 
 export interface SaveDraftData extends MailAPI.MessagesDraft {

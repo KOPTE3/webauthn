@@ -4,6 +4,7 @@ import { getRandomStr } from '../../../utils/utils';
 import * as MailApi from '../../../api/mail-api';
 import * as InternalApi from '../../../api/internal';
 import authorization from '../../../store/authorization';
+import Authorization from '../../../utils/authorization';
 
 export default class AliasSteps {
 	@step('Добавляем алиас "{__result__}" в почтовый ящик {params.email ? params.email : ""}')
@@ -13,7 +14,7 @@ export default class AliasSteps {
 		}
 
 		if (!params.email) {
-			const { email } = authorization.account.data();
+			const { email = '' } = authorization.account.data() || Authorization.CurrentAccount() || {};
 			params.email = email;
 		}
 
