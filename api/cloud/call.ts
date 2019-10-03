@@ -5,6 +5,7 @@ import initCookieJar from '../init-cookie-jar';
 import * as rp from 'request-promise-native';
 import authorization from '../../store/authorization';
 import * as Debug from 'debug';
+import Authorization from '../../utils/authorization';
 
 const debug = Debug('@qa:yoda:cloud-api');
 
@@ -80,7 +81,8 @@ export async function callAsync(
 	credentials?: Credentials,
 	allow404: boolean = false
 ): Promise<RequestResult> {
-	const { username, password }: Credentials = credentials || authorization.account.data();
+	const { username, password }: Credentials =
+		credentials || authorization.account.data() || Authorization.CurrentAccount();
 
 	const requestOptions: rp.OptionsWithUrl = {
 		...defaultRequestOptions,

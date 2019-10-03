@@ -1,6 +1,6 @@
 {
   "name": "@qa/yoda",
-  "version": "9.12.1",
+  "version": "9.12.2",
   "description": "Testing platform",
   "author": "Mail.ru Group Limited",
   "license": "UNLICENSED",
@@ -23,14 +23,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "ssh://git@stash.mail.ru:2222/qa/yoda.git"
+    "url": "ssh://git@gitlab.corp.mail.ru:qa/yoda.gitt"
   },
   "scripts": {
     "prepare": "npm run generate",
     "prepublishOnly": "tsc && npm run generate",
     "generate": "TS_NODE_PROJECT=\"./tsconfig.json\" node --require ts-node/register ./build/index.ts",
     "build-tsc": "tsc",
-    "lint": "npm run build-tsc -- --noEmit && tslint --project ./tsconfig.json  --exclude 'node_modules/**/*'"
+    "lint": "npm run build-tsc -- --noEmit && tslint --project ./tsconfig.json  --exclude 'node_modules/**/*'",
+    "release": "release-it --verbose"
   },
   "pre-commit": {
     "silent": false,
@@ -83,6 +84,7 @@
   "devDependencies": {
     "@mail/tslint-2kit-rules": "^3.1.4",
     "pre-commit": "^1.2.2",
+    "release-it": "^12.4.2",
     "ts-node": "^8.3.0",
     "tslint": "^5.17.0",
     "typescript": "3.6.3",
