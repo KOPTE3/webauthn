@@ -7,8 +7,7 @@ import * as merge from 'deepmerge';
 
 import system from '../store/system';
 import authorization from '../store/authorization';
-import Authorization, {CommonAccount} from './authorization';
-import { Credentials } from '../types/api';
+import Authorization from './authorization';
 
 type RequiredInternal<T, K extends keyof T> = { [P in K]: T[P] };
 type Required<T> = T & RequiredInternal<T, keyof T>;
