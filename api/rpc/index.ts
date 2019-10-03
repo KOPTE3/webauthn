@@ -32,6 +32,10 @@ const encodeParams = <T> (params: IEncode = {}): Partial<IEncode> => {
 class RPC {
 	constructor({ username: email, password }: Credentials, options: IRPCOptions = {}) {
 		this.credentials = parseAccount(email, password);
+		this.useOptions(options);
+	}
+
+	useOptions(options: IRPCOptions = {}): void {
 		this.options = {
 			host: config.api.mailBaseUrl,
 			version: 1,

@@ -90,6 +90,7 @@ export async function getCredentialsAsync(
 	const response: ASAccount = await rp.get(`${accountUrl}/get`, {
 		json: true,
 		auth: config.as.auth,
+		proxy: config.api.proxyUrl || void 0,
 		qs
 	});
 
@@ -315,6 +316,8 @@ export function parseAccount(email: string, password: string): CommonAccount {
 	};
 }
 
+let currentAccount: CommonAccount | undefined | null;
+
 export default class Authorization {
 	static auth(type?: Type, select?: Partial<CommonAccount & EmailType>): CommonAccount;
 	static auth(email: string, password: string): CommonAccount;
@@ -358,7 +361,13 @@ export default class Authorization {
 		browser.setCookies(cookies);
 		browser.pause(300);
 
+		currentAccount = authCredentials;
+
 		return authCredentials as CommonAccount;
+	}
+
+	static CurrentAccount(): CommonAccount | undefined | null {
+		return currentAccount;
 	}
 
 	static loadNaviData(): NaviData {
@@ -409,7 +418,7 @@ export default class Authorization {
 		for (const c of cookies) {
 			if (c.key === 'sdcs' || c.key === 'Mpop') {
 				requestJar.setCookie(
-					Cookie.fromJSON({ ...c, domain: 'mail.ru' }) || '', config.internal.baseUrl
+					Cookie.fromJSON({ ...c, domain: 'mail.ru' }) || '', config.api.internalBaseUrl
 				);
 			}
 		}

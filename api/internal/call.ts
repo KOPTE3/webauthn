@@ -83,8 +83,8 @@ export async function callAsync(
 		const response = await rp({
 			...options,
 			resolveWithFullResponse: true,
-			baseUrl: config.internal.baseUrl,
-			proxy: config.internal.proxyUrl,
+			baseUrl: config.api.internalBaseUrl,
+			proxy: config.api.proxyUrl || void 0,
 			strictSSL: false,
 			json: true
 		});
