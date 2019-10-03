@@ -1,7 +1,7 @@
 // tslint:disable:max-line-length
 export default {
 	api: {
-		internalBaseUrl: 'https://internal.pre.test.mail.ru/api/v1',
+		internalBaseUrl: 'https://serverside-api.e.mail.ru/api/v1',
 		proxyUrl: 'http://vagabond2.dev.mail.ru:3128',
 		proxyFallbackUrl: 'http://api_test:proxy-kruto69@ci1.devmail.ru:8001',
 		gibddApiBaseUrl: 'https://api.gibdd.mail.ru',
