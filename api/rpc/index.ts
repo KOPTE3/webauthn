@@ -32,8 +32,12 @@ const encodeParams = <T> (params: IEncode = {}): Partial<IEncode> => {
 class RPC {
 	constructor({ username: email, password }: Credentials, options: IRPCOptions = {}) {
 		this.credentials = parseAccount(email, password);
+		this.useOptions(options);
+	}
+
+	useOptions(options: IRPCOptions = {}): void {
 		this.options = {
-			host: 'https://e.mail.ru',
+			host: config.api.mailBaseUrl,
 			version: 1,
 			json: true,
 			clearJar: false,
@@ -47,12 +51,21 @@ class RPC {
 	/** Полномочия */
 	credentials: CommonAccount;
 
+	private tokenValue: string;
+	private jarValue: Request.CookieJar;
+
 	/**
 	 * Получение авторизационных данных
 	 */
 
 	/** Получение CSRF-токена */
-	async token() {
+	async token(): Promise<{token: string, jar: Request.CookieJar}> {
+		if (this.tokenValue && this.jarValue && !this.options.clearJar) {
+			return {
+				token: this.tokenValue,
+				jar: this.jarValue
+			};
+		}
 		const { host } = this.options;
 		const { email } = this.credentials;
 
@@ -68,6 +81,8 @@ class RPC {
 
 		// делаем запрос за токеном
 		const response = await getToken(email, assertDefinedValue(host), jarVal);
+		this.tokenValue = response.token;
+		this.jarValue = response.jar;
 
 		return response;
 	}
@@ -107,7 +122,8 @@ class RPC {
 			jar: clearJar ? rp.jar() : jar,
 			simple: true,
 			json,
-			resolveWithFullResponse: true
+			resolveWithFullResponse: true,
+			strictSSL: false
 		};
 
 		debug('rpc request options:', rpcOpts);

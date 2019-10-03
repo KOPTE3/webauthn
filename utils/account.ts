@@ -4,6 +4,7 @@ import authorization from '../store/authorization';
 import providers from '../store/authorization/providers';
 import URL from './url';
 import { assertDefinedValue } from '../utils/assert-defined';
+import Authorization from './authorization';
 
 const debug = Debug('@qa:yoda');
 const TIMEOUT: number = 30 * 1000;
@@ -114,7 +115,7 @@ export default {
 	 */
 	logout(email?: string, timeout: number = TIMEOUT): void {
 		if (!email) {
-			email = authorization.account.get('email');
+			({ email = '' } = authorization.account.data() || Authorization.CurrentAccount() || {});
 		}
 
 		// В почте разлогинизация для активного пользователя
