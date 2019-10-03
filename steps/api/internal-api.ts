@@ -6,6 +6,7 @@ import authorization from '../../store/authorization';
 import phonesStore from '../../store/phones';
 import { assertDefinedValue } from '../../utils/assert-defined';
 import { JsonArray, JsonObject } from 'type-fest';
+import Authorization from '../../utils/authorization';
 
 export type PhoneStatusStep = PhoneStatus | 'in_remove_queue' | 'twofa';
 export type ExtraEmailStatusStep = 'ok' | 'too_young' | 'in_remove_queue';
@@ -13,8 +14,9 @@ export type ExtraEmailStatusStep = 'ok' | 'too_young' | 'in_remove_queue';
 export default class InternalApiSteps {
 	@step('"Протушить" все аттачи на написании письма')
 	invalidateAllAttachesInCompose(messageId: string) {
+		const { email = '' } = authorization.account.data() || Authorization.CurrentAccount() || {};
 		InternalApi.messagesAttachesInvalidate({
-			email: authorization.account.get('email'),
+			email,
 			message_id: messageId
 		});
 	}

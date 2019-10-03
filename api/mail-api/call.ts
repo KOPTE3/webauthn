@@ -1,12 +1,11 @@
 import { URL } from 'url';
-import RPC, { IRPCResponse, IRPCOptions } from '../rpc';
+import RPC, { IRPCOptions, IRPCResponse } from '../rpc';
 import authorization from '../../store/authorization';
 import { Credentials, RequestResult } from '../../types/api';
 import * as Debug from 'debug';
+import Authorization from '../../utils/authorization';
 
 const debug = Debug('@qa:yoda:mail-api:call');
-
-let defaultRpc: RPC;
 
 export default function call(
 	path: string,
@@ -26,6 +25,8 @@ export default function call(
 	return result;
 }
 
+const rpcCache: Map<string, RPC> = new Map();
+
 export async function callAsync(
 	path: string,
 	body: object,
@@ -33,16 +34,25 @@ export async function callAsync(
 	credentials?: Credentials,
 	opts?: IRPCOptions
 ): Promise<RequestResult> {
-	const defaultCredentials: AccountManager.Credentials & Credentials = authorization.account.data();
-	if (!(defaultRpc && defaultRpc.credentials.username === defaultCredentials.username) && !credentials) {
-		if (!defaultCredentials) {
-			throw new Error('No authorized user found. Please call auth() step before or pass credentials explicitly.');
-		}
+	const legacyAccountCredentials = authorization.account.data();
+	const currentAccountCredentials = Authorization.CurrentAccount();
 
-		defaultRpc = new RPC(defaultCredentials, opts);
+	const useAccountCredentials = credentials || legacyAccountCredentials || currentAccountCredentials;
+
+	if (!useAccountCredentials) {
+		throw new Error('No authorized user found. Please use Auth() step before or pass credentials explicitly');
 	}
 
-	const rpc: RPC = (credentials) ? new RPC(credentials, opts) : defaultRpc;
+	const { username } = useAccountCredentials;
+
+	let rpc = rpcCache.get(username);
+	if (!rpc) {
+		rpc = new RPC(useAccountCredentials, opts);
+		rpcCache.set(username, rpc);
+	}
+
+	rpc.useOptions(opts);
+
 	const { host, version, noHttps } = { ...rpc.credentials, ...rpc.options };
 
 	const response: IRPCResponse = await rpc.call(path, body);
