@@ -5,7 +5,7 @@ import config from '../../config';
 
 const fileService = FileService({
 	basepath: 'files',
-	baseUrl: config.files.baseUrl
+	baseurl: config.files.baseUrl
 });
 
 /** Набор методов для работы с данными пользовательского окружения */
