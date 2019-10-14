@@ -60,27 +60,28 @@ class RPC {
 
 	/** Получение CSRF-токена */
 	async token(): Promise<{token: string, jar: Request.CookieJar}> {
+		let { host: origin } = this.options;
+		origin = origin || config.api.mailBaseUrl;
 		if (this.tokenValue && this.jarValue && !this.options.clearJar) {
+			if (!checkSdcsCookie(this.jarValue, origin)) {
+				await getSdcsCookie({ origin, jarVal: this.jarValue });
+			}
+
 			return {
 				token: this.tokenValue,
 				jar: this.jarValue
 			};
 		}
-		const { host } = this.options;
 		const { email } = this.credentials;
 
-		// получаем авторизационные куки
 		const jarVal = rp.jar();
-		const session = await loginAccountAsync(this.credentials, jarVal);
-		const hasSdcsCookie = checkSdcsCookie(session.cookies);
 
-		// если не смогли получить sdcs куку первый раз, пробуем еще раз
-		if (!hasSdcsCookie) {
-			await getSdcsCookie({ host, jarVal });
-		}
+		// получаем авторизационные куки
+		await loginAccountAsync(this.credentials, jarVal);
+		await getSdcsCookie({ origin, jarVal });
 
 		// делаем запрос за токеном
-		const response = await getToken(email, assertDefinedValue(host), jarVal);
+		const response = await getToken(email, assertDefinedValue(origin), jarVal);
 		this.tokenValue = response.token;
 		this.jarValue = response.jar;
 
