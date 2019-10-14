@@ -76,13 +76,15 @@ export async function callAsync(
 	const validStatusCodes: number[] = opts && opts.validStatusCodes || [];
 	const isValidStatusCode = (status >= 200 && status < 400) || validStatusCodes.includes(status);
 
-	if (isValidStatusCode) {
-		result.status = status;
-		result.body = responseBody;
-	} else if (status === 404) {
-		result.error = new Error(`Method "${path}" is not implemented yet`);
-	} else {
-		result.error = new Error(`Method "${path}" returns invalid response code ${status}`);
+	result.status = status;
+	result.body = responseBody;
+
+	if (!isValidStatusCode) {
+		if (status === 404) {
+			result.error = new Error(`Method "${path}" is not implemented yet`);
+		} else {
+			result.error = new Error(`Method "${path}" returns invalid response code ${status}`);
+		}
 	}
 
 	return result;
