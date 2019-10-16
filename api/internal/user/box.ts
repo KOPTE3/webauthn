@@ -3,7 +3,7 @@ import call, { callAsync } from '../call';
 
 export interface Options {
 	email: string;
-	limit: string;
+	limit: number;
 }
 
 /**
