@@ -230,7 +230,7 @@ export default class InternalApiSteps {
 	updateBoxLimit(email: string, limit: string) {
 		const data = {
 			email,
-			limit,
+			limit
 		};
 
 		InternalApi.userBoxLimit(data);
