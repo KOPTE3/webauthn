@@ -102,11 +102,11 @@ export function getCaptchaID(locator: string): string {
  */
 export function getCaptchaValue(cid: any) {
 	return new Promise<string>((resolve, reject) => {
-		const url = `${CAPTCHA_CRACKER_URL}/${cid}`;
+		const url = `${CAPTCHA_CRACKER_URL}?cid=${cid}`;
 
 		debug('captcha cracker request: ', url);
 
-		request(url, (error, response, body) => {
+		request(url, { proxy: config.api.proxyUrl, strictSSL: false }, (error, response, body) => {
 			if (error) {
 				return reject();
 			}
