@@ -225,6 +225,16 @@ export default class InternalApiSteps {
 			}
 		});
 	}
+
+	@step('Обновляем пользователю лимит ящика')
+	updateBoxLimit(email: string, limit: string) {
+		const data = {
+			email,
+			limit,
+		};
+
+		InternalApi.userBoxLimit(data);
+	}
 }
 
 export const internalApiSteps = new InternalApiSteps();
