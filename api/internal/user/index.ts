@@ -6,4 +6,4 @@ export { default as userFolders, userFoldersAsync } from './folders';
 export { default as userProfileSet, userProfileSetAsync } from './profile-set';
 export { default as twoStepEnable, twoStepEnableAsync } from './2-step-enable';
 export { default as memcachedKarmaCaptcha, memcachedKarmaCaptchaAsync } from './memcached-karma-captcha';
-export { default as userBoxLimit, userBoxLimitAsync } from './box';
+export { default as userBox, userBoxAsync } from './box';

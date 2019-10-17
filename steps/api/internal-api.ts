@@ -236,7 +236,7 @@ export default class InternalApiSteps {
 			limit
 		};
 
-		InternalApi.userBoxLimit(data);
+		InternalApi.userBox(data);
 	}
 }
 
