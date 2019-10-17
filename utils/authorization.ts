@@ -109,14 +109,14 @@ export function getCredentials(
 	return browser.waitForPromise(getCredentialsAsync(type, options), timeout, 'Could not get user credentials');
 }
 
-export async function getSdcsCookie({ host, jarVal = jar }: {host?: string, jarVal?: CookieJar} = {}) {
-	const uri = host ? 'https://auth.mail.ru/sdc?from=' + encodeURIComponent(host) : config.auth.sdc;
+export async function getSdcsCookie({ origin, jarVal = jar }: {origin?: string, jarVal?: CookieJar} = {}) {
+	const uri = origin ? 'https://auth.mail.ru/sdc?from=' + encodeURIComponent(origin) : config.auth.sdc;
 
 	await rp({
 		method: 'GET',
 		uri,
 		headers: {
-			'Referer': host || config.auth.referer,
+			'Referer': origin || config.auth.referer,
 			'User-Agent': config.auth.ua
 		},
 		followAllRedirects: false,
@@ -126,7 +126,8 @@ export async function getSdcsCookie({ host, jarVal = jar }: {host?: string, jarV
 	});
 }
 
-export function checkSdcsCookie(cookies: Cookie[]): boolean {
+export function checkSdcsCookie(jar: CookieJar, origin: string): boolean {
+	const cookies = jar.getCookies(origin || config.auth.referer);
 	return cookies.map((cookie) => cookie.toJSON())
 		.some((cookie) => cookie.key === 'sdcs');
 }
@@ -179,12 +180,12 @@ export function loginAccount(credentials: CommonAccount, timeout?: number): Sess
 	);
 }
 
-export async function getToken(email: string, host: string, jarVal = jar) {
+export async function getToken(email: string, origin: string, jarVal = jar) {
 	const options = {
 		method: 'POST',
-		uri: `${host}/api/v1/tokens`,
+		uri: `${origin}/api/v1/tokens`,
 		headers: {
-			'Referer': host || config.auth.referer,
+			'Referer': origin || config.auth.referer,
 			'User-Agent': config.auth.ua
 		},
 		qs: {
