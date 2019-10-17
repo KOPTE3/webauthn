@@ -227,7 +227,10 @@ export default class InternalApiSteps {
 	}
 
 	@step('Обновляем пользователю {email} лимит ящика: {limit}')
-	updateBoxLimit(email: string, limit: number) {
+	updateBoxLimit(
+		{ email = '' } = authorization.account.data() || Authorization.CurrentAccount() || {},
+		limit: number
+		) {
 		const data = {
 			email,
 			limit
