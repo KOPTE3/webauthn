@@ -18,7 +18,7 @@ export default {
 	},
 	captcha: {
 		CAPTCHA_HEADER_NAME: 'X-Captcha-ID',
-		CAPTCHA_CRACKER_URL: 'http://captcha.win102.mail.cloud.devmail.ru/captcha',
+		CAPTCHA_CRACKER_URL: 'https://c.mail.ru/get',
 		CAPTCHA_URL: 'https://swa.mail.ru/c',
 		get CAPTCHA_TIMEOUT(): number {
 			if (typeof browser !== 'undefined') {
