@@ -6,13 +6,17 @@ export interface Options {
 	limit: number;
 }
 
+export interface BoxSizeBody {
+	size: number;
+	limit: number;
+}
 /**
  * @see https://apidoc.devmail.ru/e.mail.ru/test/user/box/
  */
-export default function userBoxLimit(options: Options): RequestResult<any> {
+export default function userBoxLimit(options: Options): RequestResult<BoxSizeBody> {
 	return call('test/user/box', options);
 }
 
-export async function userBoxLimitAsync(options: Options): Promise<RequestResult<any>> {
+export async function userBoxLimitAsync(options: Options): Promise<RequestResult<BoxSizeBody>> {
 	return callAsync('test/user/box', options);
 }

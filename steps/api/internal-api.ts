@@ -226,7 +226,7 @@ export default class InternalApiSteps {
 		});
 	}
 
-	@step('Обновляем пользователю лимит ящика')
+	@step('Обновляем пользователю {email} лимит ящика: {limit}')
 	updateBoxLimit(email: string, limit: number) {
 		const data = {
 			email,
