@@ -1,9 +1,7 @@
-import * as assert from 'assert';
 import DefaultPage, { Query } from '../pages/index';
-import DefaultSteps from '../steps/index';
 import Authorization, { AccountCredentials, CommonAccount, Type } from '../utils/authorization';
 import Element from './index';
-import { URL } from 'url';
+import Browser from '../browser/browser';
 
 /**
  * Класс, представляющий собой абстракцию над определённой страницей
@@ -38,40 +36,16 @@ export class Page extends Element {
 		return Authorization.auth(arg0, arg1);
 	}
 
-	@step('Проверить, что текущий урл содержит следующие GET-параметры', (p: any) => p)
-	static CheckQueryParams(params: { [ name: string ]: string | RegExp }): void {
-		const url = new URL(browser.getUrl());
-
-		Object
-			.entries(params)
-			.forEach(([key, expectedValue]) => {
-				if (expectedValue instanceof RegExp) {
-					assert(
-						url.searchParams.getAll(key).some((item) => !!item.match(expectedValue)),
-						`Текущий урл не содержит параметр ${key} ~ ${expectedValue}`);
-					return;
-				}
-				assert(
-					url.searchParams.getAll(key).includes(expectedValue),
-					`Текущий урл не содержит параметр ${key}=${expectedValue}`);
-			})
-		;
-	}
-
-	@step('Проверить, что текущий урл не содержит GET-параметры: {params}', (p: any) => p)
-	static HasNoQueryParams(params: string[]): void {
-		const url = new URL(browser.getUrl());
-
-		params.forEach((parameter) => {
-			assert(
-				!url.searchParams.has(parameter),
-				`Текущий урл содержит параметр ${parameter}, и его зачение: ${url.searchParams.get(parameter)}`);
-		});
-	}
-
 	static WaitForUrl(value: ((url: string) => boolean) | string | RegExp): void {
-		const s = new DefaultSteps();
-		assert.ok(s.waitForUrl(value), 'Не дождались, пока url страницы примет необходимое значение');
+		Browser.WaitForUrl(value);
+	}
+
+	static CheckQueryParams(params: { [ name: string ]: string | RegExp }): void {
+		Browser.CheckQueryParams(params);
+	}
+
+	static HasNoQueryParams(params: string[]): void {
+		Browser.HasNoQueryParams(params);
 	}
 }
 

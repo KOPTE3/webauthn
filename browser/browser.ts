@@ -92,6 +92,54 @@ export default class Browser {
 		return browser.getUrl();
 	}
 
+	@step('Дождаться адреса соответствующего заданному условию "{value}"')
+	static WaitForUrl(
+		value: ((url: string) => boolean) | string | RegExp,
+		timeout?: number,
+		revert?: boolean
+	): void {
+		let actual = false;
+
+		try {
+			actual = browser.waitForUrl(value, timeout, revert);
+		} catch (error) {
+			// ignore
+		}
+
+		assert.ok(actual, 'Не дождались, пока url примет необходимое значение');
+	}
+
+	@step('Проверить, что текущий урл содержит следующие GET-параметры', (p: any) => p)
+	static CheckQueryParams(params: { [ name: string ]: string | RegExp }): void {
+		const actualUrl = new url.URL(browser.getUrl());
+
+		Object
+			.entries(params)
+			.forEach(([key, expectedValue]) => {
+				if (expectedValue instanceof RegExp) {
+					assert(
+						actualUrl.searchParams.getAll(key).some((item) => !!item.match(expectedValue)),
+						`Текущий урл не содержит параметр ${key} ~ ${expectedValue}`);
+					return;
+				}
+				assert(
+					actualUrl.searchParams.getAll(key).includes(expectedValue),
+					`Текущий урл не содержит параметр ${key}=${expectedValue}`);
+			})
+		;
+	}
+
+	@step('Проверить, что текущий урл не содержит GET-параметры: {params}', (p: any) => p)
+	static HasNoQueryParams(params: string[]): void {
+		const actualUrl = new url.URL(browser.getUrl());
+
+		params.forEach((parameter) => {
+			assert(
+				!actualUrl.searchParams.has(parameter),
+				`Текущий урл содержит параметр ${parameter}, и его зачение: ${actualUrl.searchParams.get(parameter)}`);
+		});
+	}
+
 	@step(
 		'Установить размер вьюпорта { type ? " и проверить, совпадает ли реальный размер с требуемым" : "" }',
 		({ width, height }: WebdriverIO.Size) => ({
