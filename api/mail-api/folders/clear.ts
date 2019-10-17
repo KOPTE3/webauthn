@@ -4,13 +4,13 @@ import call, { callAsync } from '../call';
 /**
  * @see https://apidoc.devmail.ru/e.mail.ru/folders/clear
  */
-export default function foldersClear(ids: string[], credentials?: Credentials): RequestResult<void> {
-	return call('folders/clear', ids, 'POST', credentials);
+export default function foldersClear(options: {}, credentials?: Credentials): RequestResult<string[]> {
+	return call('folders/clear', options, 'POST', credentials);
 }
 
 export async function foldersClearAsync(
-	ids: string[],
+	options: {},
 	credentials?: Credentials
-): Promise<RequestResult<void>> {
-	return callAsync('folders/clear', ids, 'POST', credentials);
+	): Promise<RequestResult<string[]>> {
+	return callAsync('folders/clear', options, 'POST', credentials);
 }
