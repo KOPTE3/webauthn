@@ -1,5 +1,5 @@
-import { RequestResult } from '../../types/api';
-import call, { callAsync } from './call';
+import { RequestResult } from '../../../../types/api';
+import call, { callAsync } from '../../call';
 import { RequireExactlyOne } from 'type-fest';
 
 interface SourceItem {
