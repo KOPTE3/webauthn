@@ -1,12 +1,4 @@
-interface FolderStore {
-	ids: {
-		[name: string]: number
-	};
-	[name: string]: any;
-}
-
-/** @namespace FoldersStore */
-const FolderStore: FolderStore = {
+const FolderStore = {
 	/** Идентификаторы папок */
 	ids: {
 		root: -1,
