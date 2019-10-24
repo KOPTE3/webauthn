@@ -10,7 +10,7 @@ import { URL } from 'url';
  * имеет location и методы авторизации и открытия страницы
  * @class Page
  */
-export class Page extends Element {
+export class Page<Params extends object = any> extends Element<Params> {
 	/** location страницы */
 	protected location: string;
 
