@@ -226,7 +226,12 @@ export default class InternalApiSteps {
 		});
 	}
 
-	@step('Вставить записи в историю оплат', (items: InternalApi.PaymentHistoryItem[]) => items)
+	@step('Вставить записи в историю оплат', (items: InternalApi.PaymentHistoryItem[]) =>
+		items.map((item: InternalApi.PaymentHistoryItem) => ({
+			...item,
+			...(item.date && { date: (new Date(item.date * 1000)).toLocaleString() })
+		}))
+	)
 	insertIntoPaymentHistory(items: InternalApi.PaymentHistoryItem[], email?: string) {
 		const { email: emailFromAuth = '' } = authorization.account.data() || Authorization.CurrentAccount() || {};
 
