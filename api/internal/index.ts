@@ -7,3 +7,8 @@ export * from './messages';
 export { default as messageSetMsgProps, messageSetMsgPropsAsync } from './message-set_msg_props';
 export { default as config, configAsync } from './config';
 export { default as tokensInfo, tokensInfoAsync } from './tokens-info';
+export {
+	default as paymentHistoryInsert,
+	paymentHistoryInsertAsync,
+	Options as PaymentHistoryInsertOptions
+} from './payment-history-insert';
