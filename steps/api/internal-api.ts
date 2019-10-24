@@ -238,6 +238,15 @@ export default class InternalApiSteps {
 			}))
 		});
 	}
+
+	@step('Очистить историю оплат')
+	clearPaymentHistory(email?: string) {
+		const { email: emailFromAuth = '' } = authorization.account.data() || Authorization.CurrentAccount() || {};
+
+		InternalApi.paymentHistoryClear({
+			email: email || emailFromAuth
+		});
+	}
 }
 
 export const internalApiSteps = new InternalApiSteps();
