@@ -232,7 +232,10 @@ export default class InternalApiSteps {
 
 		InternalApi.paymentHistoryInsert({
 			email: email || emailFromAuth,
-			items
+			items: items.map((item: InternalApi.PaymentHistoryItem) => ({
+				date: Math.floor(Date.now() / 1000),
+				...item
+			}))
 		});
 	}
 }
