@@ -9,6 +9,7 @@ import { Phone } from '../../store/phones';
 import { assertDefinedValue } from '../../utils/assert-defined';
 import { Credentials } from '../../types/api';
 import { CommonAccount } from '../../utils/authorization';
+import FolderStore from '../../store/folders';
 
 /** Интерфейс для вывода данных, о созданной запароленной папке */
 interface SecretFolderData {
@@ -331,6 +332,15 @@ export default class MailApiSteps {
 			},
 			credentials
 		);
+	}
+
+	getThreadIdBySubject(subject: string, folderId: number = FolderStore.ids.inbox): string | null {
+		const { body: threadsStatusSmartResponse } = MailApi.threadsStatusSmart({ folder: folderId });
+		const { threads } = assertDefinedValue(threadsStatusSmartResponse);
+
+		const thread = assertDefinedValue(threads.find(({ subject: threadSubject }) => threadSubject === subject));
+
+		return thread.id;
 	}
 }
 
