@@ -225,6 +225,13 @@ export default class InternalApiSteps {
 			}
 		});
 	}
+
+	@step('Вставить записи в историю оплат', (items: InternalApi.PaymentHistoryInsertOptions[]) => items)
+	insertIntoPaymentHistory(items: InternalApi.PaymentHistoryInsertOptions[]) {
+		items.forEach((item: InternalApi.PaymentHistoryInsertOptions) => {
+			InternalApi.paymentHistoryInsert(item);
+		});
+	}
 }
 
 export const internalApiSteps = new InternalApiSteps();
