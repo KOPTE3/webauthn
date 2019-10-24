@@ -2,9 +2,10 @@ import { RequestResult } from '../../types/api';
 import call, { callAsync } from './call';
 import { RequireExactlyOne } from 'type-fest';
 
-interface RawOptions {
+interface SourceItem {
 	date?: number; // default - текущий таймстемп
-	provider: string;
+	status: 'new' | 'success' | 'awaiting' | 'error';
+	receiver: string;
 	description: string; // или description_parts
 	description_parts: Array<{ // или description
 		field: string,
@@ -12,9 +13,15 @@ interface RawOptions {
 	}>;
 	thread_id?: string;
 	amount: string;
+	transaction_id?: string;
+	history_type?: 'moneta' | 'gibdd';
 }
+export type Item = RequireExactlyOne<SourceItem, 'description' | 'description_parts'>;
 
-export type Options = RequireExactlyOne<RawOptions, 'description' | 'description_parts'>;
+interface Options {
+	email: string;
+	items: Item[];
+}
 
 /**
  * @see https://apidoc.devmail.ru/e.mail.ru/test/payment/history/insert

@@ -226,10 +226,13 @@ export default class InternalApiSteps {
 		});
 	}
 
-	@step('Вставить записи в историю оплат', (items: InternalApi.PaymentHistoryInsertOptions[]) => items)
-	insertIntoPaymentHistory(items: InternalApi.PaymentHistoryInsertOptions[]) {
-		items.forEach((item: InternalApi.PaymentHistoryInsertOptions) => {
-			InternalApi.paymentHistoryInsert(item);
+	@step('Вставить записи в историю оплат', (items: InternalApi.PaymentHistoryItem[]) => items)
+	insertIntoPaymentHistory(items: InternalApi.PaymentHistoryItem[], email?: string) {
+		const { email: emailFromAuth = '' } = authorization.account.data() || Authorization.CurrentAccount() || {};
+
+		InternalApi.paymentHistoryInsert({
+			email: email || emailFromAuth,
+			items
 		});
 	}
 }

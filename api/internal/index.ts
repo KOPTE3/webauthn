@@ -10,5 +10,5 @@ export { default as tokensInfo, tokensInfoAsync } from './tokens-info';
 export {
 	default as paymentHistoryInsert,
 	paymentHistoryInsertAsync,
-	Options as PaymentHistoryInsertOptions
+	Item as PaymentHistoryItem
 } from './payment-history-insert';
