@@ -7,6 +7,7 @@ import phonesStore from '../../store/phones';
 import { assertDefinedValue } from '../../utils/assert-defined';
 import { JsonArray, JsonObject } from 'type-fest';
 import Authorization from '../../utils/authorization';
+import * as flat from 'flat';
 
 export type PhoneStatusStep = PhoneStatus | 'in_remove_queue' | 'twofa';
 export type ExtraEmailStatusStep = 'ok' | 'too_young' | 'in_remove_queue';
@@ -226,12 +227,14 @@ export default class InternalApiSteps {
 		});
 	}
 
-	@step('Вставить записи в историю оплат', (items: InternalApi.PaymentHistoryItem[]) =>
+	@step('Вставить записи в историю оплат', (items: InternalApi.PaymentHistoryItem[]) => flat.flatten(
 		items.map((item: InternalApi.PaymentHistoryItem) => ({
 			...item,
-			...(item.date && { date: (new Date(item.date * 1000)).toLocaleString() })
+			...(item.date && {
+				date: (new Date(item.date * 1000)).toLocaleString('ru-RU', { hour12: false })
+			})
 		}))
-	)
+	))
 	insertIntoPaymentHistory(items: InternalApi.PaymentHistoryItem[], email?: string) {
 		const { email: emailFromAuth = '' } = authorization.account.data() || Authorization.CurrentAccount() || {};
 
