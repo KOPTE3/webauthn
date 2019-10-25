@@ -7,6 +7,7 @@ import phonesStore from '../../store/phones';
 import { assertDefinedValue } from '../../utils/assert-defined';
 import { JsonArray, JsonObject } from 'type-fest';
 import Authorization from '../../utils/authorization';
+import user from '@qa/account-manager/utils/user';
 
 export type PhoneStatusStep = PhoneStatus | 'in_remove_queue' | 'twofa';
 export type ExtraEmailStatusStep = 'ok' | 'too_young' | 'in_remove_queue';
@@ -227,9 +228,17 @@ export default class InternalApiSteps {
 	}
 
 	@step('Обновляем пользователю {email} лимит ящика: {limit}')
-	updateBoxLimit(email: string, limit: number) {
+	updateBoxLimit(limit: number, email?: string) {
+		let userEmail;
+		if (email) {
+			userEmail = email;
+		} else {
+			const { email = '' } = authorization.account.data() || Authorization.CurrentAccount() || {};
+			userEmail = email;
+		}
+
 		const data = {
-			email,
+			email: userEmail,
 			limit
 		};
 
