@@ -334,7 +334,7 @@ export default class MailApiSteps {
 		);
 	}
 
-	getThreadIdBySubject(subject: string, folderId: number = FolderStore.ids.inbox): string | null {
+	getThreadIdBySubject(subject: string, folderId: number = FolderStore.ids.inbox): string {
 		const { body: threadsStatusSmartResponse } = MailApi.threadsStatusSmart({ folder: folderId });
 		const { threads } = assertDefinedValue(threadsStatusSmartResponse);
 

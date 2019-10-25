@@ -2,8 +2,8 @@ import { RequestResult } from '../../../../types/api';
 import call, { callAsync } from '../../call';
 import { RequireExactlyOne } from 'type-fest';
 
-interface SourceItem {
-	date?: number; // default - текущий таймстемп
+export interface RawItem {
+	date: number; // unix timestamp
 	status: 'new' | 'success' | 'awaiting' | 'error';
 	provider: string;
 	description: string; // или description_parts
@@ -16,7 +16,7 @@ interface SourceItem {
 	transaction_id?: string;
 	history_type?: 'moneta' | 'gibdd';
 }
-export type Item = RequireExactlyOne<SourceItem, 'description' | 'description_parts'>;
+export type Item = RequireExactlyOne<RawItem, 'description' | 'description_parts'>;
 
 interface Options {
 	email: string;

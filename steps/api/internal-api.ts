@@ -5,12 +5,20 @@ import userProfileSet from '../../api/internal/user/profile-set';
 import authorization from '../../store/authorization';
 import phonesStore from '../../store/phones';
 import { assertDefinedValue } from '../../utils/assert-defined';
-import { JsonArray, JsonObject } from 'type-fest';
+import { JsonArray, JsonObject, Merge, RequireExactlyOne } from 'type-fest';
 import Authorization from '../../utils/authorization';
 import * as flat from 'flat';
+import { mailApiSteps } from './mail-api';
 
 export type PhoneStatusStep = PhoneStatus | 'in_remove_queue' | 'twofa';
 export type ExtraEmailStatusStep = 'ok' | 'too_young' | 'in_remove_queue';
+export type PaymentHistoryItem = RequireExactlyOne<Merge<
+	Omit<InternalApi.PaymentHistoryRawItem, 'thread_id'>,
+	{
+		date?: Date,
+		messageSubject?: string
+	}
+>, 'description' | 'description_parts'>;
 
 export default class InternalApiSteps {
 	@step('"Протушить" все аттачи на написании письма')
@@ -227,23 +235,27 @@ export default class InternalApiSteps {
 		});
 	}
 
-	@step('Вставить записи в историю оплат', (items: InternalApi.PaymentHistoryItem[]) => flat.flatten(
-		items.map((item: InternalApi.PaymentHistoryItem) => ({
+	@step('Вставить записи в историю оплат', (items: PaymentHistoryItem[]) => flat.flatten(
+		items.map((item: PaymentHistoryItem) => ({
 			...item,
 			...(item.date && {
-				date: (new Date(item.date * 1000)).toLocaleString('ru-RU', { hour12: false })
+				date: item.date.toLocaleString('ru-RU', { hour12: false })
 			})
 		}))
 	))
-	insertIntoPaymentHistory(items: InternalApi.PaymentHistoryItem[], email?: string) {
+	insertIntoPaymentHistory(items: PaymentHistoryItem[], email?: string) {
 		const { email: emailFromAuth = '' } = authorization.account.data() || Authorization.CurrentAccount() || {};
 
 		InternalApi.paymentHistoryInsert({
 			email: email || emailFromAuth,
-			items: items.map((item: InternalApi.PaymentHistoryItem) => ({
-				date: Math.floor(Date.now() / 1000),
-				...item
-			}))
+			items: items.map((item: PaymentHistoryItem) => ({
+				...item,
+				date: Math.floor((item.date || new Date()).valueOf() / 1000),
+				...(item.messageSubject && {
+					messageSubject: undefined,
+					thread_id: mailApiSteps.getThreadIdBySubject(item.messageSubject)
+				})
+			}) as InternalApi.PaymentHistoryItem)
 		});
 	}
 
