@@ -315,6 +315,13 @@ export class Element<Params extends object = any> {
 	}
 
 	@gen
+	@step('Кликаем мимо элемента {element}')
+	static MissClickTo(element: Element, xoffset: number = -10, yoffset: number = 10): void {
+		Element.MouseOver(element, xoffset, yoffset);
+		browser.leftClick();
+	}
+
+	@gen
 	@step('Наводим курсор мыши на {element}')
 	static MouseOver(element: Element, xoffset?: number, yoffset?: number): void {
 		const locator = element.Locator();
