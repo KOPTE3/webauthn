@@ -119,7 +119,7 @@ export default class Browser {
 				const actual = browser.getViewportSize();
 
 				try {
-					assert.deepStrictEqual(actual, expected);
+					assert.deepEqual(actual, expected);
 				} catch {
 					return false;
 				}
