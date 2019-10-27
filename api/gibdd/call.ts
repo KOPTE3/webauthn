@@ -5,6 +5,7 @@ import initCookieJar from '../init-cookie-jar';
 import * as rp from 'request-promise-native';
 import authorization from '../../store/authorization';
 import * as Debug from 'debug';
+import Authorization from '../../utils/authorization';
 
 const debug = Debug('@qa:yoda:gibdd-api');
 
@@ -48,7 +49,17 @@ export async function callAsync(
 	method: 'DELETE' | 'POST' | 'GET' = 'GET',
 	credentials?: Credentials
 ): Promise<RequestResult> {
-	const { username, password }: Credentials = credentials || authorization.account.data();
+	const legacyAccountCredentials = authorization.account.data();
+	const currentAccountCredentials = Authorization.CurrentAccount();
+
+	const useAccountCredentials = credentials || legacyAccountCredentials || currentAccountCredentials;
+
+	if (!useAccountCredentials) {
+		throw new Error('No authorized user found. Please use Auth() step before or pass credentials explicitly');
+	}
+
+	const { username, password } = useAccountCredentials;
+
 	const jar = await initCookieJar(cookieJar, { username, password });
 	const requestOptions: rp.OptionsWithUrl = {
 		...defaultRequestOptions,
