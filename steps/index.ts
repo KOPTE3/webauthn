@@ -385,7 +385,7 @@ class Steps {
 				const actual = browser.getViewportSize();
 
 				try {
-					assert.deepEqual(actual, expected);
+					assert.deepStrictEqual(actual, expected);
 				} catch {
 					return false;
 				}
