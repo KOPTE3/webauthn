@@ -225,6 +225,24 @@ export default class InternalApiSteps {
 			}
 		});
 	}
+
+	@step('Обновляем пользователю {email} лимит ящика: {limit}')
+	updateBoxLimit(limit: number, email?: string) {
+		let userEmail;
+		if (email) {
+			userEmail = email;
+		} else {
+			const { email = '' } = authorization.account.data() || Authorization.CurrentAccount() || {};
+			userEmail = email;
+		}
+
+		const data = {
+			email: userEmail,
+			limit
+		};
+
+		InternalApi.userBox(data);
+	}
 }
 
 export const internalApiSteps = new InternalApiSteps();
