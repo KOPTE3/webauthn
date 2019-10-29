@@ -10,7 +10,9 @@ export default {
 		cloudBaseUrl: 'https://cloud.mail.ru',
 		mailBaseUrl: 'https://e.mail.ru',
 		accountBaseUrl: 'https://account.mail.ru',
-		userAgent: 'Yoda'
+		userAgent: 'Yoda',
+		ClientID: 'echo-autotest',
+		ClientSecret: '6SIKxBtFbKycHydAdYcXorEA1ReOMqKp'
 	},
 	cookies: {
 		qa: 'noTo1eyiyo8Ohpaegair2Too',

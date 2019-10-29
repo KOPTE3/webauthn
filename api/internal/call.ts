@@ -3,6 +3,7 @@ import * as rp from 'request-promise-native';
 import { RequestResult } from '../../types/api';
 import config from '../../config';
 import { CookieJar } from 'request';
+import { setSwaSignatureParams } from '../../utils/url';
 
 const debug = Debug('@qa:yoda:internal');
 
@@ -51,6 +52,8 @@ export async function callAsync(
 		method,
 		...opts
 	};
+
+	body = setSwaSignatureParams(body);
 
 	switch (method) {
 		case 'GET': {
