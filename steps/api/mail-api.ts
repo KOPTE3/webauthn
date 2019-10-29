@@ -64,6 +64,38 @@ export default class MailApiSteps {
 		return +assertDefinedValue(body)[0];
 	}
 
+	@step('Очистить папку {ids}')
+	clearFolders(ids: {}, credentials?: Credentials): void {
+		MailApi.foldersClear({
+			ids
+		}, credentials);
+	}
+
+	@step('Отредактироваться папку с id: {__result__}')
+	editFolders(foldersData: MailApiInterfaces.FoldersEdit['folders'], credentials?: Credentials): number[] {
+		const body = MailApi.foldersEdit({
+			folders: foldersData
+		}, credentials).body;
+
+		return assertDefinedValue(body).map((folderId: string) => +folderId);
+	}
+
+	// Устанавливает на папку в качестве пароля пароль от ящика
+	@step('Установить пароль на папку с id {folderID}')
+	setPasswordFolder(folderID: number, credentials?: Credentials): void {
+		this.editFolders(
+			[{
+				id: folderID.toString(),
+				secret: {
+					folder_password: credentials ? credentials.password : authorization.account.get('password'),
+					user_password: credentials ? credentials.password : authorization.account.get('password'),
+					question: 'Кто тут',
+					answer: 'Никто'
+				}
+			}]
+		);
+	}
+
 	@step(
 		'Создать папки с указанными параметрами. В результате созданы папки с id: [{__result__}]',
 		(folders: any[]) =>
