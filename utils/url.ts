@@ -106,11 +106,12 @@ export function getSwaSignatureParams(query: any): SwaSignatureParams {
 	};
 }
 
-export function setSwaSignatureParams(query: object): object {
+export function addSwaSignatureParams(query: object): object {
 	const swaSignatureParams = getSwaSignatureParams(query);
+	const queryCopy = { ...query };
 
 	return ((Object.keys(swaSignatureParams) as Array<keyof SwaSignatureParams>)
 		.reduce<Partial<SwaSignatureParams>>((reducer: Partial<SwaSignatureParams>, key: keyof SwaSignatureParams) => {
 			return reducer[key] = (swaSignatureParams as any)[key];
-		}, query) as any).join('&');
+		}, queryCopy) as any).join('&');
 }

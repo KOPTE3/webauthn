@@ -1,3 +1,7 @@
+function getTokenPrefix() {
+	return Math.floor(Math.random() * 10 ** 11);
+}
+
 // tslint:disable:max-line-length
 export default {
 	api: {
@@ -50,7 +54,7 @@ export default {
 		baseUrl: 'http://files.win102.mail.cloud.devmail.ru/'
 	},
 	testPushNotificationsSubscription: {
-		token: '65126618325:14838322906489354350985028373919997344018607575698298209519830904748015705070522591352296981588061962446733941893726089992087917749836223325',
+		token: getTokenPrefix() + ':14838322906489354350985028373919997344018607575698298209519830904748015705070522591352296981588061962446733941893726089992087917749836223325',
 		settings: {
 			capabilities: {
 				Filter: {},
