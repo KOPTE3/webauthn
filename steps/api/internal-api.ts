@@ -246,8 +246,9 @@ export default class InternalApiSteps {
 
 	@step('Устанавливаем статус "Оплачен" в монете')
 	setSuccessPaymentStatus(userId: string, uidl: string) {
+		const requestId = `"${Math.floor(Math.random() * 1000)}"`;
 		InternalApi.notify({
-			request_id: '"8a72b20b-4311-4470-86c6-764b98080dd7"',
+			request_id: requestId,
 			notification_data: {
 				user_id: userId,
 				notification_type: 'payed_receipt',
