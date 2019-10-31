@@ -243,6 +243,35 @@ export default class InternalApiSteps {
 
 		InternalApi.userBox(data);
 	}
+
+	@step('Устанавливаем статус "Оплачен" в монете')
+	setSuccessPaymentStatus(userId: string, uidl: string) {
+		InternalApi.notify({
+			request_id: '"8a72b20b-4311-4470-86c6-764b98080dd7"',
+			notification_data: {
+				user_id: userId,
+				notification_type: 'payed_receipt',
+				provider: '"Мосэнерго"',
+				provider_logo: '""',
+				receipt_data: [],
+				payed_data: {
+					amount: '"1.00"',
+					status: 'succeed',
+					transaction_id: '"kdf7twyeudhli"'
+				},
+				mail_proxy_param: {
+					uidl
+				}
+			}
+		});
+	}
+
+	@step('Получаем user_id для email {email}')
+	getUserId(email: string): any {
+		return InternalApi.userData({
+			email
+		}).body;
+	}
 }
 
 export const internalApiSteps = new InternalApiSteps();
