@@ -245,14 +245,16 @@ export default class InternalApiSteps {
 	}
 
 	@step('Устанавливаем статус "Оплачен" в монете')
-	setSuccessPaymentStatus(userId: string, uidl: string) {
+	setSuccessPaymentStatus(email: string, uidl: string) {
+		const { user_id: userId } = InternalApi.userData({ email }).body;
 		const requestId = `"${Math.floor(Math.random() * 1000)}"`;
-		InternalApi.notify({
+
+		InternalApi.whiteLabelPaymentNotify({
 			request_id: requestId,
 			notification_data: {
 				user_id: userId,
 				notification_type: 'payed_receipt',
-				provider: '"Мосэнерго"',
+				provider: '""',
 				provider_logo: '""',
 				receipt_data: [],
 				payed_data: {
@@ -265,13 +267,6 @@ export default class InternalApiSteps {
 				}
 			}
 		});
-	}
-
-	@step('Получаем user_id для email {email}')
-	getUserId(email: string): any {
-		return InternalApi.userData({
-			email
-		}).body;
 	}
 }
 

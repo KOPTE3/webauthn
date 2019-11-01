@@ -1,1 +1,1 @@
-export { default as notify } from './notify';
+export { default as whiteLabelPaymentNotify } from './notify';
