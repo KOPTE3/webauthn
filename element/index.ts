@@ -106,7 +106,6 @@ export class Element<Params extends object = any> {
 	}
 
 	@gen
-	@step('Получаем количество элементов {element}, результат {__result__}')
 	static GetCount(element: Element): number {
 		const locator = element.Locator();
 		const els = browser.elements(locator);
@@ -215,7 +214,6 @@ export class Element<Params extends object = any> {
 	}
 
 	@gen
-	@step('Получаем значение элемента {element}', (e: any, r: string) => ({ 'Значение равно': r }))
 	static GetValue(element: Element): string {
 		const locator = element.Locator();
 		return browser.getValue(locator);
@@ -458,7 +456,6 @@ export class Element<Params extends object = any> {
 	}
 
 	@gen
-	@step('Получаем есть ли у элемента {element} псевдокласс :focus')
 	static GetFocus(element: Element): boolean {
 		const locator = element.Locator();
 
