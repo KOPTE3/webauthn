@@ -8,10 +8,13 @@ interface Options {
 	login: string;
 }
 
+interface CodeAnswerBody {
+}
+
 /**
  * @see https://apidoc.devmail.ru/auth.mail.ru/internal/testapi/pushauth/ratelimit/drop/
  */
-export default function dropRateLimit(options: Options): RequestResult<FoldersBody> {
+export default function dropRateLimit(options: Options): RequestResult<CodeAnswerBody> {
 	return call(
 		'internal/testapi/pushauth/ratelimit/drop',
 		addSwaSignatureParams(options),
@@ -20,7 +23,7 @@ export default function dropRateLimit(options: Options): RequestResult<FoldersBo
 	);
 }
 
-export async function dropRateLimitAsync(options: Options): Promise<RequestResult<FoldersBody>> {
+export async function dropRateLimitAsync(options: Options): Promise<RequestResult<CodeAnswerBody>> {
 	return callAsync(
 		'internal/testapi/pushauth/ratelimit/drop',
 		addSwaSignatureParams(options),
