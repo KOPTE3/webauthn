@@ -4,10 +4,15 @@ import * as querystring from 'querystring';
 import config from '../config';
 import * as md5 from 'md5';
 
+interface Obj { [key: string]: any; }
+
 interface SwaSignatureParams {
 	ClientID: string;
 	SigTS: number;
 	Sig: string;
+}
+
+interface ObjectWithSwaSignatureParams extends Obj, SwaSignatureParams {
 }
 
 const debug = Debug('@qa:yoda');
@@ -94,24 +99,25 @@ export default {
 	}
 };
 
-export function getSwaSignatureParams(query: any): SwaSignatureParams {
-	const swaSig = md5(Object.keys(query).sort().map((key) => {
-		return `${key}=${query[key as any]}`;
+export function getSwaSignatureParams(query: {[key: string]: any} = {}): SwaSignatureParams {
+	const queryCopy: Obj = {
+		...query,
+		ClientID: config.api.ClientID,
+		SigTS: Date.now()
+	};
+
+	const swaSig = md5(Object.keys(queryCopy).sort().map((key) => {
+		return `${key}=${queryCopy[key as any]}`;
 	}).join('') + config.api.ClientSecret);
 
 	return {
-		ClientID: config.api.ClientID,
-		SigTS: Date.now(),
+		ClientID: queryCopy.ClientID,
+		SigTS: queryCopy.SigTS,
 		Sig: swaSig
 	};
 }
 
-export function addSwaSignatureParams(query: object): object {
+export function addSwaSignatureParams(query: {[key: string]: any} = {}): ObjectWithSwaSignatureParams {
 	const swaSignatureParams = getSwaSignatureParams(query);
-	const queryCopy = { ...query };
-
-	return ((Object.keys(swaSignatureParams) as Array<keyof SwaSignatureParams>)
-		.reduce<Partial<SwaSignatureParams>>((reducer: Partial<SwaSignatureParams>, key: keyof SwaSignatureParams) => {
-			return reducer[key] = (swaSignatureParams as any)[key];
-		}, queryCopy) as any).join('&');
+	return { ...query,  ...swaSignatureParams };
 }

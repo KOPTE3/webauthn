@@ -14,6 +14,7 @@ export default {
 		cloudBaseUrl: 'https://cloud.mail.ru',
 		mailBaseUrl: 'https://e.mail.ru',
 		accountBaseUrl: 'https://account.mail.ru',
+		swaBaseUrl: 'https://swa.test.mail.ru/api/v1',
 		userAgent: 'Yoda',
 		ClientID: 'echo-autotest',
 		ClientSecret: '6SIKxBtFbKycHydAdYcXorEA1ReOMqKp'
