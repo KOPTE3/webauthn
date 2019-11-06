@@ -9,12 +9,12 @@ export default function paymentMessagesStatusUpdate(
 	options: MailAPI.PaymentMessagesStatusUpdate,
 	credentials?: Credentials
 ): RequestResult<{}> {
-	return call('payment-notify/messages/status/update', options, 'POST', credentials);
+	return call('payment/messages/status/update', options, 'POST', credentials);
 }
 
 export async function paymentMessagesStatusUpdateAsync(
 	options: MailAPI.PaymentMessagesStatusUpdate,
 	credentials?: Credentials
 ): Promise<RequestResult<{}>> {
-	return callAsync('payment-notify/messages/status/update', options, 'POST', credentials);
+	return callAsync('payment/messages/status/update', options, 'POST', credentials);
 }
