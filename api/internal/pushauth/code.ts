@@ -9,10 +9,14 @@ interface Options {
 	reg_token: string;
 }
 
+interface CodeAnswerBody {
+	code: string;
+}
+
 /**
  * @see https://apidoc.devmail.ru/auth.mail.ru/internal/testapi/pushauth/code/
  */
-export default function getCode(options: Options): RequestResult<FoldersBody> {
+export default function getCode(options: Options): RequestResult<CodeAnswerBody> {
 	return call(
 		'internal/testapi/pushauth/code',
 		addSwaSignatureParams(options),
@@ -21,7 +25,7 @@ export default function getCode(options: Options): RequestResult<FoldersBody> {
 	);
 }
 
-export async function getCodeAsync(options: Options): Promise<RequestResult<FoldersBody>> {
+export async function getCodeAsync(options: Options): Promise<RequestResult<CodeAnswerBody>> {
 	return callAsync(
 		'internal/testapi/pushauth/code',
 		addSwaSignatureParams(options),
