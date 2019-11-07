@@ -380,14 +380,7 @@ export default class Authorization {
 			domain: '.mail.ru'
 		});
 
-		cookies.push({
-			name: 'ftrs',
-			value: response.value,
-			domain: '.mail.ru'
-		});
-
 		browser.setCookies(cookies);
-
 		browser.pause(300);
 
 		currentAccount = authCredentials;
