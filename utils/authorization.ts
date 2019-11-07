@@ -4,7 +4,7 @@ import { CookieJar } from 'request';
 import * as rp from 'request-promise-native';
 import { Cookie } from 'tough-cookie';
 import { creationTime } from '../api/internal/session/index';
-import getFtrsCookie from '../api/internal/ftrs/get';
+import getFtrsCookie, { FtrsCookieBody } from '../api/internal/ftrs/get';
 import config from '../config';
 import URL from './url';
 import { assertDefinedValue } from './assert-defined';
@@ -136,20 +136,16 @@ export function checkSdcsCookie(jar: CookieJar, origin: string): boolean {
 /**
  * Выставляет специальную куку для включения переопределния ftrs на верстке
  */
-export function setFtrsCookie() {
+export function setFtrsCookie(): FtrsCookieBody {
 	const response = getFtrsCookie();
-
-	assert.strictEqual(
-		response.body,
-		'ok',
-		'Failed to set ftrs cookie. Body is not ok'
-	);
 
 	assert.strictEqual(
 		response.status,
 		200,
 		'Failed to set ftrs cookie. Status is not ok'
 	);
+
+	return assertDefinedValue(response.body);
 }
 
 /**
@@ -359,6 +355,7 @@ export default class Authorization {
 		}
 
 		const session = loginAccount(authCredentials as CommonAccount);
+		const response = setFtrsCookie();
 
 		URL.open(getSupixUrl(), config.timeout);
 
@@ -379,9 +376,13 @@ export default class Authorization {
 			domain: '.mail.ru'
 		});
 
-		browser.setCookies(cookies);
+		cookies.push({
+			name: 'ftrs',
+			value: response.value,
+			domain: '.mail.ru'
+		});
 
-		setFtrsCookie();
+		browser.setCookies(cookies);
 
 		browser.pause(300);
 
@@ -399,15 +400,18 @@ export default class Authorization {
 
 		// Удостоверямся, что документ доступен
 		browser.waitForExist('body');
+		const response = setFtrsCookie();
 		const cookies: WebdriverIO.Cookie[] = browser.getCookie();
 
 		browser.setCookies([{
 			name: 'qa',
 			value: config.cookies.qa,
 			domain: '.mail.ru'
+		},                  {
+			name: 'ftrs',
+			value: response.value,
+			domain: '.mail.ru'
 		}]);
-
-		setFtrsCookie();
 
 		browser.close();
 
