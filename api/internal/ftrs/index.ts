@@ -1,1 +1,1 @@
-export { default as getFtrsCookie, getFtrsCookieAsync } from './get';
+export { default as getFtrsCookie, getFtrsCookieAsync, FtrsCookieBody } from './get';

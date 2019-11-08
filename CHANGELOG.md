@@ -1,5 +1,8 @@
 # Changelog
 ## 9.14.1
+* Настроили поход за кукой ftrs в тестах
+
+## 9.14.1
 * Добавлены методы WaitForUrl, CheckQueryParams, HasNoQueryParams в классе Browser
 * Добавлены методы CheckFocus и WaitForFocus в классе Element 
 
