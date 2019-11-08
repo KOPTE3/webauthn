@@ -10,9 +10,9 @@ export interface FtrsCookieBody {
  * @see https://apidoc.devmail.ru/e.mail.ru/test/ftrs/get
  */
 export default function getFtrsCookie(): RequestResult<FtrsCookieBody> {
-	return call('/golang/test/ftrs/get', {}, 'GET');
+	return call('golang/test/ftrs/get', {});
 }
 
 export async function getFtrsCookieAsync(): Promise<RequestResult<FtrsCookieBody>> {
-	return callAsync('/golang/test/ftrs/get', {}, 'GET');
+	return callAsync('golang/test/ftrs/get', {});
 }
