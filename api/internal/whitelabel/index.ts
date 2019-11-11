@@ -1,2 +1,2 @@
-export { default as whiteLabelPaymentNotify } from './payment-notify';
-export { default as whiteLabelUserData } from './user-data';
+export { default as whiteLabelPaymentNotify, whiteLabelPaymentNotifyAsync  } from './payment-notify';
+export { default as whiteLabelUserData, whiteLabelUserDataAsync } from './user-data';
