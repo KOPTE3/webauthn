@@ -99,7 +99,7 @@ export default {
 	}
 };
 
-export function getSwaSignatureParams(query: {[key: string]: any} = {}): SwaSignatureParams {
+export function getSwaSignatureParams(query: Obj = {}): SwaSignatureParams {
 	const queryCopy: Obj = {
 		...query,
 		ClientID: config.api.ClientID,
@@ -117,7 +117,7 @@ export function getSwaSignatureParams(query: {[key: string]: any} = {}): SwaSign
 	};
 }
 
-export function addSwaSignatureParams(query: {[key: string]: any} = {}): ObjectWithSwaSignatureParams {
+export function addSwaSignatureParams(query: Obj = {}): ObjectWithSwaSignatureParams {
 	const swaSignatureParams = getSwaSignatureParams(query);
 	return { ...query,  ...swaSignatureParams };
 }
