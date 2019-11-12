@@ -29,10 +29,5 @@ export function bruteforceReset(type: string, method: any) {
 }
 
 export function resetUserDataNew(email: string) {
-	return call('golang/test/messages/services/cleanmaster/stat/insert', {
-		email,
-		version: 1,
-		stat: [0, 0],
-		action: 'insert stat'
-	}, 'GET');
+	return call(`golang/test/messages/services/cleanmaster/stat/insert?email=${email}&version=1&stat=[0,0]`, {}, 'GET');
 }
