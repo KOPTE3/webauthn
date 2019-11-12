@@ -34,5 +34,5 @@ export function resetUserDataNew(email: string) {
 		version: 1,
 		stat: [0, 0],
 		action: 'insert stat'
-	});
+	}, 'GET');
 }
