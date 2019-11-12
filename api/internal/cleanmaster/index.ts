@@ -22,8 +22,17 @@ export function getUserInfo(emails: string[]): any {
 	).body[0];
 }
 
-export function bruteforceReset(type: string, method: string) {
+export function bruteforceReset(type: string, method: any) {
 	const key = `${method}`;
 
 	return call(`golang/test/bruteforce-counter/reset?type=${type}&key=${key}`, {});
+}
+
+export function resetUserDataNew(email: string) {
+	return call('golang/test/messages/services/cleanmaster/stat/insert', {
+		email,
+		version: 1,
+		stat: [0, 0],
+		action: 'insert stat'
+	});
 }
