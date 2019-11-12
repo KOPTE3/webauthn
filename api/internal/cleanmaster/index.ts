@@ -12,3 +12,12 @@ export function putUnreadSenders(option: Options): RequestResult<{}> {
 		version_ts: Math.ceil(+(new Date()) / 1000)
 	});
 }
+
+// Добавлено в рамках https://jira.mail.ru/browse/FMAIL-4538
+// Чтобы тесты cleanmaster работали, в дальшейнем убрать
+export function getUserInfo(emails: string[]): any {
+	return call('users', {
+		emails: JSON.stringify(emails)
+	}
+	).body[0];
+}
