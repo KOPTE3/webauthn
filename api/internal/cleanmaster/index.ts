@@ -21,3 +21,9 @@ export function getUserInfo(emails: string[]): any {
 	}
 	).body[0];
 }
+
+export function bruteforceReset(type: string, method: string) {
+	const key = `${method}`;
+
+	return call(`golang/test/bruteforce-counter/reset?type=${type}&key=${key}`, {});
+}
