@@ -23,7 +23,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "ssh://git@gitlab.corp.mail.ru:qa/yoda.gitt"
+    "url": "ssh://git@gitlab.corp.mail.ru:qa/yoda.git"
   },
   "scripts": {
     "prepare": "npm run generate",
