@@ -15,7 +15,6 @@ function getToken() {
 }
 
 const credentialsConfig = {
-	token: getToken(),
 	settings: {
 		capabilities: {
 			Filter: {},
@@ -378,6 +377,7 @@ export default class MailApiSteps {
 				subscriptions: [
 					{
 						account: credentials.email,
+						token: getToken(),
 						...credentialsConfig
 					}
 				]

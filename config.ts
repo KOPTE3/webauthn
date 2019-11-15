@@ -1,5 +1,9 @@
 // tslint:disable:max-line-length
 export default {
+	swaSig: {
+		ClientID: 'echo-autotest',
+		ClientSecret: '6SIKxBtFbKycHydAdYcXorEA1ReOMqKp'
+	},
 	api: {
 		internalBaseUrl: 'https://serverside-api.e.mail.ru/api/v1',
 		proxyUrl: 'http://vagabond2.dev.mail.ru:3128',
@@ -11,11 +15,7 @@ export default {
 		mailBaseUrl: 'https://e.mail.ru',
 		accountBaseUrl: 'https://account.mail.ru',
 		swaBaseUrl: 'https://swa.mail.ru/api/v1',
-		userAgent: 'Yoda',
-		swaSig: {
-			ClientID: 'echo-autotest',
-			ClientSecret: '6SIKxBtFbKycHydAdYcXorEA1ReOMqKp'
-		}
+		userAgent: 'Yoda'
 	},
 	cookies: {
 		qa: 'noTo1eyiyo8Ohpaegair2Too',
