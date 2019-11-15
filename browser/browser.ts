@@ -178,4 +178,9 @@ export default class Browser {
 			'Не удалось дождаться требуемого размера вьюпорта'
 		);
 	}
+
+	@step('Закрыть текущую вкладку')
+	static Close(): void {
+		browser.close();
+	}
 }
