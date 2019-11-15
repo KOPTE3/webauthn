@@ -10,8 +10,9 @@ type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type CallError = Error & Omit<RequestResult, 'error'>;
 
 export interface CallOptions {
-	jar: CookieJar;
+	jar?: CookieJar;
 	validStatusCodes?: number[];
+	baseUrl?: string;
 }
 
 export default function call(
@@ -81,12 +82,12 @@ export async function callAsync(
 
 	try {
 		const response = await rp({
-			...options,
 			resolveWithFullResponse: true,
 			baseUrl: config.api.internalBaseUrl,
 			proxy: config.api.proxyUrl || void 0,
 			strictSSL: false,
-			json: true
+			json: true,
+			...options
 		});
 		result.response = response.toJSON();
 
