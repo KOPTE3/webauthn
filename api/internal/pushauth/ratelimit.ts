@@ -1,7 +1,6 @@
 import { RequestResult } from '../../../types/api';
 import call, { callAsync } from '../call';
-import { FoldersBody } from '../user/folders';
-import { addSwaSignatureParams } from '../../../utils/url';
+import { addSwaSignatureParams } from '../../../utils/swaSig';
 import config from '../../../config';
 
 interface Options {
@@ -14,7 +13,7 @@ interface CodeAnswerBody {
 /**
  * @see https://apidoc.devmail.ru/auth.mail.ru/internal/testapi/pushauth/ratelimit/drop/
  */
-export default function dropRateLimit(options: Options): RequestResult<CodeAnswerBody> {
+export default function pushauthRatelimitDrop(options: Options): RequestResult<CodeAnswerBody> {
 	return call(
 		'internal/testapi/pushauth/ratelimit/drop',
 		addSwaSignatureParams(options),
@@ -23,7 +22,7 @@ export default function dropRateLimit(options: Options): RequestResult<CodeAnswe
 	);
 }
 
-export async function dropRateLimitAsync(options: Options): Promise<RequestResult<CodeAnswerBody>> {
+export async function pushauthRatelimitDropAsync(options: Options): Promise<RequestResult<CodeAnswerBody>> {
 	return callAsync(
 		'internal/testapi/pushauth/ratelimit/drop',
 		addSwaSignatureParams(options),

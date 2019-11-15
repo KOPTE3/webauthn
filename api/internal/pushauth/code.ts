@@ -1,7 +1,6 @@
 import { RequestResult } from '../../../types/api';
-import { FoldersBody } from '../user/folders';
 import call, { callAsync } from '../call';
-import { addSwaSignatureParams } from '../../../utils/url';
+import { addSwaSignatureParams } from '../../../utils/swaSig';
 import config from '../../../config';
 
 interface Options {
@@ -16,7 +15,7 @@ interface CodeAnswerBody {
 /**
  * @see https://apidoc.devmail.ru/auth.mail.ru/internal/testapi/pushauth/code/
  */
-export default function getCode(options: Options): RequestResult<CodeAnswerBody> {
+export default function pushauthCode(options: Options): RequestResult<CodeAnswerBody> {
 	return call(
 		'internal/testapi/pushauth/code',
 		addSwaSignatureParams(options),
@@ -25,7 +24,7 @@ export default function getCode(options: Options): RequestResult<CodeAnswerBody>
 	);
 }
 
-export async function getCodeAsync(options: Options): Promise<RequestResult<CodeAnswerBody>> {
+export async function pushauthCodeAsync(options: Options): Promise<RequestResult<CodeAnswerBody>> {
 	return callAsync(
 		'internal/testapi/pushauth/code',
 		addSwaSignatureParams(options),

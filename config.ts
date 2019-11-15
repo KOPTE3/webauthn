@@ -17,8 +17,10 @@ export default {
 		accountBaseUrl: 'https://account.mail.ru',
 		swaBaseUrl: 'https://swa.mail.ru/api/v1',
 		userAgent: 'Yoda',
-		ClientID: 'echo-autotest',
-		ClientSecret: '6SIKxBtFbKycHydAdYcXorEA1ReOMqKp'
+		swaSig: {
+			ClientID: 'echo-autotest',
+			ClientSecret: '6SIKxBtFbKycHydAdYcXorEA1ReOMqKp'
+		}
 	},
 	cookies: {
 		qa: 'noTo1eyiyo8Ohpaegair2Too',
@@ -54,22 +56,6 @@ export default {
 	},
 	files: {
 		baseUrl: 'http://files.win102.mail.cloud.devmail.ru/'
-	},
-	testPushNotificationsSubscription: {
-		token: getToken(),
-		settings: {
-			capabilities: {
-				Filter: {},
-				is_active: true,
-				chrome_mode: 1
-			},
-			webpush_keys: {
-				p256dh: '123',
-				auth: '123'
-			}
-		},
-		platform: 'webpush',
-		application: 'mail_e'
 	},
 	get timeout(): number {
 		if (typeof browser !== 'undefined') {

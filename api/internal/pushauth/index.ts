@@ -1,2 +1,2 @@
-export { default as getCode, getCodeAsync } from './code';
-export { default as dropRateLimit, dropRateLimitAsync } from './ratelimit';
+export { default as pushauthCode, pushauthCodeAsync } from './code';
+export { default as pushauthRatelimitDrop, pushauthRatelimitDropAsync } from './ratelimit';

@@ -1,19 +1,6 @@
 import * as url from 'url';
 import * as Debug from 'debug';
 import * as querystring from 'querystring';
-import config from '../config';
-import * as md5 from 'md5';
-
-interface Obj { [key: string]: any; }
-
-interface SwaSignatureParams {
-	ClientID: string;
-	SigTS: number;
-	Sig: string;
-}
-
-interface ObjectWithSwaSignatureParams extends Obj, SwaSignatureParams {
-}
 
 const debug = Debug('@qa:yoda');
 const TIMEOUT: number = 30 * 1000;
@@ -98,26 +85,3 @@ export default {
 		return result as string;
 	}
 };
-
-export function getSwaSignatureParams(query: Obj = {}): SwaSignatureParams {
-	const queryCopy: Obj = {
-		...query,
-		ClientID: config.api.ClientID,
-		SigTS: Date.now()
-	};
-
-	const swaSig = md5(Object.keys(queryCopy).sort().map((key) => {
-		return `${key}=${queryCopy[key as any]}`;
-	}).join('') + config.api.ClientSecret);
-
-	return {
-		ClientID: queryCopy.ClientID,
-		SigTS: queryCopy.SigTS,
-		Sig: swaSig
-	};
-}
-
-export function addSwaSignatureParams(query: Obj = {}): ObjectWithSwaSignatureParams {
-	const swaSignatureParams = getSwaSignatureParams(query);
-	return { ...query,  ...swaSignatureParams };
-}
