@@ -84,14 +84,21 @@ export async function getCredentialsAsync(
 
 	const qs = { ...options, type };
 
-	const accountUrl = options.emailType === 'test_login' ?
-		config.as.testLoginUrl :
-		config.as.url;
+	let accountUrl;
+	let proxy;
+
+	if (options.emailType === 'test_login') {
+		accountUrl = config.as.testLoginUrl;
+		proxy = config.api.proxyUrl;
+	} else {
+		accountUrl = config.as.url;
+		proxy = null;
+	}
 
 	const response: ASAccount = await rp.get(`${accountUrl}/get`, {
 		json: true,
 		auth: config.as.auth,
-		proxy: config.api.proxyUrl || void 0,
+		proxy: proxy || void 0,
 		qs
 	});
 
