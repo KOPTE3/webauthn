@@ -8,16 +8,12 @@ export interface UserInfoBody {
 	id: number;
 	login: string;
 	domain: string;
-	nick: string;
-	city: number;
-	sex: string;
-	phones: string[];
 }
 
 /**
  * @see https://apidoc.devmail.ru/e.mail.ru/users/
  */
-export function getUserInfo(userInfo: {emails: string[]}): RequestResult<UserInfoBody> {
+export default function getUserInfo(userInfo: {emails: string[]}): RequestResult<UserInfoBody> {
 	return call('users', userInfo, 'POST');
 }
 
