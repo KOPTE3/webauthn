@@ -1,5 +1,9 @@
 // tslint:disable:max-line-length
 export default {
+	swaSig: {
+		ClientID: 'echo-autotest',
+		ClientSecret: '6SIKxBtFbKycHydAdYcXorEA1ReOMqKp'
+	},
 	api: {
 		internalBaseUrl: 'https://serverside-api.e.mail.ru/api/v1',
 		proxyUrl: 'http://vagabond2.dev.mail.ru:3128',
@@ -10,6 +14,7 @@ export default {
 		cloudBaseUrl: 'https://cloud.mail.ru',
 		mailBaseUrl: 'https://e.mail.ru',
 		accountBaseUrl: 'https://account.mail.ru',
+		swaBaseUrl: 'https://swa.mail.ru/api/v1',
 		userAgent: 'Yoda'
 	},
 	cookies: {
@@ -46,22 +51,6 @@ export default {
 	},
 	files: {
 		baseUrl: 'http://files.win102.mail.cloud.devmail.ru/'
-	},
-	testPushNotificationsSubscription: {
-		token: '65126618325:14838322906489354350985028373919997344018607575698298209519830904748015705070522591352296981588061962446733941893726089992087917749836223325',
-		settings: {
-			capabilities: {
-				Filter: {},
-				is_active: true,
-				chrome_mode: 1
-			},
-			webpush_keys: {
-				p256dh: '123',
-				auth: '123'
-			}
-		},
-		platform: 'webpush',
-		application: 'mail_e'
 	},
 	get timeout(): number {
 		if (typeof browser !== 'undefined') {
