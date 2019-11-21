@@ -13,10 +13,10 @@ export interface UserInfoBody {
 /**
  * @see https://apidoc.devmail.ru/e.mail.ru/users/
  */
-export default function Users(userInfo: {emails: string[]}): RequestResult<UserInfoBody> {
+export default function users(userInfo: {emails: string[]}): RequestResult<UserInfoBody> {
 	return call('users', userInfo, 'POST');
 }
 
-export async function UsersAsync(userInfo: {emails: string[]}): Promise<RequestResult<UserInfoBody>> {
+export async function usersAsync(userInfo: {emails: string[]}): Promise<RequestResult<UserInfoBody>> {
 	return callAsync('users', userInfo, 'POST');
 }
