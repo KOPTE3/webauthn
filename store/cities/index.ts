@@ -23,6 +23,14 @@ export default {
 			full_path: 'Хабаровск, Хабаровский край, Россия'
 		},
 		{
+			city_id: 1483,
+			country_id: 24,
+			region_id: 268,
+			popularity: 20484,
+			name: 'Норильск',
+			full_path: 'Норильск, Красноярский край, Россия'
+		},
+		{
 			city_id: 25,
 			country_id: 24,
 			region_id: 999999,
