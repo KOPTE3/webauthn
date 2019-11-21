@@ -132,8 +132,8 @@ export default class InternalApiSteps {
 	}
 
 	@step('Задать пользователю город "{__result__}"')
-	setUserCity(login: string, domain: string): string {
-		const city = citiesStore.getCity();
+	setUserCity(login: string, domain: string, fullName?: string): string {
+		const city = fullName ? citiesStore.getCityByFullName(fullName) : citiesStore.getCity();
 
 		const userToEdit = {
 			login,

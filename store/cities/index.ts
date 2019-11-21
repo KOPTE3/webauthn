@@ -41,11 +41,21 @@ export default {
 	],
 
 	/**
-	 * Получение города
+	 * Получение города по индексу в массиве
 	 * @param {number} [index]
 	 * @returns {City}
 	 */
 	getCity(index: number = 0): City {
 		return this.cities[index];
+	},
+
+	/**
+	 * Получение города по полному имени
+	 * @param {string} [fullName]
+	 * @returns {City}
+	 */
+	getCityByFullName(fullName: string): City {
+		const res = this.cities.find((city) => city.full_path === fullName);
+		return res || this.cities[0];
 	}
 };
