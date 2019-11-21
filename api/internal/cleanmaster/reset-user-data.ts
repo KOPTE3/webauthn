@@ -10,10 +10,10 @@ interface ResetUserData {
 /**
  * @see https://apidoc.devmail.ru/e.mail.ru/test/messages/services/cleanmaster/stat/insert/
  */
-export function resetUserDataNew(options: ResetUserData): RequestResult<null> {
+export function messagesServicesCleanmasterStatInsert(options: ResetUserData): RequestResult<null> {
 	return call('golang/test/messages/services/cleanmaster/stat/insert', options);
 }
 
-export async function resetUserDataNewAsync(options: ResetUserData): Promise<RequestResult<null>> {
+export async function messagesServicesCleanmasterStatInsertAsync(options: ResetUserData): Promise<RequestResult<null>> {
 	return callAsync('golang/test/messages/services/cleanmaster/stat/insert', options);
 }
