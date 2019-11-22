@@ -6,11 +6,19 @@ import authorization from '../../store/authorization';
 import phonesStore from '../../store/phones';
 import citiesStore from '../../store/cities';
 import { assertDefinedValue } from '../../utils/assert-defined';
-import { JsonArray, JsonObject } from 'type-fest';
+import { JsonArray, JsonObject, Merge, RequireExactlyOne } from 'type-fest';
 import Authorization from '../../utils/authorization';
+import { mailApiSteps } from './mail-api';
 
 export type PhoneStatusStep = PhoneStatus | 'in_remove_queue' | 'twofa';
 export type ExtraEmailStatusStep = 'ok' | 'too_young' | 'in_remove_queue';
+export type PaymentHistoryItem = RequireExactlyOne<Merge<
+	Omit<InternalApi.PaymentHistoryRawItem, 'thread_id'>,
+	{
+		date?: Date,
+		messageSubject?: string
+	}
+>, 'description' | 'description_parts'>;
 
 export default class InternalApiSteps {
 	@step('"Протушить" все аттачи на написании письма')
@@ -284,6 +292,39 @@ export default class InternalApiSteps {
 					uidl
 				}
 			}
+		});
+	}
+
+	@step('Вставить записи в историю оплат', (items: PaymentHistoryItem[]) => ({
+		...items.map((item: PaymentHistoryItem) => ({
+			...item,
+			...(item.date && {
+				date: item.date.toLocaleString('ru-RU', { hour12: false })
+			})
+		}))
+	}))
+	insertIntoPaymentHistory(items: PaymentHistoryItem[], email?: string) {
+		const { email: emailFromAuth = '' } = authorization.account.data() || Authorization.CurrentAccount() || {};
+
+		InternalApi.paymentHistoryInsert({
+			email: email || emailFromAuth,
+			items: items.map((item: PaymentHistoryItem) => ({
+				...item,
+				date: Math.floor((item.date || new Date()).valueOf() / 1000),
+				...(item.messageSubject && {
+					messageSubject: undefined,
+					thread_id: mailApiSteps.getThreadIdBySubject(item.messageSubject)
+				})
+			}) as InternalApi.PaymentHistoryItem)
+		});
+	}
+
+	@step('Очистить историю оплат')
+	clearPaymentHistory(email?: string) {
+		const { email: emailFromAuth = '' } = authorization.account.data() || Authorization.CurrentAccount() || {};
+
+		InternalApi.paymentHistoryClear({
+			email: email || emailFromAuth
 		});
 	}
 }

@@ -4,6 +4,7 @@ export * from './bruteforce-counter';
 export * from './users';
 export * from './aliases';
 export * from './messages';
+export * from './payment';
 export * from './whitelabel';
 export * from './pushauth';
 export { default as messageSetMsgProps, messageSetMsgPropsAsync } from './message-set_msg_props';
