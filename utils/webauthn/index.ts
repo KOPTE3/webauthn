@@ -9,7 +9,7 @@ import config from '../../config';
 
 let counter = 0;
 
-// https://www.w3.org/TR/webauthn/#aaguid
+// https://www.w3.org/TR/webauthn-1/#aaguid
 const AAGUID: Buffer = crypto.randomBytes(16);
 
 type CollectedClientDataType = string;
@@ -27,7 +27,7 @@ export async function CreateAttestationForCredentialsCreateConfirm(
 	const challenge = Buffer.from(options.publicKey.challenge as string, 'base64' as BufferEncoding);
 
 	// #### Регистрируем пользователя (создаём открытый/закрытый ключи) ####
-	// see https://www.w3.org/TR/webauthn/#op-make-cred step 7
+	// see https://www.w3.org/TR/webauthn-1/#op-make-cred step 7
 	// Используем node 10.16.3 и получаем publicKey: Buffer, privateKey: string
 	const { publicKey, privateKey } = crypto.generateKeyPairSync(
 		'ec',
@@ -110,7 +110,7 @@ function urlSafeBase64Encode(buffer: Buffer): string {
 		.replace(/=+$/g, '');
 }
 
-// https://www.w3.org/TR/webauthn/#sec-client-data
+// https://www.w3.org/TR/webauthn-1/#sec-client-data
 // tslint:disable-next-line:max-line-length
 async function CreateCollectedClientData(
 	challenge: Buffer,
@@ -149,7 +149,7 @@ async function CreateAttestedCredentialData(
 	const x = publicKey.subarray(27, 27 + 32);
 	const y = publicKey.subarray(27 + 32, 27 + 32 + 32);
 
-	// https://www.w3.org/TR/webauthn/#sctn-encoded-credPubKey-examples
+	// https://www.w3.org/TR/webauthn-1/#sctn-encoded-credPubKey-examples
 	const CoseCredentialPublicKey = new Map();
 	CoseCredentialPublicKey.set(1, 2);
 	CoseCredentialPublicKey.set(3, -7);
@@ -162,7 +162,7 @@ async function CreateAttestedCredentialData(
 	return Buffer.concat([AAGUID, credentialIdLength, credentialId, CborCoseCredentialPublicKey]);
 }
 
-// https://www.w3.org/TR/webauthn/#sec-authenticator-data
+// https://www.w3.org/TR/webauthn-1/#sec-authenticator-data
 async function CreateAuthenticatorData(
 	attestedCredentialData: Buffer | null, counter: number = 0
 ): Promise<Buffer> {
@@ -183,7 +183,7 @@ async function CreateAuthenticatorData(
 	}
 }
 
-// https://www.w3.org/TR/webauthn/#generating-an-attestation-object
+// https://www.w3.org/TR/webauthn-1/#generating-an-attestation-object
 async function GeneratingAnAttestationObject(
 	authData: Buffer,
 	hash: Buffer,

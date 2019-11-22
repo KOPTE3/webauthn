@@ -13,7 +13,9 @@ export enum BruteforceType {
 	smsverificator = 'smsverificator',
 	confirm_filter_email_resend = 'confirm_filter_email_resend',
 	sendmsg = 'sendmsg',
-	brute_short_code = 'brute_short_code'
+	brute_short_code = 'brute_short_code',
+	cleanmasterInit = 'cleanmaster_init',
+	cleamasterUpdate = 'cleanmaster_update'
 }
 
 export interface Options {
