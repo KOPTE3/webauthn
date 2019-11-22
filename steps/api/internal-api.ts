@@ -243,6 +243,31 @@ export default class InternalApiSteps {
 
 		InternalApi.userBox(data);
 	}
+
+	@step('Устанавливаем статус "Оплачен" в монете')
+	setSuccessPaymentStatus(email: string, uidl: string) {
+		const { user_id: userId } = InternalApi.whiteLabelUserData({ email }).body;
+		const requestId = `"${Math.floor(Math.random() * 1000)}"`;
+
+		InternalApi.whiteLabelPaymentNotify({
+			request_id: requestId,
+			notification_data: {
+				user_id: userId,
+				notification_type: 'payed_receipt',
+				provider: '""',
+				provider_logo: '""',
+				receipt_data: [],
+				payed_data: {
+					amount: '"1.00"',
+					status: 'succeed',
+					transaction_id: '"kdf7twyeudhli"'
+				},
+				mail_proxy_param: {
+					uidl
+				}
+			}
+		});
+	}
 }
 
 export const internalApiSteps = new InternalApiSteps();
