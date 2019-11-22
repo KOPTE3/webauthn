@@ -4,6 +4,7 @@ import { PhoneStatus } from '../../api/internal/user/phones-state';
 import userProfileSet from '../../api/internal/user/profile-set';
 import authorization from '../../store/authorization';
 import phonesStore from '../../store/phones';
+import citiesStore from '../../store/cities';
 import { assertDefinedValue } from '../../utils/assert-defined';
 import { JsonArray, JsonObject } from 'type-fest';
 import Authorization from '../../utils/authorization';
@@ -128,6 +129,23 @@ export default class InternalApiSteps {
 		});
 
 		return `${date.day}.${date.month}.${date.year}`;
+	}
+
+	@step('Задать пользователю город "{__result__}"')
+	setUserCity(login: string, domain: string, fullName?: string): string {
+		const city = fullName ? citiesStore.getCityByFullName(fullName) : citiesStore.getCity();
+
+		const userToEdit = {
+			login,
+			domain,
+			city: city.city_id
+		};
+
+		InternalApi.usersEdit({
+			users: [userToEdit]
+		});
+
+		return city.full_path;
 	}
 
 	@step('Задать пользователю таймзону c id {timezoneId},{autodetect ? "" : " не"} определять автоматически')
