@@ -23,6 +23,7 @@ export interface UserEditOptions {
 		month: number;
 		year: number;
 	};
+	city?: number;
 }
 
 /**
