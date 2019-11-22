@@ -4,6 +4,7 @@ import { PhoneStatus } from '../../api/internal/user/phones-state';
 import userProfileSet from '../../api/internal/user/profile-set';
 import authorization from '../../store/authorization';
 import phonesStore from '../../store/phones';
+import citiesStore from '../../store/cities';
 import { assertDefinedValue } from '../../utils/assert-defined';
 import { JsonArray, JsonObject, Merge, RequireExactlyOne } from 'type-fest';
 import Authorization from '../../utils/authorization';
@@ -138,6 +139,23 @@ export default class InternalApiSteps {
 		return `${date.day}.${date.month}.${date.year}`;
 	}
 
+	@step('Задать пользователю город "{__result__}"')
+	setUserCity(login: string, domain: string, fullName?: string): string {
+		const city = fullName ? citiesStore.getCityByFullName(fullName) : citiesStore.getCity();
+
+		const userToEdit = {
+			login,
+			domain,
+			city: city.city_id
+		};
+
+		InternalApi.usersEdit({
+			users: [userToEdit]
+		});
+
+		return city.full_path;
+	}
+
 	@step('Задать пользователю таймзону c id {timezoneId},{autodetect ? "" : " не"} определять автоматически')
 	setUserTimezone(login: string, domain: string, timezoneId: number, autodetect: boolean = false) {
 		const userToEdit = {
@@ -230,6 +248,49 @@ export default class InternalApiSteps {
 			message_id: uidl,
 			props: {
 				metadata: JSON.stringify({ json_ld: newJsonLd })
+			}
+		});
+	}
+
+	@step('Обновляем пользователю {email} лимит ящика: {limit}')
+	updateBoxLimit(limit: number, email?: string) {
+		let userEmail;
+		if (email) {
+			userEmail = email;
+		} else {
+			const { email = '' } = authorization.account.data() || Authorization.CurrentAccount() || {};
+			userEmail = email;
+		}
+
+		const data = {
+			email: userEmail,
+			limit
+		};
+
+		InternalApi.userBox(data);
+	}
+
+	@step('Устанавливаем статус "Оплачен" в монете')
+	setSuccessPaymentStatus(email: string, uidl: string) {
+		const { user_id: userId } = InternalApi.whiteLabelUserData({ email }).body;
+		const requestId = `"${Math.floor(Math.random() * 1000)}"`;
+
+		InternalApi.whiteLabelPaymentNotify({
+			request_id: requestId,
+			notification_data: {
+				user_id: userId,
+				notification_type: 'payed_receipt',
+				provider: '""',
+				provider_logo: '""',
+				receipt_data: [],
+				payed_data: {
+					amount: '"1.00"',
+					status: 'succeed',
+					transaction_id: '"kdf7twyeudhli"'
+				},
+				mail_proxy_param: {
+					uidl
+				}
 			}
 		});
 	}

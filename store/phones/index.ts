@@ -30,6 +30,7 @@ export default {
 		{
 			index: 0,
 			phone: '79162143406',
+			code: '517130',
 			head: '+7 (916) 2',
 			value: '14',
 			masked: '+7 (916) 214-**-**',
@@ -40,6 +41,7 @@ export default {
 		{
 			index: 1,
 			phone: '79163870193',
+			code: '864595',
 			head: '+7 (916) 3',
 			value: '87',
 			masked: '+7 (916) 387-**-**',
@@ -50,6 +52,7 @@ export default {
 		{
 			index: 2,
 			phone: '79262361785',
+			code: '239457',
 			head: '+7 (926) 2',
 			value: '36',
 			masked: '+7 (926) 236-**-**',
@@ -60,6 +63,7 @@ export default {
 		{
 			index: 3,
 			phone: '79262399073',
+			code: '634592',
 			head: '+7 (926) 2',
 			value: '39',
 			masked: '+7 (926) 239-**-**',
@@ -70,6 +74,7 @@ export default {
 		{
 			index: 4,
 			phone: '79265299551',
+			code: '415075',
 			head: '+7 (926) 5',
 			value: '29',
 			masked: '+7 (926) 529-**-**',
@@ -80,6 +85,7 @@ export default {
 		{
 			index: 5,
 			phone: '79998689153',
+			code: '148848',
 			head: '+7 (999) 8',
 			value: '68',
 			masked: '+7 (999) 868-**-**',
@@ -90,6 +96,7 @@ export default {
 		{
 			index: 6,
 			phone: '79261181836',
+			code: '711123',
 			head: '+7 (926) 1',
 			value: '18',
 			masked: '+7 (926) 118-**-**',
@@ -100,6 +107,7 @@ export default {
 		{
 			index: 7,
 			phone: '79857867763',
+			code: '710916',
 			head: '+7 (985) 7',
 			value: '86',
 			masked: '+7 (985) 786-**-**',

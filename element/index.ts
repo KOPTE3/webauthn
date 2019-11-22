@@ -106,7 +106,6 @@ export class Element<Params extends object = any> {
 	}
 
 	@gen
-	@step('Получаем количество элементов {element}, результат {__result__}')
 	static GetCount(element: Element): number {
 		const locator = element.Locator();
 		const els = browser.elements(locator);
@@ -215,7 +214,6 @@ export class Element<Params extends object = any> {
 	}
 
 	@gen
-	@step('Получаем значение элемента {element}', (e: any, r: string) => ({ 'Значение равно': r }))
 	static GetValue(element: Element): string {
 		const locator = element.Locator();
 		return browser.getValue(locator);
@@ -462,6 +460,35 @@ export class Element<Params extends object = any> {
 	static DragTo(element: Element, targetElement: Element, dragX?: number, dragY?: number) {
 		Element.StartDrag(element, dragX, dragY);
 		Element.DropItem(targetElement);
+	}
+
+	@gen
+	static GetFocus(element: Element): boolean {
+		const locator = element.Locator();
+
+		return browser.hasFocus(locator);
+	}
+
+	@gen
+	@step('Проверить, {expected ? "наличие" : "отсутствие"} фокуса у элемента {element}')
+	static CheckFocus(element: Element, expected: boolean): void {
+		const actual = Element.GetFocus(element);
+
+		assert.strictEqual(
+			actual,
+			expected,
+			`У элемента ${element.Name()} ${expected ? 'нет фокуса' : 'есть фокус'}`
+		);
+	}
+
+	@gen
+	@step('Дожидаемся, пока у елемента {element} не {expected ? "появится" : "пропадёт"} фокус')
+	static WaitForFocus(element: Element, expected: boolean, timeout?: number): void {
+		browser.waitUntil(
+			() => Element.GetFocus(element) === expected,
+			timeout || browser.options.waitforTimeout,
+			`Не удалось дождаться пока у элемента ${element.Name()} ${expected ? 'появится' : 'пропадёт'} фокус`
+		);
 	}
 
 	public Locator(): string {

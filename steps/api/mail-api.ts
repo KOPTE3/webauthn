@@ -2,7 +2,6 @@ import { MailAPI as MailApiInterfaces } from '@qa/api';
 import * as merge from 'deepmerge';
 import { bruteforceCounterReset, BruteforceType, tokensInfo } from '../../api/internal';
 import * as MailApi from '../../api/mail-api';
-import config from '../../config';
 import authorization from '../../store/authorization';
 import helpers from '../../store/helpers';
 import { Phone } from '../../store/phones';
@@ -10,6 +9,27 @@ import { assertDefinedValue } from '../../utils/assert-defined';
 import { Credentials } from '../../types/api';
 import { CommonAccount } from '../../utils/authorization';
 import FolderStore from '../../store/folders';
+
+function getToken() {
+	return Math.floor(Math.random() * 10 ** 11) +
+		':14838322906489354350985028373919997344018607575698298209519830904748015705070522591352296981588061962446733941893726089992087917749836223325';
+}
+
+const credentialsConfig = {
+	settings: {
+		capabilities: {
+			Filter: {},
+			is_active: true,
+			chrome_mode: 1
+		},
+		webpush_keys: {
+			p256dh: '123',
+			auth: '123'
+		}
+	},
+	platform: 'webpush',
+	application: 'mail_e'
+};
 
 /** Интерфейс для вывода данных, о созданной запароленной папке */
 interface SecretFolderData {
@@ -65,6 +85,38 @@ export default class MailApiSteps {
 		return +assertDefinedValue(body)[0];
 	}
 
+	@step('Очистить папку {ids}')
+	clearFolders(ids: {}, credentials?: Credentials): void {
+		MailApi.foldersClear({
+			ids
+		}, credentials);
+	}
+
+	@step('Отредактироваться папку с id: {__result__}')
+	editFolders(foldersData: MailApiInterfaces.FoldersEdit['folders'], credentials?: Credentials): number[] {
+		const body = MailApi.foldersEdit({
+			folders: foldersData
+		}, credentials).body;
+
+		return assertDefinedValue(body).map((folderId: string) => +folderId);
+	}
+
+	// Устанавливает на папку в качестве пароля пароль от ящика
+	@step('Установить пароль на папку с id {folderID}')
+	setPasswordFolder(folderID: number, credentials?: Credentials): void {
+		this.editFolders(
+			[{
+				id: folderID.toString(),
+				secret: {
+					folder_password: credentials ? credentials.password : authorization.account.get('password'),
+					user_password: credentials ? credentials.password : authorization.account.get('password'),
+					question: 'Кто тут',
+					answer: 'Никто'
+				}
+			}]
+		);
+	}
+
 	@step(
 		'Создать папки с указанными параметрами. В результате созданы папки с id: [{__result__}]',
 		(folders: any[]) =>
@@ -80,9 +132,9 @@ export default class MailApiSteps {
 		const body = MailApi.foldersAdd({
 			folders: assertDefinedValue(foldersData)
 				.map((folderData) => ({
-				...defaultFolderData,
-				...folderData
-			}))
+					...defaultFolderData,
+					...folderData
+				}))
 		}).body;
 
 		return assertDefinedValue(body).map((folderId: string) => +folderId);
@@ -122,7 +174,7 @@ export default class MailApiSteps {
 	}
 
 	@step('Открыть запароленные папки с id: [{__result__}]')
-	openFolders(foldersData: Array<{id: number, password: string}>): number[] {
+	openFolders(foldersData: Array<{ id: number, password: string }>): number[] {
 		const body = MailApi.foldersOpen({
 			folders: foldersData.map(({ id, password }) => ({
 				id: `${id}`,
@@ -217,7 +269,7 @@ export default class MailApiSteps {
 			folder_password,
 			question,
 			answer
-		} = folderData.secret as Required<{folder_password: string, question: string, answer: string}>;
+		} = folderData.secret as Required<{ folder_password: string, question: string, answer: string }>;
 
 		return {
 			id: this.createFolder(folderData, credentials),
@@ -326,7 +378,8 @@ export default class MailApiSteps {
 				subscriptions: [
 					{
 						account: credentials.email,
-						...config.testPushNotificationsSubscription
+						token: getToken(),
+						...credentialsConfig
 					}
 				]
 			},

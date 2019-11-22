@@ -4,6 +4,7 @@ import { CookieJar } from 'request';
 import * as rp from 'request-promise-native';
 import { Cookie } from 'tough-cookie';
 import { creationTime } from '../api/internal/session/index';
+import getFtrsCookie, { FtrsCookieBody } from '../api/internal/ftrs/get';
 import config from '../config';
 import URL from './url';
 import { assertDefinedValue } from './assert-defined';
@@ -83,14 +84,21 @@ export async function getCredentialsAsync(
 
 	const qs = { ...options, type };
 
-	const accountUrl = options.emailType === 'test_login' ?
-		config.as.testLoginUrl :
-		config.as.url;
+	let accountUrl;
+	let proxy;
+
+	if (options.emailType === 'test_login') {
+		accountUrl = config.as.testLoginUrl;
+		proxy = config.api.proxyUrl;
+	} else {
+		accountUrl = config.as.url;
+		proxy = null;
+	}
 
 	const response: ASAccount = await rp.get(`${accountUrl}/get`, {
 		json: true,
 		auth: config.as.auth,
-		proxy: config.api.proxyUrl || void 0,
+		proxy: proxy || void 0,
 		qs
 	});
 
@@ -130,6 +138,21 @@ export function checkSdcsCookie(jar: CookieJar, origin: string): boolean {
 	const cookies = jar.getCookies(origin || config.auth.referer);
 	return cookies.map((cookie) => cookie.toJSON())
 		.some((cookie) => cookie.key === 'sdcs');
+}
+
+/**
+ * Выставляет специальную куку для включения переопределния ftrs на верстке
+ */
+export function setFtrsCookie(): FtrsCookieBody {
+	const response = getFtrsCookie();
+
+	assert.strictEqual(
+		response.status,
+		200,
+		'Failed to set ftrs cookie. Status is not ok'
+	);
+
+	return assertDefinedValue(response.body);
 }
 
 /**
@@ -339,6 +362,7 @@ export default class Authorization {
 		}
 
 		const session = loginAccount(authCredentials as CommonAccount);
+		const response = setFtrsCookie();
 
 		URL.open(getSupixUrl(), config.timeout);
 
@@ -356,6 +380,10 @@ export default class Authorization {
 		cookies.push({
 			name: 'qa',
 			value: config.cookies.qa,
+			domain: '.mail.ru'
+		}, {
+			name: 'ftrs',
+			value: response.value,
 			domain: '.mail.ru'
 		});
 
@@ -376,13 +404,21 @@ export default class Authorization {
 
 		// Удостоверямся, что документ доступен
 		browser.waitForExist('body');
+		const response = setFtrsCookie();
 		const cookies: WebdriverIO.Cookie[] = browser.getCookie();
 
-		browser.setCookies([{
-			name: 'qa',
-			value: config.cookies.qa,
-			domain: '.mail.ru'
-		}]);
+		browser.setCookies([
+			{
+				name: 'qa',
+				value: config.cookies.qa,
+				domain: '.mail.ru'
+			},
+			{
+				name: 'ftrs',
+				value: response.value,
+				domain: '.mail.ru'
+			}
+		]);
 
 		browser.close();
 
