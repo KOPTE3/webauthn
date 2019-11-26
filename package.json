@@ -1,6 +1,6 @@
 {
   "name": "@qa/yoda",
-  "version": "9.16.1",
+  "version": "9.17.0",
   "description": "Testing platform",
   "author": "Mail.ru Group Limited",
   "license": "UNLICENSED",
@@ -56,7 +56,7 @@
     "@types/fs-extra": "^8.0.1",
     "@types/glob": "^7.1.1",
     "@types/minimist": "^1.2.0",
-    "@types/node": "^12.12.7",
+    "@types/node": "^10.17.6",
     "@types/platform": "^1.3.2",
     "@types/request": "^2.48.3",
     "@types/request-promise-native": "^1.0.17",
