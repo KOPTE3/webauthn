@@ -274,7 +274,7 @@ export class Element<Params extends object = any> {
 				throw new Error('The given element does not have a value setter');
 			}
 			el.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
-		},              locator);
+		}, locator);
 		el.elementIdClear(el.value.ELEMENT);
 	}
 
